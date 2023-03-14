@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import {Button, Dialog} from "@material-ui/core";
+import { Button, Dialog } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import EmailVerificationModal from "../EmailVerificationModal";
-import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
-import {API_AUTH_REGISTRATION_ACTIVATE} from "../../../../util/endpoints";
-import {LoadingStatus} from "../../../../store/types/common";
+import { RegistrationInputField } from "../../RegistrationInput/RegistrationInputField";
+import { API_AUTH_REGISTRATION_ACTIVATE } from "../../../../constants/endpoint-constants";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("EmailVerificationModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -28,7 +28,7 @@ describe("EmailVerificationModal", () => {
         expect(wrapper.text().includes(`Enter it below to verify ${mockEmail}.`)).toBe(true);
         expect(wrapper.find(Button).text().includes("Next")).toBe(true);
 
-        wrapper.find(RegistrationInputField).find("input").simulate("change", {target: {value: "test"}});
+        wrapper.find(RegistrationInputField).find("input").simulate("change", { target: { value: "test" } });
         wrapper.find(Button).simulate("click");
         mockAdapter.onGet(`${API_AUTH_REGISTRATION_ACTIVATE}/test`).reply(200);
 
@@ -50,7 +50,7 @@ describe("EmailVerificationModal", () => {
                 onOpenSetPassword={jest.fn()}
             />, mockStore);
 
-        wrapper.find(RegistrationInputField).find("input").simulate("change", {target: {value: "test"}});
+        wrapper.find(RegistrationInputField).find("input").simulate("change", { target: { value: "test" } });
         wrapper.find(Button).simulate("click");
         mockAdapter.onGet(`${API_AUTH_REGISTRATION_ACTIVATE}/test`).reply(400, "Test error");
 

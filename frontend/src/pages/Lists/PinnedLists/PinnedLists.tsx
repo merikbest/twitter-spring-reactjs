@@ -1,11 +1,11 @@
-import React, {ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Paper, Typography} from "@material-ui/core";
+import React, { ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Paper, Typography } from "@material-ui/core";
 
 import Spinner from "../../../components/Spinner/Spinner";
 import PinnedListsItem from "./PinnedListsItem/PinnedListsItem";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {usePinnedListsStyles} from "./PinnedListsStyles";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { usePinnedListsStyles } from "./PinnedListsStyles";
 import {
     selectIsPinnedListsLoaded,
     selectIsPinnedListsLoading,
@@ -34,7 +34,7 @@ const PinnedLists = (): ReactElement => {
                         </Typography>
                     ) : (
                         pinnedLists.map((pinnedList) => (
-                            <PinnedListsItem key={pinnedList.id} pinnedList={pinnedList}/>
+                            <PinnedListsItem key={pinnedList.id} pinnedList={pinnedList} />
                         ))
                     )
                 )}

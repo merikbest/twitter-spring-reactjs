@@ -1,10 +1,10 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
 import classnames from "classnames";
 import Paper from "@material-ui/core/Paper";
 
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {useFollowingFollowersStyles} from "../FollowingFollowersStyles";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { useFollowingFollowersStyles } from "../FollowingFollowersStyles";
 import BackButton from "../../../components/BackButton/BackButton";
 import PageHeaderTitle from "../../../components/PageHeaderTitle/PageHeaderTitle";
 import {
@@ -24,8 +24,8 @@ const FollowingFollowersHeader = memo((): ReactElement => {
         <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
             {(userProfileId) && (
                 <>
-                    <BackButton/>
-                    <PageHeaderTitle title={fullName!} subtitle={`@${username}`}/>
+                    <BackButton />
+                    <PageHeaderTitle title={fullName!} subtitle={`@${username}`} />
                 </>
             )}
         </Paper>

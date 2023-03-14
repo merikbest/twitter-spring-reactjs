@@ -1,6 +1,6 @@
-import {RootState} from "../../store";
-import {ChatState} from "./contracts/state";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import { RootState } from "../../store";
+import { ChatState } from "./contracts/state";
+import { DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
 
 export const selectChat = (state: RootState): ChatState => state.chat;
 export const selectChatItem = (state: RootState) => selectChat(state).item;

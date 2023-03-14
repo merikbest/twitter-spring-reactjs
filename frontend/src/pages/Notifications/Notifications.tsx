@@ -1,15 +1,15 @@
-import React, {ChangeEvent, FC, ReactElement, useState} from 'react';
-import {Route, useHistory} from "react-router-dom";
-import {Typography} from "@material-ui/core";
+import React, { ChangeEvent, FC, ReactElement, useState } from "react";
+import { Route, useHistory } from "react-router-dom";
+import { Typography } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
 import classnames from "classnames";
 
-import {useNotificationsStyles} from "./NotificationsStyles";
-import {useGlobalStyles} from "../../util/globalClasses";
-import {withDocumentTitle} from "../../hoc/withDocumentTitle";
-import {NOTIFICATIONS, NOTIFICATIONS_MENTIONS} from "../../util/pathConstants";
+import { useNotificationsStyles } from "./NotificationsStyles";
+import { useGlobalStyles } from "../../util/globalClasses";
+import { withDocumentTitle } from "../../hoc/withDocumentTitle";
+import { NOTIFICATIONS, NOTIFICATIONS_MENTIONS } from "../../constants/path-constants";
 import NotificationsPage from "./NotificationsPage/NotificationsPage";
 import MentionsPage from "./MentionsPage/MentionsPage";
 
@@ -40,12 +40,12 @@ const Notifications: FC = (): ReactElement => {
             <div className={globalClasses.contentWrapper}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                        <Tab className={classes.tab} label="All"/>
-                        <Tab className={classes.tab} label="Mentions"/>
+                        <Tab className={classes.tab} label="All" />
+                        <Tab className={classes.tab} label="Mentions" />
                     </Tabs>
                 </div>
-                <Route exact path={NOTIFICATIONS} component={NotificationsPage}/>
-                <Route exact path={NOTIFICATIONS_MENTIONS} component={MentionsPage}/>
+                <Route exact path={NOTIFICATIONS} component={NotificationsPage} />
+                <Route exact path={NOTIFICATIONS_MENTIONS} component={MentionsPage} />
             </div>
         </Paper>
     );

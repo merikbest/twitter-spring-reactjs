@@ -1,9 +1,9 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {mockFullTweet} from "../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
+import { mockFullTweet } from "../../../util/test-utils/mock-test-data";
 import YouTubeVideo from "../YouTubeVideo";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("YouTubeVideo", () => {
     it("should render correctly", () => {

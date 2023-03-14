@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useEmailVerificationModalStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -7,11 +7,11 @@ export const useEmailVerificationModalStyles = makeStyles((theme: Theme) => ({
         marginTop: 5,
         padding: "0 30px",
         "& .MuiTypography-h3": {
-            marginTop: 20,
+            marginTop: 20
         },
         "& .MuiTypography-subtitle1": {
-            marginTop: 15,
-        },
+            marginTop: 15
+        }
     },
     logoIcon: {
         margin: "0 auto",
@@ -19,14 +19,14 @@ export const useEmailVerificationModalStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             height: "1.75rem",
             width: "1.75rem",
-            color: theme.palette.primary.main,
-        },
+            color: theme.palette.primary.main
+        }
     },
     emailLinkWrapper: {
         marginLeft: 10,
-        marginTop: 2,
+        marginTop: 2
     },
     buttonWrapper: {
         marginTop: 320
-    },
+    }
 }));

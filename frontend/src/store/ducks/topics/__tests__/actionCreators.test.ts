@@ -1,6 +1,6 @@
-import {testAction} from "../../../../util/testHelper";
-import {TopicsActionsType} from "../contracts/actionTypes";
-import {FollowedTopicPayload, NotInterestedTopicPayload, TopicActionPayload, TopicsState} from "../contracts/state";
+import { testAction } from "../../../../util/test-utils/test-helper";
+import { TopicsActionsType } from "../contracts/actionTypes";
+import { FollowedTopicPayload, NotInterestedTopicPayload, TopicActionPayload, TopicsState } from "../contracts/state";
 import {
     fetchFollowedTopics,
     fetchFollowedTopicsByUserId,
@@ -19,18 +19,18 @@ import {
     setTopicsByCategoriesLoadingState,
     setTopicsLoadingState
 } from "../actionCreators";
-import {LoadingStatus} from "../../../types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("topics actions", () => {
 
-    testAction(setTopics, setTopics([{id: 1}] as TopicsState["topics"]), {
+    testAction(setTopics, setTopics([{ id: 1 }] as TopicsState["topics"]), {
         type: TopicsActionsType.SET_TOPICS,
-        payload: [{id: 1}] as TopicsState["topics"]
+        payload: [{ id: 1 }] as TopicsState["topics"]
     });
 
-    testAction(fetchTopicsByIds, fetchTopicsByIds({topicsIds: [1,2,3]}), {
+    testAction(fetchTopicsByIds, fetchTopicsByIds({ topicsIds: [1, 2, 3] }), {
         type: TopicsActionsType.FETCH_TOPICS_BY_IDS,
-        payload: {topicsIds: [1,2,3]}
+        payload: { topicsIds: [1, 2, 3] }
     });
 
     testAction(setTopicsByCategories, setTopicsByCategories([{}] as TopicsState["topicsByCategories"]), {
@@ -38,17 +38,17 @@ describe("topics actions", () => {
         payload: [{}] as TopicsState["topicsByCategories"]
     });
 
-    testAction(fetchTopicsByCategories, fetchTopicsByCategories({categories: ["GAME"]}), {
+    testAction(fetchTopicsByCategories, fetchTopicsByCategories({ categories: ["GAME"] }), {
         type: TopicsActionsType.FETCH_TOPICS_BY_CATEGORIES,
-        payload: {categories: ["GAME"]}
+        payload: { categories: ["GAME"] }
     });
 
     testAction(fetchNotInterestedTopics, fetchNotInterestedTopics(), {
-        type: TopicsActionsType.FETCH_NOT_INTERESTED_TOPICS,
+        type: TopicsActionsType.FETCH_NOT_INTERESTED_TOPICS
     });
 
     testAction(fetchFollowedTopics, fetchFollowedTopics(), {
-        type: TopicsActionsType.FETCH_FOLLOWED_TOPICS,
+        type: TopicsActionsType.FETCH_FOLLOWED_TOPICS
     });
 
     testAction(fetchFollowedTopicsByUserId, fetchFollowedTopicsByUserId(1), {
@@ -56,9 +56,9 @@ describe("topics actions", () => {
         payload: 1
     });
 
-    testAction(setFollowedTopics, setFollowedTopics([{id: 1}] as TopicsState["followedTopics"]), {
+    testAction(setFollowedTopics, setFollowedTopics([{ id: 1 }] as TopicsState["followedTopics"]), {
         type: TopicsActionsType.SET_FOLLOWED_TOPICS,
-        payload: [{id: 1}] as TopicsState["followedTopics"]
+        payload: [{ id: 1 }] as TopicsState["followedTopics"]
     });
 
     testAction(processNotInterestedTopic, processNotInterestedTopic(1), {
@@ -71,9 +71,9 @@ describe("topics actions", () => {
         payload: {} as NotInterestedTopicPayload
     });
 
-    testAction(processFollowTopic, processFollowTopic({topicsId: 1} as TopicActionPayload), {
+    testAction(processFollowTopic, processFollowTopic({ topicsId: 1 } as TopicActionPayload), {
         type: TopicsActionsType.PROCESS_FOLLOW_TOPIC,
-        payload: {topicsId: 1} as TopicActionPayload
+        payload: { topicsId: 1 } as TopicActionPayload
     });
 
     testAction(setFollowTopic, setFollowTopic({} as FollowedTopicPayload), {
@@ -82,7 +82,7 @@ describe("topics actions", () => {
     });
 
     testAction(resetTopicsState, resetTopicsState(), {
-        type: TopicsActionsType.RESET_TOPICS_STATE,
+        type: TopicsActionsType.RESET_TOPICS_STATE
     });
 
     testAction(setTopicsLoadingState, setTopicsLoadingState(LoadingStatus.LOADING), {

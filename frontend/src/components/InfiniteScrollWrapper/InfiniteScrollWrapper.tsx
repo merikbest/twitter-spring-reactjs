@@ -1,5 +1,5 @@
-import React, {FC, ReactElement, ReactNode, useState} from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import React, { FC, ReactElement, ReactNode, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface InfiniteScrollWrapperProps {
     children: ReactNode;
@@ -10,7 +10,7 @@ interface InfiniteScrollWrapperProps {
 
 const InfiniteScrollWrapper: FC<InfiniteScrollWrapperProps> = (
     {
-        children, 
+        children,
         dataLength,
         pagesCount,
         loadItems
@@ -22,10 +22,10 @@ const InfiniteScrollWrapper: FC<InfiniteScrollWrapperProps> = (
         loadItems(page);
         setPage(prevState => prevState + 1);
     };
-    
+
     return (
         <InfiniteScroll
-            style={{overflow: "unset"}}
+            style={{ overflow: "unset" }}
             dataLength={dataLength}
             hasMore={page < pagesCount}
             next={loadNextPage}

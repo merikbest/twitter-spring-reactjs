@@ -1,6 +1,6 @@
-import {testAction} from "../../../../util/testHelper";
-import {setCloseSnackBar, setOpenSnackBar} from "../actionCreators";
-import {ActionSnackbarTypes} from "../contracts/actionTypes";
+import { testAction } from "../../../../util/test-utils/test-helper";
+import { setCloseSnackBar, setOpenSnackBar } from "../actionCreators";
+import { ActionSnackbarTypes } from "../contracts/actionTypes";
 
 describe("actionSnackbar actions", () => {
     testAction(setOpenSnackBar, setOpenSnackBar("test_message"), {
@@ -9,6 +9,6 @@ describe("actionSnackbar actions", () => {
     });
 
     testAction(setCloseSnackBar, setCloseSnackBar(), {
-        type: ActionSnackbarTypes.SET_CLOSE_SNACKBAR,
+        type: ActionSnackbarTypes.SET_CLOSE_SNACKBAR
     });
 });

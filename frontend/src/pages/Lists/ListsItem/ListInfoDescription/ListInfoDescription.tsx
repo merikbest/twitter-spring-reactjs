@@ -1,11 +1,11 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Avatar, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Avatar, Typography } from "@material-ui/core";
 
 import LockIcon from "../../../../components/LockIcon/LockIcon";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
-import {useListsItemStyles} from "../ListsItemStyles";
-import {useHoverList} from "../../../../hook/useHoverList";
-import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
+import { useListsItemStyles } from "../ListsItemStyles";
+import { useHoverList } from "../../../../hook/useHoverList";
+import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
 
 interface ListInfoDescriptionProps {
     listId?: number;
@@ -29,7 +29,7 @@ const ListInfoDescription: FC<ListInfoDescriptionProps> = memo((
     }
 ): ReactElement => {
     const classes = useListsItemStyles();
-    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverList();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverList();
     const avatar = listOwnerAvatar ? listOwnerAvatar : DEFAULT_PROFILE_IMG;
 
     return (
@@ -43,13 +43,13 @@ const ListInfoDescription: FC<ListInfoDescriptionProps> = memo((
                 <Typography variant={"h6"} component={"span"} className={classes.listTitle}>
                     {listName}
                 </Typography>
-                {listIsPrivate && <LockIcon/>}
+                {listIsPrivate && <LockIcon />}
             </div>
             <Typography variant={"subtitle2"} component={"div"}>
                 {listDescription}
             </Typography>
             <div className={classes.listOwnerWrapper}>
-                <Avatar className={classes.listOwnerAvatar} src={avatar}/>
+                <Avatar className={classes.listOwnerAvatar} src={avatar} />
             </div>
             <div className={classes.listOwnerInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"span"} className={classes.listOwnerFullName}>
@@ -59,7 +59,7 @@ const ListInfoDescription: FC<ListInfoDescriptionProps> = memo((
                     @{listOwnerUsername}
                 </Typography>
             </div>
-            <PopperListWindow visible={visiblePopperWindow}/>
+            <PopperListWindow visible={visiblePopperWindow} />
         </div>
     );
 });

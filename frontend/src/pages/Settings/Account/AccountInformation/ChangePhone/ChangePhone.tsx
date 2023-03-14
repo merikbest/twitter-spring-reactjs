@@ -1,19 +1,19 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Divider, Typography} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Divider, Typography } from "@material-ui/core";
 
-import {useChangePhoneStyles} from "./ChangePhoneStyles";
-import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
+import { useChangePhoneStyles } from "./ChangePhoneStyles";
+import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import ChangePhoneModal from "./ChangePhoneModal/ChangePhoneModal";
 import {
     selectUserIsSuccess,
     selectUserProfileCountryCode,
     selectUserProfilePhone
 } from "../../../../../store/ducks/user/selectors";
-import {getPhoneCode} from "../../../../../util/countryCodes";
-import {setUserLoadingStatus} from "../../../../../store/ducks/user/actionCreators";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { getPhoneCode } from "../../../../../util/country-code-helper";
+import { setUserLoadingStatus } from "../../../../../store/ducks/user/actionCreators";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { LoadingStatus } from "../../../../../types/common";
 
 const ChangePhone: FC = (): ReactElement => {
     const classes = useChangePhoneStyles();
@@ -48,7 +48,7 @@ const ChangePhone: FC = (): ReactElement => {
                     disabled
                 />
             </div>
-            <Divider/>
+            <Divider />
             <div
                 id={"openChangePhoneModal"}
                 className={classes.updatePhoneNumber}
@@ -63,7 +63,8 @@ const ChangePhone: FC = (): ReactElement => {
                     Delete phone number
                 </Typography>
             </div>
-            {visibleChangePhoneModal && <ChangePhoneModal visible={visibleChangePhoneModal} onClose={onCloseChangePhoneModal}/>}
+            {visibleChangePhoneModal &&
+                <ChangePhoneModal visible={visibleChangePhoneModal} onClose={onCloseChangePhoneModal} />}
         </>
     );
 };

@@ -1,10 +1,10 @@
-import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, DialogContent, Link as MuiLink, Radio, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Button, Dialog, DialogContent, Link as MuiLink, Radio, Typography } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
-import {useCustomizeModalStyles} from "./CustomizeModalStyles";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {NEW_ACCOUNT_SETTINGS} from "../../../util/url";
+import { useCustomizeModalStyles } from "./CustomizeModalStyles";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { NEW_ACCOUNT_SETTINGS } from "../../../constants/url-constants";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -12,7 +12,7 @@ interface CustomizeModalProps {
     onOpenCreateAccount: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAccount}): ReactElement => {
+const CustomizeModal: FC<CustomizeModalProps> = ({ open, onClose, onOpenCreateAccount }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useCustomizeModalStyles();
 
@@ -25,9 +25,9 @@ const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcc
             aria-labelledby="form-dialog-title"
             hideBackdrop
         >
-            <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
+            <DialogContent style={{ paddingTop: 0, paddingBottom: 0 }} className={classes.container}>
                 <div className={classes.logoIcon}>
-                    <TwitterIcon/>
+                    <TwitterIcon />
                 </div>
                 <Typography variant={"h3"} component={"div"} className={classes.title}>
                     Customize your experience
@@ -39,7 +39,7 @@ const CustomizeModal: FC<CustomizeModalProps> = ({open, onClose, onOpenCreateAcc
                     Twitter uses this data to personalize your experience. This web browsing history will never be
                     stored with your name, email, or phone number.
                 </Typography>
-                <Radio className={classes.radio} color="primary" checked/>
+                <Radio className={classes.radio} color="primary" checked />
                 <Typography variant={"body1"} component={"div"}>
                     {"For more details about these settings, visit the "}
                     <MuiLink href={NEW_ACCOUNT_SETTINGS} variant="body1" target="_blank" rel="noopener">

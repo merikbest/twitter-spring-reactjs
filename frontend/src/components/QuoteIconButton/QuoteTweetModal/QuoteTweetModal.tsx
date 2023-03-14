@@ -1,12 +1,12 @@
-import React, {FC, ReactElement} from 'react';
+import React, { FC, ReactElement } from "react";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 
-import {useQuoteTweetModalStyles} from "./QuoteTweetModalStyles";
+import { useQuoteTweetModalStyles } from "./QuoteTweetModalStyles";
 import AddTweetForm from "../../AddTweetForm/AddTweetForm";
 import CloseButton from "../../CloseButton/CloseButton";
-import {QuoteTweetResponse} from "../../../store/types/tweet";
+import { QuoteTweetResponse } from "../../../types/tweet";
 
 interface QuoteTweetModalProps {
     quoteTweet: QuoteTweetResponse;
@@ -14,7 +14,7 @@ interface QuoteTweetModalProps {
     onClose: () => void;
 }
 
-const QuoteTweetModal: FC<QuoteTweetModalProps> = ({quoteTweet, visible, onClose}): ReactElement | null => {
+const QuoteTweetModal: FC<QuoteTweetModalProps> = ({ quoteTweet, visible, onClose }): ReactElement | null => {
     const classes = useQuoteTweetModalStyles();
 
     if (!visible) {
@@ -24,7 +24,7 @@ const QuoteTweetModal: FC<QuoteTweetModalProps> = ({quoteTweet, visible, onClose
     return (
         <Dialog className={classes.content} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle className={classes.header} id="form-dialog-title">
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onClose} />
             </DialogTitle>
             <DialogContent className={classes.dialogContent}>
                 <AddTweetForm

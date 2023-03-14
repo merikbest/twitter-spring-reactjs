@@ -1,11 +1,11 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../../../util/testHelper";
-import {mockListsOwnerMember} from "../../../../../../../../util/mockData/mockData";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../../../util/test-utils/test-helper";
+import { mockListsOwnerMember } from "../../../../../../../../util/test-utils/mock-test-data";
 import ManageMemberButton from "../ManageMemberButton";
-import {LoadingStatus} from "../../../../../../../../store/types/common";
-import {ListMembersActionsType} from "../../../../../../../../store/ducks/listMembers/contracts/actionTypes";
+import { LoadingStatus } from "../../../../../../../../types/common";
+import { ListMembersActionsType } from "../../../../../../../../store/ducks/listMembers/contracts/actionTypes";
 
 describe("ManageMemberButton", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -28,7 +28,7 @@ describe("ManageMemberButton", () => {
         expect(wrapper.find(Button).prop("variant")).toBe("contained");
         wrapper.find(Button).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {userId: 4, listId: 3, isSuggested: true},
+            payload: { userId: 4, listId: 3, isSuggested: true },
             type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS
         });
     });
@@ -45,7 +45,7 @@ describe("ManageMemberButton", () => {
         expect(wrapper.find(Button).prop("variant")).toBe("outlined");
         wrapper.find(Button).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {userId: 4, listId: 3, isSuggested: true},
+            payload: { userId: 4, listId: 3, isSuggested: true },
             type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS
         });
     });

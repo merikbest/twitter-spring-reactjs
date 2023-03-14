@@ -1,10 +1,10 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {testApiCall} from "../../../util/apiTestHelper";
-import {API_TAGS, API_TAGS_SEARCH, API_TAGS_TRENDS} from "../../../util/endpoints";
-import {mockTags, mockTweets} from "../../../util/mockData/mockData";
-import {TagApi} from "../tagApi";
+import { testApiCall } from "../../../util/test-utils/api-test-helper";
+import { API_TAGS, API_TAGS_SEARCH, API_TAGS_TRENDS } from "../../../constants/endpoint-constants";
+import { mockTags, mockTweets } from "../../../util/test-utils/mock-test-data";
+import { TagApi } from "../tagApi";
 
 describe("TagApi", () => {
     const mockAdapter = new MockAdapter(axios);

@@ -12,10 +12,10 @@ import {
     API_CHAT_READ_MESSAGES,
     API_CHAT_SEARCH,
     API_CHAT_USERS
-} from "../../../util/endpoints";
-import {ChatApi} from "../chatApi";
-import {mockChats, mockMessages, mockUsers} from "../../../util/mockData/mockData";
-import {testApiCall} from "../../../util/apiTestHelper";
+} from "../../../constants/endpoint-constants";
+import { ChatApi } from "../chatApi";
+import { mockChats, mockMessages, mockUsers } from "../../../util/test-utils/mock-test-data";
+import { testApiCall } from "../../../util/test-utils/api-test-helper";
 
 describe("ChatApi", () => {
     const mockAdapter = new MockAdapter(axios);
@@ -72,7 +72,7 @@ describe("ChatApi", () => {
     });
 
     describe("should fetch ChatApi.addMessage", () => {
-        const mockChatMessage = {chatId: 1, text: "text"};
+        const mockChatMessage = { chatId: 1, text: "text" };
 
         it("[200] should add message Success", () => {
             testApiCall(mockAdapter, "onPost", API_CHAT_ADD_MESSAGE, 200, mockMessages[0], ChatApi.addMessage, mockChatMessage);
@@ -92,7 +92,7 @@ describe("ChatApi", () => {
     });
 
     describe("should fetch ChatApi.addMessageWithTweet", () => {
-        const mockRequest = {text: "text", tweetId: 1, usersIds: [1, 2]};
+        const mockRequest = { text: "text", tweetId: 1, usersIds: [1, 2] };
 
         it("[200] should add message with tweet Success", () => {
             testApiCall(mockAdapter, "onPost", API_CHAT_ADD_MESSAGE_TWEET, 200, mockMessages, ChatApi.addMessageWithTweet, mockRequest);
@@ -104,7 +104,7 @@ describe("ChatApi", () => {
     });
 
     describe("should fetch ChatApi.getParticipant", () => {
-        const mockRequest = {participantId: 1, chatId: 1};
+        const mockRequest = { participantId: 1, chatId: 1 };
         const mockURL = `${API_CHAT_PARTICIPANT}/1/1`;
 
         it("[200] should get participant Success", () => {
@@ -121,7 +121,7 @@ describe("ChatApi", () => {
     });
 
     describe("should fetch ChatApi.leaveFromConversation", () => {
-        const mockRequest = {participantId: 1, chatId: 1};
+        const mockRequest = { participantId: 1, chatId: 1 };
         const mockURL = `${API_CHAT_LEAVE}/1/1`;
 
         it("[200] should leave from conversation Success", () => {
@@ -140,7 +140,7 @@ describe("ChatApi", () => {
 
     describe("should fetch ChatApi.searchParticipantsByUsername", () => {
         it("[200] should leave from conversation Success", () => {
-            const mockRequest = {username: "test_username", pageNumber: 1};
+            const mockRequest = { username: "test_username", pageNumber: 1 };
             testApiCall(mockAdapter, "onGet", `${API_CHAT_SEARCH}/test_username`, 200, mockUsers, ChatApi.searchParticipantsByUsername, mockRequest);
         });
     });

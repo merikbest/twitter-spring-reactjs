@@ -1,17 +1,17 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, { FC, ReactElement, useState } from "react";
 
-import {useProfileDescriptionInputStyles} from "./ProfileDescriptionInputStyles";
+import { useProfileDescriptionInputStyles } from "./ProfileDescriptionInputStyles";
 import InputLabel from "@material-ui/core/InputLabel";
-import {ProfileDescriptionInputField} from "./ProfileDescriptionInputField";
+import { ProfileDescriptionInputField } from "./ProfileDescriptionInputField";
 
 interface ProfileDescriptionInputProps {
     onChange: (...event: any[]) => void;
-    value: string
+    value: string;
     helperText?: string;
     error?: boolean;
     name: string;
     label: string;
-    maxTextLength: number
+    maxTextLength: number;
 }
 
 const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = (
@@ -36,7 +36,7 @@ const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = (
             <div className={classes.content}>
                 {focused && (
                     <div className={classes.inputCount}>
-                        <InputLabel style={{marginTop: -5, fontSize: 12}}>
+                        <InputLabel style={{ marginTop: -5, fontSize: 12 }}>
                             {!value?.length ? 0 : value.length} / {maxTextLength}
                         </InputLabel>
                     </div>
@@ -52,7 +52,7 @@ const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = (
                 helperText={helperText}
                 error={error}
                 inputProps={{
-                    maxLength: maxTextLength,
+                    maxLength: maxTextLength
                 }}
                 fullWidth
             />

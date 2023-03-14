@@ -1,8 +1,8 @@
-import React, {FC, ReactElement,} from 'react';
-import {useSelector} from "react-redux";
-import {Divider, List, ListItem, ListItemAvatar, Popover} from '@material-ui/core';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
+import React, { FC, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Divider, List, ListItem, ListItemAvatar, Popover } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
 import {
@@ -12,8 +12,8 @@ import {
     selectUserProfileFullName,
     selectUserProfileUsername
 } from "../../store/ducks/user/selectors";
-import {useUserSideProfileStyles} from "./UserSideProfileStyles";
-import {CheckIcon, EditIcon} from "../../icons";
+import { useUserSideProfileStyles } from "./UserSideProfileStyles";
+import { CheckIcon, EditIcon } from "../../icons";
 import LogoutModal from "./LogoutModal/LogoutModal";
 import LockIcon from "../LockIcon/LockIcon";
 
@@ -43,11 +43,11 @@ const UserSideProfile: FC = (): ReactElement | null => {
     return (
         <>
             <div aria-describedby={popoverId} onClick={handleOpenPopup} className={classes.container}>
-                <Avatar alt={`avatar ${myProfileId}`} src={avatar}/>
+                <Avatar alt={`avatar ${myProfileId}`} src={avatar} />
                 <div className={classes.info}>
                     <Typography variant={"h6"}>
                         {fullName}
-                        {isPrivateProfile && <LockIcon/>}
+                        {isPrivateProfile && <LockIcon />}
                     </Typography>
                     <Typography variant={"subtitle1"}>
                         @{username}
@@ -63,21 +63,21 @@ const UserSideProfile: FC = (): ReactElement | null => {
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
                 classes={{
-                    paper: classes.popover,
+                    paper: classes.popover
                 }}
                 anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                    vertical: "top",
+                    horizontal: "center"
                 }}
                 transformOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'center',
+                    vertical: "bottom",
+                    horizontal: "center"
                 }}
             >
                 <List>
                     <ListItem>
                         <ListItemAvatar>
-                            <Avatar alt={`${myProfileId}`} src={avatar}/>
+                            <Avatar alt={`${myProfileId}`} src={avatar} />
                         </ListItemAvatar>
                         <ListItemText
                             primary={
@@ -94,14 +94,14 @@ const UserSideProfile: FC = (): ReactElement | null => {
                         <span>{CheckIcon}</span>
                     </ListItem>
                     <div className={classes.listItemWrapper}>
-                        <Divider component="li"/>
+                        <Divider component="li" />
                         <ListItem>
                             <Typography variant="body1" component="div">
                                 Add an existing account
                             </Typography>
                         </ListItem>
-                        <Divider component="li"/>
-                        <LogoutModal/>
+                        <Divider component="li" />
+                        <LogoutModal />
                     </div>
                 </List>
             </Popover>

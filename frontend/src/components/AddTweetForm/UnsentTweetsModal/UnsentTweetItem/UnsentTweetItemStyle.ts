@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useUnsentTweetItemStyles = makeStyles((theme: Theme) => ({
     tweetContainer: {
@@ -7,8 +7,8 @@ export const useUnsentTweetItemStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         "&:hover": {
             cursor: "pointer",
-            backgroundColor: theme.palette.secondary.main,
-        },
+            backgroundColor: theme.palette.secondary.main
+        }
     },
     tweetWrapper: {
         width: "100%"
@@ -22,8 +22,8 @@ export const useUnsentTweetItemStyles = makeStyles((theme: Theme) => ({
         height: 75,
         marginLeft: "auto",
         "& img": {
-            width: "100%",
-        },
+            width: "100%"
+        }
     },
     scheduledDateWrapper: {
         marginBottom: 10,
@@ -31,7 +31,7 @@ export const useUnsentTweetItemStyles = makeStyles((theme: Theme) => ({
             verticalAlign: "bottom",
             marginRight: 12,
             fill: theme.palette.text.secondary,
-            height: "1.30em",
-        },
-    },
+            height: "1.30em"
+        }
+    }
 }));

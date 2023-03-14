@@ -1,12 +1,12 @@
-import React, {ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Paper, Typography} from "@material-ui/core";
+import React, { ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Paper, Typography } from "@material-ui/core";
 
-import {useUserListsStyles} from "./UserListsStyles";
+import { useUserListsStyles } from "./UserListsStyles";
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {selectIsUserListsLoading, selectUserListsItems} from "../../../store/ducks/lists/selectors";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { selectIsUserListsLoading, selectUserListsItems } from "../../../store/ducks/lists/selectors";
 
 const UserLists = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -20,9 +20,9 @@ const UserLists = (): ReactElement => {
                 Your Lists
             </Typography>
             {isUserListsLoading ? (
-                <Spinner/>
+                <Spinner />
             ) : (
-                userLists.map((list) => (<ListsItem key={list.id} list={list} isMyList/>))
+                userLists.map((list) => (<ListsItem key={list.id} list={list} isMyList />))
             )}
         </Paper>
     );

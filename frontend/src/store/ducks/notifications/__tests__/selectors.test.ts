@@ -13,9 +13,9 @@ import {
     selectNotificationsTweetAuthors,
     selectPagesCount
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockNotificationInfo, mockNotifications, mockTweetAuthors} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../types/common";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockNotificationInfo, mockNotifications, mockTweetAuthors } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("notifications selectors:", () => {
     const mockState = createMockRootState();

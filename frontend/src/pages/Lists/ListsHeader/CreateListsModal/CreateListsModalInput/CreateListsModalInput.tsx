@@ -1,8 +1,8 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, { FC, ReactElement, useState } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import {useCreateListsModalInputStyles} from "./CreateListsModalInputStyles";
-import {ListModalInputField} from "./ListsModalInputField";
+import { useCreateListsModalInputStyles } from "./CreateListsModalInputStyles";
+import { ListModalInputField } from "./ListsModalInputField";
 
 interface CreateListsModalInputProps {
     onChange: (...event: any[]) => void;
@@ -35,7 +35,7 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = (
         <div className={classes.container}>
             <div className={classes.content}>
                 {focused && (
-                    <InputLabel style={{fontSize: 12}}>
+                    <InputLabel style={{ fontSize: 12 }}>
                         {!value?.length ? 0 : value.length} / {maxTextLength}
                     </InputLabel>
                 )}
@@ -50,7 +50,7 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = (
                 variant="filled"
                 label={label}
                 inputProps={{
-                    maxLength: maxTextLength,
+                    maxLength: maxTextLength
                 }}
                 onFocus={onFocus}
                 onBlur={onBlur}

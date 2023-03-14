@@ -1,10 +1,10 @@
-import {selectPagesCount, selectUsers, selectUsersIsLoading} from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockUsers} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../types/common";
+import { selectPagesCount, selectUsers, selectUsersIsLoading } from "../selectors";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockUsers } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("users selectors:", () => {
-    
+
     describe("selectUsers", () => {
         it("should return UserResponse array", () => {
             expect(selectUsers(createMockRootState())).toBe(mockUsers);

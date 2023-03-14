@@ -1,5 +1,5 @@
-import {AxiosResponse} from "axios";
-import {call, put, takeEvery} from 'redux-saga/effects';
+import { AxiosResponse } from "axios";
+import { call, put, takeEvery } from "redux-saga/effects";
 
 import {
     CreateListActionInterface,
@@ -7,8 +7,10 @@ import {
     FetchUserListsByIdActionInterface,
     FollowListActionInterface,
     ListsActionType,
-    PinListActionInterface, ProcessUserToListsActionInterface,
-    UnfollowListActionInterface, UnpinListActionInterface
+    PinListActionInterface,
+    ProcessUserToListsActionInterface,
+    UnfollowListActionInterface,
+    UnpinListActionInterface
 } from "./contracts/actionTypes";
 import {
     setCreatedList,
@@ -25,12 +27,12 @@ import {
     setUnpinList,
     setUserLists,
     setUserListsLoadingState
-} from './actionCreators';
-import {ListsApi} from "../../../services/api/listsApi";
-import {updateFollowToFullList} from '../list/actionCreators';
-import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../types/lists";
-import {updateFollowListDetail} from "../listDetail/actionCreators";
-import {LoadingStatus} from "../../types/common";
+} from "./actionCreators";
+import { ListsApi } from "../../../services/api/listsApi";
+import { updateFollowToFullList } from "../list/actionCreators";
+import { ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse } from "../../../types/lists";
+import { updateFollowListDetail } from "../listDetail/actionCreators";
+import { LoadingStatus } from "../../../types/common";
 
 export function* fetchListsRequest() {
     try {
@@ -52,7 +54,7 @@ export function* fetchUserListsRequest() {
     }
 }
 
-export function* fetchUserListsByIdRequest({payload}: FetchUserListsByIdActionInterface) {
+export function* fetchUserListsByIdRequest({ payload }: FetchUserListsByIdActionInterface) {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<ListResponse[]> = yield call(ListsApi.getUserTweetListsById, payload);
@@ -84,7 +86,7 @@ export function* fetchPinnedListsRequest() {
     }
 }
 
-export function* fetchSimpleListsRequest({payload}: FetchSimpleListsActionInterface) {
+export function* fetchSimpleListsRequest({ payload }: FetchSimpleListsActionInterface) {
     try {
         yield put(setSimpleListsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<SimpleListResponse[]> = yield call(ListsApi.getListsToAddUser, payload);
@@ -94,7 +96,7 @@ export function* fetchSimpleListsRequest({payload}: FetchSimpleListsActionInterf
     }
 }
 
-export function* createListRequest({payload}: CreateListActionInterface) {
+export function* createListRequest({ payload }: CreateListActionInterface) {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<ListUserResponse> = yield call(ListsApi.createTweetList, payload);
@@ -104,7 +106,7 @@ export function* createListRequest({payload}: CreateListActionInterface) {
     }
 }
 
-export function* pinListRequest({payload}: PinListActionInterface) {
+export function* pinListRequest({ payload }: PinListActionInterface) {
     try {
         const response: AxiosResponse<PinnedListResponse> = yield call(ListsApi.pinList, payload);
         yield put(setPinedList(response.data));
@@ -114,7 +116,7 @@ export function* pinListRequest({payload}: PinListActionInterface) {
     }
 }
 
-export function* unpinListRequest({payload}: UnpinListActionInterface) {
+export function* unpinListRequest({ payload }: UnpinListActionInterface) {
     try {
         const response: AxiosResponse<PinnedListResponse> = yield call(ListsApi.pinList, payload);
         yield put(setUnpinList(response.data));
@@ -124,7 +126,7 @@ export function* unpinListRequest({payload}: UnpinListActionInterface) {
     }
 }
 
-export function* followListRequest({payload}: FollowListActionInterface) {
+export function* followListRequest({ payload }: FollowListActionInterface) {
     try {
         const response: AxiosResponse<ListUserResponse> = yield call(ListsApi.followList, payload);
         yield put(setFollowList(response.data));
@@ -135,7 +137,7 @@ export function* followListRequest({payload}: FollowListActionInterface) {
     }
 }
 
-export function* unfollowListRequest({payload}: UnfollowListActionInterface) {
+export function* unfollowListRequest({ payload }: UnfollowListActionInterface) {
     try {
         const response: AxiosResponse<ListUserResponse> = yield call(ListsApi.followList, payload);
         yield put(setUnfollowList(response.data));
@@ -146,7 +148,7 @@ export function* unfollowListRequest({payload}: UnfollowListActionInterface) {
     }
 }
 
-export function* processUserToListsRequest({payload}: ProcessUserToListsActionInterface) {
+export function* processUserToListsRequest({ payload }: ProcessUserToListsActionInterface) {
     try {
         yield call(ListsApi.addUserToLists, payload);
     } catch (error) {

@@ -1,7 +1,7 @@
-import React, {ReactElement, useState} from "react";
-import {Button} from "@material-ui/core";
+import React, { ReactElement, useState } from "react";
+import { Button } from "@material-ui/core";
 
-import {useEditListButtonStyles} from "./EditListButtonStyles";
+import { useEditListButtonStyles } from "./EditListButtonStyles";
 import EditListModal from "./EditListModal/EditListModal";
 
 const EditListButton = (): ReactElement => {
@@ -27,7 +27,7 @@ const EditListButton = (): ReactElement => {
             >
                 Edit List
             </Button>
-            <EditListModal visible={visibleEditListModal} onClose={onCloseCreateListModal}/>
+            <EditListModal visible={visibleEditListModal} onClose={onCloseCreateListModal} />
         </>
     );
 };

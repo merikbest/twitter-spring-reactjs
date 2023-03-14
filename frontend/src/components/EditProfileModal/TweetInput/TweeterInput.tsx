@@ -1,17 +1,17 @@
-import React, {FC, ReactElement, useState} from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
+import React, { FC, ReactElement, useState } from "react";
+import InputLabel from "@material-ui/core/InputLabel";
 
-import {TweetInputField} from "./TweetInputField";
-import {useTweetInputStyles} from "./TweetInputStyles";
+import { TweetInputField } from "./TweetInputField";
+import { useTweetInputStyles } from "./TweetInputStyles";
 
 interface TweeterInputProps {
     onChange: (...event: any[]) => void;
-    value?: string
+    value?: string;
     helperText?: string;
     error?: boolean;
     name: string;
     label: string;
-    maxTextLength: number
+    maxTextLength: number;
 }
 
 const TweeterInput: FC<TweeterInputProps> = (
@@ -35,13 +35,13 @@ const TweeterInput: FC<TweeterInputProps> = (
         <div className={classes.container}>
             <div className={classes.content}>
                 <div className={classes.inputLabel}>
-                    <InputLabel style={{fontSize: 13}}>
+                    <InputLabel style={{ fontSize: 13 }}>
                         {label}
                     </InputLabel>
                 </div>
                 {focused && (
                     <div className={classes.inputCount}>
-                        <InputLabel style={{fontSize: 13}}>
+                        <InputLabel style={{ fontSize: 13 }}>
                             {!value?.length ? 0 : value.length} / {maxTextLength}
                         </InputLabel>
                     </div>
@@ -56,7 +56,7 @@ const TweeterInput: FC<TweeterInputProps> = (
                 error={error}
                 variant="outlined"
                 inputProps={{
-                    maxLength: maxTextLength,
+                    maxLength: maxTextLength
                 }}
                 onFocus={onFocus}
                 onBlur={onBlur}

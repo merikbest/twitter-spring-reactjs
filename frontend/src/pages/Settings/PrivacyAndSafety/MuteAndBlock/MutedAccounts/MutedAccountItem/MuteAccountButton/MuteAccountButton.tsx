@@ -1,11 +1,11 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useDispatch} from "react-redux";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch } from "react-redux";
 
 import ActionIconButton from "../../../../../../../components/ActionIconButton/ActionIconButton";
-import {MuteIcon, UnmuteIcon} from "../../../../../../../icons";
-import {processUserToMuteList} from "../../../../../../../store/ducks/user/actionCreators";
-import {setOpenSnackBar} from "../../../../../../../store/ducks/actionSnackbar/actionCreators";
-import {useMuteAccountButtonStyles} from "./MuteAccountButtonStyles";
+import { MuteIcon, UnmuteIcon } from "../../../../../../../icons";
+import { processUserToMuteList } from "../../../../../../../store/ducks/user/actionCreators";
+import { setOpenSnackBar } from "../../../../../../../store/ducks/actionSnackbar/actionCreators";
+import { useMuteAccountButtonStyles } from "./MuteAccountButtonStyles";
 
 interface MuteAccountButtonProps {
     userId: number;
@@ -13,13 +13,13 @@ interface MuteAccountButtonProps {
     isUserMuted: boolean;
 }
 
-const MuteAccountButton: FC<MuteAccountButtonProps> = memo(({userId, username, isUserMuted}): ReactElement => {
+const MuteAccountButton: FC<MuteAccountButtonProps> = memo(({ userId, username, isUserMuted }): ReactElement => {
     const dispatch = useDispatch();
-    const classes = useMuteAccountButtonStyles({isUserMuted});
+    const classes = useMuteAccountButtonStyles({ isUserMuted });
 
     const unmuteUser = (): void => {
-        dispatch(processUserToMuteList({userId}));
-        dispatch(setOpenSnackBar(`@${username} has been ${isUserMuted ? "unmuted" : "muted"}.`))
+        dispatch(processUserToMuteList({ userId }));
+        dispatch(setOpenSnackBar(`@${username} has been ${isUserMuted ? "unmuted" : "muted"}.`));
     };
 
     return (

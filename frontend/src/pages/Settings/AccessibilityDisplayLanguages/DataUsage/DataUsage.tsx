@@ -1,12 +1,12 @@
-import React, {FC, ReactElement} from 'react';
-import {Checkbox, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import React, { FC, ReactElement } from "react";
+import { Checkbox, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-import {useDataUsageStyles} from "./DataUsageStyles";
-import {ArrowRightIcon} from "../../../../icons";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY} from "../../../../util/pathConstants";
+import { useDataUsageStyles } from "./DataUsageStyles";
+import { ArrowRightIcon } from "../../../../icons";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY } from "../../../../constants/path-constants";
 
 const DataUsage: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -25,7 +25,7 @@ const DataUsage: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Data saver
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     If selected, Twitter will use less network data.

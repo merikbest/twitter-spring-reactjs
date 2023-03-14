@@ -1,11 +1,11 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
 import ActionIconButton from "../../../ActionIconButton/ActionIconButton";
 import ReplyIconButton from "../ReplyIconButton";
-import {mockFullTweet} from "../../../../util/mockData/mockData";
+import { mockFullTweet } from "../../../../util/test-utils/mock-test-data";
 import ReplyModal from "../../../ReplyModal/ReplyModal";
 import CloseButton from "../../../CloseButton/CloseButton";
 

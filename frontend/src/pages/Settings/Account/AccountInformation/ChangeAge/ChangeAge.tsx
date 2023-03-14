@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
-import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {BIRTHDAY_VISIBILITY_SETTINGS} from "../../../../../util/url";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { BIRTHDAY_VISIBILITY_SETTINGS } from "../../../../../constants/url-constants";
 
 const ChangeAge: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -17,11 +17,11 @@ const ChangeAge: FC = (): ReactElement => {
                     Learn more
                 </MuiLink>
             </Typography>
-            <Divider/>
+            <Divider />
             <Typography variant={"body1"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 13-64
             </Typography>
-            <Divider/>
+            <Divider />
             <Typography variant={"body1"} component={"div"} className={globalClasses.itemInfoWrapper}>
                 Not right? You can add your date of birth to your profile without sharing it publicly.
             </Typography>

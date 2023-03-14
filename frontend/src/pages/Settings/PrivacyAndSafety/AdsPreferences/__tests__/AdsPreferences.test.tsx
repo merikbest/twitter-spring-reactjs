@@ -1,13 +1,13 @@
 import React from "react";
 
 import AdsPreferences from "../AdsPreferences";
-import {createMockRootState, mountWithStore, testClickOnLink} from "../../../../../util/testHelper";
-import {SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES} from "../../../../../util/pathConstants";
+import { createMockRootState, mountWithStore, testClickOnLink } from "../../../../../util/test-utils/test-helper";
+import { SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES } from "../../../../../constants/path-constants";
 
 describe("AdsPreferences", () => {
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<AdsPreferences/>, createMockRootState());
+        const wrapper = mountWithStore(<AdsPreferences />, createMockRootState());
 
         expect(wrapper.text().includes("Control your discoverability settings and manage contacts you’ve imported.")).toBe(true);
         expect(wrapper.text().includes("Personalized ads")).toBe(true);
@@ -16,6 +16,6 @@ describe("AdsPreferences", () => {
     });
 
     it("should navigate to Your advertiser list", () => {
-        testClickOnLink(<AdsPreferences/>, SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES, 0);
+        testClickOnLink(<AdsPreferences />, SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES, 0);
     });
 });

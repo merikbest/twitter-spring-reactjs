@@ -52,7 +52,7 @@ public class UserController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(SEARCH_TEXT) // TODO add tests
+    @GetMapping(SEARCH_TEXT)
     public ResponseEntity<SearchResultResponse> searchByText(@PathVariable String text) {
         return ResponseEntity.ok(userMapper.searchByText(text));
     }

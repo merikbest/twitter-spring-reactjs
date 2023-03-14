@@ -1,9 +1,9 @@
-import React, {ReactElement, useEffect} from "react";
-import {useDispatch} from "react-redux";
-import {Paper} from "@material-ui/core";
+import React, { ReactElement, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Paper } from "@material-ui/core";
 
-import {fetchLists, fetchPinnedLists, fetchUserLists, resetListsState} from "../../store/ducks/lists/actionCreators";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { fetchLists, fetchPinnedLists, fetchUserLists, resetListsState } from "../../store/ducks/lists/actionCreators";
+import { useGlobalStyles } from "../../util/globalClasses";
 import ListsHeader from "./ListsHeader/ListsHeader";
 import PinnedLists from "./PinnedLists/PinnedLists";
 import DiscoverLists from "./DiscoverLists/DiscoverLists";
@@ -27,10 +27,10 @@ const Lists = (): ReactElement => {
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <ListsHeader/>
-            <PinnedLists/>
-            <DiscoverLists/>
-            <UserLists/>
+            <ListsHeader />
+            <PinnedLists />
+            <DiscoverLists />
+            <UserLists />
         </Paper>
     );
 };

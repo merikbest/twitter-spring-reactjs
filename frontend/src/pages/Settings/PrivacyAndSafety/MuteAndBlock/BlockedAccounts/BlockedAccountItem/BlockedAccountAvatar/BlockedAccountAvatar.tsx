@@ -2,7 +2,7 @@ import React, {FC, memo, ReactElement} from "react";
 import {Avatar} from "@material-ui/core";
 import classnames from "classnames";
 
-import {DEFAULT_PROFILE_IMG} from "../../../../../../../util/url";
+import {DEFAULT_PROFILE_IMG} from "../../../../../../../constants/url-constants";
 import {useGlobalStyles} from "../../../../../../../util/globalClasses";
 import {useBlockedAccountItemStyles} from "../BlockedAccountItemStyles";
 

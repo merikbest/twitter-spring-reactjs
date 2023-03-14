@@ -34,7 +34,7 @@ import {
     resetImagesState,
     resetUserProfileState
 } from "../../store/ducks/userProfile/actionCreators";
-import {WS_URL} from "../../util/endpoints";
+import {WS_URL} from "../../constants/endpoint-constants";
 import Spinner from "../../components/Spinner/Spinner";
 import UserNotFound from "./UserNotFound/UserNotFound";
 import {useGlobalStyles} from "../../util/globalClasses";
@@ -57,6 +57,7 @@ import UserBlockedMessage from "./UserBlockedMessage/UserBlockedMessage";
 import UserPrivateProfileMessage from "./UserPrivateProfileMessage/UserPrivateProfileMessage";
 import UserTweets from "./UserTweets/UserTweets";
 import UserPageActions from "./UserPageActions/UserPageActions";
+import {TOPIC_USER_ADD_TWEET, TOPIC_USER_UPDATE_TWEET} from "../../constants/ws-constants";
 
 let stompClient: CompatClient | null = null;
 
@@ -92,10 +93,10 @@ const UserPage = (): ReactElement => {
 
         stompClient = Stomp.over(() => new SockJS(WS_URL));
         stompClient.connect({}, () => {
-            stompClient?.subscribe(`/topic/user/add/tweet/${params.userId}`, (response) => {
+            stompClient?.subscribe(TOPIC_USER_ADD_TWEET(params.userId), (response) => {
                 dispatch(setAddedUserTweet(JSON.parse(response.body)));
             });
-            stompClient?.subscribe(`/topic/user/update/tweet/${params.userId}`, (response) => {
+            stompClient?.subscribe(TOPIC_USER_UPDATE_TWEET(params.userId), (response) => {
                 dispatch(setUpdatedUserTweet(JSON.parse(response.body)));
             });
         });

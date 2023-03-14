@@ -1,6 +1,6 @@
-import { RootState } from '../../store';
-import {BlockedAndMutedUsersState} from './contracts/state';
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { BlockedAndMutedUsersState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const selectBlockedAndMutedUsersState = (state: RootState): BlockedAndMutedUsersState => state.blockedAndMutedUsers;
 export const selectMutedUsersItems = (state: RootState) => selectBlockedAndMutedUsersState(state).mutedUsers;

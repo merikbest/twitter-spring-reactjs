@@ -1,7 +1,7 @@
-import {RootState} from '../../store';
-import {ListDetailState} from './contracts/state';
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { ListDetailState } from "./contracts/state";
+import { DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
+import { LoadingStatus } from "../../../types/common";
 
 export const selectListDetail = (state: RootState): ListDetailState => state.listDetail;
 export const selectListDetailItem = (state: RootState) => selectListDetail(state).item;

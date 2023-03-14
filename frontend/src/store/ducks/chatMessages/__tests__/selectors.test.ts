@@ -1,7 +1,7 @@
-import {selectChatMessagesItems, selectIsChatMessagesLoaded, selectIsChatMessagesLoading} from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockMessages} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../types/common";
+import { selectChatMessagesItems, selectIsChatMessagesLoaded, selectIsChatMessagesLoading } from "../selectors";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockMessages } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("chatMessages selectors:", () => {
     const mockState = createMockRootState();
@@ -10,7 +10,7 @@ describe("chatMessages selectors:", () => {
         it("should return ChatMessageResponse array", () => {
             expect(selectChatMessagesItems({
                 ...mockState,
-                chatMessages: {...mockState.chatMessages, items: mockMessages}
+                chatMessages: { ...mockState.chatMessages, items: mockMessages }
             })).toBe(mockMessages);
         });
     });

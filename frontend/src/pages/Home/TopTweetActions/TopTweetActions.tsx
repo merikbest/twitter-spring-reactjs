@@ -1,11 +1,11 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {ClickAwayListener, Divider, List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { ClickAwayListener, Divider, List, ListItem, Typography } from "@material-ui/core";
 
-import {useTopTweetActionsStyles} from "./TopTweetActionsStyles";
-import {SeeLatestIcon, SettingsIcon, ShowLatestTweets, ShowTopTweets, TopTweets} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {SETTINGS_CONTENT_PREFERENCES} from "../../../util/pathConstants";
+import { useTopTweetActionsStyles } from "./TopTweetActionsStyles";
+import { SeeLatestIcon, SettingsIcon, ShowLatestTweets, ShowTopTweets, TopTweets } from "../../../icons";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { SETTINGS_CONTENT_PREFERENCES } from "../../../constants/path-constants";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 
 interface TopTweetActionsProps {
@@ -53,7 +53,7 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
                                 {switchTweets ? "Latest Tweets show up as they happen" : "Home shows you top Tweets first"}
                             </Typography>
                         </div>
-                        <Divider/>
+                        <Divider />
                         <List>
                             <ListItem id={"switchTweets"} onClick={switchTweets ? handleTopTweets : handleLatestTweets}>
                                 <div className={classes.listItemWrapper}>

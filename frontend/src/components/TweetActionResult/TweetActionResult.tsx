@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from 'react';
+import React, { FC, ReactElement } from "react";
 import Typography from "@material-ui/core/Typography";
 
-import {useTweetActionResultStyles} from "./TweetActionResultStyles";
-import {LikeOutlinedIcon, PinOutlinedIcon, RetweetOutlinedIconSm} from "../../icons";
+import { useTweetActionResultStyles } from "./TweetActionResultStyles";
+import { LikeOutlinedIcon, PinOutlinedIcon, RetweetOutlinedIconSm } from "../../icons";
 
 export enum TweetActionResults {
     PIN = "PIN",
@@ -15,7 +15,7 @@ interface TweetActionResultProps {
     text: string
 }
 
-const TweetActionResult: FC<TweetActionResultProps> = ({action, text}): ReactElement => {
+const TweetActionResult: FC<TweetActionResultProps> = ({ action, text }): ReactElement => {
     const classes = useTweetActionResultStyles();
 
     const showIcon = () => {

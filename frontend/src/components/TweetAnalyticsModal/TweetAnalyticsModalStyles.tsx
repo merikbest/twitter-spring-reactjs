@@ -1,45 +1,45 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
     container: {
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
             margin: 0,
-            borderBottom: `1px solid ${theme.palette.divider}`,
+            borderBottom: `1px solid ${theme.palette.divider}`
         },
         "& .MuiDialogContent-root": {
             width: 597,
             height: 597,
             padding: 0
-        },
+        }
     },
     tweetInfoContainer: {
-        margin: "22px 12px",
+        margin: "22px 12px"
     },
     tweetInfoWrapper: {
         padding: 12,
         border: `solid 1px ${theme.palette.divider}`,
-        borderRadius: 4,
+        borderRadius: 4
     },
     tweetInfoFullName: {
-        marginRight: 5,
+        marginRight: 5
     },
     tweetInfoText: {
         "& a": {
             display: "block",
             width: 490,
-            color: 'inherit',
-            textDecoration: 'none',
+            color: "inherit",
+            textDecoration: "none"
         },
-        '& #hashtag': {
-            color: theme.palette.primary.main,
+        "& #hashtag": {
+            color: theme.palette.primary.main
         },
         "& #link": {
-            color: theme.palette.primary.main,
+            color: theme.palette.primary.main
         }
     },
     analyticsInfoWrapper: {
-        margin: "44px 0px 22px 0px",
+        margin: "44px 0px 22px 0px"
     },
     analyticsInfoTitle: {
         fontSize: 18,
@@ -51,7 +51,7 @@ export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
         fontSize: 14,
         color: "#8899a6",
         marginTop: 2,
-        lineHeight: "18px",
+        lineHeight: "18px"
     },
     impressionsCount: {
         float: "right"
@@ -62,10 +62,10 @@ export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
     engagementsButton: {
         "& .MuiButton-root": {
             borderRadius: 5
-        },
+        }
     },
     promoteWrapper: {
-        margin: "22px 12px",
+        margin: "22px 12px"
     },
     promoteImage: {
         display: "block",

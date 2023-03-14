@@ -1,13 +1,13 @@
-import React, {memo, ReactElement} from "react";
-import {Button, Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { Button, Typography } from "@material-ui/core";
 
-import {useEmptyChatMessagesStyles} from "./EmptyChatMessagesStyles";
-import {useMessagesModal} from "../../MessagesModal/useMessagesModal";
+import { useEmptyChatMessagesStyles } from "./EmptyChatMessagesStyles";
+import { useMessagesModal } from "../../MessagesModal/useMessagesModal";
 import MessagesModal from "../../MessagesModal/MessagesModal";
 
 const EmptyChatMessages = memo((): ReactElement => {
     const classes = useEmptyChatMessagesStyles();
-    const {visibleModalWindow, onOpenModalWindow, onCloseModalWindow} = useMessagesModal();
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useMessagesModal();
 
     return (
         <div className={classes.chatInfoWrapper}>
@@ -26,7 +26,7 @@ const EmptyChatMessages = memo((): ReactElement => {
             >
                 New message
             </Button>
-            <MessagesModal visible={visibleModalWindow} onClose={onCloseModalWindow}/>
+            <MessagesModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </div>
     );
 });

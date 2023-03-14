@@ -1,12 +1,12 @@
-import React, {ReactElement, useCallback, useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useHistory, useParams} from "react-router-dom";
-import {Divider} from "@material-ui/core";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { Divider } from "@material-ui/core";
 import classNames from "classnames";
-import {CompatClient, Stomp} from "@stomp/stompjs";
+import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import TweetComponent from "../TweetComponent/TweetComponent";
-import {useTweetImageStyles} from "./TweetImageModalStyles";
+import { useTweetImageStyles } from "./TweetImageModalStyles";
 import {
     fetchReplies,
     fetchTweetData,
@@ -21,7 +21,7 @@ import {
     selectTweetId,
     selectTweetImages
 } from "../../store/ducks/tweet/selectors";
-import {WS_URL} from "../../util/endpoints";
+import { WS_URL } from "../../constants/endpoint-constants";
 import ShareTweetIconButton from "../ShareTweetIconButton/ShareTweetIconButton";
 import Spinner from "../Spinner/Spinner";
 import TweetHeader from "./TweetHeader/TweetHeader";
@@ -37,6 +37,7 @@ import ImageFooterRetweetButton from "./ImageFooterRetweetButton/ImageFooterRetw
 import ImageFooterLikeButton from "./ImageFooterLikeButton/ImageFooterLikeButton";
 import ImageFooterShareButton from "./ImageFooterShareButton/ImageFooterShareButton";
 import ImageCloseButton from "./ImageCloseButton/ImageCloseButton";
+import { TOPIC_TWEET } from "../../constants/ws-constants";
 
 let stompClient: CompatClient | null = null;
 
@@ -61,7 +62,7 @@ const TweetImageModal = (): ReactElement | null => {
 
         stompClient = Stomp.over(new SockJS(WS_URL));
         stompClient.connect({}, () => {
-            stompClient?.subscribe(`/topic/tweet/${params.id}`, (response) => {
+            stompClient?.subscribe(TOPIC_TWEET(params.id), (response) => {
                 dispatch(updateTweetData(JSON.parse(response.body)));
             });
         });
@@ -107,40 +108,40 @@ const TweetImageModal = (): ReactElement | null => {
         return (
             <div className={classes.container} onClick={onCloseImageModalWindow}>
                 <div className={classes.modalWrapper}>
-                    <img className={classes.imageModal} src={image} alt={image}/>
+                    <img className={classes.imageModal} src={image} alt={image} />
                     <div className={classes.tweetInfo}>
-                        <TweetHeader/>
-                        <TweetText/>
-                        <TweetDate/>
-                        <Divider/>
-                        <TweetInteractionCount/>
+                        <TweetHeader />
+                        <TweetText />
+                        <TweetDate />
+                        <Divider />
+                        <TweetInteractionCount />
                         <div id={"tweetFooter"} className={classes.tweetFooter}>
-                            <TweetReplyIconButton/>
-                            <TweetRetweetedIconButton/>
-                            <TweetLikeIconButton/>
-                            <ShareTweetIconButton tweetId={tweetId} isFullTweet={false}/>
+                            <TweetReplyIconButton />
+                            <TweetRetweetedIconButton />
+                            <TweetLikeIconButton />
+                            <ShareTweetIconButton tweetId={tweetId} isFullTweet={false} />
                         </div>
-                        <Divider/>
-                        <AddReplyToTweet/>
+                        <Divider />
+                        <AddReplyToTweet />
                     </div>
-                    <Divider/>
+                    <Divider />
                     {isRepliesLoading ? (
-                        <Spinner/>
+                        <Spinner />
                     ) : (
                         replies.map((tweet) => (
-                            <TweetComponent key={tweet.id} tweet={tweet} isTweetImageModal/>
+                            <TweetComponent key={tweet.id} tweet={tweet} isTweetImageModal />
                         ))
                     )}
                 </div>
                 <div id={"imageFooter"} className={classes.imageFooterContainer}>
                     <div className={classNames(classes.imageFooterWrapper)}>
-                        <ImageFooterReplyIconButton/>
-                        <ImageFooterRetweetButton/>
-                        <ImageFooterLikeButton/>
-                        <ImageFooterShareButton/>
+                        <ImageFooterReplyIconButton />
+                        <ImageFooterRetweetButton />
+                        <ImageFooterLikeButton />
+                        <ImageFooterShareButton />
                     </div>
                 </div>
-                <ImageCloseButton onCloseModalWindow={onCloseModalWindow}/>
+                <ImageCloseButton onCloseModalWindow={onCloseModalWindow} />
             </div>
         );
     }

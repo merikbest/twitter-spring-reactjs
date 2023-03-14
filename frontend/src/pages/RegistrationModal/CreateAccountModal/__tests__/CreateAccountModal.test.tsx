@@ -1,18 +1,18 @@
 import React from "react";
-import {Button, Dialog} from "@material-ui/core";
+import { Button, Dialog } from "@material-ui/core";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import CreateAccountModal from "../CreateAccountModal";
-import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
+import { RegistrationInputField } from "../../RegistrationInput/RegistrationInputField";
 import Spinner from "../../../../components/Spinner/Spinner";
-import {API_AUTH_REGISTRATION_CODE} from "../../../../util/endpoints";
-import {LoadingStatus} from "../../../../store/types/common";
+import { API_AUTH_REGISTRATION_CODE } from "../../../../constants/endpoint-constants";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("CreateAccountModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
-    const mockRegistrationData = {username: "test_username", email: "test@test.test", birthday: "Feb 31, 1901"};
+    const mockRegistrationData = { username: "test_username", email: "test@test.test", birthday: "Feb 31, 1901" };
 
     it("should render empty CreateAccountModal", () => {
         const wrapper = mountWithStore(
@@ -58,7 +58,7 @@ describe("CreateAccountModal", () => {
         wrapper.find(Button).at(0).simulate("click");
         expect(wrapper.find(Spinner).exists()).toBe(true);
         mock.onPost(API_AUTH_REGISTRATION_CODE, mockRegistrationData).reply(200);
-        
+
         setImmediate(() => {
             wrapper.update();
             done();

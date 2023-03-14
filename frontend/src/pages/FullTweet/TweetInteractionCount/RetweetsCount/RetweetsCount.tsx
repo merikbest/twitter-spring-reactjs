@@ -1,10 +1,10 @@
-import React, {memo, ReactElement, useState} from "react";
-import {useFullTweetStyles} from "../../FullTweetStyles";
-import UsersListModal, {UsersListModalAction} from "../../../../components/UsersListModal/UsersListModal";
+import React, { memo, ReactElement, useState } from "react";
+import { useFullTweetStyles } from "../../FullTweetStyles";
+import UsersListModal, { UsersListModalAction } from "../../../../components/UsersListModal/UsersListModal";
 import Typography from "@material-ui/core/Typography";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
-import {selectRetweetsCount, selectTweetId} from "../../../../store/ducks/tweet/selectors";
+import { selectRetweetsCount, selectTweetId } from "../../../../store/ducks/tweet/selectors";
 
 const RetweetsCount = memo((): ReactElement => {
     const classes = useFullTweetStyles();

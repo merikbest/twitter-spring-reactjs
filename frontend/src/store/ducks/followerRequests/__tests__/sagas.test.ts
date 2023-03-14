@@ -1,6 +1,6 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
-import {acceptFollowRequests, declineFollowRequests, fetchFollowerSaga, fetchFollowRequests} from "../sagas";
+import { acceptFollowRequests, declineFollowRequests, fetchFollowerSaga, fetchFollowRequests } from "../sagas";
 import {
     acceptFollowRequest,
     declineFollowRequest,
@@ -15,26 +15,27 @@ import {
     testLoadingStatus,
     testSetResponse,
     testWatchSaga
-} from "../../../../util/testHelper";
-import {UserApi} from "../../../../services/api/userApi";
-import {FollowerUserResponse} from "../../../types/user";
-import {setFollowersSize, setUserLoadingStatus} from "../../user/actionCreators";
-import {FollowerRequestsActionsType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types/common";
+} from "../../../../util/test-utils/test-helper";
+import { UserApi } from "../../../../services/api/userApi";
+import { FollowerUserResponse } from "../../../../types/user";
+import { setFollowersSize, setUserLoadingStatus } from "../../user/actionCreators";
+import { FollowerRequestsActionsType } from "../contracts/actionTypes";
+import { LoadingStatus } from "../../../../types/common";
+import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
 
 describe("fetchFollowerSaga:", () => {
-    
+
     describe("fetchFollowerRequests:", () => {
         const mockFollowerUserResponse = {
-            data: [{id: 1}, {id: 2}],
-            headers: {"page-total-count": 1}
+            data: [{ id: 1 }, { id: 2 }],
+            headers: { PAGE_TOTAL_COUNT: 1 }
         } as AxiosResponse<FollowerUserResponse[]>;
         const worker = fetchFollowRequests(fetchFollowerRequests(1));
 
         testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getFollowerRequests, 1);
-        testSetResponse(worker, mockFollowerUserResponse, setFollowerRequests,mockExpectedResponse(mockFollowerUserResponse), "FollowerUserResponse");
-        testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.ERROR)
+        testSetResponse(worker, mockFollowerUserResponse, setFollowerRequests, mockExpectedResponse(mockFollowerUserResponse), "FollowerUserResponse");
+        testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("acceptFollowRequest:", () => {
@@ -44,7 +45,7 @@ describe("fetchFollowerSaga:", () => {
         testCall(worker, UserApi.acceptFollowRequest, 1);
         testSetResponse(worker, {}, setFollowersSize, {}, "void");
         testSetResponse(worker, {}, processFollowRequest, 1, "void");
-        testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("declineFollowRequest:", () => {
@@ -53,12 +54,12 @@ describe("fetchFollowerSaga:", () => {
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserApi.declineFollowRequest, 1);
         testSetResponse(worker, {}, processFollowRequest, 1, "void");
-        testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     testWatchSaga(fetchFollowerSaga, [
-        {actionType: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS, workSaga: fetchFollowRequests},
-        {actionType: FollowerRequestsActionsType.ACCEPT_FOLLOW_REQUEST, workSaga: acceptFollowRequests},
-        {actionType: FollowerRequestsActionsType.DECLINE_FOLLOW_REQUEST, workSaga: declineFollowRequests},
+        { actionType: FollowerRequestsActionsType.FETCH_FOLLOWER_REQUESTS, workSaga: fetchFollowRequests },
+        { actionType: FollowerRequestsActionsType.ACCEPT_FOLLOW_REQUEST, workSaga: acceptFollowRequests },
+        { actionType: FollowerRequestsActionsType.DECLINE_FOLLOW_REQUEST, workSaga: declineFollowRequests }
     ]);
 });

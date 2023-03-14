@@ -1,8 +1,8 @@
-import {initialUserDetailState, userDetailReducer} from "../reducer";
-import {UserDetailActions, UserDetailActionsType} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {UserDetailResponse} from "../../../types/user";
-import {LoadingStatus} from "../../../types/common";
+import { initialUserDetailState, userDetailReducer } from "../reducer";
+import { UserDetailActions, UserDetailActionsType } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { UserDetailResponse } from "../../../../types/user";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("userDetailReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("userDetailReducer:", () => {
             UserDetailActionsType.SET_USER_DETAIL,
             userDetailReducer(initialUserDetailState, {
                 type: UserDetailActionsType.SET_USER_DETAIL,
-                payload: {id: 1} as UserDetailResponse
+                payload: { id: 1 } as UserDetailResponse
             }),
             {
                 ...initialUserDetailState,
-                item: {id: 1} as UserDetailResponse,
+                item: { id: 1 } as UserDetailResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -30,7 +30,7 @@ describe("userDetailReducer:", () => {
             userDetailReducer(
                 {
                     ...initialUserDetailState,
-                    item: {id: 1, isFollower: false, followingSize: 0} as UserDetailResponse,
+                    item: { id: 1, isFollower: false, followingSize: 0 } as UserDetailResponse
                 },
                 {
                     type: UserDetailActionsType.SET_FOLLOW_TO_USER_DETAIL,
@@ -39,17 +39,17 @@ describe("userDetailReducer:", () => {
             ),
             {
                 ...initialUserDetailState,
-                item: {id: 1, isFollower: true, followingSize: 1} as UserDetailResponse,
+                item: { id: 1, isFollower: true, followingSize: 1 } as UserDetailResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );
-        
+
         testActionDispatch(
             UserDetailActionsType.SET_BLOCK_USER_DETAIL,
             userDetailReducer(
                 {
                     ...initialUserDetailState,
-                    item: {id: 1, isUserBlocked: false} as UserDetailResponse
+                    item: { id: 1, isUserBlocked: false } as UserDetailResponse
                 },
                 {
                     type: UserDetailActionsType.SET_BLOCK_USER_DETAIL,
@@ -57,7 +57,7 @@ describe("userDetailReducer:", () => {
                 }),
             {
                 ...initialUserDetailState,
-                item: {id: 1, isUserBlocked: true} as UserDetailResponse,
+                item: { id: 1, isUserBlocked: true } as UserDetailResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -67,7 +67,7 @@ describe("userDetailReducer:", () => {
             userDetailReducer(
                 {
                     ...initialUserDetailState,
-                    item: {id: 1, isWaitingForApprove: false} as UserDetailResponse
+                    item: { id: 1, isWaitingForApprove: false } as UserDetailResponse
                 },
                 {
                     type: UserDetailActionsType.SET_FOLLOW_REQUEST_TO_USER_DETAIL,
@@ -75,7 +75,7 @@ describe("userDetailReducer:", () => {
                 }),
             {
                 ...initialUserDetailState,
-                item: {id: 1, isWaitingForApprove: true} as UserDetailResponse,
+                item: { id: 1, isWaitingForApprove: true } as UserDetailResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -85,7 +85,7 @@ describe("userDetailReducer:", () => {
             userDetailReducer(
                 {
                     ...initialUserDetailState,
-                    item: {id: 1} as UserDetailResponse
+                    item: { id: 1 } as UserDetailResponse
                 },
                 {
                     type: UserDetailActionsType.RESET_USER_DETAIL_STATE
@@ -96,7 +96,7 @@ describe("userDetailReducer:", () => {
                 loadingState: LoadingStatus.LOADING
             }
         );
-        
+
         testActionDispatch(
             UserDetailActionsType.SET_LOADING_STATE,
             userDetailReducer(initialUserDetailState,

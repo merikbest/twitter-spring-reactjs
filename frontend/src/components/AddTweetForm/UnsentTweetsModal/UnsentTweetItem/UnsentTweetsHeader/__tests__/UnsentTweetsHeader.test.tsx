@@ -1,8 +1,8 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../../types/common";
 import UnsentTweetsHeader from "../UnsentTweetsHeader";
 
 describe("UnsentTweetsHeader", () => {

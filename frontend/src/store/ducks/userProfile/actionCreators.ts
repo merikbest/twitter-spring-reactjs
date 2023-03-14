@@ -17,7 +17,7 @@ import {
     UserProfileActionsType,
 } from './contracts/actionTypes';
 import {ChatParticipantRequest, UserProfileState} from "./contracts/state";
-import {UserProfileResponse} from "../../types/user";
+import {UserProfileResponse} from "../../../types/user";
 import {FollowUsersPayload} from "../users/contracts/state";
 
 export const setBlocked = (payload: boolean): SetBlockedActionInterface => ({

@@ -1,21 +1,21 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from "react-router-dom";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
-import {Avatar, Link as MuiLink, Typography} from "@material-ui/core";
+import { Avatar, Link as MuiLink, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {useReplyModalStyles} from "./ReplyModalStyles";
-import {formatDate} from "../../util/formatDate";
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import { useReplyModalStyles } from "./ReplyModalStyles";
+import { formatDate } from "../../util/format-date-helper";
+import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
-import {textFormatter} from "../../util/textFormatter";
-import {Image} from "../../store/types/common";
+import { textFormatter } from "../../util/text-formatter";
+import { Image } from "../../types/common";
 import CloseButton from "../CloseButton/CloseButton";
-import {useGlobalStyles} from "../../util/globalClasses";
-import {UserTweetResponse} from "../../store/types/tweet";
-import {PROFILE} from "../../util/pathConstants";
+import { useGlobalStyles } from "../../util/globalClasses";
+import { UserTweetResponse } from "../../types/tweet";
+import { PROFILE } from "../../constants/path-constants";
 
 interface ReplyModalProps {
     user: UserTweetResponse;
@@ -48,17 +48,17 @@ const ReplyModal: FC<ReplyModalProps> = (
     return (
         <Dialog
             className={classes.dialogWrapper}
-            style={{top: "-10%"}}
+            style={{ top: "-10%" }}
             open={visible}
             onClose={onClose}
             aria-labelledby="form-dialog-title"
         >
             <DialogTitle id="form-dialog-title">
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onClose} />
             </DialogTitle>
             <DialogContent className={classes.container}>
                 <div className={classes.modalWrapper}>
-                    <div className={classes.verticalLine}/>
+                    <div className={classes.verticalLine} />
                     <Avatar
                         className={classnames(globalClasses.avatar, classes.avatar)}
                         alt={`avatar ${user.id}`}
@@ -84,7 +84,7 @@ const ReplyModal: FC<ReplyModalProps> = (
                         </Typography>
                         {image && (
                             <div className={classes.image}>
-                                <img src={image?.src} alt={image?.src}/>
+                                <img src={image?.src} alt={image?.src} />
                             </div>
                         )}
                         <object>

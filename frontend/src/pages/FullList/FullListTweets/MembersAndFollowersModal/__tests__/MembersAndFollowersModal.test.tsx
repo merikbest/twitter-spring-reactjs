@@ -1,13 +1,14 @@
 import React from "react";
-import {Dialog} from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import MembersAndFollowersModal from "../MembersAndFollowersModal";
-import {mockFullList, mockListsOwnerMember} from "../../../../../util/mockData/mockData";
+import { mockFullList, mockListsOwnerMember } from "../../../../../util/test-utils/mock-test-data";
 import Spinner from "../../../../../components/Spinner/Spinner";
-import {ListMembersActionsType} from "../../../../../store/ducks/listMembers/contracts/actionTypes";
-import ManageMembersItem from "../../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { ListMembersActionsType } from "../../../../../store/ducks/listMembers/contracts/actionTypes";
+import ManageMembersItem
+    from "../../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
+import { LoadingStatus } from "../../../../../types/common";
 
 describe("MembersAndFollowersModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -44,7 +45,7 @@ describe("MembersAndFollowersModal", () => {
         expect(wrapper.text().includes("List members")).toBe(true);
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {listId: 3, listOwnerId: 2},
+            payload: { listId: 3, listOwnerId: 2 },
             type: ListMembersActionsType.FETCH_LIST_MEMBERS
         });
     });
@@ -63,7 +64,7 @@ describe("MembersAndFollowersModal", () => {
         expect(wrapper.text().includes("List followers")).toBe(true);
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {listId: 3, listOwnerId: 2},
+            payload: { listId: 3, listOwnerId: 2 },
             type: ListMembersActionsType.FETCH_LIST_FOLLOWERS
         });
     });
@@ -84,7 +85,7 @@ describe("MembersAndFollowersModal", () => {
                     membersLoadingState: LoadingStatus.LOADED
                 }
             });
-        
+
         expect(wrapper.find(Dialog).exists()).toBeTruthy();
         expect(wrapper.find(ManageMembersItem).length).toEqual(3);
     });
@@ -157,6 +158,6 @@ describe("MembersAndFollowersModal", () => {
                 onClose={jest.fn()}
             />, mockStore);
         wrapper.unmount();
-        expect(mockDispatchFn).nthCalledWith(1, {type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE});
+        expect(mockDispatchFn).nthCalledWith(1, { type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE });
     });
 });

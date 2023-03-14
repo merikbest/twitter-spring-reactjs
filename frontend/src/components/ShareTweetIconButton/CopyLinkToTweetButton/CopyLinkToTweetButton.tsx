@@ -1,18 +1,18 @@
-import React, {FC, ReactElement} from "react";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { ListItem, Typography } from "@material-ui/core";
 import CopyToClipboard from "react-copy-to-clipboard";
-import {useLocation} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import {CLIENT_URL} from "../../../util/url";
-import {LinkIcon} from "../../../icons";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import { CLIENT_URL } from "../../../constants/url-constants";
+import { LinkIcon } from "../../../icons";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface CopyLinkToTweetButtonProps {
     closeShareTweet: () => void;
 }
 
-const CopyLinkToTweetButton: FC<CopyLinkToTweetButtonProps> = ({closeShareTweet}): ReactElement => {
+const CopyLinkToTweetButton: FC<CopyLinkToTweetButtonProps> = ({ closeShareTweet }): ReactElement => {
     const dispatch = useDispatch();
     const location = useLocation();
 

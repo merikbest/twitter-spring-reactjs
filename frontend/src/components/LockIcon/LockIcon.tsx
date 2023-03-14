@@ -1,7 +1,7 @@
-import React, {ReactElement} from "react";
-import {LockIcon as Icon} from "../../icons";
+import React, { ReactElement } from "react";
+import { LockIcon as Icon } from "../../icons";
 
-import {useLockIconStyles} from "./LockIconStyles";
+import { useLockIconStyles } from "./LockIconStyles";
 
 const LockIcon = (): ReactElement => {
     const classes = useLockIconStyles();

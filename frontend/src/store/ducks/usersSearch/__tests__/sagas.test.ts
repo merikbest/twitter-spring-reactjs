@@ -1,4 +1,4 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
 import {
     fetchFollowersRequest,
@@ -24,17 +24,18 @@ import {
     testLoadingStatus,
     testSetResponse,
     testWatchSaga
-} from "../../../../util/testHelper";
-import {UserResponse} from "../../../types/user";
-import {UserApi} from "../../../../services/api/userApi";
-import {UsersSearchActionsType} from "../contracts/actionTypes";
-import {ChatApi} from "../../../../services/api/chatApi";
-import {LoadingStatus} from "../../../types/common";
+} from "../../../../util/test-utils/test-helper";
+import { UserResponse } from "../../../../types/user";
+import { UserApi } from "../../../../services/api/userApi";
+import { UsersSearchActionsType } from "../contracts/actionTypes";
+import { ChatApi } from "../../../../services/api/chatApi";
+import { LoadingStatus } from "../../../../types/common";
+import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
 
 describe("usersSearchSaga:", () => {
     const mockUserResponse = {
-        data: [{id: 1}, {id: 1}],
-        headers: {"page-total-count": 1}
+        data: [{ id: 1 }, { id: 1 }],
+        headers: { PAGE_TOTAL_COUNT: 1 }
     } as AxiosResponse<UserResponse[]>;
 
     describe("fetchUsersSearchRequest:", () => {
@@ -42,46 +43,52 @@ describe("usersSearchSaga:", () => {
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getUsers, 1);
         testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
-        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchUsersSearchByUsernameRequest:", () => {
-        const worker = fetchUsersSearchByUsernameRequest(fetchUsersSearchByUsername({username: "test", pageNumber: 1}));
+        const worker = fetchUsersSearchByUsernameRequest(fetchUsersSearchByUsername({
+            username: "test",
+            pageNumber: 1
+        }));
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.searchUsersByUsername, {username: "test", pageNumber: 1});
+        testCall(worker, UserApi.searchUsersByUsername, { username: "test", pageNumber: 1 });
         testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
-        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchParticipantsByUsernameRequest:", () => {
-        const worker = fetchParticipantsByUsernameRequest(fetchParticipantsByUsername({username: "test", pageNumber: 1}));
+        const worker = fetchParticipantsByUsernameRequest(fetchParticipantsByUsername({
+            username: "test",
+            pageNumber: 1
+        }));
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, ChatApi.searchParticipantsByUsername, {username: "test", pageNumber: 1});
+        testCall(worker, ChatApi.searchParticipantsByUsername, { username: "test", pageNumber: 1 });
         testSetResponse(worker, mockUserResponse, setPageableUsersSearch, mockExpectedResponse(mockUserResponse), "UserResponse");
-        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchFollowersRequest:", () => {
-        const worker = fetchFollowersRequest(fetchFollowers({userId: 1, page: 1}));
+        const worker = fetchFollowersRequest(fetchFollowers({ userId: 1, page: 1 }));
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getFollowers, {userId: 1, page: 1});
+        testCall(worker, UserApi.getFollowers, { userId: 1, page: 1 });
         testSetResponse(worker, mockUserResponse, setPageableFollowers, mockExpectedResponse(mockUserResponse), "UserResponse");
-        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchFollowingsRequest:", () => {
-        const worker = fetchFollowingsRequest(fetchFollowings({userId: 1, page: 1}));
+        const worker = fetchFollowingsRequest(fetchFollowings({ userId: 1, page: 1 }));
         testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getFollowing, {userId: 1, page: 1});
+        testCall(worker, UserApi.getFollowing, { userId: 1, page: 1 });
         testSetResponse(worker, mockUserResponse, setPageableFollowers, mockExpectedResponse(mockUserResponse), "UserResponse");
-        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUsersSearchLoadingState, LoadingStatus.ERROR);
     });
 
     testWatchSaga(usersSearchSaga, [
-        {actionType: UsersSearchActionsType.FETCH_USERS, workSaga: fetchUsersSearchRequest},
-        {actionType: UsersSearchActionsType.FETCH_USERS_BY_NAME, workSaga: fetchUsersSearchByUsernameRequest},
-        {actionType: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME, workSaga: fetchParticipantsByUsernameRequest},
-        {actionType: UsersSearchActionsType.FETCH_FOLLOWERS, workSaga: fetchFollowersRequest},
-        {actionType: UsersSearchActionsType.FETCH_FOLLOWINGS, workSaga: fetchFollowingsRequest},
+        { actionType: UsersSearchActionsType.FETCH_USERS, workSaga: fetchUsersSearchRequest },
+        { actionType: UsersSearchActionsType.FETCH_USERS_BY_NAME, workSaga: fetchUsersSearchByUsernameRequest },
+        { actionType: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME, workSaga: fetchParticipantsByUsernameRequest },
+        { actionType: UsersSearchActionsType.FETCH_FOLLOWERS, workSaga: fetchFollowersRequest },
+        { actionType: UsersSearchActionsType.FETCH_FOLLOWINGS, workSaga: fetchFollowingsRequest }
     ]);
 });

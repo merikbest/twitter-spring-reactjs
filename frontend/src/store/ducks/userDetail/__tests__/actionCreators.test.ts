@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/testHelper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     fetchUserDetail,
     resetUserDetailState,
@@ -8,17 +8,17 @@ import {
     setUserDetail,
     setUserDetailLoadingState
 } from "../actionCreators";
-import {UserDetailActionsType} from "../contracts/actionTypes";
-import {UserDetailResponse} from "../../../types/user";
+import { UserDetailActionsType } from "../contracts/actionTypes";
+import { UserDetailResponse } from "../../../../types/user";
 import axios from "axios";
-import {LoadingStatus} from "../../../types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("userDetail actions", () => {
     const cancelTokenSource = axios.CancelToken.source();
-    
-    testAction(setUserDetail, setUserDetail({id: 1} as UserDetailResponse), {
+
+    testAction(setUserDetail, setUserDetail({ id: 1 } as UserDetailResponse), {
         type: UserDetailActionsType.SET_USER_DETAIL,
-        payload: {id: 1} as UserDetailResponse
+        payload: { id: 1 } as UserDetailResponse
     });
 
     testAction(setFollowToUserDetail, setFollowToUserDetail(true), {
@@ -36,15 +36,15 @@ describe("userDetail actions", () => {
         payload: true
     });
 
-    testAction(fetchUserDetail, fetchUserDetail({userId: 1, cancelTokenSource: cancelTokenSource}), {
+    testAction(fetchUserDetail, fetchUserDetail({ userId: 1, cancelTokenSource: cancelTokenSource }), {
         type: UserDetailActionsType.FETCH_USER_DETAIL,
-        payload: {userId: 1, cancelTokenSource: cancelTokenSource}
+        payload: { userId: 1, cancelTokenSource: cancelTokenSource }
     });
 
     testAction(resetUserDetailState, resetUserDetailState(), {
-        type: UserDetailActionsType.RESET_USER_DETAIL_STATE,
+        type: UserDetailActionsType.RESET_USER_DETAIL_STATE
     });
-    
+
     testAction(setUserDetailLoadingState, setUserDetailLoadingState(LoadingStatus.LOADING), {
         type: UserDetailActionsType.SET_LOADING_STATE,
         payload: LoadingStatus.LOADING

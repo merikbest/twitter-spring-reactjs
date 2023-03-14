@@ -1,7 +1,7 @@
-import React, {FC, ReactElement, ReactNode} from 'react';
-import {Paper} from '@material-ui/core';
+import React, { FC, ReactElement, ReactNode } from "react";
+import { Paper } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useGlobalStyles } from "../../util/globalClasses";
 import BackButton from "../BackButton/BackButton";
 
 interface PageHeaderWrapperProps {
@@ -9,12 +9,12 @@ interface PageHeaderWrapperProps {
     backButton?: boolean;
 }
 
-const PageHeaderWrapper: FC<PageHeaderWrapperProps> = ({children, backButton}): ReactElement => {
+const PageHeaderWrapper: FC<PageHeaderWrapperProps> = ({ children, backButton }): ReactElement => {
     const globalClasses = useGlobalStyles();
 
     return (
         <Paper className={globalClasses.pageHeader} variant="outlined">
-            {backButton && <BackButton/>}
+            {backButton && <BackButton />}
             {children}
         </Paper>
     );

@@ -1,5 +1,5 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
 import LockIcon from "../../../../../../../components/LockIcon/LockIcon";
 
@@ -15,7 +15,7 @@ const MemberItemInfo: FC<MemberItemInfoProps> = memo((
         fullName,
         username,
         isPrivateProfile,
-        about,
+        about
     }
 ): ReactElement => {
     return (
@@ -23,7 +23,7 @@ const MemberItemInfo: FC<MemberItemInfoProps> = memo((
             <Typography variant={"h6"} component={"span"}>
                 {fullName}
             </Typography>
-            {isPrivateProfile && <LockIcon/>}
+            {isPrivateProfile && <LockIcon />}
             <Typography variant={"subtitle1"} component={"div"}>
                 @{username}
             </Typography>

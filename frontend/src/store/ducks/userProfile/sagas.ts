@@ -17,9 +17,9 @@ import {
     setUserProfileLoadingState
 } from "./actionCreators";
 import {ChatApi} from "../../../services/api/chatApi";
-import {UserProfileResponse} from "../../types/user";
-import {TweetImageResponse} from "../../types/tweet";
-import {LoadingStatus} from "../../types/common";
+import {UserProfileResponse} from "../../../types/user";
+import {TweetImageResponse} from "../../../types/tweet";
+import {LoadingStatus} from "../../../types/common";
 import {TweetApi} from "../../../services/api/tweetApi";
 
 export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {

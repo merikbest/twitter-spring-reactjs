@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from 'react';
-import {Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {useYouTubeVideoStyles} from "./YouTubeVideoStyles";
-import {LinkIcon} from "../../icons";
+import { useYouTubeVideoStyles } from "./YouTubeVideoStyles";
+import { LinkIcon } from "../../icons";
 
 interface YouTubeVideoProps {
     link: string;
@@ -10,7 +10,7 @@ interface YouTubeVideoProps {
     linkDescription: string;
 }
 
-const YouTubeVideo: FC<YouTubeVideoProps> = ({link, linkTitle, linkDescription}): ReactElement => {
+const YouTubeVideo: FC<YouTubeVideoProps> = ({ link, linkTitle, linkDescription }): ReactElement => {
     const classes = useYouTubeVideoStyles();
 
     const getYouTubeVideoId = (url: string): string | null => {
@@ -29,7 +29,7 @@ const YouTubeVideo: FC<YouTubeVideoProps> = ({link, linkTitle, linkDescription})
             </iframe>
             <a className={classes.youtubeLink} target="_blank" href={link}>
                 <div className={classes.videoInfoWrapper}>
-                    <Typography variant={"body1"}  component={"div"}>
+                    <Typography variant={"body1"} component={"div"}>
                         {linkTitle}
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>

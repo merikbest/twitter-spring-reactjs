@@ -1,8 +1,8 @@
-import {initialListMembersState, listMembersReducer} from "../reducer";
-import {ListMembersActions, ListMembersActionsType} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {ListsOwnerMemberResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { initialListMembersState, listMembersReducer } from "../reducer";
+import { ListMembersActions, ListMembersActionsType } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { ListsOwnerMemberResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("listMembersReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("listMembersReducer:", () => {
             ListMembersActionsType.SET_LIST_MEMBERS,
             listMembersReducer(initialListMembersState, {
                 type: ListMembersActionsType.SET_LIST_MEMBERS,
-                payload: [{id: 1}] as ListsOwnerMemberResponse[]
+                payload: [{ id: 1 }] as ListsOwnerMemberResponse[]
             }),
             {
                 ...initialListMembersState,
-                members: [{id: 1}] as ListsOwnerMemberResponse[],
+                members: [{ id: 1 }] as ListsOwnerMemberResponse[],
                 membersLoadingState: LoadingStatus.LOADED
             }
         );
@@ -29,11 +29,11 @@ describe("listMembersReducer:", () => {
             ListMembersActionsType.SET_LIST_SUGGESTED,
             listMembersReducer(initialListMembersState, {
                 type: ListMembersActionsType.SET_LIST_SUGGESTED,
-                payload: [{id: 1}] as ListsOwnerMemberResponse[]
+                payload: [{ id: 1 }] as ListsOwnerMemberResponse[]
             }),
             {
                 ...initialListMembersState,
-                suggested: [{id: 1}] as ListsOwnerMemberResponse[],
+                suggested: [{ id: 1 }] as ListsOwnerMemberResponse[],
                 suggestedLoadingState: LoadingStatus.LOADED
             }
         );
@@ -43,16 +43,16 @@ describe("listMembersReducer:", () => {
             listMembersReducer(
                 {
                     ...initialListMembersState,
-                    suggested: [{id: 1, isMemberInList: false}] as ListsOwnerMemberResponse[],
+                    suggested: [{ id: 1, isMemberInList: false }] as ListsOwnerMemberResponse[]
                 },
                 {
                     type: ListMembersActionsType.SET_USER_TO_LIST,
-                    payload: {userId: 1, isUserAdded: true, isSuggested: true}
+                    payload: { userId: 1, isUserAdded: true, isSuggested: true }
                 }
             ),
             {
                 ...initialListMembersState,
-                suggested: [{id: 1, isMemberInList: true}] as ListsOwnerMemberResponse[],
+                suggested: [{ id: 1, isMemberInList: true }] as ListsOwnerMemberResponse[],
                 membersLoadingState: LoadingStatus.LOADED
             }
         );
@@ -62,7 +62,7 @@ describe("listMembersReducer:", () => {
             listMembersReducer(
                 {
                     ...initialListMembersState,
-                    members: [{id: 1}] as ListsOwnerMemberResponse[],
+                    members: [{ id: 1 }] as ListsOwnerMemberResponse[],
                     membersLoadingState: LoadingStatus.SUCCESS
                 },
                 {
@@ -81,7 +81,7 @@ describe("listMembersReducer:", () => {
             listMembersReducer(
                 {
                     ...initialListMembersState,
-                    suggested: [{id: 1}] as ListsOwnerMemberResponse[],
+                    suggested: [{ id: 1 }] as ListsOwnerMemberResponse[],
                     suggestedLoadingState: LoadingStatus.SUCCESS
                 },
                 {
@@ -100,7 +100,7 @@ describe("listMembersReducer:", () => {
             listMembersReducer(
                 {
                     ...initialListMembersState,
-                    members: [{id: 1}] as ListsOwnerMemberResponse[],
+                    members: [{ id: 1 }] as ListsOwnerMemberResponse[]
                 },
                 {
                     type: ListMembersActionsType.RESET_LIST_MEMBERS
@@ -108,7 +108,7 @@ describe("listMembersReducer:", () => {
             ),
             {
                 ...initialListMembersState,
-                members: [],
+                members: []
             }
         );
 

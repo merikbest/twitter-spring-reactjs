@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -7,19 +7,19 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
         borderRight: 0,
         borderRadius: 0,
         display: "flex",
-        alignItems: 'flex-start',
+        alignItems: "flex-start",
         paddingLeft: 15,
         paddingTop: 8,
         paddingBottom: 8,
-        cursor: 'pointer',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-        },
+        cursor: "pointer",
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.main
+        }
     },
     listAvatar: {
         width: theme.spacing(6.7),
         height: theme.spacing(6.7),
-        marginRight: 15,
+        marginRight: 15
     },
     header: {
         display: "flex",
@@ -32,18 +32,18 @@ export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
     },
     buttonWrapper: {
         "& .MuiButton-root": {
-            float: 'right',
-            marginRight: 15,
-        },
+            float: "right",
+            marginRight: 15
+        }
     },
     outlinedButton: {
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-        },
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.light
+        }
     },
     containedButton: {
-        '&:hover': {
-            backgroundColor: theme.palette.error.dark,
-        },
-    },
+        "&:hover": {
+            backgroundColor: theme.palette.error.dark
+        }
+    }
 }));

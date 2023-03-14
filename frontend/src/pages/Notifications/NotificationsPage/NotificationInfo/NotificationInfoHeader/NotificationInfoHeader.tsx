@@ -1,8 +1,8 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
 
-import {NotificationType} from "../../../../../store/types/common";
+import { NotificationType } from "../../../../../types/common";
 import {
     selectIsNotificationInfoLoading,
     selectNotificationInfoType,

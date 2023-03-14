@@ -1,11 +1,11 @@
 import React from "react";
 import ReactRouter from "react-router";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {LoadingStatus} from "../../../store/types/common";
-import {TopicsActionsType} from "../../../store/ducks/topics/contracts/actionTypes";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../types/common";
+import { TopicsActionsType } from "../../../store/ducks/topics/contracts/actionTypes";
 import Spinner from "../../../components/Spinner/Spinner";
-import {mockTopics} from "../../../util/mockData/mockData";
+import { mockTopics } from "../../../util/test-utils/mock-test-data";
 import TopicItem from "../../Topics/TopicItem/TopicItem";
 import UserTopics from "../UserTopics";
 
@@ -15,11 +15,11 @@ describe("UserTopics", () => {
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({userId: "2"});
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ userId: "2" });
     });
 
     it("should render loading spinner", () => {
-        const wrapper = mountWithStore(<UserTopics/>, createMockRootState());
+        const wrapper = mountWithStore(<UserTopics />, createMockRootState());
         expect(wrapper.text().includes("Topics")).toBe(true);
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
@@ -29,21 +29,21 @@ describe("UserTopics", () => {
     });
 
     it("should render list of Topics", () => {
-        const mockState = {...mockRootState, topics: {...mockRootState.topics, followedTopics: mockTopics}};
-        const wrapper = mountWithStore(<UserTopics/>, mockState);
+        const mockState = { ...mockRootState, topics: { ...mockRootState.topics, followedTopics: mockTopics } };
+        const wrapper = mountWithStore(<UserTopics />, mockState);
         expect(wrapper.find(TopicItem).length).toEqual(3);
     });
 
     it("should render empty list of Topics", () => {
-        const mockState = {...mockRootState, topics: {...mockRootState.topics, followedTopics: []}};
-        const wrapper = mountWithStore(<UserTopics/>, mockState);
+        const mockState = { ...mockRootState, topics: { ...mockRootState.topics, followedTopics: [] } };
+        const wrapper = mountWithStore(<UserTopics />, mockState);
         expect(wrapper.text().includes("User isn’t following any Topics.")).toBe(true);
         expect(wrapper.text().includes("When they do, it will be listed here.")).toBe(true);
     });
 
     it("should unmount UserTopics", () => {
-        const wrapper = mountWithStore(<UserTopics/>, mockRootState);
+        const wrapper = mountWithStore(<UserTopics />, mockRootState);
         wrapper.unmount();
-        expect(mockDispatchFn).nthCalledWith(2, {type: TopicsActionsType.RESET_TOPICS_STATE});
+        expect(mockDispatchFn).nthCalledWith(2, { type: TopicsActionsType.RESET_TOPICS_STATE });
     });
 });

@@ -1,11 +1,11 @@
-import React, {FC, ReactElement} from 'react';
-import {useLocation} from "react-router-dom";
-import {Divider, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { useLocation } from "react-router-dom";
+import { Divider, Typography } from "@material-ui/core";
 
-import {useCurrentSessionStyles} from "./CurrentSessionStyles";
-import {DeviceIcon} from "../../../../../../icons";
-import {useGlobalStyles} from "../../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../../hoc/withDocumentTitle";
+import { useCurrentSessionStyles } from "./CurrentSessionStyles";
+import { DeviceIcon } from "../../../../../../icons";
+import { useGlobalStyles } from "../../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../../hoc/withDocumentTitle";
 
 const CurrentSession: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -33,7 +33,7 @@ const CurrentSession: FC = (): ReactElement => {
                     </div>
                 </div>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Date and time
@@ -44,7 +44,7 @@ const CurrentSession: FC = (): ReactElement => {
                     Active now
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Location

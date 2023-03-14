@@ -1,6 +1,6 @@
-import {UserProfileResponse} from "../../../types/user";
-import {TweetImageResponse} from "../../../types/tweet";
-import {LoadingStatus} from "../../../types/common";
+import {UserProfileResponse} from "../../../../types/user";
+import {TweetImageResponse} from "../../../../types/tweet";
+import {LoadingStatus} from "../../../../types/common";
 
 export interface UserProfileState {
     user: UserProfileResponse | undefined;

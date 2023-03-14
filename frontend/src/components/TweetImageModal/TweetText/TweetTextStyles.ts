@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useTweetTextStyles = makeStyles((theme) => ({
     text: {
@@ -7,7 +7,7 @@ export const useTweetTextStyles = makeStyles((theme) => ({
         marginBottom: 16,
         wordBreak: "break-word",
         "& #hashtag": {
-            color: theme.palette.primary.main,
-        },
-    },
+            color: theme.palette.primary.main
+        }
+    }
 }));

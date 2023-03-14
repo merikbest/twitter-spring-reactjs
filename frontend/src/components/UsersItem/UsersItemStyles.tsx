@@ -1,21 +1,21 @@
-import {makeStyles, Theme} from "@material-ui/core";
-import {UserItemSize} from "./UsersItem";
+import { makeStyles, Theme } from "@material-ui/core";
+import { UserItemSize } from "./UsersItem";
 
 interface UsersItemStylesProps {
-    size?: UserItemSize
+    size?: UserItemSize;
 }
 
-export const useUsersItemStyles = makeStyles<Theme , UsersItemStylesProps>((theme) => ({
+export const useUsersItemStyles = makeStyles<Theme, UsersItemStylesProps>((theme) => ({
     container: {
-        cursor: 'pointer',
+        cursor: "pointer",
         borderBottom: `1px solid ${theme.palette.divider}`,
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.dark,
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.dark
         },
-        '& a': {
-            color: 'inherit',
-            textDecoration: 'none',
-        },
+        "& a": {
+            color: "inherit",
+            textDecoration: "none"
+        }
     },
     userInfo: {
         marginLeft: 12,
@@ -26,13 +26,13 @@ export const useUsersItemStyles = makeStyles<Theme , UsersItemStylesProps>((them
         "& .MuiTypography-h6, .MuiTypography-subtitle1": {
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            overflow: "hidden",
-        },
+            overflow: "hidden"
+        }
     },
     buttonWrapper: {
         flex: 1,
         "& .MuiButton-root": {
-            float: 'right',
-        },
-    },
+            float: "right"
+        }
+    }
 }));

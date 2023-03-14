@@ -1,5 +1,5 @@
-import {RootState} from "../../store";
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { LoadingStatus } from "../../../types/common";
 
 export const selectTweetAdditionalInfoState = (state: RootState) => state.tweetAdditionalInfo;
 export const selectTweetAdditionalInfo = (state: RootState) => selectTweetAdditionalInfoState(state).tweetAdditionalInfo;

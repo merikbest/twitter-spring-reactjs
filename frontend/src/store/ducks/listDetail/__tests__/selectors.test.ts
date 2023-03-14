@@ -14,17 +14,17 @@ import {
     selectListDetailItemOwnerUsername,
     selectListDetailItemWallpaper
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types/common";
-import {mockFullList} from "../../../../util/mockData/mockData";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { mockFullList } from "../../../../util/test-utils/mock-test-data";
 
 describe("listDetail selectors:", () => {
     const mockState = createMockRootState();
     const mockListDetailState = {
         ...mockState,
-        listDetail: {...mockState.listDetail, item: mockFullList}
+        listDetail: { ...mockState.listDetail, item: mockFullList }
     };
-    
+
     describe("selectListDetailItem", () => {
         it("should return BaseListResponse", () => {
             expect(selectListDetailItem(mockListDetailState)).toBe(mockFullList);
@@ -93,7 +93,7 @@ describe("listDetail selectors:", () => {
 
     describe("selectListDetailItemOwnerAvatar", () => {
         it("should return ListDetailItemOwnerAvatar number", () => {
-            expect(selectListDetailItemOwnerAvatar(mockListDetailState)).toBe(mockFullList.listOwner.avatar.src);
+            expect(selectListDetailItemOwnerAvatar(mockListDetailState)).toBe(mockFullList.listOwner.avatar);
         });
     });
 

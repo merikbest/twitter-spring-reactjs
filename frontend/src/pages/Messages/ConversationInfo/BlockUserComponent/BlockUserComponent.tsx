@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement} from "react";
+import React, { FC, memo, ReactElement } from "react";
 import classnames from "classnames";
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
-import {useConversationInfoStyles} from "../ConversationInfoStyles";
+import { useConversationInfoStyles } from "../ConversationInfoStyles";
 
 interface BlockUserComponentProps {
     onOpenBlockUserModal: () => void;

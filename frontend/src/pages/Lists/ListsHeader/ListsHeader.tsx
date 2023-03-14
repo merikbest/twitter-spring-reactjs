@@ -1,15 +1,15 @@
-import React, {ReactElement, useState} from "react";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {ClickAwayListener, Typography} from "@material-ui/core";
+import React, { ReactElement, useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ClickAwayListener, Typography } from "@material-ui/core";
 
-import {useListsHeaderStyles} from "./ListsHeaderStyles";
+import { useListsHeaderStyles } from "./ListsHeaderStyles";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
-import {AddListsIcon, EditIcon, ListsIcon} from "../../../icons";
-import {LISTS_MEMBERSHIPS} from "../../../util/pathConstants";
+import { AddListsIcon, EditIcon, ListsIcon } from "../../../icons";
+import { LISTS_MEMBERSHIPS } from "../../../constants/path-constants";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
-import {selectIsLoading} from "../../../store/ducks/lists/selectors";
-import {selectUserDataId, selectUserProfileUsername} from "../../../store/ducks/user/selectors";
+import { selectIsLoading } from "../../../store/ducks/lists/selectors";
+import { selectUserDataId, selectUserProfileUsername } from "../../../store/ducks/user/selectors";
 import CreateListsModal from "./CreateListsModal/CreateListsModal";
 
 const ListsHeader = (): ReactElement => {
@@ -49,11 +49,11 @@ const ListsHeader = (): ReactElement => {
                 </div>
             )}
             <div className={classes.iconGroup}>
-                <ActionIconButton onClick={onOpenCreateListModal} actionText={"Create"} icon={AddListsIcon}/>
+                <ActionIconButton onClick={onOpenCreateListModal} actionText={"Create"} icon={AddListsIcon} />
                 <div className={classes.icon}>
                     <ClickAwayListener onClickAway={handleClickAway}>
                         <div>
-                            <ActionIconButton onClick={handleClick} actionText={"More"} icon={EditIcon}/>
+                            <ActionIconButton onClick={handleClick} actionText={"More"} icon={EditIcon} />
                             {openPopover && (
                                 <Link to={`${LISTS_MEMBERSHIPS}/${myProfileId}`} className={classes.dropdownLink}>
                                     <div className={classes.dropdown}>
@@ -70,7 +70,7 @@ const ListsHeader = (): ReactElement => {
                     </ClickAwayListener>
                 </div>
             </div>
-            <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal}/>
+            <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal} />
         </PageHeaderWrapper>
     );
 };

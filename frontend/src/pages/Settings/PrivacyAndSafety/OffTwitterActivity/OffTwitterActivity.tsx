@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
-import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {ACROSS_YOUR_DEVICES, TAILORED_SUGGESTIONS} from "../../../../util/url";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { ACROSS_YOUR_DEVICES, TAILORED_SUGGESTIONS } from "../../../../constants/url-constants";
 
 const OffTwitterActivity: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -21,7 +21,7 @@ const OffTwitterActivity: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Allow use of where you see Twitter content across the Web
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`This setting lets Twitter keep track of your visits to other websites that integrate Twitter
@@ -38,7 +38,7 @@ const OffTwitterActivity: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Personalize based on your inferred identity
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Twitter will always personalize your experience based on information you’ve provided, as well as the

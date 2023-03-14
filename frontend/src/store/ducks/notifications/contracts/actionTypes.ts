@@ -1,30 +1,30 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
 import {
     NotificationInfoResponse,
     NotificationReplyResponse,
-    NotificationResponse,
-} from "../../../types/notification";
-import {NotificationsState} from "./state";
-import {LoadingStatus, PageableResponse} from "../../../types/common";
+    NotificationResponse
+} from "../../../../types/notification";
+import { NotificationsState } from "./state";
+import { LoadingStatus, PageableResponse } from "../../../../types/common";
 
 export enum NotificationsActionsType {
-    SET_NOTIFICATIONS = 'notification/SET_NOTIFICATIONS',
-    SET_TWEET_AUTHORS_NOTIFICATIONS = 'notification/SET_TWEET_AUTHORS_NOTIFICATIONS',
-    FETCH_NOTIFICATIONS = 'notification/FETCH_NOTIFICATIONS',
-    FETCH_TWEET_AUTHORS_NOTIFICATIONS = 'notification/FETCH_TWEET_AUTHORS_NOTIFICATIONS',
-    FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS = 'notification/FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS',
-    FETCH_MENTIONS = 'notification/FETCH_MENTIONS',
-    SET_NOTIFICATION = 'notification/SET_NOTIFICATION',
-    FETCH_NOTIFICATION_INFO = 'notification/FETCH_NOTIFICATION_INFO',
-    SET_NOTIFICATION_INFO = 'notification/SET_NOTIFICATION_INFO',
-    SET_FOLLOW_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_TO_NOTIFICATION_INFO',
-    SET_BLOCKED_NOTIFICATION_INFO = 'notification/SET_BLOCKED_NOTIFICATION_INFO',
-    SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO = 'notification/SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO',
-    UPDATE_NOTIFICATION_INFO_TWEET = 'notification/UPDATE_NOTIFICATION_INFO_TWEET',
-    RESET_NOTIFICATION_STATE = 'notification/RESET_NOTIFICATION_STATE',
-    SET_TWEET_AUTHORS_LOADING_STATE = 'notification/SET_TWEET_AUTHORS_LOADING_STATE',
-    SET_LOADING_STATE = 'notification/SET_LOADING_STATE',
+    SET_NOTIFICATIONS = "notification/SET_NOTIFICATIONS",
+    SET_TWEET_AUTHORS_NOTIFICATIONS = "notification/SET_TWEET_AUTHORS_NOTIFICATIONS",
+    FETCH_NOTIFICATIONS = "notification/FETCH_NOTIFICATIONS",
+    FETCH_TWEET_AUTHORS_NOTIFICATIONS = "notification/FETCH_TWEET_AUTHORS_NOTIFICATIONS",
+    FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS = "notification/FETCH_NOTIFICATIONS_FROM_TWEET_AUTHORS",
+    FETCH_MENTIONS = "notification/FETCH_MENTIONS",
+    SET_NOTIFICATION = "notification/SET_NOTIFICATION",
+    FETCH_NOTIFICATION_INFO = "notification/FETCH_NOTIFICATION_INFO",
+    SET_NOTIFICATION_INFO = "notification/SET_NOTIFICATION_INFO",
+    SET_FOLLOW_TO_NOTIFICATION_INFO = "notification/SET_FOLLOW_TO_NOTIFICATION_INFO",
+    SET_BLOCKED_NOTIFICATION_INFO = "notification/SET_BLOCKED_NOTIFICATION_INFO",
+    SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO = "notification/SET_FOLLOW_REQUEST_TO_NOTIFICATION_INFO",
+    UPDATE_NOTIFICATION_INFO_TWEET = "notification/UPDATE_NOTIFICATION_INFO_TWEET",
+    RESET_NOTIFICATION_STATE = "notification/RESET_NOTIFICATION_STATE",
+    SET_TWEET_AUTHORS_LOADING_STATE = "notification/SET_TWEET_AUTHORS_LOADING_STATE",
+    SET_LOADING_STATE = "notification/SET_LOADING_STATE",
 }
 
 export interface SetNotificationsActionInterface extends Action<NotificationsActionsType> {

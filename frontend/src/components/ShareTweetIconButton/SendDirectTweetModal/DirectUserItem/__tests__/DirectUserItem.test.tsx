@@ -1,11 +1,11 @@
 import React from "react";
-import {Avatar} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {mockUsers} from "../../../../../util/mockData/mockData";
-import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { mockUsers } from "../../../../../util/test-utils/mock-test-data";
+import { DEFAULT_PROFILE_IMG } from "../../../../../constants/url-constants";
 import DirectUserItem from "../DirectUserItem";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { LoadingStatus } from "../../../../../types/common";
 
 describe("DirectUserItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -26,7 +26,7 @@ describe("DirectUserItem", () => {
                 handleListItemClick={jest.fn()}
             />, mockRootState);
 
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar.src);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar);
         expect(wrapper.text().includes(mockUser.fullName)).toBe(true);
         expect(wrapper.text().includes(mockUser.username)).toBe(true);
         expect(wrapper.find("#checkIcon").exists()).toBeFalsy();
@@ -36,11 +36,7 @@ describe("DirectUserItem", () => {
     it("should render selected and private user", () => {
         const wrapper = mountWithStore(
             <DirectUserItem
-                user={{
-                    ...mockUser,
-                    avatar: {id: 1, src: ""},
-                    isPrivateProfile: true
-                }}
+                user={{ ...mockUser, avatar: "", isPrivateProfile: true }}
                 userFromChat
                 myProfileId={2}
                 selected

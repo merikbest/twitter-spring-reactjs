@@ -1,10 +1,10 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {useUnsentTweetItemStyles} from "../UnsentTweetItemStyle";
-import {ScheduleIcon} from "../../../../../icons";
-import {formatScheduleDate} from "../../../../../util/formatDate";
-import {Image} from "../../../../../store/types/common";
+import { useUnsentTweetItemStyles } from "../UnsentTweetItemStyle";
+import { ScheduleIcon } from "../../../../../icons";
+import { formatScheduleDate } from "../../../../../util/format-date-helper";
+import { Image } from "../../../../../types/common";
 
 interface UnsentTweetItemInfoProps {
     scheduledDate: string;
@@ -12,7 +12,7 @@ interface UnsentTweetItemInfoProps {
     images: Image[];
 }
 
-const UnsentTweetItemInfo: FC<UnsentTweetItemInfoProps> = memo(({scheduledDate, text, images}): ReactElement => {
+const UnsentTweetItemInfo: FC<UnsentTweetItemInfoProps> = memo(({ scheduledDate, text, images }): ReactElement => {
     const classes = useUnsentTweetItemStyles();
 
     return (
@@ -29,7 +29,7 @@ const UnsentTweetItemInfo: FC<UnsentTweetItemInfoProps> = memo(({scheduledDate, 
                 </Typography>
                 {(images?.length !== 0) && (
                     <div className={classes.imageWrapper}>
-                        <img src={images?.[0].src} alt={images?.[0].src}/>
+                        <img src={images?.[0].src} alt={images?.[0].src} />
                     </div>
                 )}
             </div>

@@ -1,18 +1,18 @@
-import React, {FC, ReactElement} from 'react';
-import {Controller, useForm} from "react-hook-form";
-import {useHistory, useLocation} from "react-router-dom";
-import {Button, Checkbox} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useHistory, useLocation } from "react-router-dom";
+import { Button, Checkbox } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import {yupResolver} from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
-import {ACCOUNT_SECURITY_TIPS, DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {AuthApi} from "../../../services/api/authApi";
-import {useResetPasswordStyles} from "./ResetPasswordStyles";
-import {AuthUserResponse} from "../../../store/types/user";
-import {ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE} from "../../../util/pathConstants";
+import { ForgotPasswordTextField } from "../ForgotPasswordTextField/ForgotPasswordTextField";
+import { ACCOUNT_SECURITY_TIPS, DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
+import { AuthApi } from "../../../services/api/authApi";
+import { useResetPasswordStyles } from "./ResetPasswordStyles";
+import { AuthUserResponse } from "../../../types/user";
+import { ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE } from "../../../constants/path-constants";
 
 interface ResetPasswordFormProps {
     password: string;
@@ -21,19 +21,22 @@ interface ResetPasswordFormProps {
 
 const ResetPasswordFormSchema = yup.object().shape({
     password: yup.string().min(6, "Too short").required(),
-    password2: yup.string().oneOf([yup.ref("password")], "Passwords do not match."),
+    password2: yup.string().oneOf([yup.ref("password")], "Passwords do not match.")
 });
 
 const ResetPassword: FC = (): ReactElement => {
     const classes = useResetPasswordStyles();
     const history = useHistory();
     const location = useLocation<{ user: AuthUserResponse }>();
-    const {control, handleSubmit, formState: {errors}} = useForm<ResetPasswordFormProps>({
+    const { control, handleSubmit, formState: { errors } } = useForm<ResetPasswordFormProps>({
         resolver: yupResolver(ResetPasswordFormSchema)
     });
 
     const onSubmit = (data: ResetPasswordFormProps): void => {
-        AuthApi.passwordReset({email: location.state.user?.email!, password: data.password, password2: data.password2})
+        AuthApi.passwordReset({
+            email: location.state.user?.email!,
+            password: data.password, password2: data.password2
+        })
             .then(() => history.push(ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE))
             .catch((error) => console.log(error));
     };
@@ -72,7 +75,7 @@ const ResetPassword: FC = (): ReactElement => {
                     name="password"
                     control={control}
                     defaultValue=""
-                    render={({field: {onChange, value}}) => (
+                    render={({ field: { onChange, value } }) => (
                         <ForgotPasswordTextField
                             id="password"
                             name="password"
@@ -81,7 +84,7 @@ const ResetPassword: FC = (): ReactElement => {
                             value={value}
                             onChange={onChange}
                             InputLabelProps={{
-                                shrink: true,
+                                shrink: true
                             }}
                             error={!!errors.password}
                             autoFocus
@@ -98,7 +101,7 @@ const ResetPassword: FC = (): ReactElement => {
                     name="password2"
                     control={control}
                     defaultValue=""
-                    render={({field: {onChange, value}}) => (
+                    render={({ field: { onChange, value } }) => (
                         <ForgotPasswordTextField
                             id="password2"
                             name="password2"
@@ -107,7 +110,7 @@ const ResetPassword: FC = (): ReactElement => {
                             value={value}
                             onChange={onChange}
                             InputLabelProps={{
-                                shrink: true,
+                                shrink: true
                             }}
                             error={!!errors.password2}
                             autoFocus

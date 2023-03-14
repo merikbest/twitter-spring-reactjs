@@ -1,7 +1,7 @@
-import {AxiosResponse, CancelTokenSource} from "axios";
+import { AxiosResponse, CancelTokenSource } from "axios";
 
-import {axios} from "../../core/axios";
-import {AddLists, AddUserToListsRequest,} from "../../store/ducks/lists/contracts/state";
+import { axios } from "../../core/axios";
+import { AddLists, AddUserToListsRequest } from "../../store/ducks/lists/contracts/state";
 import {
     BaseListResponse,
     ListResponse,
@@ -9,9 +9,9 @@ import {
     ListUserResponse,
     PinnedListResponse,
     SimpleListResponse
-} from "../../store/types/lists";
-import {TweetResponse} from "../../store/types/tweet";
-import {EditListsRequest} from "../../store/ducks/list/contracts/state";
+} from "../../types/lists";
+import { TweetResponse } from "../../types/tweet";
+import { EditListsRequest } from "../../store/ducks/list/contracts/state";
 import {
     API_LISTS,
     API_LISTS_ADD_USER,
@@ -25,7 +25,7 @@ import {
     API_LISTS_TWEETS,
     API_LISTS_USER,
     API_LISTS_USER_CONSIST
-} from "../../util/endpoints";
+} from "../../constants/endpoint-constants";
 
 export const ListsApi = {
     async getAllTweetLists(): Promise<AxiosResponse<ListResponse[]>> {
@@ -71,10 +71,10 @@ export const ListsApi = {
         return await axios.get<boolean>(`${API_LISTS_ADD_USER}/${userId}/${listId}`);
     },
     async getTweetsByListId(listId: number, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_LISTS_TWEETS(listId), {params: {page: pageNumber}});
+        return await axios.get<TweetResponse[]>(API_LISTS_TWEETS(listId), { params: { page: pageNumber } });
     },
     async getListDetails(listId: number, cancelTokenSource: CancelTokenSource): Promise<AxiosResponse<BaseListResponse>> {
-        return await axios.get<BaseListResponse>(API_LISTS_DETAILS(listId), {cancelToken: cancelTokenSource.token});
+        return await axios.get<BaseListResponse>(API_LISTS_DETAILS(listId), { cancelToken: cancelTokenSource.token });
     },
     async getListFollowers(listId: number, listOwnerId: number): Promise<AxiosResponse<ListsOwnerMemberResponse[]>> {
         return await axios.get<ListsOwnerMemberResponse[]>(API_LISTS_FOLLOWERS(listId, listOwnerId));
@@ -84,5 +84,5 @@ export const ListsApi = {
     },
     async searchListMembersByUsername(listId: number, username: string): Promise<AxiosResponse<ListsOwnerMemberResponse[]>> {
         return await axios.get<ListsOwnerMemberResponse[]>(`${API_LISTS_SEARCH}/${listId}/${username}`);
-    },
+    }
 };

@@ -30,9 +30,9 @@ import {
     selectUserProfileWebsite,
     selectUserStatus
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockUser} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../types/common";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockUser } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("user selectors:", () => {
 
@@ -86,7 +86,7 @@ describe("user selectors:", () => {
 
     describe("selectUserProfileAvatar", () => {
         it("should return UserProfileAvatar", () => {
-            expect(selectUserProfileAvatar(createMockRootState())).toBe(mockUser.avatar.src);
+            expect(selectUserProfileAvatar(createMockRootState())).toBe(mockUser.avatar);
         });
     });
 

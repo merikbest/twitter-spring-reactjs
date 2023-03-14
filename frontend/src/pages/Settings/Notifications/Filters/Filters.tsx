@@ -1,12 +1,12 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {Checkbox, Typography, Link as MuiLink} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {ArrowRightIcon} from "../../../../icons";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS} from "../../../../util/pathConstants";
-import {UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE} from "../../../../util/url";
+import { ArrowRightIcon } from "../../../../icons";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS } from "../../../../constants/path-constants";
+import { UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE } from "../../../../constants/url-constants";
 
 const Filters: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -23,12 +23,13 @@ const Filters: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Quality filter
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"Choose to filter out content such as duplicate or automated Tweets. This doesn’t apply to " +
-                    "notifications from accounts you follow or have interacted with recently. "}
-                    <MuiLink href={UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE} variant="subtitle2" target="_blank" rel="noopener">
+                        "notifications from accounts you follow or have interacted with recently. "}
+                    <MuiLink href={UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE} variant="subtitle2" target="_blank"
+                             rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

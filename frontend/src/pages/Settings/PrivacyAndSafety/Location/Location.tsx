@@ -1,12 +1,15 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from "react-router-dom";
-import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {ArrowRightIcon} from "../../../../icons";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {SETTINGS_PRIVACY_AND_SAFETY_LOCATION, SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS} from "../../../../util/pathConstants";
-import {EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} from "../../../../util/url";
+import { ArrowRightIcon } from "../../../../icons";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import {
+    SETTINGS_PRIVACY_AND_SAFETY_LOCATION,
+    SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS
+} from "../../../../constants/path-constants";
+import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../constants/url-constants";
 
 const Location: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -23,13 +26,14 @@ const Location: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Personalize based on places you’ve been
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`You will always see ads on Twitter based on your Twitter activity. When this setting is enabled,
                         Twitter may further personalize ads from Twitter advertisers, on and off Twitter, by combining your
                         Twitter activity with other online activity and information from our partners. `}
-                    <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="subtitle2" target="_blank" rel="noopener">
+                    <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="subtitle2" target="_blank"
+                             rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>

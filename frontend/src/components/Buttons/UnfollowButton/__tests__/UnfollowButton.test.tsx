@@ -1,14 +1,14 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
-import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { UserActionsType } from "../../../../store/ducks/user/contracts/actionTypes";
 import UnfollowModal from "../../../UnfollowModal/UnfollowModal";
 import UnfollowButton from "../UnfollowButton";
 
 describe("UnfollowButton", () => {
-    const mockState = createMockRootState(LoadingStatus.LOADED)
+    const mockState = createMockRootState(LoadingStatus.LOADED);
     let mockDispatchFn: jest.Mock;
 
     beforeEach(() => {
@@ -42,7 +42,7 @@ describe("UnfollowButton", () => {
             />, mockState);
         wrapper.find(Button).simulate("click");
         expect(mockDispatchFn).toHaveBeenNthCalledWith(1, {
-            payload: {userId: 11},
+            payload: { userId: 11 },
             type: UserActionsType.UNFOLLOW_USER
         });
     });

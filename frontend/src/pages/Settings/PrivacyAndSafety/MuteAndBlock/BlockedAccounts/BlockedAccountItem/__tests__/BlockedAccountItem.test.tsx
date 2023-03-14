@@ -2,13 +2,13 @@ import React from "react";
 import {Avatar, Button} from "@material-ui/core";
 
 import BlockedAccountItem from "../BlockedAccountItem";
-import {createMockRootState, mockDispatch, mountWithStore, testClickOnLink} from "../../../../../../../util/testHelper";
-import {mockBlockedUsers} from "../../../../../../../util/mockData/mockData";
+import {createMockRootState, mockDispatch, mountWithStore, testClickOnLink} from "../../../../../../../util/test-utils/test-helper";
+import {mockBlockedUsers} from "../../../../../../../util/test-utils/mock-test-data";
 import {UserActionsType} from "../../../../../../../store/ducks/user/contracts/actionTypes";
-import {PROFILE} from "../../../../../../../util/pathConstants";
-import {DEFAULT_PROFILE_IMG} from "../../../../../../../util/url";
-import {BlockedUserResponse} from "../../../../../../../store/types/user";
-import {LoadingStatus} from "../../../../../../../store/types/common";
+import {PROFILE} from "../../../../../../../constants/path-constants";
+import {DEFAULT_PROFILE_IMG} from "../../../../../../../constants/url-constants";
+import {BlockedUserResponse} from "../../../../../../../types/user";
+import {LoadingStatus} from "../../../../../../../types/common";
 import {ActionSnackbarTypes} from "../../../../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("BlockedAccountItem", () => {

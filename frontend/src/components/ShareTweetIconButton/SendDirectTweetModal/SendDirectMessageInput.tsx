@@ -1,4 +1,4 @@
-import {Theme, withStyles} from "@material-ui/core";
+import { Theme, withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 
 export const SendDirectMessageInput = withStyles((theme: Theme) => ({
@@ -13,21 +13,21 @@ export const SendDirectMessageInput = withStyles((theme: Theme) => ({
                 backgroundColor: theme.palette.background.paper,
                 "& fieldset": { borderWidth: 1, borderColor: theme.palette.primary.main },
                 "& svg path": {
-                    fill: theme.palette.primary.main,
-                },
+                    fill: theme.palette.primary.main
+                }
             },
             "&:hover": {
-                "& fieldset": { borderColor: "transparent" },
+                "& fieldset": { borderColor: "transparent" }
             },
             "& fieldset": {
                 borderColor: "transparent",
-                borderWidth: 1,
-            },
+                borderWidth: 1
+            }
         },
         "& .MuiOutlinedInput-input": {
             "&::placeholder": {
-                color: theme.palette.text.primary,
-            },
-        },
-    },
+                color: theme.palette.text.primary
+            }
+        }
+    }
 }))(TextField);

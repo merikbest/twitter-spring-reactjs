@@ -1,13 +1,13 @@
-import React, {FC, memo, ReactElement} from "react";
+import React, { FC, memo, ReactElement } from "react";
 
-import {ListItem, Typography} from "@material-ui/core";
+import { ListItem, Typography } from "@material-ui/core";
 
 interface UserItemActionProps {
     title: string;
     icon: JSX.Element;
 }
 
-const UserItemAction: FC<UserItemActionProps> = memo(({title, icon}): ReactElement => {
+const UserItemAction: FC<UserItemActionProps> = memo(({ title, icon }): ReactElement => {
     return (
         <ListItem>
             <>{icon}</>

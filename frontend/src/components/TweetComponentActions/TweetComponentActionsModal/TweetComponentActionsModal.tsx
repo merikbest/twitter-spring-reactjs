@@ -1,10 +1,10 @@
-import React, {FC, ReactElement} from 'react';
+import React, { FC, ReactElement } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
-import {useTweetComponentActionsModalStyles} from "./TweetComponentActionsModalStyles";
+import { useTweetComponentActionsModalStyles } from "./TweetComponentActionsModalStyles";
 
 interface TweetComponentActionsModalProps {
     modalTitle: string;
@@ -20,14 +20,14 @@ const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
         isTweetPinned,
         visibleTweetComponentActionsModal,
         onCloseTweetComponentActionsModal,
-        onClick,
+        onClick
     }
 ): ReactElement => {
-    const classes = useTweetComponentActionsModalStyles({modalTitle});
+    const classes = useTweetComponentActionsModalStyles({ modalTitle });
 
     return (
         <Dialog open={visibleTweetComponentActionsModal} onClose={onCloseTweetComponentActionsModal}>
-            <DialogContent style={{padding: 0}}>
+            <DialogContent style={{ padding: 0 }}>
                 <div className={classes.modalWrapper}>
                     <Typography variant={"h5"}>
                         {(modalTitle === "Delete") ? (

@@ -1,17 +1,17 @@
-import {createMockRootState} from "../../../../util/testHelper";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
 import {
     selectChatFirstParticipantAvatar,
     selectChatItem,
     selectChatSecondParticipantAvatar,
     selectChatSecondParticipantId
 } from "../selectors";
-import {mockChats} from "../../../../util/mockData/mockData";
+import { mockChats } from "../../../../util/test-utils/mock-test-data";
 
 describe("chat selectors:", () => {
     const mockState = createMockRootState();
     const mockChatResponse = {
         ...mockState,
-        chat: {...mockState.chat, item: mockChats[0]}
+        chat: { ...mockState.chat, item: mockChats[0] }
     };
 
     describe("selectChatItem", () => {
@@ -28,13 +28,13 @@ describe("chat selectors:", () => {
 
     describe("selectChatFirstParticipantAvatar", () => {
         it("should return avatar src", () => {
-            expect(selectChatFirstParticipantAvatar(mockChatResponse)).toBe(mockChats[0].participants[0].user.avatar.src);
+            expect(selectChatFirstParticipantAvatar(mockChatResponse)).toBe(mockChats[0].participants[0].user.avatar);
         });
     });
 
     describe("selectChatSecondParticipantAvatar", () => {
         it("should return avatar src", () => {
-            expect(selectChatSecondParticipantAvatar(mockChatResponse)).toBe(mockChats[0].participants[1].user.avatar.src);
+            expect(selectChatSecondParticipantAvatar(mockChatResponse)).toBe(mockChats[0].participants[1].user.avatar);
         });
     });
 });

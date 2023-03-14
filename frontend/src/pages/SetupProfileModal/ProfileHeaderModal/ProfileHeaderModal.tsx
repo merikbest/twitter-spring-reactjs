@@ -1,20 +1,20 @@
-import React, {FC, ReactElement} from 'react';
-import {useSelector} from "react-redux";
-import {Avatar, Button, Dialog, DialogContent, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Avatar, Button, Dialog, DialogContent, Typography } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
-import {useProfileHeaderModalStyles} from "./ProfileHeaderModalStyles";
+import { useProfileHeaderModalStyles } from "./ProfileHeaderModalStyles";
 import UploadProfileImage from "../../../components/EditProfileModal/UploadProfileImage";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {selectUserProfileFullName, selectUserProfileUsername} from "../../../store/ducks/user/selectors";
-import {ImageObj} from "../../../components/AddTweetForm/AddTweetForm";
+import { DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
+import { selectUserProfileFullName, selectUserProfileUsername } from "../../../store/ducks/user/selectors";
+import { ImageObj } from "../../../components/AddTweetForm/AddTweetForm";
 
 interface ProfileHeaderModalProps {
     open: boolean;
     onClose: () => void;
     avatar?: ImageObj;
     wallpaper?: ImageObj;
-    onChangeWallpaper: (imageObj: ImageObj) => void
+    onChangeWallpaper: (imageObj: ImageObj) => void;
     onOpenProfileDescriptionModal: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
@@ -36,7 +36,7 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
         <Dialog transitionDuration={0} open={open} onClose={onClose} hideBackdrop>
             <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
-                    <TwitterIcon/>
+                    <TwitterIcon />
                 </div>
                 <Typography variant={"h3"} component={"div"} className={classes.title}>
                     Pick a header
@@ -52,12 +52,12 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                         src={wallpaper ? wallpaper?.src : ""}
                     />
                     <div className={classes.wallpaperEditImg}>
-                        <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={onChangeWallpaper}/>
+                        <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={onChangeWallpaper} />
                     </div>
                 </div>
                 <div className={classes.avatarWrapper}>
                     <Avatar key={avatar?.src} src={avatar?.src ?? DEFAULT_PROFILE_IMG}>
-                        <img alt="default-img" src={DEFAULT_PROFILE_IMG}/>
+                        <img alt="default-img" src={DEFAULT_PROFILE_IMG} />
                     </Avatar>
                 </div>
                 <Typography variant={"h3"} component={"div"}>

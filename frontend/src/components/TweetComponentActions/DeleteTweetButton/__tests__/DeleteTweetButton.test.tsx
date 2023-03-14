@@ -1,11 +1,11 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-import {mockDispatch, mountWithStore} from "../../../../util/testHelper";
+import { mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import TweetComponentActionsModal from "../../TweetComponentActionsModal/TweetComponentActionsModal";
-import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
-import {TweetActionType} from "../../../../store/ducks/tweet/contracts/actionTypes";
-import {TweetsActionType} from "../../../../store/ducks/tweets/contracts/actionTypes";
+import { ActionSnackbarTypes } from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { TweetActionType } from "../../../../store/ducks/tweet/contracts/actionTypes";
+import { TweetsActionType } from "../../../../store/ducks/tweets/contracts/actionTypes";
 import DeleteTweetButton from "../DeleteTweetButton";
 
 describe("DeleteTweetButton", () => {

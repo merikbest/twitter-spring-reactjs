@@ -1,15 +1,13 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Paper, Typography} from "@material-ui/core";
-
-import BackButton from "../../../../components/BackButton/BackButton";
-import {fetchNotificationsFromTweetAuthors} from "../../../../store/ducks/notifications/actionCreators";
-import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../../../store/ducks/tweets/selectors";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Paper, Typography } from "@material-ui/core";
+import { fetchNotificationsFromTweetAuthors } from "../../../../store/ducks/notifications/actionCreators";
+import { selectIsTweetsLoading, selectPagesCount, selectTweetsItems } from "../../../../store/ducks/tweets/selectors";
 import TweetComponent from "../../../../components/TweetComponent/TweetComponent";
 import Spinner from "../../../../components/Spinner/Spinner";
-import {resetTweets} from "../../../../store/ducks/tweets/actionCreators";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import { resetTweets } from "../../../../store/ducks/tweets/actionCreators";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 import PageHeaderWrapper from "../../../../components/PageHeaderWrapper/PageHeaderWrapper";
 
@@ -43,11 +41,11 @@ const NotificationsTimeline: FC = (): ReactElement => {
                 </PageHeaderWrapper>
                 <div className={globalClasses.contentWrapper}>
                     {(tweets.length === 0 && !isLoading) ? (
-                        <Spinner/>
+                        <Spinner />
                     ) : (
                         <>
-                            {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
-                            {isLoading && <Spinner/>}
+                            {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)}
+                            {isLoading && <Spinner />}
                         </>
                     )}
                 </div>

@@ -1,13 +1,13 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from "react-router-dom";
-import {Checkbox, Divider, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Checkbox, Divider, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {useAccessibilityStyles} from "./AccessibilityStyles";
-import {ArrowRightIcon} from "../../../../icons";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY} from "../../../../util/pathConstants";
+import { useAccessibilityStyles } from "./AccessibilityStyles";
+import { ArrowRightIcon } from "../../../../icons";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY } from "../../../../constants/path-constants";
 
 const Accessibility: FC = (): ReactElement => {
     const classes = useAccessibilityStyles();
@@ -31,13 +31,13 @@ const Accessibility: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"div"}>
                         Increase color contrast
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Improves legibility by increasing the contrast between text and background colors.
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Motion
@@ -48,7 +48,7 @@ const Accessibility: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"div"}>
                         Reduce motion
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Limits the amount of in-app animations, including live engagement counts.

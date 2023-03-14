@@ -1,31 +1,35 @@
 import React from "react";
-import {Button, ClickAwayListener, IconButton, List, ListItem} from "@material-ui/core";
+import { Button, ClickAwayListener, IconButton, List, ListItem } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {mockFullTweet, mockMyTweetAdditionalInfo, mockUserTweetAdditionalInfo} from "../../../util/mockData/mockData";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
+import {
+    mockFullTweet,
+    mockMyTweetAdditionalInfo,
+    mockUserTweetAdditionalInfo
+} from "../../../util/test-utils/mock-test-data";
 import TweetComponentActionsModal from "../TweetComponentActionsModal/TweetComponentActionsModal";
 import ChangeReplyWindow from "../../ChangeReplyWindow/ChangeReplyWindow";
-import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
+import { TweetsActionType } from "../../../store/ducks/tweets/contracts/actionTypes";
 import TweetComponentActions from "../TweetComponentActions";
-import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
-import {TweetActionType} from "../../../store/ducks/tweet/contracts/actionTypes";
+import { UserActionsType } from "../../../store/ducks/user/contracts/actionTypes";
+import { TweetActionType } from "../../../store/ducks/tweet/contracts/actionTypes";
 import ListsModal from "../../ListsModal/ListsModal";
 import CloseButton from "../../CloseButton/CloseButton";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
-import {LoadingStatus, ReplyType} from "../../../store/types/common";
+import { LoadingStatus, ReplyType } from "../../../types/common";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
-import {ActionSnackbarTypes} from "../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { ActionSnackbarTypes } from "../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("TweetComponentActions", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
     const mockUserTweetState = {
         ...mockRootState,
-        tweetAdditionalInfo: {...mockRootState.tweetAdditionalInfo, tweetAdditionalInfo: mockUserTweetAdditionalInfo}
-    }
+        tweetAdditionalInfo: { ...mockRootState.tweetAdditionalInfo, tweetAdditionalInfo: mockUserTweetAdditionalInfo }
+    };
     const mockMyTweetState = {
         ...mockRootState,
-        tweetAdditionalInfo: {...mockRootState.tweetAdditionalInfo, tweetAdditionalInfo: mockMyTweetAdditionalInfo}
-    }
+        tweetAdditionalInfo: { ...mockRootState.tweetAdditionalInfo, tweetAdditionalInfo: mockMyTweetAdditionalInfo }
+    };
     let mockDispatchFn: jest.Mock;
 
     beforeEach(() => {
@@ -33,7 +37,7 @@ describe("TweetComponentActions", () => {
     });
 
     it("should render another user tweet actions", () => {
-        const {wrapper} = createTweetComponentActionsWrapper();
+        const { wrapper } = createTweetComponentActionsWrapper();
         expect(wrapper.find(List).exists()).toBeFalsy();
         wrapper.find(IconButton).simulate("click");
         expect(wrapper.find(List).exists()).toBeTruthy();
@@ -46,7 +50,7 @@ describe("TweetComponentActions", () => {
     });
 
     it("should render my profile tweet actions", () => {
-        const {wrapper} = createTweetComponentActionsWrapper(mockMyTweetState);
+        const { wrapper } = createTweetComponentActionsWrapper(mockMyTweetState);
         expect(wrapper.find(List).exists()).toBeFalsy();
         wrapper.find(IconButton).simulate("click");
         expect(wrapper.find(List).exists()).toBeTruthy();
@@ -59,7 +63,7 @@ describe("TweetComponentActions", () => {
     });
 
     it("should render unpin tweet action", () => {
-        const {wrapper} = createTweetComponentActionsWrapper(mockMyTweetState);
+        const { wrapper } = createTweetComponentActionsWrapper(mockMyTweetState);
         wrapper.find(ActionIconButton).at(0).find(IconButton).simulate("click");
         expect(wrapper.text().includes("Pin to your profile")).toBe(true);
     });
@@ -102,9 +106,9 @@ describe("TweetComponentActions", () => {
             ...mockRootState,
             tweetAdditionalInfo: {
                 ...mockRootState.tweetAdditionalInfo,
-                tweetAdditionalInfo: {...mockMyTweetAdditionalInfo, addressedTweetId: 9}
+                tweetAdditionalInfo: { ...mockMyTweetAdditionalInfo, addressedTweetId: 9 }
             }
-        }
+        };
         testDeleteTweet(mockMyTweetState, TweetActionType.DELETE_TWEET_REPLY);
     });
 
@@ -119,7 +123,7 @@ describe("TweetComponentActions", () => {
                 ...mockRootState.tweetAdditionalInfo,
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
-                    user: {...mockUserTweetAdditionalInfo.user, isFollower: true}
+                    user: { ...mockUserTweetAdditionalInfo.user, isFollower: true }
                 }
             }
         };
@@ -127,7 +131,7 @@ describe("TweetComponentActions", () => {
     });
 
     it("should click open and close List Modal", () => {
-        const {wrapper} = createTweetComponentActionsWrapper();
+        const { wrapper } = createTweetComponentActionsWrapper();
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         expect(wrapper.find(ListsModal).prop("visible")).toBe(false);
         wrapper.find("#openListsModal").at(0).simulate("click");
@@ -148,7 +152,7 @@ describe("TweetComponentActions", () => {
                 ...mockRootState.tweetAdditionalInfo,
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
-                    user: {...mockUserTweetAdditionalInfo.user, isUserMuted: true}
+                    user: { ...mockUserTweetAdditionalInfo.user, isUserMuted: true }
                 }
             }
         };
@@ -166,7 +170,7 @@ describe("TweetComponentActions", () => {
                 ...mockRootState.tweetAdditionalInfo,
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
-                    user: {...mockUserTweetAdditionalInfo.user, isUserBlocked: true}
+                    user: { ...mockUserTweetAdditionalInfo.user, isUserBlocked: true }
                 }
             }
         };
@@ -174,7 +178,7 @@ describe("TweetComponentActions", () => {
     });
 
     it("should click open and close BlockUserModal", () => {
-        const {wrapper} = createTweetComponentActionsWrapper();
+        const { wrapper } = createTweetComponentActionsWrapper();
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
         wrapper.find("#onOpenBlockUserModal").at(0).simulate("click");
@@ -184,21 +188,21 @@ describe("TweetComponentActions", () => {
     });
 
     it("should click away TweetComponentActions", () => {
-        const {wrapper} = createTweetComponentActionsWrapper();
+        const { wrapper } = createTweetComponentActionsWrapper();
         // @ts-ignore
         wrapper.find(ClickAwayListener).prop("onClickAway")(jest.fn());
         expect(wrapper.find(ClickAwayListener).exists()).toBeTruthy();
     });
 
     const testClickChangeReplyType = (listItem: number, replyType: ReplyType, snackbarText: string): void => {
-        const {wrapper} = createTweetComponentActionsWrapper(mockMyTweetState);
+        const { wrapper } = createTweetComponentActionsWrapper(mockMyTweetState);
         expect(wrapper.find(ChangeReplyWindow).exists()).toBeFalsy();
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#clickReplyDropdown").at(0).simulate("click");
         expect(wrapper.find(ChangeReplyWindow).exists()).toBeTruthy();
         wrapper.find(ChangeReplyWindow).find(ListItem).at(listItem).simulate("click");
         expect(mockDispatchFn).nthCalledWith(3, {
-            payload: {tweetId: 9, replyType: replyType},
+            payload: { tweetId: 9, replyType: replyType },
             type: TweetsActionType.CHANGE_REPLY_TYPE
         });
         expect(mockDispatchFn).nthCalledWith(4, {
@@ -208,7 +212,7 @@ describe("TweetComponentActions", () => {
     };
 
     const testTweetComponentActionsModal = (itemId: string, index: number, modalTitle: string): void => {
-        const {wrapper} = createTweetComponentActionsWrapper(mockMyTweetState);
+        const { wrapper } = createTweetComponentActionsWrapper(mockMyTweetState);
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         expect(wrapper.find(TweetComponentActionsModal).at(index).prop("visibleTweetComponentActionsModal")).toBe(false);
         wrapper.find(itemId).at(index).simulate("click");
@@ -227,16 +231,16 @@ describe("TweetComponentActions", () => {
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#pin").at(0).simulate("click");
         wrapper.find(TweetComponentActionsModal).find(Button).at(1).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(3, {payload: tweetId, type: UserActionsType.FETCH_PIN_TWEET});
-        expect(mockDispatchFn).nthCalledWith(4, {payload: snackbarText, type: ActionSnackbarTypes.SET_OPEN_SNACKBAR});
+        expect(mockDispatchFn).nthCalledWith(3, { payload: tweetId, type: UserActionsType.FETCH_PIN_TWEET });
+        expect(mockDispatchFn).nthCalledWith(4, { payload: snackbarText, type: ActionSnackbarTypes.SET_OPEN_SNACKBAR });
     };
 
     const testDeleteTweet = (mockState: any, actionType: TweetActionType | TweetsActionType): void => {
-        const {wrapper} = createTweetComponentActionsWrapper(mockState);
+        const { wrapper } = createTweetComponentActionsWrapper(mockState);
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#delete").at(0).simulate("click");
         wrapper.find(TweetComponentActionsModal).find(Button).at(1).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(3, {payload: 9, type: actionType});
+        expect(mockDispatchFn).nthCalledWith(3, { payload: 9, type: actionType });
         expect(mockDispatchFn).nthCalledWith(4, {
             payload: "Your Tweet was deleted",
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
@@ -244,22 +248,22 @@ describe("TweetComponentActions", () => {
     };
 
     const testClickFollow = (iconIndex: string, text: string, actionType: UserActionsType, mockState = mockUserTweetState): void => {
-        const {wrapper} = createTweetComponentActionsWrapper(mockState);
+        const { wrapper } = createTweetComponentActionsWrapper(mockState);
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         wrapper.find("#handleFollow").at(0).simulate("click");
         expect(wrapper.find(iconIndex).exists()).toBeTruthy();
         expect(wrapper.text().includes(`${text} @${mockUserTweetAdditionalInfo.user.username}`)).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(3, {payload: {userId: 1, tweetId: 9}, type: actionType});
+        expect(mockDispatchFn).nthCalledWith(3, { payload: { userId: 1, tweetId: 9 }, type: actionType });
     };
 
     const testClickMuteUser = (iconIndex: string, text: string, snackbarText: string, mockState = mockUserTweetState): void => {
-        const {wrapper} = createTweetComponentActionsWrapper(mockState);
+        const { wrapper } = createTweetComponentActionsWrapper(mockState);
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#onMuteUser").at(0).simulate("click");
         expect(wrapper.find(iconIndex).exists()).toBeTruthy();
         expect(wrapper.text().includes(`${text} @${mockUserTweetAdditionalInfo.user.username}`)).toBe(true);
         expect(mockDispatchFn).nthCalledWith(3, {
-            payload: {userId: 1, tweetId: 9},
+            payload: { userId: 1, tweetId: 9 },
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
         expect(mockDispatchFn).nthCalledWith(4, {
@@ -269,7 +273,7 @@ describe("TweetComponentActions", () => {
     };
 
     const testClickBlockUser = (iconIndex: string, text: string, snackbarText: string, mockState = mockUserTweetState): void => {
-        const {wrapper} = createTweetComponentActionsWrapper(mockState);
+        const { wrapper } = createTweetComponentActionsWrapper(mockState);
         wrapper.find(IconButton).simulate("click");
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
         expect(wrapper.find(iconIndex).exists()).toBeTruthy();
@@ -278,7 +282,7 @@ describe("TweetComponentActions", () => {
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(true);
         wrapper.find(BlockUserModal).find(Button).at(0).simulate("click");
         expect(mockDispatchFn).nthCalledWith(3, {
-            payload: {userId: 1, tweetId: 9},
+            payload: { userId: 1, tweetId: 9 },
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
         expect(mockDispatchFn).nthCalledWith(4, {
@@ -295,6 +299,6 @@ describe("TweetComponentActions", () => {
                 onOpenTweetAnalytics={jest.fn()}
             />, mockState);
 
-        return {wrapper};
+        return { wrapper };
     };
 });

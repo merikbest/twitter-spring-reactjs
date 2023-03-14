@@ -1,5 +1,5 @@
-import {BackgroundTheme, ColorScheme, LoadingStatus} from "../../../types/common";
-import {AuthUserResponse} from "../../../types/user";
+import { BackgroundTheme, ColorScheme, LoadingStatus } from "../../../../types/common";
+import { AuthUserResponse } from "../../../../types/user";
 
 export interface UserState {
     data: AuthUserResponse | undefined;
@@ -36,5 +36,5 @@ export interface UserActionRequest {
 
 export interface ChangePhoneResponse {
     countryCode: string;
-    phone: number
+    phone: number;
 }

@@ -1,17 +1,17 @@
-import React, {FC, ReactElement, useState} from "react";
-import {useDispatch} from "react-redux";
+import React, { FC, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button/Button";
 
-import {useUnfollowButtonStyles} from "./UnfollowButtonStyles";
-import {UserResponse} from "../../../store/types/user";
-import {processFollowRequest, unfollowUser} from "../../../store/ducks/user/actionCreators";
+import { useUnfollowButtonStyles } from "./UnfollowButtonStyles";
+import { UserResponse } from "../../../types/user";
+import { processFollowRequest, unfollowUser } from "../../../store/ducks/user/actionCreators";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
 
 interface UnfollowButtonProps {
-    user?: UserResponse
+    user?: UserResponse;
 }
 
-const UnfollowButton: FC<UnfollowButtonProps> = ({user}): ReactElement => {
+const UnfollowButton: FC<UnfollowButtonProps> = ({ user }): ReactElement => {
     const classes = useUnfollowButtonStyles();
     const dispatch = useDispatch();
     const [btnText, setBtnText] = useState<string>("Following");
@@ -30,7 +30,7 @@ const UnfollowButton: FC<UnfollowButtonProps> = ({user}): ReactElement => {
         if (user?.isPrivateProfile && !user.isFollower) {
             dispatch(processFollowRequest(user!.id));
         } else {
-            dispatch(unfollowUser({userId: user!.id}));
+            dispatch(unfollowUser({ userId: user!.id }));
             setVisibleUnfollowModal(false);
         }
     };

@@ -1,6 +1,6 @@
-import { RootState } from '../../store';
-import {TagsState } from './contracts/state';
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { TagsState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 const selectTags = (state: RootState): TagsState => state.tags;
 export const selectTagsItems = (state: RootState): TagsState["tags"] => selectTags(state).tags;

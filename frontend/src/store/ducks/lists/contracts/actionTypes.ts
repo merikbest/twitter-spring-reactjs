@@ -1,8 +1,8 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
-import {AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload} from "./state";
-import {ListUserResponse, PinnedListResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload } from "./state";
+import { ListUserResponse, PinnedListResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 export enum ListsActionType {
     SET_LISTS = "lists/SET_LISTS",

@@ -1,8 +1,8 @@
-import React, {memo, ReactElement, useState} from "react";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement, useState } from "react";
+import { useSelector } from "react-redux";
 
-import {usePopperListWindowStyles} from "../PopperListWindowStyles";
-import {selectListDetailItemId, selectListDetailItemOwnerId} from "../../../../store/ducks/listDetail/selectors";
+import { usePopperListWindowStyles } from "../PopperListWindowStyles";
+import { selectListDetailItemId, selectListDetailItemOwnerId } from "../../../../store/ducks/listDetail/selectors";
 import MembersAndFollowersModal
     from "../../../FullList/FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import MembersCount from "./MembersCount/MembersCount";
@@ -41,14 +41,14 @@ const PopperListInteractionCount = memo((): ReactElement => {
                 className={classes.popperListMembers}
                 onClick={onOpenMembersModalWindow}
             >
-                <MembersCount/>
+                <MembersCount />
             </span>
             <span
                 id={"openFollowersModalWindow"}
                 className={classes.popperListMembers}
                 onClick={onOpenFollowersModalWindow}
             >
-                <FollowersCount/>
+                <FollowersCount />
             </span>
             <MembersAndFollowersModal
                 listId={listId!}

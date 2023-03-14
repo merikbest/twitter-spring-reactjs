@@ -1,12 +1,12 @@
 import React from "react";
 import routeData from "react-router";
 
-import {mockDispatch, mountWithStore} from "../../../../util/testHelper";
+import { mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import AddTweetToBookmarksButton from "../AddTweetToBookmarksButton";
-import {BOOKMARKS} from "../../../../util/pathConstants";
-import {TweetsActionType} from "../../../../store/ducks/tweets/contracts/actionTypes";
-import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
-import {TweetActionType} from "../../../../store/ducks/tweet/contracts/actionTypes";
+import { BOOKMARKS } from "../../../../constants/path-constants";
+import { TweetsActionType } from "../../../../store/ducks/tweets/contracts/actionTypes";
+import { ActionSnackbarTypes } from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { TweetActionType } from "../../../../store/ducks/tweet/contracts/actionTypes";
 
 describe("AddTweetToBookmarksButton", () => {
     let mockDispatchFn: jest.Mock;
@@ -16,7 +16,8 @@ describe("AddTweetToBookmarksButton", () => {
     });
 
     it("should click add Tweet to Bookmarks", () => {
-        const wrapper = mountWithStore(<AddTweetToBookmarksButton tweetId={1} isTweetBookmarked={false} closeShareTweet={jest.fn()}/>);
+        const wrapper = mountWithStore(<AddTweetToBookmarksButton tweetId={1} isTweetBookmarked={false}
+                                                                  closeShareTweet={jest.fn()} />);
         wrapper.find("#clickAddTweetToBookmarks").at(0).simulate("click");
         expect(wrapper.text().includes("Add Tweet to Bookmarks")).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
@@ -31,8 +32,10 @@ describe("AddTweetToBookmarksButton", () => {
 
     it("should click remove Tweet From Bookmarks", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
-            pathname: BOOKMARKS, hash: "", search: "", state: undefined});
-        const wrapper = mountWithStore(<AddTweetToBookmarksButton tweetId={1} isTweetBookmarked closeShareTweet={jest.fn()}/>);
+            pathname: BOOKMARKS, hash: "", search: "", state: undefined
+        });
+        const wrapper = mountWithStore(<AddTweetToBookmarksButton tweetId={1} isTweetBookmarked
+                                                                  closeShareTweet={jest.fn()} />);
         wrapper.find("#clickAddTweetToBookmarks").at(0).simulate("click");
         expect(wrapper.text().includes("Remove Tweet from Bookmarks")).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {

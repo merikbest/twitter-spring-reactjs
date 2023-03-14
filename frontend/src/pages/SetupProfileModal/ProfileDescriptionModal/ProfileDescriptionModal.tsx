@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, DialogContent, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Button, Dialog, DialogContent, Typography } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
-import {useProfileDescriptionModalStyles} from "./ProfileDescriptionModalStyles";
+import { useProfileDescriptionModalStyles } from "./ProfileDescriptionModalStyles";
 import ProfileDescriptionInput from "./ProfileDescriptionInput/ProfileDescriptionInput";
 
 interface ProfileDescriptionModalProps {
@@ -28,7 +28,7 @@ const ProfileDescriptionModal: FC<ProfileDescriptionModalProps> = (
         <Dialog transitionDuration={0} open={open} onClose={onClose} hideBackdrop>
             <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
-                    <TwitterIcon/>
+                    <TwitterIcon />
                 </div>
                 <Typography variant={"h3"} component={"div"}>
                     Describe yourself

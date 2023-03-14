@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Button, DialogTitle} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Button, DialogTitle } from "@material-ui/core";
 
 import CloseButton from "../../../../CloseButton/CloseButton";
-import {useUnsentTweetsHeaderStyles} from "./UnsentTweetsHeaderStyles";
+import { useUnsentTweetsHeaderStyles } from "./UnsentTweetsHeaderStyles";
 
 interface UnsentTweetsHeaderProps {
     visibleEditTweetModal: boolean;
@@ -27,7 +27,7 @@ const UnsentTweetsHeader: FC<UnsentTweetsHeaderProps> = memo((
 
     return (
         <DialogTitle>
-            <CloseButton onClose={!visibleEditTweetModal ? onClose : onCloseEditTweetModal}/>
+            <CloseButton onClose={!visibleEditTweetModal ? onClose : onCloseEditTweetModal} />
             {!visibleEditTweetModal && "Unsent Tweets"}
             {visibleEditTweetModal ? (
                 <Button

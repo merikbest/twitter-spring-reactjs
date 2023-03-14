@@ -1,22 +1,22 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Paper} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Paper } from "@material-ui/core";
 
-import {useManageMembersItemStyles} from "./ManageMembersItemStyles";
-import {selectUserDataId} from "../../../../../../store/ducks/user/selectors";
-import {ListsOwnerMemberResponse} from "../../../../../../store/types/lists";
+import { useManageMembersItemStyles } from "./ManageMembersItemStyles";
+import { selectUserDataId } from "../../../../../../store/ducks/user/selectors";
+import { ListsOwnerMemberResponse } from "../../../../../../types/lists";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
-import {useHoverUser} from "../../../../../../hook/useHoverUser";
+import { useHoverUser } from "../../../../../../hook/useHoverUser";
 import LinkWrapper from "../../../../../../components/LinkWrapper/LinkWrapper";
-import {PROFILE} from "../../../../../../util/pathConstants";
+import { PROFILE } from "../../../../../../constants/path-constants";
 import ManageMemberButton from "./ManageMemberButton/ManageMemberButton";
 import MemberItemInfo from "./MemberItemInfo/MemberItemInfo";
 import MemberItemAvatar from "./MemberItemAvatar/MemberItemAvatar";
-import {DEFAULT_PROFILE_IMG} from "../../../../../../util/url";
+import { DEFAULT_PROFILE_IMG } from "../../../../../../constants/url-constants";
 
 interface ManageMembersItemProps {
-    listId?: number
-    listOwnerId?: number
+    listId?: number;
+    listOwnerId?: number;
     user?: ListsOwnerMemberResponse;
     isSuggested?: boolean;
 }
@@ -26,18 +26,18 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
         listId,
         listOwnerId,
         user,
-        isSuggested,
+        isSuggested
     }
 ): ReactElement => {
     const classes = useManageMembersItemStyles();
     const myProfileId = useSelector(selectUserDataId);
-    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
 
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>
             <Paper className={classes.container} variant="outlined">
-                <MemberItemAvatar avatar={user?.avatar ?? DEFAULT_PROFILE_IMG}/>
-                <div style={{flex: 1}}>
+                <MemberItemAvatar avatar={user?.avatar ?? DEFAULT_PROFILE_IMG} />
+                <div style={{ flex: 1 }}>
                     <div className={classes.header}>
                         <div
                             id={"fullName"}
@@ -51,7 +51,7 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
                                 isPrivateProfile={user?.isPrivateProfile}
                                 about={user?.about}
                             />
-                            <PopperUserWindow visible={visiblePopperWindow}/>
+                            <PopperUserWindow visible={visiblePopperWindow} />
                         </div>
                         <div className={classes.buttonWrapper}>
                             {(listOwnerId === myProfileId) && (

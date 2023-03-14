@@ -1,11 +1,11 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {Link as MuiLink, Radio, Typography} from "@material-ui/core";
-import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
+import React, { FC, ReactElement, useState } from "react";
+import { Link as MuiLink, Radio, Typography } from "@material-ui/core";
+import { CheckCircle, RadioButtonUnchecked } from "@material-ui/icons";
 
-import {useAutoplayStyles} from "./AutoplayStyles";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {PUBLIC_AND_PROTECTED_TWEETS} from "../../../../../util/url";
+import { useAutoplayStyles } from "./AutoplayStyles";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { PUBLIC_AND_PROTECTED_TWEETS } from "../../../../../constants/url-constants";
 
 const Autoplay: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -37,9 +37,9 @@ const Autoplay: FC = (): ReactElement => {
                         onChange={handleChange}
                         value="Wi-Fi"
                         name="radio-buttons"
-                        inputProps={{"aria-label": "Wi-Fi"}}
-                        icon={<RadioButtonUnchecked color={"primary"}/>}
-                        checkedIcon={<CheckCircle color={"primary"}/>}
+                        inputProps={{ "aria-label": "Wi-Fi" }}
+                        icon={<RadioButtonUnchecked color={"primary"} />}
+                        checkedIcon={<CheckCircle color={"primary"} />}
                         size="small"
                     />
                 </div>
@@ -52,9 +52,9 @@ const Autoplay: FC = (): ReactElement => {
                         onChange={handleChange}
                         value="Never"
                         name="radio-buttons"
-                        inputProps={{"aria-label": "Never"}}
-                        icon={<RadioButtonUnchecked color={"primary"}/>}
-                        checkedIcon={<CheckCircle color={"primary"}/>}
+                        inputProps={{ "aria-label": "Never" }}
+                        icon={<RadioButtonUnchecked color={"primary"} />}
+                        checkedIcon={<CheckCircle color={"primary"} />}
                         size="small"
                     />
                 </div>

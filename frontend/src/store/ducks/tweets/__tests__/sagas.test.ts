@@ -1,4 +1,4 @@
-import {call} from "redux-saga/effects";
+import { call } from "redux-saga/effects";
 
 import {
     addPollRequest,
@@ -48,26 +48,30 @@ import {
     updateScheduledTweet,
     vote
 } from "../actionCreators";
-import {TweetApi} from "../../../../services/api/tweetApi";
-import {TweetResponse} from "../../../types/tweet";
-import {AxiosResponse} from "axios";
-import {TagApi} from "../../../../services/api/tagApi";
-import {ListsApi} from "../../../../services/api/listsApi";
-import {AddQuoteTweet, AddTweet, Vote} from "../contracts/state";
+import { TweetApi } from "../../../../services/api/tweetApi";
+import { TweetResponse } from "../../../../types/tweet";
+import { AxiosResponse } from "axios";
+import { TagApi } from "../../../../services/api/tagApi";
+import { ListsApi } from "../../../../services/api/listsApi";
+import { AddQuoteTweet, AddTweet, Vote } from "../contracts/state";
 import {
     mockExpectedResponse,
     testCall,
     testLoadingStatus,
     testSetResponse,
     testWatchSaga
-} from "../../../../util/testHelper";
-import {TweetsActionType} from "../contracts/actionTypes";
-import {LoadingStatus, ReplyType} from "../../../types/common";
+} from "../../../../util/test-utils/test-helper";
+import { TweetsActionType } from "../contracts/actionTypes";
+import { LoadingStatus, ReplyType } from "../../../../types/common";
+import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
 
 describe("tweetsSaga:", () => {
-    const mockTweets = [{id: 1}, {id: 2}] as TweetResponse[];
-    const mockPageableTweets = {data: mockTweets, headers: {"page-total-count": 1}} as AxiosResponse<TweetResponse[]>;
-    const mockAddTweet = {text: "test"} as AddTweet;
+    const mockTweets = [{ id: 1 }, { id: 2 }] as TweetResponse[];
+    const mockPageableTweets = {
+        data: mockTweets,
+        headers: { PAGE_TOTAL_COUNT: 1 }
+    } as AxiosResponse<TweetResponse[]>;
+    const mockAddTweet = { text: "test" } as AddTweet;
 
     describe("fetchTweetsRequest:", () => {
         const worker = fetchTweetsRequest(fetchTweets(1));
@@ -75,7 +79,7 @@ describe("tweetsSaga:", () => {
         testCall(worker, TweetApi.getTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
             items: mockPageableTweets.data,
-            pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
+            pagesCount: parseInt(mockPageableTweets.headers[PAGE_TOTAL_COUNT])
         }, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
@@ -86,7 +90,7 @@ describe("tweetsSaga:", () => {
         testCall(worker, TweetApi.getMediaTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
             items: mockPageableTweets.data,
-            pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
+            pagesCount: parseInt(mockPageableTweets.headers[PAGE_TOTAL_COUNT])
         }, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
@@ -97,7 +101,7 @@ describe("tweetsSaga:", () => {
         testCall(worker, TweetApi.getTweetsWithVideo, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
             items: mockPageableTweets.data,
-            pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
+            pagesCount: parseInt(mockPageableTweets.headers[PAGE_TOTAL_COUNT])
         }, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
@@ -108,21 +112,21 @@ describe("tweetsSaga:", () => {
         testCall(worker, TweetApi.getFollowersTweets, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, {
             items: mockPageableTweets.data,
-            pagesCount: parseInt(mockPageableTweets.headers["page-total-count"])
+            pagesCount: parseInt(mockPageableTweets.headers[PAGE_TOTAL_COUNT])
         }, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchTweetsByTagRequest:", () => {
-        const worker = fetchTweetsByTagRequest(fetchTweetsByTag({tag: "test", pageNumber: 1}));
+        const worker = fetchTweetsByTagRequest(fetchTweetsByTag({ tag: "test", pageNumber: 1 }));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TagApi.fetchTweetsByTag, {tag: "test", pageNumber: 1});
+        testCall(worker, TagApi.fetchTweetsByTag, { tag: "test", pageNumber: 1 });
         testSetResponse(worker, mockPageableTweets, setTweets, mockPageableTweets.data, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchTweetsByTextRequest:", () => {
-        const worker = fetchTweetsByTextRequest(fetchTweetsByText({text: "test", pageNumber: 1}));
+        const worker = fetchTweetsByTextRequest(fetchTweetsByText({ text: "test", pageNumber: 1 }));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         it("should call searchTweets", () => {
             const actualYield = worker.next().value;
@@ -134,7 +138,7 @@ describe("tweetsSaga:", () => {
     });
 
     describe("fetchTweetsByListIdRequest:", () => {
-        const worker = fetchTweetsByListIdRequest(fetchTweetsByListId({listId: 1, pageNumber: 1}));
+        const worker = fetchTweetsByListIdRequest(fetchTweetsByListId({ listId: 1, pageNumber: 1 }));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         it("should call getTweetsByListId", () => {
             const actualYield = worker.next().value;
@@ -147,7 +151,7 @@ describe("tweetsSaga:", () => {
     });
 
     describe("fetchQuotesByTweetIdRequest:", () => {
-        const worker = fetchQuotesByTweetIdRequest(fetchQuotesByTweetId({tweetId: 1, pageNumber: 1}));
+        const worker = fetchQuotesByTweetIdRequest(fetchQuotesByTweetId({ tweetId: 1, pageNumber: 1 }));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
         it("should call getQuotesByTweetId", () => {
             const actualYield = worker.next().value;
@@ -184,21 +188,21 @@ describe("tweetsSaga:", () => {
     });
 
     describe("addQuoteTweetRequest:", () => {
-        const mockAddQuoteTweet = {text: "test", tweetId: 1} as AddQuoteTweet;
+        const mockAddQuoteTweet = { text: "test", tweetId: 1 } as AddQuoteTweet;
         const worker = addQuoteTweetRequest(addQuoteTweet(mockAddQuoteTweet));
         testCall(worker, TweetApi.quoteTweet, mockAddQuoteTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("voteRequest:", () => {
-        const mockVote = {tweetId: 1, pollId: 1, pollChoiceId: 1} as Vote;
+        const mockVote = { tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote;
         const worker = voteRequest(vote(mockVote));
         testCall(worker, TweetApi.voteInPoll, mockVote);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("changeReplyTypeRequest:", () => {
-        const mockReplyType = {tweetId: 1, replyType: ReplyType.EVERYONE};
+        const mockReplyType = { tweetId: 1, replyType: ReplyType.EVERYONE };
         const worker = changeReplyTypeRequest(changeReplyType(mockReplyType));
         testCall(worker, TweetApi.changeTweetReplyType, mockReplyType);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
@@ -211,19 +215,19 @@ describe("tweetsSaga:", () => {
     });
 
     describe("deleteScheduledTweetsTweetRequest:", () => {
-        const worker = deleteScheduledTweetsTweetRequest(deleteScheduledTweets({tweetsIds: [1, 2, 3]}));
-        testCall(worker, TweetApi.deleteScheduledTweets, {tweetsIds: [1, 2, 3]});
+        const worker = deleteScheduledTweetsTweetRequest(deleteScheduledTweets({ tweetsIds: [1, 2, 3] }));
+        testCall(worker, TweetApi.deleteScheduledTweets, { tweetsIds: [1, 2, 3] });
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("likeTweetRequest:", () => {
-        const worker = likeTweetRequest(likeTweet({tweetId: 1}));
-        testCall(worker, TweetApi.likeTweet, {tweetId: 1});
+        const worker = likeTweetRequest(likeTweet({ tweetId: 1 }));
+        testCall(worker, TweetApi.likeTweet, { tweetId: 1 });
     });
 
     describe("retweetRequest:", () => {
-        const worker = retweetRequest(retweet({tweetId: 1}));
-        testCall(worker, TweetApi.retweet, {tweetId: 1});
+        const worker = retweetRequest(retweet({ tweetId: 1 }));
+        testCall(worker, TweetApi.retweet, { tweetId: 1 });
     });
 
     describe("fetchUserBookmarksRequest:", () => {
@@ -235,25 +239,25 @@ describe("tweetsSaga:", () => {
     });
 
     testWatchSaga(tweetsSaga, [
-        {actionType: TweetsActionType.FETCH_TWEETS, workSaga: fetchTweetsRequest},
-        {actionType: TweetsActionType.FETCH_MEDIA_TWEETS, workSaga: fetchMediaTweetsRequest},
-        {actionType: TweetsActionType.FETCH_TWEETS_WITH_VIDEO, workSaga: fetchTweetsWithVideoRequest},
-        {actionType: TweetsActionType.FETCH_FOLLOWERS_TWEETS, workSaga: fetchFollowersTweetsRequest},
-        {actionType: TweetsActionType.ADD_TWEET, workSaga: addTweetRequest},
-        {actionType: TweetsActionType.ADD_POLL, workSaga: addPollRequest},
-        {actionType: TweetsActionType.ADD_SCHEDULED_TWEET, workSaga: addScheduledTweetRequest},
-        {actionType: TweetsActionType.UPDATE_SCHEDULED_TWEET, workSaga: updateScheduledTweetRequest},
-        {actionType: TweetsActionType.ADD_QUOTE_TWEET, workSaga: addQuoteTweetRequest},
-        {actionType: TweetsActionType.VOTE, workSaga: voteRequest},
-        {actionType: TweetsActionType.CHANGE_REPLY_TYPE, workSaga: changeReplyTypeRequest},
-        {actionType: TweetsActionType.FETCH_DELETE_TWEET, workSaga: fetchDeleteTweetRequest},
-        {actionType: TweetsActionType.DELETE_SCHEDULED_TWEETS, workSaga: deleteScheduledTweetsTweetRequest},
-        {actionType: TweetsActionType.LIKE_TWEET, workSaga: likeTweetRequest},
-        {actionType: TweetsActionType.RETWEET, workSaga: retweetRequest},
-        {actionType: TweetsActionType.FETCH_TWEETS_BY_TAG, workSaga: fetchTweetsByTagRequest},
-        {actionType: TweetsActionType.FETCH_TWEETS_BY_TEXT, workSaga: fetchTweetsByTextRequest},
-        {actionType: TweetsActionType.FETCH_TWEETS_BY_LIST_ID, workSaga: fetchTweetsByListIdRequest},
-        {actionType: TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID, workSaga: fetchQuotesByTweetIdRequest},
-        {actionType: TweetsActionType.FETCH_BOOKMARKS, workSaga: fetchUserBookmarksRequest},
+        { actionType: TweetsActionType.FETCH_TWEETS, workSaga: fetchTweetsRequest },
+        { actionType: TweetsActionType.FETCH_MEDIA_TWEETS, workSaga: fetchMediaTweetsRequest },
+        { actionType: TweetsActionType.FETCH_TWEETS_WITH_VIDEO, workSaga: fetchTweetsWithVideoRequest },
+        { actionType: TweetsActionType.FETCH_FOLLOWERS_TWEETS, workSaga: fetchFollowersTweetsRequest },
+        { actionType: TweetsActionType.ADD_TWEET, workSaga: addTweetRequest },
+        { actionType: TweetsActionType.ADD_POLL, workSaga: addPollRequest },
+        { actionType: TweetsActionType.ADD_SCHEDULED_TWEET, workSaga: addScheduledTweetRequest },
+        { actionType: TweetsActionType.UPDATE_SCHEDULED_TWEET, workSaga: updateScheduledTweetRequest },
+        { actionType: TweetsActionType.ADD_QUOTE_TWEET, workSaga: addQuoteTweetRequest },
+        { actionType: TweetsActionType.VOTE, workSaga: voteRequest },
+        { actionType: TweetsActionType.CHANGE_REPLY_TYPE, workSaga: changeReplyTypeRequest },
+        { actionType: TweetsActionType.FETCH_DELETE_TWEET, workSaga: fetchDeleteTweetRequest },
+        { actionType: TweetsActionType.DELETE_SCHEDULED_TWEETS, workSaga: deleteScheduledTweetsTweetRequest },
+        { actionType: TweetsActionType.LIKE_TWEET, workSaga: likeTweetRequest },
+        { actionType: TweetsActionType.RETWEET, workSaga: retweetRequest },
+        { actionType: TweetsActionType.FETCH_TWEETS_BY_TAG, workSaga: fetchTweetsByTagRequest },
+        { actionType: TweetsActionType.FETCH_TWEETS_BY_TEXT, workSaga: fetchTweetsByTextRequest },
+        { actionType: TweetsActionType.FETCH_TWEETS_BY_LIST_ID, workSaga: fetchTweetsByListIdRequest },
+        { actionType: TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID, workSaga: fetchQuotesByTweetIdRequest },
+        { actionType: TweetsActionType.FETCH_BOOKMARKS, workSaga: fetchUserBookmarksRequest }
     ]);
 });

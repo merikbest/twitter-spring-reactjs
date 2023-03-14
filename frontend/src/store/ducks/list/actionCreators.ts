@@ -7,11 +7,11 @@ import {
     SetListActionInterface,
     SetListLoadingStateInterface,
     SetMembersSizeActionInterface,
-    UpdateFollowToFullListActionInterface,
+    UpdateFollowToFullListActionInterface
 } from "./contracts/actionTypes";
-import {BaseListResponse} from "../../types/lists";
-import {EditListsRequest} from "./contracts/state";
-import {LoadingStatus} from "../../types/common";
+import { BaseListResponse } from "../../../types/lists";
+import { EditListsRequest } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const setList = (payload: BaseListResponse): SetListActionInterface => ({
     type: ListActionType.SET_LIST,
@@ -44,7 +44,7 @@ export const deleteList = (payload: number): DeleteListActionInterface => ({
 });
 
 export const resetListState = (): ResetListStateActionInterface => ({
-    type: ListActionType.RESET_LIST_STATE,
+    type: ListActionType.RESET_LIST_STATE
 });
 
 export const setListLoadingState = (payload: LoadingStatus): SetListLoadingStateInterface => ({

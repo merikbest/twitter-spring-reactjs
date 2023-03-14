@@ -1,13 +1,13 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Button, Divider, FormControl, InputLabel, Typography} from "@material-ui/core";
+import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Divider, FormControl, InputLabel, Typography } from "@material-ui/core";
 
-import {useChangeLanguageStyles} from "./ChangeLanguageStyles";
-import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
-import {selectUserIsLoading, selectUserProfileLanguage} from "../../../../../store/ducks/user/selectors";
-import {setUserLoadingStatus, updateLanguage} from "../../../../../store/ducks/user/actionCreators";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { useChangeLanguageStyles } from "./ChangeLanguageStyles";
+import { FilledSelect } from "../../../../../components/FilledSelect/FilledSelect";
+import { selectUserIsLoading, selectUserProfileLanguage } from "../../../../../store/ducks/user/selectors";
+import { setUserLoadingStatus, updateLanguage } from "../../../../../store/ducks/user/actionCreators";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { LoadingStatus } from "../../../../../types/common";
 
 const ChangeLanguage: FC = (): ReactElement => {
     const classes = useChangeLanguageStyles();
@@ -31,7 +31,7 @@ const ChangeLanguage: FC = (): ReactElement => {
     };
 
     const onSubmit = (): void => {
-        dispatch(updateLanguage({language}));
+        dispatch(updateLanguage({ language }));
     };
 
     return (
@@ -51,7 +51,7 @@ const ChangeLanguage: FC = (): ReactElement => {
                         label="Display Language"
                         fullWidth
                     >
-                        <option aria-label="None"/>
+                        <option aria-label="None" />
                         {languages()}
                     </FilledSelect>
                 </FormControl>
@@ -60,7 +60,7 @@ const ChangeLanguage: FC = (): ReactElement => {
                     This does not change the language of the content you see in your timeline.
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={classes.buttonWrapper}>
                 <Button
                     onClick={onSubmit}

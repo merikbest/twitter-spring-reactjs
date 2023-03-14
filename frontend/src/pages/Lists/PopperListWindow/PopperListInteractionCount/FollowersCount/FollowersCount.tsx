@@ -1,8 +1,8 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
 
-import {selectListDetailItemFollowersSize} from "../../../../../store/ducks/listDetail/selectors";
+import { selectListDetailItemFollowersSize } from "../../../../../store/ducks/listDetail/selectors";
 
 const FollowersCount = memo((): ReactElement => {
     const followersSize = useSelector(selectListDetailItemFollowersSize);

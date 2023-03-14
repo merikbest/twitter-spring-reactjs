@@ -1,14 +1,14 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Switch, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Switch, Typography } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {useConversationInfoStyles} from "../ConversationInfoStyles";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { useConversationInfoStyles } from "../ConversationInfoStyles";
 
 interface SnoozeNotificationsProps {
     fullName?: string;
 }
 
-const SnoozeNotifications: FC<SnoozeNotificationsProps> = memo(({fullName}): ReactElement => {
+const SnoozeNotifications: FC<SnoozeNotificationsProps> = memo(({ fullName }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useConversationInfoStyles();
 
@@ -21,7 +21,7 @@ const SnoozeNotifications: FC<SnoozeNotificationsProps> = memo(({fullName}): Rea
                 <Typography variant={"body1"} component={"span"}>
                     {`Snooze notifications from ${fullName}`}
                 </Typography>
-                <Switch checked={false}/>
+                <Switch checked={false} />
             </div>
         </div>
     );

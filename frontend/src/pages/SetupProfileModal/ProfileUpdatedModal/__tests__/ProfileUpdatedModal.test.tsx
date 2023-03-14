@@ -1,9 +1,9 @@
 import React from "react";
-import {Button, Dialog} from "@material-ui/core";
+import { Button, Dialog } from "@material-ui/core";
 
 import ProfileUpdatedModal from "../ProfileUpdatedModal";
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("ProfileUpdatedModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -27,7 +27,7 @@ describe("ProfileUpdatedModal", () => {
                 onClose={jest.fn()}
                 onSubmit={mockOnSubmit}
             />, mockRootState);
-        
+
         wrapper.find(Button).simulate("click");
 
         expect(mockOnSubmit).toHaveBeenCalled();

@@ -1,11 +1,11 @@
-import React, {FC, ReactElement} from 'react';
-import {Divider, List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Divider, List, ListItem, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {useAdditionalResourcesStyles} from "./AdditionalResourcesStyles";
-import {ArrowTopIcon} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import { useAdditionalResourcesStyles } from "./AdditionalResourcesStyles";
+import { ArrowTopIcon } from "../../../icons";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
 import {
     ABOUT_TWITTER,
     ADS_TWITTER,
@@ -23,7 +23,7 @@ import {
     TWITTER_PRIVACY,
     TWITTER_RELEASE_NOTES,
     TWITTER_TOS
-} from "../../../util/url";
+} from "../../../constants/url-constants";
 
 const AdditionalResources: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -55,7 +55,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <Divider/>
+                    <Divider />
                     <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Legal
@@ -109,7 +109,7 @@ const AdditionalResources: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <Divider/>
+                    <Divider />
                     <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Miscellaneous

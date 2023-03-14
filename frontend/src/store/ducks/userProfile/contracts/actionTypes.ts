@@ -1,7 +1,7 @@
 import {Action} from "redux";
-import {UserProfileResponse} from "../../../types/user";
+import {UserProfileResponse} from "../../../../types/user";
 import {ChatParticipantRequest, UserProfileState} from "./state";
-import {LoadingStatus} from "../../../types/common";
+import {LoadingStatus} from "../../../../types/common";
 import {FollowUsersPayload} from "../../users/contracts/state";
 
 export enum UserProfileActionsType {

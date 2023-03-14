@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from "react";
+import React, { FC, ReactElement } from "react";
 import Button from "@material-ui/core/Button/Button";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
-import {useFollowButtonStyles} from "./FollowButtonStyles";
-import {followUser, processFollowRequest} from "../../../store/ducks/user/actionCreators";
+import { useFollowButtonStyles } from "./FollowButtonStyles";
+import { followUser, processFollowRequest } from "../../../store/ducks/user/actionCreators";
 
 interface FollowButtonProps {
     userId: number;
@@ -11,7 +11,7 @@ interface FollowButtonProps {
     size?: "medium" | "large" | "small";
 }
 
-const FollowButton: FC<FollowButtonProps> = ({userId, isPrivateProfile, size}): ReactElement => {
+const FollowButton: FC<FollowButtonProps> = ({ userId, isPrivateProfile, size }): ReactElement => {
     const classes = useFollowButtonStyles();
     const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ const FollowButton: FC<FollowButtonProps> = ({userId, isPrivateProfile, size}): 
         if (isPrivateProfile) {
             dispatch(processFollowRequest(userId));
         } else {
-            dispatch(followUser({userId}));
+            dispatch(followUser({ userId }));
         }
     };
 

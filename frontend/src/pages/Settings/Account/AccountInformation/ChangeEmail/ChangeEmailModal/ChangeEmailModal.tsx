@@ -1,20 +1,20 @@
-import React, {FC, ReactElement} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Controller, useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {Button, Checkbox, Dialog, DialogContent, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Button, Checkbox, Dialog, DialogContent, Link as MuiLink, Typography } from "@material-ui/core";
 import * as yup from "yup";
 
-import {useChangeEmailModalStyles} from "./ChangeEmailModalStyles";
-import {TweetIcon} from "../../../../../../icons";
+import { useChangeEmailModalStyles } from "./ChangeEmailModalStyles";
+import { TweetIcon } from "../../../../../../icons";
 import {
     selectUserIsError,
     selectUserIsLoading,
     selectUserProfileEmail
 } from "../../../../../../store/ducks/user/selectors";
-import {ChangeInfoTextField} from "../../../../ChangeInfoTextField/ChangeInfoTextField";
-import {updateEmail} from "../../../../../../store/ducks/user/actionCreators";
-import {EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} from "../../../../../../util/url";
+import { ChangeInfoTextField } from "../../../../ChangeInfoTextField/ChangeInfoTextField";
+import { updateEmail } from "../../../../../../store/ducks/user/actionCreators";
+import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../../../constants/url-constants";
 
 
 interface ChangeEmailModalProps {
@@ -27,22 +27,22 @@ interface EmailFormProps {
 }
 
 const SetEmailFormSchema = yup.object().shape({
-    email: yup.string().email("Invalid mail").required("Please enter a valid email address."),
+    email: yup.string().email("Invalid mail").required("Please enter a valid email address.")
 });
 
-const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactElement | null => {
+const ChangeEmailModal: FC<ChangeEmailModalProps> = ({ visible, onClose }): ReactElement | null => {
     const classes = useChangeEmailModalStyles();
     const dispatch = useDispatch();
     const myProfileEmail = useSelector(selectUserProfileEmail);
     const isLoading = useSelector(selectUserIsLoading);
     const isError = useSelector(selectUserIsError);
-    const {control, handleSubmit, formState: {errors}, getValues} = useForm<EmailFormProps>({
+    const { control, handleSubmit, formState: { errors }, getValues } = useForm<EmailFormProps>({
         resolver: yupResolver(SetEmailFormSchema),
-        mode: "onChange",
+        mode: "onChange"
     });
 
     const onSubmit = (data: EmailFormProps): void => {
-        dispatch(updateEmail({email: data.email}));
+        dispatch(updateEmail({ email: data.email }));
     };
 
     if (!visible) {
@@ -69,7 +69,7 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                         name="email"
                         control={control}
                         defaultValue=""
-                        render={({field: {onChange, value}}) => (
+                        render={({ field: { onChange, value } }) => (
                             <ChangeInfoTextField
                                 inputMode="email"
                                 id="email"
@@ -88,11 +88,12 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({visible, onClose}): ReactE
                     <div className={classes.infoWrapper}>
                         <Typography variant={"body1"} component={"span"}>
                             {"Let people who have your email address find and connect with you on Twitter. "}
-                            <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="body1" target="_blank" rel="noopener">
+                            <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="body1" target="_blank"
+                                     rel="noopener">
                                 Learn more
                             </MuiLink>
                         </Typography>
-                        <span><Checkbox/></span>
+                        <span><Checkbox /></span>
                     </div>
                     <div className={classes.footer}>
                         <Button

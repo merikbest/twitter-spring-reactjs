@@ -1,15 +1,15 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {Divider, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Divider, Typography } from "@material-ui/core";
 
-import {useLanguagesStyles} from "./LanguagesStyles";
-import {ArrowRightIcon} from "../../../../icons";
-import {selectUserProfileLanguage} from "../../../../store/ducks/user/selectors";
-import {useGlobalStyles} from "../../../../util/globalClasses";
+import { useLanguagesStyles } from "./LanguagesStyles";
+import { ArrowRightIcon } from "../../../../icons";
+import { selectUserProfileLanguage } from "../../../../store/ducks/user/selectors";
+import { useGlobalStyles } from "../../../../util/globalClasses";
 import classnames from "classnames";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {SETTINGS_INFO_LANGUAGES} from "../../../../util/pathConstants";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { SETTINGS_INFO_LANGUAGES } from "../../../../constants/path-constants";
 
 const Languages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -46,7 +46,7 @@ const Languages: FC = (): ReactElement => {
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Select additional languages
@@ -63,7 +63,7 @@ const Languages: FC = (): ReactElement => {
                 </Typography>
                 {ArrowRightIcon}
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Languages you may know

@@ -1,8 +1,8 @@
-import {testAction} from "../../../../util/testHelper";
-import {fetchChat, resetChatState, setChat, setChatLoadingState} from "../actionCreators";
-import {mockChats} from "../../../../util/mockData/mockData";
-import {ChatActionsType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types/common";
+import { testAction } from "../../../../util/test-utils/test-helper";
+import { fetchChat, resetChatState, setChat, setChatLoadingState } from "../actionCreators";
+import { mockChats } from "../../../../util/test-utils/mock-test-data";
+import { ChatActionsType } from "../contracts/actionTypes";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("chat actions", () => {
     testAction(setChat, setChat(mockChats[0]), {
@@ -16,7 +16,7 @@ describe("chat actions", () => {
     });
 
     testAction(resetChatState, resetChatState(), {
-        type: ChatActionsType.RESET_CHAT_STATE,
+        type: ChatActionsType.RESET_CHAT_STATE
     });
 
     testAction(setChatLoadingState, setChatLoadingState(LoadingStatus.LOADING), {

@@ -1,12 +1,12 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import React, { FC, memo, ReactElement } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import UserItemAction from "../UserItemAction/UserItemAction";
-import {resetUserProfileState} from "../../../../store/ducks/userProfile/actionCreators";
-import {LISTS_MEMBERSHIPS} from "../../../../util/pathConstants";
-import {selectUserProfileId} from "../../../../store/ducks/userProfile/selectors";
-import {ListsIcon} from "../../../../icons";
+import { resetUserProfileState } from "../../../../store/ducks/userProfile/actionCreators";
+import { LISTS_MEMBERSHIPS } from "../../../../constants/path-constants";
+import { selectUserProfileId } from "../../../../store/ducks/userProfile/selectors";
+import { ListsIcon } from "../../../../icons";
 
 const ViewUserListsButton: FC = memo((): ReactElement => {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const ViewUserListsButton: FC = memo((): ReactElement => {
 
     return (
         <div onClick={onClickViewUserLists}>
-            <UserItemAction title={"View Lists"} icon={ListsIcon}/>
+            <UserItemAction title={"View Lists"} icon={ListsIcon} />
         </div>
     );
 });

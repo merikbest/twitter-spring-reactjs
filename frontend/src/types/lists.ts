@@ -4,7 +4,7 @@ export interface BaseListResponse {
     description: string;
     pinnedDate: string;
     altWallpaper: string;
-    wallpaper: string
+    wallpaper: string;
     listOwner: ListOwnerResponse;
     isPrivate: boolean;
     isFollower: boolean;
@@ -26,7 +26,7 @@ export interface ListMemberResponse {
     username: string;
     about: string;
     isPrivateProfile: boolean;
-    avatar: string
+    avatar: string;
 }
 
 export interface ListsOwnerMemberResponse {
@@ -34,7 +34,7 @@ export interface ListsOwnerMemberResponse {
     fullName: string;
     username: string;
     about: string;
-    avatar: string
+    avatar: string;
     isPrivateProfile: boolean;
     isMemberInList?: boolean;
 }
@@ -44,7 +44,7 @@ export interface ListResponse {
     name: string;
     description: string;
     altWallpaper: string;
-    wallpaper: string
+    wallpaper: string;
     listOwner: ListOwnerResponse;
     isFollower: boolean;
     isListPinned: boolean;
@@ -55,7 +55,7 @@ export interface ListUserResponse {
     name: string;
     description: string;
     altWallpaper: string;
-    wallpaper: string
+    wallpaper: string;
     listOwner: ListOwnerResponse;
     isPrivate: boolean;
     isListPinned: boolean;
@@ -65,7 +65,7 @@ export interface PinnedListResponse {
     id: number;
     name: string;
     altWallpaper: string;
-    wallpaper: string
+    wallpaper: string;
     isPrivate: boolean;
     isListPinned: boolean;
 }
@@ -74,7 +74,7 @@ export interface SimpleListResponse {
     id: number;
     name: string;
     altWallpaper: string;
-    wallpaper: string
+    wallpaper: string;
     isMemberInList: boolean;
     isPrivate: boolean;
 }

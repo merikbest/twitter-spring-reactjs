@@ -1,12 +1,12 @@
-import React, {FC, memo, ReactElement, useState} from "react";
-import {useDispatch} from "react-redux";
-import {useHistory} from "react-router-dom";
+import React, { FC, memo, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import classnames from "classnames";
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
-import {useConversationInfoStyles} from "../ConversationInfoStyles";
-import {leaveFromConversation} from "../../../../store/ducks/chats/actionCreators";
-import {MESSAGES} from "../../../../util/pathConstants";
+import { useConversationInfoStyles } from "../ConversationInfoStyles";
+import { leaveFromConversation } from "../../../../store/ducks/chats/actionCreators";
+import { MESSAGES } from "../../../../constants/path-constants";
 import LeaveFromConversationModal from "../LeaveFromConversationModal/LeaveFromConversationModal";
 
 interface LeaveConversationComponentProps {
@@ -26,8 +26,8 @@ const LeaveConversationComponent: FC<LeaveConversationComponentProps> = memo((
     const [visibleLeaveFromConversationModal, setVisibleLeaveFromConversationModal] = useState<boolean>(false);
 
     const handleLeaveFromConversation = (): void => {
-        dispatch(leaveFromConversation({participantId: participantId!, chatId: chatId!}));
-        history.push({pathname: MESSAGES, state: {removeParticipant: true}});
+        dispatch(leaveFromConversation({ participantId: participantId!, chatId: chatId! }));
+        history.push({ pathname: MESSAGES, state: { removeParticipant: true } });
         setVisibleLeaveFromConversationModal(false);
     };
 

@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const usePopperListWindowStyles = makeStyles((theme: Theme) => ({
     popperListWindow: {
@@ -9,13 +9,13 @@ export const usePopperListWindowStyles = makeStyles((theme: Theme) => ({
         borderRadius: 16,
         backgroundColor: theme.palette.background.paper,
         cursor: "default",
-        boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
+        boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px"
     },
     wallpaperListImg: {
         borderRadius: "16px 16px 0px 0px",
         width: "100%",
         height: "100%",
-        inset: 0,
+        inset: 0
     },
     popperListInfo: {
         borderRadius: 16,
@@ -23,61 +23,61 @@ export const usePopperListWindowStyles = makeStyles((theme: Theme) => ({
         borderLeft: 0,
         borderRight: 0,
         padding: 12,
-        textAlign: "center",
+        textAlign: "center"
     },
     popperListTitle: {
         marginBottom: 12,
-        fontWeight: 700,
+        fontWeight: 700
     },
     popperListDescription: {
-        marginBottom: 12,
+        marginBottom: 12
     },
     popperListOwnerLink: {
         color: "black",
-        textDecoration: "none",
+        textDecoration: "none"
     },
     popperListOwnerWrapper: {
-        display: "inline-block",
+        display: "inline-block"
     },
     popperListOwnerAvatar: {
         marginRight: 4,
         width: "20px !important",
-        height: "20px !important",
+        height: "20px !important"
     },
     popperListOwnerFullName: {
         verticalAlign: "top",
         fontWeight: 700,
         marginRight: 4,
         "&:hover": {
-            textDecoration: "underline",
-        },
+            textDecoration: "underline"
+        }
     },
     popperListOwnerUsername: {
-        verticalAlign: "top",
+        verticalAlign: "top"
     },
     popperListMembers: {
         marginLeft: 20,
-        "& .MuiTypography-h6" : {
-            fontWeight: 700,
+        "& .MuiTypography-h6": {
+            fontWeight: 700
         },
         "&:hover": {
             cursor: "pointer",
-            textDecoration: "underline",
-        },
+            textDecoration: "underline"
+        }
     },
     buttonWrapper: {
         marginTop: 20,
-        marginBottom: 12,
+        marginBottom: 12
     },
     outlinedButton: {
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-        },
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.light
+        }
     },
     primaryButton: {
         width: 105,
-        '&:hover': {
-            backgroundColor: theme.palette.error.dark,
-        },
-    },
+        "&:hover": {
+            backgroundColor: theme.palette.error.dark
+        }
+    }
 }));

@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface PopperUserWindowStylesProps {
     isTweetComponent?: boolean;
@@ -15,7 +15,7 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
         borderRadius: 16,
         backgroundColor: theme.palette.background.paper,
         cursor: "default",
-        boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px",
+        boxShadow: "rgb(101 119 134 / 20%) 0px 0px 15px, rgb(101 119 134 / 15%) 0px 0px 3px 1px"
     },
     tweetComponent: {
         left: props => props.isTweetComponent ? -100 : -50
@@ -23,5 +23,5 @@ export const usePopperUserWindowStyles = makeStyles<Theme, PopperUserWindowStyle
     tweetImageModal: {
         marginTop: -10,
         right: 20
-    },
+    }
 }));

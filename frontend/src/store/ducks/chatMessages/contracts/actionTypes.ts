@@ -1,17 +1,17 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
-import {ChatMessageRequest, ChatMessageState, ChatMessageWithTweetRequest} from "./state";
-import {ChatMessageResponse} from "../../../types/chat";
-import {LoadingStatus} from "../../../types/common";
+import { ChatMessageRequest, ChatMessageState, ChatMessageWithTweetRequest } from "./state";
+import { ChatMessageResponse } from "../../../../types/chat";
+import { LoadingStatus } from "../../../../types/common";
 
 export enum ChatMessagesActionsType {
-    SET_CHAT_MESSAGES = 'chatMessages/SET_CHAT_MESSAGES',
-    SET_CHAT_MESSAGE = 'chatMessages/SET_CHAT_MESSAGE',
-    ADD_CHAT_MESSAGE = 'chatMessages/ADD_CHAT_MESSAGE',
-    ADD_CHAT_MESSAGE_WITH_TWEET = 'chatMessages/ADD_CHAT_MESSAGE_WITH_TWEET',
-    FETCH_CHAT_MESSAGES = 'chatMessages/FETCH_CHAT_MESSAGES',
-    RESET_CHAT_MESSAGES = 'chatMessages/RESET_CHAT_MESSAGES',
-    SET_LOADING_STATE = 'chatMessages/SET_LOADING_STATE',
+    SET_CHAT_MESSAGES = "chatMessages/SET_CHAT_MESSAGES",
+    SET_CHAT_MESSAGE = "chatMessages/SET_CHAT_MESSAGE",
+    ADD_CHAT_MESSAGE = "chatMessages/ADD_CHAT_MESSAGE",
+    ADD_CHAT_MESSAGE_WITH_TWEET = "chatMessages/ADD_CHAT_MESSAGE_WITH_TWEET",
+    FETCH_CHAT_MESSAGES = "chatMessages/FETCH_CHAT_MESSAGES",
+    RESET_CHAT_MESSAGES = "chatMessages/RESET_CHAT_MESSAGES",
+    SET_LOADING_STATE = "chatMessages/SET_LOADING_STATE",
 }
 
 export interface SetChatMessagesActionInterface extends Action<ChatMessagesActionsType> {

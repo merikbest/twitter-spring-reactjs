@@ -1,4 +1,4 @@
-import {SameFollowerResponse} from "./common";
+import { SameFollowerResponse } from "./common";
 
 export interface UserProfileResponse {
     id: number;
@@ -43,6 +43,14 @@ export interface UserResponse {
     isWaitingForApprove: boolean;
     isUserChatParticipant?: boolean;
     isFollower: boolean;
+}
+
+export interface CommonUserResponse {
+    id: number;
+    fullName: string;
+    username: string;
+    avatar: string;
+    isPrivateProfile: boolean;
 }
 
 export interface AuthUserResponse {

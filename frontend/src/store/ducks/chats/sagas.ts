@@ -1,15 +1,15 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
-import {AxiosResponse} from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
+import { AxiosResponse } from "axios";
 
 import {
     ChatsActionsType,
     CreateChatActionInterface,
     LeaveFromConversationActionInterface
 } from "./contracts/actionTypes";
-import {setChat, setChats, setChatsLoadingState} from "./actionCreators";
-import {ChatApi} from "../../../services/api/chatApi";
-import {ChatResponse} from "../../types/chat";
-import {LoadingStatus} from "../../types/common";
+import { setChat, setChats, setChatsLoadingState } from "./actionCreators";
+import { ChatApi } from "../../../services/api/chatApi";
+import { ChatResponse } from "../../../types/chat";
+import { LoadingStatus } from "../../../types/common";
 
 export function* fetchChatsRequest() {
     try {
@@ -21,7 +21,7 @@ export function* fetchChatsRequest() {
     }
 }
 
-export function* createChatRequest({payload}: CreateChatActionInterface) {
+export function* createChatRequest({ payload }: CreateChatActionInterface) {
     try {
         yield put(setChatsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<ChatResponse> = yield call(ChatApi.createChat, payload);
@@ -31,7 +31,7 @@ export function* createChatRequest({payload}: CreateChatActionInterface) {
     }
 }
 
-export function* leaveFromConversationRequest({payload}: LeaveFromConversationActionInterface) {
+export function* leaveFromConversationRequest({ payload }: LeaveFromConversationActionInterface) {
     try {
         yield put(setChatsLoadingState(LoadingStatus.LOADING));
         yield call(ChatApi.leaveFromConversation, payload);

@@ -1,6 +1,6 @@
-import {RootState} from "../../store";
-import {ChatsState} from "./contracts/state";
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { ChatsState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const selectChats = (state: RootState): ChatsState => state.chats;
 export const selectChatsItems = (state: RootState) => selectChats(state).items;

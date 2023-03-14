@@ -18,7 +18,7 @@ import {
     selectUsersPagesCount
 } from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
 import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {ADVANCED_TWITTER_BLOCK_OPTIONS, BLOCKING_AND_UNBLOCKING_ACCOUNTS} from "../../../../../util/url";
+import {ADVANCED_TWITTER_BLOCK_OPTIONS, BLOCKING_AND_UNBLOCKING_ACCOUNTS} from "../../../../../constants/url-constants";
 import InfiniteScrollWrapper from "../../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const BlockedAccounts: FC = (): ReactElement => {

@@ -1,5 +1,5 @@
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockUserTweetAdditionalInfo} from "../../../../util/mockData/mockData";
+import {createMockRootState} from "../../../../util/test-utils/test-helper";
+import {mockUserTweetAdditionalInfo} from "../../../../util/test-utils/mock-test-data";
 import {
     selectIsTweetAdditionalInfoLoading,
     selectIsTweetBookmarkedAdditionalInfo,

@@ -1,15 +1,15 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {ScheduleIcon} from "../../../icons";
-import {formatScheduleDate} from "../../../util/formatDate";
-import {useScheduleDateInfoStyles} from "./ScheduleDateInfoStyles";
+import { ScheduleIcon } from "../../../icons";
+import { formatScheduleDate } from "../../../util/format-date-helper";
+import { useScheduleDateInfoStyles } from "./ScheduleDateInfoStyles";
 
 interface ScheduleDateInfoProps {
     selectedScheduleDate: Date | null;
 }
 
-const ScheduleDateInfo: FC<ScheduleDateInfoProps> = memo(({selectedScheduleDate}): ReactElement => {
+const ScheduleDateInfo: FC<ScheduleDateInfoProps> = memo(({ selectedScheduleDate }): ReactElement => {
     const classes = useScheduleDateInfoStyles();
 
     return (

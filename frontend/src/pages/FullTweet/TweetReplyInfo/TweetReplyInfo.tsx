@@ -1,12 +1,12 @@
-import React, {ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { ReactElement } from "react";
+import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
-import {ReplyType} from "../../../store/types/common";
-import {FollowReplyIcon, MentionReplyIcon} from "../../../icons";
-import {selectTweetReplyType, selectTweetUserFullName} from "../../../store/ducks/tweet/selectors";
-import {useFullTweetStyles} from "../FullTweetStyles";
+import { ReplyType } from "../../../types/common";
+import { FollowReplyIcon, MentionReplyIcon } from "../../../icons";
+import { selectTweetReplyType, selectTweetUserFullName } from "../../../store/ducks/tweet/selectors";
+import { useFullTweetStyles } from "../FullTweetStyles";
 
 const TweetReplyInfo = (): ReactElement => {
     const classes = useFullTweetStyles();

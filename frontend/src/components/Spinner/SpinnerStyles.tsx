@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface SpinnerStylesProps {
     paddingTop?: number;
@@ -9,7 +9,7 @@ export const useSpinnerStyles = makeStyles<Theme, SpinnerStylesProps>((theme) =>
         width: 30,
         margin: "0px auto",
         paddingTop: props => (props.paddingTop !== undefined) ? props.paddingTop : 50,
-        paddingBottom: 50,
+        paddingBottom: 50
     },
     spinner: {
         height: 26,
@@ -18,14 +18,14 @@ export const useSpinnerStyles = makeStyles<Theme, SpinnerStylesProps>((theme) =>
         "& svg": {
             height: "100%",
             width: "100%"
-        },
+        }
     },
     "@keyframes spinner": {
         "0%": {
-            transform: "rotate(0deg)",
+            transform: "rotate(0deg)"
         },
         "100%": {
-            transform: "rotate(360deg)",
+            transform: "rotate(360deg)"
         }
     },
     backCircle: {
@@ -38,5 +38,5 @@ export const useSpinnerStyles = makeStyles<Theme, SpinnerStylesProps>((theme) =>
         strokeWidth: 4,
         strokeDasharray: 80,
         strokeDashoffset: 60
-    },
+    }
 }));

@@ -1,6 +1,6 @@
-import {RootState} from "../../store";
-import {UserTweetsState} from "./contracts/state";
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { UserTweetsState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const selectUserTweetsState = (state: RootState): UserTweetsState => state.userTweets;
 export const selectUserTweetsLoadingStatus = (state: RootState): LoadingStatus => selectUserTweetsState(state).loadingState;

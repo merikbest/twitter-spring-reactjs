@@ -1,13 +1,13 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {UsersState} from "./contracts/state";
-import {UsersActions, UsersActionsType} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types/common";
+import { UsersState } from "./contracts/state";
+import { UsersActions, UsersActionsType } from "./contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialUsersState: UsersState = {
     users: [],
     pagesCount: 1,
-    loadingState: LoadingStatus.LOADING,
+    loadingState: LoadingStatus.LOADING
 };
 
 export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActions) => {
@@ -19,7 +19,7 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
 
         case UsersActionsType.SET_PAGEABLE_USERS:
             draft.users = [...draft.users, ...action.payload.items];
-            draft.pagesCount = action.payload.pagesCount
+            draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 

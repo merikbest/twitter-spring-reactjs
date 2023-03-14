@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useWelcomeStyles = makeStyles((theme: Theme) => ({
     info: {
@@ -6,12 +6,12 @@ export const useWelcomeStyles = makeStyles((theme: Theme) => ({
         textAlign: "center",
         "& .MuiTypography-subtitle1": {
             marginTop: 12,
-            marginBottom: 20,
-        },
+            marginBottom: 20
+        }
     },
     infoButtonContainer: {
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-    },
+        alignItems: "center"
+    }
 }));

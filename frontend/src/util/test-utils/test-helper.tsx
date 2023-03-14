@@ -1,17 +1,17 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
-import {configure, mount} from "enzyme";
-import {call, put, takeLatest} from "redux-saga/effects";
+import { configure, mount } from "enzyme";
+import { call, put, takeLatest } from "redux-saga/effects";
 import configureStore from "redux-mock-store";
-import {Link, Router} from "react-router-dom";
+import { Link, Router } from "react-router-dom";
 import * as redux from "react-redux";
-import {Provider} from "react-redux";
-import {createMemoryHistory} from "history";
+import { Provider } from "react-redux";
+import { createMemoryHistory } from "history";
 import routeData from "react-router";
-import {AxiosResponse} from "axios";
-import {TextDecoder, TextEncoder} from "util";
+import { AxiosResponse } from "axios";
+import { TextDecoder, TextEncoder } from "util";
 
-import {RootState} from "../store/store";
+import { RootState } from "../../store/store";
 import {
     createMockMyProfile,
     mockFullTweet,
@@ -20,12 +20,13 @@ import {
     mockUser,
     mockUserDetailResponse,
     mockUsers
-} from "./mockData/mockData";
-import {LoadingStatus, PageableResponse} from "../store/types/common";
+} from "./mock-test-data";
+import { LoadingStatus, PageableResponse } from "../../types/common";
+import { PAGE_TOTAL_COUNT } from "../../constants/common-constants";
 
 (global as any).TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder;
-configure({adapter: new Adapter()});
+configure({ adapter: new Adapter() });
 
 // @ts-ignore
 export const testAction = (action, payload, expectedPayload) => {
@@ -68,7 +69,7 @@ export const testLoadingStatus = (worker, loadingAction, loadingStatus) => {
         const expectedYield = put(loadingAction(loadingStatus));
 
         expect(actualYield).toEqual(expectedYield);
-    })
+    });
 };
 
 // @ts-ignore
@@ -84,7 +85,7 @@ export const testCall = (worker, apiCall, payload?, data = {}) => {
         }
 
         expect(actualYield).toEqual(expectedYield);
-    })
+    });
 };
 
 // @ts-ignore
@@ -110,7 +111,7 @@ export const testWatchSaga = (watchSaga, requests, effect = takeLatest) => {
 
                 expect(actualYield).toEqual(expectedYield);
             });
-        })
+        });
     });
 };
 
@@ -128,11 +129,11 @@ export const mountWithStore = (component, mockState?, mockHistory?) => {
     );
 };
 
-export const mockExpectedResponse = <T,>(response: AxiosResponse<T>): PageableResponse<T> => {
+export const mockExpectedResponse = <T, >(response: AxiosResponse<T>): PageableResponse<T> => {
     return {
         items: response.data,
-        pagesCount: parseInt(response.headers["page-total-count"])
-    }
+        pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
+    };
 };
 
 export const mockDispatch = () => {
@@ -157,7 +158,7 @@ export const testClickOnLink = (component: any, path: string, linkIndex: number)
     const pushSpy = jest.spyOn(history, "push");
     const wrapper = mountWithStore(component, mockStore, history);
 
-    wrapper.find(Link).at(linkIndex).simulate("click", {button: 0});
+    wrapper.find(Link).at(linkIndex).simulate("click", { button: 0 });
 
     expect(pushSpy).toHaveBeenCalled();
     expect(pushSpy).toHaveBeenCalledWith(path);
@@ -167,20 +168,20 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
     return {
         chat: {
             item: undefined,
-            loadingState: loadingStatus,
+            loadingState: loadingStatus
         },
         tweetAdditionalInfo: {
             tweetAdditionalInfo: undefined,
             isTweetBookmarked: false,
-            loadingState: loadingStatus,
+            loadingState: loadingStatus
         },
         actionSnackbar: {
             snackBarMessage: "",
-            openSnackBar: false,
+            openSnackBar: false
         },
         user: {
             data: mockUser,
-            status: loadingStatus,
+            status: loadingStatus
         },
         blockedAndMutedUsers: {
             mutedUsers: [],
@@ -213,7 +214,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             members: [],
             suggested: [],
             membersLoadingState: loadingStatus,
-            suggestedLoadingState: loadingStatus,
+            suggestedLoadingState: loadingStatus
         },
         lists: {
             lists: [],
@@ -240,7 +241,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             loadingTagsState: loadingStatus,
             trends: [],
             pagesCount: 0,
-            loadingTrendsState: loadingStatus,
+            loadingTrendsState: loadingStatus
         },
         topics: {
             topics: [],
@@ -248,7 +249,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             topicsByCategories: [],
             topicsLoadingState: loadingStatus,
             followedTopicsLoadingState: loadingStatus,
-            topicsByCategoriesLoadingState: loadingStatus,
+            topicsByCategoriesLoadingState: loadingStatus
         },
         tweet: {
             tweet: mockFullTweet,
@@ -261,7 +262,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             likedUsersLoadingState: loadingStatus,
             retweetedUsersLoadingState: loadingStatus,
             repliesLoadingState: loadingStatus,
-            quotedUsersLoadingState: loadingStatus,
+            quotedUsersLoadingState: loadingStatus
         },
         tweets: {
             items: mockTweets,

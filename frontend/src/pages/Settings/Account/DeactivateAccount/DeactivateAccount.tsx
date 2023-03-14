@@ -1,19 +1,19 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {useSelector} from "react-redux";
-import {Avatar, Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Avatar, Divider, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useDeactivateAccountStyles} from "./DeactivateAccountStyles";
+import { useDeactivateAccountStyles } from "./DeactivateAccountStyles";
 import {
     selectUserDataId,
     selectUserProfileAvatar,
     selectUserProfileFullName,
     selectUserProfileUsername
 } from "../../../../store/ducks/user/selectors";
-import {REMOVE_TWITTER_PROFILE_FROM_GOOGLE_SEARCH} from "../../../../util/url";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {PROFILE, SETTINGS_INFO} from "../../../../util/pathConstants";
+import { REMOVE_TWITTER_PROFILE_FROM_GOOGLE_SEARCH } from "../../../../constants/url-constants";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { PROFILE, SETTINGS_INFO } from "../../../../constants/path-constants";
 
 const DeactivateAccount: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -27,7 +27,7 @@ const DeactivateAccount: FC = (): ReactElement => {
         <div>
             <Link to={`${PROFILE}/${myProfileId}`} className={globalClasses.linkWrapper}>
                 <div className={classes.userInfoWrapper}>
-                    <Avatar className={globalClasses.avatar} src={myProfileAvatar} alt={`avatar ${myProfileId}`}/>
+                    <Avatar className={globalClasses.avatar} src={myProfileAvatar} alt={`avatar ${myProfileId}`} />
                     <div className={classes.usernameWrapper}>
                         <Typography variant={"h6"} component={"div"}>
                             {myProfileFullName}
@@ -61,16 +61,17 @@ const DeactivateAccount: FC = (): ReactElement => {
                     to 30 days after deactivation.
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"Some account information may still be available in search engines, such as Google or Bing. "}
-                    <MuiLink href={REMOVE_TWITTER_PROFILE_FROM_GOOGLE_SEARCH} variant="subtitle2" target="_blank" rel="noopener">
+                    <MuiLink href={REMOVE_TWITTER_PROFILE_FROM_GOOGLE_SEARCH} variant="subtitle2" target="_blank"
+                             rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"If you just want to change your @username, you don’t need to deactivate your account — edit it in your "}
@@ -79,7 +80,7 @@ const DeactivateAccount: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"To use your current @username or email address with a different Twitter account, "}
@@ -89,7 +90,7 @@ const DeactivateAccount: FC = (): ReactElement => {
                     {" before you deactivate this account."}
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle2"} component={"div"}>
                     If you want to download your Twitter data, you’ll need to complete both the request and
@@ -97,7 +98,7 @@ const DeactivateAccount: FC = (): ReactElement => {
                     sent to deactivated accounts.
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={classes.deleteUser}>
                 <Typography variant={"body1"} component={"span"}>
                     Deactivate

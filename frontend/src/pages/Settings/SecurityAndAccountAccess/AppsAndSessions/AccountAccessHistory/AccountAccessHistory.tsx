@@ -1,11 +1,11 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from "react-router-dom";
-import {Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {SETTINGS_SECURITY_CONNECTED_APPS} from "../../../../../util/pathConstants";
-import {ACCESSING_YOUR_TWITTER_DATA} from "../../../../../util/url";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { SETTINGS_SECURITY_CONNECTED_APPS } from "../../../../../constants/path-constants";
+import { ACCESSING_YOUR_TWITTER_DATA } from "../../../../../constants/url-constants";
 
 const AccountAccessHistory: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

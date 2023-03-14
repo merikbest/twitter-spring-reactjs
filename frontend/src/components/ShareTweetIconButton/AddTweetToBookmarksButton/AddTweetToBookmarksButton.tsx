@@ -1,13 +1,13 @@
-import React, {FC, ReactElement} from "react";
-import {useDispatch} from "react-redux";
-import {ListItem, Typography} from "@material-ui/core";
-import {useLocation} from "react-router-dom";
+import React, { FC, ReactElement } from "react";
+import { useDispatch } from "react-redux";
+import { ListItem, Typography } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
 
-import {AddBookmarksIcon} from "../../../icons";
-import {addTweetToBookmarks} from "../../../store/ducks/tweet/actionCreators";
-import {BOOKMARKS} from "../../../util/pathConstants";
-import {removeTweetFromBookmarks} from "../../../store/ducks/tweets/actionCreators";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import { AddBookmarksIcon } from "../../../icons";
+import { addTweetToBookmarks } from "../../../store/ducks/tweet/actionCreators";
+import { BOOKMARKS } from "../../../constants/path-constants";
+import { removeTweetFromBookmarks } from "../../../store/ducks/tweets/actionCreators";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface AddTweetToBookmarksButtonProps {
     tweetId: number;

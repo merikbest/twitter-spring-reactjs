@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface TweetLikeIconButtonProps {
     isTweetLiked?: boolean;
@@ -7,19 +7,19 @@ interface TweetLikeIconButtonProps {
 export const useLikeIconButtonStyles = makeStyles<Theme, TweetLikeIconButtonProps>((theme) => ({
     likeIcon: {
         "& .MuiIconButton-root": {
-            "& svg" : {
-                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
+            "& svg": {
+                color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary
             },
             "&:hover": {
                 backgroundColor: "rgba(249, 24, 128, 0.1) !important",
                 "& svg": {
-                    color: "rgb(224, 36, 94) !important",
-                },
-            },
+                    color: "rgb(224, 36, 94) !important"
+                }
+            }
         },
         "& span": {
             verticalAlign: "middle",
-            color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary,
-        },
-    },
+            color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary
+        }
+    }
 }));

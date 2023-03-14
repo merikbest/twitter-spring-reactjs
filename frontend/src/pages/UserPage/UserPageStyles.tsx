@@ -80,12 +80,12 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     },
     outlinedButton: {
         float: 'right',
-        marginTop: '84px',
+        marginTop: 84,
         height: 42,
     },
     primaryButton: {
         "&.MuiButtonBase-root": {
-            marginTop: '84px',
+            marginTop: 84,
             width: 102,
             '&:hover': {
                 backgroundColor: theme.palette.error.dark,
@@ -105,7 +105,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         },
     },
     details: {
-        lineHeight: "20px",
+        lineHeight: 20,
         "& .MuiTypography-h6": {
             marginRight: 3,
         },
@@ -120,10 +120,10 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     followLink: {
         cursor: "pointer",
         textDecoration: 'none',
-        lineHeight: "20px",
+        lineHeight: 20,
         color: theme.palette.text.secondary,
         "& span": {
-            lineHeight: "20px",
+            lineHeight: 20,
         },
         "&:hover": {
             textDecoration: "underline",

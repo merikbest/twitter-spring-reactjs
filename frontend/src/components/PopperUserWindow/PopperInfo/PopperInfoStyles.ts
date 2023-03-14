@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const usePopperInfoStyles = makeStyles((theme) => ({
     userInfoWrapper: {
@@ -7,16 +7,16 @@ export const usePopperInfoStyles = makeStyles((theme) => ({
         "& a": {
             textDecoration: "none",
             "&:hover": {
-                textDecoration: "underline !important",
-            },
-        },
+                textDecoration: "underline !important"
+            }
+        }
     },
     lockIcon: {
         "& svg": {
             color: theme.palette.text.primary,
             marginLeft: 3,
             marginBottom: -3,
-            height: "1.2em",
-        },
-    },
+            height: "1.2em"
+        }
+    }
 }));

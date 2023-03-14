@@ -1,11 +1,11 @@
-import React, {FC, memo, ReactElement, useEffect, useState} from 'react';
-import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement, useEffect, useState } from "react";
+import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
 import classnames from "classnames";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import {useShareTweetModalStyles} from "./ShareTweetStyles";
-import {ShareIcon} from "../../icons";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useShareTweetModalStyles } from "./ShareTweetStyles";
+import { ShareIcon } from "../../icons";
+import { useGlobalStyles } from "../../util/globalClasses";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
 import SendViaDirectMessageButton from "./SendViaDirectMessageButton/SendViaDirectMessageButton";
 import AddTweetToBookmarksButton from "./AddTweetToBookmarksButton/AddTweetToBookmarksButton";
@@ -16,7 +16,7 @@ import {
 } from "../../store/ducks/tweetAdditionalInfo/actionCreators";
 import {
     selectIsTweetAdditionalInfoLoading,
-    selectIsTweetBookmarkedAdditionalInfo,
+    selectIsTweetBookmarkedAdditionalInfo
 } from "../../store/ducks/tweetAdditionalInfo/selectors";
 import Spinner from "../Spinner/Spinner";
 import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
@@ -26,9 +26,9 @@ interface ShareTweetProps {
     isFullTweet?: boolean;
 }
 
-const ShareTweetIconButton: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}): ReactElement => {
+const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useShareTweetModalStyles({isFullTweet});
+    const classes = useShareTweetModalStyles({ isFullTweet });
     const dispatch = useDispatch();
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);
     const isTweetBookmarked = useSelector(selectIsTweetBookmarkedAdditionalInfo);
@@ -40,7 +40,7 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}):
             dispatch(fetchIsTweetBookmarkedAdditionalInfo(tweetId));
         }
         return () => {
-            dispatch(resetTweetAdditionalInfo())
+            dispatch(resetTweetAdditionalInfo());
         };
     }, [tweetId, shareTweetOpen]);
 
@@ -72,16 +72,16 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({tweetId, isFullTweet}):
                 {shareTweetOpen && (
                     <div className={classnames(classes.dropdown, globalClasses.svg)}>
                         {isTweetAdditionalInfoLoading ? (
-                            <Spinner paddingTop={90}/>
+                            <Spinner paddingTop={90} />
                         ) : (
                             <List>
-                                <SendViaDirectMessageButton onClickSendViaDirectMessage={onClickSendViaDirectMessage}/>
+                                <SendViaDirectMessageButton onClickSendViaDirectMessage={onClickSendViaDirectMessage} />
                                 <AddTweetToBookmarksButton
                                     tweetId={tweetId}
                                     isTweetBookmarked={isTweetBookmarked}
                                     closeShareTweet={handleClickAway}
                                 />
-                                <CopyLinkToTweetButton closeShareTweet={handleClickAway}/>
+                                <CopyLinkToTweetButton closeShareTweet={handleClickAway} />
                                 <ListItem>
                                     <>{ShareIcon}</>
                                     <Typography variant={"body1"} component={"span"}>

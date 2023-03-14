@@ -1,10 +1,10 @@
 import React from "react";
-import {Radio} from "@material-ui/core";
+import { Radio } from "@material-ui/core";
 
 import Display from "../Display";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {UserActionsType} from "../../../../../store/ducks/user/contracts/actionTypes";
-import {BackgroundTheme, ColorScheme} from "../../../../../store/types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { UserActionsType } from "../../../../../store/ducks/user/contracts/actionTypes";
+import { BackgroundTheme, ColorScheme } from "../../../../../types/common";
 
 describe("Display", () => {
     let mockDispatchFn: jest.Mock;
@@ -63,7 +63,7 @@ describe("Display", () => {
         expect(mockChangeColorScheme).toHaveBeenCalled();
         expect(mockChangeColorScheme).toHaveBeenCalledWith(ColorScheme.YELLOW);
     });
-    
+
     it("should click Background Dim", () => {
         testOnClickBackground(1, BackgroundTheme.DIM);
     });
@@ -76,7 +76,7 @@ describe("Display", () => {
         localStorage.setItem("background", "DIM");
         testOnClickBackground(0, BackgroundTheme.DEFAULT);
     });
-    
+
     const testOnClickBackground = (itemIndex: number, background: BackgroundTheme): void => {
         const mockChangeBackgroundColor = jest.fn();
         const wrapper = mountWithStore(
@@ -84,14 +84,14 @@ describe("Display", () => {
                 changeBackgroundColor={mockChangeBackgroundColor}
                 changeColorScheme={jest.fn()}
             />, createMockRootState());
-        
+
         expect(wrapper.find(Radio).at(itemIndex).prop("checked")).toBe(false);
 
         wrapper.find(`#${background.toLowerCase()}`).simulate("click");
 
         expect(wrapper.find(Radio).at(itemIndex).prop("checked")).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {backgroundColor: background},
+            payload: { backgroundColor: background },
             type: UserActionsType.UPDATE_BACKGROUND_COLOR
         });
         expect(mockChangeBackgroundColor).toHaveBeenCalled();

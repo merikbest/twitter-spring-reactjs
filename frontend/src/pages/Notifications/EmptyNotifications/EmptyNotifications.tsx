@@ -1,15 +1,15 @@
-import React, {FC, ReactElement} from 'react';
-import {Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {useEmptyNotificationsStyles} from "./EmptyNotificationsStyles";
+import { useEmptyNotificationsStyles } from "./EmptyNotificationsStyles";
 
 interface EmptyNotificationsProps {
     isNotification: boolean;
 }
 
-const EmptyNotifications: FC<EmptyNotificationsProps> = ({isNotification}): ReactElement => {
+const EmptyNotifications: FC<EmptyNotificationsProps> = ({ isNotification }): ReactElement => {
     const classes = useEmptyNotificationsStyles();
-    
+
     return (
         <div className={classes.infoWindow}>
             <Typography variant={"h4"} component={"div"}>

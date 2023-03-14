@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 
 import {
     API_TOPICS_CATEGORY,
@@ -6,8 +6,8 @@ import {
     API_TOPICS_FOLLOWED,
     API_TOPICS_NOT_INTERESTED,
     API_TOPICS_SUGGESTED
-} from "../../util/endpoints";
-import {TopicResponse} from "../../store/types/topic";
+} from "../../constants/endpoint-constants";
+import { TopicResponse } from "../../types/topic";
 import {
     SuggestedTopicsRequest,
     TopicsByCategoriesResponse,
@@ -35,5 +35,5 @@ export const TopicApi = {
     },
     async processFollowTopic(topicId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(`${API_TOPICS_FOLLOW}/${topicId}`);
-    },
+    }
 };

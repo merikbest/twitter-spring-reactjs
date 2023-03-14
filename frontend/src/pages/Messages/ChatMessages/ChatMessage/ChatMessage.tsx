@@ -1,17 +1,17 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Link} from "react-router-dom";
-import {Avatar, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Avatar, Typography } from "@material-ui/core";
 import classNames from "classnames";
 
-import {useChatMessageStyles} from "./ChatMessageStyles";
-import {HOME_TWEET} from "../../../../util/pathConstants";
-import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
-import {formatChatMessageDate, formatDate} from "../../../../util/formatDate";
-import {textFormatter} from "../../../../util/textFormatter";
-import {CheckIcon} from "../../../../icons";
-import {ChatMessageResponse} from "../../../../store/types/chat";
-import {selectUserDataId} from "../../../../store/ducks/user/selectors";
+import { useChatMessageStyles } from "./ChatMessageStyles";
+import { HOME_TWEET } from "../../../../constants/path-constants";
+import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
+import { formatChatMessageDate, formatDate } from "../../../../util/format-date-helper";
+import { textFormatter } from "../../../../util/text-formatter";
+import { CheckIcon } from "../../../../icons";
+import { ChatMessageResponse } from "../../../../types/chat";
+import { selectUserDataId } from "../../../../store/ducks/user/selectors";
 import {
     selectChatFirstParticipantAvatar,
     selectChatSecondParticipantAvatar,
@@ -23,8 +23,8 @@ interface ChatMessageProps {
     isParticipantMessage: boolean;
 }
 
-const ChatMessage: FC<ChatMessageProps> = memo(({message, isParticipantMessage}): ReactElement => {
-    const classes = useChatMessageStyles({isParticipantMessage});
+const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage }): ReactElement => {
+    const classes = useChatMessageStyles({ isParticipantMessage });
     const myProfileId = useSelector(selectUserDataId);
     const chatSecondParticipantId = useSelector(selectChatSecondParticipantId);
     const chatFirstParticipantAvatar = useSelector(selectChatFirstParticipantAvatar);

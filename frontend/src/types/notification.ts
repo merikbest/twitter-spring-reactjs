@@ -1,6 +1,6 @@
-import {NotificationType} from "./common";
-import {TweetResponse} from "./tweet";
-import {UserResponse} from "./user";
+import { NotificationType } from "./common";
+import { TweetResponse } from "./tweet";
+import { UserResponse } from "./user";
 
 export interface NotificationsResponse {
     notifications: NotificationResponse[];

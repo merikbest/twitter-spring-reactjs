@@ -1,4 +1,4 @@
-import {BookmarkedTweetPayload, UserTweetRequest, UserTweetsState} from "./contracts/state";
+import { BookmarkedTweetPayload, UserTweetRequest, UserTweetsState } from "./contracts/state";
 import {
     DeleteUserTweetActionInterface,
     FetchUserLikedTweetsActionInterface,
@@ -16,9 +16,14 @@ import {
     SetUserTweetsLoadingStatusInterface,
     UserTweetsActionType
 } from "./contracts/actionTypes";
-import {BlockedToTweetsPayload, FollowToTweetsPayload, MutedToTweetsPayload, TweetResponse} from "../../types/tweet";
-import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
-import {LoadingStatus, PageableResponse} from "../../types/common";
+import {
+    BlockedToTweetsPayload,
+    FollowToTweetsPayload,
+    MutedToTweetsPayload,
+    TweetResponse
+} from "../../../types/tweet";
+import { NotificationReplyResponse, NotificationResponse } from "../../../types/notification";
+import { LoadingStatus, PageableResponse } from "../../../types/common";
 
 export const setUserTweets = (payload: PageableResponse<UserTweetsState["items"]>): SetUserTweetsActionInterface => ({
     type: UserTweetsActionType.SET_TWEETS,
@@ -41,7 +46,7 @@ export const setMutedUsersTweetState = (payload: MutedToTweetsPayload): SetMuted
 });
 
 export const resetUserTweets = (): ResetUserTweetsActionInterface => ({
-    type: UserTweetsActionType.RESET_TWEETS,
+    type: UserTweetsActionType.RESET_TWEETS
 });
 
 export const setAddedUserTweet = (payload: TweetResponse): SetAddedUserTweetActionInterface => ({

@@ -1,5 +1,5 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
-import {AxiosResponse} from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
+import { AxiosResponse } from "axios";
 
 import {
     FetchMentionsActionInterface,
@@ -15,20 +15,21 @@ import {
     setTweetAuthorsLoadingState,
     setTweetAuthorsNotifications
 } from "./actionCreators";
-import {UserApi} from "../../../services/api/userApi";
-import {setPageableTweets, setTweetsLoadingState} from "../tweets/actionCreators";
-import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../types/notification";
-import {TweetResponse} from "../../types/tweet";
-import {LoadingStatus} from "../../types/common";
-import {TweetApi} from "../../../services/api/tweetApi";
+import { UserApi } from "../../../services/api/userApi";
+import { setPageableTweets, setTweetsLoadingState } from "../tweets/actionCreators";
+import { NotificationInfoResponse, NotificationResponse, NotificationUserResponse } from "../../../types/notification";
+import { TweetResponse } from "../../../types/tweet";
+import { LoadingStatus } from "../../../types/common";
+import { TweetApi } from "../../../services/api/tweetApi";
+import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
 
-export function* fetchNotificationsRequest({payload}: FetchNotificationsActionInterface) {
+export function* fetchNotificationsRequest({ payload }: FetchNotificationsActionInterface) {
     try {
         yield put(setNotificationsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<NotificationResponse[]> = yield call(UserApi.getUserNotifications, payload);
         yield put(setNotifications({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setNotificationsLoadingState(LoadingStatus.ERROR));
@@ -45,33 +46,33 @@ export function* fetchFetchTweetAuthorsNotificationsRequest() {
     }
 }
 
-export function* fetchNotificationsFromTweetAuthorsRequest({payload}: FetchNotificationsFromTweetAuthorsActionInterface) {
+export function* fetchNotificationsFromTweetAuthorsRequest({ payload }: FetchNotificationsFromTweetAuthorsActionInterface) {
     try {
         yield put(setNotificationsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(UserApi.getNotificationsFromTweetAuthors, payload);
         yield put(setPageableTweets({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setNotificationsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchMentionsRequest({payload}: FetchMentionsActionInterface) {
+export function* fetchMentionsRequest({ payload }: FetchMentionsActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserMentions, payload);
         yield put(setPageableTweets({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchNotificationInfoRequest({payload}: FetchNotificationInfoActionInterface) {
+export function* fetchNotificationInfoRequest({ payload }: FetchNotificationInfoActionInterface) {
     try {
         const response: AxiosResponse<NotificationInfoResponse> = yield call(UserApi.getUserNotificationById, payload);
         yield put(setNotificationInfo(response.data));

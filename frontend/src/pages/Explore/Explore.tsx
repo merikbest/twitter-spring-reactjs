@@ -1,12 +1,12 @@
-import React, {ChangeEvent, FC, FormEvent, ReactElement, useEffect, useState} from 'react';
-import {useHistory, useLocation} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import React, { ChangeEvent, FC, FormEvent, ReactElement, useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {IconButton, InputAdornment, Paper} from "@material-ui/core";
+import { IconButton, InputAdornment, Paper } from "@material-ui/core";
 
-import {MainSearchTextField} from "../../components/SearchTextField/MainSearchTextField";
+import { MainSearchTextField } from "../../components/SearchTextField/MainSearchTextField";
 import {
     fetchMediaTweets,
     fetchTweets,
@@ -16,17 +16,17 @@ import {
     resetTweets
 } from "../../store/ducks/tweets/actionCreators";
 import BackButton from "../../components/BackButton/BackButton";
-import {selectIsTweetsLoaded, selectPagesCount, selectTweetsItemsSize} from "../../store/ducks/tweets/selectors";
-import {useExploreStyles} from "./ExploreStyles";
-import {EditIcon, SearchIcon} from "../../icons";
+import { selectIsTweetsLoaded, selectPagesCount, selectTweetsItemsSize } from "../../store/ducks/tweets/selectors";
+import { useExploreStyles } from "./ExploreStyles";
+import { EditIcon, SearchIcon } from "../../icons";
 import {
     fetchUsersSearch,
     fetchUsersSearchByUsername,
     resetUsersState
 } from "../../store/ducks/usersSearch/actionCreators";
-import {selectUsersPagesCount} from "../../store/ducks/usersSearch/selectors";
-import {useGlobalStyles} from "../../util/globalClasses";
-import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import { selectUsersPagesCount } from "../../store/ducks/usersSearch/selectors";
+import { useGlobalStyles } from "../../util/globalClasses";
+import { withDocumentTitle } from "../../hoc/withDocumentTitle";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 import UsersList from "./UsersList/UsersList";
 import TweetsList from "./TweetsList/TweetsList";
@@ -49,12 +49,12 @@ const Explore: FC = (): ReactElement => {
         window.scrollTo(0, 0);
 
         if (location.state?.tag) {
-            dispatch(fetchTweetsByTag({tag: location.state?.tag, pageNumber: 0}));
+            dispatch(fetchTweetsByTag({ tag: location.state?.tag, pageNumber: 0 }));
             setText(decodeURIComponent(location.state?.tag));
         }
 
         if (location.state?.text) {
-            dispatch(fetchTweetsByText({text: location.state?.text, pageNumber: 0}));
+            dispatch(fetchTweetsByText({ text: location.state?.text, pageNumber: 0 }));
             setText(decodeURIComponent(location.state?.text));
         }
 
@@ -70,9 +70,9 @@ const Explore: FC = (): ReactElement => {
     const loadTweets = (): void => {
         if (text) {
             if (activeTab !== 2) {
-                dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: page}));
+                dispatch(fetchTweetsByText({ text: encodeURIComponent(text), pageNumber: page }));
             } else {
-                dispatch(fetchUsersSearchByUsername({username: encodeURIComponent(text), pageNumber: page}));
+                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: page }));
             }
         } else {
             if (activeTab === 2) {
@@ -93,7 +93,7 @@ const Explore: FC = (): ReactElement => {
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         setText("");
-        history.replace({pathname: location.pathname, state: {}});
+        history.replace({ pathname: location.pathname, state: {} });
         setActiveTab(newValue);
     };
 
@@ -103,10 +103,10 @@ const Explore: FC = (): ReactElement => {
         if (text) {
             if (activeTab !== 2) {
                 dispatch(resetTweets());
-                dispatch(fetchTweetsByText({text: encodeURIComponent(text), pageNumber: 0}));
+                dispatch(fetchTweetsByText({ text: encodeURIComponent(text), pageNumber: 0 }));
             } else {
                 dispatch(resetUsersState());
-                dispatch(fetchUsersSearchByUsername({username: encodeURIComponent(text), pageNumber: 0}));
+                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: 0 }));
             }
         }
     };
@@ -143,9 +143,9 @@ const Explore: FC = (): ReactElement => {
         <Paper className={globalClasses.pageContainer} variant="outlined">
             <PageHeaderWrapper>
                 <div>
-                    <form style={{display: "block"}} onSubmit={handleSubmitSearch}>
+                    <form style={{ display: "block" }} onSubmit={handleSubmitSearch}>
                         <div className={classes.backButtonWrapper}>
-                            <BackButton/>
+                            <BackButton />
                         </div>
                         <MainSearchTextField
                             variant="outlined"
@@ -157,7 +157,7 @@ const Explore: FC = (): ReactElement => {
                                     <InputAdornment position="start">
                                         {SearchIcon}
                                     </InputAdornment>
-                                ),
+                                )
                             }}
                         />
                         <IconButton className={classes.editButton} color="primary" size="small">
@@ -166,27 +166,27 @@ const Explore: FC = (): ReactElement => {
                     </form>
                     <div className={classes.tabs}>
                         <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                            <Tab onClick={() => handleShowItems(showTopTweets)} label="Top"/>
-                            <Tab onClick={() => handleShowItems(showTopTweets)} label="Latest"/>
-                            <Tab onClick={() => handleShowItems(showUsers)} label="People"/>
-                            <Tab onClick={() => handleShowItems(showMediaTweets)} label="Photos"/>
-                            <Tab onClick={() => handleShowItems(showTweetsWithVideos)} label="Videos"/>
+                            <Tab onClick={() => handleShowItems(showTopTweets)} label="Top" />
+                            <Tab onClick={() => handleShowItems(showTopTweets)} label="Latest" />
+                            <Tab onClick={() => handleShowItems(showUsers)} label="People" />
+                            <Tab onClick={() => handleShowItems(showMediaTweets)} label="Photos" />
+                            <Tab onClick={() => handleShowItems(showTweetsWithVideos)} label="Videos" />
                         </Tabs>
                     </div>
                 </div>
             </PageHeaderWrapper>
             <div className={classes.contentWrapper}>
                 <InfiniteScroll
-                    style={{overflow: "unset"}}
+                    style={{ overflow: "unset" }}
                     dataLength={tweetsSize}
                     next={loadTweets}
                     hasMore={page < (activeTab === 2 ? usersPagesCount : tweetsPagesCount)}
                     loader={null}
                 >
                     {(activeTab !== 2) ? (
-                        <TweetsList/>
+                        <TweetsList />
                     ) : (
-                        <UsersList/>
+                        <UsersList />
                     )}
                 </InfiniteScroll>
             </div>

@@ -1,5 +1,5 @@
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockTopics} from "../../../../util/mockData/mockData";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockTopics } from "../../../../util/test-utils/mock-test-data";
 import {
     selectFollowedTopicsItems,
     selectIsFollowedTopicsLoading,
@@ -8,8 +8,8 @@ import {
     selectTopicsByCategories,
     selectTopicsItems
 } from "../selectors";
-import {TopicCategory} from "../../../types/topic";
-import {LoadingStatus} from "../../../types/common";
+import { TopicCategory } from "../../../../types/topic";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("topics selectors:", () => {
     const mockState = createMockRootState();
@@ -18,7 +18,7 @@ describe("topics selectors:", () => {
         it("should return TopicResponse array", () => {
             expect(selectTopicsItems({
                 ...mockState,
-                topics: {...mockState.topics, topics: mockTopics}
+                topics: { ...mockState.topics, topics: mockTopics }
             })).toBe(mockTopics);
         });
     });
@@ -27,7 +27,7 @@ describe("topics selectors:", () => {
         it("should return TopicResponse array", () => {
             expect(selectFollowedTopicsItems({
                 ...mockState,
-                topics: {...mockState.topics, followedTopics: mockTopics}
+                topics: { ...mockState.topics, followedTopics: mockTopics }
             })).toBe(mockTopics);
         });
     });
@@ -38,9 +38,9 @@ describe("topics selectors:", () => {
                 ...mockState,
                 topics: {
                     ...mockState.topics,
-                    topicsByCategories: [{topicCategory: TopicCategory.GAMING, topicsByCategories: mockTopics}]
+                    topicsByCategories: [{ topicCategory: TopicCategory.GAMING, topicsByCategories: mockTopics }]
                 }
-            })).toStrictEqual([{topicCategory: TopicCategory.GAMING, topicsByCategories: mockTopics}]);
+            })).toStrictEqual([{ topicCategory: TopicCategory.GAMING, topicsByCategories: mockTopics }]);
         });
     });
 

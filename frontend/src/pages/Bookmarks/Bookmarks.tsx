@@ -1,13 +1,13 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Paper} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Paper } from "@material-ui/core";
 
-import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
-import {fetchUserBookmarks, resetTweets} from "../../store/ducks/tweets/actionCreators";
+import { selectIsTweetsLoading, selectPagesCount, selectTweetsItems } from "../../store/ducks/tweets/selectors";
+import { fetchUserBookmarks, resetTweets } from "../../store/ducks/tweets/actionCreators";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import Spinner from "../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../util/globalClasses";
-import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import { useGlobalStyles } from "../../util/globalClasses";
+import { withDocumentTitle } from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
 import BookmarksHeader from "./BookmarksHeader/BookmarksHeader";
@@ -35,20 +35,20 @@ const Bookmarks: FC = (): ReactElement => {
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadBookmarks}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
-                <BookmarksHeader/>
+                <BookmarksHeader />
                 <div className={globalClasses.contentWrapper}>
                     {(isLoading && !tweets.length) ? (
-                        <Spinner/>
+                        <Spinner />
                     ) : (
                         (!isLoading && !tweets.length) ? (
-                            <EmptyPageDescription 
-                                title={"You haven’t added any Tweets to your Bookmarks yet"} 
-                                subtitle={"When you do, they’ll show up here."} 
+                            <EmptyPageDescription
+                                title={"You haven’t added any Tweets to your Bookmarks yet"}
+                                subtitle={"When you do, they’ll show up here."}
                             />
                         ) : (
                             <>
-                                {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
-                                {isLoading && <Spinner/>}
+                                {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)}
+                                {isLoading && <Spinner />}
                             </>
                         )
                     )}

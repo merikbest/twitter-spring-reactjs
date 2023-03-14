@@ -1,27 +1,27 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {BlockedAndMutedUsersActions, BlockedAndMutedUsersActionsType} from './contracts/actionTypes';
-import {BlockedAndMutedUsersState} from './contracts/state';
-import {LoadingStatus} from "../../types/common";
+import { BlockedAndMutedUsersActions, BlockedAndMutedUsersActionsType } from "./contracts/actionTypes";
+import { BlockedAndMutedUsersState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialBlockedAndMutedUsersState: BlockedAndMutedUsersState = {
     blockedUsers: [],
     mutedUsers: [],
     pagesCount: 0,
-    loadingState: LoadingStatus.LOADING,
+    loadingState: LoadingStatus.LOADING
 };
 
 export const blockedAndMutedUsersReducer = produce((draft: Draft<BlockedAndMutedUsersState>, action: BlockedAndMutedUsersActions) => {
     switch (action.type) {
         case BlockedAndMutedUsersActionsType.SET_BLOCKED_USERS:
             draft.blockedUsers = [...draft.blockedUsers, ...action.payload.items];
-            draft.pagesCount = action.payload.pagesCount
+            draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case BlockedAndMutedUsersActionsType.SET_MUTED_USERS:
             draft.mutedUsers = [...draft.mutedUsers, ...action.payload.items];
-            draft.pagesCount = action.payload.pagesCount
+            draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 

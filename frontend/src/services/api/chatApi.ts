@@ -1,11 +1,11 @@
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 
-import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../../store/ducks/chatMessages/contracts/state";
-import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
-import {UserResponse} from "../../store/types/user";
-import {ChatParticipantRequest} from "../../store/ducks/userProfile/contracts/state";
-import {LeaveConversationRequest} from "../../store/ducks/chats/contracts/state";
-import {SearchByNameRequest} from "../../store/ducks/usersSearch/contracts/state";
+import { ChatMessageRequest, ChatMessageWithTweetRequest } from "../../store/ducks/chatMessages/contracts/state";
+import { ChatMessageResponse, ChatResponse } from "../../types/chat";
+import { UserResponse } from "../../types/user";
+import { ChatParticipantRequest } from "../../store/ducks/userProfile/contracts/state";
+import { LeaveConversationRequest } from "../../store/ducks/chats/contracts/state";
+import { SearchByNameRequest } from "../../store/ducks/usersSearch/contracts/state";
 import {
     API_CHAT,
     API_CHAT_ADD_MESSAGE,
@@ -17,7 +17,7 @@ import {
     API_CHAT_READ_MESSAGES,
     API_CHAT_SEARCH,
     API_CHAT_USERS
-} from "../../util/endpoints";
+} from "../../constants/endpoint-constants";
 
 export const ChatApi = {
     async getChatById(chatId: number): Promise<AxiosResponse<ChatResponse>> {
@@ -48,6 +48,6 @@ export const ChatApi = {
         return await axios.get<string>(`${API_CHAT_LEAVE}/${request.participantId}/${request.chatId}`);
     },
     async searchParticipantsByUsername(request: SearchByNameRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_CHAT_SEARCH}/${request.username}`, {params: {page: request.pageNumber}});
-    },
+        return await axios.get<UserResponse[]>(`${API_CHAT_SEARCH}/${request.username}`, { params: { page: request.pageNumber } });
+    }
 };

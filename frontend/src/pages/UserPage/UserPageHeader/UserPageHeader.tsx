@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
 
-import {LockIcon} from "../../../icons";
+import { LockIcon } from "../../../icons";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 import {
     selectUserProfileFullName,
@@ -12,13 +12,13 @@ import {
     selectUserProfileMediaTweetCount,
     selectUserProfileTweetCount
 } from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { useUserPageStyles } from "../UserPageStyles";
 
 interface UserPageHeaderProps {
     activeTab: number;
 }
 
-const UserPageHeader: FC<UserPageHeaderProps> = memo(({activeTab}): ReactElement => {
+const UserPageHeader: FC<UserPageHeaderProps> = memo(({ activeTab }): ReactElement => {
     const classes = useUserPageStyles();
     const userProfileId = useSelector(selectUserProfileId);
     const fullName = useSelector(selectUserProfileFullName);

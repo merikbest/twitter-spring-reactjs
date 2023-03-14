@@ -1,17 +1,17 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
-import {UserDetailResponse} from "../../../types/user";
-import {UserDetailsRequest} from "./state";
-import {LoadingStatus} from "../../../types/common";
+import { UserDetailResponse } from "../../../../types/user";
+import { UserDetailsRequest } from "./state";
+import { LoadingStatus } from "../../../../types/common";
 
 export enum UserDetailActionsType {
-    SET_USER_DETAIL = 'userDetail/SET_USER_DETAIL',
-    SET_FOLLOW_TO_USER_DETAIL = 'userDetail/SET_FOLLOW_TO_USER_DETAIL',
-    SET_BLOCK_USER_DETAIL = 'userDetail/SET_BLOCK_USER_DETAIL',
-    SET_FOLLOW_REQUEST_TO_USER_DETAIL = 'userProfile/SET_FOLLOW_REQUEST_TO_USER_DETAIL',
-    FETCH_USER_DETAIL = 'userDetail/FETCH_USER_DETAIL',
-    RESET_USER_DETAIL_STATE = 'userDetail/RESET_USER_DETAIL_STATE',
-    SET_LOADING_STATE = 'userDetail/SET_LOADING_STATE',
+    SET_USER_DETAIL = "userDetail/SET_USER_DETAIL",
+    SET_FOLLOW_TO_USER_DETAIL = "userDetail/SET_FOLLOW_TO_USER_DETAIL",
+    SET_BLOCK_USER_DETAIL = "userDetail/SET_BLOCK_USER_DETAIL",
+    SET_FOLLOW_REQUEST_TO_USER_DETAIL = "userProfile/SET_FOLLOW_REQUEST_TO_USER_DETAIL",
+    FETCH_USER_DETAIL = "userDetail/FETCH_USER_DETAIL",
+    RESET_USER_DETAIL_STATE = "userDetail/RESET_USER_DETAIL_STATE",
+    SET_LOADING_STATE = "userDetail/SET_LOADING_STATE",
 }
 
 export interface SetUserDetailActionInterface extends Action<UserDetailActionsType> {

@@ -1,13 +1,13 @@
-import React, {FC, ReactElement} from "react";
+import React, { FC, ReactElement } from "react";
 import Button from "@material-ui/core/Button/Button";
 
-import {useFollowTopicButtonStyles} from "./FollowTopicButtonStyles";
+import { useFollowTopicButtonStyles } from "./FollowTopicButtonStyles";
 
 interface FollowTopicButtonProps {
     onClickButton: () => void;
 }
 
-const FollowTopicButton: FC<FollowTopicButtonProps> = ({onClickButton}): ReactElement => {
+const FollowTopicButton: FC<FollowTopicButtonProps> = ({ onClickButton }): ReactElement => {
     const classes = useFollowTopicButtonStyles();
 
     return (

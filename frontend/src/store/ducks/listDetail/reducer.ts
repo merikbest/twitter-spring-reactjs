@@ -1,12 +1,12 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {ListDetailActionsType, UserDetailActions} from "./contracts/actionTypes";
-import {ListDetailState} from "./contracts/state";
-import {LoadingStatus} from "../../types/common";
+import { ListDetailActionsType, UserDetailActions } from "./contracts/actionTypes";
+import { ListDetailState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialListDetailState: ListDetailState = {
     item: undefined,
-    loadingState: LoadingStatus.LOADING,
+    loadingState: LoadingStatus.LOADING
 };
 
 export const listDetailReducer = produce((draft: Draft<ListDetailState>, action: UserDetailActions) => {

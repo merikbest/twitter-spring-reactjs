@@ -1,4 +1,4 @@
-import {Image, LinkCoverSize, ReplyType} from "./common";
+import { Image, LinkCoverSize, ReplyType } from "./common";
 
 export interface TweetResponse {
     id: number;
@@ -44,7 +44,7 @@ export interface TweetAdditionalInfoResponse {
         isMyProfileBlocked: boolean;
         isUserBlocked: boolean;
         isUserMuted: boolean;
-    }
+    };
 }
 
 export interface UserTweetResponse {

@@ -1,5 +1,5 @@
-import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 export interface ListsState {
     lists: ListResponse[];
@@ -31,5 +31,5 @@ export interface AddUserToListsRequest {
 
 export interface UpdateListsPayload {
     listId: number;
-    isMember: boolean
+    isMember: boolean;
 }

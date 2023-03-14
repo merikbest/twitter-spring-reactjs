@@ -1,7 +1,7 @@
 import React from "react";
 
-import {mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { ActionSnackbarTypes } from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 import CopyLinkToTweetButton from "../CopyLinkToTweetButton";
 
 describe("CopyLinkToTweetButton", () => {
@@ -12,7 +12,7 @@ describe("CopyLinkToTweetButton", () => {
     });
 
     it("should click Copy Link To Tweet", () => {
-        const wrapper = mountWithStore(<CopyLinkToTweetButton closeShareTweet={jest.fn()}/>);
+        const wrapper = mountWithStore(<CopyLinkToTweetButton closeShareTweet={jest.fn()} />);
         wrapper.find("#copyLinkToTweet").at(0).simulate("click");
         expect(wrapper.text().includes("Copy link to Tweet")).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {

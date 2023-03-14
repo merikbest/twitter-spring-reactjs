@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {Divider, List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Divider, List, ListItem, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {usePrivacyAndSafetyStyles} from "./PrivacyAndSafetyStyles";
+import { usePrivacyAndSafetyStyles } from "./PrivacyAndSafetyStyles";
 import {
     AdsIcon,
     ArrowRightIcon,
@@ -19,8 +19,8 @@ import {
     QuoteTweetIcon,
     SpacesIcon
 } from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
 import {
     SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES,
     SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE,
@@ -33,8 +33,8 @@ import {
     SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY,
     SETTINGS_PRIVACY_AND_SAFETY_SPACES,
     SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS
-} from "../../../util/pathConstants";
-import {FORMS_PRIVACY, PRIVACY_TWITTER, TWITTER_PRIVACY} from "../../../util/url";
+} from "../../../constants/path-constants";
+import { FORMS_PRIVACY, PRIVACY_TWITTER, TWITTER_PRIVACY } from "../../../constants/url-constants";
 
 const PrivacyAndSafety: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -47,7 +47,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     Manage what information you see and share on Twitter.
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Your Twitter activity
@@ -182,7 +182,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Divider/>
+                    <Divider />
                     <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Data sharing and off-Twitter activity
@@ -261,7 +261,7 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </Link>
-                    <Divider/>
+                    <Divider />
                     <div className={globalClasses.itemInfoWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Learn more about privacy on Twitter

@@ -1,11 +1,11 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from "react-router-dom";
-import {List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { List, ListItem, Typography } from "@material-ui/core";
 
-import {AppsIcon, ArrowRightIcon, ConnectedIcon, SecurityIcon} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
-import {SETTINGS_SECURITY, SETTINGS_SECURITY_APPS_AND_SESSIONS} from "../../../util/pathConstants";
+import { AppsIcon, ArrowRightIcon, ConnectedIcon, SecurityIcon } from "../../../icons";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
+import { SETTINGS_SECURITY, SETTINGS_SECURITY_APPS_AND_SESSIONS } from "../../../constants/path-constants";
 
 const SecurityAndAccountAccess: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

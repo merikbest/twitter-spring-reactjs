@@ -1,6 +1,6 @@
-import React, {FC, ReactElement} from 'react';
-import {useProfileUpdatedModalStyles} from "./ProfileUpdatedModalStyles";
-import {Button, Dialog, DialogContent, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { useProfileUpdatedModalStyles } from "./ProfileUpdatedModalStyles";
+import { Button, Dialog, DialogContent, Typography } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
 interface ProfileUpdatedModalProps {
@@ -9,14 +9,14 @@ interface ProfileUpdatedModalProps {
     onSubmit: () => Promise<void>;
 }
 
-const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({open, onClose, onSubmit}): ReactElement => {
+const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({ open, onClose, onSubmit }): ReactElement => {
     const classes = useProfileUpdatedModalStyles();
 
     return (
         <Dialog transitionDuration={0} open={open} onClose={onClose} hideBackdrop>
             <DialogContent className={classes.container}>
                 <div className={classes.logoIcon}>
-                    <TwitterIcon/>
+                    <TwitterIcon />
                 </div>
                 <Typography variant={"h3"} component={"div"} className={classes.title}>
                     Your profile is updated

@@ -1,12 +1,12 @@
-import React, {FC, memo, ReactElement, useCallback, useEffect, useRef, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement, useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {useTweetComponentMoreStyles} from "./TweetComponentActionsStyles";
-import {EditIcon, EmbedTweetIcon, ReportIcon} from "../../icons";
-import {selectUserDataId} from "../../store/ducks/user/selectors";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useTweetComponentMoreStyles } from "./TweetComponentActionsStyles";
+import { EditIcon, EmbedTweetIcon, ReportIcon } from "../../icons";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
+import { useGlobalStyles } from "../../util/globalClasses";
 import ChangeReplyWindow from "../ChangeReplyWindow/ChangeReplyWindow";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
 import TweetActivityButton from "./TweetActivityButton/TweetActivityButton";
@@ -17,7 +17,10 @@ import PinTweetButton from "./PinTweetButton/PinTweetButton";
 import DeleteTweetButton from "./DeleteTweetButton/DeleteTweetButton";
 import FollowUserButton from "./FollowUserButton/FollowUserButton";
 import ChangeReplyButton from "./ChangeReplyButton/ChangeReplyButton";
-import {fetchTweetAdditionalInfo, resetTweetAdditionalInfo} from "../../store/ducks/tweetAdditionalInfo/actionCreators";
+import {
+    fetchTweetAdditionalInfo,
+    resetTweetAdditionalInfo
+} from "../../store/ducks/tweetAdditionalInfo/actionCreators";
 import {
     selectIsTweetAdditionalInfoLoading,
     selectTweetInfoAddressedTweetId,
@@ -32,19 +35,20 @@ import {
     selectTweetInfoUserUsername
 } from "../../store/ducks/tweetAdditionalInfo/selectors";
 import Spinner from "../Spinner/Spinner";
-import {ReplyType} from "../../store/types/common";
-import {changeReplyType} from "../../store/ducks/tweets/actionCreators";
-import {setOpenSnackBar} from "../../store/ducks/actionSnackbar/actionCreators";
-import {useParams} from "react-router-dom";
+import { ReplyType } from "../../types/common";
+import { changeReplyType } from "../../store/ducks/tweets/actionCreators";
+import { setOpenSnackBar } from "../../store/ducks/actionSnackbar/actionCreators";
+import { useParams } from "react-router-dom";
 
 interface TweetComponentActionsProps {
     tweetId: number;
     isFullTweet?: boolean;
     onOpenTweetAnalytics?: () => void;
 }
-const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({tweetId, isFullTweet}): ReactElement => {
+
+const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({ tweetId, isFullTweet }): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useTweetComponentMoreStyles({isFullTweet: isFullTweet});
+    const classes = useTweetComponentMoreStyles({ isFullTweet: isFullTweet });
     const dispatch = useDispatch();
     const params = useParams<{ userId: string }>();
     const myProfileId = useSelector(selectUserDataId);
@@ -69,7 +73,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({tweetId, is
         }
         return () => {
             dispatch(resetTweetAdditionalInfo());
-        }
+        };
     }, [tweetId, openActionsDropdown]);
 
     useEffect(() => {
@@ -97,7 +101,7 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({tweetId, is
     }, []);
 
     const onChangeTweetReplyType = (replyType: ReplyType): void => {
-        dispatch(changeReplyType({tweetId, userId: params.userId, replyType}));
+        dispatch(changeReplyType({ tweetId, userId: params.userId, replyType }));
         let snackBarMessage;
 
         if (replyType === ReplyType.EVERYONE) {
@@ -116,11 +120,11 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({tweetId, is
         <div ref={ref}>
             <ClickAwayListener onClickAway={handleClickAwayActionsDropdown}>
                 <div className={classes.root}>
-                    <ActionIconButton actionText={"More"} onClick={handleClickActionsDropdown} icon={EditIcon}/>
+                    <ActionIconButton actionText={"More"} onClick={handleClickActionsDropdown} icon={EditIcon} />
                     {openActionsDropdown && (
                         <div className={classnames(classes.dropdown, globalClasses.svg)}>
                             {isTweetAdditionalInfoLoading ? (
-                                <Spinner paddingTop={95}/>
+                                <Spinner paddingTop={95} />
                             ) : (
                                 <List>
                                     {(myProfileId === tweetUserId) ? (
@@ -134,8 +138,8 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({tweetId, is
                                                 tweetId={tweetId}
                                                 onCloseActionsDropdown={handleClickAwayActionsDropdown}
                                             />
-                                            <AddToListButton userId={tweetUserId!} username={tweetUserUsername!}/>
-                                            <ChangeReplyButton handleClickReplyDropdown={handleClickReplyDropdown}/>
+                                            <AddToListButton userId={tweetUserId!} username={tweetUserUsername!} />
+                                            <ChangeReplyButton handleClickReplyDropdown={handleClickReplyDropdown} />
                                             <ListItem>
                                                 <>{EmbedTweetIcon}</>
                                                 <Typography variant={"body1"} component={"span"}>

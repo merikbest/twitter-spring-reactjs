@@ -1,9 +1,9 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import ImageList from "../ImageList";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("ImageList", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -11,7 +11,7 @@ describe("ImageList", () => {
     it("should render correctly", () => {
         const mockRemoveImage = jest.fn();
         const wrapper = mountWithStore(
-            <ImageList images={[{id: 1, src: "test_img"}]} removeImage={mockRemoveImage}/>, mockRootState);
+            <ImageList images={[{ id: 1, src: "test_img" }]} removeImage={mockRemoveImage} />, mockRootState);
 
         wrapper.find(IconButton).at(0).simulate("click");
 

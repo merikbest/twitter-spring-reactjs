@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Button, DialogTitle} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Button, DialogTitle } from "@material-ui/core";
 
 import CloseButton from "../../../CloseButton/CloseButton";
-import {useScheduleModalStyles} from "../ScheduleModalStyles";
+import { useScheduleModalStyles } from "../ScheduleModalStyles";
 
 interface ScheduleModalTitleProps {
     onClose: () => void;
@@ -25,7 +25,7 @@ const ScheduleTitle: FC<ScheduleModalTitleProps> = memo((
 
     return (
         <DialogTitle>
-            <CloseButton onClose={onClose}/>
+            <CloseButton onClose={onClose} />
             Schedule
             <div className={classes.buttonWrapper}>
                 {selectedScheduleDate && (

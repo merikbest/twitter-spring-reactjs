@@ -1,13 +1,13 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {PROFILE} from "../../../util/pathConstants";
-import {LockIcon} from "../../../icons";
-import {formatDate} from "../../../util/formatDate";
+import { PROFILE } from "../../../constants/path-constants";
+import { LockIcon } from "../../../icons";
+import { formatDate } from "../../../util/format-date-helper";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import LinkWrapper from "../../LinkWrapper/LinkWrapper";
-import {useHoverUser} from "../../../hook/useHoverUser";
-import {useTweetHeaderStyles} from "./TweetHeaderStyles";
+import { useHoverUser } from "../../../hook/useHoverUser";
+import { useTweetHeaderStyles } from "./TweetHeaderStyles";
 
 interface TweetHeaderProps {
     dateTime?: string;
@@ -23,11 +23,11 @@ const TweetHeader: FC<TweetHeaderProps> = memo((
         fullName,
         username,
         isPrivateProfile,
-        dateTime,
+        dateTime
     }
 ): ReactElement => {
     const classes = useTweetHeaderStyles();
-    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
 
     return (
         <LinkWrapper path={`${PROFILE}/${userId}`} visiblePopperWindow={visiblePopperWindow}>
@@ -42,7 +42,7 @@ const TweetHeader: FC<TweetHeaderProps> = memo((
                 <Typography variant={"subtitle1"} component={"span"}>
                     {formatDate(new Date(dateTime!))}
                 </Typography>
-                <PopperUserWindow visible={visiblePopperWindow} isTweetComponent/>
+                <PopperUserWindow visible={visiblePopperWindow} isTweetComponent />
             </span>
         </LinkWrapper>
     );

@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useTweetActionResultStyles = makeStyles<Theme>((theme) => ({
     container: {
@@ -9,12 +9,12 @@ export const useTweetActionResultStyles = makeStyles<Theme>((theme) => ({
         color: theme.palette.text.secondary,
         "& svg": {
             verticalAlign: "bottom",
-            height: "1.20em",
+            height: "1.20em"
         },
         "& .MuiTypography-subtitle2": {
             marginLeft: 12,
-            fontWeight: 700,
-        },
-    },
+            fontWeight: 700
+        }
+    }
 }));
 

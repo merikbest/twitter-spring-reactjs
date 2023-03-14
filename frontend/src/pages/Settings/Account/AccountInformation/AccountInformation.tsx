@@ -1,9 +1,9 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Divider, Link as MuiLink, List, ListItem, Typography} from "@material-ui/core";
-import {Link} from 'react-router-dom';
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Divider, Link as MuiLink, List, ListItem, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-import {ArrowRightIcon} from "../../../../icons";
+import { ArrowRightIcon } from "../../../../icons";
 import {
     selectUserDataIsPrivateProfile,
     selectUserProfileCountryCode,
@@ -14,11 +14,11 @@ import {
     selectUserProfileRegistrationDate,
     selectUserProfileUsername
 } from "../../../../store/ducks/user/selectors";
-import {formatScheduleDate} from "../../../../util/formatDate";
-import {getCountry, getPhoneCode} from "../../../../util/countryCodes";
-import {fetchUserData} from "../../../../store/ducks/user/actionCreators";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import { formatScheduleDate } from "../../../../util/format-date-helper";
+import { getCountry, getPhoneCode } from "../../../../util/country-code-helper";
+import { fetchUserData } from "../../../../store/ducks/user/actionCreators";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import {
     SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES,
     SETTINGS_INFO_AGE,
@@ -28,7 +28,7 @@ import {
     SETTINGS_INFO_PHONE,
     SETTINGS_INFO_USERNAME,
     SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE
-} from "../../../../util/pathConstants";
+} from "../../../../constants/path-constants";
 
 const AccountInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -105,7 +105,7 @@ const AccountInformation: FC = (): ReactElement => {
                         </MuiLink>
                     </Typography>
                 </div>
-                <Divider/>
+                <Divider />
                 <Link to={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE}>
                     <ListItem>
                         <div>
@@ -129,7 +129,7 @@ const AccountInformation: FC = (): ReactElement => {
                         {formatScheduleDate(new Date(registrationDate!))}
                     </Typography>
                 </div>
-                <Divider/>
+                <Divider />
                 <Link to={SETTINGS_INFO_COUNTRY}>
                     <ListItem>
                         <div>
@@ -186,7 +186,7 @@ const AccountInformation: FC = (): ReactElement => {
                         </MuiLink>
                     </Typography>
                 </div>
-                <Divider/>
+                <Divider />
                 <Link to={SETTINGS_INFO_AGE}>
                     <ListItem>
                         <div>

@@ -1,13 +1,13 @@
-import React, {FC, ReactElement} from "react";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {MessagesIcon} from "../../../icons";
+import { MessagesIcon } from "../../../icons";
 
 interface SendViaDirectMessageButtonProps {
     onClickSendViaDirectMessage: () => void;
 }
 
-const SendViaDirectMessageButton: FC<SendViaDirectMessageButtonProps> = ({onClickSendViaDirectMessage}): ReactElement => {
+const SendViaDirectMessageButton: FC<SendViaDirectMessageButtonProps> = ({ onClickSendViaDirectMessage }): ReactElement => {
 
     return (
         <ListItem id={"clickSendViaDirectMessage"} onClick={onClickSendViaDirectMessage}>

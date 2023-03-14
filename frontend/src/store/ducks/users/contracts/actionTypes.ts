@@ -1,4 +1,4 @@
-import {Action} from "redux";
+import { Action } from "redux";
 import {
     BlockedUsersPayload,
     FollowRequestUsersPayload,
@@ -7,20 +7,20 @@ import {
     SubscribedUsersPayload,
     UsersState
 } from "./state";
-import {LoadingStatus, PageableResponse} from "../../../types/common";
+import { LoadingStatus, PageableResponse } from "../../../../types/common";
 
 export enum UsersActionsType {
-    FETCH_USERS = 'users/FETCH_USERS',
-    FETCH_RELEVANT_USERS = 'users/FETCH_RELEVANT_USERS',
-    SET_USERS = 'users/SET_USERS', // TODO DELETE
-    SET_PAGEABLE_USERS = 'users/SET_PAGEABLE_USERS',
-    SET_FOLLOW_TO_USERS_STATE = 'users/SET_FOLLOW_TO_USERS_STATE',
-    SET_FOLLOW_REQUEST_TO_USERS_STATE = 'users/SET_FOLLOW_REQUEST_TO_USERS_STATE',
-    SET_BLOCKED_USERS_STATE = 'users/SET_BLOCKED_USERS_STATE',
-    SET_MUTED_USERS_STATE = 'users/SET_MUTED_USERS_STATE',
-    SET_SUBSCRIBED_USERS_STATE = 'users/SET_SUBSCRIBED_USERS_STATE',
-    RESET_USERS_STATE = 'users/RESET_USERS_STATE',
-    SET_USER_LOADING_STATE = 'users/SET_USER_LOADING_STATE',
+    FETCH_USERS = "users/FETCH_USERS",
+    FETCH_RELEVANT_USERS = "users/FETCH_RELEVANT_USERS",
+    SET_USERS = "users/SET_USERS", // TODO DELETE
+    SET_PAGEABLE_USERS = "users/SET_PAGEABLE_USERS",
+    SET_FOLLOW_TO_USERS_STATE = "users/SET_FOLLOW_TO_USERS_STATE",
+    SET_FOLLOW_REQUEST_TO_USERS_STATE = "users/SET_FOLLOW_REQUEST_TO_USERS_STATE",
+    SET_BLOCKED_USERS_STATE = "users/SET_BLOCKED_USERS_STATE",
+    SET_MUTED_USERS_STATE = "users/SET_MUTED_USERS_STATE",
+    SET_SUBSCRIBED_USERS_STATE = "users/SET_SUBSCRIBED_USERS_STATE",
+    RESET_USERS_STATE = "users/RESET_USERS_STATE",
+    SET_USER_LOADING_STATE = "users/SET_USER_LOADING_STATE",
 }
 
 export interface FetchUsersActionInterface extends Action<UsersActionsType> {

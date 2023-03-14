@@ -1,10 +1,10 @@
-import React, {FC, ReactElement, useState} from "react";
-import {useDispatch} from "react-redux";
+import React, { FC, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button/Button";
 
-import {useUnfollowButtonStyles} from "./UnfollowButtonStyles";
+import { useUnfollowButtonStyles } from "./UnfollowButtonStyles";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
-import {processFollowRequest, unfollowUser} from "../../../store/ducks/user/actionCreators";
+import { processFollowRequest, unfollowUser } from "../../../store/ducks/user/actionCreators";
 
 interface UnfollowButtonProps {
     userId: number;
@@ -41,7 +41,7 @@ const UnfollowButton: FC<UnfollowButtonProps> = (
         if (isPrivateProfile) {
             dispatch(processFollowRequest(userId));
         } else {
-            dispatch(unfollowUser({userId}));
+            dispatch(unfollowUser({ userId }));
             setVisibleUnfollowModal(false);
         }
     };

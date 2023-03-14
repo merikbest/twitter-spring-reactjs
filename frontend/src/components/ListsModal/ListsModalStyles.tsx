@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useListsModalStyles = makeStyles<Theme>((theme) => ({
     dialog: {
@@ -7,15 +7,15 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
             marginBottom: 0,
             borderBottom: `1px solid ${theme.palette.divider}`,
             "& .MuiButton-root": {
-                marginLeft: "auto",
-            },
-        },
+                marginLeft: "auto"
+            }
+        }
     },
     content: {
         height: 600,
         width: 598,
         padding: "0px 0px",
-        overflowX: "hidden",
+        overflowX: "hidden"
     },
     createList: {
         width: "100%",
@@ -24,20 +24,20 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
         borderBottom: `1px solid ${theme.palette.divider}`,
         "&:hover": {
             cursor: "pointer",
-            backgroundColor: theme.palette.secondary.main,
-        },
+            backgroundColor: theme.palette.secondary.main
+        }
     },
     listAvatar: {
         width: "48px !important",
         height: "48px !important",
         borderRadius: "12px !important",
-        marginRight: 15,
+        marginRight: 15
     },
     list: {
         "& .MuiListItem-root": {
             "& .MuiTypography-body1": {
                 fontWeight: 700,
-                fontSize: 15,
+                fontSize: 15
             },
             padding: "12px 16px",
             "&:hover": {
@@ -48,14 +48,14 @@ export const useListsModalStyles = makeStyles<Theme>((theme) => ({
                 position: "absolute",
                 right: 0,
                 marginRight: 16,
-                "& svg" : {
+                "& svg": {
                     color: theme.palette.primary.main,
-                    height: "1.30em",
-                },
-            },
+                    height: "1.30em"
+                }
+            }
         },
         "& .Mui-selected": {
-            backgroundColor: theme.palette.action.hover,
-        },
-    },
+            backgroundColor: theme.palette.action.hover
+        }
+    }
 }));

@@ -13,7 +13,7 @@ import {
     SetUsersSearchActionInterface,
     SetUsersSearchLoadingStatusActionInterface,
     UsersSearchActionsType
-} from './contracts/actionTypes';
+} from "./contracts/actionTypes";
 import {
     BlockedUsersPayload,
     FollowersRequest,
@@ -22,7 +22,7 @@ import {
     SearchByNameRequest,
     UsersSearchState
 } from "./contracts/state";
-import {PageableResponse} from "../../types/common";
+import { PageableResponse } from "../../../types/common";
 
 export const setUsersSearch = (payload: UsersSearchState["users"]): SetUsersSearchActionInterface => ({
     type: UsersSearchActionsType.SET_USERS,
@@ -80,7 +80,7 @@ export const fetchParticipantsByUsername = (payload: SearchByNameRequest): Fetch
 });
 
 export const resetUsersState = (): ResetUsersStateActionInterface => ({
-    type: UsersSearchActionsType.RESET_USERS_STATE,
+    type: UsersSearchActionsType.RESET_USERS_STATE
 });
 
 export const setUsersSearchLoadingState = (payload: UsersSearchState["loadingState"]): SetUsersSearchLoadingStatusActionInterface => ({

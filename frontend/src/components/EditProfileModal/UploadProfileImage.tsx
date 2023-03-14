@@ -1,5 +1,5 @@
-import React, {FC, useCallback, useEffect, useRef} from 'react';
-import {ImageObj} from "../AddTweetForm/AddTweetForm";
+import React, { FC, useCallback, useEffect, useRef } from "react";
+import { ImageObj } from "../AddTweetForm/AddTweetForm";
 import IconButton from "@material-ui/core/IconButton";
 import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 
@@ -7,10 +7,10 @@ interface UploadProfileImageProps {
     setupProfile?: boolean;
     name: string;
     image?: ImageObj;
-    onChangeImage: (imageObj: ImageObj) => void
+    onChangeImage: (imageObj: ImageObj) => void;
 }
 
-const UploadProfileImage: FC<UploadProfileImageProps> = ({setupProfile, name, image, onChangeImage}) => {
+const UploadProfileImage: FC<UploadProfileImageProps> = ({ setupProfile, name, image, onChangeImage }) => {
     const uploadRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = (): void => {
@@ -25,18 +25,18 @@ const UploadProfileImage: FC<UploadProfileImageProps> = ({setupProfile, name, im
             const file = target.files?.[0];
             if (file) {
                 const fileObj = new Blob([file]);
-                onChangeImage({src: URL.createObjectURL(fileObj), file});
+                onChangeImage({ src: URL.createObjectURL(fileObj), file });
             }
         }
     }, []);
 
     useEffect(() => {
         if (uploadRef.current) {
-            uploadRef.current.addEventListener('change', handleChangeFileInput);
+            uploadRef.current.addEventListener("change", handleChangeFileInput);
         }
         return () => {
             if (uploadRef.current) {
-                uploadRef.current.removeEventListener('change', handleChangeFileInput);
+                uploadRef.current.removeEventListener("change", handleChangeFileInput);
             }
         };
     }, []);
@@ -45,10 +45,10 @@ const UploadProfileImage: FC<UploadProfileImageProps> = ({setupProfile, name, im
         <>
             {name === "wallpaper" ?
                 <>
-                    <IconButton onClick={handleClickImage} style={{color: "#fff"}}>
-                        <PhotoCameraOutlinedIcon/>
+                    <IconButton onClick={handleClickImage} style={{ color: "#fff" }}>
+                        <PhotoCameraOutlinedIcon />
                     </IconButton>
-                    <input ref={uploadRef} type="file" id="upload-wallpaper-input" hidden/>
+                    <input ref={uploadRef} type="file" id="upload-wallpaper-input" hidden />
                 </> :
                 <>
                     <IconButton
@@ -61,9 +61,9 @@ const UploadProfileImage: FC<UploadProfileImageProps> = ({setupProfile, name, im
                             color: "#fff"
                         }}
                     >
-                        <PhotoCameraOutlinedIcon/>
+                        <PhotoCameraOutlinedIcon />
                     </IconButton>
-                    <input ref={uploadRef} type="file" id="upload-avatar-input" hidden/>
+                    <input ref={uploadRef} type="file" id="upload-avatar-input" hidden />
                 </>
             }
         </>

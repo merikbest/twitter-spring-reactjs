@@ -1,5 +1,5 @@
-import {AxiosResponse} from "axios";
-import {takeEvery} from "redux-saga/effects";
+import { AxiosResponse } from "axios";
+import { takeEvery } from "redux-saga/effects";
 
 import {
     addTweetToBookmarksRequest,
@@ -29,25 +29,29 @@ import {
     setTweetData,
     setTweetLoadingState
 } from "../actionCreators";
-import {TweetResponse} from "../../../types/tweet";
-import {TweetApi} from "../../../../services/api/tweetApi";
-import {setUpdatedBookmarkedTweetTweetsState} from "../../tweets/actionCreators";
-import {setUpdatedBookmarkedTweetUserTweetState} from "../../userTweets/actionCreators";
-import {ReplyTweet} from "../contracts/state";
-import {UserResponse} from "../../../types/user";
+import { TweetResponse } from "../../../../types/tweet";
+import { TweetApi } from "../../../../services/api/tweetApi";
+import { setUpdatedBookmarkedTweetTweetsState } from "../../tweets/actionCreators";
+import { setUpdatedBookmarkedTweetUserTweetState } from "../../userTweets/actionCreators";
+import { ReplyTweet } from "../contracts/state";
+import { UserResponse } from "../../../../types/user";
 import {
     mockExpectedResponse,
     testCall,
     testLoadingStatus,
     testSetResponse,
     testWatchSaga
-} from "../../../../util/testHelper";
-import {TweetActionType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types/common";
+} from "../../../../util/test-utils/test-helper";
+import { TweetActionType } from "../contracts/actionTypes";
+import { LoadingStatus } from "../../../../types/common";
+import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
 
 describe("tweetSaga:", () => {
-    const mockTweet = {data: {id: 1}} as AxiosResponse<TweetResponse>;
-    const usersMock = {data: [{id: 1}, {id: 2}], headers: {"page-total-count": 1}} as AxiosResponse<UserResponse[]>;
+    const mockTweet = { data: { id: 1 } } as AxiosResponse<TweetResponse>;
+    const usersMock = {
+        data: [{ id: 1 }, { id: 2 }],
+        headers: { PAGE_TOTAL_COUNT: 1 }
+    } as AxiosResponse<UserResponse[]>;
 
     describe("fetchTweetDataRequest:", () => {
         const worker = fetchTweetDataRequest(fetchTweetData(1));
@@ -58,8 +62,8 @@ describe("tweetSaga:", () => {
 
     describe("addTweetToBookmarksRequest:", () => {
         const worker = addTweetToBookmarksRequest(addTweetToBookmarks(1));
-        const mockResponse = {data: true} as AxiosResponse<boolean>;
-        const mockPayload = {tweetId: 1, isTweetBookmarked: true};
+        const mockResponse = { data: true } as AxiosResponse<boolean>;
+        const mockPayload = { tweetId: 1, isTweetBookmarked: true };
 
         testCall(worker, TweetApi.addTweetToBookmarks, 1, true);
         testSetResponse(worker, mockResponse, setBookmarkedTweet, mockResponse.data, "boolean");
@@ -69,7 +73,7 @@ describe("tweetSaga:", () => {
     });
 
     describe("fetchReplyTweetRequest:", () => {
-        const mockReplyTweet = {tweetId: 1} as ReplyTweet;
+        const mockReplyTweet = { tweetId: 1 } as ReplyTweet;
         const worker = fetchReplyTweetRequest(fetchReplyTweet(mockReplyTweet));
         testCall(worker, TweetApi.replyTweet, mockReplyTweet, mockReplyTweet);
         testLoadingStatus(worker, setTweetLoadingState, LoadingStatus.ERROR);
@@ -82,24 +86,24 @@ describe("tweetSaga:", () => {
     });
 
     describe("fetchLikedUsersRequest:", () => {
-        const worker = fetchLikedUsersRequest(fetchLikedUsers({tweetId: 1, pageNumber: 2}));
+        const worker = fetchLikedUsersRequest(fetchLikedUsers({ tweetId: 1, pageNumber: 2 }));
         testLoadingStatus(worker, setLikedUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getLikedUsersByTweetId, {tweetId: 1, pageNumber: 2}, usersMock);
+        testCall(worker, TweetApi.getLikedUsersByTweetId, { tweetId: 1, pageNumber: 2 }, usersMock);
         testSetResponse(worker, usersMock, setLikedUsers, mockExpectedResponse(usersMock), "UserResponse");
         testLoadingStatus(worker, setLikedUsersLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchRetweetedUsersRequest:", () => {
-        const worker = fetchRetweetedUsersRequest(fetchRetweetedUsers({tweetId: 1, pageNumber: 2}));
+        const worker = fetchRetweetedUsersRequest(fetchRetweetedUsers({ tweetId: 1, pageNumber: 2 }));
         testLoadingStatus(worker, setRetweetedUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getRetweetedUsersByTweetId, {tweetId: 1, pageNumber: 2}, usersMock);
+        testCall(worker, TweetApi.getRetweetedUsersByTweetId, { tweetId: 1, pageNumber: 2 }, usersMock);
         testSetResponse(worker, usersMock, setRetweetedUsers, mockExpectedResponse(usersMock), "UserResponse");
         testLoadingStatus(worker, setRetweetedUsersLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchRepliesRequest", () => {
         const worker = fetchRepliesRequest(fetchReplies(1));
-        const tweetsMock = {data: [{id: 1}, {id: 2}]} as AxiosResponse<TweetResponse[]>;
+        const tweetsMock = { data: [{ id: 1 }, { id: 2 }] } as AxiosResponse<TweetResponse[]>;
         testLoadingStatus(worker, setRepliesLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.getRepliesByTweetId, 1, tweetsMock);
         testSetResponse(worker, tweetsMock, setReplies, tweetsMock.data, "UserResponse");
@@ -107,12 +111,12 @@ describe("tweetSaga:", () => {
     });
 
     testWatchSaga(tweetSaga, [
-        {actionType: TweetActionType.FETCH_TWEET_DATA, workSaga: fetchTweetDataRequest},
-        {actionType: TweetActionType.ADD_TWEET_TO_BOOKMARKS, workSaga: addTweetToBookmarksRequest},
-        {actionType: TweetActionType.FETCH_REPLY_TWEET, workSaga: fetchReplyTweetRequest},
-        {actionType: TweetActionType.DELETE_TWEET_REPLY, workSaga: deleteTweetReplyRequest},
-        {actionType: TweetActionType.FETCH_LIKED_USERS, workSaga: fetchLikedUsersRequest},
-        {actionType: TweetActionType.FETCH_RETWEETED_USERS, workSaga: fetchRetweetedUsersRequest},
-        {actionType: TweetActionType.FETCH_REPLIES, workSaga: fetchRepliesRequest},
+        { actionType: TweetActionType.FETCH_TWEET_DATA, workSaga: fetchTweetDataRequest },
+        { actionType: TweetActionType.ADD_TWEET_TO_BOOKMARKS, workSaga: addTweetToBookmarksRequest },
+        { actionType: TweetActionType.FETCH_REPLY_TWEET, workSaga: fetchReplyTweetRequest },
+        { actionType: TweetActionType.DELETE_TWEET_REPLY, workSaga: deleteTweetReplyRequest },
+        { actionType: TweetActionType.FETCH_LIKED_USERS, workSaga: fetchLikedUsersRequest },
+        { actionType: TweetActionType.FETCH_RETWEETED_USERS, workSaga: fetchRetweetedUsersRequest },
+        { actionType: TweetActionType.FETCH_REPLIES, workSaga: fetchRepliesRequest }
     ], takeEvery);
 });

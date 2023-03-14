@@ -1,11 +1,9 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
-import {axios} from "../../core/axios";
-import {RegistrationInfo} from "../../pages/Authentication/Authentication";
-import {RegistrationProps} from "../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
-import {LoginProps} from "../../pages/Login/Login";
-import {AuthenticationResponse} from "../../store/types/auth";
-import {AuthUserResponse} from "../../store/types/user";
+import { axios } from "../../core/axios";
+import { RegistrationProps } from "../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { AuthenticationResponse, LoginRequest, RegistrationInfo } from "../../types/auth";
+import { AuthUserResponse } from "../../types/user";
 import {
     API_AUTH_FORGOT,
     API_AUTH_FORGOT_EMAIL,
@@ -17,10 +15,10 @@ import {
     API_AUTH_RESET,
     API_AUTH_RESET_CURRENT,
     API_USER_TOKEN
-} from "../../util/endpoints";
+} from "../../constants/endpoint-constants";
 
 export const AuthApi = {
-    async signIn(postData: LoginProps): Promise<AxiosResponse<AuthenticationResponse>> {
+    async signIn(postData: LoginRequest): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.post<AuthenticationResponse>(API_AUTH_LOGIN, postData);
     },
     async checkEmail(postData: RegistrationInfo): Promise<AxiosResponse<string>> {
@@ -52,5 +50,5 @@ export const AuthApi = {
     },
     async getMe(): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.get<AuthenticationResponse>(API_USER_TOKEN);
-    },
+    }
 };

@@ -1,15 +1,15 @@
 import React from "react";
-import {Radio} from "@material-ui/core";
+import { Radio } from "@material-ui/core";
 
 import Autoplay from "../Autoplay";
-import {createMockRootState, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../../types/common";
 
 describe("Autoplay", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
 
     it("should render correctly and toggle radio button", () => {
-        const wrapper = mountWithStore(<Autoplay/>, mockStore);
+        const wrapper = mountWithStore(<Autoplay />, mockStore);
 
         expect(wrapper.text().includes("Autoplay")).toBe(true);
         expect(wrapper.text().includes("On cellular or Wi-Fi")).toBe(true);

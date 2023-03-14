@@ -1,10 +1,10 @@
-import React, {memo, ReactElement, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Button} from "@material-ui/core";
+import React, { memo, ReactElement, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@material-ui/core";
 
-import {processFollowRequest} from "../../../store/ducks/user/actionCreators";
-import {selectUserProfileId} from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { processFollowRequest } from "../../../store/ducks/user/actionCreators";
+import { selectUserProfileId } from "../../../store/ducks/userProfile/selectors";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const CancelUserButton = memo((): ReactElement => {
     const classes = useUserPageStyles();

@@ -1,12 +1,12 @@
 import React from "react";
 
 import AdditionalResources from "../AdditionalResources";
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 
 describe("AdditionalResources", () => {
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<AdditionalResources/>, createMockRootState());
+        const wrapper = mountWithStore(<AdditionalResources />, createMockRootState());
 
         expect(wrapper.text().includes("Check out other places for helpful information to learn more about Twitter products and services.")).toBe(true);
         expect(wrapper.text().includes("Release notes")).toBe(true);

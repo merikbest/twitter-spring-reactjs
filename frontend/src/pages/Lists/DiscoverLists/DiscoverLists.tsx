@@ -1,14 +1,14 @@
-import React, {ReactElement} from "react";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {Paper, Typography} from "@material-ui/core";
+import React, { ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Paper, Typography } from "@material-ui/core";
 
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
-import {SUGGESTED} from "../../../util/pathConstants";
-import {useDiscoverListsStyles} from "./DiscoverListsStyles";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {selectIsListsLoading, selectListsItems} from "../../../store/ducks/lists/selectors";
+import { SUGGESTED } from "../../../constants/path-constants";
+import { useDiscoverListsStyles } from "./DiscoverListsStyles";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { selectIsListsLoading, selectListsItems } from "../../../store/ducks/lists/selectors";
 
 const DiscoverLists = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -22,12 +22,12 @@ const DiscoverLists = (): ReactElement => {
                 Discover new Lists
             </Typography>
             {isListsLoading ? (
-                <div style={{padding: "59px 0px"}}>
-                    <Spinner/>
+                <div style={{ padding: "59px 0px" }}>
+                    <Spinner />
                 </div>
             ) : (
                 lists.slice(0, 3).map((list, index) => (
-                    <ListsItem key={list.id} list={list} listIndex={index}/>
+                    <ListsItem key={list.id} list={list} listIndex={index} />
                 ))
             )}
             <Link to={SUGGESTED} className={globalClasses.link}>

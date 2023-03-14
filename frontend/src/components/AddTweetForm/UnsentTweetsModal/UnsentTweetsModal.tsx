@@ -1,15 +1,15 @@
-import React, {ChangeEvent, FC, ReactElement, useCallback, useEffect, useState} from 'react';
-import {Button, Dialog, DialogContent} from "@material-ui/core";
+import React, { ChangeEvent, FC, ReactElement, useCallback, useEffect, useState } from "react";
+import { Button, Dialog, DialogContent } from "@material-ui/core";
 
-import {useUnsentTweetsModalStyles} from "./UnsentTweetsModalStyles";
-import {TweetApi} from "../../../services/api/tweetApi";
+import { useUnsentTweetsModalStyles } from "./UnsentTweetsModalStyles";
+import { TweetApi } from "../../../services/api/tweetApi";
 import AddTweetForm from "../AddTweetForm";
 import Spinner from "../../Spinner/Spinner";
-import {TweetResponse} from "../../../store/types/tweet";
+import { TweetResponse } from "../../../types/tweet";
 import UnsentTweetItem from "./UnsentTweetItem/UnsentTweetItem";
 import EmptyPageDescription from "../../EmptyPageDescription/EmptyPageDescription";
-import {useDispatch, useSelector} from "react-redux";
-import {fetchUnsentTweets, resetUnsentTweets} from "../../../store/ducks/unsentTweets/actionCreators";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUnsentTweets, resetUnsentTweets } from "../../../store/ducks/unsentTweets/actionCreators";
 import {
     selectIstUnsentTweetsLoading,
     selectUnsentTweets,
@@ -24,7 +24,7 @@ interface UnsentTweetsModalProps {
     onClose: () => void;
 }
 
-const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): ReactElement | null => {
+const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({ visible, onClose }): ReactElement | null => {
     const dispatch = useDispatch();
     const unsentTweets = useSelector(selectUnsentTweets);
     const isUnsentTweetsLoading = useSelector(selectIstUnsentTweetsLoading);
@@ -34,7 +34,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
     const [visibleEditTweetModal, setVisibleEditTweetModal] = useState<boolean>(false);
     const [visibleEditListFooter, setVisibleEditListFooter] = useState<boolean>(false);
     const [checkboxIndexes, setCheckboxIndexes] = useState<number[]>([]);
-    const classes = useUnsentTweetsModalStyles({visibleEditTweetModal});
+    const classes = useUnsentTweetsModalStyles({ visibleEditTweetModal });
 
     useEffect(() => {
         if (visible) {
@@ -52,7 +52,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
 
     const loadUnsentTweets = (page: number): void => {
         dispatch(fetchUnsentTweets(page));
-    }
+    };
 
     const onOpenEditTweetModal = (tweet: TweetResponse): void => {
         if (!visibleEditListFooter) {
@@ -101,7 +101,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
 
     const handleDeleteScheduledTweets = (): void => {
         if (checkboxIndexes.length !== 0) {
-            TweetApi.deleteScheduledTweets({tweetsIds: checkboxIndexes.map(value => Number(value))})
+            TweetApi.deleteScheduledTweets({ tweetsIds: checkboxIndexes.map(value => Number(value)) })
                 .then(() => dispatch(fetchUnsentTweets(0)));
             setCheckboxIndexes([]);
             setVisibleEditListFooter(false);
@@ -125,14 +125,14 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
             {(!visibleEditTweetModal) ? (
                 <>
                     <DialogContent id="scrollableDiv" className={classes.content}>
-                        <UnsentTweetsTab activeTab={activeTab} handleChangeTab={handleChangeTab}/>
+                        <UnsentTweetsTab activeTab={activeTab} handleChangeTab={handleChangeTab} />
                         <InfiniteScrollWrapper
                             dataLength={unsentTweets.length}
                             pagesCount={pagesCount}
                             loadItems={loadUnsentTweets}
                         >
                             {isUnsentTweetsLoading && !unsentTweets.length ? (
-                                <Spinner/>
+                                <Spinner />
                             ) : (
                                 (!isUnsentTweetsLoading && !unsentTweets.length) ? (
                                     <EmptyPageDescription
@@ -151,7 +151,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({visible, onClose}): Reac
                                                 visibleEditListFooter={visibleEditListFooter}
                                             />
                                         ))}
-                                        {isUnsentTweetsLoading && <Spinner/>}
+                                        {isUnsentTweetsLoading && <Spinner />}
                                     </>
                                 )
                             )}

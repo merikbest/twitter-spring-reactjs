@@ -1,7 +1,7 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../types/common";
 import BlockUserComponent from "../BlockUserComponent";
 
 describe("BlockUserComponent", () => {

@@ -1,11 +1,11 @@
-import React, {memo, ReactElement} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, { memo, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
-import {NotificationsAddFilledIcon, NotificationsAddIcon} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {selectUserProfileId, selectUserProfileIsSubscriber} from "../../../store/ducks/userProfile/selectors";
-import {processSubscribe} from "../../../store/ducks/userProfile/actionCreators";
+import { NotificationsAddFilledIcon, NotificationsAddIcon } from "../../../icons";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { selectUserProfileId, selectUserProfileIsSubscriber } from "../../../store/ducks/userProfile/selectors";
+import { processSubscribe } from "../../../store/ducks/userProfile/actionCreators";
 
 const NotificationButton = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();

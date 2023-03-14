@@ -1,16 +1,16 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
     header: {
         margin: 0,
         border: 0,
         "& svg": {
-            fontSize: 26,
-        },
+            fontSize: 26
+        }
     },
     button: {
         marginLeft: "auto",
-        height: 30,
+        height: 30
     },
     content: {
         height: 550,
@@ -23,17 +23,17 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
             border: `1px solid ${theme.palette.divider}`,
             "& .MuiChip-label": {
                 fontSize: 15,
-                fontWeight: 700,
+                fontWeight: 700
             },
             "& .MuiChip-deleteIcon": {
                 color: theme.palette.primary.main
-            },
-        },
+            }
+        }
     },
     divider: {
         marginTop: 8,
         height: 1,
-        backgroundColor: theme.palette.divider,
+        backgroundColor: theme.palette.divider
     },
     footer: {
         position: "absolute",
@@ -41,11 +41,11 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
         minHeight: 56,
         width: "100%",
         borderTop: `3px solid ${theme.palette.divider}`,
-        bottom: 0,
+        bottom: 0
     },
     chatIcon: {
         display: "inline-block",
         marginLeft: 3,
-        marginTop: 3,
-    },
+        marginTop: 3
+    }
 }));

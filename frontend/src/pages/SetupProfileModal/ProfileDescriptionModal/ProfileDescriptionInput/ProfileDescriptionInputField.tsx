@@ -1,43 +1,43 @@
-import {createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps, Theme} from "@material-ui/core";
+import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps, Theme } from "@material-ui/core";
 
 const useStylesRegistration = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             border: `1px solid ${theme.palette.divider}`,
-            overflow: 'hidden',
+            overflow: "hidden",
             borderRadius: 4,
             backgroundColor: theme.palette.background.paper,
-            transition: theme.transitions.create(['border-color', 'box-shadow']),
-            '&:hover': {
-                backgroundColor: theme.palette.background.paper,
+            transition: theme.transitions.create(["border-color", "box-shadow"]),
+            "&:hover": {
+                backgroundColor: theme.palette.background.paper
             },
-            '&$focused': {
+            "&$focused": {
                 backgroundColor: theme.palette.background.paper,
                 borderColor: "transparent",
-                boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
-            },
+                boxShadow: `0 0 0 2px ${theme.palette.primary.main}`
+            }
         },
         focused: {},
         error: {
-            border: '1px solid rgb(224, 36, 94)',
+            border: "1px solid rgb(224, 36, 94)",
             backgroundColor: theme.palette.common.white,
-            '&:hover': {
-                backgroundColor: theme.palette.common.white,
+            "&:hover": {
+                backgroundColor: theme.palette.common.white
             },
-            '&$focused': {
+            "&$focused": {
                 backgroundColor: theme.palette.common.white,
                 borderColor: "transparent",
-                boxShadow: "0 0 0 2px rgb(224, 36, 94)",
-            },
+                boxShadow: "0 0 0 2px rgb(224, 36, 94)"
+            }
         },
         disabled: {
             backgroundColor: theme.palette.common.white,
             color: "#849099",
-            '&:hover': {
-                backgroundColor: theme.palette.common.white,
-            },
-        },
-    }),
+            "&:hover": {
+                backgroundColor: theme.palette.common.white
+            }
+        }
+    })
 );
 
 export const ProfileDescriptionInputField = (props: TextFieldProps) => {
@@ -49,4 +49,4 @@ export const ProfileDescriptionInputField = (props: TextFieldProps) => {
             {...props}
         />
     );
-}
+};

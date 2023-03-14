@@ -1,11 +1,11 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import TweetComponentActionsModal from "../../TweetComponentActionsModal/TweetComponentActionsModal";
-import {LoadingStatus} from "../../../../store/types/common";
-import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
-import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
+import { LoadingStatus } from "../../../../types/common";
+import { ActionSnackbarTypes } from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { UserActionsType } from "../../../../store/ducks/user/contracts/actionTypes";
 import PinTweetButton from "../PinTweetButton";
 
 describe("PinTweetButton", () => {
@@ -17,7 +17,8 @@ describe("PinTweetButton", () => {
     });
 
     it("should open/close TweetComponentActionsModal", () => {
-        const wrapper = mountWithStore(<PinTweetButton tweetId={1} onCloseActionsDropdown={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<PinTweetButton tweetId={1}
+                                                       onCloseActionsDropdown={jest.fn()} />, mockRootState);
         expect(wrapper.find(TweetComponentActionsModal).prop("visibleTweetComponentActionsModal")).toBe(false);
         wrapper.find("#pin").at(0).simulate("click");
         expect(wrapper.find(TweetComponentActionsModal).prop("visibleTweetComponentActionsModal")).toBe(true);

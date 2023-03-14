@@ -16,12 +16,12 @@ import {
     selectUserDetailSameFollowers,
     selectUserDetailUsername
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types/common";
-import {mockUserDetailResponse} from "../../../../util/mockData/mockData";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { mockUserDetailResponse } from "../../../../util/test-utils/mock-test-data";
 
 describe("userDetail selectors:", () => {
-    
+
     describe("selectUserDetailItem", () => {
         it("should return UserDetailResponse", () => {
             expect(selectUserDetailItem(createMockRootState())).toBe(mockUserDetailResponse);
@@ -66,7 +66,7 @@ describe("userDetail selectors:", () => {
 
     describe("selectUserDetailAvatar", () => {
         it("should return UserDetailAvatar string", () => {
-            expect(selectUserDetailAvatar(createMockRootState())).toBe(mockUserDetailResponse.avatar.src);
+            expect(selectUserDetailAvatar(createMockRootState())).toBe(mockUserDetailResponse.avatar);
         });
     });
 

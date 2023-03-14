@@ -3,7 +3,8 @@ import {
     AddTweet,
     ChangeReplyTypeRequest,
     FetchTweetsByTagRequest,
-    FetchTweetsByTextRequest, TweetActionPayload,
+    FetchTweetsByTextRequest,
+    TweetActionPayload,
     TweetsByListIdRequest,
     TweetsState,
     TweetsWithQuotesByIdRequest,
@@ -44,11 +45,16 @@ import {
     SetUpdatedTweetActionInterface,
     TweetsActionType,
     UpdateScheduledTweetActionInterface,
-    VoteActionInterface,
+    VoteActionInterface
 } from "./contracts/actionTypes";
-import {BlockedToTweetsPayload, FollowToTweetsPayload, MutedToTweetsPayload, TweetResponse} from "../../types/tweet";
-import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
-import {LoadingStatus, PageableResponse} from "../../types/common";
+import {
+    BlockedToTweetsPayload,
+    FollowToTweetsPayload,
+    MutedToTweetsPayload,
+    TweetResponse
+} from "../../../types/tweet";
+import { NotificationReplyResponse, NotificationResponse } from "../../../types/notification";
+import { LoadingStatus, PageableResponse } from "../../../types/common";
 
 export const setFollowToTweetsState = (payload: FollowToTweetsPayload): SetFollowToTweetsStateActionInterface => ({
     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
@@ -86,7 +92,7 @@ export const setTweet = (payload: TweetResponse): SetTweetActionInterface => ({
 });
 
 export const resetTweets = (): ResetTweetsActionInterface => ({
-    type: TweetsActionType.RESET_TWEETS,
+    type: TweetsActionType.RESET_TWEETS
 });
 
 export const addTweet = (payload: AddTweet): AddTweetActionInterface => ({
@@ -161,22 +167,22 @@ export const setTweetsLoadingState = (payload: LoadingStatus): SetTweetsLoadingS
 
 export const likeTweet = (payload: TweetActionPayload): LikeTweetActionInterface => ({
     type: TweetsActionType.LIKE_TWEET,
-    payload,
+    payload
 });
 
 export const retweet = (payload: TweetActionPayload): RetweetActionInterface => ({
     type: TweetsActionType.RETWEET,
-    payload,
+    payload
 });
 
 export const setUpdatedBookmarkedTweetTweetsState = (payload: UpdatedBookmarkedTweetPayload): SetUpdatedBookmarkedTweetActionInterface => ({
     type: TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET,
-    payload,
+    payload
 });
 
 export const fetchTweets = (payload: number): FetchTweetsActionInterface => ({
     type: TweetsActionType.FETCH_TWEETS,
-    payload,
+    payload
 });
 
 export const fetchMediaTweets = (payload: number): FetchMediaTweetsActionInterface => ({
@@ -211,5 +217,5 @@ export const fetchUserBookmarks = (payload: number): FetchBookmarksActionInterfa
 
 export const removeTweetFromBookmarks = (payload: number): RemoveTweetFromBookmarksActionInterface => ({
     type: TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS,
-    payload,
+    payload
 });

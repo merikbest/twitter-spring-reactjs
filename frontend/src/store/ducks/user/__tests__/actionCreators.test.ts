@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/testHelper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     fetchPinTweet,
     fetchReadMessages,
@@ -42,22 +42,22 @@ import {
     updatePrivateProfile,
     updateUsername
 } from "../actionCreators";
-import {UserActionsType} from "../contracts/actionTypes";
-import {Settings, UserRequest} from "../contracts/state";
-import {AuthUserResponse} from "../../../types/user";
-import {LoginProps} from "../../../../pages/Login/Login";
-import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
-import {ChatMessageResponse} from "../../../types/chat";
-import {LoadingStatus} from "../../../types/common";
+import { UserActionsType } from "../contracts/actionTypes";
+import { Settings, UserRequest } from "../contracts/state";
+import { AuthUserResponse } from "../../../../types/user";
+import { RegistrationProps } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { ChatMessageResponse } from "../../../../types/chat";
+import { LoadingStatus } from "../../../../types/common";
+import { LoginRequest } from "../../../../types/auth";
 
 describe("user actions", () => {
-    testAction(updatedUserData, updatedUserData({username: "text"} as UserRequest), {
+    testAction(updatedUserData, updatedUserData({ fullName: "text" } as UserRequest), {
         type: UserActionsType.UPDATE_USER_DATA,
-        payload: {username: "text"} as UserRequest
+        payload: { fullName: "text" } as UserRequest
     });
 
     testAction(setFollowersSize, setFollowersSize(), {
-        type: UserActionsType.SET_FOLLOWERS_SIZE,
+        type: UserActionsType.SET_FOLLOWERS_SIZE
     });
 
     testAction(setProfileStarted, setProfileStarted(true), {
@@ -75,27 +75,27 @@ describe("user actions", () => {
         payload: 1
     });
 
-    testAction(setUserData, setUserData({id: 1} as AuthUserResponse), {
+    testAction(setUserData, setUserData({ id: 1 } as AuthUserResponse), {
         type: UserActionsType.SET_USER_DATA,
-        payload: {id: 1} as AuthUserResponse
+        payload: { id: 1 } as AuthUserResponse
     });
 
     testAction(signOut, signOut(), {
-        type: UserActionsType.SIGN_OUT,
+        type: UserActionsType.SIGN_OUT
     });
 
-    testAction(fetchSignIn, fetchSignIn({email: "test@test.test"} as LoginProps), {
+    testAction(fetchSignIn, fetchSignIn({ email: "test@test.test" } as LoginRequest), {
         type: UserActionsType.FETCH_SIGN_IN,
-        payload: {email: "test@test.test"} as LoginProps
+        payload: { email: "test@test.test" } as LoginRequest
     });
 
-    testAction(fetchSignUp, fetchSignUp({email: "test@test.test"} as RegistrationProps), {
+    testAction(fetchSignUp, fetchSignUp({ email: "test@test.test" } as RegistrationProps), {
         type: UserActionsType.FETCH_SIGN_UP,
-        payload: {email: "test@test.test"} as RegistrationProps
+        payload: { email: "test@test.test" } as RegistrationProps
     });
 
     testAction(fetchUserData, fetchUserData(), {
-        type: UserActionsType.FETCH_USER_DATA,
+        type: UserActionsType.FETCH_USER_DATA
     });
 
     testAction(setUserLoadingStatus, setUserLoadingStatus(LoadingStatus.LOADING), {
@@ -103,14 +103,14 @@ describe("user actions", () => {
         payload: LoadingStatus.LOADING
     });
 
-    testAction(followUser, followUser({userId: 1, tweetId: 1}), {
+    testAction(followUser, followUser({ userId: 1, tweetId: 1 }), {
         type: UserActionsType.FOLLOW_USER,
-        payload: {userId: 1, tweetId: 1}
+        payload: { userId: 1, tweetId: 1 }
     });
 
-    testAction(unfollowUser, unfollowUser({userId: 1, tweetId: 1}), {
+    testAction(unfollowUser, unfollowUser({ userId: 1, tweetId: 1 }), {
         type: UserActionsType.UNFOLLOW_USER,
-        payload: {userId: 1, tweetId: 1}
+        payload: { userId: 1, tweetId: 1 }
     });
 
     testAction(setUserFollowing, setUserFollowing(true), {
@@ -128,14 +128,14 @@ describe("user actions", () => {
         payload: 1
     });
 
-    testAction(processUserToBlocklist, processUserToBlocklist({userId: 1, tweetId: 1}), {
+    testAction(processUserToBlocklist, processUserToBlocklist({ userId: 1, tweetId: 1 }), {
         type: UserActionsType.PROCESS_USER_TO_BLOCKLIST,
-        payload: {userId: 1, tweetId: 1}
+        payload: { userId: 1, tweetId: 1 }
     });
 
-    testAction(processUserToMuteList, processUserToMuteList({userId: 1, tweetId: 1}), {
+    testAction(processUserToMuteList, processUserToMuteList({ userId: 1, tweetId: 1 }), {
         type: UserActionsType.PROCESS_USER_TO_MUTELIST,
-        payload: {userId: 1, tweetId: 1}
+        payload: { userId: 1, tweetId: 1 }
     });
 
     testAction(startUseTwitter, startUseTwitter(1), {
@@ -148,58 +148,58 @@ describe("user actions", () => {
         payload: 1
     });
 
-    testAction(setUnreadMessage, setUnreadMessage({id: 1} as ChatMessageResponse), {
+    testAction(setUnreadMessage, setUnreadMessage({ id: 1 } as ChatMessageResponse), {
         type: UserActionsType.SET_UNREAD_MESSAGE,
-        payload: {id: 1} as ChatMessageResponse
+        payload: { id: 1 } as ChatMessageResponse
     });
 
     testAction(setNewNotification, setNewNotification(), {
-        type: UserActionsType.SET_NEW_NOTIFICATION,
+        type: UserActionsType.SET_NEW_NOTIFICATION
     });
 
-    testAction(updateUsername, updateUsername({username: "text"} as Settings), {
+    testAction(updateUsername, updateUsername({ username: "text" } as Settings), {
         type: UserActionsType.UPDATE_USERNAME,
-        payload: {username: "text"} as Settings
+        payload: { username: "text" } as Settings
     });
 
-    testAction(updateEmail, updateEmail({email: "test@test.test"} as Settings), {
+    testAction(updateEmail, updateEmail({ email: "test@test.test" } as Settings), {
         type: UserActionsType.UPDATE_EMAIL,
-        payload: {email: "test@test.test"} as Settings
+        payload: { email: "test@test.test" } as Settings
     });
 
-    testAction(updatePhone, updatePhone({phone: 12345} as Settings), {
+    testAction(updatePhone, updatePhone({ phone: 12345 } as Settings), {
         type: UserActionsType.UPDATE_PHONE,
-        payload: {phone: 12345} as Settings
+        payload: { phone: 12345 } as Settings
     });
 
-    testAction(updateCountry, updateCountry({country: "test"} as Settings), {
+    testAction(updateCountry, updateCountry({ country: "test" } as Settings), {
         type: UserActionsType.UPDATE_COUNTRY,
-        payload: {country: "test"} as Settings
+        payload: { country: "test" } as Settings
     });
 
-    testAction(updateGender, updateGender({gender: "test"} as Settings), {
+    testAction(updateGender, updateGender({ gender: "test" } as Settings), {
         type: UserActionsType.UPDATE_GENDER,
-        payload: {gender: "test"} as Settings
+        payload: { gender: "test" } as Settings
     });
 
-    testAction(updateLanguage, updateLanguage({language: "test"} as Settings), {
+    testAction(updateLanguage, updateLanguage({ language: "test" } as Settings), {
         type: UserActionsType.UPDATE_LANGUAGE,
-        payload: {language: "test"} as Settings
+        payload: { language: "test" } as Settings
     });
 
-    testAction(updateDirect, updateDirect({mutedDirectMessages: true} as Settings), {
+    testAction(updateDirect, updateDirect({ mutedDirectMessages: true } as Settings), {
         type: UserActionsType.UPDATE_DIRECT,
-        payload: {mutedDirectMessages: true} as Settings
+        payload: { mutedDirectMessages: true } as Settings
     });
 
-    testAction(updatePrivateProfile, updatePrivateProfile({privateProfile: true} as Settings), {
+    testAction(updatePrivateProfile, updatePrivateProfile({ privateProfile: true } as Settings), {
         type: UserActionsType.UPDATE_PRIVATE_PROFILE,
-        payload: {privateProfile: true} as Settings
+        payload: { privateProfile: true } as Settings
     });
 
-    testAction(updateColorScheme, updateColorScheme({colorScheme: "BLUE"} as Settings), {
+    testAction(updateColorScheme, updateColorScheme({ colorScheme: "BLUE" } as Settings), {
         type: UserActionsType.UPDATE_COLOR_SCHEME,
-        payload: {colorScheme: "BLUE"} as Settings
+        payload: { colorScheme: "BLUE" } as Settings
     });
 
     testAction(setUsername, setUsername("test"), {
@@ -212,9 +212,9 @@ describe("user actions", () => {
         payload: "test"
     });
 
-    testAction(setPhone, setPhone({countryCode: "text", phone: 12345}), {
+    testAction(setPhone, setPhone({ countryCode: "text", phone: 12345 }), {
         type: UserActionsType.SET_PHONE,
-        payload: {countryCode: "text", phone: 12345}
+        payload: { countryCode: "text", phone: 12345 }
     });
 
     testAction(setCountry, setCountry("test"), {

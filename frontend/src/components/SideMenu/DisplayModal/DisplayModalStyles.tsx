@@ -1,27 +1,27 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
     dialog: {
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
-            marginBottom: 0,
-        },
+            marginBottom: 0
+        }
     },
     content: {
         height: 603,
         width: 598,
         padding: "0px 32px 32px 32px",
-        overflowX: "hidden",
+        overflowX: "hidden"
     },
     title: {
         marginTop: 32,
         marginBottom: 12,
         textAlign: "center",
-        fontWeight: 800,
+        fontWeight: 800
     },
     text: {
         marginBottom: 20,
-        textAlign: "center",
+        textAlign: "center"
     },
     tweetInfoWrapper: {
         display: "flex",
@@ -30,7 +30,7 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         padding: "16px 12px",
         width: 455,
         border: `1px solid ${theme.palette.divider}`,
-        borderRadius: 16,
+        borderRadius: 16
     },
     tweetIconWrapper: {
         display: "flex",
@@ -40,17 +40,17 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         width: 48,
         height: 48,
         backgroundColor: theme.palette.primary.main,
-        borderRadius: "50%",
+        borderRadius: "50%"
     },
     tweetIcon: {
         marginTop: 5,
         "& svg": {
             color: theme.palette.common.white,
             height: "1.7em"
-        },
+        }
     },
     tweetTitle: {
-        marginRight: 3,
+        marginRight: 3
     },
     tweetVerifiedIcon: {
         marginRight: 3,
@@ -58,21 +58,21 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
             verticalAlign: "bottom",
             color: theme.palette.primary.main,
             height: "1.35em"
-        },
+        }
     },
     tweetText: {
         "&#xs": {
-            fontSize: 13,
+            fontSize: 13
         },
         "&#xl": {
-            fontSize: 20,
-        },
+            fontSize: 20
+        }
     },
     tweetLink: {
-        color: theme.palette.primary.main,
+        color: theme.palette.primary.main
     },
     subtitle: {
-        fontWeight: 700,
+        fontWeight: 700
     },
     stepperWrapper: {
         display: "flex",
@@ -80,14 +80,14 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         padding: 16,
         marginBottom: 12,
         backgroundColor: theme.palette.secondary.main,
-        borderRadius: 16,
+        borderRadius: 16
     },
     stepper: {
         position: "relative",
         width: "100%",
         height: 4,
         margin: "0px 20px",
-        backgroundColor: theme.palette.primary.light,
+        backgroundColor: theme.palette.primary.light
     },
     stepperPoint: {
         marginTop: -3,
@@ -99,20 +99,20 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.primary.main,
         boxShadow: "rgb(101 119 134 / 20%) 0px 0px 7px, rgb(101 119 134 / 15%) 0px 1px 3px 1px",
         "&#xs": {
-            marginLeft: "1%",
+            marginLeft: "1%"
         },
         "&#sm": {
-            marginLeft: "24%",
+            marginLeft: "24%"
         },
         "&#md": {
-            marginLeft: "49%",
+            marginLeft: "49%"
         },
         "&#lg": {
-            marginLeft: "74%",
+            marginLeft: "74%"
         },
         "&#xl": {
-            marginLeft: "97%",
-        },
+            marginLeft: "97%"
+        }
     },
     colorWrapper: {
         display: "flex",
@@ -120,7 +120,7 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         padding: "8px 0px",
         marginBottom: 12,
         backgroundColor: theme.palette.secondary.main,
-        borderRadius: 16,
+        borderRadius: 16
     },
     colorItem: {
         display: "flex",
@@ -131,30 +131,30 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         borderRadius: "50%",
         cursor: "pointer",
         "&#blue": {
-            backgroundColor: "rgb(29, 155, 240)",
+            backgroundColor: "rgb(29, 155, 240)"
         },
         "&#yellow": {
-            backgroundColor: "rgb(255, 212, 0)",
+            backgroundColor: "rgb(255, 212, 0)"
         },
         "&#crimson": {
-            backgroundColor: "rgb(249, 24, 128)",
+            backgroundColor: "rgb(249, 24, 128)"
         },
         "&#violet": {
-            backgroundColor: "rgb(120, 86, 255)",
+            backgroundColor: "rgb(120, 86, 255)"
         },
         "&#orange": {
-            backgroundColor: "rgb(255, 122, 0)",
+            backgroundColor: "rgb(255, 122, 0)"
         },
         "&#green": {
-            backgroundColor: "rgb(0, 186, 124)",
-        },
+            backgroundColor: "rgb(0, 186, 124)"
+        }
     },
     checkIcon: {
         marginTop: 5,
         "& svg": {
             color: theme.palette.common.white,
             height: "1.9em"
-        },
+        }
     },
     backgroundContainer: {
         backgroundColor: theme.palette.secondary.main,
@@ -162,7 +162,7 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         padding: "4px 12px"
     },
     backgroundWrapper: {
-        display: "inline-block",
+        display: "inline-block"
     },
     backgroundItem: {
         display: "flex",
@@ -182,21 +182,21 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
         "&#default": {
             backgroundColor: theme.palette.common.white,
             "& .MuiTypography-h6": {
-                color: "rgb(0, 0, 0)",
-            },
+                color: "rgb(0, 0, 0)"
+            }
         },
         "&#dim": {
             backgroundColor: "rgb(21, 32, 43)",
             "& .MuiTypography-h6": {
-                color: theme.palette.common.white,
-            },
+                color: theme.palette.common.white
+            }
         },
         "&#lights-out": {
             backgroundColor: "rgb(0, 0, 0)",
             "& .MuiTypography-h6": {
-                color: "rgb(217, 217, 217)",
-            },
-        },
+                color: "rgb(217, 217, 217)"
+            }
+        }
     },
     backgroundItemWrapper: {
         padding: "4px 0px",
@@ -205,12 +205,12 @@ export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
             "& .MuiSvgIcon-root": {
                 width: 20,
                 height: 20
-            },
-        },
+            }
+        }
     },
     buttonWrapper: {
         marginTop: 38,
         width: 67,
-        margin: "0px auto",
-    },
+        margin: "0px auto"
+    }
 }));

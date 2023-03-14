@@ -1,11 +1,11 @@
-import React, {memo, ReactElement} from "react";
-import {IconButton} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { IconButton } from "@material-ui/core";
 
-import {ShareIcon} from "../../../icons";
-import {useImageFooterButtonStyles} from "../ImageFooterButtonStyles";
+import { ShareIcon } from "../../../icons";
+import { useImageFooterButtonStyles } from "../ImageFooterButtonStyles";
 
 const ImageFooterShareButton = memo((): ReactElement => {
-    const classes = useImageFooterButtonStyles()
+    const classes = useImageFooterButtonStyles();
 
     return (
         <div className={classes.imageFooterIcon}>

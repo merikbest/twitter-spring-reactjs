@@ -1,11 +1,11 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, { FC, ReactElement, useState } from "react";
 import TwitterIcon from "@material-ui/icons/Twitter";
-import {Button, Dialog, DialogContent, Link as MuiLink, Typography} from "@material-ui/core";
+import { Button, Dialog, DialogContent, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useEmailVerificationModalStyles} from "./EmailVerificationModalStyles";
-import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
-import {AuthApi} from "../../../services/api/authApi";
-import {useGlobalStyles} from "../../../util/globalClasses";
+import { useEmailVerificationModalStyles } from "./EmailVerificationModalStyles";
+import { RegistrationInputField } from "../RegistrationInput/RegistrationInputField";
+import { AuthApi } from "../../../services/api/authApi";
+import { useGlobalStyles } from "../../../util/globalClasses";
 
 interface CustomizeModalProps {
     email: string;
@@ -14,9 +14,9 @@ interface CustomizeModalProps {
     onOpenSetPassword: (value: boolean | ((prevVar: boolean) => boolean)) => void;
 }
 
-const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, onOpenSetPassword}): ReactElement => {
+const EmailVerificationModal: FC<CustomizeModalProps> = ({ email, open, onClose, onOpenSetPassword }): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useEmailVerificationModalStyles()
+    const classes = useEmailVerificationModalStyles();
     const [verificationCode, setVerificationCode] = useState<string>("");
     const [error, setError] = useState<string>("");
 
@@ -35,9 +35,9 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
             aria-labelledby="form-dialog-title"
             hideBackdrop
         >
-            <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
+            <DialogContent style={{ paddingTop: 0, paddingBottom: 0 }} className={classes.container}>
                 <div className={classes.logoIcon}>
-                    <TwitterIcon/>
+                    <TwitterIcon />
                 </div>
                 <Typography variant={"h3"} component={"div"}>
                     We sent you a code
@@ -45,7 +45,7 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({email, open, onClose, 
                 <Typography variant={"subtitle1"} component={"div"}>
                     {`Enter it below to verify ${email}.`}
                 </Typography>
-                <div style={{marginTop: 10}}>
+                <div style={{ marginTop: 10 }}>
                     <RegistrationInputField
                         label="Verification code"
                         variant="filled"

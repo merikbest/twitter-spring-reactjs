@@ -1,8 +1,8 @@
-import {useDispatch} from "react-redux";
-import {useState} from "react";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import axios from "axios";
 
-import {fetchUserDetail} from "../store/ducks/userDetail/actionCreators";
+import { fetchUserDetail } from "../store/ducks/userDetail/actionCreators";
 
 interface UseHoverUser {
     visiblePopperWindow: boolean;
@@ -18,7 +18,7 @@ export const useHoverUser = (): UseHoverUser => {
 
     const handleHoverPopper = (userId: number): void => {
         setDelayHandler(setTimeout(() => {
-            dispatch(fetchUserDetail({userId, cancelTokenSource}));
+            dispatch(fetchUserDetail({ userId, cancelTokenSource }));
         }, 666));
 
         setDelayHandler(setTimeout(() => {
@@ -32,5 +32,5 @@ export const useHoverUser = (): UseHoverUser => {
         setVisiblePopperWindow(false);
     };
 
-    return {visiblePopperWindow, handleHoverPopper, handleLeavePopper};
+    return { visiblePopperWindow, handleHoverPopper, handleLeavePopper };
 };

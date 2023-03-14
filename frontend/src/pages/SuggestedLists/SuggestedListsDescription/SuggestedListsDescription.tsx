@@ -1,9 +1,9 @@
-import React, {memo, ReactElement} from "react";
-import {Paper, Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { Paper, Typography } from "@material-ui/core";
 
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {useSuggestedListsStyles} from "../SuggestedListsStyles";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { useSuggestedListsStyles } from "../SuggestedListsStyles";
 
 const SuggestedListsDescription = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();

@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, DialogContent, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Button, Dialog, DialogContent, Typography } from "@material-ui/core";
 import classNames from "classnames";
 
-import {useBlockUserModalStyles} from "./BlockUserModalStyles";
+import { useBlockUserModalStyles } from "./BlockUserModalStyles";
 
 interface BlockUserModalProps {
     username: string;

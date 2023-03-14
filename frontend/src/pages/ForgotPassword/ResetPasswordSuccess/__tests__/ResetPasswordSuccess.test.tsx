@@ -1,18 +1,18 @@
 import React from "react";
-import {createMemoryHistory} from "history";
-import {Link as MuiLink} from "@material-ui/core";
+import { createMemoryHistory } from "history";
+import { Link as MuiLink } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import ResetPasswordSuccess from "../ResetPasswordSuccess";
-import {ACCOUNT_LOGIN} from "../../../../util/pathConstants";
+import { ACCOUNT_LOGIN } from "../../../../constants/path-constants";
 
 describe("ResetPasswordSuccess", () => {
     const mockStore = createMockRootState();
-    
+
     it("should render correctly", (done) => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        const wrapper = mountWithStore(<ResetPasswordSuccess/>, mockStore, history);
+        const wrapper = mountWithStore(<ResetPasswordSuccess />, mockStore, history);
         wrapper.find(MuiLink).at(2).simulate("click", { button: 0 });
 
         setImmediate(() => {

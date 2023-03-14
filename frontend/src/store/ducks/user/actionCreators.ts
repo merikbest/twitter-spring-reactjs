@@ -1,4 +1,4 @@
-import {ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState} from "./contracts/state";
+import { ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState } from "./contracts/state";
 import {
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
@@ -44,9 +44,9 @@ import {
     UpdateUsernameActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
-import {RegistrationProps} from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
-import {LoginProps} from "../../../pages/Login/Login";
-import {ChatMessageResponse} from "../../types/chat";
+import { RegistrationProps } from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { ChatMessageResponse } from "../../../types/chat";
+import { LoginRequest } from "../../../types/auth";
 
 export const updatedUserData = (payload: UserRequest): UpdateUserDataActionInterface => ({
     type: UserActionsType.UPDATE_USER_DATA,
@@ -78,21 +78,21 @@ export const setUserData = (payload: UserState["data"]): SetUserDataActionInterf
 });
 
 export const signOut = (): SignOutActionInterface => ({
-    type: UserActionsType.SIGN_OUT,
+    type: UserActionsType.SIGN_OUT
 });
 
-export const fetchSignIn = (payload: LoginProps): FetchSignInActionInterface => ({
+export const fetchSignIn = (payload: LoginRequest): FetchSignInActionInterface => ({
     type: UserActionsType.FETCH_SIGN_IN,
-    payload,
+    payload
 });
 
 export const fetchSignUp = (payload: RegistrationProps): FetchSignUpActionInterface => ({
     type: UserActionsType.FETCH_SIGN_UP,
-    payload,
+    payload
 });
 
 export const fetchUserData = (): FetchUserDataActionInterface => ({
-    type: UserActionsType.FETCH_USER_DATA,
+    type: UserActionsType.FETCH_USER_DATA
 });
 
 export const setUserLoadingStatus = (payload: UserState["status"]): SetUserLoadingStateActionInterface => ({
@@ -102,154 +102,154 @@ export const setUserLoadingStatus = (payload: UserState["status"]): SetUserLoadi
 
 export const followUser = (payload: UserActionRequest): FollowUserActionInterface => ({
     type: UserActionsType.FOLLOW_USER,
-    payload,
+    payload
 });
 
 export const unfollowUser = (payload: UserActionRequest): UnfollowUserActionInterface => ({
     type: UserActionsType.UNFOLLOW_USER,
-    payload,
+    payload
 });
 
 export const setUserFollowing = (payload: boolean): SetUserFollowingActionInterface => ({
     type: UserActionsType.SET_USER_FOLLOWING,
-    payload,
+    payload
 });
 
 export const fetchPinTweet = (payload: number): FetchPinTweetActionInterface => ({
     type: UserActionsType.FETCH_PIN_TWEET,
-    payload,
+    payload
 });
 
 export const processFollowRequest = (payload: number): ProcessFollowRequestActionInterface => ({
     type: UserActionsType.PROCESS_FOLLOW_REQUEST,
-    payload,
+    payload
 });
 
 export const processUserToBlocklist = (payload: UserActionRequest): ProcessUserToBlocklistActionInterface => ({
     type: UserActionsType.PROCESS_USER_TO_BLOCKLIST,
-    payload,
+    payload
 });
 
 export const processUserToMuteList = (payload: UserActionRequest): ProcessUserToMuteListActionInterface => ({
     type: UserActionsType.PROCESS_USER_TO_MUTELIST,
-    payload,
+    payload
 });
 
 export const startUseTwitter = (payload: number): StartUseTwitterActionInterface => ({
     type: UserActionsType.START_USE_TWITTER,
-    payload,
+    payload
 });
 
 export const fetchReadMessages = (payload: number): FetchReadMessagesActionInterface => ({
     type: UserActionsType.FETCH_READ_MESSAGES,
-    payload,
+    payload
 });
 
 export const setUnreadMessage = (payload: ChatMessageResponse): SetUnreadMessageActionInterface => ({
     type: UserActionsType.SET_UNREAD_MESSAGE,
-    payload,
+    payload
 });
 
 export const setNewNotification = (): SetNewNotificationActionInterface => ({
-    type: UserActionsType.SET_NEW_NOTIFICATION,
+    type: UserActionsType.SET_NEW_NOTIFICATION
 });
 
 export const updateUsername = (payload: Settings): UpdateUsernameActionInterface => ({
     type: UserActionsType.UPDATE_USERNAME,
-    payload,
+    payload
 });
 
 export const updateEmail = (payload: Settings): UpdateEmailActionInterface => ({
     type: UserActionsType.UPDATE_EMAIL,
-    payload,
+    payload
 });
 
 export const updatePhone = (payload: Settings): UpdatePhoneActionInterface => ({
     type: UserActionsType.UPDATE_PHONE,
-    payload,
+    payload
 });
 
 export const updateCountry = (payload: Settings): UpdateCountryActionInterface => ({
     type: UserActionsType.UPDATE_COUNTRY,
-    payload,
+    payload
 });
 
 export const updateGender = (payload: Settings): UpdateGenderActionInterface => ({
     type: UserActionsType.UPDATE_GENDER,
-    payload,
+    payload
 });
 
 export const updateLanguage = (payload: Settings): UpdateLanguageActionInterface => ({
     type: UserActionsType.UPDATE_LANGUAGE,
-    payload,
+    payload
 });
 
 export const updateDirect = (payload: Settings): UpdateDirectActionInterface => ({
     type: UserActionsType.UPDATE_DIRECT,
-    payload,
+    payload
 });
 
 export const updatePrivateProfile = (payload: Settings): UpdatePrivateProfileActionInterface => ({
     type: UserActionsType.UPDATE_PRIVATE_PROFILE,
-    payload,
+    payload
 });
 
 export const updateColorScheme = (payload: Settings): UpdateColorSchemeActionInterface => ({
     type: UserActionsType.UPDATE_COLOR_SCHEME,
-    payload,
+    payload
 });
 
 export const updateBackgroundColor = (payload: Settings): UpdateBackgroundColorActionInterface => ({
     type: UserActionsType.UPDATE_BACKGROUND_COLOR,
-    payload,
+    payload
 });
 
 export const setUsername = (payload: string): SetUsernameActionInterface => ({
     type: UserActionsType.SET_USERNAME,
-    payload,
+    payload
 });
 
 export const setEmail = (payload: string): SetEmailActionInterface => ({
     type: UserActionsType.SET_EMAIL,
-    payload,
+    payload
 });
 
 export const setPhone = (payload: ChangePhoneResponse): SetPhoneActionInterface => ({
     type: UserActionsType.SET_PHONE,
-    payload,
+    payload
 });
 
 export const setCountry = (payload: string): SetCountryActionInterface => ({
     type: UserActionsType.SET_COUNTRY,
-    payload,
+    payload
 });
 
 export const setGender = (payload: string): SetGenderActionInterface => ({
     type: UserActionsType.SET_GENDER,
-    payload,
+    payload
 });
 
 export const setLanguage = (payload: string): SetLanguageActionInterface => ({
     type: UserActionsType.SET_LANGUAGE,
-    payload,
+    payload
 });
 
 export const setDirect = (payload: boolean): SetDirectActionInterface => ({
     type: UserActionsType.SET_DIRECT,
-    payload,
+    payload
 });
 
 export const setPrivateProfile = (payload: boolean): SetPrivateProfileActionInterface => ({
     type: UserActionsType.SET_PRIVATE_PROFILE,
-    payload,
+    payload
 });
 
 export const setColorScheme = (payload: string): SetColorSchemeActionInterface => ({
     type: UserActionsType.SET_COLOR_SCHEME,
-    payload,
+    payload
 });
 
 export const setBackgroundColor = (payload: string): SetBackgroundColorActionInterface => ({
     type: UserActionsType.SET_BACKGROUND_COLOR,
-    payload,
+    payload
 });

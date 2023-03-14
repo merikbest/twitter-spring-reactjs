@@ -1,8 +1,8 @@
-import {chatReducer, initialChatState} from "../reducer";
-import {ChatActions, ChatActionsType} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types/common";
-import {mockChats} from "../../../../util/mockData/mockData";
+import { chatReducer, initialChatState } from "../reducer";
+import { ChatActions, ChatActionsType } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { mockChats } from "../../../../util/test-utils/mock-test-data";
 
 describe("chatReducer:", () => {
     describe("initial state:", () => {
@@ -30,10 +30,10 @@ describe("chatReducer:", () => {
             chatReducer(
                 {
                     ...initialChatState,
-                    item: mockChats[0],
+                    item: mockChats[0]
                 },
                 {
-                    type: ChatActionsType.RESET_CHAT_STATE,
+                    type: ChatActionsType.RESET_CHAT_STATE
                 }
             ),
             {

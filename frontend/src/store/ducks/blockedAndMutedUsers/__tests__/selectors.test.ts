@@ -5,18 +5,18 @@ import {
     selectMutedUsersItems,
     selectUsersPagesCount
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockBlockedUsers, mockMutedUsers} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../types/common";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockBlockedUsers, mockMutedUsers } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("blockedAndMutedUsers selectors:", () => {
     const mockState = createMockRootState();
-    
+
     describe("selectMutedUsersItems", () => {
         it("should return MutedUserResponse array", () => {
             expect(selectMutedUsersItems({
                 ...mockState,
-                blockedAndMutedUsers: {...mockState.blockedAndMutedUsers, mutedUsers: mockMutedUsers}
+                blockedAndMutedUsers: { ...mockState.blockedAndMutedUsers, mutedUsers: mockMutedUsers }
             })).toBe(mockMutedUsers);
         });
     });
@@ -25,7 +25,7 @@ describe("blockedAndMutedUsers selectors:", () => {
         it("should return BlockedUserResponse array", () => {
             expect(selectBlockedUsersItems({
                 ...mockState,
-                blockedAndMutedUsers: {...mockState.blockedAndMutedUsers, blockedUsers: mockBlockedUsers}
+                blockedAndMutedUsers: { ...mockState.blockedAndMutedUsers, blockedUsers: mockBlockedUsers }
             })).toBe(mockBlockedUsers);
         });
     });

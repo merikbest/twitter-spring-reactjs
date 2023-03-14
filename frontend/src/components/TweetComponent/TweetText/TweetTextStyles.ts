@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useTweetTextStyles = makeStyles((theme) => ({
     text: {
@@ -6,13 +6,13 @@ export const useTweetTextStyles = makeStyles((theme) => ({
             display: "block",
             width: 490,
             color: "inherit",
-            textDecoration: "none",
+            textDecoration: "none"
         },
         "& #hashtag": {
-            color: theme.palette.primary.main,
+            color: theme.palette.primary.main
         },
         "& #link": {
-            color: theme.palette.primary.main,
+            color: theme.palette.primary.main
         }
-    },
+    }
 }));

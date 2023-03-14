@@ -12,10 +12,10 @@ import usLang from "date-fns/locale/en-US/index";
 import differenceInDays from "date-fns/differenceInDays";
 import differenceInHours from "date-fns/differenceInHours";
 import differenceInMinutes from "date-fns/differenceInMinutes";
-import {PollResponse} from "../store/types/tweet";
+import { PollResponse } from "../types/tweet";
 
 export const formatDate = (date: Date): string => {
-    return format(date, 'MMM d');
+    return format(date, "MMM d");
 };
 
 export const formatScheduleDate = (date: Date): string => {
@@ -23,7 +23,7 @@ export const formatScheduleDate = (date: Date): string => {
 };
 
 export const formatChatMessageDate = (date: Date): string => {
-    const datePattern = format(date, 'hh:mm a', {locale: usLang});
+    const datePattern = format(date, "hh:mm a", { locale: usLang });
 
     if (isToday(date)) return datePattern;
 
@@ -43,7 +43,7 @@ export const formatChatMessageDate = (date: Date): string => {
 
     if (isSunday(date)) return `Sun ${datePattern}`;
 
-    return format(date, 'MMM dd, hh:mm a', {locale: usLang});
+    return format(date, "MMM dd, hh:mm a", { locale: usLang });
 };
 
 export const voteFormatDate = (poll: PollResponse): string => {

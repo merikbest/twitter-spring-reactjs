@@ -1,10 +1,10 @@
-import React, {memo, ReactElement, useState} from "react";
+import React, { memo, ReactElement, useState } from "react";
 import Typography from "@material-ui/core/Typography";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
-import {selectLikedTweetsCount, selectRetweetsCount, selectTweetId} from "../../../store/ducks/tweet/selectors";
-import UsersListModal, {UsersListModalAction} from "../../UsersListModal/UsersListModal";
-import {useTweetInteractionCountStyles} from "./TweetInteractionCountStyles";
+import { selectLikedTweetsCount, selectRetweetsCount, selectTweetId } from "../../../store/ducks/tweet/selectors";
+import UsersListModal, { UsersListModalAction } from "../../UsersListModal/UsersListModal";
+import { useTweetInteractionCountStyles } from "./TweetInteractionCountStyles";
 
 const TweetInteractionCount = memo((): ReactElement => {
     const classes = useTweetInteractionCountStyles();
@@ -38,7 +38,7 @@ const TweetInteractionCount = memo((): ReactElement => {
                             href={"javascript:void(0);"}
                             onClick={onOpenRetweetsModalWindow}
                         >
-                            <span style={{marginRight: 20}}>
+                            <span style={{ marginRight: 20 }}>
                                 <Typography variant={"h6"} component={"span"}>
                                     {retweetsCount}
                                 </Typography>
@@ -54,7 +54,7 @@ const TweetInteractionCount = memo((): ReactElement => {
                             href={"javascript:void(0);"}
                             onClick={onOpenLikesModalWindow}
                         >
-                            <span style={{marginRight: 20}}>
+                            <span style={{ marginRight: 20 }}>
                                 <Typography variant={"h6"} component={"span"}>
                                     {likedTweetsCount}
                                 </Typography>

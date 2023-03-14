@@ -1,11 +1,11 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
     container: {
         width: 550,
         minHeight: 600,
         marginTop: 5,
-        padding: "0 30px",
+        padding: "0 30px"
     },
     logoIcon: {
         margin: "0 auto",
@@ -13,22 +13,22 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             height: "1.75rem",
             width: "1.75rem",
-            color: theme.palette.primary.main,
-        },
+            color: theme.palette.primary.main
+        }
     },
     title: {
-        marginBottom: 44,
+        marginBottom: 44
     },
     subtitle: {
         fontWeight: 700,
         fontSize: 18,
         marginBottom: 12,
-        lineHeight: "20px",
+        lineHeight: "20px"
     },
     text: {
         width: 450,
         display: "inline-block",
-        marginBottom: 40,
+        marginBottom: 40
     },
     radio: {
         display: "inline-block",
@@ -36,9 +36,9 @@ export const useCustomizeModalStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             width: 16,
             height: 16
-        },
+        }
     },
     buttonWrapper: {
         marginTop: 285
-    },
+    }
 }));

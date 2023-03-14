@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface HoverActionStylesProps {
     positionTop?: boolean;
@@ -16,7 +16,7 @@ export const useHoverActionStyles = makeStyles<Theme, HoverActionStylesProps>((t
         padding: "2px 4px",
         "& #action-text": {
             lineHeight: "12px",
-            color: theme.palette.common.white,
-        },
+            color: theme.palette.common.white
+        }
     }
 }));

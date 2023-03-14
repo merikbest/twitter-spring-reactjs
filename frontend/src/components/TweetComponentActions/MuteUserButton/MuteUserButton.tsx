@@ -1,10 +1,10 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useDispatch} from "react-redux";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch } from "react-redux";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {MuteIcon, UnmuteIcon} from "../../../icons";
-import {processUserToMuteList} from "../../../store/ducks/user/actionCreators";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import { MuteIcon, UnmuteIcon } from "../../../icons";
+import { processUserToMuteList } from "../../../store/ducks/user/actionCreators";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface MuteUserButtonProps {
     tweetId: number;
@@ -18,13 +18,13 @@ const MuteUserButton: FC<MuteUserButtonProps> = memo((
         tweetId,
         userId,
         username,
-        isUserMuted,
+        isUserMuted
     }
 ): ReactElement => {
     const dispatch = useDispatch();
 
     const onMuteUser = (): void => {
-        dispatch(processUserToMuteList({userId, tweetId}));
+        dispatch(processUserToMuteList({ userId, tweetId }));
         dispatch(setOpenSnackBar(`@${username} has been ${isUserMuted ? "unmuted" : "muted"}.`));
     };
 

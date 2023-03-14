@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useTweetInteractionCountStyles = makeStyles((theme) => ({
     content: {
@@ -10,7 +10,7 @@ export const useTweetInteractionCountStyles = makeStyles((theme) => ({
             textDecoration: "none"
         },
         "& .MuiTypography-subtitle1": {
-            marginLeft: 5,
-        },
-    },
+            marginLeft: 5
+        }
+    }
 }));

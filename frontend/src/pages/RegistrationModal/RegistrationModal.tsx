@@ -1,16 +1,16 @@
-import React, {ChangeEvent, FC, ReactElement, ReactNode, useState} from 'react';
-import {Controller, useForm} from "react-hook-form";
-import {Button, Dialog, FormControl, InputLabel, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { ChangeEvent, FC, ReactElement, ReactNode, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Button, Dialog, FormControl, InputLabel, Link as MuiLink, Typography } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
-import TwitterIcon from "@material-ui/icons/Twitter"
-import {yupResolver} from "@hookform/resolvers/yup";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import {useRegistrationModalStyles} from "./RegistrationModalStyles";
+import { useRegistrationModalStyles } from "./RegistrationModalStyles";
 import RegistrationInput from "./RegistrationInput/RegistrationInput";
-import {RegistrationInfo} from "../Authentication/Authentication";
-import {AuthApi} from "../../services/api/authApi";
-import {FilledSelect} from "../../components/FilledSelect/FilledSelect";
+import { AuthApi } from "../../services/api/authApi";
+import { FilledSelect } from "../../components/FilledSelect/FilledSelect";
+import { RegistrationInfo } from "../../types/auth";
 
 interface RegistrationModalProps {
     open: boolean;
@@ -26,7 +26,7 @@ interface RegistrationFormProps {
 
 const RegistrationFormSchema = yup.object().shape({
     username: yup.string().min(1, "What is your name?").required(),
-    email: yup.string().email("Invalid mail").required("Please enter a valid email address."),
+    email: yup.string().email("Invalid mail").required("Please enter a valid email address.")
 });
 
 const RegistrationModal: FC<RegistrationModalProps> = (
@@ -41,7 +41,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
     const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<number>(0);
     const [year, setYear] = useState<number>(0);
-    const {control, handleSubmit, setError, formState: {errors}} = useForm<RegistrationFormProps>({
+    const { control, handleSubmit, setError, formState: { errors } } = useForm<RegistrationFormProps>({
         resolver: yupResolver(RegistrationFormSchema)
     });
 
@@ -51,7 +51,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
         if (month !== "" && day !== 0 && year !== 0) {
             birthday = month + " " + day + ", " + year;
         }
-        const registrationData: RegistrationInfo = {username: data.username, email: data.email, birthday: birthday};
+        const registrationData: RegistrationInfo = { username: data.username, email: data.email, birthday: birthday };
         AuthApi.checkEmail(registrationData)
             .then(() => {
                 onChangeRegistrationInfo(registrationData);
@@ -61,10 +61,10 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                 const errors = error.response.data;
 
                 if (errors.username) {
-                    setError("username", {type: "server", message: errors.username});
+                    setError("username", { type: "server", message: errors.username });
                 }
                 if (errors.email) {
-                    setError("email", {type: "server", message: errors.email});
+                    setError("email", { type: "server", message: errors.email });
                 }
             });
     };
@@ -106,9 +106,9 @@ const RegistrationModal: FC<RegistrationModalProps> = (
             onClose={onClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
+            <DialogContent style={{ paddingTop: 0, paddingBottom: 0 }} className={classes.container}>
                 <div className={classes.logoIcon}>
-                    <TwitterIcon/>
+                    <TwitterIcon />
                 </div>
                 <div>
                     <Typography variant={"h3"} component={"div"} className={classes.title}>
@@ -120,7 +120,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                 name="username"
                                 control={control}
                                 defaultValue=""
-                                render={({field: {onChange, value}}) => (
+                                render={({ field: { onChange, value } }) => (
                                     <RegistrationInput
                                         name="username"
                                         helperText={errors.username?.message}
@@ -136,7 +136,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                 name="email"
                                 control={control}
                                 defaultValue=""
-                                render={({field: {onChange, value}}) => (
+                                render={({ field: { onChange, value } }) => (
                                     <RegistrationInput
                                         name="email"
                                         helperText={errors.email?.message}
@@ -166,7 +166,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                 </InputLabel>
                                 <FilledSelect
                                     variant="filled"
-                                    style={{width: 240, marginRight: 12}}
+                                    style={{ width: 240, marginRight: 12 }}
                                     labelId="select-month"
                                     id="select-month"
                                     native
@@ -174,7 +174,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     onChange={changeMonth}
                                     label="Month"
                                 >
-                                    <option aria-label="None"/>
+                                    <option aria-label="None" />
                                     <option value={"Jan"}>January</option>
                                     <option value={"Feb"}>February</option>
                                     <option value={"Mar"}>March</option>
@@ -189,13 +189,13 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     <option value={"Dec"}>December</option>
                                 </FilledSelect>
                             </FormControl>
-                            <FormControl style={{margin: "16px 0"}} variant="filled" className={classes.formControl}>
+                            <FormControl style={{ margin: "16px 0" }} variant="filled" className={classes.formControl}>
                                 <InputLabel htmlFor="select-day">
                                     Day
                                 </InputLabel>
                                 <FilledSelect
                                     variant="filled"
-                                    style={{width: 100, marginRight: 12}}
+                                    style={{ width: 100, marginRight: 12 }}
                                     labelId="select-day"
                                     id="select-day"
                                     native
@@ -203,17 +203,17 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     onChange={changeDay}
                                     label="Day"
                                 >
-                                    <option aria-label="None"/>
+                                    <option aria-label="None" />
                                     {showDays()}
                                 </FilledSelect>
                             </FormControl>
-                            <FormControl style={{margin: "16px 0"}} variant="filled" className={classes.formControl}>
+                            <FormControl style={{ margin: "16px 0" }} variant="filled" className={classes.formControl}>
                                 <InputLabel htmlFor="select-year">
                                     Year
                                 </InputLabel>
                                 <FilledSelect
                                     variant="filled"
-                                    style={{width: 125,}}
+                                    style={{ width: 125 }}
                                     labelId="select-year"
                                     id="select-year"
                                     native
@@ -221,7 +221,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                                     onChange={changeYear}
                                     label="Year"
                                 >
-                                    <option aria-label="None"/>
+                                    <option aria-label="None" />
                                     {showYears()}
                                 </FilledSelect>
                             </FormControl>

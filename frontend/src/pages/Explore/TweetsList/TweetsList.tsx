@@ -1,9 +1,9 @@
-import React, {ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { ReactElement } from "react";
+import { useSelector } from "react-redux";
 
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import Spinner from "../../../components/Spinner/Spinner";
-import {selectIsTweetsLoading, selectTweetsItems} from "../../../store/ducks/tweets/selectors";
+import { selectIsTweetsLoading, selectTweetsItems } from "../../../store/ducks/tweets/selectors";
 
 const TweetsList = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
@@ -11,8 +11,8 @@ const TweetsList = (): ReactElement => {
 
     return (
         <>
-            <>{tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}</>
-            <>{isTweetsLoading && <Spinner/>}</>
+            <>{tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)}</>
+            <>{isTweetsLoading && <Spinner />}</>
         </>
     );
 };

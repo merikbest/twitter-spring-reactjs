@@ -1,16 +1,16 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Paper} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Paper } from "@material-ui/core";
 
-import {useTweetComponentStyles} from "./TweetComponentStyles";
-import {selectUserDataId} from "../../store/ducks/user/selectors";
+import { useTweetComponentStyles } from "./TweetComponentStyles";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
 import TweetComponentActions from "../TweetComponentActions/TweetComponentActions";
 import ShareTweetIconButton from "../ShareTweetIconButton/ShareTweetIconButton";
 import VoteComponent from "../VoteComponent/VoteComponent";
 import QuoteIconButton from "../QuoteIconButton/QuoteIconButton";
 import Quote from "../Quote/Quote";
-import {TweetResponse} from "../../store/types/tweet";
-import {ReplyType} from "../../store/types/common";
+import { TweetResponse } from "../../types/tweet";
+import { ReplyType } from "../../types/common";
 import TweetDeleted from "../TweetDeleted/TweetDeleted";
 import LikeIconButton from "./LikeIconButton/LikeIconButton";
 import ReplyIconButton from "./ReplyIconButton/ReplyIconButton";
@@ -23,7 +23,7 @@ import TweetText from "./TweetText/TweetText";
 import TweetImage from "./TweetImage/TweetImage";
 import TweetReplyConversation from "./TweetReplyConversation/TweetReplyConversation";
 import TweetActions from "./TweetActions/TweetActions";
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
 
 export interface TweetComponentProps {
     tweet?: TweetResponse;
@@ -31,16 +31,16 @@ export interface TweetComponentProps {
     isTweetImageModal?: boolean;
 }
 
-const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweetImageModal}): ReactElement => {
+const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTweetImageModal }): ReactElement => {
     const myProfileId = useSelector(selectUserDataId);
     const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfileId !== tweet?.user.id);
-    const classes = useTweetComponentStyles({isTweetImageModal});
+    const classes = useTweetComponentStyles({ isTweetImageModal });
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <TweetActions tweetId={tweet?.id} retweetsUserIds={tweet?.retweetsUserIds} activeTab={activeTab}/>
+            <TweetActions tweetId={tweet?.id} retweetsUserIds={tweet?.retweetsUserIds} activeTab={activeTab} />
             <div className={classes.tweetWrapper}>
-                <TweetAvatar userId={tweet?.user.id} src={tweet?.user.avatar ?? DEFAULT_PROFILE_IMG}/>
+                <TweetAvatar userId={tweet?.user.id} src={tweet?.user.avatar ?? DEFAULT_PROFILE_IMG} />
                 <div className={classes.tweetContainer}>
                     <div className={classes.header}>
                         <TweetHeader
@@ -50,7 +50,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweet
                             isPrivateProfile={tweet?.user.isPrivateProfile}
                             dateTime={tweet!.dateTime}
                         />
-                        <TweetComponentActions tweetId={tweet!.id}/>
+                        <TweetComponentActions tweetId={tweet!.id} />
                     </div>
                     <div className={classes.tweetContent}>
                         {tweet?.addressedUsername && (
@@ -59,19 +59,19 @@ const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweet
                                 addressedUsername={tweet.addressedUsername}
                             />
                         )}
-                        <TweetText text={tweet?.text} tweetId={tweet?.id}/>
+                        <TweetText text={tweet?.text} tweetId={tweet?.id} />
                         {(tweet?.images?.length !== 0) && (
-                            <TweetImage tweetId={tweet?.id} imageSrc={tweet?.images?.[0].src}/>
+                            <TweetImage tweetId={tweet?.id} imageSrc={tweet?.images?.[0].src} />
                         )}
-                        {tweet?.poll && <VoteComponent tweetId={tweet?.id} poll={tweet?.poll}/>}
+                        {tweet?.poll && <VoteComponent tweetId={tweet?.id} poll={tweet?.poll} />}
                         {(tweet?.user.isFollower && tweet?.replyType === ReplyType.FOLLOW) && (
-                            <TweetReplyConversation/>
+                            <TweetReplyConversation />
                         )}
                         {tweet?.quoteTweet && (
                             tweet?.quoteTweet.isDeleted ? (
-                                <TweetDeleted/>
+                                <TweetDeleted />
                             ) : (
-                                <Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted/>
+                                <Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted />
                             ))
                         }
                         <TweetMedia
@@ -105,7 +105,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({tweet, activeTab, isTweet
                             isTweetLiked={tweet?.isTweetLiked}
                             likedTweetsCount={tweet?.likedTweetsCount}
                         />
-                        <ShareTweetIconButton tweetId={tweet!.id}/>
+                        <ShareTweetIconButton tweetId={tweet!.id} />
                         {(myProfileId === tweet?.user.id) && (
                             <AnalyticsIconButton
                                 tweetUserFullName={tweet?.user.fullName}

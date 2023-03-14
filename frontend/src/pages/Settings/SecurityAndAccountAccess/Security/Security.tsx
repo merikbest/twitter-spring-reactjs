@@ -1,12 +1,12 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {Checkbox, Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Checkbox, Divider, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {ArrowRightIcon} from "../../../../icons";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {SETTINGS_SECURITY_LOGIN_VERIFICATION} from '../../../../util/pathConstants';
-import {ACCOUNT_SECURITY_TIPS, TWO_FACTOR_AUTHENTICATION} from "../../../../util/url";
+import { ArrowRightIcon } from "../../../../icons";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { SETTINGS_SECURITY_LOGIN_VERIFICATION } from "../../../../constants/path-constants";
+import { ACCOUNT_SECURITY_TIPS, TWO_FACTOR_AUTHENTICATION } from "../../../../constants/url-constants";
 
 const Security: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -41,7 +41,7 @@ const Security: FC = (): ReactElement => {
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Additional password protection
@@ -59,7 +59,7 @@ const Security: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Password reset protect
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <MuiLink href={ACCOUNT_SECURITY_TIPS} variant="body1" target="_blank" rel="noopener">
                     Learn more

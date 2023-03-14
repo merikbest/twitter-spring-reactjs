@@ -1,9 +1,9 @@
-import {initialTweetsState, tweetsReducer} from "../reducer";
-import {TweetsActions, TweetsActionType} from "../contracts/actionTypes";
-import {TweetResponse} from "../../../types/tweet";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus, NotificationType} from "../../../types/common";
-import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
+import { initialTweetsState, tweetsReducer } from "../reducer";
+import { TweetsActions, TweetsActionType } from "../contracts/actionTypes";
+import { TweetResponse } from "../../../../types/tweet";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus, NotificationType } from "../../../../types/common";
+import { NotificationReplyResponse, NotificationResponse } from "../../../../types/notification";
 
 describe("tweetsReducer:", () => {
     describe("initial state:", () => {
@@ -17,11 +17,11 @@ describe("tweetsReducer:", () => {
             TweetsActionType.SET_TWEETS,
             tweetsReducer(initialTweetsState, {
                 type: TweetsActionType.SET_TWEETS,
-                payload: [{id: 1}] as TweetResponse[]
+                payload: [{ id: 1 }] as TweetResponse[]
             }),
             {
                 ...initialTweetsState,
-                items: [{id: 1}] as TweetResponse[],
+                items: [{ id: 1 }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -30,11 +30,11 @@ describe("tweetsReducer:", () => {
             TweetsActionType.SET_SCHEDULED_TWEETS,
             tweetsReducer(initialTweetsState, {
                 type: TweetsActionType.SET_SCHEDULED_TWEETS,
-                payload: [{id: 1}] as TweetResponse[]
+                payload: [{ id: 1 }] as TweetResponse[]
             }),
             {
                 ...initialTweetsState,
-                items: [{id: 1}] as TweetResponse[],
+                items: [{ id: 1 }] as TweetResponse[]
             }
         );
 
@@ -42,11 +42,11 @@ describe("tweetsReducer:", () => {
             TweetsActionType.SET_PAGEABLE_TWEETS,
             tweetsReducer(initialTweetsState, {
                 type: TweetsActionType.SET_PAGEABLE_TWEETS,
-                payload: {items: [{id: 1}] as TweetResponse[], pagesCount: 2}
+                payload: { items: [{ id: 1 }] as TweetResponse[], pagesCount: 2 }
             }),
             {
                 ...initialTweetsState,
-                items: [{id: 1}] as TweetResponse[],
+                items: [{ id: 1 }] as TweetResponse[],
                 pagesCount: 2,
                 loadingState: LoadingStatus.LOADED
             }
@@ -56,11 +56,11 @@ describe("tweetsReducer:", () => {
             TweetsActionType.SET_TWEET,
             tweetsReducer(initialTweetsState, {
                 type: TweetsActionType.SET_TWEET,
-                payload: {id: 1} as TweetResponse
+                payload: { id: 1 } as TweetResponse
             }),
             {
                 ...initialTweetsState,
-                items: [{id: 1}] as TweetResponse[],
+                items: [{ id: 1 }] as TweetResponse[]
             }
         );
 
@@ -69,11 +69,11 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{id: 1}] as TweetResponse[],
-                    pagesCount: 2,
+                    items: [{ id: 1 }] as TweetResponse[],
+                    pagesCount: 2
                 },
                 {
-                    type: TweetsActionType.RESET_TWEETS,
+                    type: TweetsActionType.RESET_TWEETS
                 }
             ),
             {
@@ -87,19 +87,19 @@ describe("tweetsReducer:", () => {
             TweetsActionType.SET_UPDATED_TWEET + "(NotificationType.LIKE)",
             tweetsReducer({
                     ...initialTweetsState,
-                    items: [{id: 1, isTweetLiked: false, likedTweetsCount: 0}] as TweetResponse[],
+                    items: [{ id: 1, isTweetLiked: false, likedTweetsCount: 0 }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_UPDATED_TWEET,
                     payload: {
                         id: 1,
-                        tweet: {id: 1, notificationCondition: true},
+                        tweet: { id: 1, notificationCondition: true },
                         notificationType: NotificationType.LIKE
                     } as NotificationResponse
                 }),
             {
                 ...initialTweetsState,
-                items: [{id: 1, isTweetLiked: true, likedTweetsCount: 1}] as TweetResponse[],
+                items: [{ id: 1, isTweetLiked: true, likedTweetsCount: 1 }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADING
             }
         );
@@ -108,19 +108,19 @@ describe("tweetsReducer:", () => {
             TweetsActionType.SET_UPDATED_TWEET + "(NotificationType.RETWEET)",
             tweetsReducer({
                     ...initialTweetsState,
-                    items: [{id: 1, isTweetRetweeted: false, retweetsCount: 0}] as TweetResponse[],
+                    items: [{ id: 1, isTweetRetweeted: false, retweetsCount: 0 }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_UPDATED_TWEET,
                     payload: {
                         id: 1,
-                        tweet: {id: 1, notificationCondition: true},
+                        tweet: { id: 1, notificationCondition: true },
                         notificationType: NotificationType.RETWEET
                     } as NotificationResponse
                 }),
             {
                 ...initialTweetsState,
-                items: [{id: 1, isTweetRetweeted: true, retweetsCount: 1}] as TweetResponse[],
+                items: [{ id: 1, isTweetRetweeted: true, retweetsCount: 1 }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADING
             }
         );
@@ -129,19 +129,19 @@ describe("tweetsReducer:", () => {
             TweetsActionType.SET_UPDATED_TWEET + "(NotificationType.REPLY)",
             tweetsReducer({
                     ...initialTweetsState,
-                    items: [{id: 1, repliesCount: 0}] as TweetResponse[],
+                    items: [{ id: 1, repliesCount: 0 }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_UPDATED_TWEET,
                     payload: {
                         tweetId: 1,
-                        tweet: {id: 1},
+                        tweet: { id: 1 },
                         notificationType: NotificationType.REPLY
                     } as NotificationReplyResponse
                 }),
             {
                 ...initialTweetsState,
-                items: [{id: 1, repliesCount: 1}] as TweetResponse[],
+                items: [{ id: 1, repliesCount: 1 }] as TweetResponse[]
             }
         );
 
@@ -150,16 +150,16 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{id: 1, isTweetBookmarked: false}] as TweetResponse[],
+                    items: [{ id: 1, isTweetBookmarked: false }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET,
-                    payload: {tweetId: 1, isTweetBookmarked: true}
+                    payload: { tweetId: 1, isTweetBookmarked: true }
                 }
             ),
             {
                 ...initialTweetsState,
-                items: [{id: 1, isTweetBookmarked: true}] as TweetResponse[],
+                items: [{ id: 1, isTweetBookmarked: true }] as TweetResponse[]
             }
         );
 
@@ -180,7 +180,7 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{id: 1}] as TweetResponse[],
+                    items: [{ id: 1 }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS,
@@ -199,7 +199,7 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{id: 1}] as TweetResponse[],
+                    items: [{ id: 1 }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.DELETE_TWEET,
@@ -208,7 +208,7 @@ describe("tweetsReducer:", () => {
             ),
             {
                 ...initialTweetsState,
-                items: [],
+                items: []
             }
         );
 
@@ -217,16 +217,16 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{id: 1, user: {id: 1, isFollower: false}}] as TweetResponse[],
+                    items: [{ id: 1, user: { id: 1, isFollower: false } }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
-                    payload: {userId: 1, tweetId: 1, isFollower: true}
+                    payload: { userId: 1, tweetId: 1, isFollower: true }
                 }
             ),
             {
                 ...initialTweetsState,
-                items: [{id: 1, user: {id: 1, isFollower: true}}] as TweetResponse[],
+                items: [{ id: 1, user: { id: 1, isFollower: true } }] as TweetResponse[]
             }
         );
 
@@ -235,16 +235,16 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{id: 1, user: {id: 1, isUserBlocked: false}}] as TweetResponse[],
+                    items: [{ id: 1, user: { id: 1, isUserBlocked: false } }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE,
-                    payload: {userId: 1, tweetId: 1, isUserBlocked: true}
+                    payload: { userId: 1, tweetId: 1, isUserBlocked: true }
                 }
             ),
             {
                 ...initialTweetsState,
-                items: [{id: 1, user: {id: 1, isUserBlocked: true}}] as TweetResponse[],
+                items: [{ id: 1, user: { id: 1, isUserBlocked: true } }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -254,16 +254,16 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{id: 1, user: {id: 1, isUserMuted: false}}] as TweetResponse[],
+                    items: [{ id: 1, user: { id: 1, isUserMuted: false } }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_MUTED_TO_TWEETS_STATE,
-                    payload: {userId: 1, tweetId: 1, isUserMuted: true}
+                    payload: { userId: 1, tweetId: 1, isUserMuted: true }
                 }
             ),
             {
                 ...initialTweetsState,
-                items: [{id: 1, user: {id: 1, isUserMuted: true}}] as TweetResponse[],
+                items: [{ id: 1, user: { id: 1, isUserMuted: true } }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );

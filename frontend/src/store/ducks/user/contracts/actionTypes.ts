@@ -1,55 +1,55 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
-import {ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState} from "./state";
-import {RegistrationProps} from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
-import {LoginProps} from "../../../../pages/Login/Login";
-import {ChatMessageResponse} from "../../../types/chat";
-import {LoadingStatus} from "../../../types/common";
+import { ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState } from "./state";
+import { RegistrationProps } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { ChatMessageResponse } from "../../../../types/chat";
+import { LoadingStatus } from "../../../../types/common";
+import { LoginRequest } from "../../../../types/auth";
 
 export enum UserActionsType {
     // followersSize
-    SIGN_OUT = 'user/SIGN_OUT',
+    SIGN_OUT = "user/SIGN_OUT",
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
-    FETCH_SIGN_UP = 'user/FETCH_SIGN_UP',
+    FETCH_SIGN_UP = "user/FETCH_SIGN_UP",
     SET_USER_DATA = "user/SET_USER_DATA",
-    FETCH_USER_DATA = 'user/FETCH_USER_DATA',
+    FETCH_USER_DATA = "user/FETCH_USER_DATA",
     SET_USER_LOADING_STATE = "user/SET_USER_LOADING_STATE",
     UPDATE_USER_DATA = "user/UPDATE_USER_DATA",
-    SET_FOLLOWERS_SIZE = 'user/SET_FOLLOWERS_SIZE',
-    SET_PROFILE_STARTED = 'user/SET_PROFILE_STARTED',
-    SET_PIN_TWEET_ID = 'user/SET_PIN_TWEET_ID',
-    SET_READ_MESSAGE = 'user/SET_READ_MESSAGE',
-    FOLLOW_USER = 'user/FOLLOW_USER',
-    UNFOLLOW_USER = 'user/UNFOLLOW_USER',
-    SET_USER_FOLLOWING = 'user/SET_USER_FOLLOWING',
-    FETCH_PIN_TWEET = 'user/FETCH_PIN_TWEET',
-    PROCESS_FOLLOW_REQUEST = 'user/PROCESS_FOLLOW_REQUEST',
-    PROCESS_USER_TO_BLOCKLIST = 'user/PROCESS_USER_TO_BLOCKLIST',
-    PROCESS_USER_TO_MUTELIST = 'user/PROCESS_USER_TO_MUTELIST',
-    UPDATE_USERNAME = 'user/UPDATE_USERNAME',
-    UPDATE_EMAIL = 'user/UPDATE_EMAIL',
-    UPDATE_PHONE = 'user/UPDATE_PHONE',
-    UPDATE_COUNTRY = 'user/UPDATE_COUNTRY',
-    UPDATE_GENDER = 'user/UPDATE_GENDER',
-    UPDATE_LANGUAGE = 'user/UPDATE_LANGUAGE',
-    UPDATE_DIRECT = 'user/UPDATE_DIRECT',
-    UPDATE_PRIVATE_PROFILE = 'user/UPDATE_PRIVATE_PROFILE',
-    UPDATE_COLOR_SCHEME = 'user/UPDATE_COLOR_SCHEME',
-    UPDATE_BACKGROUND_COLOR = 'user/UPDATE_BACKGROUND_COLOR',
-    SET_USERNAME = 'user/SET_USERNAME',
-    SET_EMAIL = 'user/SET_EMAIL',
-    SET_PHONE = 'user/SET_PHONE',
-    SET_COUNTRY = 'user/SET_COUNTRY',
-    SET_GENDER = 'user/SET_GENDER',
-    SET_LANGUAGE = 'user/SET_LANGUAGE',
-    SET_DIRECT = 'user/SET_DIRECT',
-    SET_PRIVATE_PROFILE = 'user/SET_PRIVATE_PROFILE',
-    SET_COLOR_SCHEME = 'user/SET_COLOR_SCHEME',
-    SET_BACKGROUND_COLOR = 'user/SET_BACKGROUND_COLOR',
-    START_USE_TWITTER = 'user/START_USE_TWITTER',
-    FETCH_READ_MESSAGES = 'user/FETCH_READ_MESSAGES',
-    SET_UNREAD_MESSAGE = 'user/SET_UNREAD_MESSAGE',
-    SET_NEW_NOTIFICATION = 'user/SET_NEW_NOTIFICATION',
+    SET_FOLLOWERS_SIZE = "user/SET_FOLLOWERS_SIZE",
+    SET_PROFILE_STARTED = "user/SET_PROFILE_STARTED",
+    SET_PIN_TWEET_ID = "user/SET_PIN_TWEET_ID",
+    SET_READ_MESSAGE = "user/SET_READ_MESSAGE",
+    FOLLOW_USER = "user/FOLLOW_USER",
+    UNFOLLOW_USER = "user/UNFOLLOW_USER",
+    SET_USER_FOLLOWING = "user/SET_USER_FOLLOWING",
+    FETCH_PIN_TWEET = "user/FETCH_PIN_TWEET",
+    PROCESS_FOLLOW_REQUEST = "user/PROCESS_FOLLOW_REQUEST",
+    PROCESS_USER_TO_BLOCKLIST = "user/PROCESS_USER_TO_BLOCKLIST",
+    PROCESS_USER_TO_MUTELIST = "user/PROCESS_USER_TO_MUTELIST",
+    UPDATE_USERNAME = "user/UPDATE_USERNAME",
+    UPDATE_EMAIL = "user/UPDATE_EMAIL",
+    UPDATE_PHONE = "user/UPDATE_PHONE",
+    UPDATE_COUNTRY = "user/UPDATE_COUNTRY",
+    UPDATE_GENDER = "user/UPDATE_GENDER",
+    UPDATE_LANGUAGE = "user/UPDATE_LANGUAGE",
+    UPDATE_DIRECT = "user/UPDATE_DIRECT",
+    UPDATE_PRIVATE_PROFILE = "user/UPDATE_PRIVATE_PROFILE",
+    UPDATE_COLOR_SCHEME = "user/UPDATE_COLOR_SCHEME",
+    UPDATE_BACKGROUND_COLOR = "user/UPDATE_BACKGROUND_COLOR",
+    SET_USERNAME = "user/SET_USERNAME",
+    SET_EMAIL = "user/SET_EMAIL",
+    SET_PHONE = "user/SET_PHONE",
+    SET_COUNTRY = "user/SET_COUNTRY",
+    SET_GENDER = "user/SET_GENDER",
+    SET_LANGUAGE = "user/SET_LANGUAGE",
+    SET_DIRECT = "user/SET_DIRECT",
+    SET_PRIVATE_PROFILE = "user/SET_PRIVATE_PROFILE",
+    SET_COLOR_SCHEME = "user/SET_COLOR_SCHEME",
+    SET_BACKGROUND_COLOR = "user/SET_BACKGROUND_COLOR",
+    START_USE_TWITTER = "user/START_USE_TWITTER",
+    FETCH_READ_MESSAGES = "user/FETCH_READ_MESSAGES",
+    SET_UNREAD_MESSAGE = "user/SET_UNREAD_MESSAGE",
+    SET_NEW_NOTIFICATION = "user/SET_NEW_NOTIFICATION",
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -58,7 +58,7 @@ export interface SignOutActionInterface extends Action<UserActionsType> {
 
 export interface FetchSignInActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FETCH_SIGN_IN;
-    payload: LoginProps;
+    payload: LoginRequest;
 }
 
 export interface FetchSignUpActionInterface extends Action<UserActionsType> {

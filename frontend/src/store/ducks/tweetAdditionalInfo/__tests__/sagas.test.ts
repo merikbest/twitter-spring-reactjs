@@ -1,7 +1,7 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
-import {testCall, testLoadingStatus, testSetResponse} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types/common";
+import { testCall, testLoadingStatus, testSetResponse } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
 import {
     fetchIsTweetBookmarkedAdditionalInfo,
     fetchTweetAdditionalInfo,
@@ -9,15 +9,15 @@ import {
     setTweetAdditionalInfo,
     setTweetAdditionalInfoLoadingState
 } from "../actionCreators";
-import {fetchIsTweetBookmarkedAdditionalInfoRequest, fetchTweetAdditionalInfoRequest} from "../saga";
-import {TweetApi} from "../../../../services/api/tweetApi";
-import {mockUserTweetAdditionalInfo} from "../../../../util/mockData/mockData";
-import {TweetAdditionalInfoResponse} from "../../../types/tweet";
+import { fetchIsTweetBookmarkedAdditionalInfoRequest, fetchTweetAdditionalInfoRequest } from "../saga";
+import { TweetApi } from "../../../../services/api/tweetApi";
+import { mockUserTweetAdditionalInfo } from "../../../../util/test-utils/mock-test-data";
+import { TweetAdditionalInfoResponse } from "../../../../types/tweet";
 
 describe("tweetAdditionalInfoSaga:", () => {
     describe("fetchTweetAdditionalInfoRequest:", () => {
         const worker = fetchTweetAdditionalInfoRequest(fetchTweetAdditionalInfo(1));
-        const mockResponse = {data: mockUserTweetAdditionalInfo} as AxiosResponse<TweetAdditionalInfoResponse>;
+        const mockResponse = { data: mockUserTweetAdditionalInfo } as AxiosResponse<TweetAdditionalInfoResponse>;
         testLoadingStatus(worker, setTweetAdditionalInfoLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.getTweetAdditionalInfoById, 1, mockUserTweetAdditionalInfo);
         testSetResponse(worker, mockResponse, setTweetAdditionalInfo, mockResponse.data, "TweetAdditionalInfoResponse");
@@ -26,7 +26,7 @@ describe("tweetAdditionalInfoSaga:", () => {
 
     describe("fetchIsTweetBookmarkedAdditionalInfoRequest:", () => {
         const worker = fetchIsTweetBookmarkedAdditionalInfoRequest(fetchIsTweetBookmarkedAdditionalInfo(1));
-        const mockResponse = {data: true} as AxiosResponse<boolean>;
+        const mockResponse = { data: true } as AxiosResponse<boolean>;
         testLoadingStatus(worker, setTweetAdditionalInfoLoadingState, LoadingStatus.LOADING);
         testCall(worker, TweetApi.getIsTweetBookmarked, 1, mockUserTweetAdditionalInfo);
         testSetResponse(worker, mockResponse, setIsTweetBookmarkedAdditionalInfo, mockResponse.data, "TweetAdditionalInfoResponse");

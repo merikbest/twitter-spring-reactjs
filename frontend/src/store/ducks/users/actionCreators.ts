@@ -11,7 +11,7 @@ import {
     SetUsersActionInterface,
     SetUsersLoadingStatusActionInterface,
     UsersActionsType
-} from './contracts/actionTypes';
+} from "./contracts/actionTypes";
 import {
     BlockedUsersPayload,
     FollowRequestUsersPayload,
@@ -20,7 +20,7 @@ import {
     SubscribedUsersPayload,
     UsersState
 } from "./contracts/state";
-import {PageableResponse} from "../../types/common";
+import { PageableResponse } from "../../../types/common";
 
 export const setUsers = (payload: UsersState["users"]): SetUsersActionInterface => ({
     type: UsersActionsType.SET_USERS,
@@ -59,7 +59,7 @@ export const setSubscribedUsersState = (payload: SubscribedUsersPayload): SetSub
 
 export const fetchUsers = (payload: number): FetchUsersActionInterface => ({
     type: UsersActionsType.FETCH_USERS,
-    payload,
+    payload
 });
 
 export const fetchRelevantUsers = (): FetchRelevantUsersActionInterface => ({
@@ -67,7 +67,7 @@ export const fetchRelevantUsers = (): FetchRelevantUsersActionInterface => ({
 });
 
 export const resetUsersState = (): ResetUsersStateActionInterface => ({
-    type: UsersActionsType.RESET_USERS_STATE,
+    type: UsersActionsType.RESET_USERS_STATE
 });
 
 export const setUsersLoadingState = (payload: UsersState["loadingState"]): SetUsersLoadingStatusActionInterface => ({

@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
 import LockIcon from "../../LockIcon/LockIcon";
-import {UserItemSize} from "../UsersItem";
+import { UserItemSize } from "../UsersItem";
 
 interface UserItemInfoProps {
     fullName?: string;
@@ -28,7 +28,7 @@ const UserItemInfo: FC<UserItemInfoProps> = memo((
             <Typography variant={"h6"} display={"inline"}>
                 {fullName}
             </Typography>
-            {isPrivateProfile && <LockIcon/>}
+            {isPrivateProfile && <LockIcon />}
             <Typography variant={"subtitle1"} component={"div"}>
                 @{username}
             </Typography>

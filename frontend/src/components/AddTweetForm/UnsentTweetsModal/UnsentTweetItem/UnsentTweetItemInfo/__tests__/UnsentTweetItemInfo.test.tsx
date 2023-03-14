@@ -1,10 +1,10 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../../store/types/common";
-import {mockFullTweet} from "../../../../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../../types/common";
+import { mockFullTweet } from "../../../../../../util/test-utils/mock-test-data";
 import UnsentTweetItemInfo from "../UnsentTweetItemInfo";
-import {formatScheduleDate} from "../../../../../../util/formatDate";
+import { formatScheduleDate } from "../../../../../../util/format-date-helper";
 
 describe("UnsentTweetItemInfo", () => {
     it("should render correctly", () => {

@@ -1,12 +1,12 @@
-import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
-import {useHistory} from "react-router-dom";
-import {Button, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { ChangeEvent, FC, FormEvent, ReactElement, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Button, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
-import {AuthApi} from "../../../services/api/authApi";
-import {useCheckEmailCodeStyles} from "./CheckEmailCodeStyles";
-import { ACCOUNT_FORGOT_RESET_PASSWORD } from '../../../util/pathConstants';
-import {REGAIN_ACCESS} from "../../../util/url";
+import { ForgotPasswordTextField } from "../ForgotPasswordTextField/ForgotPasswordTextField";
+import { AuthApi } from "../../../services/api/authApi";
+import { useCheckEmailCodeStyles } from "./CheckEmailCodeStyles";
+import { ACCOUNT_FORGOT_RESET_PASSWORD } from "../../../constants/path-constants";
+import { REGAIN_ACCESS } from "../../../constants/url-constants";
 
 const CheckEmailCode: FC = (): ReactElement => {
     const classes = useCheckEmailCodeStyles();
@@ -22,7 +22,7 @@ const CheckEmailCode: FC = (): ReactElement => {
         } else {
             AuthApi.getUserByResetCode(resetCode)
                 .then((response) => {
-                    history.push({pathname: ACCOUNT_FORGOT_RESET_PASSWORD, state: {user: response.data}});
+                    history.push({ pathname: ACCOUNT_FORGOT_RESET_PASSWORD, state: { user: response.data } });
                 })
                 .catch(() => setError(true));
         }

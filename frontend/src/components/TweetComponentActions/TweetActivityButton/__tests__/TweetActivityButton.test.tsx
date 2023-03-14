@@ -1,7 +1,7 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {mountWithStore} from "../../../../util/testHelper";
+import { mountWithStore } from "../../../../util/test-utils/test-helper";
 import TweetActivityButton from "../TweetActivityButton";
 import TweetAnalyticsModal from "../../../TweetAnalyticsModal/TweetAnalyticsModal";
 import CloseButton from "../../../CloseButton/CloseButton";

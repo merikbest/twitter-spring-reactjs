@@ -1,8 +1,8 @@
-import {initialListState, listReducer} from "../reducer";
-import {ListActions, ListActionType} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {BaseListResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { initialListState, listReducer } from "../reducer";
+import { ListActions, ListActionType } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { BaseListResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("listReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("listReducer:", () => {
             ListActionType.SET_LIST,
             listReducer(initialListState, {
                 type: ListActionType.SET_LIST,
-                payload: {id: 1} as BaseListResponse
+                payload: { id: 1 } as BaseListResponse
             }),
             {
                 ...initialListState,
-                list: {id: 1} as BaseListResponse,
+                list: { id: 1 } as BaseListResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -30,7 +30,7 @@ describe("listReducer:", () => {
             listReducer(
                 {
                     ...initialListState,
-                    list: {id: 1, membersSize: 1} as BaseListResponse,
+                    list: { id: 1, membersSize: 1 } as BaseListResponse
                 },
                 {
                     type: ListActionType.SET_MEMBERS_SIZE,
@@ -39,7 +39,7 @@ describe("listReducer:", () => {
             ),
             {
                 ...initialListState,
-                list: {id: 1, membersSize: 2} as BaseListResponse,
+                list: { id: 1, membersSize: 2 } as BaseListResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -49,7 +49,7 @@ describe("listReducer:", () => {
             listReducer(
                 {
                     ...initialListState,
-                    list: {id: 1, followersSize: 1, isFollower: false} as BaseListResponse,
+                    list: { id: 1, followersSize: 1, isFollower: false } as BaseListResponse
                 },
                 {
                     type: ListActionType.UPDATE_FOLLOW_TO_FULL_LIST,
@@ -58,7 +58,7 @@ describe("listReducer:", () => {
             ),
             {
                 ...initialListState,
-                list: {id: 1, followersSize: 2, isFollower: true} as BaseListResponse,
+                list: { id: 1, followersSize: 2, isFollower: true } as BaseListResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -68,10 +68,10 @@ describe("listReducer:", () => {
             listReducer(
                 {
                     ...initialListState,
-                    list: {id: 1} as BaseListResponse,
+                    list: { id: 1 } as BaseListResponse
                 },
                 {
-                    type: ListActionType.RESET_LIST_STATE,
+                    type: ListActionType.RESET_LIST_STATE
                 }
             ),
             {

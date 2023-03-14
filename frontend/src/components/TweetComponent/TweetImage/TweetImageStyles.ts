@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useTweetImageStyles = makeStyles((theme) => ({
     image: {
@@ -9,10 +9,10 @@ export const useTweetImageStyles = makeStyles((theme) => ({
             width: 504,
             height: 252,
             borderRadius: 20,
-            borderColor: theme.palette.info.light,
+            borderColor: theme.palette.info.light
         },
         "& .small": {
-            width: 260,
-        },
-    },
+            width: 260
+        }
+    }
 }));

@@ -1,9 +1,9 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useActionSnackbarStyles = makeStyles<Theme>((theme) => ({
     snackBar: {
         "& .MuiPaper-root": {
-            border: "none",
+            border: "none"
         },
         "& .MuiSnackbarContent-root": {
             color: theme.palette.common.white,
@@ -13,8 +13,8 @@ export const useActionSnackbarStyles = makeStyles<Theme>((theme) => ({
             "& .MuiSnackbarContent-message": {
                 fontSize: 15,
                 margin: "0 auto",
-                textAlign: "center",
-            },
-        },
-    },
+                textAlign: "center"
+            }
+        }
+    }
 }));

@@ -1,5 +1,5 @@
-import {AxiosResponse} from "axios";
-import {call, put, takeLatest} from 'redux-saga/effects';
+import { AxiosResponse } from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
 
 import {
     setListMembers,
@@ -15,13 +15,13 @@ import {
     ListMembersActionsType,
     ProcessUserToListMembersActionInterface
 } from "./contracts/actionTypes";
-import {ListsApi} from "../../../services/api/listsApi";
-import {ListsOwnerMemberResponse} from "../../types/lists";
-import {setMembersSize} from "../list/actionCreators";
-import {LoadingStatus} from "../../types/common";
-import {setOpenSnackBar} from "../actionSnackbar/actionCreators";
+import { ListsApi } from "../../../services/api/listsApi";
+import { ListsOwnerMemberResponse } from "../../../types/lists";
+import { setMembersSize } from "../list/actionCreators";
+import { LoadingStatus } from "../../../types/common";
+import { setOpenSnackBar } from "../actionSnackbar/actionCreators";
 
-export function* fetchListMembersRequest({payload}: FetchListMembersActionInterface) {
+export function* fetchListMembersRequest({ payload }: FetchListMembersActionInterface) {
     try {
         yield put(setLoadingMembersState(LoadingStatus.LOADING));
         const response: AxiosResponse<ListsOwnerMemberResponse[]> = yield call(ListsApi.getListMembers, payload.listId, payload.listOwnerId);
@@ -31,7 +31,7 @@ export function* fetchListMembersRequest({payload}: FetchListMembersActionInterf
     }
 }
 
-export function* fetchListFollowersRequest({payload}: FetchListFollowersActionInterface) {
+export function* fetchListFollowersRequest({ payload }: FetchListFollowersActionInterface) {
     try {
         yield put(setLoadingMembersState(LoadingStatus.LOADING));
         const response: AxiosResponse<ListsOwnerMemberResponse[]> = yield call(ListsApi.getListFollowers, payload.listId, payload.listOwnerId);
@@ -41,7 +41,7 @@ export function* fetchListFollowersRequest({payload}: FetchListFollowersActionIn
     }
 }
 
-export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersByUsernameActionInterface) {
+export function* fetchListMembersByUsernameRequest({ payload }: FetchListMembersByUsernameActionInterface) {
     try {
         yield put(setLoadingSuggestedState(LoadingStatus.LOADING));
         const response: AxiosResponse<ListsOwnerMemberResponse[]> = yield call(ListsApi.searchListMembersByUsername, payload.listId, payload.username);
@@ -51,11 +51,11 @@ export function* fetchListMembersByUsernameRequest({payload}: FetchListMembersBy
     }
 }
 
-export function* processListMemberRequest({payload}: ProcessUserToListMembersActionInterface) {
+export function* processListMemberRequest({ payload }: ProcessUserToListMembersActionInterface) {
     try {
         yield put(setLoadingSuggestedState(LoadingStatus.LOADING));
-        const {data}: AxiosResponse<boolean> = yield call(ListsApi.addUserToList, payload.userId, payload.listId);
-        yield put(setUserToList({userId: payload.userId, isUserAdded: data, isSuggested: payload.isSuggested}));
+        const { data }: AxiosResponse<boolean> = yield call(ListsApi.addUserToList, payload.userId, payload.listId);
+        yield put(setUserToList({ userId: payload.userId, isUserAdded: data, isSuggested: payload.isSuggested }));
         yield put(setMembersSize(data));
     } catch (error) {
         yield put(setOpenSnackBar("You aren’t allowed to add this member to this List."));

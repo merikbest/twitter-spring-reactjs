@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface UseTopicsButtonStyles {
     isTopicFollowed: boolean;
@@ -14,12 +14,12 @@ export const useTopicButtonStyles = makeStyles<Theme, UseTopicsButtonStyles>((th
         flexWrap: "wrap",
         justifyContent: "flex-start",
         "& .MuiButtonBase-root": {
-            backgroundColor: props => props.isTopicFollowed ? theme.palette.primary.main : theme.palette.background.default,
+            backgroundColor: props => props.isTopicFollowed ? theme.palette.primary.main : theme.palette.background.default
         },
         "& .MuiTypography-h6": {
             color: props => props.isTopicFollowed ? theme.palette.common.white : theme.palette.common.black,
             fontWeight: 700,
-            marginRight: 12,
+            marginRight: 12
         },
         "& .MuiButton-label": {
             justifyContent: "space-between"
@@ -29,10 +29,10 @@ export const useTopicButtonStyles = makeStyles<Theme, UseTopicsButtonStyles>((th
             height: "1.172rem",
             fill: (props: { isTopicFollowed: any; isTopicNotInterested: any; }) =>
                 props.isTopicNotInterested ? theme.palette.common.white :
-                    props.isTopicFollowed ? theme.palette.common.white : theme.palette.primary.main,
+                    props.isTopicFollowed ? theme.palette.common.white : theme.palette.primary.main
         },
         "& .MuiButton-root:hover": {
-            backgroundColor: props => props.isTopicFollowed ? theme.palette.primary.dark : theme.palette.secondary.light,
+            backgroundColor: props => props.isTopicFollowed ? theme.palette.primary.dark : theme.palette.secondary.light
         }
     },
     topicItemTextInfo: {
@@ -40,6 +40,6 @@ export const useTopicButtonStyles = makeStyles<Theme, UseTopicsButtonStyles>((th
         flexBasis: 0,
         height: 40,
         padding: "7px 12px 7px 16px",
-        border: `1px solid rgb(185, 202, 211)`,
-    },
+        border: `1px solid rgb(185, 202, 211)`
+    }
 }));

@@ -1,8 +1,8 @@
-import React, {memo, ReactElement, ReactNode} from "react";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement, ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Skeleton from "@material-ui/lab/Skeleton";
-import {List} from "@material-ui/core";
+import { List } from "@material-ui/core";
 
 import {
     selectUserProfileId,
@@ -10,11 +10,11 @@ import {
     selectUserProfileIsMyProfileBlocked,
     selectUserProfileIsPrivateProfile
 } from "../../../store/ducks/userProfile/selectors";
-import {USER} from "../../../util/pathConstants";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
+import { USER } from "../../../constants/path-constants";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import UserFollowersCount from "./UserFollowersCount/UserFollowersCount";
 import UserFollowingCount from "./UserFollowingCount/UserFollowingCount";
-import {useUserPageStyles} from "../UserPageStyles";
+import { useUserPageStyles } from "../UserPageStyles";
 
 interface LinkToFollowersProps {
     children: ReactNode;
@@ -29,11 +29,11 @@ const UserInteractionCount = memo((): ReactElement => {
     const isMyProfileBlocked = useSelector(selectUserProfileIsMyProfileBlocked);
     const isFollower = useSelector(selectUserProfileIsFollower);
 
-    const LinkToFollowers = ({children, linkTo}: LinkToFollowersProps): JSX.Element => {
+    const LinkToFollowers = ({ children, linkTo }: LinkToFollowersProps): JSX.Element => {
         if (isPrivateProfile && userProfileId !== myProfileId && !isFollower) {
             return <div className={classes.followLink}>{children}</div>;
         } else {
-            return <Link to={`${USER}/${userProfileId}/${linkTo}`} className={classes.followLink}>{children}</Link>
+            return <Link to={`${USER}/${userProfileId}/${linkTo}`} className={classes.followLink}>{children}</Link>;
         }
     };
 
@@ -41,17 +41,17 @@ const UserInteractionCount = memo((): ReactElement => {
         <>
             {!userProfileId && (
                 <div className={classes.skeletonDetails}>
-                    <Skeleton component={"span"} variant="text" width={80}/>
-                    <Skeleton component={"span"} variant="text" width={80}/>
+                    <Skeleton component={"span"} variant="text" width={80} />
+                    <Skeleton component={"span"} variant="text" width={80} />
                 </div>
             )}
             {!isMyProfileBlocked && (
                 <List className={classes.details}>
                     <LinkToFollowers linkTo={"following"}>
-                        <UserFollowersCount/>
+                        <UserFollowersCount />
                     </LinkToFollowers>
                     <LinkToFollowers linkTo={"followers"}>
-                        <UserFollowingCount/>
+                        <UserFollowingCount />
                     </LinkToFollowers>
                 </List>
             )}

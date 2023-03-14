@@ -1,7 +1,7 @@
 import React from "react";
-import {Dialog} from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 
-import {mountWithStore} from "../../../../../util/testHelper";
+import { mountWithStore } from "../../../../../util/test-utils/test-helper";
 import LeaveFromConversationModal from "../LeaveFromConversationModal";
 
 describe("LeaveFromConversationModal", () => {

@@ -1,10 +1,10 @@
-import React, {memo, ReactElement} from "react";
+import React, { memo, ReactElement } from "react";
 import classnames from "classnames";
-import {Paper, Typography} from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 
 import BackButton from "../../../../components/BackButton/BackButton";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {useConversationInfoStyles} from "../ConversationInfoStyles";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { useConversationInfoStyles } from "../ConversationInfoStyles";
 
 const ConversationHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -12,7 +12,7 @@ const ConversationHeader = memo((): ReactElement => {
 
     return (
         <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
-            <BackButton/>
+            <BackButton />
             <Typography variant="h5">
                 Conversation info
             </Typography>

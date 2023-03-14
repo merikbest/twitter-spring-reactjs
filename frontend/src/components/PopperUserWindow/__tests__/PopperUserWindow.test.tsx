@@ -1,32 +1,32 @@
 import React from "react";
-import {Link} from "react-router-dom";
-import {Avatar, Button} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { Avatar, Button } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {mockUserDetailResponse} from "../../../util/mockData/mockData";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
+import { mockUserDetailResponse } from "../../../util/test-utils/mock-test-data";
 import PopperUserWindow from "../PopperUserWindow";
-import {PROFILE} from "../../../util/pathConstants";
-import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
+import { PROFILE } from "../../../constants/path-constants";
+import { UserActionsType } from "../../../store/ducks/user/contracts/actionTypes";
 import FollowerGroup from "../../FollowerGroup/FollowerGroup";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("PopperUserWindow", () => {
     const mockState = createMockRootState(LoadingStatus.LOADED);
     const mockRootState = {
         ...mockState,
-        userDetail: {...mockState.userDetail, item: mockUserDetailResponse}
+        userDetail: { ...mockState.userDetail, item: mockUserDetailResponse }
     };
     let mockDispatchFn: jest.Mock;
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
     });
-    
+
     it("should render correctly", () => {
         const wrapper = mountWrapper(mockRootState);
 
         expect(wrapper.find(Link).at(0).prop("to")).toBe(`${PROFILE}/${mockUserDetailResponse.id}`);
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockUserDetailResponse.avatar.src);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockUserDetailResponse.avatar);
         expect(wrapper.find(Button).at(0).text().includes("Following")).toBe(true);
         expect(wrapper.find(Link).at(1).prop("to")).toBe(`${PROFILE}/${mockUserDetailResponse.id}`);
         expect(wrapper.text().includes(mockUserDetailResponse.fullName)).toBe(true);
@@ -42,31 +42,31 @@ describe("PopperUserWindow", () => {
 
         wrapper.find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(1, {payload: {userId: 1}, type: UserActionsType.UNFOLLOW_USER});
+        expect(mockDispatchFn).nthCalledWith(1, { payload: { userId: 1 }, type: UserActionsType.UNFOLLOW_USER });
     });
 
     it("should click handle Unfollow private profile", () => {
         const wrapper = mountWrapper({
             ...mockState,
-            userDetail: {...mockState.userDetail, item: {...mockUserDetailResponse, isPrivateProfile: true}}
+            userDetail: { ...mockState.userDetail, item: { ...mockUserDetailResponse, isPrivateProfile: true } }
         });
 
         wrapper.find(Button).at(0).simulate("click");
 
         expect(wrapper.find(FollowerGroup).exists()).toBeFalsy();
         expect(wrapper.find("svg").prop("id")).toEqual("lockIcon");
-        expect(mockDispatchFn).nthCalledWith(1, {payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST});
+        expect(mockDispatchFn).nthCalledWith(1, { payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST });
     });
 
     it("should click handle Follow", () => {
         const wrapper = mountWrapper({
             ...mockState,
-            userDetail: {...mockState.userDetail, item: {...mockUserDetailResponse, isFollower: false}}
+            userDetail: { ...mockState.userDetail, item: { ...mockUserDetailResponse, isFollower: false } }
         });
 
         expect(wrapper.find(Button).at(0).text().includes("Follow")).toBe(true);
         wrapper.find(Button).at(0).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {payload: {userId: 1}, type: UserActionsType.FOLLOW_USER});
+        expect(mockDispatchFn).nthCalledWith(1, { payload: { userId: 1 }, type: UserActionsType.FOLLOW_USER });
     });
 
     it("should click handle Follow private profile", () => {
@@ -74,12 +74,12 @@ describe("PopperUserWindow", () => {
             ...mockState,
             userDetail: {
                 ...mockState.userDetail,
-                item: {...mockUserDetailResponse, isFollower: false, isPrivateProfile: true}
+                item: { ...mockUserDetailResponse, isFollower: false, isPrivateProfile: true }
             }
         });
 
         wrapper.find(Button).at(0).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST});
+        expect(mockDispatchFn).nthCalledWith(1, { payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST });
     });
 
     it("should click cancel Follow", () => {
@@ -87,13 +87,13 @@ describe("PopperUserWindow", () => {
             ...mockState,
             userDetail: {
                 ...mockState.userDetail,
-                item: {...mockUserDetailResponse, isFollower: false, isWaitingForApprove: true}
+                item: { ...mockUserDetailResponse, isFollower: false, isWaitingForApprove: true }
             }
         });
 
         expect(wrapper.find(Button).at(0).text().includes("Pending")).toBe(true);
         wrapper.find(Button).at(0).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST});
+        expect(mockDispatchFn).nthCalledWith(1, { payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST });
     });
 
     it("should click on Block User", () => {
@@ -101,7 +101,7 @@ describe("PopperUserWindow", () => {
             ...mockState,
             userDetail: {
                 ...mockState.userDetail,
-                item: {...mockUserDetailResponse, isFollower: false, isUserBlocked: true}
+                item: { ...mockUserDetailResponse, isFollower: false, isUserBlocked: true }
             }
         });
 
@@ -110,7 +110,7 @@ describe("PopperUserWindow", () => {
         wrapper.find(Button).at(0).simulate("click");
 
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {userId: 1},
+            payload: { userId: 1 },
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
     });
@@ -131,7 +131,7 @@ describe("PopperUserWindow", () => {
             ...mockState,
             userDetail: {
                 ...mockState.userDetail,
-                item: {...mockUserDetailResponse, isFollower: false, isUserBlocked: true}
+                item: { ...mockUserDetailResponse, isFollower: false, isUserBlocked: true }
             }
         });
         testSimulateHoverButton(wrapper, "Blocked", "Unblock");
@@ -142,7 +142,7 @@ describe("PopperUserWindow", () => {
             ...mockState,
             userDetail: {
                 ...mockState.userDetail,
-                item: {...mockUserDetailResponse, isFollower: false, isWaitingForApprove: true}
+                item: { ...mockUserDetailResponse, isFollower: false, isWaitingForApprove: true }
             }
         });
         testSimulateHoverButton(wrapper, "Pending", "Cancel");
@@ -152,7 +152,7 @@ describe("PopperUserWindow", () => {
         const wrapper = mountWrapper(mockRootState);
         testSimulateHoverButton(wrapper, "Following", "Unfollow");
     });
-    
+
     const testSimulateHoverButton = (wrapper: any, mouseleaveText: string, mouseOverText: string): void => {
         expect(wrapper.find(Button).at(0).text().includes(mouseleaveText)).toBe(true);
         wrapper.find(Button).at(0).simulate("mouseover");

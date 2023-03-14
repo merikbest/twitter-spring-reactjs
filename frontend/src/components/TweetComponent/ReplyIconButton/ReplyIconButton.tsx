@@ -1,11 +1,11 @@
-import React, {FC, memo, ReactElement, useState} from "react";
+import React, { FC, memo, ReactElement, useState } from "react";
 
-import {UserTweetResponse} from "../../../store/types/tweet";
+import { UserTweetResponse } from "../../../types/tweet";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
-import {ReplyIcon} from "../../../icons";
+import { ReplyIcon } from "../../../icons";
 import ReplyModal from "../../ReplyModal/ReplyModal";
-import {Image} from "../../../store/types/common";
-import {useReplyIconButtonStyles} from "./ReplyIconButtonStyles";
+import { Image } from "../../../types/common";
+import { useReplyIconButtonStyles } from "./ReplyIconButtonStyles";
 
 interface TweetReplyIconButtonProps {
     tweetId?: number;
@@ -28,7 +28,7 @@ const ReplyIconButton: FC<TweetReplyIconButtonProps> = memo((
         isUserCanReply
     }
 ): ReactElement => {
-    const classes = useReplyIconButtonStyles({isUserCanReply});
+    const classes = useReplyIconButtonStyles({ isUserCanReply });
     const [visibleReplyModalWindow, setVisibleReplyModalWindow] = useState<boolean>(false);
 
     const onOpenReplyModalWindow = (): void => {

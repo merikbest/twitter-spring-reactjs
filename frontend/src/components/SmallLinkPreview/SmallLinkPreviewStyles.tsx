@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface SmallLinkPreviewStylesProps {
     linkCover: string;
@@ -21,7 +21,7 @@ export const useSmallLinkPreviewStyles = makeStyles<Theme, SmallLinkPreviewStyle
     },
     siteLink: {
         color: "inherit",
-        textDecoration: "none",
+        textDecoration: "none"
     },
     linkPreviewImage: {
         display: "flex",
@@ -33,7 +33,7 @@ export const useSmallLinkPreviewStyles = makeStyles<Theme, SmallLinkPreviewStyle
         backgroundImage: props => props.linkCover ? `url(${props.linkCover})` : "",
         backgroundSize: "cover",
         backgroundPosition: "center center",
-        borderRadius: "16px 0px 0px 16px",
+        borderRadius: "16px 0px 0px 16px"
     },
     videoIcon: {
         display: "flex",
@@ -47,8 +47,8 @@ export const useSmallLinkPreviewStyles = makeStyles<Theme, SmallLinkPreviewStyle
         "& svg": {
             marginLeft: 2,
             fill: theme.palette.common.white,
-            height: "1.10em",
-        },
+            height: "1.10em"
+        }
     },
     linkPreviewTitle: {
         fontSize: 15,
@@ -63,7 +63,7 @@ export const useSmallLinkPreviewStyles = makeStyles<Theme, SmallLinkPreviewStyle
         "& .MuiTypography-body1": {
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            overflow: "hidden",
+            overflow: "hidden"
         },
         "& .MuiTypography-subtitle1": {
             marginTop: 5,
@@ -77,8 +77,8 @@ export const useSmallLinkPreviewStyles = makeStyles<Theme, SmallLinkPreviewStyle
                 marginRight: 3,
                 verticalAlign: "middle",
                 fill: theme.palette.text.secondary,
-                height: "1.10em",
-            },
-        },
-    },
+                height: "1.10em"
+            }
+        }
+    }
 }));

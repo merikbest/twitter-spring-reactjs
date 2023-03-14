@@ -1,10 +1,10 @@
-import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Button, Dialog, Typography } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 
-import {useTweetAnalyticsModalStyles} from "./TweetAnalyticsModalStyles";
-import {textFormatter} from "../../util/textFormatter";
+import { useTweetAnalyticsModalStyles } from "./TweetAnalyticsModalStyles";
+import { textFormatter } from "../../util/text-formatter";
 import CloseButton from "../CloseButton/CloseButton";
 
 interface TweetAnalyticsModalStyles {
@@ -33,7 +33,7 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = (
     return (
         <Dialog open={visible} onClose={onClose} className={classes.container} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onClose} />
                 Tweet Analytics
             </DialogTitle>
             <DialogContent>
@@ -79,12 +79,12 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = (
                     </div>
                     <div className={classes.promoteWrapper}>
                         <img className={classes.promoteImage}
-                             src="https://ton.twimg.com/tfb/promote-a54f43f3904fb8073e4f16564fe00058.png"/>
+                             src="https://ton.twimg.com/tfb/promote-a54f43f3904fb8073e4f16564fe00058.png" />
                         <Typography className={classes.promoteTitle} component={"div"}>
                             Promote your Tweet
                         </Typography>
                         <Typography className={classes.promoteText} component={"div"}>
-                            Your Tweet has 0 total impressions so far. <br/>
+                            Your Tweet has 0 total impressions so far. <br />
                             Get more impressions on this Tweet!
                         </Typography>
                     </div>

@@ -1,9 +1,9 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {NotificationsState} from "./contracts/state";
-import {NotificationsActions, NotificationsActionsType} from "./contracts/actionTypes";
-import {LoadingStatus, NotificationType} from "../../types/common";
-import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
+import { NotificationsState } from "./contracts/state";
+import { NotificationsActions, NotificationsActionsType } from "./contracts/actionTypes";
+import { LoadingStatus, NotificationType } from "../../../types/common";
+import { NotificationReplyResponse, NotificationResponse } from "../../../types/notification";
 
 export const initialNotificationsState: NotificationsState = {
     notificationsList: [],
@@ -12,7 +12,7 @@ export const initialNotificationsState: NotificationsState = {
     notificationInfo: undefined,
     notificationInfoLoadingState: LoadingStatus.LOADING,
     loadingState: LoadingStatus.LOADING,
-    loadingTweetAuthorsState: LoadingStatus.LOADING,
+    loadingTweetAuthorsState: LoadingStatus.LOADING
 };
 
 export const notificationsReducer = produce((draft: Draft<NotificationsState>, action: NotificationsActions) => {

@@ -1,9 +1,9 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
-import {mockFullList} from "../../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { mockFullList } from "../../../../util/test-utils/mock-test-data";
 import MembersAndFollowers from "../MembersAndFollowers";
 import MembersAndFollowersModal from "../../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
@@ -20,8 +20,8 @@ describe("MembersAndFollowers", () => {
     });
 
     const testOpenAndCloseModalWindow = (itemId: string, modalTitle: string) => {
-        const mockState = {...mockRootState, list: {...mockRootState.list, list: mockFullList}};
-        const wrapper = mountWithStore(<MembersAndFollowers/>, mockState);
+        const mockState = { ...mockRootState, list: { ...mockRootState.list, list: mockFullList } };
+        const wrapper = mountWithStore(<MembersAndFollowers />, mockState);
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(false);
         wrapper.find(itemId).at(0).simulate("click");
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);

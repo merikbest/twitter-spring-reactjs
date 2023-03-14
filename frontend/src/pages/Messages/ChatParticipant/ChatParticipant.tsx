@@ -1,11 +1,11 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { FC, memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
 
-import {useChatParticipantStyles} from "./ChatParticipantStyles";
-import {Avatar, ListItem, Typography} from "@material-ui/core";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {ChatResponse} from "../../../store/types/chat";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
+import { useChatParticipantStyles } from "./ChatParticipantStyles";
+import { Avatar, ListItem, Typography } from "@material-ui/core";
+import { DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
+import { ChatResponse } from "../../../types/chat";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
 
 interface ChatParticipantProps {
     chat: ChatResponse;

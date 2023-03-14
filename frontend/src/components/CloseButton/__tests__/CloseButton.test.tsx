@@ -1,17 +1,17 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import HoverAction from "../../HoverAction/HoverAction";
 import CloseButton from "../CloseButton";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("CloseButton", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
 
     it("should render correctly", () => {
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<CloseButton onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<CloseButton onClose={jest.fn()} />, mockRootState);
         wrapper.find(IconButton).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();

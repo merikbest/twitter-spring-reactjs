@@ -1,10 +1,10 @@
 import React from "react";
-import {Button, Dialog} from "@material-ui/core";
+import { Button, Dialog } from "@material-ui/core";
 
 import ProfileDescriptionModal from "../ProfileDescriptionModal";
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import ProfileDescriptionInput from "../ProfileDescriptionInput/ProfileDescriptionInput";
-import {LoadingStatus} from "../../../../store/types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("ProfileDescriptionModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -51,7 +51,7 @@ describe("ProfileDescriptionModal", () => {
                 onOpenProfileUpdatedModal={mockOnOpenProfileUpdatedModal}
             />, mockRootState);
 
-        wrapper.find(ProfileDescriptionInput).find("input").simulate("change", {target: {value: mockText}});
+        wrapper.find(ProfileDescriptionInput).find("input").simulate("change", { target: { value: mockText } });
         wrapper.find(Button).simulate("click");
 
         expect(mockOnChangeText).toHaveBeenCalled();

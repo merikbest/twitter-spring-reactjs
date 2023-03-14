@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useListsItemStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -7,18 +7,18 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
         borderRight: 0,
         borderRadius: 0,
         display: "flex",
-        alignItems: 'flex-start',
+        alignItems: "flex-start",
         padding: "12px 16px",
-        cursor: 'pointer',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-        },
+        cursor: "pointer",
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.main
+        }
     },
     listAvatar: {
         width: "50px !important",
         height: "50px !important",
         borderRadius: 12,
-        marginRight: 15,
+        marginRight: 15
     },
     listInfoContainer: {
         width: "100%",
@@ -27,27 +27,27 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
         justifyContent: "space-between"
     },
     listInfoWrapper: {
-        display: "block",
+        display: "block"
     },
     listTitle: {
-        fontWeight: 700,
+        fontWeight: 700
     },
     listOwnerWrapper: {
         display: "inline-block",
-        verticalAlign: "middle",
+        verticalAlign: "middle"
     },
     listOwnerAvatar: {
         marginRight: 4,
         width: "15px !important",
-        height: "15px !important",
+        height: "15px !important"
     },
     listOwnerInfoWrapper: {
-        display: "inline-block",
+        display: "inline-block"
     },
     listOwnerFullName: {
         marginRight: 4,
         fontWeight: 700,
-        color: theme.palette.text.primary,
+        color: theme.palette.text.primary
     },
     listPinWrapper: {
         "& .MuiIconButton-root": {
@@ -55,8 +55,8 @@ export const useListsItemStyles = makeStyles((theme: Theme) => ({
             "& svg": {
                 verticalAlign: "bottom",
                 color: theme.palette.primary.main,
-                height: "0.85em",
-            },
-        },
-    },
+                height: "0.85em"
+            }
+        }
+    }
 }));

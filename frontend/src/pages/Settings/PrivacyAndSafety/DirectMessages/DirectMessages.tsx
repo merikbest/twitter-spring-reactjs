@@ -1,17 +1,17 @@
-import React, {FC, memo, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 
+import { selectUserDataId, selectUserDataIsMutedDirectMessages } from "../../../../store/ducks/user/selectors";
+import { setUserLoadingStatus, updateDirect } from "../../../../store/ducks/user/actionCreators";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import {
-    selectUserData,
-    selectUserDataId,
-    selectUserDataIsMutedDirectMessages
-} from "../../../../store/ducks/user/selectors";
-import {setUserLoadingStatus, updateDirect} from "../../../../store/ducks/user/actionCreators";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {DIRECT_MESSAGES, DIRECT_MESSAGES_RECEIPTS, DIRECT_MESSAGES_RECEIVE} from "../../../../util/url";
-import {LoadingStatus} from "../../../../store/types/common";
+    DIRECT_MESSAGES,
+    DIRECT_MESSAGES_RECEIPTS,
+    DIRECT_MESSAGES_RECEIVE
+} from "../../../../constants/url-constants";
+import { LoadingStatus } from "../../../../types/common";
 
 const DirectMessages: FC = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -32,7 +32,7 @@ const DirectMessages: FC = memo((): ReactElement => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(event.target.checked);
-        dispatch(updateDirect({mutedDirectMessages: event.target.checked}));
+        dispatch(updateDirect({ mutedDirectMessages: event.target.checked }));
     };
 
     return (
@@ -47,7 +47,7 @@ const DirectMessages: FC = memo((): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Allow message requests from everyone
                     </Typography>
-                    <Checkbox checked={checked} onChange={handleChange}/>
+                    <Checkbox checked={checked} onChange={handleChange} />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Let people who you don’t follow send you message requests and add you to group conversations. To
@@ -62,7 +62,7 @@ const DirectMessages: FC = memo((): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Filter low-quality messages
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Hide message requests that have been detected as being potentially spam or low-quality. These will
@@ -78,7 +78,7 @@ const DirectMessages: FC = memo((): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Show read receipts
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Let people you’re messaging with know when you’ve seen their messages. Read receipts are not shown

@@ -1,8 +1,8 @@
-import React, {memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {FollowReplyIcon} from "../../../icons";
-import {useTweetReplyConversationStyles} from "./TweetReplyConversationStyles";
+import { FollowReplyIcon } from "../../../icons";
+import { useTweetReplyConversationStyles } from "./TweetReplyConversationStyles";
 
 const TweetReplyConversation = memo((): ReactElement => {
     const classes = useTweetReplyConversationStyles();

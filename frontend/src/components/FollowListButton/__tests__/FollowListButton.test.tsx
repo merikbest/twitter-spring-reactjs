@@ -1,9 +1,9 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {ListsActionType} from "../../../store/ducks/lists/contracts/actionTypes";
-import {LoadingStatus} from "../../../store/types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
+import { ListsActionType } from "../../../store/ducks/lists/contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
 import FollowListButton from "../FollowListButton";
 
 describe("FollowListButton", () => {
@@ -15,7 +15,7 @@ describe("FollowListButton", () => {
     });
 
     it("should click Unfollow List", () => {
-        const wrapper = mountWithStore(<FollowListButton listId={1} isFollower/>, mockRootState);
+        const wrapper = mountWithStore(<FollowListButton listId={1} isFollower />, mockRootState);
         wrapper.find(Button).simulate("click");
         expect(wrapper.find(Button).prop("variant")).toBe("contained");
         expect(wrapper.find(Button).text().includes("Following")).toBe(true);
@@ -26,7 +26,7 @@ describe("FollowListButton", () => {
     });
 
     it("should click Follow List", () => {
-        const wrapper = mountWithStore(<FollowListButton listId={1} isFollower={false}/>, mockRootState);
+        const wrapper = mountWithStore(<FollowListButton listId={1} isFollower={false} />, mockRootState);
         wrapper.find(Button).simulate("click");
         expect(wrapper.find(Button).prop("variant")).toBe("outlined");
         expect(wrapper.find(Button).text().includes("Follow")).toBe(true);
@@ -37,7 +37,7 @@ describe("FollowListButton", () => {
     });
 
     it("should hover FollowListButton", () => {
-        const wrapper = mountWithStore(<FollowListButton listId={1} isFollower/>, mockRootState);
+        const wrapper = mountWithStore(<FollowListButton listId={1} isFollower />, mockRootState);
         wrapper.find(Button).simulate("mouseover");
         expect(wrapper.find(Button).text().includes("Unfollow")).toBe(true);
         wrapper.find(Button).simulate("mouseleave");

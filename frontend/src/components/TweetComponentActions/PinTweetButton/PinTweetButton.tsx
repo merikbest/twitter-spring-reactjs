@@ -1,19 +1,19 @@
-import React, {FC, memo, ReactElement, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ListItem, Typography } from "@material-ui/core";
 
 import TweetComponentActionsModal from "../TweetComponentActionsModal/TweetComponentActionsModal";
-import {selectUserPinnedTweetId} from "../../../store/ducks/user/selectors";
-import {fetchPinTweet} from "../../../store/ducks/user/actionCreators";
-import {PinIcon} from "../../../icons";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import { selectUserPinnedTweetId } from "../../../store/ducks/user/selectors";
+import { fetchPinTweet } from "../../../store/ducks/user/actionCreators";
+import { PinIcon } from "../../../icons";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface PinTweetButtonProps {
     tweetId: number;
     onCloseActionsDropdown: () => void;
 }
 
-const PinTweetButton: FC<PinTweetButtonProps> = memo(({tweetId, onCloseActionsDropdown}): ReactElement => {
+const PinTweetButton: FC<PinTweetButtonProps> = memo(({ tweetId, onCloseActionsDropdown }): ReactElement => {
     const dispatch = useDispatch();
     const pinnedTweetId = useSelector(selectUserPinnedTweetId);
     const [visibleTweetPinModal, setVisibleTweetPinModal] = useState<boolean>(false);

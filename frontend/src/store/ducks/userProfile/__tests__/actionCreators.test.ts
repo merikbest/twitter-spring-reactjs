@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/testHelper";
+import {testAction} from "../../../../util/test-utils/test-helper";
 import {
     fetchChatParticipant,
     fetchImages,
@@ -17,9 +17,9 @@ import {
     setUserProfileLoadingState
 } from "../actionCreators";
 import {UserProfileActionsType} from "../contracts/actionTypes";
-import {UserProfileResponse} from "../../../types/user";
-import {TweetImageResponse} from "../../../types/tweet";
-import {LoadingStatus} from "../../../types/common";
+import {UserProfileResponse} from "../../../../types/user";
+import {TweetImageResponse} from "../../../../types/tweet";
+import {LoadingStatus} from "../../../../types/common";
 
 describe("userProfile actions", () => {
     testAction(setBlocked, setBlocked(true), {

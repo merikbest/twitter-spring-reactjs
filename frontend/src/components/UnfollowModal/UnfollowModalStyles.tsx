@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useUnfollowModalStyles = makeStyles((theme) => ({
     modalWrapper: {
@@ -8,19 +8,19 @@ export const useUnfollowModalStyles = makeStyles((theme) => ({
         margin: "32px 20px",
         "& .MuiTypography-subtitle1": {
             marginTop: 8,
-            marginBottom: 24,
+            marginBottom: 24
         },
         "& .MuiButton-root": {
-            width: 134,
-        },
+            width: 134
+        }
     },
     modalButtonWrapper: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "space-between"
     },
     modalCancelButton: {
         color: theme.palette.text.primary,
-        backgroundColor: theme.palette.divider,
-    },
+        backgroundColor: theme.palette.divider
+    }
 }));

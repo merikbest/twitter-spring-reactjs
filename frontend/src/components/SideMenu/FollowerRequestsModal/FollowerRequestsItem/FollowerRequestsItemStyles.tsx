@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -7,19 +7,19 @@ export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
         borderRight: 0,
         borderRadius: 0,
         display: "flex",
-        alignItems: 'flex-start',
+        alignItems: "flex-start",
         paddingLeft: 15,
         paddingTop: 8,
         paddingBottom: 8,
-        cursor: 'pointer',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-        },
+        cursor: "pointer",
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.main
+        }
     },
     listAvatar: {
         width: "48px !important",
         height: "48px !important",
-        marginRight: 15,
+        marginRight: 15
     },
     header: {
         display: "flex",
@@ -32,12 +32,12 @@ export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
     },
     buttonWrapper: {
         display: "flex",
-        marginTop: 8,
+        marginTop: 8
     },
     buttonItemWrapper: {
         display: "inline-block",
         width: "50%",
-        marginRight: 12,
+        marginRight: 12
     },
     declineButton: {
         "& .MuiButton-root": {
@@ -45,9 +45,9 @@ export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
             color: theme.palette.error.main,
             "&:hover": {
                 borderColor: theme.palette.error.light,
-                backgroundColor: "rgb(244, 33, 46, 0.1)",
-            },
-        },
+                backgroundColor: "rgb(244, 33, 46, 0.1)"
+            }
+        }
     },
     acceptButton: {
         "& .MuiButton-root": {
@@ -55,8 +55,8 @@ export const useFollowerRequestsItemStyles = makeStyles((theme: Theme) => ({
             color: theme.palette.primary.main,
             "&:hover": {
                 borderColor: theme.palette.info.light,
-                backgroundColor: theme.palette.action.hover,
-            },
-        },
-    },
+                backgroundColor: theme.palette.action.hover
+            }
+        }
+    }
 }));

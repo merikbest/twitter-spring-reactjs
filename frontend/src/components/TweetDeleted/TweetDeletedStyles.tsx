@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useTweetDeletedStyles = makeStyles((theme) => ({
     container: {
@@ -9,6 +9,6 @@ export const useTweetDeletedStyles = makeStyles((theme) => ({
         borderRadius: 16,
         fontSize: 15,
         lineHeight: "20px",
-        border: `1px solid ${theme.palette.grey[200]}`,
-    },
+        border: `1px solid ${theme.palette.grey[200]}`
+    }
 }));

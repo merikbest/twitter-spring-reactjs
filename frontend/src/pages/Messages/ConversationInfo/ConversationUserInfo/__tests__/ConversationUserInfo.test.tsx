@@ -1,7 +1,7 @@
 import React from "react";
 
-import {mountWithStore} from "../../../../../util/testHelper";
-import {mockUser} from "../../../../../util/mockData/mockData";
+import { mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { mockUser } from "../../../../../util/test-utils/mock-test-data";
 import ConversationUserInfo from "../ConversationUserInfo";
 
 describe("ConversationUserInfo", () => {

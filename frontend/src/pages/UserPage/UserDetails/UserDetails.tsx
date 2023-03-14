@@ -1,10 +1,10 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
 import Skeleton from "@material-ui/lab/Skeleton";
-import {Link as MuiLink, List, ListItem, Typography} from "@material-ui/core";
+import { Link as MuiLink, List, ListItem, Typography } from "@material-ui/core";
 import format from "date-fns/format";
 
-import {CalendarIcon, LinkIcon, LocationIcon} from "../../../icons";
+import { CalendarIcon, LinkIcon, LocationIcon } from "../../../icons";
 import {
     selectUserProfileBirthday,
     selectUserProfileId,
@@ -13,7 +13,7 @@ import {
     selectUserProfileRegistrationDate,
     selectUserProfileWebsite
 } from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const UserDetails = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -28,9 +28,9 @@ const UserDetails = memo((): ReactElement => {
         <>
             {!userProfileId && (
                 <div className={classes.skeletonDetails}>
-                    <Skeleton component={"span"} variant="text" width={80}/>
-                    <Skeleton component={"span"} variant="text" width={150}/>
-                    <Skeleton component={"span"} variant="text" width={150}/>
+                    <Skeleton component={"span"} variant="text" width={80} />
+                    <Skeleton component={"span"} variant="text" width={150} />
+                    <Skeleton component={"span"} variant="text" width={150} />
                 </div>
             )}
             {!isMyProfileBlocked && (

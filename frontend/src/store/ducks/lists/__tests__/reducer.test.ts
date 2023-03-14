@@ -1,8 +1,8 @@
-import {initialListsState, listsReducer} from "../reducer";
-import {ListsActions, ListsActionType} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { initialListsState, listsReducer } from "../reducer";
+import { ListsActions, ListsActionType } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("listsReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("listsReducer:", () => {
             ListsActionType.SET_LISTS,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_LISTS,
-                payload: [{id: 1}] as ListResponse[]
+                payload: [{ id: 1 }] as ListResponse[]
             }),
             {
                 ...initialListsState,
-                lists: [{id: 1}] as ListResponse[],
+                lists: [{ id: 1 }] as ListResponse[],
                 loadingState: LoadingStatus.LOADED,
                 listsLoadingState: LoadingStatus.LOADED
             }
@@ -30,12 +30,12 @@ describe("listsReducer:", () => {
             ListsActionType.SET_USER_LISTS,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_USER_LISTS,
-                payload: [{id: 1}] as ListUserResponse[]
+                payload: [{ id: 1 }] as ListUserResponse[]
             }),
             {
                 ...initialListsState,
-                userLists: [{id: 1}] as ListUserResponse[],
-                userListsLoadingState: LoadingStatus.LOADED,
+                userLists: [{ id: 1 }] as ListUserResponse[],
+                userListsLoadingState: LoadingStatus.LOADED
             }
         );
 
@@ -43,12 +43,12 @@ describe("listsReducer:", () => {
             ListsActionType.SET_PINNED_LISTS,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_PINNED_LISTS,
-                payload: [{id: 1}] as PinnedListResponse[]
+                payload: [{ id: 1 }] as PinnedListResponse[]
             }),
             {
                 ...initialListsState,
-                pinnedLists: [{id: 1}] as PinnedListResponse[],
-                pinnedListsLoadingState: LoadingStatus.LOADED,
+                pinnedLists: [{ id: 1 }] as PinnedListResponse[],
+                pinnedListsLoadingState: LoadingStatus.LOADED
             }
         );
 
@@ -56,12 +56,12 @@ describe("listsReducer:", () => {
             ListsActionType.SET_SIMPLE_LISTS,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_SIMPLE_LISTS,
-                payload: [{id: 1}] as SimpleListResponse[]
+                payload: [{ id: 1 }] as SimpleListResponse[]
             }),
             {
                 ...initialListsState,
-                simpleLists: [{id: 1}] as SimpleListResponse[],
-                simpleListsLoadingState: LoadingStatus.LOADED,
+                simpleLists: [{ id: 1 }] as SimpleListResponse[],
+                simpleListsLoadingState: LoadingStatus.LOADED
             }
         );
 
@@ -70,18 +70,18 @@ describe("listsReducer:", () => {
             listsReducer(
                 {
                     ...initialListsState,
-                    lists: [{id: 1, isFollower: false}] as ListResponse[],
+                    lists: [{ id: 1, isFollower: false }] as ListResponse[],
                     userLists: []
                 },
                 {
                     type: ListsActionType.SET_FOLLOW_LIST,
-                    payload: {id: 1} as ListUserResponse
+                    payload: { id: 1 } as ListUserResponse
                 }
             ),
             {
                 ...initialListsState,
-                lists: [{id: 1, isFollower: true}] as ListResponse[],
-                userLists: [{id: 1}] as ListUserResponse[],
+                lists: [{ id: 1, isFollower: true }] as ListResponse[],
+                userLists: [{ id: 1 }] as ListUserResponse[]
             }
         );
 
@@ -90,16 +90,16 @@ describe("listsReducer:", () => {
             listsReducer(
                 {
                     ...initialListsState,
-                    lists: [{id: 1, isFollower: true}] as ListResponse[]
+                    lists: [{ id: 1, isFollower: true }] as ListResponse[]
                 },
                 {
                     type: ListsActionType.SET_UNFOLLOW_LIST,
-                    payload: {id: 1} as ListUserResponse
+                    payload: { id: 1 } as ListUserResponse
                 }
             ),
             {
                 ...initialListsState,
-                lists: [{id: 1, isFollower: false}] as ListResponse[]
+                lists: [{ id: 1, isFollower: false }] as ListResponse[]
             }
         );
 
@@ -107,12 +107,12 @@ describe("listsReducer:", () => {
             ListsActionType.SET_LIST,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_LIST,
-                payload: {id: 1} as ListUserResponse
+                payload: { id: 1 } as ListUserResponse
             }),
             {
                 ...initialListsState,
-                userLists: [{id: 1}] as ListUserResponse[],
-                loadingState: LoadingStatus.LOADED,
+                userLists: [{ id: 1 }] as ListUserResponse[],
+                loadingState: LoadingStatus.LOADED
             }
         );
 
@@ -120,11 +120,11 @@ describe("listsReducer:", () => {
             ListsActionType.SET_PINED_LIST,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_PINED_LIST,
-                payload: {id: 1} as PinnedListResponse
+                payload: { id: 1 } as PinnedListResponse
             }),
             {
                 ...initialListsState,
-                pinnedLists: [{id: 1}] as PinnedListResponse[]
+                pinnedLists: [{ id: 1 }] as PinnedListResponse[]
             }
         );
 
@@ -133,11 +133,11 @@ describe("listsReducer:", () => {
             listsReducer(
                 {
                     ...initialListsState,
-                    pinnedLists: [{id: 1}] as PinnedListResponse[]
+                    pinnedLists: [{ id: 1 }] as PinnedListResponse[]
                 },
                 {
                     type: ListsActionType.SET_UNPIN_LIST,
-                    payload: {id: 1} as PinnedListResponse
+                    payload: { id: 1 } as PinnedListResponse
                 }
             ),
             {
@@ -151,16 +151,16 @@ describe("listsReducer:", () => {
             listsReducer(
                 {
                     ...initialListsState,
-                    userLists: [{id: 1, pinnedDate: ""}] as ListUserResponse[]
+                    userLists: [{ id: 1 }] as ListUserResponse[]
                 },
                 {
                     type: ListsActionType.SET_PINED_LIST_TO_USER_LIST,
-                    payload: {id: 1, pinnedDate: "2222-22-22"} as PinnedListResponse
+                    payload: { id: 1 } as PinnedListResponse
                 }
             ),
             {
                 ...initialListsState,
-                userLists: [{id: 1, pinnedDate: "2222-22-22"}] as ListUserResponse[]
+                userLists: [{ id: 1 }] as ListUserResponse[]
             }
         );
 
@@ -169,12 +169,12 @@ describe("listsReducer:", () => {
             listsReducer(
                 {
                     ...initialListsState,
-                    lists: [{id: 1}] as ListResponse[],
-                    pinnedLists: [{id: 1}] as PinnedListResponse[],
-                    userLists: [{id: 1}] as ListUserResponse[],
+                    lists: [{ id: 1 }] as ListResponse[],
+                    pinnedLists: [{ id: 1 }] as PinnedListResponse[],
+                    userLists: [{ id: 1 }] as ListUserResponse[],
                     listsLoadingState: LoadingStatus.SUCCESS,
                     pinnedListsLoadingState: LoadingStatus.SUCCESS,
-                    userListsLoadingState: LoadingStatus.SUCCESS,
+                    userListsLoadingState: LoadingStatus.SUCCESS
                 },
                 {
                     type: ListsActionType.RESET_LISTS_STATE
@@ -187,7 +187,7 @@ describe("listsReducer:", () => {
                 userLists: [],
                 listsLoadingState: LoadingStatus.LOADING,
                 pinnedListsLoadingState: LoadingStatus.LOADING,
-                userListsLoadingState: LoadingStatus.LOADING,
+                userListsLoadingState: LoadingStatus.LOADING
             }
         );
 
@@ -195,11 +195,11 @@ describe("listsReducer:", () => {
             ListsActionType.SET_LOADING_STATE,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_LOADING_STATE,
-                payload: LoadingStatus.SUCCESS,
+                payload: LoadingStatus.SUCCESS
             }),
             {
                 ...initialListsState,
-                loadingState: LoadingStatus.SUCCESS,
+                loadingState: LoadingStatus.SUCCESS
             }
         );
 
@@ -207,11 +207,11 @@ describe("listsReducer:", () => {
             ListsActionType.SET_LISTS_LOADING_STATE,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_LISTS_LOADING_STATE,
-                payload: LoadingStatus.SUCCESS,
+                payload: LoadingStatus.SUCCESS
             }),
             {
                 ...initialListsState,
-                listsLoadingState: LoadingStatus.SUCCESS,
+                listsLoadingState: LoadingStatus.SUCCESS
             }
         );
 
@@ -219,11 +219,11 @@ describe("listsReducer:", () => {
             ListsActionType.SET_LISTS_LOADING_STATE,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_LISTS_LOADING_STATE,
-                payload: LoadingStatus.SUCCESS,
+                payload: LoadingStatus.SUCCESS
             }),
             {
                 ...initialListsState,
-                listsLoadingState: LoadingStatus.SUCCESS,
+                listsLoadingState: LoadingStatus.SUCCESS
             }
         );
 
@@ -231,11 +231,11 @@ describe("listsReducer:", () => {
             ListsActionType.SET_USER_LISTS_LOADING_STATE,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_USER_LISTS_LOADING_STATE,
-                payload: LoadingStatus.SUCCESS,
+                payload: LoadingStatus.SUCCESS
             }),
             {
                 ...initialListsState,
-                userListsLoadingState: LoadingStatus.SUCCESS,
+                userListsLoadingState: LoadingStatus.SUCCESS
             }
         );
 
@@ -243,11 +243,11 @@ describe("listsReducer:", () => {
             ListsActionType.SET_PINNED_LISTS_LOADING_STATE,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_PINNED_LISTS_LOADING_STATE,
-                payload: LoadingStatus.SUCCESS,
+                payload: LoadingStatus.SUCCESS
             }),
             {
                 ...initialListsState,
-                pinnedListsLoadingState: LoadingStatus.SUCCESS,
+                pinnedListsLoadingState: LoadingStatus.SUCCESS
             }
         );
 
@@ -255,11 +255,11 @@ describe("listsReducer:", () => {
             ListsActionType.SET_SIMPLE_LISTS_LOADING_STATE,
             listsReducer(initialListsState, {
                 type: ListsActionType.SET_SIMPLE_LISTS_LOADING_STATE,
-                payload: LoadingStatus.SUCCESS,
+                payload: LoadingStatus.SUCCESS
             }),
             {
                 ...initialListsState,
-                simpleListsLoadingState: LoadingStatus.SUCCESS,
+                simpleListsLoadingState: LoadingStatus.SUCCESS
             }
         );
     });

@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {testApiCall} from "../../../util/apiTestHelper";
+import { testApiCall } from "../../../util/test-utils/api-test-helper";
 import {
     API_LISTS,
     API_LISTS_ADD_USER,
@@ -15,7 +15,7 @@ import {
     API_LISTS_TWEETS,
     API_LISTS_USER,
     API_LISTS_USER_CONSIST
-} from "../../../util/endpoints";
+} from "../../../constants/endpoint-constants";
 import {
     mockFullList,
     mockLists,
@@ -24,8 +24,8 @@ import {
     mockSimpleList,
     mockTweets,
     mockUserLists
-} from "../../../util/mockData/mockData";
-import {ListsApi} from "../listsApi";
+} from "../../../util/test-utils/mock-test-data";
+import { ListsApi } from "../listsApi";
 
 describe("ListsApi", () => {
     const mockAdapter = new MockAdapter(axios);
@@ -76,7 +76,7 @@ describe("ListsApi", () => {
     });
 
     describe("should fetch ListsApi.createTweetList", () => {
-        const mockRequest = {name: "test list", isPrivate: true};
+        const mockRequest = { name: "test list", isPrivate: true };
 
         it("[200] should create tweet list Success", () => {
             testApiCall(mockAdapter, "onPost", API_LISTS, 200, mockUserLists[0], ListsApi.createTweetList, mockRequest);
@@ -88,7 +88,7 @@ describe("ListsApi", () => {
     });
 
     describe("should fetch ListsApi.editList", () => {
-        const mockRequest = {id: 1, name: "test list", isPrivate: true};
+        const mockRequest = { id: 1, name: "test list", isPrivate: true };
 
         it("[200] should edit list Success", () => {
             testApiCall(mockAdapter, "onPut", API_LISTS, 200, mockFullList, ListsApi.editList, mockRequest);
@@ -144,7 +144,7 @@ describe("ListsApi", () => {
     });
 
     describe("should fetch ListsApi.addUserToLists", () => {
-        const mockAddUserRequest = {userId: 1, lists: [{listId: 1, isMemberInList: true}]};
+        const mockAddUserRequest = { userId: 1, lists: [{ listId: 1, isMemberInList: true }] };
 
         it("[200] should add user to lists Success", () => {
             testApiCall(mockAdapter, "onPost", API_LISTS_ADD_USER, 200, "User added to lists success.", ListsApi.addUserToLists, mockAddUserRequest);

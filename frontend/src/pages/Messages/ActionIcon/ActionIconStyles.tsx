@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useActionIconStyles = makeStyles((theme: Theme) => ({
     icon: {
@@ -8,9 +8,9 @@ export const useActionIconStyles = makeStyles((theme: Theme) => ({
             "& svg": {
                 color: theme.palette.primary.main,
                 verticalAlign: "bottom",
-                height: "0.90em",
-            },
-        },
+                height: "0.90em"
+            }
+        }
     },
     chatIcon: {
         "& .MuiIconButton-root": {
@@ -18,9 +18,9 @@ export const useActionIconStyles = makeStyles((theme: Theme) => ({
             height: 30,
             paddingTop: 2,
             "& svg": {
-                height: "0.82em",
+                height: "0.82em"
             }
-        },
+        }
     },
     emojiIcon: {
         right: 50,
@@ -29,8 +29,8 @@ export const useActionIconStyles = makeStyles((theme: Theme) => ({
             width: 30,
             height: 30,
             "& svg": {
-                height: "0.82em",
+                height: "0.82em"
             }
-        },
-    },
+        }
+    }
 }));

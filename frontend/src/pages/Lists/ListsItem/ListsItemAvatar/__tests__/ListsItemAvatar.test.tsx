@@ -1,9 +1,9 @@
 import React from "react";
-import {Avatar} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types/common";
-import {mockLists} from "../../../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../types/common";
+import { mockLists } from "../../../../../util/test-utils/mock-test-data";
 import ListsItemAvatar from "../ListsItemAvatar";
 
 describe("ListsItemAvatar", () => {

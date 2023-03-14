@@ -1,5 +1,5 @@
-import {TweetResponse} from "../../../types/tweet";
-import {Image, LoadingStatus, ReplyType} from "../../../types/common";
+import { TweetResponse } from "../../../../types/tweet";
+import { Image, LoadingStatus, ReplyType } from "../../../../types/common";
 
 export interface TweetsState {
     items: TweetResponse[];

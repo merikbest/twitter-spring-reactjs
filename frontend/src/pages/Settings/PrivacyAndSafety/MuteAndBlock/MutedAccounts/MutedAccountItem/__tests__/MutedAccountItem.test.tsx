@@ -1,16 +1,21 @@
 import React from "react";
-import {Avatar, IconButton} from "@material-ui/core";
+import { Avatar, IconButton } from "@material-ui/core";
 
 import MutedAccountItem from "../MutedAccountItem";
-import {createMockRootState, mockDispatch, mountWithStore, testClickOnLink} from "../../../../../../../util/testHelper";
-import {mockMutedUsers} from "../../../../../../../util/mockData/mockData";
-import {MutedUserResponse} from "../../../../../../../store/types/user";
-import {DEFAULT_PROFILE_IMG} from "../../../../../../../util/url";
-import {UserActionsType} from "../../../../../../../store/ducks/user/contracts/actionTypes";
-import {PROFILE} from "../../../../../../../util/pathConstants";
+import {
+    createMockRootState,
+    mockDispatch,
+    mountWithStore,
+    testClickOnLink
+} from "../../../../../../../util/test-utils/test-helper";
+import { mockMutedUsers } from "../../../../../../../util/test-utils/mock-test-data";
+import { MutedUserResponse } from "../../../../../../../types/user";
+import { DEFAULT_PROFILE_IMG } from "../../../../../../../constants/url-constants";
+import { UserActionsType } from "../../../../../../../store/ducks/user/contracts/actionTypes";
+import { PROFILE } from "../../../../../../../constants/path-constants";
 import HoverAction from "../../../../../../../components/HoverAction/HoverAction";
-import {LoadingStatus} from "../../../../../../../store/types/common";
-import {ActionSnackbarTypes} from "../../../../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { LoadingStatus } from "../../../../../../../types/common";
+import { ActionSnackbarTypes } from "../../../../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("MutedAccountItem", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -27,9 +32,9 @@ describe("MutedAccountItem", () => {
     });
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockMutedUser}/>, mockStore);
+        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockMutedUser} />, mockStore);
 
-        expect(wrapper.find(Avatar).prop("src")).toEqual(mockMutedUser.avatar.src);
+        expect(wrapper.find(Avatar).prop("src")).toEqual(mockMutedUser.avatar);
         expect(wrapper.text().includes(mockMutedUser.fullName)).toBe(true);
         expect(wrapper.text().includes(mockMutedUser.username)).toBe(true);
         expect(wrapper.text().includes(mockMutedUser.about)).toBe(true);
@@ -37,7 +42,7 @@ describe("MutedAccountItem", () => {
     });
 
     it("should render unmuted user", () => {
-        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockUnmutedUser}/>, mockStore);
+        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockUnmutedUser} />, mockStore);
 
         expect(wrapper.find(Avatar).prop("src")).toEqual(DEFAULT_PROFILE_IMG);
         expect(wrapper.text().includes(mockMutedUser.fullName)).toBe(true);
@@ -47,12 +52,12 @@ describe("MutedAccountItem", () => {
     });
 
     it("should click unmuted user", () => {
-        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockMutedUser}/>, mockStore);
+        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockMutedUser} />, mockStore);
 
         wrapper.find(IconButton).simulate("click");
 
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {userId: 1},
+            payload: { userId: 1 },
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {
@@ -62,14 +67,14 @@ describe("MutedAccountItem", () => {
     });
 
     it("should click mute user", () => {
-        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockUnmutedUser}/>, mockStore);
+        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockUnmutedUser} />, mockStore);
 
         expect(wrapper.find("svg").prop("id")).toEqual("unmuteIcon");
 
         wrapper.find(IconButton).simulate("click");
 
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {userId: 1},
+            payload: { userId: 1 },
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {
@@ -80,7 +85,7 @@ describe("MutedAccountItem", () => {
 
     it("should hover Mute icon and render Unmute Hover Action", () => {
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockMutedUser}/>, mockStore);
+        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockMutedUser} />, mockStore);
         wrapper.find(IconButton).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
@@ -91,7 +96,7 @@ describe("MutedAccountItem", () => {
 
     it("should hover Mute icon and render Mute Hover Action", () => {
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockUnmutedUser}/>, mockStore);
+        const wrapper = mountWithStore(<MutedAccountItem mutedUser={mockUnmutedUser} />, mockStore);
         wrapper.find(IconButton).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
@@ -101,10 +106,10 @@ describe("MutedAccountItem", () => {
     });
 
     it("should click on avatar and link to User profile", () => {
-        testClickOnLink(<MutedAccountItem mutedUser={mockMutedUser}/>, `${PROFILE}/${mockMutedUser.id}`, 0);
+        testClickOnLink(<MutedAccountItem mutedUser={mockMutedUser} />, `${PROFILE}/${mockMutedUser.id}`, 0);
     });
 
     it("should click on username and link to User profile", () => {
-        testClickOnLink(<MutedAccountItem mutedUser={mockMutedUser}/>, `${PROFILE}/${mockMutedUser.id}`, 1);
+        testClickOnLink(<MutedAccountItem mutedUser={mockMutedUser} />, `${PROFILE}/${mockMutedUser.id}`, 1);
     });
 });

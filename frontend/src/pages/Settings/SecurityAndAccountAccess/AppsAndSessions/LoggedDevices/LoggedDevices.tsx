@@ -1,13 +1,13 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {useLoggedDevicesStyles} from "./LoggedDevicesStyles";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY} from "../../../../../util/pathConstants";
-import {ACROSS_YOUR_DEVICES} from "../../../../../util/url";
+import { useLoggedDevicesStyles } from "./LoggedDevicesStyles";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY } from "../../../../../constants/path-constants";
+import { ACROSS_YOUR_DEVICES } from "../../../../../constants/url-constants";
 
 const LoggedDevices: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -25,7 +25,7 @@ const LoggedDevices: FC = (): ReactElement => {
                 </MuiLink>
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={classnames(classes.infoItemWrapper, globalClasses.itemInfoWrapper)}>
                 <Typography variant={"h6"} component={"div"}>
                     Browsers
@@ -37,7 +37,7 @@ const LoggedDevices: FC = (): ReactElement => {
                     </MuiLink> settings.
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={classnames(classes.infoItemWrapper, globalClasses.itemInfoWrapper)}>
                 <Typography variant={"h6"} component={"div"}>
                     Mobile Devices
@@ -49,7 +49,7 @@ const LoggedDevices: FC = (): ReactElement => {
                     </MuiLink> settings.
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={classnames(classes.infoItemWrapper, globalClasses.itemInfoWrapper)}>
                 <Typography variant={"h6"} component={"div"}>
                     Email addresses

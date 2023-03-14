@@ -1,14 +1,14 @@
-import React, {useState} from "react";
-import {Button} from "@material-ui/core";
+import React, { useState } from "react";
+import { Button } from "@material-ui/core";
 
 import SetupProfileModal from "../SetupProfileModal";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
 import ProfilePictureModal from "../ProfilePictureModal/ProfilePictureModal";
 import ProfileDescriptionModal from "../ProfileDescriptionModal/ProfileDescriptionModal";
 import ProfileUpdatedModal from "../ProfileUpdatedModal/ProfileUpdatedModal";
 import ProfileHeaderModal from "../ProfileHeaderModal/ProfileHeaderModal";
-import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
-import {LoadingStatus} from "../../../store/types/common";
+import { UserActionsType } from "../../../store/ducks/user/contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
 
 describe("SetupProfileModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -19,7 +19,7 @@ describe("SetupProfileModal", () => {
     });
 
     it("should render ProfilePictureModal", () => {
-        const wrapper = mountWithStore(<SetupProfileModal visible={true} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<SetupProfileModal visible={true} onClose={jest.fn()} />, mockRootState);
         expect(wrapper.find(ProfilePictureModal).prop("open")).toBe(true);
     });
 
@@ -28,7 +28,7 @@ describe("SetupProfileModal", () => {
             .mockImplementationOnce(() => [true, () => null])
             .mockImplementationOnce(() => [false, () => null])
             .mockImplementationOnce(() => [false, () => null]);
-        const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()} />, mockRootState);
         expect(wrapper.find(ProfileHeaderModal).prop("open")).toBe(true);
     });
 
@@ -37,7 +37,7 @@ describe("SetupProfileModal", () => {
             .mockImplementationOnce(() => [false, () => null])
             .mockImplementationOnce(() => [true, () => null])
             .mockImplementationOnce(() => [false, () => null]);
-        const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()} />, mockRootState);
         expect(wrapper.find(ProfileDescriptionModal).prop("open")).toBe(true);
     });
 
@@ -46,7 +46,7 @@ describe("SetupProfileModal", () => {
             .mockImplementationOnce(() => [false, () => null])
             .mockImplementationOnce(() => [false, () => null])
             .mockImplementationOnce(() => [true, () => null]);
-        const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()} />, mockRootState);
         expect(wrapper.find(ProfileUpdatedModal).prop("open")).toBe(true);
     });
 
@@ -57,10 +57,10 @@ describe("SetupProfileModal", () => {
             .mockImplementationOnce(() => [true, () => null])
             .mockImplementationOnce(() => [true, () => null])
             .mockImplementationOnce(() => [true, () => null]);
-        const wrapper = mountWithStore(<SetupProfileModal visible={true} onClose={mockOnClose}/>, mockRootState);
+        const wrapper = mountWithStore(<SetupProfileModal visible={true} onClose={mockOnClose} />, mockRootState);
 
         wrapper.find(ProfileUpdatedModal).find(Button).simulate("click");
-        
+
         expect(mockOnClose).toHaveBeenCalled();
         expect(mockDispatchFn).nthCalledWith(1, {
             payload: {

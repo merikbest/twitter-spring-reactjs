@@ -1,8 +1,8 @@
-import React, {FC, ReactElement, useState} from "react";
-import {IconButton} from "@material-ui/core";
+import React, { FC, ReactElement, useState } from "react";
+import { IconButton } from "@material-ui/core";
 
 import HoverAction from "../HoverAction/HoverAction";
-import {useActionIconButtonStyles} from "./ActionIconButtonStyles";
+import { useActionIconButtonStyles } from "./ActionIconButtonStyles";
 
 const HOVER_DELAY = 500;
 
@@ -49,7 +49,7 @@ const ActionIconButton: FC<ActionIconButtonProps> = (
                 size={size}
             >
                 <>{icon}</>
-                <HoverAction visible={visibleHoverAction} actionText={actionText}/>
+                <HoverAction visible={visibleHoverAction} actionText={actionText} />
             </IconButton>
         </div>
     );

@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useImageCloseButtonStyles = makeStyles((theme) => ({
     imageModalClose: {
@@ -6,6 +6,6 @@ export const useImageCloseButtonStyles = makeStyles((theme) => ({
         "& svg": {
             height: "0.9em",
             color: theme.palette.common.white
-        },
-    },
+        }
+    }
 }));

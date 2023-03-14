@@ -1,14 +1,14 @@
 import React from "react";
 import ReactRouter from "react-router";
-import {ClickAwayListener, IconButton} from "@material-ui/core";
+import { ClickAwayListener, IconButton } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
-import {mockFullTweet} from "../../../util/mockData/mockData";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
+import { mockFullTweet } from "../../../util/test-utils/mock-test-data";
 import QuoteIconButton from "../QuoteIconButton";
 import QuoteTweetModal from "../QuoteTweetModal/QuoteTweetModal";
 import CloseButton from "../../CloseButton/CloseButton";
-import {LoadingStatus} from "../../../store/types/common";
-import {TweetsActionType} from "../../../store/ducks/tweets/contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
+import { TweetsActionType } from "../../../store/ducks/tweets/contracts/actionTypes";
 
 describe("QuoteIconButton", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -16,7 +16,7 @@ describe("QuoteIconButton", () => {
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({userId: "3"});
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ userId: "3" });
     });
 
     it("should render is tweet retweeted by owner", () => {
@@ -66,7 +66,7 @@ describe("QuoteIconButton", () => {
         wrapper.find("#clickRetweet").at(0).simulate("click");
 
         expect(mockDispatchFn).toHaveBeenCalledWith({
-            payload: {tweetId: mockFullTweet.id, userId: "3"},
+            payload: { tweetId: mockFullTweet.id, userId: "3" },
             type: TweetsActionType.RETWEET
         });
     });
@@ -88,6 +88,6 @@ describe("QuoteIconButton", () => {
                 user={mockFullTweet.user}
                 isTweetRetweeted={isTweetRetweetedByMe}
                 retweetsCount={retweetsCount}
-            />, mockRootState)
+            />, mockRootState);
     };
 });

@@ -1,16 +1,16 @@
-import React, {FC, ReactElement, useState} from "react";
-import {useDispatch} from "react-redux";
+import React, { FC, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button/Button";
 
-import {usePendingButtonStyles} from "./PendingButtonStyles";
-import {processFollowRequest} from "../../../store/ducks/user/actionCreators";
+import { usePendingButtonStyles } from "./PendingButtonStyles";
+import { processFollowRequest } from "../../../store/ducks/user/actionCreators";
 
 interface PendingButtonProps {
     userId: number;
     size?: "medium" | "large" | "small";
 }
 
-const PendingButton: FC<PendingButtonProps> = ({userId, size}): ReactElement => {
+const PendingButton: FC<PendingButtonProps> = ({ userId, size }): ReactElement => {
     const classes = usePendingButtonStyles();
     const dispatch = useDispatch();
     const [btnText, setBtnText] = useState<string>("Pending");

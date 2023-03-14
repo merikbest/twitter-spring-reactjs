@@ -1,23 +1,24 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
-import {fetchRelevantUsersRequest, fetchUsersRequest, usersSaga} from "../sagas";
-import {fetchUsers, setPageableUsers, setUsers, setUsersLoadingState} from "../actionCreators";
+import { fetchRelevantUsersRequest, fetchUsersRequest, usersSaga } from "../sagas";
+import { fetchUsers, setPageableUsers, setUsers, setUsersLoadingState } from "../actionCreators";
 import {
     mockExpectedResponse,
     testCall,
     testLoadingStatus,
     testSetResponse,
     testWatchSaga
-} from "../../../../util/testHelper";
-import {UserResponse} from "../../../types/user";
-import {UserApi} from "../../../../services/api/userApi";
-import {UsersActionsType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types/common";
+} from "../../../../util/test-utils/test-helper";
+import { UserResponse } from "../../../../types/user";
+import { UserApi } from "../../../../services/api/userApi";
+import { UsersActionsType } from "../contracts/actionTypes";
+import { LoadingStatus } from "../../../../types/common";
+import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
 
 describe("usersSaga:", () => {
     const mockUserResponse = {
-        data: [{id: 1}, {id: 1}],
-        headers: {"page-total-count": 1}
+        data: [{ id: 1 }, { id: 1 }],
+        headers: { PAGE_TOTAL_COUNT: 1 }
     } as AxiosResponse<UserResponse[]>;
 
     describe("fetchUsersRequest:", () => {
@@ -26,7 +27,7 @@ describe("usersSaga:", () => {
         testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getUsers, 1);
         testSetResponse(worker, mockUserResponse, setPageableUsers, mockExpectedResponse(mockUserResponse), "UserResponse");
-        testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.ERROR);
     });
 
     describe("fetchRelevantUsersRequest:", () => {
@@ -35,11 +36,11 @@ describe("usersSaga:", () => {
         testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.LOADING);
         testCall(worker, UserApi.getRelevantUsers);
         testSetResponse(worker, mockUserResponse, setUsers, mockUserResponse.data, "UserResponse");
-        testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setUsersLoadingState, LoadingStatus.ERROR);
     });
 
     testWatchSaga(usersSaga, [
-        {actionType: UsersActionsType.FETCH_USERS, workSaga: fetchUsersRequest},
-        {actionType: UsersActionsType.FETCH_RELEVANT_USERS, workSaga: fetchRelevantUsersRequest},
+        { actionType: UsersActionsType.FETCH_USERS, workSaga: fetchUsersRequest },
+        { actionType: UsersActionsType.FETCH_RELEVANT_USERS, workSaga: fetchRelevantUsersRequest }
     ]);
 });

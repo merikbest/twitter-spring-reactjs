@@ -1,12 +1,12 @@
-import React, {FC, ReactElement, useState} from "react";
-import {useDispatch} from "react-redux";
+import React, { FC, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button/Button";
 import classNames from "classnames";
 
-import {useBlockButtonStyles} from "./BlockButtonStyles";
+import { useBlockButtonStyles } from "./BlockButtonStyles";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
-import {processUserToBlocklist} from "../../../store/ducks/user/actionCreators";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import { processUserToBlocklist } from "../../../store/ducks/user/actionCreators";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface BlockButtonProps {
     userId: number;
@@ -40,7 +40,7 @@ const BlockButton: FC<BlockButtonProps> = (
     };
 
     const onBlockUser = (): void => {
-        dispatch(processUserToBlocklist({userId}));
+        dispatch(processUserToBlocklist({ userId }));
         dispatch(setOpenSnackBar(`@${username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`));
         setVisibleBlockUserModal(false);
     };

@@ -1,12 +1,12 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
 import BlockUserButton from "../BlockUserButton";
 import BlockUserModal from "../../../BlockUserModal/BlockUserModal";
-import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
-import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { UserActionsType } from "../../../../store/ducks/user/contracts/actionTypes";
+import { ActionSnackbarTypes } from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("BlockUserButton", () => {
     let mockDispatchFn: jest.Mock;
@@ -51,7 +51,7 @@ describe("BlockUserButton", () => {
         wrapper.find("#onOpenBlockUserModal").at(0).simulate("click");
         wrapper.find(BlockUserModal).find(Button).at(0).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {userId: 1, tweetId: 1},
+            payload: { userId: 1, tweetId: 1 },
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {

@@ -1,4 +1,4 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
+import { call, put, takeLatest } from "redux-saga/effects";
 
 import {
     AddChatMessageActionInterface,
@@ -6,13 +6,13 @@ import {
     ChatMessagesActionsType,
     FetchChatMessagesActionInterface
 } from "./contracts/actionTypes";
-import {ChatApi} from "../../../services/api/chatApi";
-import {setChatMessages, setChatMessagesLoadingState} from "./actionCreators";
-import {ChatMessageResponse} from "../../types/chat";
-import {AxiosResponse} from "axios";
-import {LoadingStatus} from "../../types/common";
+import { ChatApi } from "../../../services/api/chatApi";
+import { setChatMessages, setChatMessagesLoadingState } from "./actionCreators";
+import { ChatMessageResponse } from "../../../types/chat";
+import { AxiosResponse } from "axios";
+import { LoadingStatus } from "../../../types/common";
 
-export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInterface) {
+export function* fetchChatMessagesRequest({ payload }: FetchChatMessagesActionInterface) {
     try {
         yield put(setChatMessagesLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<ChatMessageResponse[]> = yield call(ChatApi.getChatMessages, payload);
@@ -22,7 +22,7 @@ export function* fetchChatMessagesRequest({payload}: FetchChatMessagesActionInte
     }
 }
 
-export function* addChatMessageRequest({payload}: AddChatMessageActionInterface) {
+export function* addChatMessageRequest({ payload }: AddChatMessageActionInterface) {
     try {
         yield put(setChatMessagesLoadingState(LoadingStatus.LOADING));
         yield call(ChatApi.addMessage, payload);
@@ -31,7 +31,7 @@ export function* addChatMessageRequest({payload}: AddChatMessageActionInterface)
     }
 }
 
-export function* addChatMessageWithTweetRequest({payload}: AddChatMessageWithTweetActionInterface) {
+export function* addChatMessageWithTweetRequest({ payload }: AddChatMessageWithTweetActionInterface) {
     try {
         yield put(setChatMessagesLoadingState(LoadingStatus.LOADING));
         yield call(ChatApi.addMessageWithTweet, payload);

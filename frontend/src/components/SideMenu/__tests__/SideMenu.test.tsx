@@ -1,22 +1,22 @@
 import React from "react";
 import routeData from "react-router";
 import configureStore from "redux-mock-store";
-import {mount} from "enzyme";
-import {createMemoryHistory} from "history";
-import {Provider} from "react-redux";
-import {Button, IconButton, MuiThemeProvider, Popover} from "@material-ui/core";
-import {createTheme} from "@material-ui/core/styles";
-import {NavLink, Router} from "react-router-dom";
+import { mount } from "enzyme";
+import { createMemoryHistory } from "history";
+import { Provider } from "react-redux";
+import { Button, IconButton, MuiThemeProvider, Popover } from "@material-ui/core";
+import { createTheme } from "@material-ui/core/styles";
+import { NavLink, Router } from "react-router-dom";
 
-import {createMockRootState, mockDispatch} from "../../../util/testHelper";
-import {BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH} from "../../../util/pathConstants";
-import {mockUser} from "../../../util/mockData/mockData";
+import { createMockRootState, mockDispatch } from "../../../util/test-utils/test-helper";
+import { BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH } from "../../../constants/path-constants";
+import { mockUser } from "../../../util/test-utils/mock-test-data";
 import AddTweetModal from "../../AddTweetModal/AddTweetModal";
 import CloseButton from "../../CloseButton/CloseButton";
 import DisplayModal from "../DisplayModal/DisplayModal";
 import FollowerRequestsModal from "../FollowerRequestsModal/FollowerRequestsModal";
 import SideMenu from "../SideMenu";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("SideMenu", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
@@ -33,7 +33,7 @@ describe("SideMenu", () => {
     });
 
     it("should render correctly", () => {
-        const {wrapper} = createSideMenuWrapper();
+        const { wrapper } = createSideMenuWrapper();
 
         expect(wrapper.find("#homeIcon").exists()).toBeTruthy();
         expect(wrapper.text().includes("Home")).toBe(true);
@@ -56,21 +56,21 @@ describe("SideMenu", () => {
     it("should render Notifications Count", () => {
         const mockState = {
             ...mockRootState,
-            user: {...mockRootState.user, data: {...mockUser, notificationsCount: 100}}
+            user: { ...mockRootState.user, data: { ...mockUser, notificationsCount: 100 } }
         };
-        const {wrapper} = createSideMenuWrapper(mockState);
+        const { wrapper } = createSideMenuWrapper(mockState);
 
         expect(wrapper.find("#notificationsCount").exists()).toBeTruthy();
         expect(wrapper.find("#notificationsCount").text().includes("100")).toBe(true);
     });
 
     it("should render empty Home Notification", () => {
-        const {wrapper} = createSideMenuWrapper(createMockRootState(LoadingStatus.LOADING));
+        const { wrapper } = createSideMenuWrapper(createMockRootState(LoadingStatus.LOADING));
         expect(wrapper.find("#homeNotification").exists()).toBeFalsy();
     });
 
     it("should click open and render Popover items correctly", () => {
-        const {wrapper} = createSideMenuWrapper();
+        const { wrapper } = createSideMenuWrapper();
 
         expect(wrapper.find(Popover).at(0).prop("open")).toBe(false);
         wrapper.find("#openPopup").simulate("click");
@@ -86,7 +86,7 @@ describe("SideMenu", () => {
     });
 
     it("should click close Popup", () => {
-        const {wrapper} = createSideMenuWrapper();
+        const { wrapper } = createSideMenuWrapper();
 
         expect(wrapper.find(Popover).at(0).prop("open")).toBe(false);
         wrapper.find("#openPopup").simulate("click");
@@ -98,19 +98,19 @@ describe("SideMenu", () => {
     });
 
     it("should click Open Add Tweet Modal and close", () => {
-        const {wrapper} = createSideMenuWrapper();
+        const { wrapper } = createSideMenuWrapper();
 
         expect(wrapper.find(AddTweetModal).prop("visible")).toBe(false);
         wrapper.find(Button).simulate("click");
 
         expect(wrapper.find(AddTweetModal).prop("visible")).toBe(true);
         wrapper.find(AddTweetModal).find(CloseButton).find(IconButton).simulate("click");
-        
+
         expect(wrapper.find(AddTweetModal).prop("visible")).toBe(false);
     });
 
     it("should click Open Display Modal and close", () => {
-        const {wrapper} = createSideMenuWrapper();
+        const { wrapper } = createSideMenuWrapper();
 
         expect(wrapper.find(DisplayModal).prop("visible")).toBe(false);
 
@@ -126,18 +126,18 @@ describe("SideMenu", () => {
     it("should click Open Follower Requests Modal and close", () => {
         const mockState = {
             ...mockRootState,
-            user: {...mockRootState.user, data: {...mockUser, isPrivateProfile: true}}
+            user: { ...mockRootState.user, data: { ...mockUser, isPrivateProfile: true } }
         };
-        const {wrapper} = createSideMenuWrapper(mockState);
+        const { wrapper } = createSideMenuWrapper(mockState);
 
         expect(wrapper.find(FollowerRequestsModal).prop("visible")).toBe(false);
 
         wrapper.find("#openPopup").simulate("click");
         wrapper.find("#openFollowerRequestsModal").at(0).simulate("click");
-        
+
         expect(wrapper.find(FollowerRequestsModal).prop("visible")).toBe(true);
         wrapper.find(FollowerRequestsModal).find(CloseButton).find(IconButton).simulate("click");
-        
+
         expect(wrapper.find(FollowerRequestsModal).prop("visible")).toBe(false);
     });
 
@@ -208,17 +208,17 @@ describe("SideMenu", () => {
             search: "",
             state: undefined
         });
-        const {wrapper} = createSideMenuWrapper();
+        const { wrapper } = createSideMenuWrapper();
 
         expect(wrapper.find(iconId).exists()).toBeTruthy();
     };
 
     const testClickToNavLink = (pathname: string, linkIndex: number): void => {
-        const mockLocation = {hash: "", pathname: pathname, search: "", state: null};
+        const mockLocation = { hash: "", pathname: pathname, search: "", state: null };
         jest.spyOn(routeData, "useLocation").mockReturnValue(mockLocation);
-        const {wrapper, pushSpy} = createSideMenuWrapper();
+        const { wrapper, pushSpy } = createSideMenuWrapper();
 
-        wrapper.find(NavLink).at(linkIndex).simulate("click", {button: 0});
+        wrapper.find(NavLink).at(linkIndex).simulate("click", { button: 0 });
 
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(mockLocation);
@@ -230,19 +230,19 @@ describe("SideMenu", () => {
         const mockStore = configureStore([]);
         const store = mockStore(mockState);
         const theme = createTheme({
-            props: {MuiWithWidth: {initialWidth: "xl"}},
+            props: { MuiWithWidth: { initialWidth: "xl" } }
         });
 
         const wrapper = mount(
             <Router history={history}>
                 <Provider store={store}>
                     <MuiThemeProvider theme={theme}>
-                        <SideMenu changeBackgroundColor={jest.fn()} changeColorScheme={jest.fn()}/>
+                        <SideMenu changeBackgroundColor={jest.fn()} changeColorScheme={jest.fn()} />
                     </MuiThemeProvider>
                 </Provider>
             </Router>
         );
 
-        return {wrapper, pushSpy};
+        return { wrapper, pushSpy };
     };
 });

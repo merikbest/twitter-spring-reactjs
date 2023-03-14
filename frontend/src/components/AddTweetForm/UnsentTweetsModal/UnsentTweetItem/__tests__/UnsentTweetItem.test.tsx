@@ -1,14 +1,14 @@
 import React from "react";
-import {Checkbox} from "@material-ui/core";
+import { Checkbox } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../../util/testHelper";
-import {mockFullTweet} from "../../../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { mockFullTweet } from "../../../../../util/test-utils/mock-test-data";
 import UnsentTweetItem from "../UnsentTweetItem";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { LoadingStatus } from "../../../../../types/common";
 
 describe("UnsentTweetItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
-    const mockTweet = {...mockFullTweet, scheduledDate: "2022-10-15T21:20:33"};
+    const mockTweet = { ...mockFullTweet, scheduledDate: "2022-10-15T21:20:33" };
 
     it("should click open Edit Tweet Modal", () => {
         const mockOnOpenEditTweetModal = jest.fn();

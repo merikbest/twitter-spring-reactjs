@@ -1,6 +1,6 @@
-import {actionSnackbarReducer, initialActionSnackbarState} from "../reducer";
-import {ActionSnackbarActions, ActionSnackbarTypes} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
+import { actionSnackbarReducer, initialActionSnackbarState } from "../reducer";
+import { ActionSnackbarActions, ActionSnackbarTypes } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
 
 describe("actionSnackbarReducer:", () => {
     describe("initial state:", () => {
@@ -19,7 +19,7 @@ describe("actionSnackbarReducer:", () => {
             {
                 ...initialActionSnackbarState,
                 snackBarMessage: "test_message",
-                openSnackBar: true,
+                openSnackBar: true
             }
         );
 
@@ -30,7 +30,7 @@ describe("actionSnackbarReducer:", () => {
             }),
             {
                 ...initialActionSnackbarState,
-                openSnackBar: false,
+                openSnackBar: false
             }
         );
     });

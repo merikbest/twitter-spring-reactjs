@@ -1,8 +1,8 @@
-import {chatsReducer, initialChatsState} from "../reducer";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {ChatsActions, ChatsActionsType} from "../contracts/actionTypes";
-import {ChatResponse} from "../../../types/chat";
-import {LoadingStatus} from "../../../types/common";
+import { chatsReducer, initialChatsState } from "../reducer";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { ChatsActions, ChatsActionsType } from "../contracts/actionTypes";
+import { ChatResponse } from "../../../../types/chat";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("chatsReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("chatsReducer:", () => {
             ChatsActionsType.SET_CHATS,
             chatsReducer(initialChatsState, {
                 type: ChatsActionsType.SET_CHATS,
-                payload: [{id: 1}] as ChatResponse[]
+                payload: [{ id: 1 }] as ChatResponse[]
             }),
             {
                 ...initialChatsState,
-                items: [{id: 1}] as ChatResponse[],
+                items: [{ id: 1 }] as ChatResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -29,11 +29,11 @@ describe("chatsReducer:", () => {
             ChatsActionsType.SET_CHAT,
             chatsReducer(initialChatsState, {
                 type: ChatsActionsType.SET_CHAT,
-                payload: {id: 1} as ChatResponse
+                payload: { id: 1 } as ChatResponse
             }),
             {
                 ...initialChatsState,
-                items: [{id: 1}] as ChatResponse[],
+                items: [{ id: 1 }] as ChatResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -43,11 +43,11 @@ describe("chatsReducer:", () => {
             chatsReducer(
                 {
                     ...initialChatsState,
-                    items: [{id: 1}] as ChatResponse[],
+                    items: [{ id: 1 }] as ChatResponse[]
                 },
                 {
                     type: ChatsActionsType.LEAVE_FROM_CONVERSATION,
-                    payload: {participantId: 1, chatId: 1}
+                    payload: { participantId: 1, chatId: 1 }
                 }
             ),
             {
@@ -62,10 +62,10 @@ describe("chatsReducer:", () => {
             chatsReducer(
                 {
                     ...initialChatsState,
-                    items: [{id: 1}] as ChatResponse[],
+                    items: [{ id: 1 }] as ChatResponse[]
                 },
                 {
-                    type: ChatsActionsType.RESET_CHATS_STATE,
+                    type: ChatsActionsType.RESET_CHATS_STATE
                 }
             ),
             {

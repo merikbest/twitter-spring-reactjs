@@ -1,20 +1,20 @@
-import React, {FC, MouseEvent, ReactElement, useState} from "react";
-import {Paper, Popover} from "@material-ui/core";
-import {useDispatch} from "react-redux";
-import {EmojiData, Picker} from "emoji-mart";
+import React, { FC, MouseEvent, ReactElement, useState } from "react";
+import { Paper, Popover } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { EmojiData, Picker } from "emoji-mart";
 import EmojiConvertor from "emoji-js";
 
-import {EmojiIcon, GifIcon, MediaIcon, SendMessageIcon} from "../../../../icons";
-import {MessageInput} from "../../MessageInput/MessageInput";
-import {useChatFooterStyles} from "./ChatFooterStyles";
-import {addChatMessage} from "../../../../store/ducks/chatMessages/actionCreators";
+import { EmojiIcon, GifIcon, MediaIcon, SendMessageIcon } from "../../../../icons";
+import { MessageInput } from "../../MessageInput/MessageInput";
+import { useChatFooterStyles } from "./ChatFooterStyles";
+import { addChatMessage } from "../../../../store/ducks/chatMessages/actionCreators";
 import ActionIcon from "../../ActionIcon/ActionIcon";
 
 interface ChatFooterProps {
     chatId: number;
 }
 
-const ChatFooter: FC<ChatFooterProps> = ({chatId}): ReactElement => {
+const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
     const classes = useChatFooterStyles();
     const dispatch = useDispatch();
     const [message, setMessage] = useState<string>("");
@@ -25,7 +25,7 @@ const ChatFooter: FC<ChatFooterProps> = ({chatId}): ReactElement => {
 
     const onSendMessage = (): void => {
         if (message !== "") {
-            dispatch(addChatMessage({chatId: chatId, text: textConverter()}));
+            dispatch(addChatMessage({ chatId: chatId, text: textConverter() }));
             setMessage("");
         }
     };
@@ -80,7 +80,7 @@ const ChatFooter: FC<ChatFooterProps> = ({chatId}): ReactElement => {
                     positionTop
                 />
             </div>
-            <div style={{marginLeft: 8}}>
+            <div style={{ marginLeft: 8 }}>
                 <ActionIcon
                     onClick={onSendMessage}
                     actionText={"Send"}
@@ -95,10 +95,10 @@ const ChatFooter: FC<ChatFooterProps> = ({chatId}): ReactElement => {
                 open={openPopover}
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
-                anchorOrigin={{vertical: "bottom", horizontal: "center"}}
-                transformOrigin={{vertical: "top", horizontal: "center"}}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                transformOrigin={{ vertical: "top", horizontal: "center" }}
             >
-                <Picker title="" emoji="wave" onSelect={addEmoji} set="twitter"/>
+                <Picker title="" emoji="wave" onSelect={addEmoji} set="twitter" />
             </Popover>
         </Paper>
     );

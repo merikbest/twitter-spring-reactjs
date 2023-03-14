@@ -1,7 +1,7 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
-import {AxiosResponse} from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
+import { AxiosResponse } from "axios";
 
-import {setUserTweets, setUserTweetsLoadingStatus} from "./actionCreators";
+import { setUserTweets, setUserTweetsLoadingStatus } from "./actionCreators";
 import {
     FetchUserLikedTweetsActionInterface,
     FetchUserMediaTweetsActionInterface,
@@ -9,46 +9,46 @@ import {
     FetchUserTweetsActionInterface,
     UserTweetsActionType
 } from "./contracts/actionTypes";
-import {UserApi} from "../../../services/api/userApi";
-import {TweetResponse} from "../../types/tweet";
-import {LoadingStatus} from "../../types/common";
-import {TweetApi} from "../../../services/api/tweetApi";
+import { TweetResponse } from "../../../types/tweet";
+import { LoadingStatus } from "../../../types/common";
+import { TweetApi } from "../../../services/api/tweetApi";
+import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
 
-export function* fetchUserTweetsRequest({payload}: FetchUserTweetsActionInterface) {
+export function* fetchUserTweetsRequest({ payload }: FetchUserTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserTweets, payload);
-        yield put(setUserTweets({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
+        yield put(setUserTweets({ items: response.data, pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT]) }));
     } catch (e) {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchUserLikedTweetsRequest({payload}: FetchUserLikedTweetsActionInterface) {
+export function* fetchUserLikedTweetsRequest({ payload }: FetchUserLikedTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserLikedTweets, payload);
-        yield put(setUserTweets({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
+        yield put(setUserTweets({ items: response.data, pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT]) }));
     } catch (e) {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchUserMediaTweetsRequest({payload}: FetchUserMediaTweetsActionInterface) {
+export function* fetchUserMediaTweetsRequest({ payload }: FetchUserMediaTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserMediaTweets, payload);
-        yield put(setUserTweets({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
+        yield put(setUserTweets({ items: response.data, pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT]) }));
     } catch (e) {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchUserRetweetsAndRepliesRequest({payload}: FetchUserRetweetsAndRepliesActionInterface) {
+export function* fetchUserRetweetsAndRepliesRequest({ payload }: FetchUserRetweetsAndRepliesActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserRetweetsAndReplies, payload);
-        yield put(setUserTweets({items: response.data, pagesCount: parseInt(response.headers["page-total-count"])}));
+        yield put(setUserTweets({ items: response.data, pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT]) }));
     } catch (e) {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));
     }

@@ -1,10 +1,10 @@
-import React, {memo, ReactElement} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Button} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@material-ui/core";
 
-import {followUser, processFollowRequest} from "../../../store/ducks/user/actionCreators";
-import {selectUserProfileId, selectUserProfileIsPrivateProfile} from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { followUser, processFollowRequest } from "../../../store/ducks/user/actionCreators";
+import { selectUserProfileId, selectUserProfileIsPrivateProfile } from "../../../store/ducks/userProfile/selectors";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const FollowUserButton = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -16,7 +16,7 @@ const FollowUserButton = memo((): ReactElement => {
         if (isPrivateProfile) {
             dispatch(processFollowRequest(userProfileId!));
         } else {
-            dispatch(followUser({userId: userProfileId!}));
+            dispatch(followUser({ userId: userProfileId! }));
         }
     };
 

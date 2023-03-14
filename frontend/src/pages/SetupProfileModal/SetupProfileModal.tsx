@@ -1,26 +1,26 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, { FC, ReactElement, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import ProfilePictureModal from "./ProfilePictureModal/ProfilePictureModal";
 import ProfileHeaderModal from "./ProfileHeaderModal/ProfileHeaderModal";
-import {ImageObj} from "../../components/AddTweetForm/AddTweetForm";
+import { ImageObj } from "../../components/AddTweetForm/AddTweetForm";
 import ProfileDescriptionModal from "./ProfileDescriptionModal/ProfileDescriptionModal";
 import ProfileUpdatedModal from "./ProfileUpdatedModal/ProfileUpdatedModal";
-import {uploadImage} from "../../util/uploadImage";
+import { uploadImage } from "../../util/upload-image-helper";
 import {
     selectUserProfileFullName,
     selectUserProfileLocation,
     selectUserProfileWebsite
 } from "../../store/ducks/user/selectors";
-import {updatedUserData} from "../../store/ducks/user/actionCreators";
-import {useSetupProfileModalStyles} from "./SetupProfileModalStyles";
+import { updatedUserData } from "../../store/ducks/user/actionCreators";
+import { useSetupProfileModalStyles } from "./SetupProfileModalStyles";
 
 interface SetupProfileModalProps {
     visible: boolean;
     onClose: () => void;
 }
 
-const SetupProfileModal: FC<SetupProfileModalProps> = ({visible, onClose}): ReactElement => {
+const SetupProfileModal: FC<SetupProfileModalProps> = ({ visible, onClose }): ReactElement => {
     const classes = useSetupProfileModalStyles();
     const dispatch = useDispatch();
     const fullName = useSelector(selectUserProfileFullName);

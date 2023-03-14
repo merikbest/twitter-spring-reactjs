@@ -1,13 +1,13 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {Button, Dialog, DialogContent, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement, useState } from "react";
+import { Button, Dialog, DialogContent, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useCreateAccountModalStyles} from "./CreateAccountModalStyles";
-import {RegistrationInputField} from "../RegistrationInput/RegistrationInputField";
-import {RegistrationInfo} from "../../Authentication/Authentication";
-import {AuthApi} from "../../../services/api/authApi";
+import { useCreateAccountModalStyles } from "./CreateAccountModalStyles";
+import { RegistrationInputField } from "../RegistrationInput/RegistrationInputField";
+import { AuthApi } from "../../../services/api/authApi";
 import Spinner from "../../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS_NEW} from "../../../util/url";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS_NEW } from "../../../constants/url-constants";
+import { RegistrationInfo } from "../../../types/auth";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -51,12 +51,12 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
             aria-labelledby="form-dialog-title"
             hideBackdrop
         >
-            <DialogContent style={{paddingTop: 0, paddingBottom: 0}} className={classes.container}>
+            <DialogContent style={{ paddingTop: 0, paddingBottom: 0 }} className={classes.container}>
                 <Typography component={"div"} className={classes.title}>
                     Step 3 of 5
                 </Typography>
                 {isLoading ? (
-                    <Spinner/>
+                    <Spinner />
                 ) : (
                     <>
                         <Typography variant={"h5"} component={"div"} className={classes.subtitle}>

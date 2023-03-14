@@ -1,17 +1,17 @@
 import React from "react";
-import {Avatar, Button, Dialog} from "@material-ui/core";
+import { Avatar, Button, Dialog } from "@material-ui/core";
 
 import ProfileHeaderModal from "../ProfileHeaderModal";
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {DEFAULT_PROFILE_IMG} from "../../../../util/url";
-import {wallpapers} from "../../../../util/wallpapers";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
+import { wallpapers } from "../../../../util/wallpapers";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("ProfileHeaderModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
     const mockImage = {
         src: wallpapers[0],
-        file: new File([""], "test_filename", {type: "text/html"})
+        file: new File([""], "test_filename", { type: "text/html" })
     };
 
     it("should render empty ProfileDescriptionModal", () => {

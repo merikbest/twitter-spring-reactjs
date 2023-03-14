@@ -1,14 +1,14 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Divider, Typography} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Divider, Typography } from "@material-ui/core";
 
-import {useChangeEmailStyles} from "./ChangeEmailStyles";
-import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
-import {selectUserIsSuccess, selectUserProfileEmail} from "../../../../../store/ducks/user/selectors";
+import { useChangeEmailStyles } from "./ChangeEmailStyles";
+import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
+import { selectUserIsSuccess, selectUserProfileEmail } from "../../../../../store/ducks/user/selectors";
 import ChangeEmailModal from "./ChangeEmailModal/ChangeEmailModal";
-import {setUserLoadingStatus} from "../../../../../store/ducks/user/actionCreators";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { setUserLoadingStatus } from "../../../../../store/ducks/user/actionCreators";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { LoadingStatus } from "../../../../../types/common";
 
 const ChangeEmail: FC = (): ReactElement => {
     const classes = useChangeEmailStyles();
@@ -42,7 +42,7 @@ const ChangeEmail: FC = (): ReactElement => {
                     disabled
                 />
             </div>
-            <Divider/>
+            <Divider />
             <div
                 id={"openChangeEmailModal"}
                 className={classes.updateEmailAddress}

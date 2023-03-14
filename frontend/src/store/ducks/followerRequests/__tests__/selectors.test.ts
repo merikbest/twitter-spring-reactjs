@@ -3,19 +3,19 @@ import {
     selectFollowerRequestsPagesCount,
     selectIsFollowerRequestsLoading
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {FollowerUserResponse} from "../../../types/user";
-import {LoadingStatus} from "../../../types/common";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { FollowerUserResponse } from "../../../../types/user";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("followerRequests selectors:", () => {
     const mockState = createMockRootState();
-    const mockFollowerUserResponse = [{id: 1}, {id: 2}] as FollowerUserResponse[];
+    const mockFollowerUserResponse = [{ id: 1 }, { id: 2 }] as FollowerUserResponse[];
 
     describe("selectFollowerRequestsItems", () => {
         it("should return FollowerUserResponse array", () => {
             expect(selectFollowerRequestsItems({
                 ...mockState,
-                followerRequests: {...mockState.notifications, items: mockFollowerUserResponse}
+                followerRequests: { ...mockState.notifications, items: mockFollowerUserResponse }
             })).toBe(mockFollowerUserResponse);
         });
     });

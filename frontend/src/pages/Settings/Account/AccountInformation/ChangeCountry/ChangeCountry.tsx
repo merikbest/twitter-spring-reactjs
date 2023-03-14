@@ -1,16 +1,16 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {FormControl, InputLabel, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FormControl, InputLabel, Link as MuiLink, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {useChangeCountryStyles} from "./ChangeCountryStyles";
-import {FilledSelect} from "../../../../../components/FilledSelect/FilledSelect";
-import {selectUserDataId, selectUserProfileCountry} from "../../../../../store/ducks/user/selectors";
-import {setUserLoadingStatus, updateCountry} from "../../../../../store/ducks/user/actionCreators";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {HOW_TO_CHANGE_COUNTRY_SETTINGS} from "../../../../../util/url";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { useChangeCountryStyles } from "./ChangeCountryStyles";
+import { FilledSelect } from "../../../../../components/FilledSelect/FilledSelect";
+import { selectUserDataId, selectUserProfileCountry } from "../../../../../store/ducks/user/selectors";
+import { setUserLoadingStatus, updateCountry } from "../../../../../store/ducks/user/actionCreators";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { HOW_TO_CHANGE_COUNTRY_SETTINGS } from "../../../../../constants/url-constants";
+import { LoadingStatus } from "../../../../../types/common";
 
 const ChangeCountry: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -18,7 +18,7 @@ const ChangeCountry: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);
     const myProfileCountry = useSelector(selectUserProfileCountry);
-    const [country, setCountry] = useState<string>("")
+    const [country, setCountry] = useState<string>("");
 
     useEffect(() => {
         if (myProfileId) {
@@ -32,7 +32,7 @@ const ChangeCountry: FC = (): ReactElement => {
 
     const onChangeCountry = (event: ChangeEvent<{ value: unknown }>): void => {
         setCountry(event.target.value as string);
-        dispatch(updateCountry({country: event.target.value as string}));
+        dispatch(updateCountry({ country: event.target.value as string }));
     };
 
     return (
@@ -52,13 +52,13 @@ const ChangeCountry: FC = (): ReactElement => {
                         label="Country"
                         fullWidth
                     >
-                        <option aria-label="None"/>
+                        <option aria-label="None" />
                         {countries()}
                     </FilledSelect>
                 </FormControl>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {"This is the primary country associated with your account. Your country helps us to customize " +
-                    "your Twitter experience. "}
+                        "your Twitter experience. "}
                     <MuiLink href={HOW_TO_CHANGE_COUNTRY_SETTINGS} variant="subtitle2" target="_blank" rel="noopener">
                         Learn more
                     </MuiLink>
@@ -298,5 +298,5 @@ const countries = (): JSX.Element => {
             <option value="ZM">Zambia</option>
             <option value="ZW">Zimbabwe</option>
         </>
-    )
-}
+    );
+};

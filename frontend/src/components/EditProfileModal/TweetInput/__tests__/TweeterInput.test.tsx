@@ -1,10 +1,10 @@
 import React from "react";
-import {InputLabel} from "@material-ui/core";
+import { InputLabel } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {TweetInputField} from "../TweetInputField";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { TweetInputField } from "../TweetInputField";
 import TweeterInput from "../TweeterInput";
-import {LoadingStatus} from "../../../../store/types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("TweeterInput", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from "react";
+import React, { FC, ReactElement } from "react";
 
-import {useTopicsStyles} from "../TopicsStyles";
+import { useTopicsStyles } from "../TopicsStyles";
 import FollowedTopicButton from "./FollowedTopicButton/FollowedTopicButton";
-import {TopicResponse} from "../../../store/types/topic";
+import { TopicResponse } from "../../../types/topic";
 import TopicButton from "./TopicButton/TopicButton";
 
 interface TopicBlockProps {
@@ -27,9 +27,9 @@ const TopicBlock: FC<TopicBlockProps> = (
             <div className={topicClasses.topicsContainer}>
                 {topics.slice(startTopicValue, endTopicValue).map((topic) => (
                     isFollowedTopic ? (
-                        <FollowedTopicButton key={topic.id} topic={topic}/>
+                        <FollowedTopicButton key={topic.id} topic={topic} />
                     ) : (
-                        <TopicButton key={topic.id} topic={topic}/>
+                        <TopicButton key={topic.id} topic={topic} />
                     )
                 ))}
             </div>

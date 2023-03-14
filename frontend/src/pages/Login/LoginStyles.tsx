@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useLoginStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -7,21 +7,21 @@ export const useLoginStyles = makeStyles((theme: Theme) => ({
         "& svg": {
             marginTop: 20,
             color: theme.palette.primary.main,
-            fontSize: 45,
+            fontSize: 45
         },
         "& .MuiTypography-h4": {
             fontWeight: 700,
-            margin: "18px 0px",
-        },
+            margin: "18px 0px"
+        }
     },
     error: {
         padding: "12px 16px",
         borderRadius: 12,
         marginBottom: 12,
-        backgroundColor: "rgb(255, 210, 218)",
+        backgroundColor: "rgb(255, 210, 218)"
     },
     input: {
-        marginBottom: 24,
+        marginBottom: 24
     },
     footer: {
         marginTop: 32,
@@ -30,8 +30,8 @@ export const useLoginStyles = makeStyles((theme: Theme) => ({
             textDecoration: "none",
             color: theme.palette.primary.main,
             "&:hover": {
-                textDecoration: "underline",
-            },
-        },
-    },
+                textDecoration: "underline"
+            }
+        }
+    }
 }));

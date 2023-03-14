@@ -1,11 +1,11 @@
-import React, {FC, FormEvent, ReactElement, useState} from 'react';
-import {useHistory, useLocation} from "react-router-dom";
-import {Button, Link as MuiLink, Radio, Typography} from "@material-ui/core";
+import React, { FC, FormEvent, ReactElement, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { Button, Link as MuiLink, Radio, Typography } from "@material-ui/core";
 
-import {AuthApi} from "../../../services/api/authApi";
-import {useResetPasswordOptionStyles} from "./ResetPasswordOptionStyles";
-import {ACCOUNT_FORGOT_CONFIRM_PIN_RESET} from "../../../util/pathConstants";
-import {REGAIN_ACCESS} from "../../../util/url";
+import { AuthApi } from "../../../services/api/authApi";
+import { useResetPasswordOptionStyles } from "./ResetPasswordOptionStyles";
+import { ACCOUNT_FORGOT_CONFIRM_PIN_RESET } from "../../../constants/path-constants";
+import { REGAIN_ACCESS } from "../../../constants/url-constants";
 
 const ResetPasswordOption: FC = (): ReactElement => {
     const classes = useResetPasswordOptionStyles();
@@ -16,7 +16,7 @@ const ResetPasswordOption: FC = (): ReactElement => {
     const sendResetCode = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         setIsLoading(true);
-        AuthApi.sendPasswordResetCode({email: location.state.email})
+        AuthApi.sendPasswordResetCode({ email: location.state.email })
             .then(() => {
                 history.push(ACCOUNT_FORGOT_CONFIRM_PIN_RESET);
                 setIsLoading(false);
@@ -37,7 +37,7 @@ const ResetPasswordOption: FC = (): ReactElement => {
             </Typography>
             <form className={classes.formWrapper} onSubmit={sendResetCode}>
                 <div className={classes.emailWrapper}>
-                    <Radio className={classes.radio} checked color="primary"/>
+                    <Radio className={classes.radio} checked color="primary" />
                     <Typography variant={"body1"} component={"span"}>
                         {"Send an email to "}
                     </Typography>

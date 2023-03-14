@@ -1,17 +1,17 @@
-import React, {FC, memo, ReactElement, useState} from 'react';
-import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
-import {useParams} from "react-router-dom";
+import React, { FC, memo, ReactElement, useState } from "react";
+import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 import classnames from "classnames";
 
-import {useIconButtonStyles} from "./QuoteIconButtonSyles";
-import {QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon} from "../../icons";
+import { useIconButtonStyles } from "./QuoteIconButtonSyles";
+import { QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon } from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
-import {useGlobalStyles} from "../../util/globalClasses";
-import {QuoteTweetResponse, UserTweetResponse} from "../../store/types/tweet";
+import { useGlobalStyles } from "../../util/globalClasses";
+import { QuoteTweetResponse, UserTweetResponse } from "../../types/tweet";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
-import {retweet} from "../../store/ducks/tweets/actionCreators";
-import {useDispatch, useSelector} from "react-redux";
-import {selectUserDataId} from "../../store/ducks/user/selectors";
+import { retweet } from "../../store/ducks/tweets/actionCreators";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
 
 export interface QuoteTweetProps {
     tweetId?: number;
@@ -33,7 +33,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
     }
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useIconButtonStyles({isTweetRetweetedByMe: isTweetRetweeted});
+    const classes = useIconButtonStyles({ isTweetRetweetedByMe: isTweetRetweeted });
     const dispatch = useDispatch();
     const params = useParams<{ userId: string }>();
     const myProfileId = useSelector(selectUserDataId);
@@ -50,7 +50,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
 
     const onClickRetweet = (): void => {
         if (user?.id !== myProfileId) {
-            dispatch(retweet({tweetId: tweetId!, userId: params.userId}));
+            dispatch(retweet({ tweetId: tweetId!, userId: params.userId }));
         }
         setOpen(false);
     };
@@ -92,7 +92,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
                     </div>
                 )}
                 <QuoteTweetModal
-                    quoteTweet={{id: tweetId, dateTime, text, user} as QuoteTweetResponse}
+                    quoteTweet={{ id: tweetId, dateTime, text, user } as QuoteTweetResponse}
                     onClose={onCloseAddTweet}
                     visible={visibleAddTweet}
                 />

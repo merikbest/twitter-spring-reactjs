@@ -1,8 +1,8 @@
-import {initialListDetailState, listDetailReducer} from "../reducer";
-import {ListDetailActionsType, UserDetailActions} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {BaseListResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { initialListDetailState, listDetailReducer } from "../reducer";
+import { ListDetailActionsType, UserDetailActions } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { BaseListResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("listDetailReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("listDetailReducer:", () => {
             ListDetailActionsType.SET_LIST_DETAIL,
             listDetailReducer(initialListDetailState, {
                 type: ListDetailActionsType.SET_LIST_DETAIL,
-                payload: {id: 1} as BaseListResponse
+                payload: { id: 1 } as BaseListResponse
             }),
             {
                 ...initialListDetailState,
-                item: {id: 1} as BaseListResponse,
+                item: { id: 1 } as BaseListResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -30,7 +30,7 @@ describe("listDetailReducer:", () => {
             listDetailReducer(
                 {
                     ...initialListDetailState,
-                    item: {id: 1, followersSize: 1, isFollower: false} as BaseListResponse,
+                    item: { id: 1, followersSize: 1, isFollower: false } as BaseListResponse
                 },
                 {
                     type: ListDetailActionsType.UPDATE_FOLLOW_LIST_DETAIL,
@@ -39,7 +39,7 @@ describe("listDetailReducer:", () => {
             ),
             {
                 ...initialListDetailState,
-                item: {id: 1, followersSize: 2, isFollower: true} as BaseListResponse,
+                item: { id: 1, followersSize: 2, isFollower: true } as BaseListResponse,
                 loadingState: LoadingStatus.LOADING
             }
         );
@@ -49,7 +49,7 @@ describe("listDetailReducer:", () => {
             listDetailReducer(
                 {
                     ...initialListDetailState,
-                    item: {id: 1, followersSize: 1, isFollower: false} as BaseListResponse,
+                    item: { id: 1, followersSize: 1, isFollower: false } as BaseListResponse
                 },
                 {
                     type: ListDetailActionsType.UPDATE_FOLLOW_LIST_DETAIL,
@@ -58,7 +58,7 @@ describe("listDetailReducer:", () => {
             ),
             {
                 ...initialListDetailState,
-                item: {id: 1, followersSize: 2, isFollower: true} as BaseListResponse,
+                item: { id: 1, followersSize: 2, isFollower: true } as BaseListResponse,
                 loadingState: LoadingStatus.LOADING
             }
         );
@@ -68,10 +68,10 @@ describe("listDetailReducer:", () => {
             listDetailReducer(
                 {
                     ...initialListDetailState,
-                    item: {id: 1} as BaseListResponse,
+                    item: { id: 1 } as BaseListResponse
                 },
                 {
-                    type: ListDetailActionsType.RESET_LIST_DETAIL_STATE,
+                    type: ListDetailActionsType.RESET_LIST_DETAIL_STATE
                 }
             ),
             {

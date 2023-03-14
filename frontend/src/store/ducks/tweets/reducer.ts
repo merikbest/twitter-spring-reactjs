@@ -1,9 +1,9 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {TweetsState} from "./contracts/state";
-import {TweetsActions, TweetsActionType} from './contracts/actionTypes';
-import {LoadingStatus, NotificationType} from "../../types/common";
-import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
+import { TweetsState } from "./contracts/state";
+import { TweetsActions, TweetsActionType } from "./contracts/actionTypes";
+import { LoadingStatus, NotificationType } from "../../../types/common";
+import { NotificationReplyResponse, NotificationResponse } from "../../../types/notification";
 
 export const initialTweetsState: TweetsState = {
     items: [],
@@ -76,7 +76,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
         case TweetsActionType.REMOVE_TWEET_FROM_BOOKMARKS:
             draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
-            draft.loadingState = LoadingStatus.LOADED
+            draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case TweetsActionType.DELETE_TWEET:
@@ -90,7 +90,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             } else {
                 draft.items = draft.items.map((tweet) => {
                     if (tweet.user.id === action.payload.userId) {
-                        tweet.user.isFollower = action.payload.isFollower
+                        tweet.user.isFollower = action.payload.isFollower;
                         return tweet;
                     } else {
                         return tweet;
@@ -106,14 +106,14 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             } else {
                 draft.items = draft.items.map((tweet) => {
                     if (tweet.user.id === action.payload.userId) {
-                        tweet.user.isUserBlocked = action.payload.isUserBlocked
+                        tweet.user.isUserBlocked = action.payload.isUserBlocked;
                         return tweet;
                     } else {
                         return tweet;
                     }
                 });
             }
-            draft.loadingState = LoadingStatus.LOADED
+            draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case TweetsActionType.SET_MUTED_TO_TWEETS_STATE:
@@ -123,14 +123,14 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             } else {
                 draft.items = draft.items.map((tweet) => {
                     if (tweet.user.id === action.payload.userId) {
-                        tweet.user.isUserMuted = action.payload.isUserMuted
+                        tweet.user.isUserMuted = action.payload.isUserMuted;
                         return tweet;
                     } else {
                         return tweet;
                     }
                 });
             }
-            draft.loadingState = LoadingStatus.LOADED
+            draft.loadingState = LoadingStatus.LOADED;
             break;
 
         default:

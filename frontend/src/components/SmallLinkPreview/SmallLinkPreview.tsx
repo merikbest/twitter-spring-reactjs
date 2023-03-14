@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from 'react';
-import {Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {useSmallLinkPreviewStyles} from "./SmallLinkPreviewStyles";
-import {LinkIcon, PlayVideoIcon} from "../../icons";
+import { useSmallLinkPreviewStyles } from "./SmallLinkPreviewStyles";
+import { LinkIcon, PlayVideoIcon } from "../../icons";
 
 interface SmallLinkPreviewProps {
     link: string;
@@ -23,7 +23,7 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = (
         isFullTweet
     }
 ): ReactElement => {
-    const classes = useSmallLinkPreviewStyles({linkCover: linkCover, isFullTweet: isFullTweet});
+    const classes = useSmallLinkPreviewStyles({ linkCover: linkCover, isFullTweet: isFullTweet });
     const matches = link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
     const domain = matches && matches[1];
 
@@ -36,15 +36,15 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = (
                             {PlayVideoIcon}
                         </div>
                     </div>
-                    <LinkPreviewInfo/>
+                    <LinkPreviewInfo />
                 </div>
             );
         } else {
             return (
                 <a className={classes.siteLink} target="_blank" href={link}>
                     <div className={classes.container}>
-                        <div className={classes.linkPreviewImage}/>
-                        <LinkPreviewInfo/>
+                        <div className={classes.linkPreviewImage} />
+                        <LinkPreviewInfo />
                     </div>
                 </a>
             );
@@ -67,7 +67,7 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = (
         );
     };
 
-    return (<LinkPreview/>);
+    return (<LinkPreview />);
 };
 
 export default SmallLinkPreview;

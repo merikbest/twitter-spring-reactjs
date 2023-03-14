@@ -1,4 +1,4 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
 import {
     addChatMessageRequest,
@@ -13,46 +13,50 @@ import {
     setChatMessages,
     setChatMessagesLoadingState
 } from "../actionCreators";
-import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
-import {ChatApi} from "../../../../services/api/chatApi";
-import {ChatMessageResponse} from "../../../types/chat";
-import {ChatMessageRequest, ChatMessageWithTweetRequest} from "../contracts/state";
-import {ChatMessagesActionsType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types/common";
+import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
+import { ChatApi } from "../../../../services/api/chatApi";
+import { ChatMessageResponse } from "../../../../types/chat";
+import { ChatMessageRequest, ChatMessageWithTweetRequest } from "../contracts/state";
+import { ChatMessagesActionsType } from "../contracts/actionTypes";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("chatMessagesSaga:", () => {
-    
+
     describe("fetchChatMessagesRequest:", () => {
-        const mockChatMessageResponse = {data: [{id: 1}, {id: 2}]} as AxiosResponse<ChatMessageResponse[]>;
+        const mockChatMessageResponse = { data: [{ id: 1 }, { id: 2 }] } as AxiosResponse<ChatMessageResponse[]>;
         const worker = fetchChatMessagesRequest(fetchChatMessages(1));
-        
+
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.LOADING);
         testCall(worker, ChatApi.getChatMessages, 1);
         testSetResponse(worker, mockChatMessageResponse, setChatMessages, mockChatMessageResponse.data, "ChatMessageResponse");
-        testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR);
     });
 
     describe("addChatMessageRequest:", () => {
-        const mockChatMessageRequest = {chatId: 1, text: "text"} as ChatMessageRequest;
+        const mockChatMessageRequest = { chatId: 1, text: "text" } as ChatMessageRequest;
         const worker = addChatMessageRequest(addChatMessage(mockChatMessageRequest));
 
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.LOADING);
         testCall(worker, ChatApi.addMessage, mockChatMessageRequest);
-        testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR);
     });
 
     describe("addChatMessageWithTweetRequest:", () => {
-        const mockChatMessageWithTweetRequest = {tweetId: 1, text: "text", usersIds: [1, 2]} as ChatMessageWithTweetRequest;
+        const mockChatMessageWithTweetRequest = {
+            tweetId: 1,
+            text: "text",
+            usersIds: [1, 2]
+        } as ChatMessageWithTweetRequest;
         const worker = addChatMessageWithTweetRequest(addChatMessageWithTweet(mockChatMessageWithTweetRequest));
 
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.LOADING);
         testCall(worker, ChatApi.addMessageWithTweet, mockChatMessageWithTweetRequest);
-        testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR)
+        testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR);
     });
 
     testWatchSaga(chatMessagesSaga, [
-        {actionType: ChatMessagesActionsType.FETCH_CHAT_MESSAGES, workSaga: fetchChatMessagesRequest},
-        {actionType: ChatMessagesActionsType.ADD_CHAT_MESSAGE, workSaga: addChatMessageRequest},
-        {actionType: ChatMessagesActionsType.ADD_CHAT_MESSAGE_WITH_TWEET, workSaga: addChatMessageWithTweetRequest},
+        { actionType: ChatMessagesActionsType.FETCH_CHAT_MESSAGES, workSaga: fetchChatMessagesRequest },
+        { actionType: ChatMessagesActionsType.ADD_CHAT_MESSAGE, workSaga: addChatMessageRequest },
+        { actionType: ChatMessagesActionsType.ADD_CHAT_MESSAGE_WITH_TWEET, workSaga: addChatMessageWithTweetRequest }
     ]);
 });

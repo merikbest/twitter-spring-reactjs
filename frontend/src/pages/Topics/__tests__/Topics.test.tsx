@@ -1,10 +1,10 @@
 import React from "react";
 import ReactRouter from "react-router";
 import Tab from "@material-ui/core/Tab";
-import {createMemoryHistory} from "history";
+import { createMemoryHistory } from "history";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {TOPICS_FOLLOWED, TOPICS_NOT_INTERESTED, TOPICS_SUGGESTED} from "../../../util/pathConstants";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
+import { TOPICS_FOLLOWED, TOPICS_NOT_INTERESTED, TOPICS_SUGGESTED } from "../../../constants/path-constants";
 import Topics from "../Topics";
 
 describe("Topics", () => {
@@ -34,17 +34,17 @@ describe("Topics", () => {
     });
 
     const testTab = (param: string, tabIndex: number, tabLabel: string): void => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({topics: param});
-        const wrapper = mountWithStore(<Topics/>, createMockRootState());
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ topics: param });
+        const wrapper = mountWithStore(<Topics />, createMockRootState());
         expect(wrapper.find(Tab).at(tabIndex).prop("selected")).toBe(true);
         expect(wrapper.find(Tab).at(tabIndex).text().includes(tabLabel)).toBe(true);
     };
 
     const testClickTab = (tabIndex: number, path: string): void => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({topics: ""});
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ topics: "" });
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        const wrapper = mountWithStore(<Topics/>, createMockRootState(), history);
+        const wrapper = mountWithStore(<Topics />, createMockRootState(), history);
         wrapper.find(Tab).at(tabIndex).simulate("click");
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(path);

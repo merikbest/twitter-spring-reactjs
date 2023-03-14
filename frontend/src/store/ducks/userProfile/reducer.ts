@@ -1,7 +1,7 @@
 import produce, {Draft} from 'immer';
 import {UserProfileState} from "./contracts/state";
 import {UserProfileActions, UserProfileActionsType} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types/common";
+import {LoadingStatus} from "../../../types/common";
 
 export const initialUserProfileState: UserProfileState = {
     user: undefined,

@@ -1,10 +1,10 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useTweetReplyConversationStyles = makeStyles((theme) => ({
     iconWrapper: {
         display: "inline-block",
         marginTop: 8,
-        marginBottom: 4,
+        marginBottom: 4
     },
     iconCircle: {
         marginRight: 5,
@@ -14,12 +14,12 @@ export const useTweetReplyConversationStyles = makeStyles((theme) => ({
         width: 20,
         height: 20,
         borderRadius: "50%",
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.main
     },
     icon: {
         "& svg": {
             height: "0.75em",
-            fill: theme.palette.common.white,
-        },
-    },
+            fill: theme.palette.common.white
+        }
+    }
 }));

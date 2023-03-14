@@ -1,16 +1,16 @@
-import React, {FC, FormEvent, ReactElement, useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Button, Dialog, DialogContent, DialogTitle, List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, FormEvent, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Dialog, DialogContent, DialogTitle, List, ListItem, Typography } from "@material-ui/core";
 
-import {useListsModalStyles} from "./ListsModalStyles";
+import { useListsModalStyles } from "./ListsModalStyles";
 import {
     selectIsSimpleListsLoaded,
     selectIsSimpleListsLoading,
     selectSimpleListsItems
 } from "../../store/ducks/lists/selectors";
-import {fetchSimpleLists, processUserToLists, resetListsState} from "../../store/ducks/lists/actionCreators";
+import { fetchSimpleLists, processUserToLists, resetListsState } from "../../store/ducks/lists/actionCreators";
 import CloseButton from "../CloseButton/CloseButton";
-import {SimpleListResponse} from "../../store/types/lists";
+import { SimpleListResponse } from "../../types/lists";
 import Spinner from "../Spinner/Spinner";
 import ListsModalItem from "./ListsModalItem/ListsModalItem";
 
@@ -20,7 +20,7 @@ interface ListsModalProps {
     onClose: () => void;
 }
 
-const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactElement | null => {
+const ListsModal: FC<ListsModalProps> = ({ userId, visible, onClose }): ReactElement | null => {
     const classes = useListsModalStyles();
     const dispatch = useDispatch();
     const simpleLists = useSelector(selectSimpleListsItems);
@@ -43,10 +43,10 @@ const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactEleme
         const listsRequest = lists.map((list) => {
             return {
                 listId: list.id,
-                isMemberInList: list.isMemberInList,
-            }
+                isMemberInList: list.isMemberInList
+            };
         });
-        dispatch(processUserToLists({userId, lists: listsRequest}));
+        dispatch(processUserToLists({ userId, lists: listsRequest }));
         dispatch(resetListsState());
         setLists([]);
         onClose();
@@ -55,7 +55,7 @@ const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactEleme
     const onSelect = (listId: number): void => {
         const listsCopy = [...lists];
         const index = listsCopy.findIndex((list) => list.id === listId);
-        listsCopy[index] = {...listsCopy[index], isMemberInList: !listsCopy[index].isMemberInList};
+        listsCopy[index] = { ...listsCopy[index], isMemberInList: !listsCopy[index].isMemberInList };
         setLists(listsCopy);
     };
 
@@ -67,7 +67,7 @@ const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactEleme
         <Dialog open={visible} onClose={onClose} className={classes.dialog}>
             <form onSubmit={onSubmit}>
                 <DialogTitle>
-                    <CloseButton onClose={onClose}/>
+                    <CloseButton onClose={onClose} />
                     Pick a List
                     <Button type="submit" variant="contained" color="primary" size="small">
                         Save
@@ -79,7 +79,7 @@ const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactEleme
                     </Typography>
                     <div className={classes.list}>
                         {isSimpleListsLoading ? (
-                            <Spinner/>
+                            <Spinner />
                         ) : (
                             <List>
                                 {lists.map((list) => (
@@ -90,7 +90,7 @@ const ListsModal: FC<ListsModalProps> = ({userId, visible, onClose}): ReactEleme
                                         dense
                                         button
                                     >
-                                        <ListsModalItem list={list}/>
+                                        <ListsModalItem list={list} />
                                     </ListItem>
                                 ))}
                             </List>

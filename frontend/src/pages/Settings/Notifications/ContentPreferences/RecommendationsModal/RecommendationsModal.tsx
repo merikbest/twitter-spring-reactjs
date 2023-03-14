@@ -1,17 +1,17 @@
-import React, {FC, ReactElement} from 'react';
-import {Button, Checkbox, Dialog, DialogContent, Divider, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Button, Checkbox, Dialog, DialogContent, Divider, Typography } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import classnames from "classnames";
 
-import {useRecommendationsModalStyles} from "./RecommendationsModalStyles";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
+import { useRecommendationsModalStyles } from "./RecommendationsModalStyles";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
 
 export interface RecommendationsModalProps {
     visible?: boolean;
     onClose: () => void;
 }
 
-const RecommendationsModal: FC<RecommendationsModalProps> = ({visible, onClose}): ReactElement | null => {
+const RecommendationsModal: FC<RecommendationsModalProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles();
     const classes = useRecommendationsModalStyles();
 
@@ -23,7 +23,7 @@ const RecommendationsModal: FC<RecommendationsModalProps> = ({visible, onClose})
         <Dialog className={classes.dialog} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogContent className={classes.content}>
                 <div className={classes.logoIcon}>
-                    <TwitterIcon/>
+                    <TwitterIcon />
                 </div>
                 <div className={classes.contentWrapper}>
                     <Typography variant={"h3"} component={"div"}>
@@ -36,23 +36,23 @@ const RecommendationsModal: FC<RecommendationsModalProps> = ({visible, onClose})
                         <Typography variant={"body1"} component={"span"}>
                             English
                         </Typography>
-                        <Checkbox/>
+                        <Checkbox />
                     </div>
-                    <Divider/>
+                    <Divider />
                     <div className={classnames(globalClasses.infoItemCheckbox, classes.checkboxWrapper)}>
                         <Typography variant={"body1"} component={"span"}>
                             Russian - русский
                         </Typography>
-                        <Checkbox/>
+                        <Checkbox />
                     </div>
-                    <Divider/>
+                    <Divider />
                     <div className={classnames(globalClasses.infoItemCheckbox, classes.checkboxWrapper)}>
                         <Typography variant={"body1"} component={"span"}>
                             Chinese - 中文
                         </Typography>
-                        <Checkbox/>
+                        <Checkbox />
                     </div>
-                    <Divider/>
+                    <Divider />
                     <Button
                         onClick={onClose}
                         className={classes.button}

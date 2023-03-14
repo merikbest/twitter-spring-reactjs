@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useTopicsStyles = makeStyles((theme: Theme) => ({
     tabs: {
@@ -7,44 +7,44 @@ export const useTopicsStyles = makeStyles((theme: Theme) => ({
         "& .MuiTab-root": {
             minWidth: 200,
             fontWeight: 700,
-            textTransform: "none",
+            textTransform: "none"
         },
         "& .MuiTabs-indicator": {
             marginLeft: 65,
             maxWidth: 70,
             height: 4,
-            backgroundColor: theme.palette.primary.main,
-        },
+            backgroundColor: theme.palette.primary.main
+        }
     },
     topicsBlock: {
         marginRight: 4,
         display: "inline-flex",
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent: "center"
     },
     topicsContainer: {
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column"
     },
     topicsInfo: {
-        width: 1000,
+        width: 1000
     },
     topicsItems: {
         "& .MuiIconButton-root": {
             "&:hover": {
                 backgroundColor: "black !important",
                 "& svg": {
-                    color: "white !important",
-                },
-            },
-        },
+                    color: "white !important"
+                }
+            }
+        }
     },
     moreTopics: {
         padding: 16,
         color: theme.palette.primary.main,
         "&:hover": {
             cursor: "pointer",
-            backgroundColor: theme.palette.secondary.main,
-        },
-    },
+            backgroundColor: theme.palette.secondary.main
+        }
+    }
 }));

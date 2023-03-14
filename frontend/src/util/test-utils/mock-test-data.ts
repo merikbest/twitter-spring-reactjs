@@ -1,9 +1,4 @@
-import {
-    QuoteTweetResponse,
-    TweetAdditionalInfoResponse,
-    TweetImageResponse,
-    TweetResponse
-} from "../../store/types/tweet";
+import { QuoteTweetResponse, TweetAdditionalInfoResponse, TweetImageResponse, TweetResponse } from "../../types/tweet";
 import {
     AuthUserResponse,
     BlockedUserResponse,
@@ -12,7 +7,7 @@ import {
     UserDetailResponse,
     UserProfileResponse,
     UserResponse
-} from "../../store/types/user";
+} from "../../types/user";
 import {
     BaseListResponse,
     ListResponse,
@@ -20,12 +15,12 @@ import {
     ListUserResponse,
     PinnedListResponse,
     SimpleListResponse
-} from "../../store/types/lists";
-import {ChatMessageResponse, ChatResponse} from "../../store/types/chat";
-import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../store/types/notification";
-import {TagResponse} from "../../store/types/tag";
-import {SameFollowerResponse} from "../../store/types/common";
-import {TopicCategory, TopicResponse} from "../../store/types/topic";
+} from "../../types/lists";
+import { ChatMessageResponse, ChatResponse } from "../../types/chat";
+import { NotificationInfoResponse, NotificationResponse, NotificationUserResponse } from "../../types/notification";
+import { TagResponse } from "../../types/tag";
+import { SameFollowerResponse } from "../../types/common";
+import { TopicCategory, TopicResponse } from "../../types/topic";
 
 export const mockTweets = [
     {
@@ -183,10 +178,7 @@ export const mockUsers = [
         "fullName": "JavaCat",
         "username": "JavaCat",
         "about": "Hello twitter!",
-        "avatar": {
-            "id": 5,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
         "isPrivateProfile": false,
         "isMutedDirectMessages": false,
         "isUserBlocked": false,
@@ -199,10 +191,7 @@ export const mockUsers = [
         "fullName": "Random",
         "username": "Random",
         "about": null,
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
         "isPrivateProfile": false,
         "isMutedDirectMessages": false,
         "isUserBlocked": false,
@@ -255,7 +244,7 @@ export const createMockMyProfile = (followersSize: number = 1, followingSize: nu
         "isWaitingForApprove": false,
         "isFollower": false,
         "isSubscriber": false
-    } as unknown as UserProfileResponse
+    } as unknown as UserProfileResponse;
 };
 
 export const mockMyProfile = {
@@ -337,7 +326,7 @@ export const createMockUserProfile = (followersSize: number = 1, followingSize: 
         "isWaitingForApprove": false,
         "isFollower": true,
         "isSubscriber": false
-    } as unknown as UserProfileResponse
+    } as unknown as UserProfileResponse;
 };
 
 export const mockUserProfile = {
@@ -433,7 +422,7 @@ export const mockUserDetailResponse = {
     avatar: {
         id: 11,
         src: "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-    },
+    }
 } as unknown as UserDetailResponse;
 
 export const mockProfileImages = [
@@ -512,7 +501,7 @@ export const mockFollowerUserResponse = [
         "avatar": {
             "id": 11,
             "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        },
+        }
     },
     {
         "id": 3,
@@ -522,7 +511,7 @@ export const mockFollowerUserResponse = [
         "avatar": {
             "id": 3,
             "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
-        },
+        }
     }
 ] as unknown as FollowerUserResponse[];
 
@@ -635,7 +624,7 @@ export const mockMediaTweets = [
         "isUserFollowByOtherUser": false,
         "isTweetDeleted": false,
         "isTweetBookmarked": false
-    },
+    }
 ];
 
 export const mockVideoTweets = [
@@ -679,7 +668,7 @@ export const mockVideoTweets = [
         "isUserFollowByOtherUser": true,
         "isTweetDeleted": false,
         "isTweetBookmarked": false
-    },
+    }
 ];
 
 // lists
@@ -694,10 +683,7 @@ export const mockFullList = {
         "id": 2,
         "fullName": "MrCat",
         "username": "Cat",
-        "avatar": {
-            "id": 33,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
         "isPrivateProfile": false
     },
     "membersSize": 2,
@@ -762,7 +748,7 @@ export const mockListsOwnerMember = [
             "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
         },
         "isPrivateProfile": false,
-        "isMemberInList": true,
+        "isMemberInList": true
     }
 ] as unknown as ListsOwnerMemberResponse[];
 
@@ -868,7 +854,7 @@ export const mockSimpleList = [
         "isMemberInList": true,
         "isPrivate": false
     }
-] as unknown as SimpleListResponse[]
+] as unknown as SimpleListResponse[];
 
 // fulltweet
 export const mockFullTweet = {
@@ -903,8 +889,8 @@ export const mockFullTweet = {
     "images": [
         {
             "id": 8,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a2692fac-4b70-4828-845c-2fe439473f82_Cl5DjoUWYAAslnd.jfif",
-        },
+            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a2692fac-4b70-4828-845c-2fe439473f82_Cl5DjoUWYAAslnd.jfif"
+        }
     ],
     "quoteTweet": {
         "id": 13,
@@ -922,22 +908,22 @@ export const mockFullTweet = {
             "username": "JavaCat",
             "avatar": {
                 "id": 5,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
+                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
             },
             "isFollower": false,
             "isMyProfileBlocked": false,
             "isPrivateProfile": false,
             "isUserBlocked": false,
-            "isUserMuted": false,
-        },
+            "isUserMuted": false
+        }
     },
     "poll": {
         "id": 100,
         "dateTime": "2022-04-11T16:53:49.696909",
         "pollChoices": [
-            {"id": 100, "choice": "test choice 1", "votedUser": [{"id": 2}]},
-            {"id": 101, "choice": "test choice 2", "votedUser": []},
-            {"id": 102, "choice": "test choice 3", "votedUser": []}]
+            { "id": 100, "choice": "test choice 1", "votedUser": [{ "id": 2 }] },
+            { "id": 101, "choice": "test choice 2", "votedUser": [] },
+            { "id": 102, "choice": "test choice 3", "votedUser": [] }]
     },
     "retweetsUserIds": [1, 2],
     "retweetsCount": 2,
@@ -1096,31 +1082,31 @@ export const mockMessages = [
         "id": 1,
         "text": "Hello Cat",
         "date": "2021-10-16T16:40:07",
-        "author": {"id": 1},
+        "author": { "id": 1 },
         "tweet": null,
-        "chat": {"id": 1}
+        "chat": { "id": 1 }
     },
     {
         "id": 2,
         "text": "How are you?",
         "date": "2021-10-16T16:40:41",
-        "author": {"id": 1},
+        "author": { "id": 1 },
         "tweet": null,
-        "chat": {"id": 1}
+        "chat": { "id": 1 }
     },
     {
         "id": 3,
         "text": "I'm fine, thanks, and you? ",
         "date": "2021-10-16T16:41:59",
-        "author": {"id": 2},
+        "author": { "id": 2 },
         "tweet": null,
-        "chat": {"id": 1}
+        "chat": { "id": 1 }
     },
     {
         "id": 4,
         "text": "Good)",
         "date": "2021-10-16T16:42:50",
-        "author": {"id": 1},
+        "author": { "id": 1 },
         "tweet": {
             "id": 14,
             "text": "Feels Good Man  :sunglasses:",
@@ -1135,15 +1121,15 @@ export const mockMessages = [
                 }
             }
         },
-        "chat": {"id": 1}
+        "chat": { "id": 1 }
     },
     {
         "id": 100,
         "text": "helo",
         "date": "2022-03-10T20:47:10",
-        "author": {"id": 2},
+        "author": { "id": 2 },
         "tweet": null,
-        "chat": {"id": 1}
+        "chat": { "id": 1 }
     }
 ] as unknown as ChatMessageResponse[];
 
@@ -1190,7 +1176,7 @@ export const mockNotifications = [
             "isFollower": false
         },
         "userToFollow": null,
-        "tweet": {"id": 6, "text": "#myCat  :smile_cat:", "user": {"id": 2}, "notificationCondition": false}
+        "tweet": { "id": 6, "text": "#myCat  :smile_cat:", "user": { "id": 2 }, "notificationCondition": false }
     },
     {
         "id": 11,
@@ -1207,7 +1193,7 @@ export const mockNotifications = [
             "isFollower": false
         },
         "userToFollow": null,
-        "tweet": {"id": 5, "text": "Another #FirstTweet", "user": {"id": 2}, "notificationCondition": false}
+        "tweet": { "id": 5, "text": "Another #FirstTweet", "user": { "id": 2 }, "notificationCondition": false }
     }
 ] as unknown as NotificationResponse[];
 
@@ -1231,7 +1217,7 @@ export const mockTweetAuthors = [
             "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
         },
         "isFollower": false
-    },
+    }
 ] as unknown as NotificationUserResponse[];
 
 export const mockNotificationInfo = {
@@ -1328,20 +1314,20 @@ export const mockTopics = [
         "topicName": "Elon Musk",
         "topicCategory": TopicCategory.ENTERTAINMENT,
         "isTopicFollowed": false,
-        "isTopicNotInterested": false,
+        "isTopicNotInterested": false
     },
     {
         "id": 2,
         "topicName": "PewDiePie",
         "topicCategory": TopicCategory.GAMING,
         "isTopicFollowed": false,
-        "isTopicNotInterested": false,
+        "isTopicNotInterested": false
     },
     {
         "id": 3,
         "topicName": "Funny Tweets",
         "topicCategory": TopicCategory.ONLY_ON_TWITTER,
         "isTopicFollowed": false,
-        "isTopicNotInterested": false,
+        "isTopicNotInterested": false
     }
 ] as unknown as TopicResponse[];

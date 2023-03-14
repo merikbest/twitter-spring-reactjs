@@ -1,11 +1,11 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { List, ListItem, Typography } from "@material-ui/core";
 
-import {ArrowRightIcon, FiltersIcon, PreferencesIcon,} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
-import {SETTINGS_NOTIFICATION_FILTERS, SETTINGS_NOTIFICATION_PREFERENCES} from "../../../util/pathConstants";
+import { ArrowRightIcon, FiltersIcon, PreferencesIcon } from "../../../icons";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
+import { SETTINGS_NOTIFICATION_FILTERS, SETTINGS_NOTIFICATION_PREFERENCES } from "../../../constants/path-constants";
 
 const Notifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

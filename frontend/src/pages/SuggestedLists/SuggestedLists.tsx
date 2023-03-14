@@ -1,12 +1,12 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Paper} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Paper } from "@material-ui/core";
 
-import {fetchLists} from "../../store/ducks/lists/actionCreators";
-import {selectIsLoading, selectListsItems} from "../../store/ducks/lists/selectors";
+import { fetchLists } from "../../store/ducks/lists/actionCreators";
+import { selectIsLoading, selectListsItems } from "../../store/ducks/lists/selectors";
 import ListsItem from "../Lists/ListsItem/ListsItem";
 import Spinner from "../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useGlobalStyles } from "../../util/globalClasses";
 import SuggestedListsDescription from "./SuggestedListsDescription/SuggestedListsDescription";
 
 const SuggestedLists: FC = (): ReactElement => {
@@ -22,11 +22,11 @@ const SuggestedLists: FC = (): ReactElement => {
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <SuggestedListsDescription/>
+            <SuggestedListsDescription />
             {isLoading ? (
-                <Spinner/>
+                <Spinner />
             ) : (
-                lists.map((list) => <ListsItem key={list.id} list={list}/>)
+                lists.map((list) => <ListsItem key={list.id} list={list} />)
             )}
         </Paper>
     );

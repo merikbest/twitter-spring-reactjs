@@ -1,6 +1,6 @@
-import React, {FC, ReactElement} from "react";
+import React, { FC, ReactElement } from "react";
 
-import {useHoverActionStyles} from "./HoverActionStyles";
+import { useHoverActionStyles } from "./HoverActionStyles";
 
 interface HoverActionProps {
     visible?: boolean;
@@ -8,8 +8,8 @@ interface HoverActionProps {
     actionText: string;
 }
 
-const HoverAction: FC<HoverActionProps> = ({visible, positionTop, actionText}): ReactElement | null => {
-    const classes = useHoverActionStyles({positionTop});
+const HoverAction: FC<HoverActionProps> = ({ visible, positionTop, actionText }): ReactElement | null => {
+    const classes = useHoverActionStyles({ positionTop });
 
     if (!visible) {
         return null;

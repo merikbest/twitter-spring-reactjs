@@ -51,7 +51,7 @@ export const MEDIA_POLICY = RULES_AND_POLICIES + "/media-policy";
 export const TWITTER_COOKIES = RULES_AND_POLICIES + "/twitter-cookies";
 export const TWITTER_NOTICES = RULES_AND_POLICIES + "/notices-on-twitter";
 
-export const DEVELOPER_TWITTER = "https://developer.twitter.com" ;
+export const DEVELOPER_TWITTER = "https://developer.twitter.com";
 export const DEVELOPER_ACCOUNT = "https://developer.twitter.com/support/twitter-api/developer-account";
 export const BUSINESS_TWITTER = "https://business.twitter.com/";
 export const HOW_TWITTER_ADS_WORK = "https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html?ref=web-twc-ao-gbl-adsinfo&utm_source=twc&utm_medium=web&utm_campaign=ao&utm_content=adsinfo";

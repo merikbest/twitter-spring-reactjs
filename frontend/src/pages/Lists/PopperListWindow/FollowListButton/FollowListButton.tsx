@@ -1,10 +1,10 @@
-import React, {memo, ReactElement} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Button} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@material-ui/core";
 
-import {usePopperListWindowStyles} from "../PopperListWindowStyles";
-import {followList} from "../../../../store/ducks/lists/actionCreators";
-import {selectListDetailItemId} from "../../../../store/ducks/listDetail/selectors";
+import { usePopperListWindowStyles } from "../PopperListWindowStyles";
+import { followList } from "../../../../store/ducks/lists/actionCreators";
+import { selectListDetailItemId } from "../../../../store/ducks/listDetail/selectors";
 
 const FollowListButton = memo((): ReactElement => {
     const classes = usePopperListWindowStyles();

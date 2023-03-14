@@ -1,5 +1,5 @@
-import {call, put, takeLatest} from 'redux-saga/effects';
-import {AxiosResponse} from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
+import { AxiosResponse } from "axios";
 
 import {
     FetchFollowersActionInterface,
@@ -9,71 +9,72 @@ import {
     FetchUsersSearchByNameActionInterface,
     UsersSearchActionsType
 } from "./contracts/actionTypes";
-import {UserApi} from "../../../services/api/userApi";
-import {setPageableFollowers, setPageableUsersSearch, setUsersSearchLoadingState} from "./actionCreators";
-import {UserResponse} from "../../types/user";
-import {ChatApi} from "../../../services/api/chatApi";
-import {LoadingStatus} from "../../types/common";
+import { UserApi } from "../../../services/api/userApi";
+import { setPageableFollowers, setPageableUsersSearch, setUsersSearchLoadingState } from "./actionCreators";
+import { UserResponse } from "../../../types/user";
+import { ChatApi } from "../../../services/api/chatApi";
+import { LoadingStatus } from "../../../types/common";
+import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
 
-export function* fetchUsersSearchRequest({payload}: FetchUsersSearchActionInterface) {
+export function* fetchUsersSearchRequest({ payload }: FetchUsersSearchActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getUsers, payload);
         yield put(setPageableUsersSearch({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchUsersSearchByUsernameRequest({payload}: FetchUsersSearchByNameActionInterface) {
+export function* fetchUsersSearchByUsernameRequest({ payload }: FetchUsersSearchByNameActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(UserApi.searchUsersByUsername, payload);
         yield put(setPageableUsersSearch({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchParticipantsByUsernameRequest({payload}: FetchParticipantsSearchByNameActionInterface) {
+export function* fetchParticipantsByUsernameRequest({ payload }: FetchParticipantsSearchByNameActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(ChatApi.searchParticipantsByUsername, payload);
         yield put(setPageableUsersSearch({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchFollowersRequest({payload}: FetchFollowersActionInterface) {
+export function* fetchFollowersRequest({ payload }: FetchFollowersActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getFollowers, payload);
         yield put(setPageableFollowers({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* fetchFollowingsRequest({payload}: FetchFollowingsActionInterface) {
+export function* fetchFollowingsRequest({ payload }: FetchFollowingsActionInterface) {
     try {
         yield put(setUsersSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserResponse[]> = yield call(UserApi.getFollowing, payload);
         yield put(setPageableFollowers({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setUsersSearchLoadingState(LoadingStatus.ERROR));

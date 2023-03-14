@@ -1,9 +1,9 @@
 import React from "react";
-import {ListItem} from "@material-ui/core";
+import { ListItem } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import ChangeReplyWindow from "../ChangeReplyWindow";
-import {LoadingStatus, ReplyType} from "../../../store/types/common";
+import { LoadingStatus, ReplyType } from "../../../types/common";
 
 describe("ChangeReplyWindow", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -19,7 +19,7 @@ describe("ChangeReplyWindow", () => {
     it("should render correctly with MENTION reply", () => {
         testReply(ReplyType.MENTION, 2, "Only people you mention");
     });
-    
+
     const testReply = (reply: ReplyType, itemIndex: number, text: string): void => {
         const mockOnChangeTweetReplyType = jest.fn();
         const wrapper = mountWithStore(

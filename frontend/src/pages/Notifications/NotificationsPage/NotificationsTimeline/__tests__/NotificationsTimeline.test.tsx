@@ -1,12 +1,12 @@
 import React from "react";
 
 import NotificationsTimeline from "../NotificationsTimeline";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {NotificationsActionsType} from "../../../../../store/ducks/notifications/contracts/actionTypes";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { NotificationsActionsType } from "../../../../../store/ducks/notifications/contracts/actionTypes";
 import Spinner from "../../../../../components/Spinner/Spinner";
 import TweetComponent from "../../../../../components/TweetComponent/TweetComponent";
-import {TweetsActionType} from "../../../../../store/ducks/tweets/contracts/actionTypes";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { TweetsActionType } from "../../../../../store/ducks/tweets/contracts/actionTypes";
+import { LoadingStatus } from "../../../../../types/common";
 
 window.scrollTo = jest.fn();
 
@@ -19,8 +19,8 @@ describe("NotificationsTimeline", () => {
     });
 
     it("should render loading Spinner", () => {
-        const wrapper = mountWithStore(<NotificationsTimeline/>, createMockRootState());
-        
+        const wrapper = mountWithStore(<NotificationsTimeline />, createMockRootState());
+
         expect(wrapper.text().includes("Tweets")).toBe(true);
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
@@ -30,15 +30,15 @@ describe("NotificationsTimeline", () => {
     });
 
     it("should render NotificationsTimeline", () => {
-        const wrapper = mountWithStore(<NotificationsTimeline/>, mockStore);
+        const wrapper = mountWithStore(<NotificationsTimeline />, mockStore);
 
         expect(wrapper.find(TweetComponent).length).toEqual(2);
     });
 
     it("should reset NotificationsTimeline", () => {
-        const wrapper = mountWithStore(<NotificationsTimeline/>, mockStore);
+        const wrapper = mountWithStore(<NotificationsTimeline />, mockStore);
         wrapper.unmount();
 
-        expect(mockDispatchFn).nthCalledWith(2, {type: TweetsActionType.RESET_TWEETS});
+        expect(mockDispatchFn).nthCalledWith(2, { type: TweetsActionType.RESET_TWEETS });
     });
 });

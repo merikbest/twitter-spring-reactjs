@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const usePageWrapperStyles = makeStyles((theme) => ({
     header: {
@@ -6,7 +6,7 @@ export const usePageWrapperStyles = makeStyles((theme) => ({
         "& .MuiTypography-h5": {
             marginLeft: 16,
             display: "inline-block",
-            verticalAlign: "middle",
-        },
-    },
+            verticalAlign: "middle"
+        }
+    }
 }));

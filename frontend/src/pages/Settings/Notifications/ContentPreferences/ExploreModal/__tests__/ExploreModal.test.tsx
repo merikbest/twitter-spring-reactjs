@@ -1,10 +1,10 @@
 import React from "react";
-import {Checkbox, Dialog, IconButton} from "@material-ui/core";
+import { Checkbox, Dialog, IconButton } from "@material-ui/core";
 
 import ExploreModal from "../ExploreModal";
-import {createMockRootState, mountWithStore} from "../../../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../../../util/test-utils/test-helper";
 import CloseButton from "../../../../../../components/CloseButton/CloseButton";
-import {LoadingStatus} from "../../../../../../store/types/common";
+import { LoadingStatus } from "../../../../../../types/common";
 
 describe("ExploreModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -59,10 +59,10 @@ describe("ExploreModal", () => {
                 onClose={jest.fn()}
                 isSearchModal={true}
             />, mockStore);
-        
+
         expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(true);
         expect(wrapper.find(Checkbox).at(1).prop("checked")).toBe(true);
-        
+
         wrapper.find(Checkbox).at(0).find("input").simulate("change");
         wrapper.find(Checkbox).at(1).find("input").simulate("change");
 
@@ -80,7 +80,7 @@ describe("ExploreModal", () => {
             />, mockStore);
 
         wrapper.find(CloseButton).find(IconButton).simulate("click");
-        
+
         expect(mockOnClose).toHaveBeenCalled();
     });
 });

@@ -1,11 +1,11 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
-import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../../store/ducks/tweets/selectors";
+import { selectIsTweetsLoading, selectPagesCount, selectTweetsItems } from "../../../store/ducks/tweets/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
-import {resetTweets} from "../../../store/ducks/tweets/actionCreators";
-import {fetchMentions} from '../../../store/ducks/notifications/actionCreators';
+import { resetTweets } from "../../../store/ducks/tweets/actionCreators";
+import { fetchMentions } from "../../../store/ducks/notifications/actionCreators";
 import EmptyNotifications from "../EmptyNotifications/EmptyNotifications";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
@@ -31,11 +31,11 @@ const MentionsPage: FC = (): ReactElement => {
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>
             {(!tweets.length && !isLoading) ? (
-                <EmptyNotifications isNotification={false}/>
+                <EmptyNotifications isNotification={false} />
             ) : (
                 <>
-                    {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
-                    {isLoading && <Spinner/>}
+                    {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)}
+                    {isLoading && <Spinner />}
                 </>
             )}
         </InfiniteScrollWrapper>

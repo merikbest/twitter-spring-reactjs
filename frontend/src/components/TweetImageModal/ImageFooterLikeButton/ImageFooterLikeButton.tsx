@@ -1,23 +1,23 @@
-import React, {memo, ReactElement} from "react";
-import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import React, { memo, ReactElement } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {LikeIcon, LikeOutlinedIcon} from "../../../icons";
-import {likeTweet} from "../../../store/ducks/tweets/actionCreators";
-import {selectIsTweetLiked, selectLikedTweetsCount} from "../../../store/ducks/tweet/selectors";
-import {useImageFooterButtonStyles} from "../ImageFooterButtonStyles";
+import { LikeIcon, LikeOutlinedIcon } from "../../../icons";
+import { likeTweet } from "../../../store/ducks/tweets/actionCreators";
+import { selectIsTweetLiked, selectLikedTweetsCount } from "../../../store/ducks/tweet/selectors";
+import { useImageFooterButtonStyles } from "../ImageFooterButtonStyles";
 
 const ImageFooterLikeButton = memo((): ReactElement => {
-    const classes = useImageFooterButtonStyles()
+    const classes = useImageFooterButtonStyles();
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
     const isTweetLiked = useSelector(selectIsTweetLiked);
     const likedTweetsCount = useSelector(selectLikedTweetsCount);
 
     const handleLike = (): void => {
-        dispatch(likeTweet({tweetId: parseInt(params.id)}));
+        dispatch(likeTweet({ tweetId: parseInt(params.id) }));
     };
 
     return (

@@ -1,11 +1,11 @@
-import produce, {Draft} from "immer";
+import produce, { Draft } from "immer";
 
-import {ActionSnackbarActions, ActionSnackbarTypes} from "./contracts/actionTypes";
-import {ActionSnackbarState} from "./contracts/state";
+import { ActionSnackbarActions, ActionSnackbarTypes } from "./contracts/actionTypes";
+import { ActionSnackbarState } from "./contracts/state";
 
 export const initialActionSnackbarState: ActionSnackbarState = {
     snackBarMessage: "",
-    openSnackBar: false,
+    openSnackBar: false
 };
 
 export const actionSnackbarReducer = produce((draft: Draft<ActionSnackbarState>, action: ActionSnackbarActions) => {

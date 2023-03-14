@@ -1,13 +1,13 @@
 import React from "react";
-import {Radio} from "@material-ui/core";
+import { Radio } from "@material-ui/core";
 
 import PhotoTagging from "../PhotoTagging";
-import {createMockRootState, mountWithStore} from "../../../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../../../util/test-utils/test-helper";
 
 describe("PhotoTagging", () => {
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<PhotoTagging/>, createMockRootState());
+        const wrapper = mountWithStore(<PhotoTagging />, createMockRootState());
 
         expect(wrapper.text().includes("Photo tagging")).toBe(true);
         expect(wrapper.text().includes("Anyone can tag you")).toBe(true);

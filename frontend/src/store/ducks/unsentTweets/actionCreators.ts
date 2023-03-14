@@ -1,5 +1,5 @@
-import {LoadingStatus, PageableResponse} from "../../types/common";
-import {UnsentTweetsState} from "./contracts/state";
+import { LoadingStatus, PageableResponse } from "../../../types/common";
+import { UnsentTweetsState } from "./contracts/state";
 import {
     FetchUnsentTweetsActionInterface,
     ResetUnsentTweetsActionInterface,
@@ -19,7 +19,7 @@ export const fetchUnsentTweets = (payload: number): FetchUnsentTweetsActionInter
 });
 
 export const resetUnsentTweets = (): ResetUnsentTweetsActionInterface => ({
-    type: UnsentTweetActionType.RESET_UNSENT_TWEETS,
+    type: UnsentTweetActionType.RESET_UNSENT_TWEETS
 });
 
 export const setUnsentTweetsLoadingState = (payload: LoadingStatus): SetUnsentTweetsLoadingStateInterface => ({

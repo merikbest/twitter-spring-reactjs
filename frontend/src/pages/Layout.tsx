@@ -1,20 +1,20 @@
-import React, {FC, ReactElement, ReactNode} from 'react';
-import {Container, Grid, Typography} from '@material-ui/core';
-import {useLocation} from "react-router-dom";
-import {getYear} from "date-fns";
-import {useSelector} from "react-redux";
+import React, { FC, ReactElement, ReactNode } from "react";
+import { Container, Grid, Typography } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
+import { getYear } from "date-fns";
+import { useSelector } from "react-redux";
 
 import SideMenu from "../components/SideMenu/SideMenu";
 import Tags from "../components/Tags/Tags";
-import Users from '../components/Users/Users';
-import {useLayoutStyles} from "./LayoutStyles";
+import Users from "../components/Users/Users";
+import { useLayoutStyles } from "./LayoutStyles";
 import SideSearch from "../components/SideSearch/SideSearch";
-import {EditIcon} from "../icons";
-import {DisplayProps} from "./Settings/AccessibilityDisplayLanguages/Display/Display";
+import { EditIcon } from "../icons";
+import { DisplayProps } from "./Settings/AccessibilityDisplayLanguages/Display/Display";
 import ProfileImages from "../components/ProfileImages/ProfileImages";
-import {selectImages} from "../store/ducks/userProfile/selectors";
-import {SETTINGS} from "../util/pathConstants";
-import {TWITTER_ADS_WORK, TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS} from "../util/url";
+import { selectImages } from "../store/ducks/userProfile/selectors";
+import { SETTINGS } from "../constants/path-constants";
+import { TWITTER_ADS_WORK, TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS } from "../constants/url-constants";
 
 interface Layout {
     children: ReactNode;
@@ -40,7 +40,7 @@ export const Layout: FC<Layout & DisplayProps> = (
             <Grid container spacing={3}>
                 <div className={classes.leftSideGrid}>
                     <Grid sm={1} md={2} item>
-                        <SideMenu changeBackgroundColor={changeBackgroundColor} changeColorScheme={changeColorScheme}/>
+                        <SideMenu changeBackgroundColor={changeBackgroundColor} changeColorScheme={changeColorScheme} />
                     </Grid>
                 </div>
                 {(location.pathname.includes("/message") || location.pathname.includes(SETTINGS)) ? (
@@ -53,11 +53,11 @@ export const Layout: FC<Layout & DisplayProps> = (
                             {children}
                         </Grid>
                         <div>
-                            <SideSearch/>
-                            {tweetImages.length !== 0 && <ProfileImages/>}
+                            <SideSearch />
+                            {tweetImages.length !== 0 && <ProfileImages />}
                             <div className={classes.rightSide}>
-                                <Tags/>
-                                <Users/>
+                                <Tags />
+                                <Users />
                                 <div className={classes.footer}>
                                     <div>
                                         <a href={TWITTER_TOS} target={"_blank"}>

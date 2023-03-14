@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { FC, ReactElement } from "react";
+import { useSelector } from "react-redux";
 import classNames from "classnames";
 
-import {usePopperUserWindowStyles} from "./PopperUserWindowStyles";
-import {selectUserDetailIsMyProfileBlocked} from "../../store/ducks/userDetail/selectors";
+import { usePopperUserWindowStyles } from "./PopperUserWindowStyles";
+import { selectUserDetailIsMyProfileBlocked } from "../../store/ducks/userDetail/selectors";
 import PopperHeader from "./PopperHeader/PopperHeader";
 import PopperInfo from "./PopperInfo/PopperInfo";
 import PopperFooter from "./PopperFooter/PopperFooter";
@@ -21,7 +21,7 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
         isTweetImageModal
     }
 ): ReactElement | null => {
-    const classes = usePopperUserWindowStyles({isTweetComponent});
+    const classes = usePopperUserWindowStyles({ isTweetComponent });
     const isMyProfileBlocked = useSelector(selectUserDetailIsMyProfileBlocked);
 
     if (!visible) {
@@ -36,9 +36,9 @@ const PopperUserWindow: FC<PopperUserWindowProps> = (
                 isTweetImageModal && classes.tweetImageModal
             )}
         >
-            <PopperHeader/>
-            <PopperInfo/>
-            {!isMyProfileBlocked && <PopperFooter/>}
+            <PopperHeader />
+            <PopperInfo />
+            {!isMyProfileBlocked && <PopperFooter />}
         </div>
     );
 };

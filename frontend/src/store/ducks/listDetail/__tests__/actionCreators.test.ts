@@ -1,5 +1,5 @@
 import axios from "axios";
-import {testAction} from "../../../../util/testHelper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     fetchListDetail,
     resetListDetailState,
@@ -7,21 +7,21 @@ import {
     setListDetailLoadingState,
     updateFollowListDetail
 } from "../actionCreators";
-import {ListDetailActionsType} from "../contracts/actionTypes";
-import {BaseListResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { ListDetailActionsType } from "../contracts/actionTypes";
+import { BaseListResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("listDetail actions", () => {
     const cancelTokenSource = axios.CancelToken.source();
-    
-    testAction(setListDetail, setListDetail({id: 1} as BaseListResponse), {
+
+    testAction(setListDetail, setListDetail({ id: 1 } as BaseListResponse), {
         type: ListDetailActionsType.SET_LIST_DETAIL,
-        payload: {id: 1} as BaseListResponse
+        payload: { id: 1 } as BaseListResponse
     });
 
-    testAction(fetchListDetail, fetchListDetail({listId: 1, cancelTokenSource: cancelTokenSource}), {
+    testAction(fetchListDetail, fetchListDetail({ listId: 1, cancelTokenSource: cancelTokenSource }), {
         type: ListDetailActionsType.FETCH_LIST_DETAIL,
-        payload: {listId: 1, cancelTokenSource: cancelTokenSource}
+        payload: { listId: 1, cancelTokenSource: cancelTokenSource }
     });
 
     testAction(updateFollowListDetail, updateFollowListDetail(true), {
@@ -30,7 +30,7 @@ describe("listDetail actions", () => {
     });
 
     testAction(resetListDetailState, resetListDetailState(), {
-        type: ListDetailActionsType.RESET_LIST_DETAIL_STATE,
+        type: ListDetailActionsType.RESET_LIST_DETAIL_STATE
     });
 
     testAction(setListDetailLoadingState, setListDetailLoadingState(LoadingStatus.LOADING), {

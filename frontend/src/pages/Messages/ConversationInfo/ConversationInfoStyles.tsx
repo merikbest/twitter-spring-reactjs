@@ -1,24 +1,24 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
     container: {
         minWidth: 600,
         padding: 0,
-        borderLeft: 0,
+        borderLeft: 0
     },
     header: {
-        width: 598,
+        width: 598
     },
     pageInfoWrapper: {
         paddingTop: 65,
         display: "flex",
-        alignItems: 'flex-start',
+        alignItems: "flex-start",
         paddingLeft: 15,
         paddingBottom: 12,
-        cursor: 'pointer',
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-        },
+        cursor: "pointer",
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.main
+        }
     },
     participantInfoWrapper: {
         display: "flex",
@@ -28,29 +28,29 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
     participantAvatar: {
         width: "48px !important",
         height: "48px !important",
-        marginRight: 15,
+        marginRight: 15
     },
     buttonWrapper: {
-        float: 'right',
-        marginRight: 15,
+        float: "right",
+        marginRight: 15
     },
     outlinedButton: {
         width: 79,
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.light,
-        },
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.light
+        }
     },
     blockButton: {
-        backgroundColor: theme.palette.error.main,
+        backgroundColor: theme.palette.error.main
     },
     containedButton: {
         width: 105,
-        '&:hover': {
-            backgroundColor: theme.palette.error.dark,
-        },
+        "&:hover": {
+            backgroundColor: theme.palette.error.dark
+        }
     },
     text: {
-        paddingTop: 12,
+        paddingTop: 12
     },
     switchWrapper: {
         display: "flex",
@@ -59,22 +59,22 @@ export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
     conversationInfoButton: {
         textAlign: "center",
         padding: 16,
-        cursor: "pointer",
+        cursor: "pointer"
     },
     blockUser: {
         "& .MuiTypography-body1": {
-            color: theme.palette.primary.main,
+            color: theme.palette.primary.main
         },
         "&:hover": {
-            backgroundColor: theme.palette.action.hover,
-        },
+            backgroundColor: theme.palette.action.hover
+        }
     },
     leaveConversation: {
         "& .MuiTypography-body1": {
-            color: theme.palette.error.main,
+            color: theme.palette.error.main
         },
         "&:hover": {
             backgroundColor: "rgba(244, 33, 46, 0.1)"
         }
-    },
+    }
 }));

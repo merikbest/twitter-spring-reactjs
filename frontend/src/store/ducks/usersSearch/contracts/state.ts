@@ -1,5 +1,5 @@
-import {UserResponse} from "../../../types/user";
-import {LoadingStatus} from "../../../types/common";
+import { UserResponse } from "../../../../types/user";
+import { LoadingStatus } from "../../../../types/common";
 
 export interface UsersSearchState {
     users: UserResponse[];

@@ -1,25 +1,31 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
 import {
     AddQuoteTweet,
     AddTweet,
     ChangeReplyTypeRequest,
     FetchTweetsByTagRequest,
-    FetchTweetsByTextRequest, TweetActionPayload,
+    FetchTweetsByTextRequest,
+    TweetActionPayload,
     TweetsByListIdRequest,
     TweetsState,
     TweetsWithQuotesByIdRequest,
     UpdatedBookmarkedTweetPayload,
     Vote
 } from "./state";
-import {BlockedToTweetsPayload, FollowToTweetsPayload, MutedToTweetsPayload, TweetResponse} from "../../../types/tweet";
-import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
-import {LoadingStatus, PageableResponse} from "../../../types/common";
+import {
+    BlockedToTweetsPayload,
+    FollowToTweetsPayload,
+    MutedToTweetsPayload,
+    TweetResponse
+} from "../../../../types/tweet";
+import { NotificationReplyResponse, NotificationResponse } from "../../../../types/notification";
+import { LoadingStatus, PageableResponse } from "../../../../types/common";
 
 export enum TweetsActionType {
-    SET_FOLLOW_TO_TWEETS_STATE = 'tweets/SET_FOLLOW_TO_TWEETS_STATE',
-    SET_BLOCKED_TO_TWEETS_STATE = 'tweets/SET_BLOCKED_TO_TWEETS_STATE',
-    SET_MUTED_TO_TWEETS_STATE = 'tweets/SET_MUTED_TO_TWEETS_STATE',
+    SET_FOLLOW_TO_TWEETS_STATE = "tweets/SET_FOLLOW_TO_TWEETS_STATE",
+    SET_BLOCKED_TO_TWEETS_STATE = "tweets/SET_BLOCKED_TO_TWEETS_STATE",
+    SET_MUTED_TO_TWEETS_STATE = "tweets/SET_MUTED_TO_TWEETS_STATE",
     SET_TWEETS = "tweets/SET_TWEETS",
     FETCH_TWEETS = "tweets/FETCH_TWEETS",
     FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
@@ -44,8 +50,8 @@ export enum TweetsActionType {
     DELETE_SCHEDULED_TWEETS = "tweets/DELETE_SCHEDULED_TWEETS",
     REMOVE_TWEET_FROM_BOOKMARKS = "tweets/REMOVE_TWEET_FROM_BOOKMARKS",
     SET_SCHEDULED_TWEETS = "tweets/SET_SCHEDULED_TWEETS",
-    LIKE_TWEET = 'tweets/LIKE_TWEET',
-    RETWEET = 'tweets/RETWEET',
+    LIKE_TWEET = "tweets/LIKE_TWEET",
+    RETWEET = "tweets/RETWEET",
     SET_UPDATED_BOOKMARKED_TWEET = "tweets/SET_UPDATED_BOOKMARKED_TWEET",
     SET_UPDATED_TWEET = "tweets/SET_UPDATED_TWEET",
     FETCH_DELETE_TWEET = "tweets/FETCH_DELETE_TWEET",

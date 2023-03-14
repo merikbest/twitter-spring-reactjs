@@ -1,5 +1,5 @@
-import {ChatResponse} from "../../../types/chat";
-import {LoadingStatus} from "../../../types/common";
+import { ChatResponse } from "../../../../types/chat";
+import { LoadingStatus } from "../../../../types/common";
 
 export interface ChatState {
     item?: ChatResponse;

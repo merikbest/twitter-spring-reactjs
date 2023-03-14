@@ -1,12 +1,12 @@
-import React, {FC, ReactElement, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 
 import TweetComponent from "../../../../components/TweetComponent/TweetComponent";
-import UsersItem, {UserItemSize} from "../../../../components/UsersItem/UsersItem";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {fetchNotificationInfo, resetNotificationState} from "../../../../store/ducks/notifications/actionCreators";
+import UsersItem, { UserItemSize } from "../../../../components/UsersItem/UsersItem";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { fetchNotificationInfo, resetNotificationState } from "../../../../store/ducks/notifications/actionCreators";
 import {
     selectIsNotificationInfoLoading,
     selectNotificationInfoTweet,
@@ -34,15 +34,15 @@ const NotificationInfo: FC = (): ReactElement => {
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <NotificationInfoHeader/>
+            <NotificationInfoHeader />
             {isLoading ? (
-                <Spinner paddingTop={150}/>
+                <Spinner paddingTop={150} />
             ) : (
                 <>
                     <div className={globalClasses.contentWrapper}>
-                        <TweetComponent tweet={notificationTweet}/>
+                        <TweetComponent tweet={notificationTweet} />
                     </div>
-                    <UsersItem user={notificationUser} size={UserItemSize.MEDIUM}/>
+                    <UsersItem user={notificationUser} size={UserItemSize.MEDIUM} />
                 </>
             )}
         </Paper>

@@ -1,16 +1,16 @@
-import React, {ReactElement, useEffect} from 'react';
-import {Button, Divider, Link as MuiLink} from "@material-ui/core";
+import React, { ReactElement, useEffect } from "react";
+import { Button, Divider, Link as MuiLink } from "@material-ui/core";
 import classnames from "classnames";
 import * as yup from "yup";
-import {Controller, useForm} from "react-hook-form";
-import {yupResolver} from "@hookform/resolvers/yup";
-import {useDispatch} from "react-redux";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from "react-redux";
 
-import {useChangeYourPasswordStyles} from "./ChangeYourPasswordStyles";
-import {ChangeInfoTextField} from "../../ChangeInfoTextField/ChangeInfoTextField";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {AuthApi} from "../../../../services/api/authApi";
-import {setOpenSnackBar} from "../../../../store/ducks/actionSnackbar/actionCreators";
+import { useChangeYourPasswordStyles } from "./ChangeYourPasswordStyles";
+import { ChangeInfoTextField } from "../../ChangeInfoTextField/ChangeInfoTextField";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { AuthApi } from "../../../../services/api/authApi";
+import { setOpenSnackBar } from "../../../../store/ducks/actionSnackbar/actionCreators";
 
 interface ChangeYourPasswordFormProps {
     currentPassword: string;
@@ -20,15 +20,15 @@ interface ChangeYourPasswordFormProps {
 
 const ChangeYourPasswordFormSchema = yup.object().shape({
     password: yup.string().min(8, "Your password needs to be at least 8 characters. Please enter a longer one.").required(),
-    password2: yup.string().oneOf([yup.ref("password")], "Passwords do not match."),
+    password2: yup.string().oneOf([yup.ref("password")], "Passwords do not match.")
 });
 
 const ChangeYourPassword = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useChangeYourPasswordStyles();
     const dispatch = useDispatch();
-    const {control, handleSubmit, setError, formState: {errors}, reset} = useForm<ChangeYourPasswordFormProps>({
-        resolver: yupResolver(ChangeYourPasswordFormSchema),
+    const { control, handleSubmit, setError, formState: { errors }, reset } = useForm<ChangeYourPasswordFormProps>({
+        resolver: yupResolver(ChangeYourPasswordFormSchema)
     });
 
     useEffect(() => {
@@ -49,13 +49,13 @@ const ChangeYourPassword = (): ReactElement => {
                 const errors = error.response.data;
 
                 if (errors.currentPassword) {
-                    setError("currentPassword", {type: "server", message: errors.currentPassword});
+                    setError("currentPassword", { type: "server", message: errors.currentPassword });
                 }
                 if (errors.password) {
-                    setError("password", {type: "server", message: errors.password});
+                    setError("password", { type: "server", message: errors.password });
                 }
                 if (errors.password2) {
-                    setError("password2", {type: "server", message: errors.password2});
+                    setError("password2", { type: "server", message: errors.password2 });
                 }
             });
     };
@@ -68,7 +68,7 @@ const ChangeYourPassword = (): ReactElement => {
                         name="currentPassword"
                         control={control}
                         defaultValue=""
-                        render={({field: {onChange, value}}) => (
+                        render={({ field: { onChange, value } }) => (
                             <ChangeInfoTextField
                                 id="currentPassword"
                                 name="currentPassword"
@@ -87,13 +87,13 @@ const ChangeYourPassword = (): ReactElement => {
                         Forgot password?
                     </MuiLink>
                 </div>
-                <Divider/>
+                <Divider />
                 <div className={globalClasses.itemInfoWrapper}>
                     <Controller
                         name="password"
                         control={control}
                         defaultValue=""
-                        render={({field: {onChange, value}}) => (
+                        render={({ field: { onChange, value } }) => (
                             <ChangeInfoTextField
                                 id="password"
                                 name="password"
@@ -114,7 +114,7 @@ const ChangeYourPassword = (): ReactElement => {
                         name="password2"
                         control={control}
                         defaultValue=""
-                        render={({field: {onChange, value}}) => (
+                        render={({ field: { onChange, value } }) => (
                             <ChangeInfoTextField
                                 id="password2"
                                 name="password2"
@@ -130,7 +130,7 @@ const ChangeYourPassword = (): ReactElement => {
                         )}
                     />
                 </div>
-                <Divider/>
+                <Divider />
                 <div className={classnames(classes.buttonWrapper, globalClasses.itemInfoWrapper)}>
                     <Button
                         type="submit"

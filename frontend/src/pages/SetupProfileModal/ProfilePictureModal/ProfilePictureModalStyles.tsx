@@ -1,22 +1,22 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useProfilePictureModalStyles = makeStyles((theme) => ({
     container: {
         width: 598,
         height: 600,
         marginTop: 5,
-        position: "relative",
+        position: "relative"
     },
     logoIcon: {
         margin: "0 auto",
         width: 30,
         "& svg": {
             fontSize: 34,
-            color: theme.palette.primary.main,
-        },
+            color: theme.palette.primary.main
+        }
     },
     title: {
-        margin: "16px 0",
+        margin: "16px 0"
     },
     avatarWrapper: {
         position: "relative",
@@ -26,23 +26,23 @@ export const useProfilePictureModalStyles = makeStyles((theme) => ({
         "& .MuiButtonBase-root": {
             "& MuiIconButton-root": {
                 top: 66,
-                left: 67,
-            },
+                left: 67
+            }
         },
         "& img": {
             width: "184px",
-            height: "184px",
+            height: "184px"
         },
         "& .MuiAvatar-root": {
             zIndex: 4,
             width: "184px !important",
-            height: "184px !important",
-        },
+            height: "184px !important"
+        }
     },
     button: {
         position: "absolute",
         bottom: 0,
         width: 530,
-        marginBottom: 30,
-    },
+        marginBottom: 30
+    }
 }));

@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement, useState} from "react";
+import React, { FC, memo, ReactElement, useState } from "react";
 
 import YouTubeVideo from "../../YouTubeVideo/YouTubeVideo";
 import SmallLinkPreview from "../../SmallLinkPreview/SmallLinkPreview";
-import {LinkCoverSize} from "../../../store/types/common";
+import { LinkCoverSize } from "../../../types/common";
 import LargeLinkPreview from "../../LargeLinkPreview/LargeLinkPreview";
 
 interface TweetMediaProps {
@@ -26,7 +26,7 @@ const TweetMedia: FC<TweetMediaProps> = memo((
     const isYouTubeLink = link && link.includes("youtu");
 
     const onOpenYouTubeVideo = (): void => {
-        setOpenYouTubeVideo(true)
+        setOpenYouTubeVideo(true);
     };
 
     return (

@@ -1,21 +1,21 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch} from "react-redux";
-import {Divider, Radio, Typography} from "@material-ui/core";
-import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Divider, Radio, Typography } from "@material-ui/core";
+import { CheckCircle, RadioButtonUnchecked } from "@material-ui/icons";
 
-import {useDisplayStyles} from "./DisplayStyles";
-import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../../icons";
-import {updateBackgroundColor} from "../../../../store/ducks/user/actionCreators";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {BackgroundTheme, ColorScheme} from "../../../../store/types/common";
+import { useDisplayStyles } from "./DisplayStyles";
+import { CheckIcon, TweetIcon, VerifiedIcon } from "../../../../icons";
+import { updateBackgroundColor } from "../../../../store/ducks/user/actionCreators";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { BackgroundTheme, ColorScheme } from "../../../../types/common";
 
 export interface DisplayProps {
     changeBackgroundColor: (background: BackgroundTheme) => void;
     changeColorScheme: (color: ColorScheme) => void;
 }
 
-const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
+const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useDisplayStyles();
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
     };
 
     const processBackgroundColor = (background: BackgroundTheme): void => {
-        dispatch(updateBackgroundColor({backgroundColor: background}));
+        dispatch(updateBackgroundColor({ backgroundColor: background }));
         setSelectedBackgroundColor(background);
         changeBackgroundColor(background);
     };
@@ -48,7 +48,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
         changeColorScheme(color);
     };
 
-    const ColorSelector: FC<{ color: ColorScheme }> = ({color}): JSX.Element => {
+    const ColorSelector: FC<{ color: ColorScheme }> = ({ color }): JSX.Element => {
         return (
             <div
                 id={color.toLowerCase()}
@@ -101,7 +101,7 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                     </div>
                 </div>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Font size
@@ -111,32 +111,32 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                         Aa
                     </Typography>
                     <span className={classes.stepper}>
-                        <div id={"xs"} className={classes.stepperPoint}/>
-                        <div id={"sm"} className={classes.stepperPoint}/>
-                        <div id={"md"} className={classes.stepperPoint}/>
-                        <div id={"lg"} className={classes.stepperPoint}/>
-                        <div id={"xl"} className={classes.stepperPoint}/>
+                        <div id={"xs"} className={classes.stepperPoint} />
+                        <div id={"sm"} className={classes.stepperPoint} />
+                        <div id={"md"} className={classes.stepperPoint} />
+                        <div id={"lg"} className={classes.stepperPoint} />
+                        <div id={"xl"} className={classes.stepperPoint} />
                     </span>
                     <Typography variant={"body1"} id={"xl"} component={"span"} className={classes.tweetText}>
                         Aa
                     </Typography>
                 </div>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Color
                 </Typography>
             </div>
             <div className={classes.colorWrapper}>
-                <ColorSelector color={ColorScheme.BLUE}/>
-                <ColorSelector color={ColorScheme.YELLOW}/>
-                <ColorSelector color={ColorScheme.CRIMSON}/>
-                <ColorSelector color={ColorScheme.VIOLET}/>
-                <ColorSelector color={ColorScheme.ORANGE}/>
-                <ColorSelector color={ColorScheme.GREEN}/>
+                <ColorSelector color={ColorScheme.BLUE} />
+                <ColorSelector color={ColorScheme.YELLOW} />
+                <ColorSelector color={ColorScheme.CRIMSON} />
+                <ColorSelector color={ColorScheme.VIOLET} />
+                <ColorSelector color={ColorScheme.ORANGE} />
+                <ColorSelector color={ColorScheme.GREEN} />
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Background
@@ -153,9 +153,9 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                                 onChange={handleChangeBackgroundColor}
                                 value={BackgroundTheme.DEFAULT}
                                 name="radio-buttons"
-                                inputProps={{"aria-label": "Default"}}
-                                icon={<RadioButtonUnchecked color={"primary"}/>}
-                                checkedIcon={<CheckCircle color={"primary"}/>}
+                                inputProps={{ "aria-label": "Default" }}
+                                icon={<RadioButtonUnchecked color={"primary"} />}
+                                checkedIcon={<CheckCircle color={"primary"} />}
                                 size="small"
                             />
                         </div>
@@ -174,9 +174,9 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                                 onChange={handleChangeBackgroundColor}
                                 value={BackgroundTheme.DIM}
                                 name="radio-buttons"
-                                inputProps={{"aria-label": "Dim"}}
-                                icon={<RadioButtonUnchecked color={"primary"}/>}
-                                checkedIcon={<CheckCircle color={"primary"}/>}
+                                inputProps={{ "aria-label": "Dim" }}
+                                icon={<RadioButtonUnchecked color={"primary"} />}
+                                checkedIcon={<CheckCircle color={"primary"} />}
                                 size="small"
                             />
                         </div>
@@ -195,9 +195,9 @@ const Display: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): 
                                 onChange={handleChangeBackgroundColor}
                                 value={BackgroundTheme.LIGHTS_OUT}
                                 name="radio-buttons"
-                                inputProps={{"aria-label": "Lights-out"}}
-                                icon={<RadioButtonUnchecked color={"primary"}/>}
-                                checkedIcon={<CheckCircle color={"primary"}/>}
+                                inputProps={{ "aria-label": "Lights-out" }}
+                                icon={<RadioButtonUnchecked color={"primary"} />}
+                                checkedIcon={<CheckCircle color={"primary"} />}
                                 size="small"
                             />
                         </div>

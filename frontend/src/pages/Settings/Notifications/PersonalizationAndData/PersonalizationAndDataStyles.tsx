@@ -1,13 +1,13 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const usePersonalizationAndDataStyles = makeStyles((theme: Theme) => ({
     switch: {
-        float: "right",
+        float: "right"
     },
     subText: {
-        marginTop: 12,
+        marginTop: 12
     },
     content: {
-        paddingBottom: 64,
-    },
+        paddingBottom: 64
+    }
 }));

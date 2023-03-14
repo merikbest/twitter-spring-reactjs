@@ -1,17 +1,17 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, { FC, ReactElement, useState } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import {useRegistrationInputStyles} from "./RegistrationInputStyles";
-import {RegistrationInputField} from "./RegistrationInputField";
+import { useRegistrationInputStyles } from "./RegistrationInputStyles";
+import { RegistrationInputField } from "./RegistrationInputField";
 
 interface RegistrationInputProps {
     onChange: (...event: any[]) => void;
-    value: string
+    value: string;
     helperText?: string;
     error?: boolean;
     name: string;
     label: string;
-    maxTextLength: number
+    maxTextLength: number;
 }
 
 const RegistrationInput: FC<RegistrationInputProps> = (
@@ -36,7 +36,7 @@ const RegistrationInput: FC<RegistrationInputProps> = (
             <div className={classes.content}>
                 {focused && (
                     <div className={classes.inputCount}>
-                        <InputLabel style={{marginTop: -5, fontSize: 12}}>
+                        <InputLabel style={{ marginTop: -5, fontSize: 12 }}>
                             {!value?.length ? 0 : value.length} / {maxTextLength}
                         </InputLabel>
                     </div>
@@ -52,7 +52,7 @@ const RegistrationInput: FC<RegistrationInputProps> = (
                 helperText={helperText}
                 error={error}
                 inputProps={{
-                    maxLength: maxTextLength,
+                    maxLength: maxTextLength
                 }}
                 fullWidth
             />

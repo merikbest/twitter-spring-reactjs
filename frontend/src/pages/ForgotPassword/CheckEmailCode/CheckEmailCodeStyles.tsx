@@ -1,15 +1,15 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useCheckEmailCodeStyles = makeStyles((theme: Theme) => ({
     text: {
-        margin: "14px 0px",
+        margin: "14px 0px"
     },
     errorMessage: {
         display: "inline-block",
         marginTop: 10,
         marginLeft: 15,
         color: "#c33",
-        fontSize: 13,
+        fontSize: 13
     },
     button: {
         marginTop: 25,
@@ -18,11 +18,11 @@ export const useCheckEmailCodeStyles = makeStyles((theme: Theme) => ({
             backgroundColor: "#006dbf",
             borderColor: "#006dbf",
             boxShadow: "0 0 0 2px #fff, 0 0 0 4px #1da1f2",
-            color: theme.palette.common.white,
-        },
+            color: theme.palette.common.white
+        }
     },
     footerText: {
         marginTop: 14,
-        marginBottom: 68,
-    },
+        marginBottom: 68
+    }
 }));

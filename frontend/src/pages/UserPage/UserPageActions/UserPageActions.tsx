@@ -1,10 +1,10 @@
-import React, {memo, ReactElement, useState} from "react";
-import {ClickAwayListener, List} from "@material-ui/core";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement, useState } from "react";
+import { ClickAwayListener, List } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
-import {useUserPageActionsStyles} from "./UserPageActionsStyles";
-import {EditIcon, MomentsIcon, ReportIcon, ShareIcon} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
+import { useUserPageActionsStyles } from "./UserPageActionsStyles";
+import { EditIcon, MomentsIcon, ReportIcon, ShareIcon } from "../../../icons";
+import { useGlobalStyles } from "../../../util/globalClasses";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import {
     selectUserProfileIsFollower,
@@ -41,30 +41,30 @@ const UserPageActions = memo((): ReactElement => {
         <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.container}>
                 <span className={globalClasses.userPageIconButton}>
-                    <ActionIconButton actionText={"More"} onClick={handleClick} icon={EditIcon}/>
+                    <ActionIconButton actionText={"More"} onClick={handleClick} icon={EditIcon} />
                 </span>
                 {open && (
                     <div className={classes.dropdown}>
                         <List>
                             {(!isPrivateProfile || isFollower) && (
                                 <>
-                                    <ViewUserTopicsButton/>
-                                    <AddUserToListsButton/>
-                                    <ViewUserListsButton/>
-                                    <UserItemAction title={"View Moments"} icon={MomentsIcon}/>
+                                    <ViewUserTopicsButton />
+                                    <AddUserToListsButton />
+                                    <ViewUserListsButton />
+                                    <UserItemAction title={"View Moments"} icon={MomentsIcon} />
                                     {!isUserBlocked && (
                                         <>
-                                            <UserItemAction title={"Share profile via..."} icon={ShareIcon}/>
-                                            <CopyProfileLinkButton onCloseUserPageActions={handleClickAway}/>
+                                            <UserItemAction title={"Share profile via..."} icon={ShareIcon} />
+                                            <CopyProfileLinkButton onCloseUserPageActions={handleClickAway} />
                                         </>
                                     )}
                                 </>
                             )}
                             {!isUserBlocked && (
-                                <MuteUserButton onCloseUserPageActions={handleClickAway}/>
+                                <MuteUserButton onCloseUserPageActions={handleClickAway} />
                             )}
-                            <BlockUserButton/>
-                            <UserItemAction title={`Report @${username}`} icon={ReportIcon}/>
+                            <BlockUserButton />
+                            <UserItemAction title={`Report @${username}`} icon={ReportIcon} />
                         </List>
                     </div>
                 )}

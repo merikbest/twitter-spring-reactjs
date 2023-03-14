@@ -1,14 +1,14 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {UsersSearchState} from "./contracts/state";
-import {UsersSearchActions, UsersSearchActionsType} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types/common";
+import { UsersSearchState } from "./contracts/state";
+import { UsersSearchActions, UsersSearchActionsType } from "./contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialUsersSearchState: UsersSearchState = {
     users: [],
     pagesCount: 1,
     followers: [],
-    loadingState: LoadingStatus.LOADING,
+    loadingState: LoadingStatus.LOADING
 };
 
 export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, action: UsersSearchActions) => {
@@ -20,13 +20,13 @@ export const usersSearchReducer = produce((draft: Draft<UsersSearchState>, actio
 
         case UsersSearchActionsType.SET_PAGEABLE_USERS:
             draft.users = [...draft.users, ...action.payload.items];
-            draft.pagesCount = action.payload.pagesCount
+            draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case UsersSearchActionsType.SET_PAGEABLE_FOLLOWERS:
             draft.followers = [...draft.followers, ...action.payload.items];
-            draft.pagesCount = action.payload.pagesCount
+            draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 

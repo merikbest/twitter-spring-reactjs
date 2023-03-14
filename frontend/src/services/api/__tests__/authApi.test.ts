@@ -1,8 +1,8 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
-import {AuthUserResponse} from "../../../store/types/user";
-import {AuthApi} from "../authApi";
+import { AuthUserResponse } from "../../../types/user";
+import { AuthApi } from "../authApi";
 import {
     API_AUTH_FORGOT,
     API_AUTH_FORGOT_EMAIL,
@@ -14,19 +14,19 @@ import {
     API_AUTH_RESET,
     API_AUTH_RESET_CURRENT,
     API_USER_TOKEN
-} from "../../../util/endpoints";
-import {mockUser} from "../../../util/mockData/mockData";
-import {testApiCall} from "../../../util/apiTestHelper";
+} from "../../../constants/endpoint-constants";
+import { mockUser } from "../../../util/test-utils/mock-test-data";
+import { testApiCall } from "../../../util/test-utils/api-test-helper";
 
 describe("AuthApi", () => {
     const mockAdapter = new MockAdapter(axios);
     const mockUserErrorResponse = "User not found";
-    const mockAuthUserResponse = {user: mockUser, token: "test_token"};
+    const mockAuthUserResponse = { user: mockUser, token: "test_token" };
 
     beforeEach(() => mockAdapter.reset());
 
     describe("should fetch AuthApi.signIn", () => {
-        const mockRequest = {email: "test@test.com", password: "test_password"};
+        const mockRequest = { email: "test@test.com", password: "test_password" };
         const mockPasswordErrorResponse = "Incorrect password or email";
 
         it("[200] should Login Success", () => {
@@ -43,7 +43,7 @@ describe("AuthApi", () => {
     });
 
     describe("should fetch AuthApi.checkEmail", () => {
-        const mockRequest = {username: "test_username", email: "test@test.com", birthday: "test_birthday"};
+        const mockRequest = { username: "test_username", email: "test@test.com", birthday: "test_birthday" };
         const mockResponse = "User data checked.";
         const mockErrorResponse = "Email has already been taken.";
 
@@ -57,7 +57,7 @@ describe("AuthApi", () => {
     });
 
     describe("should fetch AuthApi.sendRegistrationCode", () => {
-        const mockRequest = {username: "test_username", email: "test@test.com", birthday: "test_birthday"};
+        const mockRequest = { username: "test_username", email: "test@test.com", birthday: "test_birthday" };
         const mockResponse = "Registration code sent successfully";
 
         it("[200] should send registration code success", () => {
@@ -85,7 +85,7 @@ describe("AuthApi", () => {
     });
 
     describe("should fetch AuthApi.endRegistration", () => {
-        const mockRequest = {email: "test@test.com", password: "test_birthday"};
+        const mockRequest = { email: "test@test.com", password: "test_birthday" };
         const mockPasswordError = "Your password needs to be at least 8 characters";
 
         it("[200] should end registration success", () => {
@@ -102,7 +102,7 @@ describe("AuthApi", () => {
     });
 
     describe("should fetch AuthApi.findExistingEmail", () => {
-        const mockRequest = {email: "test@test.com"};
+        const mockRequest = { email: "test@test.com" };
         const mockResponse = "Reset password code is send to your E-mail";
         const mockError = "Email not found";
 
@@ -116,7 +116,7 @@ describe("AuthApi", () => {
     });
 
     describe("should fetch AuthApi.sendPasswordResetCode", () => {
-        const mockRequest = {email: "test@test.com"};
+        const mockRequest = { email: "test@test.com" };
         const mockResponse = "Reset password code is send to your E-mail";
         const mockError = "Email not found";
 
@@ -132,7 +132,7 @@ describe("AuthApi", () => {
     describe("should fetch AuthApi.getUserByResetCode", () => {
         const mockRequest = "test_code";
         const mockUrl = `${API_AUTH_RESET}/${mockRequest}`;
-        const mockResponse = {id: 1} as AuthUserResponse;
+        const mockResponse = { id: 1 } as AuthUserResponse;
         const mockErrorResponse = "Password reset code is invalid!";
 
         it("[200] should get user by reset code success", () => {
@@ -145,7 +145,7 @@ describe("AuthApi", () => {
     });
 
     describe("should fetch AuthApi.passwordReset", () => {
-        const mockRequest = {email: "test@test.com", password: "password_test", password2: "password2_test"};
+        const mockRequest = { email: "test@test.com", password: "password_test", password2: "password2_test" };
         const mockResponse = "Password successfully changed!";
         const mockError = "Email not found";
 
@@ -159,7 +159,11 @@ describe("AuthApi", () => {
     });
 
     describe("should fetch AuthApi.currentPasswordReset", () => {
-        const mockRequest = {currentPassword: "password_test", password: "password_test", password2: "password2_test"};
+        const mockRequest = {
+            currentPassword: "password_test",
+            password: "password_test",
+            password2: "password2_test"
+        };
         const mockResponse = "Your password has been successfully updated.";
         const mockError = "The password you entered was incorrect.";
 

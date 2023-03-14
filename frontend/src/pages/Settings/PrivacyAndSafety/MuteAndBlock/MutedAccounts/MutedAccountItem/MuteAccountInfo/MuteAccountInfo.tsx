@@ -1,10 +1,10 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Link} from "react-router-dom";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Typography } from "@material-ui/core";
 
-import {PROFILE} from "../../../../../../../util/pathConstants";
-import {useGlobalStyles} from "../../../../../../../util/globalClasses";
-import {useMutedAccountItemStyles} from "../MutedAccountItemStyles";
+import { PROFILE } from "../../../../../../../constants/path-constants";
+import { useGlobalStyles } from "../../../../../../../util/globalClasses";
+import { useMutedAccountItemStyles } from "../MutedAccountItemStyles";
 
 interface MuteAccountInfoProps {
     userId: number;

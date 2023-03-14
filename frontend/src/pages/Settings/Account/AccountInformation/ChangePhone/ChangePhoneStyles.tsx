@@ -1,17 +1,17 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useChangePhoneStyles = makeStyles((theme: Theme) => ({
     textFieldWrapper: {
         padding: "12px 16px",
         "& .MuiFormLabel-root.Mui-disabled": {
-            color: theme.palette.grey[500],
-        },
+            color: theme.palette.grey[500]
+        }
     },
     updatePhoneNumber: {
         textAlign: "center",
         padding: 16,
         "& .MuiTypography-body1": {
-            color: theme.palette.primary.main,
+            color: theme.palette.primary.main
         },
         cursor: "pointer",
         "&:hover": {
@@ -22,11 +22,11 @@ export const useChangePhoneStyles = makeStyles((theme: Theme) => ({
         textAlign: "center",
         padding: 16,
         "& .MuiTypography-body1": {
-            color: theme.palette.error.main,
+            color: theme.palette.error.main
         },
         cursor: "pointer",
         "&:hover": {
             backgroundColor: "rgba(244, 33, 46, 0.1)"
         }
-    },
+    }
 }));

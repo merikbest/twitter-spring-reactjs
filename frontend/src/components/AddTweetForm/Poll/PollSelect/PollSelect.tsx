@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement, ReactNode} from "react";
-import {FormControl, InputLabel} from "@material-ui/core";
+import React, { FC, memo, ReactElement, ReactNode } from "react";
+import { FormControl, InputLabel } from "@material-ui/core";
 
-import {FilledSelect} from "../../../FilledSelect/FilledSelect";
-import {usePollStyles} from "../PollStyles";
+import { FilledSelect } from "../../../FilledSelect/FilledSelect";
+import { usePollStyles } from "../PollStyles";
 
 interface PollDaySelectProps {
     id: "day" | "hour" | "minute";
@@ -38,8 +38,8 @@ const PollSelect: FC<PollDaySelectProps> = memo((
                 labelId={`select-${id}`}
                 id={`select-${id}`}
                 value={value}
-                onChange={(event) => onChange({[id]: event.target.value as number})}
-                style={{width, marginRight}}
+                onChange={(event) => onChange({ [id]: event.target.value as number })}
+                style={{ width, marginRight }}
                 native
             >
                 {showOptions(id === "day" && 7 || id === "hour" && 24 || 60)}

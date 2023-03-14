@@ -1,8 +1,8 @@
-import {useDispatch} from "react-redux";
-import {useState} from "react";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import axios from "axios";
 
-import {fetchListDetail} from "../store/ducks/listDetail/actionCreators";
+import { fetchListDetail } from "../store/ducks/listDetail/actionCreators";
 
 interface UseHoverList {
     visiblePopperWindow: boolean;
@@ -18,7 +18,7 @@ export const useHoverList = (): UseHoverList => {
 
     const handleHoverPopper = (listId: number): void => {
         setDelayHandler(setTimeout(() => {
-            dispatch(fetchListDetail({listId, cancelTokenSource}));
+            dispatch(fetchListDetail({ listId, cancelTokenSource }));
         }, 666));
 
         setDelayHandler(setTimeout(() => {
@@ -32,5 +32,5 @@ export const useHoverList = (): UseHoverList => {
         setVisiblePopperWindow(false);
     };
 
-    return {visiblePopperWindow, handleHoverPopper, handleLeavePopper};
+    return { visiblePopperWindow, handleHoverPopper, handleLeavePopper };
 };

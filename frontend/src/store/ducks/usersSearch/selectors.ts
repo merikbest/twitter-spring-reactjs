@@ -1,6 +1,6 @@
-import {RootState} from '../../store';
-import {UsersSearchState} from './contracts/state';
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { UsersSearchState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const selectUsersSearchState = (state: RootState): UsersSearchState => state.usersSearch;
 export const selectUsersSearch = (state: RootState): UsersSearchState["users"] => state.usersSearch.users;

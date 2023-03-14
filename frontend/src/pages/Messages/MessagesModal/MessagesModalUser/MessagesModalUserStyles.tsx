@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface MessagesModalUserStylesProps {
     mutedDirectMessages: boolean;
@@ -8,17 +8,17 @@ export const useMessagesModalUserStyles = makeStyles<Theme, MessagesModalUserSty
     container: {
         width: "100%",
         display: "flex",
-        alignItems: 'flex-start',
+        alignItems: "flex-start",
         paddingLeft: 15,
         paddingTop: 8,
         paddingBottom: 8,
         cursor: props => props.mutedDirectMessages ? "default" : "pointer",
-        opacity: props => props.mutedDirectMessages ? 0.5 : 1,
+        opacity: props => props.mutedDirectMessages ? 0.5 : 1
     },
     listAvatar: {
         width: theme.spacing(5),
         height: theme.spacing(5),
-        marginRight: 15,
+        marginRight: 15
     },
     header: {
         display: "flex",
@@ -27,5 +27,5 @@ export const useMessagesModalUserStyles = makeStyles<Theme, MessagesModalUserSty
     },
     headerInfo: {
         width: 350
-    },
+    }
 }));

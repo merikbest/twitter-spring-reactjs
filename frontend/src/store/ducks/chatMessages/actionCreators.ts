@@ -1,4 +1,4 @@
-import {ChatMessageRequest, ChatMessageState, ChatMessageWithTweetRequest} from "./contracts/state";
+import { ChatMessageRequest, ChatMessageState, ChatMessageWithTweetRequest } from "./contracts/state";
 import {
     AddChatMessageActionInterface,
     AddChatMessageWithTweetActionInterface,
@@ -9,27 +9,27 @@ import {
     SetChatMessagesActionInterface,
     SetChatMessagesLoadingStateActionInterface
 } from "./contracts/actionTypes";
-import {ChatMessageResponse} from "../../types/chat";
-import {LoadingStatus} from "../../types/common";
+import { ChatMessageResponse } from "../../../types/chat";
+import { LoadingStatus } from "../../../types/common";
 
 export const setChatMessages = (payload: ChatMessageState["items"]): SetChatMessagesActionInterface => ({
     type: ChatMessagesActionsType.SET_CHAT_MESSAGES,
-    payload,
+    payload
 });
 
 export const setChatMessage = (payload: ChatMessageResponse): SetChatMessageActionInterface => ({
     type: ChatMessagesActionsType.SET_CHAT_MESSAGE,
-    payload,
+    payload
 });
 
 export const addChatMessage = (payload: ChatMessageRequest): AddChatMessageActionInterface => ({
     type: ChatMessagesActionsType.ADD_CHAT_MESSAGE,
-    payload,
+    payload
 });
 
 export const addChatMessageWithTweet = (payload: ChatMessageWithTweetRequest): AddChatMessageWithTweetActionInterface => ({
     type: ChatMessagesActionsType.ADD_CHAT_MESSAGE_WITH_TWEET,
-    payload,
+    payload
 });
 
 export const fetchChatMessages = (payload: number): FetchChatMessagesActionInterface => ({
@@ -43,5 +43,5 @@ export const resetChatMessages = (): ResetChatMessagesLoadingStateActionInterfac
 
 export const setChatMessagesLoadingState = (payload: LoadingStatus): SetChatMessagesLoadingStateActionInterface => ({
     type: ChatMessagesActionsType.SET_LOADING_STATE,
-    payload,
+    payload
 });

@@ -1,13 +1,13 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {Button, Dialog, DialogContent, Radio, Typography} from "@material-ui/core";
-import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
-import {useDispatch} from "react-redux";
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { Button, Dialog, DialogContent, Radio, Typography } from "@material-ui/core";
+import { CheckCircle, RadioButtonUnchecked } from "@material-ui/icons";
+import { useDispatch } from "react-redux";
 
-import {useDisplayModalStyles} from "./DisplayModalStyles";
-import {CheckIcon, TweetIcon, VerifiedIcon} from "../../../icons";
-import {DisplayProps} from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
-import {updateBackgroundColor, updateColorScheme} from "../../../store/ducks/user/actionCreators";
-import {BackgroundTheme, ColorScheme} from "../../../store/types/common";
+import { useDisplayModalStyles } from "./DisplayModalStyles";
+import { CheckIcon, TweetIcon, VerifiedIcon } from "../../../icons";
+import { DisplayProps } from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import { updateBackgroundColor, updateColorScheme } from "../../../store/ducks/user/actionCreators";
+import { BackgroundTheme, ColorScheme } from "../../../types/common";
 
 interface DisplayModalProps {
     visible?: boolean;
@@ -32,7 +32,7 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
             const background = localStorage.getItem("background");
             const color = localStorage.getItem("color");
             setSelectedBackgroundColor((background !== null) ? background as BackgroundTheme : BackgroundTheme.DEFAULT);
-            setSelectedColor((color !== null) ? color  as ColorScheme : ColorScheme.BLUE);
+            setSelectedColor((color !== null) ? color as ColorScheme : ColorScheme.BLUE);
         }
     }, [visible]);
 
@@ -45,18 +45,18 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
     };
 
     const processBackgroundColor = (background: BackgroundTheme): void => {
-        dispatch(updateBackgroundColor({backgroundColor: background}));
+        dispatch(updateBackgroundColor({ backgroundColor: background }));
         setSelectedBackgroundColor(background);
         changeBackgroundColor(background);
     };
 
     const onClickColor = (color: ColorScheme): void => {
-        dispatch(updateColorScheme({colorScheme: color}));
+        dispatch(updateColorScheme({ colorScheme: color }));
         setSelectedColor(color);
         changeColorScheme(color);
     };
 
-    const ColorSelector: FC<{ color: ColorScheme }> = ({color}): JSX.Element => {
+    const ColorSelector: FC<{ color: ColorScheme }> = ({ color }): JSX.Element => {
         return (
             <div
                 id={color.toLowerCase()}
@@ -124,11 +124,11 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
                         Aa
                     </Typography>
                     <span className={classes.stepper}>
-                        <div id={"xs"} className={classes.stepperPoint}/>
-                        <div id={"sm"} className={classes.stepperPoint}/>
-                        <div id={"md"} className={classes.stepperPoint}/>
-                        <div id={"lg"} className={classes.stepperPoint}/>
-                        <div id={"xl"} className={classes.stepperPoint}/>
+                        <div id={"xs"} className={classes.stepperPoint} />
+                        <div id={"sm"} className={classes.stepperPoint} />
+                        <div id={"md"} className={classes.stepperPoint} />
+                        <div id={"lg"} className={classes.stepperPoint} />
+                        <div id={"xl"} className={classes.stepperPoint} />
                     </span>
                     <Typography variant={"body1"} id={"xl"} component={"span"} className={classes.tweetText}>
                         Aa
@@ -138,12 +138,12 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
                     Color
                 </Typography>
                 <div className={classes.colorWrapper}>
-                    <ColorSelector color={ColorScheme.BLUE}/>
-                    <ColorSelector color={ColorScheme.YELLOW}/>
-                    <ColorSelector color={ColorScheme.CRIMSON}/>
-                    <ColorSelector color={ColorScheme.VIOLET}/>
-                    <ColorSelector color={ColorScheme.ORANGE}/>
-                    <ColorSelector color={ColorScheme.GREEN}/>
+                    <ColorSelector color={ColorScheme.BLUE} />
+                    <ColorSelector color={ColorScheme.YELLOW} />
+                    <ColorSelector color={ColorScheme.CRIMSON} />
+                    <ColorSelector color={ColorScheme.VIOLET} />
+                    <ColorSelector color={ColorScheme.ORANGE} />
+                    <ColorSelector color={ColorScheme.GREEN} />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"} className={classes.subtitle}>
                     Background
@@ -159,9 +159,9 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
                                     onChange={handleChangeBackgroundColor}
                                     value={BackgroundTheme.DEFAULT}
                                     name="radio-buttons"
-                                    inputProps={{"aria-label": "Default"}}
-                                    icon={<RadioButtonUnchecked color={"primary"}/>}
-                                    checkedIcon={<CheckCircle color={"primary"}/>}
+                                    inputProps={{ "aria-label": "Default" }}
+                                    icon={<RadioButtonUnchecked color={"primary"} />}
+                                    checkedIcon={<CheckCircle color={"primary"} />}
                                     size="small"
                                 />
                             </div>
@@ -180,9 +180,9 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
                                     onChange={handleChangeBackgroundColor}
                                     value={BackgroundTheme.DIM}
                                     name="radio-buttons"
-                                    inputProps={{"aria-label": "Dim"}}
-                                    icon={<RadioButtonUnchecked color={"primary"}/>}
-                                    checkedIcon={<CheckCircle color={"primary"}/>}
+                                    inputProps={{ "aria-label": "Dim" }}
+                                    icon={<RadioButtonUnchecked color={"primary"} />}
+                                    checkedIcon={<CheckCircle color={"primary"} />}
                                     size="small"
                                 />
                             </div>
@@ -201,9 +201,9 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
                                     onChange={handleChangeBackgroundColor}
                                     value={BackgroundTheme.LIGHTS_OUT}
                                     name="radio-buttons"
-                                    inputProps={{"aria-label": "Lights-out"}}
-                                    icon={<RadioButtonUnchecked color={"primary"}/>}
-                                    checkedIcon={<CheckCircle color={"primary"}/>}
+                                    inputProps={{ "aria-label": "Lights-out" }}
+                                    icon={<RadioButtonUnchecked color={"primary"} />}
+                                    checkedIcon={<CheckCircle color={"primary"} />}
                                     size="small"
                                 />
                             </div>

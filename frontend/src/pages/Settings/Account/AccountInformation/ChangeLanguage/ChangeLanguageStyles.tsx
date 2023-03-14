@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useChangeLanguageStyles = makeStyles((theme: Theme) => ({
     selectWrapper: {
@@ -8,10 +8,10 @@ export const useChangeLanguageStyles = makeStyles((theme: Theme) => ({
         }
     },
     languageInfo: {
-        paddingTop: 2,
+        paddingTop: 2
     },
     buttonWrapper: {
         padding: "12px 16px",
-        float: "right",
-    },
+        float: "right"
+    }
 }));

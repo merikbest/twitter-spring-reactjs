@@ -1,12 +1,12 @@
 import React from "react";
-import {Link} from "react-router-dom";
-import {createMemoryHistory} from "history";
-import {ImageList, ImageListItem} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { createMemoryHistory } from "history";
+import { ImageList, ImageListItem } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {MODAL} from "../../../util/pathConstants";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
+import { MODAL } from "../../../constants/path-constants";
 import ProfileImages from "../ProfileImages";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("ProfileImages", () => {
     const mockState = createMockRootState(LoadingStatus.LOADED);
@@ -57,9 +57,9 @@ describe("ProfileImages", () => {
 
     it("should render empty Profile Images", () => {
         const mockImagesArray = createImagesArray(1);
-        const wrapper = mountWithStore(<ProfileImages/>, {
+        const wrapper = mountWithStore(<ProfileImages />, {
             ...mockState,
-            userProfile: {...mockState.userProfile, images: mockImagesArray}
+            userProfile: { ...mockState.userProfile, images: mockImagesArray }
         });
 
         expect(wrapper.find(ImageList).exists()).toBeFalsy();
@@ -69,27 +69,27 @@ describe("ProfileImages", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const mockImagesArray = createImagesArray(6);
-        const wrapper = mountWithStore(<ProfileImages/>, {
+        const wrapper = mountWithStore(<ProfileImages />, {
             ...mockState,
-            userProfile: {...mockState.userProfile, images: mockImagesArray}
+            userProfile: { ...mockState.userProfile, images: mockImagesArray }
         }, history);
 
-        wrapper.find(Link).at(imageIndex).simulate("click", {button: 0});
+        wrapper.find(Link).at(imageIndex).simulate("click", { button: 0 });
 
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith({
             pathname: `${MODAL}/${mockImagesArray[imageIndex].tweetId}`,
             state: {
-                background: {pathname: "/", hash: "", key: expect.any(String), search: "", state: undefined},
+                background: { pathname: "/", hash: "", key: expect.any(String), search: "", state: undefined }
             }
         });
     };
 
     const testImages = (imagesLength: number): void => {
         const mockImagesArray = createImagesArray(imagesLength);
-        const wrapper = mountWithStore(<ProfileImages/>, {
+        const wrapper = mountWithStore(<ProfileImages />, {
             ...mockState,
-            userProfile: {...mockState.userProfile, images: mockImagesArray}
+            userProfile: { ...mockState.userProfile, images: mockImagesArray }
         });
 
         expect(wrapper.find(ImageList).prop("cols")).toBe((imagesLength <= 4) ? 2 : 3);

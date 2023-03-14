@@ -1,20 +1,20 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Link} from "react-router-dom";
-import {Avatar} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Avatar } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
-import {PROFILE} from "../../../util/pathConstants";
+import { PROFILE } from "../../../constants/path-constants";
 import PopperUserWindow from "../../../components/PopperUserWindow/PopperUserWindow";
-import {useFullTweetStyles} from "../FullTweetStyles";
-import {useGlobalStyles} from "../../../util/globalClasses";
+import { useFullTweetStyles } from "../FullTweetStyles";
+import { useGlobalStyles } from "../../../util/globalClasses";
 import {
     selectTweetUserAvatar,
     selectTweetUserFullName,
     selectTweetUserId,
     selectTweetUserUsername
 } from "../../../store/ducks/tweet/selectors";
-import {useHoverUser} from "../../../hook/useHoverUser";
+import { useHoverUser } from "../../../hook/useHoverUser";
 
 const TweetHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -23,11 +23,11 @@ const TweetHeader = memo((): ReactElement => {
     const tweetUserAvatar = useSelector(selectTweetUserAvatar);
     const tweetUserUsername = useSelector(selectTweetUserUsername);
     const tweetUserFullName = useSelector(selectTweetUserFullName);
-    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
 
     return (
         <div className={classes.headerWrapper}>
-            <Avatar className={globalClasses.avatar} src={tweetUserAvatar} alt={`avatar ${tweetUserId!}`}/>
+            <Avatar className={globalClasses.avatar} src={tweetUserAvatar} alt={`avatar ${tweetUserId!}`} />
             <div
                 id={"userInfo"}
                 className={classes.headerUserInfo}
@@ -44,7 +44,7 @@ const TweetHeader = memo((): ReactElement => {
                         @{tweetUserUsername}
                     </Typography>
                 </div>
-                <PopperUserWindow visible={visiblePopperWindow}/>
+                <PopperUserWindow visible={visiblePopperWindow} />
             </div>
         </div>
     );

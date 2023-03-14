@@ -1,7 +1,7 @@
-import React, {FC, ReactElement} from "react";
-import {Link} from "react-router-dom";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
 
-import {useActionIconStyles} from "./ActionIconStyles";
+import { useActionIconStyles } from "./ActionIconStyles";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 
 interface ActionIconProps {
@@ -11,7 +11,7 @@ interface ActionIconProps {
     className: "icon" | "chatIcon" | "emojiIcon";
     icon: JSX.Element;
     positionTop?: boolean;
-    disabled?: boolean
+    disabled?: boolean;
 }
 
 const ActionIcon: FC<ActionIconProps> = (
@@ -21,7 +21,7 @@ const ActionIcon: FC<ActionIconProps> = (
         actionText,
         className,
         icon,
-        disabled,
+        disabled
     }
 ): ReactElement => {
     const classes = useActionIconStyles();
@@ -40,10 +40,10 @@ const ActionIcon: FC<ActionIconProps> = (
         <div className={classes[className]}>
             {path ? (
                 <Link to={path}>
-                    <Icon/>
+                    <Icon />
                 </Link>
             ) : (
-                <Icon/>
+                <Icon />
             )}
         </div>
     );

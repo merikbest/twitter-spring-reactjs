@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useYouTubeVideoStyles = makeStyles<Theme>((theme) => ({
     container: {
@@ -10,12 +10,12 @@ export const useYouTubeVideoStyles = makeStyles<Theme>((theme) => ({
         "& iframe": {
             width: "100%",
             height: 378,
-            borderRadius: "16px 16px 0px 0px",
+            borderRadius: "16px 16px 0px 0px"
         },
         "& .MuiTypography-body1": {
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            overflow: "hidden",
+            overflow: "hidden"
         },
         "& .MuiTypography-subtitle1": {
             marginTop: 5,
@@ -29,16 +29,16 @@ export const useYouTubeVideoStyles = makeStyles<Theme>((theme) => ({
                 marginRight: 3,
                 verticalAlign: "bottom",
                 fill: theme.palette.text.secondary,
-                height: "1.10em",
-            },
-        },
+                height: "1.10em"
+            }
+        }
     },
     youtubeLink: {
         color: "inherit",
-        textDecoration: "none",
+        textDecoration: "none"
     },
     videoInfoWrapper: {
         padding: "3px 12px 12px 12px",
         lineHeight: "20px"
-    },
+    }
 }));

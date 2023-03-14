@@ -1,12 +1,12 @@
-import React, {ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Divider} from "@material-ui/core";
+import React, { ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Divider } from "@material-ui/core";
 
 import RetweetsCount from "./RetweetsCount/RetweetsCount";
 import QuotesCount from "./QuotesCount/QuotesCount";
 import LikesCount from "./LikesCount/LikesCount";
-import {useFullTweetStyles} from "../FullTweetStyles";
-import {selectLikedTweetsCount, selectRetweetsCount} from "../../../store/ducks/tweet/selectors";
+import { useFullTweetStyles } from "../FullTweetStyles";
+import { selectLikedTweetsCount, selectRetweetsCount } from "../../../store/ducks/tweet/selectors";
 
 const TweetInteractionCount = (): ReactElement => {
     const classes = useFullTweetStyles();
@@ -17,11 +17,11 @@ const TweetInteractionCount = (): ReactElement => {
         <>
             {(retweetsCount !== 0 || likedTweetsCount !== 0) && (
                 <>
-                    <Divider/>
+                    <Divider />
                     <div className={classes.content}>
-                        <RetweetsCount/>
-                        <QuotesCount/>
-                        <LikesCount/>
+                        <RetweetsCount />
+                        <QuotesCount />
+                        <LikesCount />
                     </div>
                 </>
             )}

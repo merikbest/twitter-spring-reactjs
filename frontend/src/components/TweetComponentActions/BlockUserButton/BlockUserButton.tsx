@@ -1,11 +1,11 @@
-import React, {FC, memo, ReactElement, useState} from "react";
-import {useDispatch} from "react-redux";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {BlockIcon, UnblockIcon} from "../../../icons";
+import { BlockIcon, UnblockIcon } from "../../../icons";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
-import {processUserToBlocklist} from "../../../store/ducks/user/actionCreators";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import { processUserToBlocklist } from "../../../store/ducks/user/actionCreators";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface BlockUserButtonProps {
     tweetId: number;
@@ -19,14 +19,14 @@ const BlockUserButton: FC<BlockUserButtonProps> = memo((
         tweetId,
         userId,
         username,
-        isUserBlocked,
+        isUserBlocked
     }
 ): ReactElement => {
     const dispatch = useDispatch();
     const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
 
     const onBlockUser = (): void => {
-        dispatch(processUserToBlocklist({userId, tweetId}));
+        dispatch(processUserToBlocklist({ userId, tweetId }));
         dispatch(setOpenSnackBar(`@${username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`));
         setVisibleBlockUserModal(false);
     };

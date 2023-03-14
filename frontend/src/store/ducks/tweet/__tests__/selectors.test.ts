@@ -36,9 +36,9 @@ import {
     selectTweetUserUsername,
     selectUsersPagesCount
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockFullTweet, mockTweets, mockUsers} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../types/common";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockFullTweet, mockTweets, mockUsers } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("tweet selectors:", () => {
     const mockState = createMockRootState();
@@ -50,7 +50,7 @@ describe("tweet selectors:", () => {
             likedUsers: mockUsers,
             retweetedUsers: mockUsers,
             replies: mockTweets,
-            errorMessage: "Tweet not found",
+            errorMessage: "Tweet not found"
         }
     };
 
@@ -182,7 +182,7 @@ describe("tweet selectors:", () => {
 
     describe("selectTweetUserAvatar", () => {
         it("should return TweetUserAvatar", () => {
-            expect(selectTweetUserAvatar(mockState)).toBe(mockFullTweet.user.avatar.src);
+            expect(selectTweetUserAvatar(mockState)).toBe(mockFullTweet.user.avatar);
         });
     });
 

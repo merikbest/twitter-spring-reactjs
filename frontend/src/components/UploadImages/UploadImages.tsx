@@ -1,14 +1,14 @@
-import React, {FC, memo, ReactElement, useCallback, useEffect, useRef} from 'react';
+import React, { FC, memo, ReactElement, useCallback, useEffect, useRef } from "react";
 
-import {ImageObj} from "../AddTweetForm/AddTweetForm";
-import {MediaIcon} from "../../icons";
+import { ImageObj } from "../AddTweetForm/AddTweetForm";
+import { MediaIcon } from "../../icons";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
 
 interface UploadImageProps {
     onChangeImages: (callback: (prev: ImageObj[]) => ImageObj[]) => void;
 }
 
-const UploadImages: FC<UploadImageProps> = memo(({onChangeImages}): ReactElement => {
+const UploadImages: FC<UploadImageProps> = memo(({ onChangeImages }): ReactElement => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = () => {
@@ -26,8 +26,8 @@ const UploadImages: FC<UploadImageProps> = memo(({onChangeImages}): ReactElement
                 onChangeImages((prev) => [
                     {
                         src: URL.createObjectURL(fileObj),
-                        file,
-                    },
+                        file
+                    }
                 ]);
             }
         }
@@ -35,11 +35,11 @@ const UploadImages: FC<UploadImageProps> = memo(({onChangeImages}): ReactElement
 
     useEffect(() => {
         if (inputRef.current) {
-            inputRef.current.addEventListener('change', handleChangeFileInput);
+            inputRef.current.addEventListener("change", handleChangeFileInput);
         }
         return () => {
             if (inputRef.current) {
-                inputRef.current.removeEventListener('change', handleChangeFileInput);
+                inputRef.current.removeEventListener("change", handleChangeFileInput);
             }
         };
     }, []);
@@ -52,7 +52,7 @@ const UploadImages: FC<UploadImageProps> = memo(({onChangeImages}): ReactElement
                 onClick={handleClickImage}
                 size={"medium"}
             />
-            <input ref={inputRef} type="file" id="upload-input" hidden/>
+            <input ref={inputRef} type="file" id="upload-input" hidden />
         </>
     );
 });

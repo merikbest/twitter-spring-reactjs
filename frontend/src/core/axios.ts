@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
+import { TOKEN } from "../constants/common-constants";
 
 axios.interceptors.request.use((config) => {
-    if (localStorage.getItem('token')) {
-        config.headers['Authorization'] = localStorage.getItem('token');
+    if (localStorage.getItem(TOKEN)) {
+        config.headers["Authorization"] = localStorage.getItem(TOKEN);
         return config;
     } else {
         return config;

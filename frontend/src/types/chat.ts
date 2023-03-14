@@ -37,5 +37,5 @@ export interface ChatMessageResponse {
     };
     chat: {
         id: number;
-    }
+    };
 }

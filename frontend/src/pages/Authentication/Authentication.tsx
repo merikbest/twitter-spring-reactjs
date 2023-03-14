@@ -1,28 +1,23 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {useHistory} from "react-router-dom";
-import TwitterIcon from '@material-ui/icons/Twitter';
-import {Button, List, ListItem, Typography} from '@material-ui/core';
+import React, { FC, ReactElement, useState } from "react";
+import { useHistory } from "react-router-dom";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import { Button, List, ListItem, Typography } from "@material-ui/core";
 
-import {useAuthenticationStyles} from "./AuthenticationStyles";
-import {CommunityIcon, ReplyIcon, SearchIcon} from "../../icons";
+import { useAuthenticationStyles } from "./AuthenticationStyles";
+import { CommunityIcon, ReplyIcon, SearchIcon } from "../../icons";
 import RegistrationModal from "../RegistrationModal/RegistrationModal";
 import CustomizeModal from "../RegistrationModal/CustomizeModal/CustomizeModal";
 import CreateAccountModal from "../RegistrationModal/CreateAccountModal/CreateAccountModal";
 import EmailVerificationModal from "../RegistrationModal/EmailVerificationModal/EmailVerificationModal";
 import SetPasswordModal from "../RegistrationModal/SetPasswordModal/SetPasswordModal";
-import {ACCOUNT_LOGIN} from "../../util/pathConstants";
-
-export interface RegistrationInfo {
-    username: string;
-    email: string;
-    birthday: string;
-}
+import { ACCOUNT_LOGIN } from "../../constants/path-constants";
+import { RegistrationInfo } from "../../types/auth";
 
 const Authentication: FC = (): ReactElement => {
     const classes = useAuthenticationStyles();
     const history = useHistory();
     const [registrationInfo, setRegistrationInfo] = useState<RegistrationInfo>({
-        username: "", email: "", birthday: "",
+        username: "", email: "", birthday: ""
     });
     const [visibleRegistrationModal, setVisibleRegistrationModal] = useState<boolean>(false);
     const [visibleCustomizeModal, setVisibleCustomizeModal] = useState<boolean>(false);
@@ -53,35 +48,38 @@ const Authentication: FC = (): ReactElement => {
     return (
         <div className={classes.wrapper}>
             <section className={classes.leftSide}>
-                <TwitterIcon color="primary" className={classes.leftSideTwitterIcon}/>
+                <TwitterIcon color="primary" className={classes.leftSideTwitterIcon} />
                 <List className={classes.leftSideListInfo}>
                     <ListItem>
                         <Typography variant="h6">
-                            <>{SearchIcon}</> Follow your interests.
+                            <>{SearchIcon}</>
+                            Follow your interests.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography variant="h6">
-                            <>{CommunityIcon}</> Hear what people are talking about.
+                            <>{CommunityIcon}</>
+                            Hear what people are talking about.
                         </Typography>
                     </ListItem>
                     <ListItem>
                         <Typography variant="h6">
-                            <>{ReplyIcon}</> Join the conversation.
+                            <>{ReplyIcon}</>
+                            Join the conversation.
                         </Typography>
                     </ListItem>
                 </List>
             </section>
             <section className={classes.rightSide}>
                 <div className={classes.rightSideWrapper}>
-                    <TwitterIcon color="primary" className={classes.rightSideTwitterIcon}/>
+                    <TwitterIcon color="primary" className={classes.rightSideTwitterIcon} />
                     <Typography className={classes.rightSideTittle} variant="h4">
                         See what's happening in the world right now
                     </Typography>
                     <Typography>
                         <b>Join Twitter today!</b>
                     </Typography>
-                    <br/>
+                    <br />
                     <Button
                         className={classes.signinButton}
                         onClick={handleClickOpenSignUp}

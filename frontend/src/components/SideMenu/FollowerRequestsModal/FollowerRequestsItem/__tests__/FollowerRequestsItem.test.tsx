@@ -1,14 +1,14 @@
 import React from "react";
-import {Avatar, Button, Paper} from "@material-ui/core";
-import {createMemoryHistory} from "history";
+import { Avatar, Button, Paper } from "@material-ui/core";
+import { createMemoryHistory } from "history";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {mockFollowerUserResponse, mockUserDetailResponse} from "../../../../../util/mockData/mockData";
-import {FollowerRequestsActionsType} from "../../../../../store/ducks/followerRequests/contracts/actionTypes";
-import {PROFILE} from "../../../../../util/pathConstants";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { mockFollowerUserResponse, mockUserDetailResponse } from "../../../../../util/test-utils/mock-test-data";
+import { FollowerRequestsActionsType } from "../../../../../store/ducks/followerRequests/contracts/actionTypes";
+import { PROFILE } from "../../../../../constants/path-constants";
 import PopperUserWindow from "../../../../PopperUserWindow/PopperUserWindow";
 import FollowerRequestsItem from "../FollowerRequestsItem";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { LoadingStatus } from "../../../../../types/common";
 
 describe("FollowerRequestsItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
@@ -20,9 +20,9 @@ describe("FollowerRequestsItem", () => {
     });
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()} />, mockRootState);
 
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar.src);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar);
         expect(wrapper.text().includes(mockUser.fullName)).toBe(true);
         expect(wrapper.text().includes(mockUser.username)).toBe(true);
         expect(wrapper.text().includes(mockUser.about)).toBe(true);
@@ -31,7 +31,7 @@ describe("FollowerRequestsItem", () => {
     });
 
     it("should click decline Follower Request", () => {
-        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()} />, mockRootState);
 
         wrapper.find(Button).at(0).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, {
@@ -41,7 +41,7 @@ describe("FollowerRequestsItem", () => {
     });
 
     it("should click accept Follower Request", () => {
-        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()} />, mockRootState);
 
         wrapper.find(Button).at(1).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, {
@@ -68,9 +68,12 @@ describe("FollowerRequestsItem", () => {
     });
 
     it("should hover and leave Member", () => {
-        const mockState = {...mockRootState, userDetail: {...mockRootState.userDetail, item: mockUserDetailResponse}}
+        const mockState = {
+            ...mockRootState,
+            userDetail: { ...mockRootState.userDetail, item: mockUserDetailResponse }
+        };
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()}/>, mockState);
+        const wrapper = mountWithStore(<FollowerRequestsItem user={mockUser} onClose={jest.fn()} />, mockState);
         expect(wrapper.find(PopperUserWindow).prop("visible")).toBe(false);
         wrapper.find("#handleHoverPopper").at(0).simulate("mouseenter");
         jest.runAllTimers();

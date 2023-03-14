@@ -1,11 +1,11 @@
-import React, {FC, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
-import {useDispatch} from "react-redux";
+import React, { FC, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
-import {useTopicItemStyles} from "./TopicItemStyles";
-import {TopicIconContained} from "../../../icons";
-import {processFollowTopic} from "../../../store/ducks/topics/actionCreators";
-import {TopicResponse} from "../../../store/types/topic";
+import { useTopicItemStyles } from "./TopicItemStyles";
+import { TopicIconContained } from "../../../icons";
+import { processFollowTopic } from "../../../store/ducks/topics/actionCreators";
+import { TopicResponse } from "../../../types/topic";
 import UnfollowTopicButton from "./UnfollowTopicButton/UnfollowTopicButton";
 import FollowTopicButton from "./FollowTopicButton/FollowTopicButton";
 
@@ -13,12 +13,12 @@ interface TopicItemProps {
     topic: TopicResponse;
 }
 
-const TopicItem: FC<TopicItemProps> = ({topic}): ReactElement => {
+const TopicItem: FC<TopicItemProps> = ({ topic }): ReactElement => {
     const classes = useTopicItemStyles();
     const dispatch = useDispatch();
 
     const onClickFollowTopic = (): void => {
-        dispatch(processFollowTopic({topicsId: topic.id, topicCategory: topic.topicCategory}));
+        dispatch(processFollowTopic({ topicsId: topic.id, topicCategory: topic.topicCategory }));
     };
 
     const converterCategory = (category: string): string | null => {
@@ -45,9 +45,9 @@ const TopicItem: FC<TopicItemProps> = ({topic}): ReactElement => {
             </div>
             <div className={classes.buttonWrapper}>
                 {topic.isTopicFollowed ? (
-                    <UnfollowTopicButton topicName={topic.topicName} onClickFollowTopic={onClickFollowTopic}/>
+                    <UnfollowTopicButton topicName={topic.topicName} onClickFollowTopic={onClickFollowTopic} />
                 ) : (
-                    <FollowTopicButton onClickButton={onClickFollowTopic}/>
+                    <FollowTopicButton onClickButton={onClickFollowTopic} />
                 )}
             </div>
         </div>

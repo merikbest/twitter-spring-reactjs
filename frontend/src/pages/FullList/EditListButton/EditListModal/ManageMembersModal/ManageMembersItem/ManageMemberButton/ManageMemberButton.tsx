@@ -1,9 +1,9 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useDispatch} from "react-redux";
-import {Button} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch } from "react-redux";
+import { Button } from "@material-ui/core";
 
-import {useManageMembersItemStyles} from "../ManageMembersItemStyles";
-import {processUserToListMembers} from "../../../../../../../store/ducks/listMembers/actionCreators";
+import { useManageMembersItemStyles } from "../ManageMembersItemStyles";
+import { processUserToListMembers } from "../../../../../../../store/ducks/listMembers/actionCreators";
 
 interface ManageMemberButtonProps {
     userId: number;
@@ -17,7 +17,7 @@ const ManageMemberButton: FC<ManageMemberButtonProps> = memo((
         userId,
         listId,
         isMemberInList,
-        isSuggested,
+        isSuggested
     }
 ): ReactElement => {
     const dispatch = useDispatch();
@@ -25,8 +25,8 @@ const ManageMemberButton: FC<ManageMemberButtonProps> = memo((
 
     const onClickAddUserToList = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        dispatch(processUserToListMembers({userId, listId, isSuggested}));
-    }
+        dispatch(processUserToListMembers({ userId, listId, isSuggested }));
+    };
 
     return (
         <Button

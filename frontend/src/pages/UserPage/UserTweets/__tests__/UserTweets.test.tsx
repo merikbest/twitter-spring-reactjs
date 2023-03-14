@@ -3,9 +3,9 @@ import ReactRouter from "react-router";
 import Tab from "@material-ui/core/Tab";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
-import {UserTweetsActionType} from "../../../../store/ducks/userTweets/contracts/actionTypes";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { UserTweetsActionType } from "../../../../store/ducks/userTweets/contracts/actionTypes";
 import UserTweets from "../UserTweets";
 
 describe("UserTweets", () => {
@@ -14,7 +14,7 @@ describe("UserTweets", () => {
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({userId: "2"});
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ userId: "2" });
     });
 
     it("should click tweet Tab and fetch user tweets", () => {
@@ -50,17 +50,17 @@ describe("UserTweets", () => {
     });
 
     const testClickTab = (tabIndex: number, tabText: string, typeAction: UserTweetsActionType): void => {
-        const wrapper = mountWithStore(<UserTweets activeTab={tabIndex} handleChangeTab={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<UserTweets activeTab={tabIndex} handleChangeTab={jest.fn()} />, mockRootState);
         wrapper.find(Tab).at(tabIndex).simulate("click");
         expect(wrapper.find(Tab).at(tabIndex).prop("selected")).toBe(true);
         expect(wrapper.find(Tab).at(tabIndex).text().includes(tabText)).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(2, {payload: {userId: "2", page: 0}, type: typeAction});
+        expect(mockDispatchFn).nthCalledWith(2, { payload: { userId: "2", page: 0 }, type: typeAction });
     };
 
     const testLoadUserTweets = (tabIndex: number, actionType: UserTweetsActionType): void => {
-        const wrapper = mountWithStore(<UserTweets activeTab={tabIndex} handleChangeTab={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<UserTweets activeTab={tabIndex} handleChangeTab={jest.fn()} />, mockRootState);
         wrapper.find(Tab).at(tabIndex).simulate("click");
         wrapper.find(InfiniteScroll).prop("next")();
-        expect(mockDispatchFn).nthCalledWith(2, {payload: {userId: "2", page: 0}, type: actionType});
+        expect(mockDispatchFn).nthCalledWith(2, { payload: { userId: "2", page: 0 }, type: actionType });
     };
 });

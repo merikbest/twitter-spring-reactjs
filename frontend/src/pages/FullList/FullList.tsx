@@ -1,9 +1,9 @@
-import React, {FC, ReactElement, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
-import {Paper} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { Paper } from "@material-ui/core";
 
-import {useFullListStyles} from "./FullListStyles";
+import { useFullListStyles } from "./FullListStyles";
 import {
     selectIsListLoaded,
     selectIsListLoading,
@@ -11,12 +11,12 @@ import {
     selectListItemIsFollower,
     selectListItemName,
     selectListItemOwnerId,
-    selectListItemOwnerUsername,
+    selectListItemOwnerUsername
 } from "../../store/ducks/list/selectors";
-import {fetchListById} from "../../store/ducks/list/actionCreators";
-import {selectUserDataId} from "../../store/ducks/user/selectors";
+import { fetchListById } from "../../store/ducks/list/actionCreators";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
 import Spinner from "../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useGlobalStyles } from "../../util/globalClasses";
 import FollowListButton from "../../components/FollowListButton/FollowListButton";
 import FullListTweets from "./FullListTweets/FullListTweets";
 import MembersAndFollowers from "./MembersAndFollowers/MembersAndFollowers";
@@ -52,27 +52,27 @@ const FullList: FC = (): ReactElement => {
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <FullListHeader/>
+            <FullListHeader />
             <div className={globalClasses.contentWrapper}>
                 {isListLoading ? (
-                    <Spinner paddingTop={250}/>
+                    <Spinner paddingTop={250} />
                 ) : (
                     <>
-                        <FullListWallpaper/>
+                        <FullListWallpaper />
                         <Paper className={classes.listInfo} variant="outlined">
-                            <FullListDescription/>
-                            <MembersAndFollowers/>
+                            <FullListDescription />
+                            <MembersAndFollowers />
                             <div className={classes.buttonWrapper}>
                                 {(myProfileId === listOwnerId) ? (
-                                    <EditListButton/>
+                                    <EditListButton />
                                 ) : (
-                                    <FollowListButton listId={listId!} isFollower={listIsFollower!}/>
+                                    <FollowListButton listId={listId!} isFollower={listIsFollower!} />
                                 )}
                             </div>
                         </Paper>
                     </>
                 )}
-                <FullListTweets/>
+                <FullListTweets />
             </div>
         </Paper>
     );

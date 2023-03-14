@@ -1,12 +1,12 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import {List} from "@material-ui/core";
+import { List } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
 import CloseButton from "../CloseButton/CloseButton";
-import {useUsersListModalStyles} from "./UsersListModalStyles";
-import {useDispatch, useSelector} from "react-redux";
+import { useUsersListModalStyles } from "./UsersListModalStyles";
+import { useDispatch, useSelector } from "react-redux";
 import {
     fetchLikedUsers,
     fetchRetweetedUsers,
@@ -20,7 +20,7 @@ import {
     selectRetweetedUsers,
     selectUsersPagesCount
 } from "../../store/ducks/tweet/selectors";
-import UsersItem, {UserItemSize} from "../UsersItem/UsersItem";
+import UsersItem, { UserItemSize } from "../UsersItem/UsersItem";
 import Spinner from "../Spinner/Spinner";
 import InfiniteScrollWrapper from "../InfiniteScrollWrapper/InfiniteScrollWrapper";
 
@@ -61,7 +61,10 @@ const UsersListModal: FC<UsersListModalProps> = (
     }, [visible]);
 
     const loadUsers = (page: number): void => {
-        dispatch(isLiked ? fetchLikedUsers({tweetId, pageNumber: page}) : fetchRetweetedUsers({tweetId, pageNumber: page}));
+        dispatch(isLiked ? fetchLikedUsers({ tweetId, pageNumber: page }) : fetchRetweetedUsers({
+            tweetId,
+            pageNumber: page
+        }));
     };
 
     const onCloseUsersListModal = (): void => {
@@ -78,19 +81,19 @@ const UsersListModal: FC<UsersListModalProps> = (
     return (
         <Dialog className={classes.dialog} open={visible} onClose={onCloseUsersListModal}>
             <DialogTitle>
-                <CloseButton onClose={onCloseUsersListModal}/>
+                <CloseButton onClose={onCloseUsersListModal} />
                 {title}
             </DialogTitle>
             <DialogContent id="scrollableDiv" className={classes.content}>
                 <InfiniteScrollWrapper dataLength={users.length} pagesCount={usersPagesCount} loadItems={loadUsers}>
                     {isUsersLoading && !users.length ? (
-                        <Spinner paddingTop={250}/>
+                        <Spinner paddingTop={250} />
                     ) : (
                         <List>
                             {users.map((user) => (
-                                <UsersItem key={user.id} user={user} size={UserItemSize.MEDIUM}/>
+                                <UsersItem key={user.id} user={user} size={UserItemSize.MEDIUM} />
                             ))}
-                            {isUsersLoading && <Spinner/>}
+                            {isUsersLoading && <Spinner />}
                         </List>
                     )}
                 </InfiniteScrollWrapper>

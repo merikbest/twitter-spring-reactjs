@@ -1,8 +1,8 @@
-import React, {memo, ReactElement} from "react";
-import {Link as MuiLink} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { Link as MuiLink } from "@material-ui/core";
 
-import {useTweetDeletedStyles} from "./TweetDeletedStyles";
-import {TWITTER_NOTICES} from "../../util/url";
+import { useTweetDeletedStyles } from "./TweetDeletedStyles";
+import { TWITTER_NOTICES } from "../../constants/url-constants";
 
 const TweetDeleted = memo((): ReactElement => {
     const classes = useTweetDeletedStyles();

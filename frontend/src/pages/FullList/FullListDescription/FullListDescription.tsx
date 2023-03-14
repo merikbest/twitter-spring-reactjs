@@ -1,11 +1,11 @@
-import React, {memo, ReactElement} from "react";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {Avatar, Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Avatar, Typography } from "@material-ui/core";
 
-import {LockIcon} from "../../../icons";
-import {PROFILE} from "../../../util/pathConstants";
-import {useFullListStyles} from "../FullListStyles";
+import { LockIcon } from "../../../icons";
+import { PROFILE } from "../../../constants/path-constants";
+import { useFullListStyles } from "../FullListStyles";
 import {
     selectListItemDescription,
     selectListItemIsPrivate,
@@ -39,7 +39,7 @@ const FullListDescription = memo((): ReactElement => {
             </Typography>
             <Link to={`${PROFILE}/${listOwnerId}`} className={classes.listOwnerLink}>
                 <div className={classes.listOwnerWrapper}>
-                    <Avatar className={classes.listOwnerAvatar} src={listOwnerAvatar}/>
+                    <Avatar className={classes.listOwnerAvatar} src={listOwnerAvatar} />
                 </div>
                 <Typography variant={"h6"} component={"span"}>
                     {listOwnerFullName}

@@ -1,12 +1,15 @@
-import React, {FC, ReactElement, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Dialog, DialogContent} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dialog, DialogContent } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import {useFollowerRequestsModalStyles} from "./FollowerRequestsModalSyles";
+import { useFollowerRequestsModalStyles } from "./FollowerRequestsModalSyles";
 import CloseButton from "../../CloseButton/CloseButton";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {fetchFollowerRequests, resetFollowerRequestsState} from "../../../store/ducks/followerRequests/actionCreators";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import {
+    fetchFollowerRequests,
+    resetFollowerRequestsState
+} from "../../../store/ducks/followerRequests/actionCreators";
 import {
     selectFollowerRequestsItems,
     selectFollowerRequestsPagesCount,
@@ -22,7 +25,7 @@ interface FollowerRequestsModalProps {
     onClose: () => void;
 }
 
-const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose}): ReactElement | null => {
+const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles();
     const classes = useFollowerRequestsModalStyles();
     const dispatch = useDispatch();
@@ -50,7 +53,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
     return (
         <Dialog open={visible} onClose={onClose} className={classes.dialog}>
             <DialogTitle>
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onClose} />
                 Follower requests
             </DialogTitle>
             <DialogContent id="scrollableDiv" className={classes.content}>
@@ -60,7 +63,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
                     loadItems={loadFollowerRequests}
                 >
                     {(isFollowerRequestsLoading && !followerRequests.length) ? (
-                        <Spinner/>
+                        <Spinner />
                     ) : (
                         (!isFollowerRequestsLoading && !followerRequests.length) ? (
                             <div className={globalClasses.contentWrapper}>
@@ -72,9 +75,9 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({visible, onClose
                         ) : (
                             <>
                                 {followerRequests.map((followers) => (
-                                    <FollowerRequestsItem key={followers.id} user={followers} onClose={onClose}/>
+                                    <FollowerRequestsItem key={followers.id} user={followers} onClose={onClose} />
                                 ))}
-                                {isFollowerRequestsLoading && <Spinner/>}
+                                {isFollowerRequestsLoading && <Spinner />}
                             </>
                         )
                     )}

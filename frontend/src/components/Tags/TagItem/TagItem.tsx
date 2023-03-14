@@ -1,19 +1,19 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from "react-router-dom";
-import {ListItem, ListItemText, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { ListItem, ListItemText, Typography } from "@material-ui/core";
 
-import {SEARCH} from "../../../util/pathConstants";
-import {TagResponse} from "../../../store/types/tag";
-import {useTagsStyles} from "../TagsStyles";
+import { SEARCH } from "../../../constants/path-constants";
+import { TagResponse } from "../../../types/tag";
+import { useTagsStyles } from "../TagsStyles";
 
 interface TagItemProps {
     tag: TagResponse;
     classes?: ReturnType<typeof useTagsStyles>;
 }
 
-const TagItem: FC<TagItemProps> = ({tag, classes}): ReactElement => {
+const TagItem: FC<TagItemProps> = ({ tag, classes }): ReactElement => {
     return (
-        <Link to={{pathname: SEARCH, state: {tag: tag.tagName}}}>
+        <Link to={{ pathname: SEARCH, state: { tag: tag.tagName } }}>
             <ListItem className={classes?.item}>
                 <ListItemText
                     primary={tag.tagName}

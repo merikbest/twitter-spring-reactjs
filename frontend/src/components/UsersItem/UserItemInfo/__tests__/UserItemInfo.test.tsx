@@ -1,9 +1,9 @@
 import React from "react";
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
-import {mountWithStore} from "../../../../util/testHelper";
-import {mockUsers} from "../../../../util/mockData/mockData";
-import {UserItemSize} from "../../UsersItem";
+import { mountWithStore } from "../../../../util/test-utils/test-helper";
+import { mockUsers } from "../../../../util/test-utils/mock-test-data";
+import { UserItemSize } from "../../UsersItem";
 import UserItemInfo from "../UserItemInfo";
 import LockIcon from "../../../LockIcon/LockIcon";
 
@@ -37,5 +37,5 @@ describe("UserItemInfo", () => {
                 isMyProfileBlocked={isMyProfileBlocked}
                 size={size}
             />);
-    }
+    };
 });

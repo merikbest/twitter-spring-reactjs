@@ -1,8 +1,8 @@
-import React, {ReactElement} from 'react';
-import {useHistory} from 'react-router-dom';
+import React, { ReactElement } from "react";
+import { useHistory } from "react-router-dom";
 
-import {useBackButtonStyles} from "./BackButtonStyles";
-import {ArrowIcon} from "../../icons";
+import { useBackButtonStyles } from "./BackButtonStyles";
+import { ArrowIcon } from "../../icons";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
 
 const BackButton = (): ReactElement => {
@@ -15,7 +15,7 @@ const BackButton = (): ReactElement => {
 
     return (
         <div className={classes.container}>
-            <ActionIconButton actionText={"Back"} onClick={handleClickButton} icon={ArrowIcon}/>
+            <ActionIconButton actionText={"Back"} onClick={handleClickButton} icon={ArrowIcon} />
         </div>
     );
 };

@@ -1,11 +1,11 @@
-import React, {memo, ReactElement} from "react";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
 
-import {USER} from "../../../util/pathConstants";
-import {selectUserDetailFollowingSize, selectUserDetailId} from "../../../store/ducks/userDetail/selectors";
-import {usePopperFooterStyles} from "./PopperFooterStyles";
+import { USER } from "../../../constants/path-constants";
+import { selectUserDetailFollowingSize, selectUserDetailId } from "../../../store/ducks/userDetail/selectors";
+import { usePopperFooterStyles } from "./PopperFooterStyles";
 
 const PopperFooterFollowers = memo((): ReactElement => {
     const classes = usePopperFooterStyles();

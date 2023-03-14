@@ -1,17 +1,17 @@
-import React, {FC, ReactElement} from "react";
-import {Button, ButtonGroup, Divider, Typography} from "@material-ui/core";
-import {useDispatch} from "react-redux";
+import React, { FC, ReactElement } from "react";
+import { Button, ButtonGroup, Divider, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
-import {CheckIcon, CloseIcon, PlusIcon} from "../../../../icons";
-import {useFollowedTopicItemButton} from "./FollowedTopicItemButton";
-import {TopicResponse} from "../../../../store/types/topic";
-import {processFollowTopic, processNotInterestedTopic} from "../../../../store/ducks/topics/actionCreators";
+import { CheckIcon, CloseIcon, PlusIcon } from "../../../../icons";
+import { useFollowedTopicItemButton } from "./FollowedTopicItemButton";
+import { TopicResponse } from "../../../../types/topic";
+import { processFollowTopic, processNotInterestedTopic } from "../../../../store/ducks/topics/actionCreators";
 
 interface TopicButtonProps {
     topic: TopicResponse;
 }
 
-const FollowedTopicButton: FC<TopicButtonProps> = ({topic}): ReactElement => {
+const FollowedTopicButton: FC<TopicButtonProps> = ({ topic }): ReactElement => {
     const classes = useFollowedTopicItemButton({
         isTopicFollowed: topic.isTopicFollowed,
         isTopicNotInterested: topic.isTopicNotInterested
@@ -19,7 +19,7 @@ const FollowedTopicButton: FC<TopicButtonProps> = ({topic}): ReactElement => {
     const dispatch = useDispatch();
 
     const onClickFollowTopic = (): void => {
-        dispatch(processFollowTopic({topicsId: topic.id, topicCategory: topic.topicCategory}));
+        dispatch(processFollowTopic({ topicsId: topic.id, topicCategory: topic.topicCategory }));
     };
 
     const onClickNotInterestedTopic = (): void => {
@@ -44,7 +44,7 @@ const FollowedTopicButton: FC<TopicButtonProps> = ({topic}): ReactElement => {
                     disabled={topic.isTopicNotInterested}
                     onClick={topic.isTopicFollowed ? undefined : onClickNotInterestedTopic}
                 >
-                    {!topic.isTopicNotInterested && <Divider orientation="vertical" flexItem/>}
+                    {!topic.isTopicNotInterested && <Divider orientation="vertical" flexItem />}
                     <>{topic.isTopicFollowed ? CheckIcon : CloseIcon}</>
                 </Button>
             </ButtonGroup>

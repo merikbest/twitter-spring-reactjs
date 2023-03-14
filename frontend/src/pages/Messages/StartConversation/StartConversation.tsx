@@ -1,13 +1,13 @@
-import React, {memo, ReactElement} from "react";
-import {Button, Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { Button, Typography } from "@material-ui/core";
 
-import {useStartConversationStyles} from "./StartConversationStyles";
+import { useStartConversationStyles } from "./StartConversationStyles";
 import MessagesModal from "../MessagesModal/MessagesModal";
-import {useMessagesModal} from "../MessagesModal/useMessagesModal";
+import { useMessagesModal } from "../MessagesModal/useMessagesModal";
 
 const StartConversation = memo((): ReactElement => {
     const classes = useStartConversationStyles();
-    const {visibleModalWindow, onOpenModalWindow, onCloseModalWindow} = useMessagesModal();
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useMessagesModal();
 
     return (
         <>
@@ -27,7 +27,7 @@ const StartConversation = memo((): ReactElement => {
             >
                 Start a conversation
             </Button>
-            <MessagesModal visible={visibleModalWindow} onClose={onCloseModalWindow}/>
+            <MessagesModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );
 });

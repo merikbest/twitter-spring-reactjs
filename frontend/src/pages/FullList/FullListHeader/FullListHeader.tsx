@@ -1,8 +1,8 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
 
-import {LockIcon} from "../../../icons";
+import { LockIcon } from "../../../icons";
 import ShareActionsModal from "../ShareActionsModal/ShareActionsModal";
 import TopTweetsActionsModal from "../TopTweetsActionsModal/TopTweetsActionsModal";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
@@ -12,7 +12,7 @@ import {
     selectListItemName,
     selectListItemOwnerUsername
 } from "../../../store/ducks/list/selectors";
-import {useFullListStyles} from "../FullListStyles";
+import { useFullListStyles } from "../FullListStyles";
 
 const FullListHeader = memo((): ReactElement => {
     const classes = useFullListStyles();
@@ -37,8 +37,8 @@ const FullListHeader = memo((): ReactElement => {
                 </div>
             )}
             <div className={classes.iconGroup}>
-                <ShareActionsModal/>
-                <TopTweetsActionsModal/>
+                <ShareActionsModal />
+                <TopTweetsActionsModal />
             </div>
         </PageHeaderWrapper>
     );

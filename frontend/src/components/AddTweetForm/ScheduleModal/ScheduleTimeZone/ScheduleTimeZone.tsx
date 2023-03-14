@@ -1,7 +1,7 @@
-import React, {memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {useScheduleModalStyles} from "../ScheduleModalStyles";
+import { useScheduleModalStyles } from "../ScheduleModalStyles";
 
 const ScheduleTimeZone = memo((): ReactElement => {
     const classes = useScheduleModalStyles();

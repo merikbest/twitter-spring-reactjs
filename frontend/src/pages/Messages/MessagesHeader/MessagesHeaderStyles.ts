@@ -1,11 +1,11 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useMessagesHeaderStyles = makeStyles((theme: Theme) => ({
     header: {
-        width: 416,
+        width: 416
     },
     iconGroup: {
         marginLeft: "auto",
-        marginRight: 10,
-    },
+        marginRight: 10
+    }
 }));

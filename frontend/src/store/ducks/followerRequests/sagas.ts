@@ -1,5 +1,5 @@
-import {AxiosResponse} from "axios";
-import {call, put, takeLatest} from 'redux-saga/effects';
+import { AxiosResponse } from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
 
 import {
     AcceptFollowerRequestActionInterface,
@@ -7,26 +7,27 @@ import {
     FetchFollowerRequestsActionInterface,
     FollowerRequestsActionsType
 } from "./contracts/actionTypes";
-import {processFollowRequest, setFollowerRequests, setFollowerRequestsLoadingState} from "./actionCreators";
-import {FollowerUserResponse} from "../../types/user";
-import {UserApi} from "../../../services/api/userApi";
-import {setFollowersSize, setUserLoadingStatus} from "../user/actionCreators";
-import {LoadingStatus} from "../../types/common";
+import { processFollowRequest, setFollowerRequests, setFollowerRequestsLoadingState } from "./actionCreators";
+import { FollowerUserResponse } from "../../../types/user";
+import { UserApi } from "../../../services/api/userApi";
+import { setFollowersSize, setUserLoadingStatus } from "../user/actionCreators";
+import { LoadingStatus } from "../../../types/common";
+import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
 
-export function* fetchFollowRequests({payload}: FetchFollowerRequestsActionInterface) {
+export function* fetchFollowRequests({ payload }: FetchFollowerRequestsActionInterface) {
     try {
         yield put(setFollowerRequestsLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<FollowerUserResponse[]> = yield call(UserApi.getFollowerRequests, payload);
         yield put(setFollowerRequests({
             items: response.data,
-            pagesCount: parseInt(response.headers["page-total-count"])
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
         }));
     } catch (error) {
         yield put(setFollowerRequestsLoadingState(LoadingStatus.ERROR));
     }
 }
 
-export function* acceptFollowRequests({payload}: AcceptFollowerRequestActionInterface) {
+export function* acceptFollowRequests({ payload }: AcceptFollowerRequestActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         yield call(UserApi.acceptFollowRequest, payload);
@@ -37,7 +38,7 @@ export function* acceptFollowRequests({payload}: AcceptFollowerRequestActionInte
     }
 }
 
-export function* declineFollowRequests({payload}: DeclineFollowerRequestActionInterface) {
+export function* declineFollowRequests({ payload }: DeclineFollowerRequestActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         yield call(UserApi.declineFollowRequest, payload);

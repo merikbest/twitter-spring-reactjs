@@ -1,6 +1,6 @@
-import {RootState} from "../../store";
-import {TopicsState} from "./contracts/state";
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { TopicsState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 const selectTopics = (state: RootState): TopicsState => state.topics;
 

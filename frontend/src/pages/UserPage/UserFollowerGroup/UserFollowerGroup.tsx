@@ -1,5 +1,5 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
 
 import FollowerGroup from "../../../components/FollowerGroup/FollowerGroup";
 import {
@@ -20,7 +20,7 @@ const UserFollowerGroup = memo((): ReactElement => {
     return (
         <>
             {userProfileId && !isMyProfileBlocked && (!isPrivateProfile || isFollower) && (
-                <FollowerGroup userId={userProfileId} sameFollowers={sameFollowers}/>
+                <FollowerGroup userId={userProfileId} sameFollowers={sameFollowers} />
             )}
         </>
     );

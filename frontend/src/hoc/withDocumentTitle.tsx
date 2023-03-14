@@ -1,4 +1,4 @@
-import React, {ComponentType, useEffect} from "react";
+import React, { ComponentType, useEffect } from "react";
 
 export const withDocumentTitle = <T extends object>(Component: ComponentType<T>) => (title?: string) => (props: T) => {
 
@@ -6,5 +6,5 @@ export const withDocumentTitle = <T extends object>(Component: ComponentType<T>)
         document.title = title ? `${title} / Twitter` : "Twitter";
     }, []);
 
-    return <Component {...props as T}/>;
-}
+    return <Component {...props as T} />;
+};

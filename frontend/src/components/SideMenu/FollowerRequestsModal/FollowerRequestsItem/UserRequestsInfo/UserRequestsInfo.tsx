@@ -1,18 +1,18 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
 import PopperUserWindow from "../../../../PopperUserWindow/PopperUserWindow";
-import {useHoverUser} from "../../../../../hook/useHoverUser";
-import {useFollowerRequestsItemStyles} from "../FollowerRequestsItemStyles";
-import {FollowerUserResponse} from "../../../../../store/types/user";
+import { useHoverUser } from "../../../../../hook/useHoverUser";
+import { useFollowerRequestsItemStyles } from "../FollowerRequestsItemStyles";
+import { FollowerUserResponse } from "../../../../../types/user";
 
 interface UserRequestsInfoProps {
     user: FollowerUserResponse;
 }
 
-const UserRequestsInfo: FC<UserRequestsInfoProps> = memo(({user}): ReactElement => {
+const UserRequestsInfo: FC<UserRequestsInfoProps> = memo(({ user }): ReactElement => {
     const classes = useFollowerRequestsItemStyles();
-    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
 
     return (
         <div className={classes.header}>
@@ -26,7 +26,7 @@ const UserRequestsInfo: FC<UserRequestsInfoProps> = memo(({user}): ReactElement 
                 <Typography variant={"body1"}>
                     {user?.about}
                 </Typography>
-                <PopperUserWindow visible={visiblePopperWindow}/>
+                <PopperUserWindow visible={visiblePopperWindow} />
             </div>
         </div>
     );

@@ -1,12 +1,12 @@
 import React from "react";
-import {Avatar} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import MessagesModalUser from "../MessagesModalUser";
-import {mockUsers} from "../../../../../util/mockData/mockData";
-import {UserResponse} from "../../../../../store/types/user";
-import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { mockUsers } from "../../../../../util/test-utils/mock-test-data";
+import { UserResponse } from "../../../../../types/user";
+import { DEFAULT_PROFILE_IMG } from "../../../../../constants/url-constants";
+import { LoadingStatus } from "../../../../../types/common";
 
 describe("MessagesModalUser", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -18,9 +18,9 @@ describe("MessagesModalUser", () => {
     });
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<MessagesModalUser user={mockUser}/>, mockStore);
-        
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar.src);
+        const wrapper = mountWithStore(<MessagesModalUser user={mockUser} />, mockStore);
+
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar);
         expect(wrapper.text().includes(mockUser.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockUser.username}`)).toBe(true);
         expect(wrapper.find("#lockIcon").at(0).exists()).toBeFalsy();
@@ -28,12 +28,12 @@ describe("MessagesModalUser", () => {
 
     it("should render private user profile", () => {
         const mockPrivateUserStore = {
-            ...mockStore, 
+            ...mockStore,
             isPrivateProfile: true,
             isMutedDirectMessages: true,
             avatar: undefined
         } as unknown as UserResponse;
-        const wrapper = mountWithStore(<MessagesModalUser user={mockPrivateUserStore}/>, mockStore);
+        const wrapper = mountWithStore(<MessagesModalUser user={mockPrivateUserStore} />, mockStore);
 
         expect(wrapper.find(Avatar).prop("src")).toBe(DEFAULT_PROFILE_IMG);
         expect(wrapper.find("#lockIcon").at(0).exists()).toBeTruthy();

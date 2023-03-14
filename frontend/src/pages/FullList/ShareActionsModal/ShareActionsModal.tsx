@@ -1,8 +1,8 @@
-import React, {ReactElement, useState} from "react";
-import {ClickAwayListener, List, ListItem, Typography} from "@material-ui/core";
+import React, { ReactElement, useState } from "react";
+import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
 
-import {useShareActionsModalStyles} from "./ShareActionsModalStyles";
-import {LinkIcon, MessagesIcon, ShareIcon, TweetThisIcon} from "../../../icons";
+import { useShareActionsModalStyles } from "./ShareActionsModalStyles";
+import { LinkIcon, MessagesIcon, ShareIcon, TweetThisIcon } from "../../../icons";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 
 const ShareActionsModal = (): ReactElement => {
@@ -21,7 +21,7 @@ const ShareActionsModal = (): ReactElement => {
         <>
             <ClickAwayListener onClickAway={handleClickAway}>
                 <div className={classes.root}>
-                    <ActionIconButton onClick={handleClick} actionText={"Share"} icon={ShareIcon}/>
+                    <ActionIconButton onClick={handleClick} actionText={"Share"} icon={ShareIcon} />
                     {open && (
                         <div className={classes.dropdown}>
                             <List>

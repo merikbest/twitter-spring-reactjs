@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface QuoteStylesProps {
     isTweetQuoted?: boolean,
@@ -22,30 +22,30 @@ export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
         fontSize: 14,
         borderRadius: 16,
         border: `1px solid ${theme.palette.divider}`,
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.dark,
-        },
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.dark
+        }
     },
     quoteTweetWrapper: {
         display: "flex",
-        justifyContent: "flex-start",
+        justifyContent: "flex-start"
     },
     quoteTweetAvatar: {
         marginRight: 3,
         maxWidth: "20px !important",
-        maxHeight: "20px !important",
+        maxHeight: "20px !important"
     },
     quoteTweetFullName: {
         fontWeight: 700,
-        marginRight: 3,
+        marginRight: 3
     },
     quoteTweetUsername: {
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.secondary
     },
     quoteTweetText: {
         width: 490,
-        '& #hashtag': {
-            color: theme.palette.primary.main,
-        },
-    },
+        "& #hashtag": {
+            color: theme.palette.primary.main
+        }
+    }
 }));

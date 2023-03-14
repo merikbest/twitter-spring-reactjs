@@ -1,10 +1,10 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {MuteIcon, UnmuteIcon} from "../../../../icons";
-import {processUserToMuteList} from "../../../../store/ducks/user/actionCreators";
-import {setOpenSnackBar} from "../../../../store/ducks/actionSnackbar/actionCreators";
+import { MuteIcon, UnmuteIcon } from "../../../../icons";
+import { processUserToMuteList } from "../../../../store/ducks/user/actionCreators";
+import { setOpenSnackBar } from "../../../../store/ducks/actionSnackbar/actionCreators";
 import {
     selectUserProfileId,
     selectUserProfileIsUserMuted,
@@ -15,14 +15,14 @@ interface MuteUserButtonProps {
     onCloseUserPageActions: () => void;
 }
 
-const MuteUserButton: FC<MuteUserButtonProps> = memo(({onCloseUserPageActions}): ReactElement => {
+const MuteUserButton: FC<MuteUserButtonProps> = memo(({ onCloseUserPageActions }): ReactElement => {
     const dispatch = useDispatch();
     const userProfileId = useSelector(selectUserProfileId);
     const username = useSelector(selectUserProfileUsername);
     const isUserMuted = useSelector(selectUserProfileIsUserMuted);
 
     const handleMuteUser = (): void => {
-        dispatch(processUserToMuteList({userId: userProfileId!}));
+        dispatch(processUserToMuteList({ userId: userProfileId! }));
         dispatch(setOpenSnackBar(`@${username} has been ${isUserMuted ? "unmuted" : "muted"}.`));
         onCloseUserPageActions();
     };

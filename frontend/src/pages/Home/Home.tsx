@@ -1,29 +1,29 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {useLocation} from "react-router-dom";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Divider, Paper, Typography} from "@material-ui/core";
+import { Divider, Paper, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
-import {useHomeStyles} from './HomeStyles';
-import AddTweetForm from '../../components/AddTweetForm/AddTweetForm';
+import { useHomeStyles } from "./HomeStyles";
+import AddTweetForm from "../../components/AddTweetForm/AddTweetForm";
 import {
     fetchFollowersTweets,
     fetchTweets,
     resetTweets,
-    setTweetsLoadingState,
+    setTweetsLoadingState
 } from "../../store/ducks/tweets/actionCreators";
-import {selectIsTweetsLoading, selectPagesCount, selectTweetsItems} from "../../store/ducks/tweets/selectors";
-import {fetchUserData} from "../../store/ducks/user/actionCreators";
-import {selectUserDataIsProfileStarted} from "../../store/ducks/user/selectors";
+import { selectIsTweetsLoading, selectPagesCount, selectTweetsItems } from "../../store/ducks/tweets/selectors";
+import { fetchUserData } from "../../store/ducks/user/actionCreators";
+import { selectUserDataIsProfileStarted } from "../../store/ducks/user/selectors";
 import Welcome from "../../components/Welcome/Welcome";
 import Spinner from "../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useGlobalStyles } from "../../util/globalClasses";
 import TopTweetActions from "./TopTweetActions/TopTweetActions";
-import {withDocumentTitle} from "../../hoc/withDocumentTitle";
-import {SEARCH} from "../../util/pathConstants";
-import {LoadingStatus} from "../../store/types/common";
+import { withDocumentTitle } from "../../hoc/withDocumentTitle";
+import { SEARCH } from "../../constants/path-constants";
+import { LoadingStatus } from "../../types/common";
 
 const Home: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -80,7 +80,7 @@ const Home: FC = (): ReactElement => {
 
     return (
         <InfiniteScroll
-            style={{overflow: "unset"}}
+            style={{ overflow: "unset" }}
             dataLength={tweets.length}
             next={loadTweets}
             hasMore={page < pagesCount}
@@ -98,15 +98,15 @@ const Home: FC = (): ReactElement => {
                     />
                 </Paper>
                 <div className={classes.addForm}>
-                    <AddTweetForm title={"What's happening?"} buttonName={"Tweet"}/>
+                    <AddTweetForm title={"What's happening?"} buttonName={"Tweet"} />
                 </div>
-                <Divider/>
+                <Divider />
                 {!isProfileStarted ? (
-                    <Welcome/>
+                    <Welcome />
                 ) : (
                     <>
-                        {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
-                        {isLoading && <Spinner/>}
+                        {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)}
+                        {isLoading && <Spinner />}
                     </>
                 )}
             </Paper>

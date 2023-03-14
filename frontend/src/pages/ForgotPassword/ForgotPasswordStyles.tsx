@@ -1,15 +1,15 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
     container: {
         fontFamily: "\"Helvetica Neue\",Helvetica,Arial,sans-serif",
         "& a": {
-            textDecoration: "none",
+            textDecoration: "none"
         }
     },
     header: {
         borderBottom: "0px solid #e1e8ed",
-        boxShadow: "0 0 3px #aaa",
+        boxShadow: "0 0 3px #aaa"
     },
     headerWrapper: {
         margin: "0px auto",
@@ -20,12 +20,12 @@ export const useForgotPasswordStyles = makeStyles((theme: Theme) => ({
             verticalAlign: "bottom",
             marginRight: 6,
             fill: theme.palette.primary.main,
-            fontSize: 25,
-        },
+            fontSize: 25
+        }
     },
     content: {
         margin: "0px auto",
         width: 590,
-        paddingTop: 19,
-    },
+        paddingTop: 19
+    }
 }));

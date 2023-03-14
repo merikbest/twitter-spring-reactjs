@@ -1,23 +1,23 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import ConnectToUsers from "../ConnectToUsers";
-import {mockUsers} from "../../../util/mockData/mockData";
+import { mockUsers } from "../../../util/test-utils/mock-test-data";
 import Spinner from "../../Spinner/Spinner";
 import UsersItem from "../../UsersItem/UsersItem";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("ConnectToUsers", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
 
     it("should render loading spinner", () => {
         const wrapper = mountWithStore(
-            <ConnectToUsers 
-                title={"Followers you know"} 
-                isUsersLoading={true} 
+            <ConnectToUsers
+                title={"Followers you know"}
+                isUsersLoading={true}
                 users={[]}
             />, mockRootState);
-        
+
         expect(wrapper.find(Spinner).exists()).toBe(true);
     });
 

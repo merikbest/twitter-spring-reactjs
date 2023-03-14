@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
-import {Checkbox, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Checkbox, Typography } from "@material-ui/core";
 
-import {ArrowRightIcon} from "../../../../icons";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import { ArrowRightIcon } from "../../../../icons";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 
 const ContentYouSee: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -20,7 +20,7 @@ const ContentYouSee: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Display media that may contain sensitive content
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
             </div>
             <div className={globalClasses.contentLink}>

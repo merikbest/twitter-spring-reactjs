@@ -1,14 +1,14 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {ListMembersActions, ListMembersActionsType} from './contracts/actionTypes';
-import {ListMembersState} from './contracts/state';
-import {LoadingStatus} from "../../types/common";
+import { ListMembersActions, ListMembersActionsType } from "./contracts/actionTypes";
+import { ListMembersState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialListMembersState: ListMembersState = {
     members: [],
     suggested: [],
     membersLoadingState: LoadingStatus.LOADING,
-    suggestedLoadingState: LoadingStatus.LOADING,
+    suggestedLoadingState: LoadingStatus.LOADING
 };
 
 export const listMembersReducer = produce((draft: Draft<ListMembersState>, action: ListMembersActions) => {

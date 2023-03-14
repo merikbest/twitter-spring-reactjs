@@ -1,12 +1,12 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {UserState} from "./contracts/state";
-import {UserActions, UserActionsType} from './contracts/actionTypes';
-import {LoadingStatus} from "../../types/common";
+import { UserState } from "./contracts/state";
+import { UserActions, UserActionsType } from "./contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialUserState: UserState = {
     data: undefined,
-    status: LoadingStatus.NEVER,
+    status: LoadingStatus.NEVER
 };
 
 export const userReducer = produce((draft: Draft<UserState>, action: UserActions) => {

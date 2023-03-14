@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useSetupProfileModalStyles = makeStyles((theme) => ({
     container: {
@@ -8,6 +8,6 @@ export const useSetupProfileModalStyles = makeStyles((theme) => ({
         },
         "& .MuiDialog-container": {
             padding: "0 32px"
-        },
-    },
+        }
+    }
 }));

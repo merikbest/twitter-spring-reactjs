@@ -1,16 +1,16 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useUserNotFoundStyles = makeStyles((theme: Theme) => ({
     container: {
         "& .MuiTab-root": {
             textTransform: "none !important",
             minWidth: "150px !important",
-            padding: "14px 12px !important",
+            padding: "14px 12px !important"
         },
         "& .MuiTab-wrapper": {
             fontWeight: "700px !important",
-            fontSize: 16,
-        },
+            fontSize: 16
+        }
     },
     wallpaper: {
         height: 253,
@@ -20,8 +20,8 @@ export const useUserNotFoundStyles = makeStyles((theme: Theme) => ({
             objectFit: "cover",
             position: "absolute",
             width: 601,
-            height: 200,
-        },
+            height: 200
+        }
     },
     avatar: {
         marginTop: -70,
@@ -32,11 +32,11 @@ export const useUserNotFoundStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.grey[600],
             width: "140px !important",
             height: "140px !important",
-            border: `4px solid ${theme.palette.background.paper}`,
-        },
+            border: `4px solid ${theme.palette.background.paper}`
+        }
     },
     info: {
         margin: "40px 20px",
         textAlign: "center"
-    },
+    }
 }));

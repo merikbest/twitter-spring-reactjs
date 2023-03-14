@@ -1,10 +1,10 @@
 import React from "react";
 import routeData from "react-router";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {mockFullTweet} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../../store/types/common";
-import {MODAL} from "../../../../util/pathConstants";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { mockFullTweet } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
+import { MODAL } from "../../../../constants/path-constants";
 import TweetImage from "../TweetImage";
 
 describe("TweetImage", () => {

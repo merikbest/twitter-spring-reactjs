@@ -1,13 +1,13 @@
 import React from "react";
-import {Avatar} from "@material-ui/core";
-import {Link} from "react-router-dom";
-import {createMemoryHistory} from "history";
+import { Avatar } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { createMemoryHistory } from "history";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {mockQuoteTweet} from "../../../util/mockData/mockData";
-import {HOME_TWEET} from "../../../util/pathConstants";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
+import { mockQuoteTweet } from "../../../util/test-utils/mock-test-data";
+import { HOME_TWEET } from "../../../constants/path-constants";
 import Quote from "../Quote";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("Quote", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -20,7 +20,7 @@ describe("Quote", () => {
                 isFullTweet
             />, mockRootState);
 
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockQuoteTweet.user.avatar.src);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockQuoteTweet.user.avatar);
         expect(wrapper.text().includes(mockQuoteTweet.user.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockQuoteTweet.user.username}`)).toBe(true);
         expect(wrapper.text().includes("#JavaScript")).toBe(true);
@@ -34,7 +34,7 @@ describe("Quote", () => {
                 isFullTweet={false}
             />, mockRootState);
 
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockQuoteTweet.user.avatar.src);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockQuoteTweet.user.avatar);
         expect(wrapper.text().includes(mockQuoteTweet.user.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockQuoteTweet.user.username}`)).toBe(true);
         expect(wrapper.text().includes("#JavaScript")).toBe(true);
@@ -50,7 +50,7 @@ describe("Quote", () => {
                 isFullTweet
             />, mockRootState, history);
 
-        wrapper.find(Link).simulate("click", {button: 0});
+        wrapper.find(Link).simulate("click", { button: 0 });
 
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${HOME_TWEET}/${mockQuoteTweet.id}`);

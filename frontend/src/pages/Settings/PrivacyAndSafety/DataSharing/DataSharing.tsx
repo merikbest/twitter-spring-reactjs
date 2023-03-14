@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
-import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {DATA_THROUGH_PARTNERSHIPS} from "../../../../util/url";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { DATA_THROUGH_PARTNERSHIPS } from "../../../../constants/url-constants";
 
 const DataSharing: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -20,7 +20,7 @@ const DataSharing: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Allow additional information sharing with business partners
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Twitter always shares information with business partners as a way to run and improve its products.

@@ -1,13 +1,13 @@
-import {AxiosResponse} from "axios";
-import {call, put, takeLatest} from 'redux-saga/effects';
+import { AxiosResponse } from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
 
-import {setListDetail, setListDetailLoadingState} from './actionCreators';
-import {FetchListDetailActionInterface, ListDetailActionsType} from "./contracts/actionTypes";
-import {ListsApi} from "../../../services/api/listsApi";
-import {BaseListResponse} from "../../types/lists";
-import {LoadingStatus} from "../../types/common";
+import { setListDetail, setListDetailLoadingState } from "./actionCreators";
+import { FetchListDetailActionInterface, ListDetailActionsType } from "./contracts/actionTypes";
+import { ListsApi } from "../../../services/api/listsApi";
+import { BaseListResponse } from "../../../types/lists";
+import { LoadingStatus } from "../../../types/common";
 
-export function* fetchListDetailRequest({payload}: FetchListDetailActionInterface) {
+export function* fetchListDetailRequest({ payload }: FetchListDetailActionInterface) {
     try {
         yield put(setListDetailLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<BaseListResponse> = yield call(ListsApi.getListDetails, payload.listId, payload.cancelTokenSource);

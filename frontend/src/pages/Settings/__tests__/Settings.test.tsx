@@ -1,11 +1,11 @@
-import React, {Component} from "react";
-import {Route} from "react-router-dom";
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
 import routeData from "react-router";
-import {ReactWrapper} from "enzyme";
-import {ListItem} from "@material-ui/core";
+import { ReactWrapper } from "enzyme";
+import { ListItem } from "@material-ui/core";
 
 import Settings from "../Settings";
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import {
     SETTINGS,
     SETTINGS_ABOUT,
@@ -62,7 +62,7 @@ import {
     SETTINGS_SECURITY_SESSIONS,
     SETTINGS_SECURITY_SESSIONS_CURRENT,
     SETTINGS_TEAMS
-} from "../../../util/pathConstants";
+} from "../../../constants/path-constants";
 import Account from "../Account/Account";
 import AccountInformation from "../Account/AccountInformation/AccountInformation";
 import ChangeUsername from "../Account/AccountInformation/ChangeUsername/ChangeUsername";
@@ -120,7 +120,7 @@ import Autoplay from "../AccessibilityDisplayLanguages/DataUsage/Autoplay/Autopl
 import AdditionalResources from "../AdditionalResources/AdditionalResources";
 import ContentPreferences from "../Notifications/ContentPreferences/ContentPreferences";
 import PersonalizationAndData from "../Notifications/PersonalizationAndData/PersonalizationAndData";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("Settings", () => {
 
@@ -171,7 +171,7 @@ describe("Settings", () => {
     it("should click and navigate to Accessibility, display, and languages", () => {
         testClickNavigation("Accessibility, display, and languages", 4);
     });
-    
+
     it("should click and navigate to Additional resources", () => {
         testClickNavigation("Additional resources", 5);
     });
@@ -263,7 +263,7 @@ describe("Settings", () => {
 
     const createWrapper = (): ReactWrapper<any, Component["state"], Component> => {
         const mockStore = createMockRootState(LoadingStatus.LOADED);
-        return mountWithStore(<Settings changeBackgroundColor={jest.fn()} changeColorScheme={jest.fn()}/>, mockStore);
+        return mountWithStore(<Settings changeBackgroundColor={jest.fn()} changeColorScheme={jest.fn()} />, mockStore);
     };
 
     const testListItems = (wrapper: ReactWrapper<any, Component["state"], Component>, mockText: string, itemIndex: number): void => {

@@ -1,8 +1,8 @@
-import {initialTagsState, tagsReducer} from "../reducer";
-import {TagsActions, TagsActionsType} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {TagResponse} from "../../../types/tag";
-import {LoadingStatus} from "../../../types/common";
+import { initialTagsState, tagsReducer } from "../reducer";
+import { TagsActions, TagsActionsType } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { TagResponse } from "../../../../types/tag";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("tagsReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("tagsReducer:", () => {
             TagsActionsType.SET_TAGS,
             tagsReducer(initialTagsState, {
                 type: TagsActionsType.SET_TAGS,
-                payload: [{id: 1}] as TagResponse[]
+                payload: [{ id: 1 }] as TagResponse[]
             }),
             {
                 ...initialTagsState,
-                tags: [{id: 1}] as TagResponse[],
+                tags: [{ id: 1 }] as TagResponse[],
                 loadingTagsState: LoadingStatus.LOADED
             }
         );
@@ -29,11 +29,11 @@ describe("tagsReducer:", () => {
             TagsActionsType.SET_TRENDS,
             tagsReducer(initialTagsState, {
                 type: TagsActionsType.SET_TRENDS,
-                payload: {items: [{id: 1}] as TagResponse[], pagesCount: 2}
+                payload: { items: [{ id: 1 }] as TagResponse[], pagesCount: 2 }
             }),
             {
                 ...initialTagsState,
-                trends: [{id: 1}] as TagResponse[],
+                trends: [{ id: 1 }] as TagResponse[],
                 pagesCount: 2,
                 loadingTrendsState: LoadingStatus.LOADED
             }
@@ -44,7 +44,7 @@ describe("tagsReducer:", () => {
             tagsReducer(
                 {
                     ...initialTagsState,
-                    trends: [{id: 1}] as TagResponse[],
+                    trends: [{ id: 1 }] as TagResponse[],
                     pagesCount: 11
                 },
                 {

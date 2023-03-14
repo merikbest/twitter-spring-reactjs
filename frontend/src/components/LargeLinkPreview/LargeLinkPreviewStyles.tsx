@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface LargeLinkPreviewStylesProps {
     isFullTweet?: boolean;
@@ -17,7 +17,7 @@ export const useLargeLinkPreviewStyles = makeStyles<Theme, LargeLinkPreviewStyle
         "& .MuiTypography-body1": {
             textOverflow: "ellipsis",
             whiteSpace: "nowrap",
-            overflow: "hidden",
+            overflow: "hidden"
         },
         "& .MuiTypography-subtitle1": {
             marginTop: 5,
@@ -31,20 +31,20 @@ export const useLargeLinkPreviewStyles = makeStyles<Theme, LargeLinkPreviewStyle
                 marginRight: 3,
                 verticalAlign: "bottom",
                 fill: theme.palette.text.secondary,
-                height: "1.10em",
-            },
-        },
+                height: "1.10em"
+            }
+        }
     },
     linkCover: {
         borderRadius: "16px 16px 0px 0px",
-        width: "100%",
+        width: "100%"
     },
     siteLink: {
         color: "inherit",
-        textDecoration: "none",
+        textDecoration: "none"
     },
     siteInfoWrapper: {
         padding: "3px 12px 12px 12px",
         lineHeight: "20px"
-    },
+    }
 }));

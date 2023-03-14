@@ -1,17 +1,17 @@
 import React from "react";
-import {IconButton, Paper} from "@material-ui/core";
+import { IconButton, Paper } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import Poll, {pollInitialState} from "../Poll";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import Poll, { pollInitialState } from "../Poll";
 import PollInput from "../PollInput/PollInput";
-import {FilledSelect} from "../../../FilledSelect/FilledSelect";
+import { FilledSelect } from "../../../FilledSelect/FilledSelect";
 import HoverAction from "../../../HoverAction/HoverAction";
-import {LoadingStatus} from "../../../../store/types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("Poll", () => {
 
     it("should render correctly and click Add Poll Choice Button", () => {
-        const {wrapper} = createPollWrapper();
+        const { wrapper } = createPollWrapper();
 
         expect(wrapper.find(PollInput).at(0).prop("label")).toBe("Choice 1");
         expect(wrapper.find(PollInput).at(1).prop("label")).toBe("Choice 2");
@@ -36,17 +36,17 @@ describe("Poll", () => {
     });
 
     it("should change poll input and select date", () => {
-        const {wrapper, mockOnClose, mockSetPollData} = createPollWrapper();
+        const { wrapper, mockOnClose, mockSetPollData } = createPollWrapper();
 
         wrapper.find("#addPollChoiceButton").at(0).find(IconButton).simulate("click");
         wrapper.find("#addPollChoiceButton").at(0).find(IconButton).simulate("click");
-        wrapper.find(PollInput).at(0).find("input").at(0).simulate("change", {target: {value: "test poll 1"}});
-        wrapper.find(PollInput).at(1).find("input").at(0).simulate("change", {target: {value: "test poll 2"}});
-        wrapper.find(PollInput).at(2).find("input").at(0).simulate("change", {target: {value: "test poll 3"}});
-        wrapper.find(PollInput).at(3).find("input").at(0).simulate("change", {target: {value: "test poll 4"}});
-        wrapper.find(FilledSelect).at(0).find("select").simulate("change", {target: {value: 7}});
-        wrapper.find(FilledSelect).at(1).find("select").simulate("change", {target: {value: 23}});
-        wrapper.find(FilledSelect).at(2).find("select").simulate("change", {target: {value: 59}});
+        wrapper.find(PollInput).at(0).find("input").at(0).simulate("change", { target: { value: "test poll 1" } });
+        wrapper.find(PollInput).at(1).find("input").at(0).simulate("change", { target: { value: "test poll 2" } });
+        wrapper.find(PollInput).at(2).find("input").at(0).simulate("change", { target: { value: "test poll 3" } });
+        wrapper.find(PollInput).at(3).find("input").at(0).simulate("change", { target: { value: "test poll 4" } });
+        wrapper.find(FilledSelect).at(0).find("select").simulate("change", { target: { value: 7 } });
+        wrapper.find(FilledSelect).at(1).find("select").simulate("change", { target: { value: 23 } });
+        wrapper.find(FilledSelect).at(2).find("select").simulate("change", { target: { value: 59 } });
 
         expect(mockSetPollData).toHaveBeenCalled();
         expect(mockSetPollData).toHaveBeenCalledTimes(7);
@@ -58,7 +58,7 @@ describe("Poll", () => {
 
     it("should hover Add icon and render Hover Action", () => {
         jest.useFakeTimers();
-        const {wrapper} = createPollWrapper();
+        const { wrapper } = createPollWrapper();
         wrapper.find(IconButton).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();
@@ -71,7 +71,7 @@ describe("Poll", () => {
     });
 
     it("should Poll not exist", () => {
-        const {wrapper} = createPollWrapper(false);
+        const { wrapper } = createPollWrapper(false);
         expect(wrapper.find(Paper).exists()).toBeFalsy();
     });
 
@@ -87,6 +87,6 @@ describe("Poll", () => {
                 onClose={mockOnClose}
             />, createMockRootState(LoadingStatus.LOADED));
 
-        return {wrapper, mockOnClose, mockSetPollData};
+        return { wrapper, mockOnClose, mockSetPollData };
     };
 });

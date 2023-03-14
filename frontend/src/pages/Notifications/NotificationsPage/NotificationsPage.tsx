@@ -1,15 +1,15 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Link, useHistory} from "react-router-dom";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 import {
     fetchFetchTweetAuthorsNotifications,
     fetchNotifications,
     resetNotificationState
 } from "../../../store/ducks/notifications/actionCreators";
-import {fetchUserData} from "../../../store/ducks/user/actionCreators";
+import { fetchUserData } from "../../../store/ducks/user/actionCreators";
 import {
     selectIsNotificationsLoading,
     selectNotificationsList,
@@ -17,11 +17,11 @@ import {
     selectPagesCount
 } from "../../../store/ducks/notifications/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
-import {NOTIFICATIONS_TIMELINE} from "../../../util/pathConstants";
-import {NotificationsIconFilled} from "../../../icons";
+import { NOTIFICATIONS_TIMELINE } from "../../../constants/path-constants";
+import { NotificationsIconFilled } from "../../../icons";
 import NotificationAuthorItem from "./NotificationAuthorItem/NotificationAuthorItem";
 import NotificationItem from "./NotificationItem/NotificationItem";
-import {useNotificationsPageStyles} from "./NotificationsPageStyles";
+import { useNotificationsPageStyles } from "./NotificationsPageStyles";
 import EmptyNotifications from "../EmptyNotifications/EmptyNotifications";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
@@ -51,10 +51,10 @@ const NotificationsPage: FC = (): ReactElement => {
     return (
         <>
             {(isNotificationLoading && !notifications.length) ? (
-                <Spinner/>
+                <Spinner />
             ) : (
                 (!isNotificationLoading && !notifications.length) ? (
-                    <EmptyNotifications isNotification/>
+                    <EmptyNotifications isNotification />
                 ) : (
                     <>
                         {(tweetAuthors.length !== 0) && (
@@ -65,12 +65,12 @@ const NotificationsPage: FC = (): ReactElement => {
                                             {NotificationsIconFilled}
                                         </span>
                                     </div>
-                                    <div style={{flex: 1}}>
+                                    <div style={{ flex: 1 }}>
                                         {tweetAuthors.slice(0, 6).map((tweetAuthor, index) => (
-                                            <NotificationAuthorItem key={index} tweetAuthor={tweetAuthor}/>
+                                            <NotificationAuthorItem key={index} tweetAuthor={tweetAuthor} />
                                         ))}
-                                        <Typography 
-                                            variant={"body1"} 
+                                        <Typography
+                                            variant={"body1"}
                                             component={"div"}
                                             className={classes.notificationInfoText}
                                         >
@@ -83,8 +83,8 @@ const NotificationsPage: FC = (): ReactElement => {
                                             ) : (
                                                 (tweetAuthors.length === 2) && (
                                                     <>
-                                                        <Typography 
-                                                            variant={"body1"} 
+                                                        <Typography
+                                                            variant={"body1"}
                                                             component={"span"}
                                                             className={classes.notificationInfoText}
                                                         >
@@ -107,9 +107,9 @@ const NotificationsPage: FC = (): ReactElement => {
                             loadItems={loadNotifications}
                         >
                             {notifications.map((notification) => (
-                                <NotificationItem key={notification.id} notification={notification}/>
+                                <NotificationItem key={notification.id} notification={notification} />
                             ))}
-                            {isNotificationLoading && <Spinner/>}
+                            {isNotificationLoading && <Spinner />}
                         </InfiniteScrollWrapper>
                     </>
                 )

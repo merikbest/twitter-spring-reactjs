@@ -1,13 +1,13 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Button} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Button } from "@material-ui/core";
 
-import {useScheduleModalStyles} from "../ScheduleModalStyles";
+import { useScheduleModalStyles } from "../ScheduleModalStyles";
 
 interface ScheduleFooterProps {
     onOpenUnsentTweetsModal: () => void;
 }
 
-const ScheduleFooter: FC<ScheduleFooterProps> = memo(({onOpenUnsentTweetsModal}): ReactElement => {
+const ScheduleFooter: FC<ScheduleFooterProps> = memo(({ onOpenUnsentTweetsModal }): ReactElement => {
     const classes = useScheduleModalStyles();
 
     return (

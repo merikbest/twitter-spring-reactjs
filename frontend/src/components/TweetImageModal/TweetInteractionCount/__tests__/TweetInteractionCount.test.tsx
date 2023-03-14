@@ -1,12 +1,12 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
 import TweetInteractionCount from "../TweetInteractionCount";
-import UsersListModal, {UsersListModalAction} from "../../../UsersListModal/UsersListModal";
+import UsersListModal, { UsersListModalAction } from "../../../UsersListModal/UsersListModal";
 import CloseButton from "../../../CloseButton/CloseButton";
-import {mockFullTweet} from "../../../../util/mockData/mockData";
+import { mockFullTweet } from "../../../../util/test-utils/mock-test-data";
 
 describe("TweetInteractionCount", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
@@ -27,13 +27,13 @@ describe("TweetInteractionCount", () => {
                     ...mockFullTweet, retweetsCount: 0, likedTweetsCount: 0
                 }
             }
-        }
-        const wrapper = mountWithStore(<TweetInteractionCount/>, mockState);
+        };
+        const wrapper = mountWithStore(<TweetInteractionCount />, mockState);
         expect(wrapper.find("#content").exists()).toBeFalsy();
     });
 
     const testClickModalWindow = (text: string, index: number, modalAction: UsersListModalAction) => {
-        const wrapper = mountWithStore(<TweetInteractionCount/>, mockRootState);
+        const wrapper = mountWithStore(<TweetInteractionCount />, mockRootState);
         expect(wrapper.text().includes(text)).toBe(true);
         expect(wrapper.find(UsersListModal).prop("visible")).toBe(false);
         wrapper.find("a").at(index).simulate("click");

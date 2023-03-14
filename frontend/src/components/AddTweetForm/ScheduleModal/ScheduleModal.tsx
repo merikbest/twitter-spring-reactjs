@@ -1,11 +1,11 @@
-import React, {ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState} from 'react';
-import {addDays, getDate, getDaysInMonth, getMonth, getYear, isBefore} from "date-fns";
-import {Dialog, DialogContent, FormControl, InputLabel, Typography} from "@material-ui/core";
+import React, { ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState } from "react";
+import { addDays, getDate, getDaysInMonth, getMonth, getYear, isBefore } from "date-fns";
+import { Dialog, DialogContent, FormControl, InputLabel, Typography } from "@material-ui/core";
 
-import {useScheduleModalStyles} from "./ScheduleModalStyles";
-import {ScheduleIcon} from "../../../icons";
-import {FilledSelect} from "../../FilledSelect/FilledSelect";
-import {formatScheduleDate} from "../../../util/formatDate";
+import { useScheduleModalStyles } from "./ScheduleModalStyles";
+import { ScheduleIcon } from "../../../icons";
+import { FilledSelect } from "../../FilledSelect/FilledSelect";
+import { formatScheduleDate } from "../../../util/format-date-helper";
 import ScheduleTitle from "./ScheduleTitle/ScheduleTitle";
 import ScheduleTimeZone from "./ScheduleTimeZone/ScheduleTimeZone";
 import ScheduleFooter from "./ScheduleFooter/ScheduleFooter";
@@ -97,7 +97,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
         setMinute(minuteNumber);
         handleDate(new Date(`${year}-${month}-${day}T${hour}:${minuteNumber}:00Z`));
     };
-    
+
     const handleDaysCount = (monthNumber: string): void => {
         if (["01", "03", "05", "07", "08", "10", "12"].includes(monthNumber)) {
             setDaysCount(31);
@@ -107,7 +107,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
             setDaysCount(28);
         }
     };
-    
+
     const handleDate = (date: Date) => {
         setSelectedDate(date);
         setDateFormat(formatScheduleDate(date));
@@ -196,7 +196,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
-                                style={{width: 273, marginRight: 12}}
+                                style={{ width: 273, marginRight: 12 }}
                                 labelId="select-month"
                                 id="select-month"
                                 native
@@ -224,7 +224,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
-                                style={{width: 123, marginRight: 12}}
+                                style={{ width: 123, marginRight: 12 }}
                                 labelId="select-day"
                                 id="select-day"
                                 native
@@ -254,7 +254,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
-                                style={{width: 144,}}
+                                style={{ width: 144 }}
                                 labelId="select-year"
                                 id="select-year"
                                 native
@@ -289,7 +289,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
-                                style={{width: 179, marginRight: 12}}
+                                style={{ width: 179, marginRight: 12 }}
                                 labelId="select-hour"
                                 id="select-hour"
                                 native
@@ -306,7 +306,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
-                                style={{width: 179, marginRight: 12}}
+                                style={{ width: 179, marginRight: 12 }}
                                 labelId="select-minute"
                                 id="select-minute"
                                 native
@@ -318,9 +318,9 @@ const ScheduleModal: FC<ScheduleModalProps> = (
                             </FilledSelect>
                         </FormControl>
                     </div>
-                    <ScheduleTimeZone/>
+                    <ScheduleTimeZone />
                 </div>
-                <ScheduleFooter onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}/>
+                <ScheduleFooter onOpenUnsentTweetsModal={onOpenUnsentTweetsModal} />
             </DialogContent>
         </Dialog>
     );

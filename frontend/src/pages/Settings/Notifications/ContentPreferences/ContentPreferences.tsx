@@ -1,19 +1,19 @@
-import React, {ReactElement, useState} from 'react';
-import {Divider, Typography} from "@material-ui/core";
+import React, { ReactElement, useState } from "react";
+import { Divider, Typography } from "@material-ui/core";
 import classnames from "classnames";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {useContentPreferencesStyles} from "./ContentPreferencesStyles";
-import {ArrowRightIcon} from "../../../../icons";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { useContentPreferencesStyles } from "./ContentPreferencesStyles";
+import { ArrowRightIcon } from "../../../../icons";
 import ExploreModal from "./ExploreModal/ExploreModal";
 import RecommendationsModal from "./RecommendationsModal/RecommendationsModal";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import {
     SETTINGS_PERSONALIZATION,
     SETTINGS_PRIVACY_AND_SAFETY_BLOCKED,
     SETTINGS_PRIVACY_AND_SAFETY_MUTED
-} from "../../../../util/pathConstants";
+} from "../../../../constants/path-constants";
 
 const ContentPreferences = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -44,9 +44,9 @@ const ContentPreferences = (): ReactElement => {
                     Explore
                 </Typography>
             </div>
-            <div 
+            <div
                 id={"searchSettings"}
-                className={globalClasses.contentLink} 
+                className={globalClasses.contentLink}
                 onClick={() => onOpenSettingsModal(true)}
             >
                 <Typography variant={"body1"} component={"span"}>
@@ -56,7 +56,7 @@ const ContentPreferences = (): ReactElement => {
             </div>
             <div
                 id={"exploreSettings"}
-                className={globalClasses.contentLink} 
+                className={globalClasses.contentLink}
                 onClick={() => onOpenSettingsModal(false)}
             >
                 <Typography variant={"body1"} component={"span"}>
@@ -64,7 +64,7 @@ const ContentPreferences = (): ReactElement => {
                 </Typography>
                 {ArrowRightIcon}
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Languages
@@ -72,7 +72,7 @@ const ContentPreferences = (): ReactElement => {
             </div>
             <div
                 id={"openVisibleRecommendationsModal"}
-                className={globalClasses.contentLink} 
+                className={globalClasses.contentLink}
                 onClick={onOpenVisibleRecommendationsModal}
             >
                 <Typography variant={"body1"} component={"span"}>
@@ -85,7 +85,7 @@ const ContentPreferences = (): ReactElement => {
                     Select which languages you want recommended Tweets, people, and trends to include.
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Safety
@@ -107,7 +107,7 @@ const ContentPreferences = (): ReactElement => {
                     {ArrowRightIcon}
                 </div>
             </Link>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
                     Personalization and data

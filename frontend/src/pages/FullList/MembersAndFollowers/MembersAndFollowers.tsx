@@ -1,8 +1,8 @@
-import React, {memo, ReactElement, useState} from "react";
-import {Typography} from "@material-ui/core";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement, useState } from "react";
+import { Typography } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
-import {useMembersAndFollowersStyles} from "./MembersAndFollowersStyles";
+import { useMembersAndFollowersStyles } from "./MembersAndFollowersStyles";
 import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import {
     selectListItemFollowersSize,

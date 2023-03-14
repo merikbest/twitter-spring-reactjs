@@ -1,12 +1,12 @@
-import React, {FC, ReactElement, useEffect} from 'react';
+import React, { FC, ReactElement, useEffect } from "react";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
-import {useAddTweetModalStyles} from "./AddTweetModalStyles";
+import { useAddTweetModalStyles } from "./AddTweetModalStyles";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
-import {selectIsTweetsLoaded} from "../../store/ducks/tweets/selectors";
+import { selectIsTweetsLoaded } from "../../store/ducks/tweets/selectors";
 import CloseButton from "../CloseButton/CloseButton";
 
 interface AddTweetModalProps {
@@ -15,7 +15,7 @@ interface AddTweetModalProps {
     onClose: () => void;
 }
 
-const AddTweetModal: FC<AddTweetModalProps> = ({title, visible, onClose}): ReactElement | null => {
+const AddTweetModal: FC<AddTweetModalProps> = ({ title, visible, onClose }): ReactElement | null => {
     const classes = useAddTweetModalStyles();
     const isTweetAdded = useSelector(selectIsTweetsLoaded);
 
@@ -30,7 +30,7 @@ const AddTweetModal: FC<AddTweetModalProps> = ({title, visible, onClose}): React
     return (
         <Dialog className={classes.content} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle className={classes.header} id="form-dialog-title">
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onClose} />
                 {title}
             </DialogTitle>
             <DialogContent className={classes.dialogContent}>
@@ -38,7 +38,7 @@ const AddTweetModal: FC<AddTweetModalProps> = ({title, visible, onClose}): React
                     maxRows={6}
                     minRows={6}
                     title={"What's happening?"}
-                    buttonName={"Tweet"}/>
+                    buttonName={"Tweet"} />
             </DialogContent>
         </Dialog>
     );

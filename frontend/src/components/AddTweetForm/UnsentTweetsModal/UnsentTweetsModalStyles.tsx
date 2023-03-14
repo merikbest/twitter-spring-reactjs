@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface UnsentTweetsModalStylesProps {
     visibleEditTweetModal: boolean;
@@ -10,15 +10,15 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
             marginBottom: 0,
             borderBottom: props => props.visibleEditTweetModal ? `1px solid ${theme.palette.divider}` : "1px solid transparent",
             "& .MuiButtonBase-root": {
-                marginLeft: "auto",
-            },
-        },
+                marginLeft: "auto"
+            }
+        }
     },
     content: {
         width: 598,
         overflowX: "hidden",
         padding: 0,
-        minHeight: props => props.visibleEditTweetModal ? 220 : 600,
+        minHeight: props => props.visibleEditTweetModal ? 220 : 600
     },
     tweetContainer: {
         padding: "12px 16px",
@@ -26,8 +26,8 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         display: "flex",
         "&:hover": {
             cursor: "pointer",
-            backgroundColor: theme.palette.secondary.main,
-        },
+            backgroundColor: theme.palette.secondary.main
+        }
     },
     tweetWrapper: {
         width: "100%"
@@ -41,8 +41,8 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         height: 75,
         marginLeft: "auto",
         "& img": {
-            width: "100%",
-        },
+            width: "100%"
+        }
     },
     scheduledDateWrapper: {
         marginBottom: 10,
@@ -50,11 +50,11 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
             verticalAlign: "bottom",
             marginRight: 12,
             fill: theme.palette.text.secondary,
-            height: "1.30em",
-        },
+            height: "1.30em"
+        }
     },
     addTweetWrapper: {
-      padding: "4px 16px 20px 16px",
+        padding: "4px 16px 20px 16px"
     },
     footer: {
         width: "100%",
@@ -62,17 +62,17 @@ export const useUnsentTweetsModalStyles = makeStyles<Theme, UnsentTweetsModalSty
         bottom: 0,
         display: "flex",
         justifyContent: "space-between",
-        borderTop: `1px solid ${theme.palette.divider}`,
+        borderTop: `1px solid ${theme.palette.divider}`
     },
     footerDeleteButton: {
         "&.MuiButton-root": {
             color: theme.palette.error.main,
-            '&:hover': {
-                backgroundColor: "rgba(244, 33, 46, 0.1)",
+            "&:hover": {
+                backgroundColor: "rgba(244, 33, 46, 0.1)"
             },
             "&.Mui-disabled": {
-                color: "rgb(249, 144, 150)",
-            },
-        },
-    },
+                color: "rgb(249, 144, 150)"
+            }
+        }
+    }
 }));

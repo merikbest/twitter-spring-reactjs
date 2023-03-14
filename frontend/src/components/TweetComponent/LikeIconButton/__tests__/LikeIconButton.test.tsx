@@ -1,11 +1,11 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
 import ActionIconButton from "../../../ActionIconButton/ActionIconButton";
-import {LikeIcon, LikeOutlinedIcon} from "../../../../icons";
-import {TweetsActionType} from "../../../../store/ducks/tweets/contracts/actionTypes";
+import { LikeIcon, LikeOutlinedIcon } from "../../../../icons";
+import { TweetsActionType } from "../../../../store/ducks/tweets/contracts/actionTypes";
 import LikeIconButton from "../LikeIconButton";
 
 describe("LikeIconButton", () => {
@@ -27,7 +27,7 @@ describe("LikeIconButton", () => {
         expect(wrapper.find(ActionIconButton).prop("icon")).toBe(LikeOutlinedIcon);
         expect(wrapper.find("#likedTweetsCount").exists()).toBeTruthy();
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {payload: {tweetId: 1}, type: TweetsActionType.LIKE_TWEET});
+        expect(mockDispatchFn).nthCalledWith(1, { payload: { tweetId: 1 }, type: TweetsActionType.LIKE_TWEET });
     });
 
     it("should render unlike button", () => {

@@ -1,21 +1,21 @@
-import {Action} from "redux";
-import {FetchTweetUsersPayload, ReplyTweet, TweetState} from "./state";
-import {NotificationReplyResponse, NotificationResponse} from "../../../types/notification";
-import {LoadingStatus, PageableResponse} from "../../../types/common";
-import {TweetResponse} from "../../../types/tweet";
+import { Action } from "redux";
+import { FetchTweetUsersPayload, ReplyTweet, TweetState } from "./state";
+import { NotificationReplyResponse, NotificationResponse } from "../../../../types/notification";
+import { LoadingStatus, PageableResponse } from "../../../../types/common";
+import { TweetResponse } from "../../../../types/tweet";
 
 export enum TweetActionType {
-    SET_FOLLOW_TO_TWEET_STATE = 'tweet/SET_FOLLOW_TO_TWEET_STATE',
-    SET_BLOCKED_TO_TWEET_STATE = 'tweet/SET_BLOCKED_TO_TWEET_STATE',
-    SET_MUTED_TO_TWEET_STATE = 'tweet/SET_MUTED_TO_TWEET_STATE',
+    SET_FOLLOW_TO_TWEET_STATE = "tweet/SET_FOLLOW_TO_TWEET_STATE",
+    SET_BLOCKED_TO_TWEET_STATE = "tweet/SET_BLOCKED_TO_TWEET_STATE",
+    SET_MUTED_TO_TWEET_STATE = "tweet/SET_MUTED_TO_TWEET_STATE",
     SET_TWEET_DATA = "tweet/SET_TWEET_DATA",
     UPDATE_TWEET_DATA = "tweet/UPDATE_TWEET_DATA",
     FETCH_TWEET_DATA = "tweet/FETCH_TWEET_DATA",
     RESET_TWEET_STATE = "tweet/RESET_TWEET_STATE",
     SET_LOADING_STATE = "tweet/SET_LOADING_STATE",
     SET_ERROR_MESSAGE = "tweet/SET_ERROR_MESSAGE",
-    ADD_TWEET_TO_BOOKMARKS = 'tweet/ADD_TWEET_TO_BOOKMARKS',
-    SET_BOOKMARKED_TWEET = 'tweet/SET_BOOKMARKED_TWEET',
+    ADD_TWEET_TO_BOOKMARKS = "tweet/ADD_TWEET_TO_BOOKMARKS",
+    SET_BOOKMARKED_TWEET = "tweet/SET_BOOKMARKED_TWEET",
     FETCH_REPLY_TWEET = "tweet/FETCH_REPLY_TWEET",
     DELETE_TWEET_REPLY = "tweet/DELETE_TWEET_REPLY",
     // liked and retweeted users

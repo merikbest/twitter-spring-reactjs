@@ -1,9 +1,9 @@
-import React, {memo, ReactElement, useState} from "react";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement, useState } from "react";
+import { useSelector } from "react-redux";
 
 import YouTubeVideo from "../../../components/YouTubeVideo/YouTubeVideo";
 import SmallLinkPreview from "../../../components/SmallLinkPreview/SmallLinkPreview";
-import {LinkCoverSize} from "../../../store/types/common";
+import { LinkCoverSize } from "../../../types/common";
 import LargeLinkPreview from "../../../components/LargeLinkPreview/LargeLinkPreview";
 import {
     selectLinkCover,

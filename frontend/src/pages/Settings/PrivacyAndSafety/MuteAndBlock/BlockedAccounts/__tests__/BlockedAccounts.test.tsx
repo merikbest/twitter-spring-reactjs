@@ -4,14 +4,14 @@ import Tab from "@material-ui/core/Tab";
 
 import BlockedAccounts from "../BlockedAccounts";
 import BlockedAccountItem from "../BlockedAccountItem/BlockedAccountItem";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
+import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/test-utils/test-helper";
 import {
     BlockedAndMutedUsersActionsType
 } from "../../../../../../store/ducks/blockedAndMutedUsers/contracts/actionTypes";
 import Spinner from "../../../../../../components/Spinner/Spinner";
-import {ADVANCED_TWITTER_BLOCK_OPTIONS, BLOCKING_AND_UNBLOCKING_ACCOUNTS} from "../../../../../../util/url";
-import {mockBlockedUsers} from "../../../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../../../../store/types/common";
+import {ADVANCED_TWITTER_BLOCK_OPTIONS, BLOCKING_AND_UNBLOCKING_ACCOUNTS} from "../../../../../../constants/url-constants";
+import {mockBlockedUsers} from "../../../../../../util/test-utils/mock-test-data";
+import {LoadingStatus} from "../../../../../../types/common";
 
 describe("BlockedAccounts", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

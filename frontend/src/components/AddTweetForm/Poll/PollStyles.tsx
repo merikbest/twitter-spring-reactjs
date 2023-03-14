@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const usePollStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -6,10 +6,10 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
         minHeight: 300,
         marginLeft: 55,
         border: `1px solid ${theme.palette.grey[100]}`,
-        borderRadius: 16,
+        borderRadius: 16
     },
     pollInputWrapper: {
-        padding: "11px 11px 0px 11px",
+        padding: "11px 11px 0px 11px"
     },
     addPollInputWrapper: {
         position: "relative",
@@ -17,28 +17,28 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
             position: "absolute",
             bottom: 0,
             marginLeft: 6,
-            padding: 5,
-        },
+            padding: 5
+        }
     },
     addPollInputButton: {
         "& .MuiIconButton-root": {
             position: "absolute",
             bottom: 0,
             marginLeft: 6,
-            padding: 5,
-        },
+            padding: 5
+        }
     },
     pollLength: {
         padding: 11,
         borderLeft: 0,
         borderRight: 0,
-        border: `1px solid ${theme.palette.grey[100]}`,
+        border: `1px solid ${theme.palette.grey[100]}`
     },
     pollLengthTitle: {
-        marginBottom: 4,
+        marginBottom: 4
     },
     pollSelect: {
-        marginRight: 19,
+        marginRight: 19
     },
     footer: {
         textAlign: "center",
@@ -47,11 +47,11 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
         height: 47,
         "& .MuiTypography-body1": {
             paddingTop: 13,
-            color: theme.palette.error.main,
+            color: theme.palette.error.main
         },
         "&:hover": {
             cursor: "pointer",
-            backgroundColor: "rgba(244, 33, 46, 0.1)",
-        },
-    },
+            backgroundColor: "rgba(244, 33, 46, 0.1)"
+        }
+    }
 }));

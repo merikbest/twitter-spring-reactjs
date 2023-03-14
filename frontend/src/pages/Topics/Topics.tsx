@@ -1,12 +1,12 @@
-import React, {ChangeEvent, ReactElement, useEffect, useState} from "react";
-import {Route, useHistory, useParams} from "react-router-dom";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
+import { Route, useHistory, useParams } from "react-router-dom";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
-import {useTopicsStyles} from "./TopicsStyles";
+import { useTopicsStyles } from "./TopicsStyles";
 import Followed from "./Followed/Followed";
-import {TOPICS_FOLLOWED, TOPICS_NOT_INTERESTED, TOPICS_SUGGESTED} from "../../util/pathConstants";
+import { TOPICS_FOLLOWED, TOPICS_NOT_INTERESTED, TOPICS_SUGGESTED } from "../../constants/path-constants";
 import Suggested from "./Suggested/Suggested";
 import NotInterested from "./NotInterested/NotInterested";
 
@@ -41,14 +41,14 @@ const Topics = (): ReactElement => {
         <PageWrapper title={"Topics"}>
             <div className={classes.tabs}>
                 <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleTabChange}>
-                    <Tab label="Followed"/>
-                    <Tab label="Suggested"/>
-                    <Tab label="Not Interested"/>
+                    <Tab label="Followed" />
+                    <Tab label="Suggested" />
+                    <Tab label="Not Interested" />
                 </Tabs>
             </div>
-            <Route exact path={TOPICS_FOLLOWED} component={Followed}/>
-            <Route exact path={TOPICS_SUGGESTED} component={Suggested}/>
-            <Route exact path={TOPICS_NOT_INTERESTED} component={NotInterested}/>
+            <Route exact path={TOPICS_FOLLOWED} component={Followed} />
+            <Route exact path={TOPICS_SUGGESTED} component={Suggested} />
+            <Route exact path={TOPICS_NOT_INTERESTED} component={NotInterested} />
         </PageWrapper>
     );
 };

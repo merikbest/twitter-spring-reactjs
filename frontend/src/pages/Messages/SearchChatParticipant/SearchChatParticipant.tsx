@@ -1,8 +1,8 @@
-import React, {memo, ReactElement, useState} from "react";
-import {InputAdornment} from "@material-ui/core";
+import React, { memo, ReactElement, useState } from "react";
+import { InputAdornment } from "@material-ui/core";
 
-import {SearchIcon} from "../../../icons";
-import {PeopleSearchInput} from "../PeopleSearchInput/PeopleSearchInput";
+import { SearchIcon } from "../../../icons";
+import { PeopleSearchInput } from "../PeopleSearchInput/PeopleSearchInput";
 
 const SearchChatParticipant = memo((): ReactElement => {
     const [text, setText] = useState<string>("");
@@ -18,7 +18,7 @@ const SearchChatParticipant = memo((): ReactElement => {
                     <InputAdornment position="start">
                         {SearchIcon}
                     </InputAdornment>
-                ),
+                )
             }}
         />
     );

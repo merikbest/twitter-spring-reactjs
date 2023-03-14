@@ -1,11 +1,11 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {NavLink, Route, useLocation} from 'react-router-dom';
-import {Grid, List, ListItem, Paper, Typography} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect } from "react";
+import { NavLink, Route, useLocation } from "react-router-dom";
+import { Grid, List, ListItem, Paper, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {useSettingsStyles} from "./SettingsStyles";
-import {ArrowRightIcon} from "../../icons";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useSettingsStyles } from "./SettingsStyles";
+import { ArrowRightIcon } from "../../icons";
+import { useGlobalStyles } from "../../util/globalClasses";
 import BackButton from "../../components/BackButton/BackButton";
 import Account from "./Account/Account";
 import AccountInformation from "./Account/AccountInformation/AccountInformation";
@@ -59,12 +59,12 @@ import PushNotifications from "./Notifications/Preferences/PushNotifications/Pus
 import EmailNotifications from "./Notifications/Preferences/EmailNotifications/EmailNotifications";
 import Accessibility from "./AccessibilityDisplayLanguages/Accessibility/Accessibility";
 import DataUsage from "./AccessibilityDisplayLanguages/DataUsage/DataUsage";
-import Display, {DisplayProps} from "./AccessibilityDisplayLanguages/Display/Display";
+import Display, { DisplayProps } from "./AccessibilityDisplayLanguages/Display/Display";
 import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
 import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
 import ContentPreferences from "./Notifications/ContentPreferences/ContentPreferences";
 import PersonalizationAndData from "./Notifications/PersonalizationAndData/PersonalizationAndData";
-import {withDocumentTitle} from "../../hoc/withDocumentTitle";
+import { withDocumentTitle } from "../../hoc/withDocumentTitle";
 import {
     SETTINGS,
     SETTINGS_ABOUT,
@@ -122,16 +122,16 @@ import {
     SETTINGS_SECURITY_SESSIONS,
     SETTINGS_SECURITY_SESSIONS_CURRENT,
     SETTINGS_TEAMS
-} from "../../util/pathConstants";
+} from "../../constants/path-constants";
 
 export interface LocationState {
     pathname: string;
 }
 
-const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
+const Settings: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const location = useLocation<LocationState>();
-    const classes = useSettingsStyles({location});
+    const classes = useSettingsStyles({ location });
     const [selectedIndex, setSelectedIndex] = React.useState(1);
 
     useEffect(() => {
@@ -245,67 +245,67 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_INFO}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Account information
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_INFO_USERNAME}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Change username
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_INFO_PHONE}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Change phone
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_INFO_EMAIL}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Change email
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_INFO_COUNTRY}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Change country
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_INFO_LANGUAGES}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Change display language
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_INFO_GENDER}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Gender
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_INFO_AGE}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Age
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PASSWORD}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Change your password
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_TEAMS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             TweetDeck Teams
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_DEACTIVATE}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Deactivate account
                         </Typography>
@@ -316,49 +316,49 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_SECURITY}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Security
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_SECURITY_LOGIN_VERIFICATION}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Two-factor authentication
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_SECURITY_APPS_AND_SESSIONS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Apps and sessions
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_SECURITY_CONNECTED_APPS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Connected apps
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_SECURITY_SESSIONS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Sessions
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_SECURITY_SESSIONS_CURRENT}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Current session
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_SECURITY_LOGIN_HISTORY}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Account access history
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_SECURITY_DEVICES}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Logged-in devices and apps
                         </Typography>
@@ -369,121 +369,121 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Audience and tagging
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_TAGGING}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Photo tagging
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Your Tweets
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Add location information to your Tweets
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Content you see
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Mute and block
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_BLOCKED}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Blocked accounts
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTED}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Muted accounts
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Muted words
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Muted notifications
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Direct Messages
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_SPACES}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Spaces
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Discoverability and contacts
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Manage contacts
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Ads preferences
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Your advertiser list
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Off-Twitter activity
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Data sharing with business partners
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Location information
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             See places you’ve been
                         </Typography>
@@ -494,25 +494,25 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_NOTIFICATION_FILTERS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Filters
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_NOTIFICATION_PREFERENCES}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Preferences
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Push notifications
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Email notifications
                         </Typography>
@@ -523,37 +523,37 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Accessibility
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Display
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Languages
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Data usage
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Autoplay
                         </Typography>
                     </Route>
                     <Route exact path={SETTINGS_PERSONALIZATION}>
-                        <BackButton/>
+                        <BackButton />
                         <Typography variant="h5">
                             Personalization and data
                         </Typography>
@@ -571,66 +571,73 @@ const Settings: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                 </Paper>
                 <Paper className={classnames(globalClasses.pageContainer, classes.pageContainer)} variant="outlined">
                     <div className={globalClasses.contentWrapper}>
-                        <Route exact path={SETTINGS} component={Account}/>
-                        <Route exact path={SETTINGS_INFO} component={AccountInformation}/>
-                        <Route exact path={SETTINGS_INFO_USERNAME} component={ChangeUsername}/>
-                        <Route exact path={SETTINGS_INFO_PHONE} component={ChangePhone}/>
-                        <Route exact path={SETTINGS_INFO_EMAIL} component={ChangeEmail}/>
-                        <Route exact path={SETTINGS_INFO_COUNTRY} component={ChangeCountry}/>
-                        <Route exact path={SETTINGS_INFO_LANGUAGES} component={ChangeLanguage}/>
-                        <Route exact path={SETTINGS_INFO_GENDER} component={ChangeGender}/>
-                        <Route exact path={SETTINGS_INFO_AGE} component={ChangeAge}/>
-                        <Route exact path={SETTINGS_PASSWORD} component={ChangeYourPassword}/>
-                        <Route exact path={SETTINGS_TEAMS} component={TweetDeckTeams}/>
-                        <Route exact path={SETTINGS_DEACTIVATE} component={DeactivateAccount}/>
-                        <Route exact path={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS} component={SecurityAndAccountAccess}/>
-                        <Route exact path={SETTINGS_SECURITY} component={Security}/>
-                        <Route exact path={SETTINGS_SECURITY_LOGIN_VERIFICATION} component={TwoFactorAuthentication}/>
-                        <Route exact path={SETTINGS_SECURITY_APPS_AND_SESSIONS} component={AppsAndSessions}/>
-                        <Route exact path={SETTINGS_SECURITY_CONNECTED_APPS} component={ConnectedApps}/>
-                        <Route exact path={SETTINGS_SECURITY_SESSIONS} component={Sessions}/>
-                        <Route exact path={SETTINGS_SECURITY_SESSIONS_CURRENT} component={CurrentSession}/>
-                        <Route exact path={SETTINGS_SECURITY_LOGIN_HISTORY} component={AccountAccessHistory}/>
-                        <Route exact path={SETTINGS_SECURITY_DEVICES} component={LoggedDevices}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY} component={PrivacyAndSafety}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE} component={AudienceAndTagging}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_TAGGING} component={PhotoTagging}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS} component={YourTweets}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION} component={LocationInformation}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE} component={ContentYouSee}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK} component={MuteAndBlock}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_BLOCKED} component={BlockedAccounts}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTED} component={MutedAccounts}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS} component={MutedWords}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS} component={MutedNotifications}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES} component={DirectMessages}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_SPACES} component={Spaces}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS} component={Discoverability}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD} component={ManageContacts}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES} component={AdsPreferences}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES} component={YourAdvertiserList}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY} component={OffTwitterActivity}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS} component={DataSharing}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION} component={Location}/>
-                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS} component={Places}/>
-                        <Route exact path={SETTINGS_NOTIFICATION} component={Notifications}/>
-                        <Route exact path={SETTINGS_NOTIFICATION_FILTERS} component={Filters}/>
-                        <Route exact path={SETTINGS_NOTIFICATION_PREFERENCES} component={Preferences}/>
-                        <Route exact path={SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS} component={PushNotifications}/>
-                        <Route exact path={SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS} component={EmailNotifications}/>
-                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES} component={AccessibilityDisplayLanguages}/>
-                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY} component={Accessibility}/>
+                        <Route exact path={SETTINGS} component={Account} />
+                        <Route exact path={SETTINGS_INFO} component={AccountInformation} />
+                        <Route exact path={SETTINGS_INFO_USERNAME} component={ChangeUsername} />
+                        <Route exact path={SETTINGS_INFO_PHONE} component={ChangePhone} />
+                        <Route exact path={SETTINGS_INFO_EMAIL} component={ChangeEmail} />
+                        <Route exact path={SETTINGS_INFO_COUNTRY} component={ChangeCountry} />
+                        <Route exact path={SETTINGS_INFO_LANGUAGES} component={ChangeLanguage} />
+                        <Route exact path={SETTINGS_INFO_GENDER} component={ChangeGender} />
+                        <Route exact path={SETTINGS_INFO_AGE} component={ChangeAge} />
+                        <Route exact path={SETTINGS_PASSWORD} component={ChangeYourPassword} />
+                        <Route exact path={SETTINGS_TEAMS} component={TweetDeckTeams} />
+                        <Route exact path={SETTINGS_DEACTIVATE} component={DeactivateAccount} />
+                        <Route exact path={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS} component={SecurityAndAccountAccess} />
+                        <Route exact path={SETTINGS_SECURITY} component={Security} />
+                        <Route exact path={SETTINGS_SECURITY_LOGIN_VERIFICATION} component={TwoFactorAuthentication} />
+                        <Route exact path={SETTINGS_SECURITY_APPS_AND_SESSIONS} component={AppsAndSessions} />
+                        <Route exact path={SETTINGS_SECURITY_CONNECTED_APPS} component={ConnectedApps} />
+                        <Route exact path={SETTINGS_SECURITY_SESSIONS} component={Sessions} />
+                        <Route exact path={SETTINGS_SECURITY_SESSIONS_CURRENT} component={CurrentSession} />
+                        <Route exact path={SETTINGS_SECURITY_LOGIN_HISTORY} component={AccountAccessHistory} />
+                        <Route exact path={SETTINGS_SECURITY_DEVICES} component={LoggedDevices} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY} component={PrivacyAndSafety} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE} component={AudienceAndTagging} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_TAGGING} component={PhotoTagging} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS} component={YourTweets} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION} component={LocationInformation} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE} component={ContentYouSee} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK} component={MuteAndBlock} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_BLOCKED} component={BlockedAccounts} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTED} component={MutedAccounts} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS} component={MutedWords} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS}
+                               component={MutedNotifications} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES} component={DirectMessages} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_SPACES} component={Spaces} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS} component={Discoverability} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD} component={ManageContacts} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES} component={AdsPreferences} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES} component={YourAdvertiserList} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}
+                               component={OffTwitterActivity} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS}
+                               component={DataSharing} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION} component={Location} />
+                        <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS} component={Places} />
+                        <Route exact path={SETTINGS_NOTIFICATION} component={Notifications} />
+                        <Route exact path={SETTINGS_NOTIFICATION_FILTERS} component={Filters} />
+                        <Route exact path={SETTINGS_NOTIFICATION_PREFERENCES} component={Preferences} />
+                        <Route exact path={SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS} component={PushNotifications} />
+                        <Route exact path={SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS} component={EmailNotifications} />
+                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}
+                               component={AccessibilityDisplayLanguages} />
+                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY}
+                               component={Accessibility} />
                         <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY}
                                render={() => <Display
                                    changeBackgroundColor={changeBackgroundColor}
-                                   changeColorScheme={changeColorScheme}/>
-                               }/>
-                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES} component={Languages}/>
-                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA} component={DataUsage}/>
-                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY} component={Autoplay}/>
-                        <Route exact path={SETTINGS_ABOUT} component={AdditionalResources}/>
-                        <Route exact path={SETTINGS_CONTENT_PREFERENCES} component={ContentPreferences}/>
-                        <Route exact path={SETTINGS_PERSONALIZATION} component={PersonalizationAndData}/>
+                                   changeColorScheme={changeColorScheme} />
+                               } />
+                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}
+                               component={Languages} />
+                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA} component={DataUsage} />
+                        <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY}
+                               component={Autoplay} />
+                        <Route exact path={SETTINGS_ABOUT} component={AdditionalResources} />
+                        <Route exact path={SETTINGS_CONTENT_PREFERENCES} component={ContentPreferences} />
+                        <Route exact path={SETTINGS_PERSONALIZATION} component={PersonalizationAndData} />
                     </div>
                 </Paper>
             </Grid>

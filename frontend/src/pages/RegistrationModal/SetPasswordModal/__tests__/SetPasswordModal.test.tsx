@@ -1,12 +1,12 @@
 import React from "react";
-import {createMemoryHistory} from "history";
-import {Button, Dialog} from "@material-ui/core";
+import { createMemoryHistory } from "history";
+import { Button, Dialog } from "@material-ui/core";
 
 import SetPasswordModal from "../SetPasswordModal";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {RegistrationInputField} from "../../RegistrationInput/RegistrationInputField";
-import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { RegistrationInputField } from "../../RegistrationInput/RegistrationInputField";
+import { UserActionsType } from "../../../../store/ducks/user/contracts/actionTypes";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("SetPasswordModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -19,7 +19,7 @@ describe("SetPasswordModal", () => {
 
     it("should CreateAccountModal and submit form", (done) => {
         const history = createMemoryHistory();
-        const mockRegistrationData = {email: "test@test.test", password: "test_password", history: history};
+        const mockRegistrationData = { email: "test@test.test", password: "test_password", history: history };
         const wrapper = mountWithStore(
             <SetPasswordModal
                 email={"test@test.test"}
@@ -31,8 +31,8 @@ describe("SetPasswordModal", () => {
         expect(wrapper.text().includes("You'll need a password")).toBe(true);
         expect(wrapper.text().includes("Make sure it’s 8 characters or more.")).toBe(true);
         expect(wrapper.find(Button).text().includes("Next")).toBe(true);
-        
-        wrapper.find(RegistrationInputField).find("input").simulate("change", {target: {value: "test_password"}});
+
+        wrapper.find(RegistrationInputField).find("input").simulate("change", { target: { value: "test_password" } });
         wrapper.find(Button).at(0).simulate("submit");
 
         setImmediate(() => {
@@ -53,8 +53,8 @@ describe("SetPasswordModal", () => {
                 open={true}
                 onClose={jest.fn()}
             />, mockStore);
-        
-        wrapper.find(RegistrationInputField).find("input").simulate("change", {target: {value: "test"}});
+
+        wrapper.find(RegistrationInputField).find("input").simulate("change", { target: { value: "test" } });
         wrapper.find(Button).at(0).simulate("submit");
 
         setImmediate(() => {

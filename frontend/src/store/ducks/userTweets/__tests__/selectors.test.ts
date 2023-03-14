@@ -4,9 +4,9 @@ import {
     selectPagesCount,
     selectUserTweetsItems
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockTweets} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../types/common";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockTweets } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("userTweets selectors:", () => {
     const mockState = createMockRootState();
@@ -15,7 +15,7 @@ describe("userTweets selectors:", () => {
         it("should return TweetResponse array", () => {
             expect(selectUserTweetsItems({
                 ...mockState,
-                userTweets: {...mockState.userTweets, items: mockTweets}
+                userTweets: { ...mockState.userTweets, items: mockTweets }
             })).toBe(mockTweets);
         });
     });

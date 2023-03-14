@@ -1,8 +1,8 @@
 import React from "react";
-import {Dialog, Radio} from "@material-ui/core";
+import { Dialog, Radio } from "@material-ui/core";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {BackgroundTheme, ColorScheme, LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { BackgroundTheme, ColorScheme, LoadingStatus } from "../../../../types/common";
 import DisplayModal from "../DisplayModal";
 
 describe("DisplayModal", () => {
@@ -16,7 +16,7 @@ describe("DisplayModal", () => {
     });
 
     it("should render correctly", () => {
-        const {wrapper} = createDisplayModalWrapper();
+        const { wrapper } = createDisplayModalWrapper();
 
         expect(wrapper.text().includes("Customize your view")).toBe(true);
         expect(wrapper.text().includes("Manage your font size, color, and background.")).toBe(true);
@@ -32,7 +32,7 @@ describe("DisplayModal", () => {
     it("should render different colors", () => {
         localStorage.setItem("color", "YELLOW");
         localStorage.setItem("background", "DIM");
-        const {wrapper} = createDisplayModalWrapper();
+        const { wrapper } = createDisplayModalWrapper();
 
         expect(wrapper.find("#blue").find("#checkIcon").exists()).toBeFalsy();
         expect(wrapper.find("#yellow").find("#checkIcon").exists()).toBeTruthy();
@@ -42,8 +42,8 @@ describe("DisplayModal", () => {
     });
 
     it("should change Background color", () => {
-        const {wrapper, mockChangeBackgroundColor} = createDisplayModalWrapper();
-        
+        const { wrapper, mockChangeBackgroundColor } = createDisplayModalWrapper();
+
         expect(wrapper.find(Radio).at(1).prop("checked")).toBe(false);
         wrapper.find(Radio).at(1).find("input").simulate("change");
         expect(wrapper.find(Radio).at(1).prop("checked")).toBe(true);
@@ -53,27 +53,27 @@ describe("DisplayModal", () => {
 
     it("should click DEFAULT Background color", () => {
         localStorage.setItem("background", "DIM");
-        const {wrapper, mockChangeBackgroundColor} = createDisplayModalWrapper();
+        const { wrapper, mockChangeBackgroundColor } = createDisplayModalWrapper();
 
         expect(wrapper.find(Radio).at(0).prop("checked")).toBe(false);
         wrapper.find("#default").simulate("click");
         expect(wrapper.find(Radio).at(0).prop("checked")).toBe(true);
         expect(mockChangeBackgroundColor).toHaveBeenCalled();
         expect(mockChangeBackgroundColor).toHaveBeenCalledWith(BackgroundTheme.DEFAULT);
-        testClickBackgroundColor("#default", 0, BackgroundTheme.DEFAULT)
+        testClickBackgroundColor("#default", 0, BackgroundTheme.DEFAULT);
     });
 
     it("should click DEFAULT Background color", () => {
         localStorage.setItem("background", "DIM");
-        testClickBackgroundColor("#default", 0, BackgroundTheme.DEFAULT)
+        testClickBackgroundColor("#default", 0, BackgroundTheme.DEFAULT);
     });
 
     it("should click DIM Background color", () => {
-        testClickBackgroundColor("#dim", 1, BackgroundTheme.DIM)
+        testClickBackgroundColor("#dim", 1, BackgroundTheme.DIM);
     });
 
     it("should click LIGHTS_OUT Background color", () => {
-        testClickBackgroundColor("#lights-out", 2, BackgroundTheme.LIGHTS_OUT)
+        testClickBackgroundColor("#lights-out", 2, BackgroundTheme.LIGHTS_OUT);
     });
 
     it("should click change BLUE Color scheme", () => {
@@ -102,12 +102,12 @@ describe("DisplayModal", () => {
     });
 
     it("should render empty DisplayModal", () => {
-        const {wrapper} = createDisplayModalWrapper(false);
+        const { wrapper } = createDisplayModalWrapper(false);
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
     });
-    
+
     const testClickBackgroundColor = (backgroundColorId: string, itemId: number, background: BackgroundTheme): void => {
-        const {wrapper, mockChangeBackgroundColor} = createDisplayModalWrapper();
+        const { wrapper, mockChangeBackgroundColor } = createDisplayModalWrapper();
 
         expect(wrapper.find(Radio).at(itemId).prop("checked")).toBe(false);
         wrapper.find(backgroundColorId).simulate("click");
@@ -115,9 +115,9 @@ describe("DisplayModal", () => {
         expect(mockChangeBackgroundColor).toHaveBeenCalled();
         expect(mockChangeBackgroundColor).toHaveBeenCalledWith(background);
     };
-    
+
     const testClickChangeColorScheme = (colorId: string, colorScheme: ColorScheme): void => {
-        const {wrapper, mockChangeColorScheme} = createDisplayModalWrapper();
+        const { wrapper, mockChangeColorScheme } = createDisplayModalWrapper();
 
         expect(wrapper.find(colorId).find("#checkIcon").exists()).toBeFalsy();
         wrapper.find(colorId).simulate("click");
@@ -138,6 +138,6 @@ describe("DisplayModal", () => {
                 changeColorScheme={mockChangeColorScheme}
             />, mockRootState);
 
-        return {wrapper, mockOnClose, mockChangeBackgroundColor, mockChangeColorScheme};
+        return { wrapper, mockOnClose, mockChangeBackgroundColor, mockChangeColorScheme };
     };
 });

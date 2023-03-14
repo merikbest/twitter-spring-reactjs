@@ -1,15 +1,15 @@
-import React, {FC, memo, MouseEvent, ReactElement, useState} from "react";
-import {EmojiData, Picker} from "emoji-mart";
-import {Popover} from "@material-ui/core";
+import React, { FC, memo, MouseEvent, ReactElement, useState } from "react";
+import { EmojiData, Picker } from "emoji-mart";
+import { Popover } from "@material-ui/core";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
-import {EmojiIcon} from "../../../icons";
+import { EmojiIcon } from "../../../icons";
 
 interface EmojiIconButtonProps {
     addEmoji: (emoji: EmojiData) => void;
 }
 
-const EmojiIconButton: FC<EmojiIconButtonProps> = memo(({addEmoji}): ReactElement => {
+const EmojiIconButton: FC<EmojiIconButtonProps> = memo(({ addEmoji }): ReactElement => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openPopover = Boolean(anchorEl);
     const popoverId = openPopover ? "simple-popover" : undefined;
@@ -36,10 +36,10 @@ const EmojiIconButton: FC<EmojiIconButtonProps> = memo(({addEmoji}): ReactElemen
                 open={openPopover}
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
-                anchorOrigin={{vertical: "bottom", horizontal: "center"}}
-                transformOrigin={{vertical: "top", horizontal: "center"}}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                transformOrigin={{ vertical: "top", horizontal: "center" }}
             >
-                <Picker title="" emoji="wave" onSelect={addEmoji} set="twitter"/>
+                <Picker title="" emoji="wave" onSelect={addEmoji} set="twitter" />
             </Popover>
         </>
     );

@@ -1,4 +1,4 @@
-import {Theme, withStyles} from "@material-ui/core";
+import { Theme, withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 
 export const ManageMembersInput = withStyles((theme: Theme) => ({
@@ -13,25 +13,25 @@ export const ManageMembersInput = withStyles((theme: Theme) => ({
                 backgroundColor: theme.palette.background.paper,
                 "& fieldset": { borderWidth: 1, borderColor: theme.palette.primary.main },
                 "& svg path": {
-                    fill: theme.palette.primary.main,
-                },
+                    fill: theme.palette.primary.main
+                }
             },
             "&:hover": {
-                "& fieldset": { borderColor: "transparent" },
+                "& fieldset": { borderColor: "transparent" }
             },
             "& fieldset": {
                 borderColor: "transparent",
-                borderWidth: 1,
+                borderWidth: 1
             },
             "& .MuiInputAdornment-root": {
-                "& svg" : {
+                "& svg": {
                     color: theme.palette.text.secondary,
                     height: "1.25em"
                 }
-            },
+            }
         },
         "& .MuiOutlinedInput-input": {
-            padding: "12px 0px",
-        },
-    },
+            padding: "12px 0px"
+        }
+    }
 }))(TextField);

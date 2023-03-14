@@ -18,13 +18,13 @@ import {
     setUserProfile,
     setUserProfileLoadingState
 } from "../actionCreators";
-import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/testHelper";
-import {UserProfileResponse} from "../../../types/user";
+import {testCall, testLoadingStatus, testSetResponse, testWatchSaga} from "../../../../util/test-utils/test-helper";
+import {UserProfileResponse} from "../../../../types/user";
 import {UserApi} from "../../../../services/api/userApi";
 import {ChatApi} from "../../../../services/api/chatApi";
-import {TweetImageResponse} from "../../../types/tweet";
+import {TweetImageResponse} from "../../../../types/tweet";
 import {UserProfileActionsType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types/common";
+import {LoadingStatus} from "../../../../types/common";
 import {TweetApi} from "../../../../services/api/tweetApi";
 
 describe("userProfileSaga:", () => {

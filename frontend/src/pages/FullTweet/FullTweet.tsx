@@ -1,11 +1,11 @@
-import React, {ReactElement, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
-import Paper from '@material-ui/core/Paper';
-import {Divider} from "@material-ui/core";
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Paper from "@material-ui/core/Paper";
+import { Divider } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import SockJS from "sockjs-client";
-import {CompatClient, Stomp} from "@stomp/stompjs";
+import { CompatClient, Stomp } from "@stomp/stompjs";
 
 import {
     selectIsRepliesLoading,
@@ -16,22 +16,22 @@ import {
     selectTweetId,
     selectTweetText,
     selectTweetUserFullName
-} from '../../store/ducks/tweet/selectors';
+} from "../../store/ducks/tweet/selectors";
 import {
     fetchReplies,
     fetchTweetData,
     resetRepliesState,
     resetTweetState,
-    updateTweetData,
-} from '../../store/ducks/tweet/actionCreators';
+    updateTweetData
+} from "../../store/ducks/tweet/actionCreators";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
-import {useFullTweetStyles} from "./FullTweetStyles";
-import {WS_URL} from "../../util/endpoints";
-import {textFormatter} from "../../util/textFormatter";
+import { useFullTweetStyles } from "./FullTweetStyles";
+import { WS_URL } from "../../constants/endpoint-constants";
+import { textFormatter } from "../../util/text-formatter";
 import ShareTweetIconButton from "../../components/ShareTweetIconButton/ShareTweetIconButton";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 import Spinner from "../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useGlobalStyles } from "../../util/globalClasses";
 import LikeIconButton from "./LikeIconButton/LikeIconButton";
 import RetweetIconButton from "./RetweetIconButton/RetweetIconButton";
 import ReplyIconButton from "./ReplyIconButton/ReplyIconButton";
@@ -47,6 +47,7 @@ import TweetPoll from "./TweetPoll/TweetPoll";
 import TweetQuote from "./TweetQuote/TweetQuote";
 import TweetErrorPage from "./TweetErrorPage/TweetErrorPage";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
+import { TOPIC_TWEET } from "../../constants/ws-constants";
 
 let stompClient: CompatClient | null = null;
 
@@ -71,7 +72,7 @@ const FullTweet = (): ReactElement | null => {
 
             stompClient = Stomp.over(() => new SockJS(WS_URL));
             stompClient.connect({}, () => {
-                stompClient?.subscribe(`/topic/tweet/${params.id}`, (response) => {
+                stompClient?.subscribe(TOPIC_TWEET(params.id), (response) => {
                     dispatch(updateTweetData(JSON.parse(response.body)));
                 });
             });
@@ -94,47 +95,47 @@ const FullTweet = (): ReactElement | null => {
     }, [isTweetLoadedSuccess]);
 
     if (isTweetLoading) {
-        return <Spinner paddingTop={200}/>;
+        return <Spinner paddingTop={200} />;
     } else if (tweetId && isTweetLoadedSuccess) {
         return (
             <PageWrapper title={"Tweet"}>
                 <div className={globalClasses.contentWrapper}>
                     <Paper className={classes.container}>
-                        <TweetActions/>
+                        <TweetActions />
                         <div className={classes.tweetHeader}>
-                            <TweetHeader/>
-                            <TweetComponentActions tweetId={tweetId} isFullTweet/>
+                            <TweetHeader />
+                            <TweetComponentActions tweetId={tweetId} isFullTweet />
                         </div>
                         <Typography variant={"h3"} className={classes.textWrapper}>
                             {textFormatter(tweetText!)}
-                            <TweetMedia/>
-                            <TweetImage/>
-                            <TweetPoll/>
-                            <TweetQuote/>
+                            <TweetMedia />
+                            <TweetImage />
+                            <TweetPoll />
+                            <TweetQuote />
                         </Typography>
-                        <TweetDateTime/>
-                        <TweetInteractionCount/>
+                        <TweetDateTime />
+                        <TweetInteractionCount />
                         <div className={classes.info}>
-                            <ReplyIconButton/>
-                            <RetweetIconButton/>
-                            <LikeIconButton/>
-                            <ShareTweetIconButton tweetId={tweetId!} isFullTweet/>
+                            <ReplyIconButton />
+                            <RetweetIconButton />
+                            <LikeIconButton />
+                            <ShareTweetIconButton tweetId={tweetId!} isFullTweet />
                         </div>
-                        <Divider/>
-                        <TweetReplyInfo/>
-                        <AddReplyToTweet/>
+                        <Divider />
+                        <TweetReplyInfo />
+                        <AddReplyToTweet />
                     </Paper>
-                    <div className={classes.divider}/>
+                    <div className={classes.divider} />
                     {isRepliesLoading ? (
-                        <Spinner/>
+                        <Spinner />
                     ) : (
-                        replies.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)
+                        replies.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)
                     )}
                 </div>
             </PageWrapper>
         );
     } else if (!tweetId && isError) {
-        return <TweetErrorPage/>;
+        return <TweetErrorPage />;
     } else {
         return null;
     }

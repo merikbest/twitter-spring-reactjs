@@ -1,9 +1,9 @@
 import React from "react";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import TweetComponentActionsModal from "../TweetComponentActionsModal";
-import {LoadingStatus} from "../../../../store/types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("TweetComponentActionsModal", () => {
     it("should render Delete Tweet Action Modal", () => {

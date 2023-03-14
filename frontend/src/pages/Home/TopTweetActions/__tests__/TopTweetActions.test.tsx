@@ -1,18 +1,18 @@
 import React from "react";
-import {ClickAwayListener, IconButton} from "@material-ui/core";
+import { ClickAwayListener, IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import TopTweetActions from "../TopTweetActions";
 import HoverAction from "../../../../components/HoverAction/HoverAction";
-import {LoadingStatus} from "../../../../store/types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("TopTweetActions", () => {
     const mockStore = createMockRootState(LoadingStatus.SUCCESS);
 
     beforeEach(() => {
-        React.useState = jest.fn().mockReturnValue([true, jest.fn()])
+        React.useState = jest.fn().mockReturnValue([true, jest.fn()]);
     });
-    
+
     it("should render Latest Tweets info", () => {
         const wrapper = mountWithStore(
             <TopTweetActions

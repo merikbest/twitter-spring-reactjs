@@ -1,11 +1,11 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {Divider, Link as MuiLink, Radio, Switch, Typography} from "@material-ui/core";
-import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
+import React, { FC, ReactElement, useState } from "react";
+import { Divider, Link as MuiLink, Radio, Switch, Typography } from "@material-ui/core";
+import { CheckCircle, RadioButtonUnchecked } from "@material-ui/icons";
 
-import {useTweetDeckTeamsStyles} from "./TweetDeckTeamsStyles";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {TWEETDECK_TEAMS} from "../../../../util/url";
+import { useTweetDeckTeamsStyles } from "./TweetDeckTeamsStyles";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { TWEETDECK_TEAMS } from "../../../../constants/url-constants";
 
 const TweetDeckTeams: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -27,7 +27,7 @@ const TweetDeckTeams: FC = (): ReactElement => {
                 <Typography variant={"h6"} component={"div"} className={classes.title}>
                     Turn on TweetDeck Teams
                     <span className={classes.switch}>
-                        <Switch defaultChecked/>
+                        <Switch defaultChecked />
                     </span>
                 </Typography>
                 <Typography variant={"subtitle2"} component={"div"}>
@@ -37,7 +37,7 @@ const TweetDeckTeams: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
@@ -48,9 +48,9 @@ const TweetDeckTeams: FC = (): ReactElement => {
                         onChange={handleChange}
                         value="Anyone"
                         name="radio-buttons"
-                        inputProps={{"aria-label": "Anyone"}}
-                        icon={<RadioButtonUnchecked color={"primary"}/>}
-                        checkedIcon={<CheckCircle color={"primary"}/>}
+                        inputProps={{ "aria-label": "Anyone" }}
+                        icon={<RadioButtonUnchecked color={"primary"} />}
+                        checkedIcon={<CheckCircle color={"primary"} />}
                         size="small"
                     />
                 </div>
@@ -63,9 +63,9 @@ const TweetDeckTeams: FC = (): ReactElement => {
                         onChange={handleChange}
                         value="Others"
                         name="radio-buttons"
-                        inputProps={{"aria-label": "Others"}}
-                        icon={<RadioButtonUnchecked color={"primary"}/>}
-                        checkedIcon={<CheckCircle color={"primary"}/>}
+                        inputProps={{ "aria-label": "Others" }}
+                        icon={<RadioButtonUnchecked color={"primary"} />}
+                        checkedIcon={<CheckCircle color={"primary"} />}
                         size="small"
                     />
                 </div>

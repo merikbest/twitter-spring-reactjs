@@ -1,15 +1,15 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {Paper} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Paper } from "@material-ui/core";
 
-import {useListsItemStyles} from "./ListsItemStyles";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
-import {PinIcon, PinIconFilled} from "../../../icons";
-import {pinList, unpinList} from "../../../store/ducks/lists/actionCreators";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {ListResponse, ListUserResponse} from "../../../store/types/lists";
-import {LISTS} from "../../../util/pathConstants";
+import { useListsItemStyles } from "./ListsItemStyles";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
+import { PinIcon, PinIconFilled } from "../../../icons";
+import { pinList, unpinList } from "../../../store/ducks/lists/actionCreators";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { ListResponse, ListUserResponse } from "../../../types/lists";
+import { LISTS } from "../../../constants/path-constants";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import FollowListButton from "../../../components/FollowListButton/FollowListButton";
 import ListInfoDescription from "./ListInfoDescription/ListInfoDescription";
@@ -21,7 +21,7 @@ interface ListsItemProps {
     isMyList?: boolean;
 }
 
-const ListsItem: FC<ListsItemProps> = memo(({list, listIndex, isMyList}): ReactElement => {
+const ListsItem: FC<ListsItemProps> = memo(({ list, listIndex, isMyList }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useListsItemStyles();
     const dispatch = useDispatch();
@@ -40,8 +40,8 @@ const ListsItem: FC<ListsItemProps> = memo(({list, listIndex, isMyList}): ReactE
 
     return (
         <Link to={`${LISTS}/${list?.id}`} className={globalClasses.link}>
-            <Paper className={classes.container} style={{border: (listIndex === 2) ? 0 : 1}} variant="outlined">
-                <ListsItemAvatar listWallpaper={list?.wallpaper} listAltWallpaper={list?.altWallpaper}/>
+            <Paper className={classes.container} style={{ border: (listIndex === 2) ? 0 : 1 }} variant="outlined">
+                <ListsItemAvatar listWallpaper={list?.wallpaper} listAltWallpaper={list?.altWallpaper} />
                 <div className={classes.listInfoContainer}>
                     <ListInfoDescription
                         listId={list?.id}

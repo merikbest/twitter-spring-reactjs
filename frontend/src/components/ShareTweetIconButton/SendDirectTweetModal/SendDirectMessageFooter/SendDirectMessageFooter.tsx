@@ -1,12 +1,12 @@
-import React, {ChangeEvent, FC, memo, ReactElement, useState} from "react";
+import React, { ChangeEvent, FC, memo, ReactElement, useState } from "react";
 import IconButton from "@material-ui/core/IconButton";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
-import {useSendDirectTweetModalStyles} from "../SendDirectTweetModalStyles";
-import {SendDirectMessageInput} from "../SendDirectMessageInput";
-import {SendMessageIcon} from "../../../../icons";
-import {addChatMessageWithTweet} from "../../../../store/ducks/chatMessages/actionCreators";
-import {UserResponse} from "../../../../store/types/user";
+import { useSendDirectTweetModalStyles } from "../SendDirectTweetModalStyles";
+import { SendDirectMessageInput } from "../SendDirectMessageInput";
+import { SendMessageIcon } from "../../../../icons";
+import { addChatMessageWithTweet } from "../../../../store/ducks/chatMessages/actionCreators";
+import { UserResponse } from "../../../../types/user";
 
 interface SendDirectMessageFooterProps {
     tweetId: number;
@@ -32,7 +32,7 @@ const SendDirectMessageFooter: FC<SendDirectMessageFooterProps> = memo((
             usersIds: selectedUsers.map((user) => user.id!)
         }));
         setText("");
-        onSendMessageFinish()
+        onSendMessageFinish();
     };
 
     const handleSetMessage = (event: ChangeEvent<HTMLInputElement>): void => {

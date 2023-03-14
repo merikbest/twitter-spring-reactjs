@@ -1,10 +1,10 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
 import TweetAnalyticsModal from "../../../TweetAnalyticsModal/TweetAnalyticsModal";
-import {mockFullTweet} from "../../../../util/mockData/mockData";
+import { mockFullTweet } from "../../../../util/test-utils/mock-test-data";
 import AnalyticsIconButton from "../AnalyticsIconButton";
 import ActionIconButton from "../../../ActionIconButton/ActionIconButton";
 import CloseButton from "../../../CloseButton/CloseButton";

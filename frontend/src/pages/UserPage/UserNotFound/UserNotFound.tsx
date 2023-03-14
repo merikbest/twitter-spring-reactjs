@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
-import {Avatar, Paper, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Avatar, Paper, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
-import {useUserNotFoundStyles} from "./UserNotFoundStyles";
-import {useGlobalStyles} from "../../../util/globalClasses";
+import { useUserNotFoundStyles } from "./UserNotFoundStyles";
+import { useGlobalStyles } from "../../../util/globalClasses";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const UserNotFound: FC = (): ReactElement => {
@@ -17,7 +17,7 @@ const UserNotFound: FC = (): ReactElement => {
                     Profile
                 </Typography>
             </PageHeaderWrapper>
-            <div className={classes.wallpaper}/>
+            <div className={classes.wallpaper} />
             <div className={classes.avatar}>
                 <Avatar>
                     <div></div>

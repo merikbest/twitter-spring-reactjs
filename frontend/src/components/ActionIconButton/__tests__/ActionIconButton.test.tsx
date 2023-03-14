@@ -1,11 +1,11 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import ActionIconButton from "../ActionIconButton";
-import {GifIcon} from "../../../icons";
+import { GifIcon } from "../../../icons";
 import HoverAction from "../../HoverAction/HoverAction";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("ActionIconButton", () => {
     const mockStore = createMockRootState(LoadingStatus.SUCCESS);

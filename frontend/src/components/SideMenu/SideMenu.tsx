@@ -1,8 +1,8 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Link, NavLink, useLocation} from 'react-router-dom';
-import {Button, Divider, Hidden, IconButton, List, ListItem, Popover, Typography} from "@material-ui/core";
-import CreateIcon from '@material-ui/icons/Create';
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { Button, Divider, Hidden, IconButton, List, ListItem, Popover, Typography } from "@material-ui/core";
+import CreateIcon from "@material-ui/icons/Create";
 import classnames from "classnames";
 
 import {
@@ -40,14 +40,14 @@ import {
     selectUserDataNotificationsCount,
     selectUserDataUnreadMessagesCount
 } from "../../store/ducks/user/selectors";
-import {useSideMenuStyles} from "./SideMenuStyles";
+import { useSideMenuStyles } from "./SideMenuStyles";
 import AddTweetModal from "../AddTweetModal/AddTweetModal";
-import {selectLoadingState} from "../../store/ducks/tweets/selectors";
+import { selectLoadingState } from "../../store/ducks/tweets/selectors";
 import DisplayModal from "./DisplayModal/DisplayModal";
-import {DisplayProps} from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import { DisplayProps } from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
-import {useGlobalStyles} from "../../util/globalClasses";
-import {resetFollowerRequestsState} from "../../store/ducks/followerRequests/actionCreators";
+import { useGlobalStyles } from "../../util/globalClasses";
+import { resetFollowerRequestsState } from "../../store/ducks/followerRequests/actionCreators";
 import {
     BOOKMARKS,
     HOME,
@@ -58,11 +58,11 @@ import {
     SEARCH,
     SETTINGS,
     TOPICS_FOLLOWED
-} from "../../util/pathConstants";
-import {HELP_TWITTER, TWITTER_ABOUT, TWITTER_LOGIN} from "../../util/url";
-import {LoadingStatus} from "../../store/types/common";
+} from "../../constants/path-constants";
+import { HELP_TWITTER, TWITTER_ABOUT, TWITTER_LOGIN } from "../../constants/url-constants";
+import { LoadingStatus } from "../../types/common";
 
-const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}): ReactElement => {
+const SideMenu: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useSideMenuStyles();
     const dispatch = useDispatch();
@@ -142,7 +142,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             <Hidden smDown>
                                 <>
                                     {visibleHomeNotification &&
-                                        <span id={"homeNotification"} className={classes.homeNotification}/>}
+                                        <span id={"homeNotification"} className={classes.homeNotification} />}
                                     {(location.pathname.includes(HOME)) ? (
                                         <span>{HomeIconFilled}</span>
                                     ) : (
@@ -295,15 +295,15 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                         anchorEl={anchorEl}
                         onClose={handleClosePopup}
                         classes={{
-                            paper: classes.popover,
+                            paper: classes.popover
                         }}
                         anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'center',
+                            vertical: "top",
+                            horizontal: "center"
                         }}
                         transformOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
+                            vertical: "bottom",
+                            horizontal: "center"
                         }}
                     >
                         <div className={classnames(classes.listItemWrapper, globalClasses.svg)}>
@@ -349,7 +349,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                                         </Typography>
                                     </ListItem>
                                 </a>
-                                <Divider/>
+                                <Divider />
                                 <Link to={SETTINGS}>
                                     <ListItem id={"closePopup"} onClick={handleClosePopup}>
                                         {SettingsIcon}
@@ -394,10 +394,10 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                             Tweet
                         </Hidden>
                         <Hidden mdUp>
-                            <CreateIcon/>
+                            <CreateIcon />
                         </Hidden>
                     </Button>
-                    <AddTweetModal visible={visibleAddTweet} onClose={onCloseAddTweet}/>
+                    <AddTweetModal visible={visibleAddTweet} onClose={onCloseAddTweet} />
                     <FollowerRequestsModal
                         visible={visibleFollowerRequestsModal}
                         onClose={onCloseFollowerRequestsModal}
@@ -410,7 +410,7 @@ const SideMenu: FC<DisplayProps> = ({changeBackgroundColor, changeColorScheme}):
                     />
                 </li>
             </ul>
-            <UserSideProfile/>
+            <UserSideProfile />
         </>
     );
 };

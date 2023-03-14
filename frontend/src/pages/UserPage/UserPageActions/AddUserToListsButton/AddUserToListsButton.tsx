@@ -1,9 +1,9 @@
-import React, {memo, ReactElement, useState} from "react";
-import {useSelector} from "react-redux";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { memo, ReactElement, useState } from "react";
+import { useSelector } from "react-redux";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {AddListsIcon} from "../../../../icons";
-import {selectUserProfileId, selectUserProfileUsername} from "../../../../store/ducks/userProfile/selectors";
+import { AddListsIcon } from "../../../../icons";
+import { selectUserProfileId, selectUserProfileUsername } from "../../../../store/ducks/userProfile/selectors";
 import ListsModal from "../../../../components/ListsModal/ListsModal";
 
 const AddUserToListsButton = memo((): ReactElement => {
@@ -27,7 +27,7 @@ const AddUserToListsButton = memo((): ReactElement => {
                     Add/remove @{username} from Lists
                 </Typography>
             </ListItem>
-            <ListsModal userId={userProfileId!} visible={visibleListsModal} onClose={onCloseListsModal}/>
+            <ListsModal userId={userProfileId!} visible={visibleListsModal} onClose={onCloseListsModal} />
         </>
     );
 });

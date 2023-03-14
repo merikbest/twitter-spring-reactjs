@@ -1,20 +1,20 @@
-import React, {FC, memo, ReactElement} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Button, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Typography } from "@material-ui/core";
 import isAfter from "date-fns/isAfter";
 
-import {useVoteComponentStyles} from "./VoteComponentStyles";
-import {selectUserDataId} from "../../store/ducks/user/selectors";
-import {vote} from "../../store/ducks/tweets/actionCreators";
-import {voteFormatDate} from "../../util/formatDate";
-import {PollResponse} from "../../store/types/tweet";
+import { useVoteComponentStyles } from "./VoteComponentStyles";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
+import { vote } from "../../store/ducks/tweets/actionCreators";
+import { voteFormatDate } from "../../util/format-date-helper";
+import { PollResponse } from "../../types/tweet";
 
 interface VoteComponentProps {
     tweetId: number;
     poll?: PollResponse;
 }
 
-const VoteComponent: FC<VoteComponentProps> = memo(({tweetId, poll}): ReactElement => {
+const VoteComponent: FC<VoteComponentProps> = memo(({ tweetId, poll }): ReactElement => {
     const classes = useVoteComponentStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);
@@ -25,7 +25,7 @@ const VoteComponent: FC<VoteComponentProps> = memo(({tweetId, poll}): ReactEleme
     const isPollEnded = isAfter(Date.now(), new Date(poll?.dateTime!));
 
     const onClickVote = (pollChoiceId: number): void => {
-        dispatch(vote({tweetId, pollId: poll?.id!, pollChoiceId}));
+        dispatch(vote({ tweetId, pollId: poll?.id!, pollChoiceId }));
     };
 
     return (
@@ -46,7 +46,7 @@ const VoteComponent: FC<VoteComponentProps> = memo(({tweetId, poll}): ReactEleme
                                     </div>
                                     <div
                                         className={classes.voteScale}
-                                        style={{width: `${(voteNumber === 0) ? 1 : voteNumber}%`}}
+                                        style={{ width: `${(voteNumber === 0) ? 1 : voteNumber}%` }}
                                     />
                                 </div>
                             );

@@ -1,15 +1,15 @@
 import React from "react";
-import {Avatar, Button, Dialog} from "@material-ui/core";
+import { Avatar, Button, Dialog } from "@material-ui/core";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
 import EditProfileModal from "../EditProfileModal";
-import {mockFullTweet, mockUser} from "../../../util/mockData/mockData";
+import { mockFullTweet, mockUser } from "../../../util/test-utils/mock-test-data";
 import TweeterInput from "../TweetInput/TweeterInput";
-import {API_USER_UPLOAD_IMAGE} from "../../../util/endpoints";
-import {UserActionsType} from "../../../store/ducks/user/contracts/actionTypes";
-import {LoadingStatus} from "../../../store/types/common";
+import { API_USER_UPLOAD_IMAGE } from "../../../constants/endpoint-constants";
+import { UserActionsType } from "../../../store/ducks/user/contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
 
 describe("EditProfileModal", () => {
     const mock = new MockAdapter(axios);
@@ -19,13 +19,13 @@ describe("EditProfileModal", () => {
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
     });
-    
+
     it("should render correctly Edit Profile Modal", () => {
-        const wrapper = mountWithStore(<EditProfileModal visible={true} onClose={jest.fn()}/>, mockRootState);
-        
+        const wrapper = mountWithStore(<EditProfileModal visible={true} onClose={jest.fn()} />, mockRootState);
+
         expect(wrapper.text().includes("Edit Profile")).toBe(true);
-        expect(wrapper.find("img").at(0).prop("src")).toBe(mockUser.wallpaper.src);
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar.src);
+        expect(wrapper.find("img").at(0).prop("src")).toBe(mockUser.wallpaper);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar);
         expect(wrapper.find(TweeterInput).at(0).prop("value")).toBe(mockUser.username);
         expect(wrapper.find(TweeterInput).at(1).prop("value")).toBe(mockUser.about);
         expect(wrapper.find(TweeterInput).at(2).prop("value")).toBe(mockUser.location);
@@ -33,10 +33,10 @@ describe("EditProfileModal", () => {
     });
 
     it("should submit Edit Profile Modal form", (done) => {
-        const wrapper = mountWithStore(<EditProfileModal visible={true} onClose={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<EditProfileModal visible={true} onClose={jest.fn()} />, mockRootState);
         mock.onPost(API_USER_UPLOAD_IMAGE).reply(200, mockFullTweet.images[0]);
         mock.onPost(API_USER_UPLOAD_IMAGE).reply(200, mockFullTweet.images[0]);
-        
+
         wrapper.find(Button).at(0).simulate("submit");
 
         setImmediate(() => {
@@ -49,15 +49,15 @@ describe("EditProfileModal", () => {
                     website: mockUser.website,
                     avatar: undefined,
                     wallpaper: undefined,
-                    about: mockUser.about,
+                    about: mockUser.about
                 }, type: UserActionsType.UPDATE_USER_DATA
             });
         });
     });
-    
+
     it("should render empty Edit Profile Modal", () => {
-        const wrapper = mountWithStore(<EditProfileModal visible={false} onClose={jest.fn()}/>, mockRootState);
-        
+        const wrapper = mountWithStore(<EditProfileModal visible={false} onClose={jest.fn()} />, mockRootState);
+
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
     });
 });

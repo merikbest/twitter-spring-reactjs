@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 
 interface UseMessagesModal {
     visibleModalWindow: boolean;
@@ -17,5 +17,5 @@ export const useMessagesModal = (): UseMessagesModal => {
         setVisibleModalWindow(false);
     };
 
-    return {visibleModalWindow, onOpenModalWindow, onCloseModalWindow};
+    return { visibleModalWindow, onOpenModalWindow, onCloseModalWindow };
 };

@@ -1,13 +1,13 @@
 import React from "react";
-import {Avatar} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import ListInfoDescription from "../ListInfoDescription";
-import {mockLists} from "../../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { mockLists } from "../../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../../types/common";
 import PopperListWindow from "../../../PopperListWindow/PopperListWindow";
 import LockIcon from "../../../../../components/LockIcon/LockIcon";
-import {DEFAULT_PROFILE_IMG} from "../../../../../util/url";
+import { DEFAULT_PROFILE_IMG } from "../../../../../constants/url-constants";
 
 describe("ListInfoDescription", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

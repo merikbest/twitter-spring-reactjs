@@ -1,8 +1,8 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Dialog, DialogContent, DialogTitle} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 
-import {useMembersAndFollowersModalStyles} from "./MembersAndFollowersModalStyles";
+import { useMembersAndFollowersModalStyles } from "./MembersAndFollowersModalStyles";
 import ManageMembersItem
     from "../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
@@ -11,7 +11,7 @@ import {
     fetchListMembers,
     resetListMembersState
 } from "../../../../store/ducks/listMembers/actionCreators";
-import {selectIsListMembersLoading, selectListMembersItems} from "../../../../store/ducks/listMembers/selectors";
+import { selectIsListMembersLoading, selectListMembersItems } from "../../../../store/ducks/listMembers/selectors";
 import Spinner from "../../../../components/Spinner/Spinner";
 import EmptyPageDescription from "../../../../components/EmptyPageDescription/EmptyPageDescription";
 
@@ -40,9 +40,9 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     useEffect(() => {
         if (visible) {
             if (title === "List members") {
-                dispatch(fetchListMembers({listId, listOwnerId}));
+                dispatch(fetchListMembers({ listId, listOwnerId }));
             } else {
-                dispatch(fetchListFollowers({listId, listOwnerId}));
+                dispatch(fetchListFollowers({ listId, listOwnerId }));
             }
         }
         return () => {
@@ -61,16 +61,16 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     return (
         <Dialog open={visible} onClose={onClose} onClick={handleClick} className={classes.dialog}>
             <DialogTitle>
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onClose} />
                 {title}
             </DialogTitle>
             <DialogContent className={classes.content}>
                 {isLoading ? (
-                    <Spinner/>
+                    <Spinner />
                 ) : (
                     (users.length !== 0) ? (
                         users.map((user) => (
-                            <ManageMembersItem key={user.id} listId={listId} listOwnerId={listOwnerId} user={user}/>
+                            <ManageMembersItem key={user.id} listId={listId} listOwnerId={listOwnerId} user={user} />
                         ))
                     ) : (
                         <EmptyPageDescription

@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/testHelper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     fetchListFollowers,
     fetchListMembers,
@@ -13,56 +13,56 @@ import {
     setLoadingSuggestedState,
     setUserToList
 } from "../actionCreators";
-import {ListMembersActionsType} from "../contracts/actionTypes";
-import {ListsOwnerMemberResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { ListMembersActionsType } from "../contracts/actionTypes";
+import { ListsOwnerMemberResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("listMembers actions", () => {
-    testAction(setListMembers, setListMembers([{id: 1}] as ListsOwnerMemberResponse[]), {
+    testAction(setListMembers, setListMembers([{ id: 1 }] as ListsOwnerMemberResponse[]), {
         type: ListMembersActionsType.SET_LIST_MEMBERS,
-        payload: [{id: 1}] as ListsOwnerMemberResponse[]
+        payload: [{ id: 1 }] as ListsOwnerMemberResponse[]
     });
 
-    testAction(setListSuggested, setListSuggested([{id: 1}] as ListsOwnerMemberResponse[]), {
+    testAction(setListSuggested, setListSuggested([{ id: 1 }] as ListsOwnerMemberResponse[]), {
         type: ListMembersActionsType.SET_LIST_SUGGESTED,
-        payload: [{id: 1}] as ListsOwnerMemberResponse[]
+        payload: [{ id: 1 }] as ListsOwnerMemberResponse[]
     });
 
-    testAction(fetchListMembers, fetchListMembers({listId: 1, listOwnerId: 2}), {
+    testAction(fetchListMembers, fetchListMembers({ listId: 1, listOwnerId: 2 }), {
         type: ListMembersActionsType.FETCH_LIST_MEMBERS,
-        payload: {listId: 1, listOwnerId: 2}
+        payload: { listId: 1, listOwnerId: 2 }
     });
 
-    testAction(fetchListFollowers, fetchListFollowers({listId: 1, listOwnerId: 2}), {
+    testAction(fetchListFollowers, fetchListFollowers({ listId: 1, listOwnerId: 2 }), {
         type: ListMembersActionsType.FETCH_LIST_FOLLOWERS,
-        payload: {listId: 1, listOwnerId: 2}
+        payload: { listId: 1, listOwnerId: 2 }
     });
 
-    testAction(fetchListMembersByUsername, fetchListMembersByUsername({listId: 1, username: "test"}), {
+    testAction(fetchListMembersByUsername, fetchListMembersByUsername({ listId: 1, username: "test" }), {
         type: ListMembersActionsType.FETCH_LIST_MEMBERS_BY_USERNAME,
-        payload: {listId: 1, username: "test"}
+        payload: { listId: 1, username: "test" }
     });
 
-    testAction(processUserToListMembers, processUserToListMembers({userId: 1, listId: 1}), {
+    testAction(processUserToListMembers, processUserToListMembers({ userId: 1, listId: 1 }), {
         type: ListMembersActionsType.PROCESS_USER_TO_LIST_MEMBERS,
-        payload: {userId: 1, listId: 1}
+        payload: { userId: 1, listId: 1 }
     });
 
-    testAction(setUserToList, setUserToList({userId: 1, isUserAdded: true, isSuggested: true}), {
+    testAction(setUserToList, setUserToList({ userId: 1, isUserAdded: true, isSuggested: true }), {
         type: ListMembersActionsType.SET_USER_TO_LIST,
-        payload: {userId: 1, isUserAdded: true, isSuggested: true}
+        payload: { userId: 1, isUserAdded: true, isSuggested: true }
     });
 
     testAction(resetListMembersState, resetListMembersState(), {
-        type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE,
+        type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE
     });
 
     testAction(resetListMembers, resetListMembers(), {
-        type: ListMembersActionsType.RESET_LIST_MEMBERS,
+        type: ListMembersActionsType.RESET_LIST_MEMBERS
     });
 
     testAction(resetListSuggested, resetListSuggested(), {
-        type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE,
+        type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE
     });
 
     testAction(setLoadingMembersState, setLoadingMembersState(LoadingStatus.LOADING), {

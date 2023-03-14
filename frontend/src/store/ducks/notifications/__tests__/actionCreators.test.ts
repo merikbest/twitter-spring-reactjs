@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/testHelper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     fetchFetchTweetAuthorsNotifications,
     fetchMentions,
@@ -17,21 +17,25 @@ import {
     setTweetAuthorsNotifications,
     updateNotificationInfoTweet
 } from "../actionCreators";
-import {NotificationsActionsType} from "../contracts/actionTypes";
-import {NotificationInfoResponse, NotificationResponse, NotificationUserResponse} from "../../../types/notification";
-import {LoadingStatus} from "../../../types/common";
+import { NotificationsActionsType } from "../contracts/actionTypes";
+import {
+    NotificationInfoResponse,
+    NotificationResponse,
+    NotificationUserResponse
+} from "../../../../types/notification";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("notifications actions", () => {
-    const notification = {id: 1} as NotificationResponse;
-    
-    testAction(setNotifications, setNotifications({items: [{id: 1}] as NotificationResponse[], pagesCount: 1}), {
+    const notification = { id: 1 } as NotificationResponse;
+
+    testAction(setNotifications, setNotifications({ items: [{ id: 1 }] as NotificationResponse[], pagesCount: 1 }), {
         type: NotificationsActionsType.SET_NOTIFICATIONS,
-        payload: {items: [{id: 1}] as NotificationResponse[], pagesCount: 1}
+        payload: { items: [{ id: 1 }] as NotificationResponse[], pagesCount: 1 }
     });
 
-    testAction(setTweetAuthorsNotifications, setTweetAuthorsNotifications([{id: 1}] as NotificationUserResponse[]), {
+    testAction(setTweetAuthorsNotifications, setTweetAuthorsNotifications([{ id: 1 }] as NotificationUserResponse[]), {
         type: NotificationsActionsType.SET_TWEET_AUTHORS_NOTIFICATIONS,
-        payload: [{id: 1}] as NotificationUserResponse[]
+        payload: [{ id: 1 }] as NotificationUserResponse[]
     });
 
     testAction(fetchNotifications, fetchNotifications(1), {
@@ -40,7 +44,7 @@ describe("notifications actions", () => {
     });
 
     testAction(fetchFetchTweetAuthorsNotifications, fetchFetchTweetAuthorsNotifications(), {
-        type: NotificationsActionsType.FETCH_TWEET_AUTHORS_NOTIFICATIONS,
+        type: NotificationsActionsType.FETCH_TWEET_AUTHORS_NOTIFICATIONS
     });
 
     testAction(fetchNotificationsFromTweetAuthors, fetchNotificationsFromTweetAuthors(1), {
@@ -63,9 +67,9 @@ describe("notifications actions", () => {
         payload: 1
     });
 
-    testAction(setNotificationInfo, setNotificationInfo({id: 1} as NotificationInfoResponse), {
+    testAction(setNotificationInfo, setNotificationInfo({ id: 1 } as NotificationInfoResponse), {
         type: NotificationsActionsType.SET_NOTIFICATION_INFO,
-        payload: {id: 1} as NotificationInfoResponse
+        payload: { id: 1 } as NotificationInfoResponse
     });
 
     testAction(setFollowToNotificationInfo, setFollowToNotificationInfo(true), {
@@ -89,7 +93,7 @@ describe("notifications actions", () => {
     });
 
     testAction(resetNotificationState, resetNotificationState(), {
-        type: NotificationsActionsType.RESET_NOTIFICATION_STATE,
+        type: NotificationsActionsType.RESET_NOTIFICATION_STATE
     });
 
     testAction(setNotificationsLoadingState, setNotificationsLoadingState(LoadingStatus.LOADING), {

@@ -1,14 +1,14 @@
-import {Avatar} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 import React from "react";
 
 import BackButton from "../../../../components/BackButton/BackButton";
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import UserNotFound from "../UserNotFound";
 
 describe("UserNotFound", () => {
 
     it("should render UserNotFound", () => {
-        const wrapper = mountWithStore(<UserNotFound/>, createMockRootState());
+        const wrapper = mountWithStore(<UserNotFound />, createMockRootState());
 
         expect(wrapper.find(BackButton).exists()).toBeTruthy();
         expect(wrapper.find(Avatar).exists()).toBeTruthy();

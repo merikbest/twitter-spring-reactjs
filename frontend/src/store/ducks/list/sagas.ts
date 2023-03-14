@@ -1,5 +1,5 @@
-import {call, put, takeEvery} from 'redux-saga/effects';
-import {AxiosResponse} from "axios";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { AxiosResponse } from "axios";
 
 import {
     DeleteListActionInterface,
@@ -7,12 +7,12 @@ import {
     FetchListByIdActionInterface,
     ListActionType
 } from "./contracts/actionTypes";
-import {setList, setListLoadingState} from './actionCreators';
-import {ListsApi} from "../../../services/api/listsApi";
-import {BaseListResponse} from "../../types/lists";
-import {LoadingStatus} from "../../types/common";
+import { setList, setListLoadingState } from "./actionCreators";
+import { ListsApi } from "../../../services/api/listsApi";
+import { BaseListResponse } from "../../../types/lists";
+import { LoadingStatus } from "../../../types/common";
 
-export function* fetchListByIdRequest({payload}: FetchListByIdActionInterface) {
+export function* fetchListByIdRequest({ payload }: FetchListByIdActionInterface) {
     try {
         yield put(setListLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<BaseListResponse> = yield call(ListsApi.getListById, payload);
@@ -22,7 +22,7 @@ export function* fetchListByIdRequest({payload}: FetchListByIdActionInterface) {
     }
 }
 
-export function* deleteListRequest({payload}: DeleteListActionInterface) {
+export function* deleteListRequest({ payload }: DeleteListActionInterface) {
     try {
         yield call(ListsApi.deleteList, payload);
     } catch (error) {
@@ -30,7 +30,7 @@ export function* deleteListRequest({payload}: DeleteListActionInterface) {
     }
 }
 
-export function* editListRequest({payload}: EditListActionInterface) {
+export function* editListRequest({ payload }: EditListActionInterface) {
     try {
         yield put(setListLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<BaseListResponse> = yield call(ListsApi.editList, payload);

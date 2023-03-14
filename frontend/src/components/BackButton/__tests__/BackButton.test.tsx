@@ -1,11 +1,11 @@
 import React from "react";
-import {createMemoryHistory} from "history";
-import {IconButton} from "@material-ui/core";
+import { createMemoryHistory } from "history";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import HoverAction from "../../HoverAction/HoverAction";
 import BackButton from "../BackButton";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("BackButton", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -13,7 +13,7 @@ describe("BackButton", () => {
     it("should render correctly and click back", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "goBack");
-        const wrapper = mountWithStore(<BackButton/>, mockRootState, history);
+        const wrapper = mountWithStore(<BackButton />, mockRootState, history);
 
         wrapper.find(IconButton).simulate("click");
 
@@ -23,7 +23,7 @@ describe("BackButton", () => {
 
     it("should hover Back icon and render Hover Action", () => {
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<BackButton/>, mockRootState);
+        const wrapper = mountWithStore(<BackButton />, mockRootState);
         wrapper.find(IconButton).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();

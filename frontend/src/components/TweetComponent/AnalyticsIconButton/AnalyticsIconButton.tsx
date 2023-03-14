@@ -1,10 +1,9 @@
-import React, {FC, memo, ReactElement, useState} from "react";
-import {ClassNameMap} from "@material-ui/core/styles/withStyles";
+import React, { FC, memo, ReactElement, useState } from "react";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
-import {AnalyticsIcon} from "../../../icons";
+import { AnalyticsIcon } from "../../../icons";
 import TweetAnalyticsModal from "../../TweetAnalyticsModal/TweetAnalyticsModal";
-import {useAnalyticsIconButtonStyles} from "./AnalyticsIconButtonStyles";
+import { useAnalyticsIconButtonStyles } from "./AnalyticsIconButtonStyles";
 
 interface AnalyticsIconButtonProps {
     tweetUserFullName?: string;

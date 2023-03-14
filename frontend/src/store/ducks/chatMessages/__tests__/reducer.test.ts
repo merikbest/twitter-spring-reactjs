@@ -1,8 +1,8 @@
-import {chatMessagesReducer, initialChatMessagesState} from "../reducer";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {ChatMessageActions, ChatMessagesActionsType} from "../contracts/actionTypes";
-import {ChatMessageResponse} from "../../../types/chat";
-import {LoadingStatus} from "../../../types/common";
+import { chatMessagesReducer, initialChatMessagesState } from "../reducer";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { ChatMessageActions, ChatMessagesActionsType } from "../contracts/actionTypes";
+import { ChatMessageResponse } from "../../../../types/chat";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("chatMessagesReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("chatMessagesReducer:", () => {
             ChatMessagesActionsType.SET_CHAT_MESSAGES,
             chatMessagesReducer(initialChatMessagesState, {
                 type: ChatMessagesActionsType.SET_CHAT_MESSAGES,
-                payload: [{id: 1}] as ChatMessageResponse[]
+                payload: [{ id: 1 }] as ChatMessageResponse[]
             }),
             {
                 ...initialChatMessagesState,
-                items: [{id: 1}] as ChatMessageResponse[],
+                items: [{ id: 1 }] as ChatMessageResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -30,16 +30,16 @@ describe("chatMessagesReducer:", () => {
             chatMessagesReducer(
                 {
                     ...initialChatMessagesState,
-                    items: [{id: 1, chat: {id: 1}}] as ChatMessageResponse[]
+                    items: [{ id: 1, chat: { id: 1 } }] as ChatMessageResponse[]
                 },
                 {
                     type: ChatMessagesActionsType.SET_CHAT_MESSAGE,
-                    payload: {id: 2, chat: {id: 1}} as ChatMessageResponse
+                    payload: { id: 2, chat: { id: 1 } } as ChatMessageResponse
                 }
             ),
             {
                 ...initialChatMessagesState,
-                items: [{id: 1, chat: {id: 1}}, {id: 2, chat: {id: 1}}] as ChatMessageResponse[],
+                items: [{ id: 1, chat: { id: 1 } }, { id: 2, chat: { id: 1 } }] as ChatMessageResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -49,10 +49,10 @@ describe("chatMessagesReducer:", () => {
             chatMessagesReducer(
                 {
                     ...initialChatMessagesState,
-                    items: [{id: 1}] as ChatMessageResponse[],
+                    items: [{ id: 1 }] as ChatMessageResponse[]
                 },
                 {
-                    type: ChatMessagesActionsType.RESET_CHAT_MESSAGES,
+                    type: ChatMessagesActionsType.RESET_CHAT_MESSAGES
                 }
             ),
             {

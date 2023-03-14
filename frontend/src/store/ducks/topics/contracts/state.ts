@@ -1,5 +1,5 @@
-import {LoadingStatus} from "../../../types/common";
-import {TopicCategory, TopicResponse} from "../../../types/topic";
+import { LoadingStatus } from "../../../../types/common";
+import { TopicCategory, TopicResponse } from "../../../../types/topic";
 
 export interface TopicsState {
     topics: TopicResponse[];

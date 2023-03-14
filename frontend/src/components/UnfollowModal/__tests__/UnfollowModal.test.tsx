@@ -1,10 +1,10 @@
 import React from "react";
-import {Button, Dialog} from "@material-ui/core";
+import { Button, Dialog } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {mockUsers} from "../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
+import { mockUsers } from "../../../util/test-utils/mock-test-data";
 import UnfollowModal from "../UnfollowModal";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("UnfollowModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
@@ -18,9 +18,9 @@ describe("UnfollowModal", () => {
                 onClose={jest.fn()}
                 handleUnfollow={jest.fn()}
             />, mockRootState);
-        
+
         wrapper.find(Dialog).simulate("click");
-        
+
         expect(wrapper.text().includes(`Unfollow ${mockUserFullName}`)).toBe(true);
         expect(wrapper.text().includes("Their Tweets will no longer show up in your home timeline.")).toBe(true);
         expect(wrapper.find(Button).at(0).text().includes("Cancel")).toBe(true);

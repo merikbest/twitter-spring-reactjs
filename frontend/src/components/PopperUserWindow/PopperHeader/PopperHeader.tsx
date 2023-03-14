@@ -1,9 +1,9 @@
-import React, {memo, ReactElement} from "react";
-import {Link} from "react-router-dom";
-import {Avatar} from "@material-ui/core";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Avatar } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
-import {PROFILE} from "../../../util/pathConstants";
+import { PROFILE } from "../../../constants/path-constants";
 import BlockButton from "../../Buttons/BlockButton/BlockButton";
 import PendingButton from "../../Buttons/PendingButton/PendingButton";
 import FollowButton from "../../Buttons/FollowButton/FollowButton";
@@ -19,8 +19,8 @@ import {
     selectUserDetailIsWaitingForApprove,
     selectUserDetailUsername
 } from "../../../store/ducks/userDetail/selectors";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
-import {usePopperHeaderStyles} from "./PopperHeaderStyles";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
+import { usePopperHeaderStyles } from "./PopperHeaderStyles";
 
 const PopperHeader = memo((): ReactElement => {
     const classes = usePopperHeaderStyles();
@@ -38,22 +38,22 @@ const PopperHeader = memo((): ReactElement => {
     return (
         <div className={classes.headerWrapper}>
             <Link to={`${PROFILE}/${userId}`}>
-                <Avatar className={classes.avatar} src={avatar} alt={`avatar ${userId}`}/>
+                <Avatar className={classes.avatar} src={avatar} alt={`avatar ${userId}`} />
             </Link>
             {(myProfileId === userId) ? null : (
                 (isMyProfileBlocked) ? null : (
                     (!isFollower) ? (
                         (isUserBlocked) ? (
-                            <BlockButton userId={userId!} username={username!} isUserBlocked={isUserBlocked}/>
+                            <BlockButton userId={userId!} username={username!} isUserBlocked={isUserBlocked} />
                         ) : (
                             (isWaitingForApprove) ? (
-                                <PendingButton userId={userId!}/>
+                                <PendingButton userId={userId!} />
                             ) : (
-                                <FollowButton userId={userId!} isPrivateProfile={isPrivateProfile!}/>
+                                <FollowButton userId={userId!} isPrivateProfile={isPrivateProfile!} />
                             )
                         )
                     ) : (
-                        <UnfollowButton userId={userId!} isPrivateProfile={isPrivateProfile!} fullName={fullName!}/>
+                        <UnfollowButton userId={userId!} isPrivateProfile={isPrivateProfile!} fullName={fullName!} />
                     )
                 )
             )}

@@ -1,14 +1,14 @@
-import React, {ReactNodeArray} from "react";
+import React, { ReactNodeArray } from "react";
 import reactStringReplace from "react-string-replace";
-import {Emoji} from "emoji-mart";
-import 'emoji-mart/css/emoji-mart.css'
+import { Emoji } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
 
 export const textFormatter = (text: string): ReactNodeArray => {
     let replacedText: ReactNodeArray;
     let index: number = 1;
 
     replacedText = reactStringReplace(text, /(\n)/g, (match) => (
-        <>{match}<br/></>
+        <>{match}<br /></>
     ));
 
     replacedText = reactStringReplace(replacedText, /(#\w+)\b/ig, (match) => (
@@ -20,7 +20,7 @@ export const textFormatter = (text: string): ReactNodeArray => {
     ));
 
     replacedText = reactStringReplace(replacedText, /:(.+?):/g, (match) => (
-        <Emoji native={false} key={index++} emoji={match} set={'twitter'} size={20} />
+        <Emoji native={false} key={index++} emoji={match} set={"twitter"} size={20} />
     ));
 
     return replacedText;

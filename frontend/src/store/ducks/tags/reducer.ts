@@ -1,15 +1,15 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {TagsActions, TagsActionsType} from './contracts/actionTypes';
-import {TagsState} from './contracts/state';
-import {LoadingStatus} from "../../types/common";
+import { TagsActions, TagsActionsType } from "./contracts/actionTypes";
+import { TagsState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialTagsState: TagsState = {
     tags: [],
     loadingTagsState: LoadingStatus.LOADING,
     trends: [],
     pagesCount: 0,
-    loadingTrendsState: LoadingStatus.LOADING,
+    loadingTrendsState: LoadingStatus.LOADING
 };
 
 export const tagsReducer = produce((draft: Draft<TagsState>, action: TagsActions) => {

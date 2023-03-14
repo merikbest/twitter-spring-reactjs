@@ -1,9 +1,9 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useDispatch} from "react-redux";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch } from "react-redux";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {FollowIcon, UnfollowIcon} from "../../../icons";
-import {followUser, unfollowUser} from "../../../store/ducks/user/actionCreators";
+import { FollowIcon, UnfollowIcon } from "../../../icons";
+import { followUser, unfollowUser } from "../../../store/ducks/user/actionCreators";
 
 interface FollowUserButtonProps {
     tweetId: number;
@@ -17,16 +17,16 @@ const FollowUserButton: FC<FollowUserButtonProps> = memo((
         tweetId,
         userId,
         username,
-        isFollower,
+        isFollower
     }
 ): ReactElement => {
     const dispatch = useDispatch();
 
     const handleFollow = (): void => {
         if (isFollower) {
-            dispatch(unfollowUser({userId, tweetId}));
+            dispatch(unfollowUser({ userId, tweetId }));
         } else {
-            dispatch(followUser({userId, tweetId}));
+            dispatch(followUser({ userId, tweetId }));
         }
     };
 

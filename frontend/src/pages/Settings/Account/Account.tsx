@@ -1,11 +1,16 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { List, ListItem, Typography } from "@material-ui/core";
 
-import {ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
-import {SETTINGS_DEACTIVATE, SETTINGS_INFO, SETTINGS_PASSWORD, SETTINGS_TEAMS} from "../../../util/pathConstants";
+import { ArrowRightIcon, CommunityIcon, DeleteAccountIcon, DownloadIcon, KeyIcon, ProfileIcon } from "../../../icons";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
+import {
+    SETTINGS_DEACTIVATE,
+    SETTINGS_INFO,
+    SETTINGS_PASSWORD,
+    SETTINGS_TEAMS
+} from "../../../constants/path-constants";
 
 const Account: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

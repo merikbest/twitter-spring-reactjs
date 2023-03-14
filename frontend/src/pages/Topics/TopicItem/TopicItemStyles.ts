@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useTopicItemStyles = makeStyles((theme: Theme) => ({
     container: {
@@ -8,15 +8,15 @@ export const useTopicItemStyles = makeStyles((theme: Theme) => ({
         cursor: "pointer",
         borderBottom: `1px solid ${theme.palette.divider}`,
         "& .MuiTypography-h6": {
-            fontWeight: 700,
+            fontWeight: 700
         },
         "&:hover": {
-            backgroundColor: theme.palette.secondary.dark,
+            backgroundColor: theme.palette.secondary.dark
         },
         "& a": {
             color: "inherit",
-            textDecoration: "none",
-        },
+            textDecoration: "none"
+        }
     },
     topicInfo: {
         display: "inline-block"
@@ -32,10 +32,10 @@ export const useTopicItemStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.primary.main,
         "& svg": {
             height: "1em",
-            fill: theme.palette.common.white,
-        },
+            fill: theme.palette.common.white
+        }
     },
     buttonWrapper: {
-        flex: 1,
-    },
+        flex: 1
+    }
 }));

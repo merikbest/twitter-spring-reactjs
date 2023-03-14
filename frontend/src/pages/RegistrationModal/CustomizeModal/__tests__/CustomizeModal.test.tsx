@@ -1,9 +1,9 @@
 import React from "react";
-import {Button, Dialog} from "@material-ui/core";
+import { Button, Dialog } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import CustomizeModal from "../CustomizeModal";
-import {LoadingStatus} from "../../../../store/types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("CustomizeModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -16,9 +16,9 @@ describe("CustomizeModal", () => {
                 onClose={jest.fn()}
                 onOpenCreateAccount={mockOnOpenCreateAccount}
             />, mockStore);
-        
+
         wrapper.find(Button).at(0).simulate("click");
-        
+
         expect(wrapper.find(Dialog).prop("open")).toBe(true);
         expect(wrapper.text().includes("Customize your experience")).toBe(true);
         expect(wrapper.text().includes("Track where you see Twitter content across the web")).toBe(true);

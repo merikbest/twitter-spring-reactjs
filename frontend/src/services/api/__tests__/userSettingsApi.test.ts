@@ -1,18 +1,22 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {testApiCall} from "../../../util/apiTestHelper";
+import { testApiCall } from "../../../util/test-utils/api-test-helper";
 import {
     API_SETTINGS_UPDATE_BACKGROUND_COLOR,
     API_SETTINGS_UPDATE_COLOR_SCHEME,
-    API_SETTINGS_UPDATE_COUNTRY, API_SETTINGS_UPDATE_DIRECT,
-    API_SETTINGS_UPDATE_EMAIL, API_SETTINGS_UPDATE_GENDER, API_SETTINGS_UPDATE_LANGUAGE,
-    API_SETTINGS_UPDATE_PHONE, API_SETTINGS_UPDATE_PRIVATE,
+    API_SETTINGS_UPDATE_COUNTRY,
+    API_SETTINGS_UPDATE_DIRECT,
+    API_SETTINGS_UPDATE_EMAIL,
+    API_SETTINGS_UPDATE_GENDER,
+    API_SETTINGS_UPDATE_LANGUAGE,
+    API_SETTINGS_UPDATE_PHONE,
+    API_SETTINGS_UPDATE_PRIVATE,
     API_SETTINGS_UPDATE_USERNAME
-} from "../../../util/endpoints";
-import {UserSettingsApi} from "../userSettingsApi";
-import {BackgroundTheme, ColorScheme} from "../../../store/types/common";
-import {mockUser} from "../../../util/mockData/mockData";
+} from "../../../constants/endpoint-constants";
+import { UserSettingsApi } from "../userSettingsApi";
+import { BackgroundTheme, ColorScheme } from "../../../types/common";
+import { mockUser } from "../../../util/test-utils/mock-test-data";
 
 describe("UserSettingsApi", () => {
     const mockAdapter = new MockAdapter(axios);
@@ -43,7 +47,7 @@ describe("UserSettingsApi", () => {
     });
 
     describe("should call UserSettingsApi.updateEmail", () => {
-        const mockAuthUserResponse = {user: mockUser, token: "test_token"};
+        const mockAuthUserResponse = { user: mockUser, token: "test_token" };
 
         it("[200] should update email Success", () => {
             testApiCall(mockAdapter, "onPut", API_SETTINGS_UPDATE_EMAIL, 200, mockAuthUserResponse, UserSettingsApi.updateEmail, mockRequest);
@@ -55,7 +59,7 @@ describe("UserSettingsApi", () => {
     });
 
     describe("should call UserSettingsApi.updatePhone", () => {
-        const mockChangePhoneResponse = {countryCode: "test", phone: 123456789};
+        const mockChangePhoneResponse = { countryCode: "test", phone: 123456789 };
 
         it("[200] should update phone Success", () => {
             testApiCall(mockAdapter, "onPut", API_SETTINGS_UPDATE_PHONE, 200, mockChangePhoneResponse, UserSettingsApi.updatePhone, mockRequest);

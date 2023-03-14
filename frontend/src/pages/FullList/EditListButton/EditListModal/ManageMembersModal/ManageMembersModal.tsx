@@ -1,14 +1,14 @@
-import React, {ChangeEvent, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Dialog, DialogContent, DialogTitle, InputAdornment, Typography} from "@material-ui/core";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Dialog, DialogContent, DialogTitle, InputAdornment, Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
-import {useManageMembersModalStyles} from "./ManageMembersModalStyles";
+import { useManageMembersModalStyles } from "./ManageMembersModalStyles";
 import ManageMembersItem from "./ManageMembersItem/ManageMembersItem";
-import {ArrowIcon, ForwardArrowIcon, SearchIcon} from "../../../../../icons";
-import {selectListItem} from "../../../../../store/ducks/list/selectors";
+import { ArrowIcon, ForwardArrowIcon, SearchIcon } from "../../../../../icons";
+import { selectListItem } from "../../../../../store/ducks/list/selectors";
 import {
     selectIsListMembersLoading,
     selectListMembersItems,
@@ -21,7 +21,7 @@ import {
     resetListSuggested
 } from "../../../../../store/ducks/listMembers/actionCreators";
 import Spinner from "../../../../../components/Spinner/Spinner";
-import {ManageMembersInput} from "./ManageMembersInput/ManageMembersInput";
+import { ManageMembersInput } from "./ManageMembersInput/ManageMembersInput";
 import EmptyPageDescription from "../../../../../components/EmptyPageDescription/EmptyPageDescription";
 
 const ManageMembersModal = (): ReactElement => {
@@ -37,7 +37,7 @@ const ManageMembersModal = (): ReactElement => {
 
     useEffect(() => {
         if (visibleManageMembersModal) {
-            dispatch(fetchListMembers({listId: list?.id!, listOwnerId: list?.listOwner.id!}));
+            dispatch(fetchListMembers({ listId: list?.id!, listOwnerId: list?.listOwner.id! }));
         }
 
         return () => {
@@ -52,14 +52,14 @@ const ManageMembersModal = (): ReactElement => {
         if (newValue === 0) {
             setSearchText("");
             dispatch(resetListSuggested());
-            dispatch(fetchListMembers({listId: list?.id!, listOwnerId: list?.listOwner.id!}));
+            dispatch(fetchListMembers({ listId: list?.id!, listOwnerId: list?.listOwner.id! }));
         }
     };
 
     const onSearch = (text: string): void => {
         if (text) {
             setSearchText(text);
-            dispatch(fetchListMembersByUsername({listId: list?.id!, username: encodeURIComponent(text)}));
+            dispatch(fetchListMembersByUsername({ listId: list?.id!, username: encodeURIComponent(text) }));
         } else {
             setSearchText("");
             dispatch(resetListSuggested());
@@ -101,13 +101,13 @@ const ManageMembersModal = (): ReactElement => {
                 <DialogContent className={classes.content}>
                     <div className={classes.tabs}>
                         <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                            <Tab className={classes.tab} label={`Members (${list?.membersSize})`}/>
-                            <Tab className={classes.tab} label="Suggested"/>
+                            <Tab className={classes.tab} label={`Members (${list?.membersSize})`} />
+                            <Tab className={classes.tab} label="Suggested" />
                         </Tabs>
                     </div>
                     {(activeTab === 0) ? (
                         isMembersLoading ? (
-                            <Spinner/>
+                            <Spinner />
                         ) : (
                             (members.length !== 0) ? (
                                 members.map((member) => (
@@ -138,7 +138,7 @@ const ManageMembersModal = (): ReactElement => {
                                         <InputAdornment position="start">
                                             {SearchIcon}
                                         </InputAdornment>
-                                    ),
+                                    )
                                 }}
                             />
                             {(suggested.length !== 0) ? (

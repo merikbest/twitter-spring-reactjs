@@ -1,19 +1,19 @@
 import React from "react";
-import {Dialog, IconButton} from "@material-ui/core";
+import { Dialog, IconButton } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../util/test-utils/test-helper";
 import ManageMembersModal from "../ManageMembersModal";
-import {mockFullList, mockListsOwnerMember} from "../../../../../../util/mockData/mockData";
-import {ListMembersActionsType} from "../../../../../../store/ducks/listMembers/contracts/actionTypes";
+import { mockFullList, mockListsOwnerMember } from "../../../../../../util/test-utils/mock-test-data";
+import { ListMembersActionsType } from "../../../../../../store/ducks/listMembers/contracts/actionTypes";
 import Spinner from "../../../../../../components/Spinner/Spinner";
 import ManageMembersItem from "../ManageMembersItem/ManageMembersItem";
-import {ManageMembersInput} from "../ManageMembersInput/ManageMembersInput";
-import {LoadingStatus} from "../../../../../../store/types/common";
+import { ManageMembersInput } from "../ManageMembersInput/ManageMembersInput";
+import { LoadingStatus } from "../../../../../../types/common";
 
 describe("ManageMembersModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
-    const mockListStore = {...mockStore, list: {...mockStore.list, list: mockFullList}};
+    const mockListStore = { ...mockStore, list: { ...mockStore.list, list: mockFullList } };
     let mockDispatchFn: jest.Mock;
 
     beforeEach(() => {
@@ -21,7 +21,7 @@ describe("ManageMembersModal", () => {
     });
 
     it("should open/close ManageMembersModal", () => {
-        const wrapper = mountWithStore(<ManageMembersModal/>, mockListStore);
+        const wrapper = mountWithStore(<ManageMembersModal />, mockListStore);
         expect(wrapper.find(Dialog).at(0).prop("open")).toBe(false);
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
         expect(wrapper.find(Dialog).at(0).prop("open")).toBe(true);
@@ -30,10 +30,10 @@ describe("ManageMembersModal", () => {
     });
 
     it("should render loading Manage Members Modal window correctly", () => {
-        const wrapper = mountWithStore(<ManageMembersModal/>, {
+        const wrapper = mountWithStore(<ManageMembersModal />, {
             ...mockStore,
-            list: {list: mockFullList, loadingState: LoadingStatus.LOADING},
-            listMembers: {...mockStore.listMembers, membersLoadingState: LoadingStatus.LOADING}
+            list: { list: mockFullList, loadingState: LoadingStatus.LOADING },
+            listMembers: { ...mockStore.listMembers, membersLoadingState: LoadingStatus.LOADING }
         });
         expect(wrapper.find(Dialog).exists()).toBeTruthy();
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
@@ -48,13 +48,13 @@ describe("ManageMembersModal", () => {
             type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE
         });
         expect(mockDispatchFn).nthCalledWith(3, {
-            payload: {listId: 3, listOwnerId: 2},
+            payload: { listId: 3, listOwnerId: 2 },
             type: ListMembersActionsType.FETCH_LIST_MEMBERS
         });
     });
 
     it("should render list of ManageMembersItem", () => {
-        const wrapper = mountWithStore(<ManageMembersModal/>, {
+        const wrapper = mountWithStore(<ManageMembersModal />, {
             ...mockListStore,
             listMembers: {
                 ...mockStore.listMembers,
@@ -68,9 +68,9 @@ describe("ManageMembersModal", () => {
     });
 
     it("should render empty list of Members", () => {
-        const wrapper = mountWithStore(<ManageMembersModal/>, {
+        const wrapper = mountWithStore(<ManageMembersModal />, {
             ...mockListStore,
-            listMembers: {...mockStore.listMembers, members: [], membersLoadingState: LoadingStatus.LOADED}
+            listMembers: { ...mockStore.listMembers, members: [], membersLoadingState: LoadingStatus.LOADED }
         });
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
         expect(wrapper.find(Spinner).exists()).toBe(false);
@@ -80,7 +80,7 @@ describe("ManageMembersModal", () => {
     });
 
     it("should reset List Members State", () => {
-        const wrapper = mountWithStore(<ManageMembersModal/>, mockListStore);
+        const wrapper = mountWithStore(<ManageMembersModal />, mockListStore);
         wrapper.unmount();
         expect(mockDispatchFn).nthCalledWith(1, {
             type: ListMembersActionsType.RESET_LIST_MEMBERS_STATE
@@ -92,7 +92,7 @@ describe("ManageMembersModal", () => {
 
     it("should render list of suggested ManageMembersItem", () => {
         // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
-        const wrapper = mountWithStore(<ManageMembersModal/>, {
+        const wrapper = mountWithStore(<ManageMembersModal />, {
             ...mockListStore,
             listMembers: {
                 ...mockStore.listMembers,
@@ -109,9 +109,9 @@ describe("ManageMembersModal", () => {
 
     it("should render empty list of suggested Members", () => {
         // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
-        const wrapper = mountWithStore(<ManageMembersModal/>, {
+        const wrapper = mountWithStore(<ManageMembersModal />, {
             ...mockListStore,
-            listMembers: {...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED}
+            listMembers: { ...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED }
         });
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
         wrapper.find(Tab).at(1).simulate("click");
@@ -124,7 +124,7 @@ describe("ManageMembersModal", () => {
 
     it("should click on Members tab", () => {
         // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
-        const wrapper = mountWithStore(<ManageMembersModal/>, {
+        const wrapper = mountWithStore(<ManageMembersModal />, {
             ...mockListStore,
             listMembers: {
                 ...mockStore.listMembers,
@@ -135,37 +135,37 @@ describe("ManageMembersModal", () => {
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
         wrapper.find(Tab).at(0).simulate("click");
         expect(mockDispatchFn).nthCalledWith(3, {
-            payload: {listId: 3, listOwnerId: 2},
+            payload: { listId: 3, listOwnerId: 2 },
             type: ListMembersActionsType.FETCH_LIST_MEMBERS
         });
     });
 
     it("should search members by username", () => {
         // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
-        const wrapper = mountWithStore(<ManageMembersModal/>, {
+        const wrapper = mountWithStore(<ManageMembersModal />, {
             ...mockListStore,
-            listMembers: {...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED}
+            listMembers: { ...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED }
         });
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
         wrapper.find(Tab).at(1).simulate("click");
-        wrapper.find(ManageMembersInput).find("input").at(0).simulate("change", {target: {value: "test"}});
+        wrapper.find(ManageMembersInput).find("input").at(0).simulate("change", { target: { value: "test" } });
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(4, {
-            payload: {listId: 3, username: "test"},
+            payload: { listId: 3, username: "test" },
             type: ListMembersActionsType.FETCH_LIST_MEMBERS_BY_USERNAME
         });
     });
 
     it("should clear text input", () => {
         // React.useState = jest.fn().mockReturnValue([1, jest.fn()]);
-        const wrapper = mountWithStore(<ManageMembersModal/>, {
+        const wrapper = mountWithStore(<ManageMembersModal />, {
             ...mockListStore,
-            listMembers: {...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED}
+            listMembers: { ...mockStore.listMembers, suggested: [], suggestedLoadingState: LoadingStatus.LOADED }
         });
         wrapper.find("#onOpenManageMembersModal").at(0).simulate("click");
         wrapper.find(Tab).at(1).simulate("click");
-        wrapper.find(ManageMembersInput).find("input").at(0).simulate("change", {target: {value: undefined}});
+        wrapper.find(ManageMembersInput).find("input").at(0).simulate("change", { target: { value: undefined } });
         expect(wrapper.find(ManageMembersInput).exists()).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(2, {type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE});
+        expect(mockDispatchFn).nthCalledWith(2, { type: ListMembersActionsType.RESET_LIST_SUGGESTED_STATE });
     });
 });

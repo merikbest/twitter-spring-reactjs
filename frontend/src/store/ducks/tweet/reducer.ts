@@ -1,9 +1,9 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {TweetState} from "./contracts/state";
-import {TweetActions, TweetActionType} from './contracts/actionTypes';
-import {LoadingStatus, NotificationType} from "../../types/common";
-import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
+import { TweetState } from "./contracts/state";
+import { TweetActions, TweetActionType } from "./contracts/actionTypes";
+import { LoadingStatus, NotificationType } from "../../../types/common";
+import { NotificationReplyResponse, NotificationResponse } from "../../../types/notification";
 
 export const initialTweetState: TweetState = {
     tweet: undefined,
@@ -17,7 +17,7 @@ export const initialTweetState: TweetState = {
     usersPagesCount: 0,
     // replies
     replies: [],
-    repliesLoadingState: LoadingStatus.LOADING,
+    repliesLoadingState: LoadingStatus.LOADING
 };
 
 export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActions) => {

@@ -1,13 +1,13 @@
-import {testAction} from "../../../../util/testHelper";
-import {fetchUnsentTweets, resetUnsentTweets, setUnsentTweets, setUnsentTweetsLoadingState} from "../actionCreators";
-import {TweetResponse} from "../../../types/tweet";
-import {UnsentTweetActionType} from "../contracts/actionTypes";
-import {LoadingStatus} from "../../../types/common";
+import { testAction } from "../../../../util/test-utils/test-helper";
+import { fetchUnsentTweets, resetUnsentTweets, setUnsentTweets, setUnsentTweetsLoadingState } from "../actionCreators";
+import { TweetResponse } from "../../../../types/tweet";
+import { UnsentTweetActionType } from "../contracts/actionTypes";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("unsentTweets actions", () => {
-    testAction(setUnsentTweets, setUnsentTweets({items: [{id: 1}] as TweetResponse[], pagesCount: 1}), {
+    testAction(setUnsentTweets, setUnsentTweets({ items: [{ id: 1 }] as TweetResponse[], pagesCount: 1 }), {
         type: UnsentTweetActionType.SET_UNSENT_TWEETS,
-        payload: {items: [{id: 1}] as TweetResponse[], pagesCount: 1}
+        payload: { items: [{ id: 1 }] as TweetResponse[], pagesCount: 1 }
     });
 
     testAction(fetchUnsentTweets, fetchUnsentTweets(1), {

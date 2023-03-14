@@ -1,10 +1,10 @@
-import React, {FC, ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { FC, ReactElement } from "react";
+import { useSelector } from "react-redux";
 
-import {usePopperListWindowStyles} from "./PopperListWindowStyles";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
-import {BaseListResponse} from "../../../store/types/lists";
-import {selectListDetailItemIsFollower, selectListDetailItemOwnerId} from "../../../store/ducks/listDetail/selectors";
+import { usePopperListWindowStyles } from "./PopperListWindowStyles";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
+import { BaseListResponse } from "../../../types/lists";
+import { selectListDetailItemIsFollower, selectListDetailItemOwnerId } from "../../../store/ducks/listDetail/selectors";
 import PopperListDescription from "./PopperListDescription/PopperListDescription";
 import PopperListInteractionCount from "./PopperListInteractionCount/PopperListInteractionCount";
 import PopperListWallpaper from "./PopperListWallpaper/PopperListWallpaper";
@@ -16,7 +16,7 @@ interface PopperListWindowProps {
     visible?: boolean;
 }
 
-const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | null => {
+const PopperListWindow: FC<PopperListWindowProps> = ({ visible }): ReactElement | null => {
     const classes = usePopperListWindowStyles();
     const myProfileId = useSelector(selectUserDataId);
     const listOwnerId = useSelector(selectListDetailItemOwnerId);
@@ -28,16 +28,16 @@ const PopperListWindow: FC<PopperListWindowProps> = ({visible}): ReactElement | 
 
     return (
         <div id={"popperListWindow"} className={classes.popperListWindow}>
-            <PopperListWallpaper/>
+            <PopperListWallpaper />
             <div className={classes.popperListInfo}>
-                <PopperListDescription/>
-                <PopperListInteractionCount/>
+                <PopperListDescription />
+                <PopperListInteractionCount />
                 <div className={classes.buttonWrapper}>
                     {(myProfileId !== listOwnerId) && (
                         isFollower ? (
-                            <UnfollowListButton/>
+                            <UnfollowListButton />
                         ) : (
-                            <FollowListButton/>
+                            <FollowListButton />
                         ))
                     }
                 </div>

@@ -1,9 +1,9 @@
 import React from "react";
 
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../types/common";
 import CopyProfileLinkButton from "../CopyProfileLinkButton";
-import {ActionSnackbarTypes} from "../../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { ActionSnackbarTypes } from "../../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
 describe("CopyProfileLinkButton", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
@@ -14,7 +14,7 @@ describe("CopyProfileLinkButton", () => {
     });
 
     it("should copy Link To Profile", () => {
-        const wrapper = mountWithStore(<CopyProfileLinkButton onCloseUserPageActions={jest.fn()}/>, mockRootState);
+        const wrapper = mountWithStore(<CopyProfileLinkButton onCloseUserPageActions={jest.fn()} />, mockRootState);
         wrapper.find("#copyLinkToProfile").at(0).simulate("click");
         expect(wrapper.text().includes("Copy link to profile")).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {

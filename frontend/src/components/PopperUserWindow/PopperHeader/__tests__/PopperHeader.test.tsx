@@ -1,9 +1,9 @@
 import React from "react";
-import {Avatar} from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {mockUserDetailResponse} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { mockUserDetailResponse } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 import UnfollowButton from "../../../Buttons/UnfollowButton/UnfollowButton";
 import FollowButton from "../../../Buttons/FollowButton/FollowButton";
 import PendingButton from "../../../Buttons/PendingButton/PendingButton";
@@ -14,39 +14,43 @@ describe("PopperHeader", () => {
     const mockState = createMockRootState(LoadingStatus.LOADED);
     const mockRootState = {
         ...mockState,
-        userDetail: {...mockState.userDetail, item: {...mockUserDetailResponse}}
+        userDetail: { ...mockState.userDetail, item: { ...mockUserDetailResponse } }
     };
 
     it("should render Unfollow button", () => {
-        const wrapper = mountWithStore(<PopperHeader/>, mockRootState);
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockUserDetailResponse.avatar.src);
+        const wrapper = mountWithStore(<PopperHeader />, mockRootState);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockUserDetailResponse.avatar);
         expect(wrapper.find(UnfollowButton).exists()).toBeTruthy();
     });
 
     it("should render Follow button", () => {
-        const wrapper = mountWithStore(<PopperHeader/>, {
+        const wrapper = mountWithStore(<PopperHeader />, {
             ...mockState,
-            userDetail: {...mockState.userDetail, item: {...mockUserDetailResponse, isFollower: false}}
+            userDetail: { ...mockState.userDetail, item: { ...mockUserDetailResponse, isFollower: false } }
         });
         expect(wrapper.find(FollowButton).exists()).toBeTruthy();
     });
 
     it("should render PendingButton button", () => {
-        const wrapper = mountWithStore(<PopperHeader/>, {
+        const wrapper = mountWithStore(<PopperHeader />, {
             ...mockState,
-            userDetail: {...mockState.userDetail, item: {
-                ...mockUserDetailResponse, isFollower: false, isWaitingForApprove: true
-            }}
+            userDetail: {
+                ...mockState.userDetail, item: {
+                    ...mockUserDetailResponse, isFollower: false, isWaitingForApprove: true
+                }
+            }
         });
         expect(wrapper.find(PendingButton).exists()).toBeTruthy();
     });
 
     it("should render BlockButton button", () => {
-        const wrapper = mountWithStore(<PopperHeader/>, {
+        const wrapper = mountWithStore(<PopperHeader />, {
             ...mockState,
-            userDetail: {...mockState.userDetail, item: {
+            userDetail: {
+                ...mockState.userDetail, item: {
                     ...mockUserDetailResponse, isFollower: false, isUserBlocked: true
-                }}
+                }
+            }
         });
         expect(wrapper.find(BlockButton).exists()).toBeTruthy();
     });

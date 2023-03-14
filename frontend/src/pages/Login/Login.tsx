@@ -1,22 +1,15 @@
-import React, {ChangeEvent, FC, FormEvent, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {History, LocationState} from "history";
-import {Link, useHistory} from "react-router-dom";
-import {Button, Typography} from "@material-ui/core";
+import React, { ChangeEvent, FC, FormEvent, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { Button, Typography } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 
-import {LoginTextField} from "./LoginInputField";
-import {useLoginStyles} from "./LoginStyles";
-import {selectUserIsError, selectUserStatus} from "../../store/ducks/user/selectors";
-import {fetchSignIn, setUserLoadingStatus} from "../../store/ducks/user/actionCreators";
-import {ACCOUNT_FORGOT, ACCOUNT_SIGNIN} from "../../util/pathConstants";
-import {LoadingStatus} from "../../store/types/common";
-
-export interface LoginProps {
-    email: string;
-    password: string;
-    history: History<LocationState>;
-}
+import { LoginTextField } from "./LoginInputField";
+import { useLoginStyles } from "./LoginStyles";
+import { selectUserIsError } from "../../store/ducks/user/selectors";
+import { fetchSignIn, setUserLoadingStatus } from "../../store/ducks/user/actionCreators";
+import { ACCOUNT_FORGOT, ACCOUNT_SIGNIN } from "../../constants/path-constants";
+import { LoadingStatus } from "../../types/common";
 
 const Login: FC = (): ReactElement => {
     const classes = useLoginStyles();
@@ -34,7 +27,7 @@ const Login: FC = (): ReactElement => {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        dispatch(fetchSignIn({email, password, history}));
+        dispatch(fetchSignIn({ email, password, history }));
     };
 
     const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -48,7 +41,7 @@ const Login: FC = (): ReactElement => {
     return (
         <div className={classes.container}>
             <div>
-                <TwitterIcon/>
+                <TwitterIcon />
             </div>
             <Typography variant={"h4"} component={"div"}>
                 Log in to Twitter

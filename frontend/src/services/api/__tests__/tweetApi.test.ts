@@ -1,6 +1,6 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
-import {testApiCall} from "../../../util/apiTestHelper";
+import { testApiCall } from "../../../util/test-utils/api-test-helper";
 import {
     API_TWEETS,
     API_TWEETS_CHANGE_REPLY,
@@ -24,19 +24,19 @@ import {
     API_TWEETS_USER_TWEETS,
     API_TWEETS_VIDEO,
     API_TWEETS_VOTE
-} from "../../../util/endpoints";
-import {mockFullTweet, mockTweets, mockUsers} from "../../../util/mockData/mockData";
-import {TweetApi} from "../tweetApi";
-import {ReplyType} from "../../../store/types/common";
+} from "../../../constants/endpoint-constants";
+import { mockFullTweet, mockTweets, mockUsers } from "../../../util/test-utils/mock-test-data";
+import { TweetApi } from "../tweetApi";
+import { ReplyType } from "../../../types/common";
 
 describe("TweetApi", () => {
     const mockAdapter = new MockAdapter(axios);
     const tweetNotFoundError = "Tweet not found";
     const mockUserErrorResponse = "User not found";
-    const mockAddTweetRequest = {text: "test", images: [], replyType: ReplyType.EVERYONE};
-    const mockNotificationTweet = {id: 1, text: "test", user: {id: 1}, notificationCondition: true};
-    const tweetActionRequest = {tweetId: 1, userId: 1};
-    const mockPageable = {userId: 1, page: 1};
+    const mockAddTweetRequest = { text: "test", images: [], replyType: ReplyType.EVERYONE };
+    const mockNotificationTweet = { id: 1, text: "test", user: { id: 1 }, notificationCondition: true };
+    const tweetActionRequest = { tweetId: 1, userId: 1 };
+    const mockPageable = { userId: 1, page: 1 };
 
     beforeEach(() => mockAdapter.reset());
 
@@ -136,7 +136,7 @@ describe("TweetApi", () => {
     });
 
     describe("should fetch TweetApi.deleteScheduledTweets", () => {
-        const mockTweetsIds = {tweetsIds: [1, 2, 3]};
+        const mockTweetsIds = { tweetsIds: [1, 2, 3] };
 
         it("[200] should delete scheduled tweets Success", () => {
             testApiCall(mockAdapter, "onDelete", API_TWEETS_SCHEDULE, 200, "Scheduled tweets deleted.", TweetApi.deleteScheduledTweets, mockTweetsIds);
@@ -204,7 +204,7 @@ describe("TweetApi", () => {
     });
 
     describe("should fetch TweetApi.quoteTweet", () => {
-        const mockQuoteTweet = {tweetId: 1, userId: 1, text: "test", images: [], replyType: ReplyType.MENTION};
+        const mockQuoteTweet = { tweetId: 1, userId: 1, text: "test", images: [], replyType: ReplyType.MENTION };
 
         it("[200] should quote tweet Success", () => {
             testApiCall(mockAdapter, "onPost", `${API_TWEETS_QUOTE}/1/1`, 200, mockFullTweet, TweetApi.quoteTweet, mockQuoteTweet);
@@ -216,7 +216,7 @@ describe("TweetApi", () => {
     });
 
     describe("should fetch TweetApi.changeTweetReplyType", () => {
-        const mockChangeReplyType = {tweetId: 1, userId: 1, replyType: ReplyType.MENTION};
+        const mockChangeReplyType = { tweetId: 1, userId: 1, replyType: ReplyType.MENTION };
 
         it("[200] should change tweet reply type Success", () => {
             testApiCall(mockAdapter, "onGet", `${API_TWEETS_CHANGE_REPLY}/1/1`, 200, mockFullTweet, TweetApi.changeTweetReplyType, mockChangeReplyType);
@@ -228,7 +228,7 @@ describe("TweetApi", () => {
     });
 
     describe("should fetch TweetApi.voteInPoll", () => {
-        const mockVote = {tweetId: 1, pollId: 1, pollChoiceId: 1};
+        const mockVote = { tweetId: 1, pollId: 1, pollChoiceId: 1 };
 
         it("[200] should vote in poll Success", () => {
             testApiCall(mockAdapter, "onPost", API_TWEETS_VOTE, 200, mockFullTweet, TweetApi.voteInPoll, mockVote);
@@ -302,7 +302,7 @@ describe("TweetApi", () => {
     });
 
     describe("should fetch TweetApi.getUserTweetImages", () => {
-        const mockTweetImageResponse = [{tweetId: 1, imageId: 1, src: "test"}];
+        const mockTweetImageResponse = [{ tweetId: 1, imageId: 1, src: "test" }];
 
         it("[200] should get user tweet images Success", () => {
             testApiCall(mockAdapter, "onGet", `${API_TWEETS_IMAGES}/1`, 200, mockTweetImageResponse, TweetApi.getUserTweetImages, 1);

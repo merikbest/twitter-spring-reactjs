@@ -1,16 +1,16 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useMessagesStyles = makeStyles((theme: Theme) => ({
     grid: {
-        padding: "12px 0px 0px 0px !important",
+        padding: "12px 0px 0px 0px !important"
     },
     list: {
         "& .Mui-selected": {
             borderRight: `2px solid ${theme.palette.primary.main}`,
             backgroundColor: theme.palette.secondary.dark,
             "&:hover": {
-                backgroundColor: theme.palette.secondary.dark,
-            },
-        },
-    },
+                backgroundColor: theme.palette.secondary.dark
+            }
+        }
+    }
 }));

@@ -1,8 +1,8 @@
-import {initialTweetAdditionalInfoState, tweetAdditionalInfoReducer} from "../reducer";
-import {TweetAdditionalInfoActions, TweetAdditionalInfoType} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types/common";
-import {mockUserTweetAdditionalInfo} from "../../../../util/mockData/mockData";
+import { initialTweetAdditionalInfoState, tweetAdditionalInfoReducer } from "../reducer";
+import { TweetAdditionalInfoActions, TweetAdditionalInfoType } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { mockUserTweetAdditionalInfo } from "../../../../util/test-utils/mock-test-data";
 
 describe("tweetAdditionalInfoReducer:", () => {
     describe("initial state:", () => {
@@ -39,8 +39,9 @@ describe("tweetAdditionalInfoReducer:", () => {
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
                     user: {
-                        ...mockUserTweetAdditionalInfo.user, isUserMuted: true}
-                },
+                        ...mockUserTweetAdditionalInfo.user, isUserMuted: true
+                    }
+                }
             }
         );
 
@@ -58,8 +59,9 @@ describe("tweetAdditionalInfoReducer:", () => {
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
                     user: {
-                        ...mockUserTweetAdditionalInfo.user, isUserBlocked: true}
-                },
+                        ...mockUserTweetAdditionalInfo.user, isUserBlocked: true
+                    }
+                }
             }
         );
 
@@ -77,8 +79,9 @@ describe("tweetAdditionalInfoReducer:", () => {
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
                     user: {
-                        ...mockUserTweetAdditionalInfo.user, isFollower: true}
-                },
+                        ...mockUserTweetAdditionalInfo.user, isFollower: true
+                    }
+                }
             }
         );
 
@@ -101,7 +104,7 @@ describe("tweetAdditionalInfoReducer:", () => {
                 ...initialTweetAdditionalInfoState,
                 tweetAdditionalInfo: mockUserTweetAdditionalInfo
             }, {
-                type: TweetAdditionalInfoType.RESET_TWEET_ADDITIONAL_INFO_STATE,
+                type: TweetAdditionalInfoType.RESET_TWEET_ADDITIONAL_INFO_STATE
             }),
             {
                 tweetAdditionalInfo: undefined,

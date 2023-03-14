@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useEmptyFollowersDescriptionStyles = makeStyles((theme) => ({
     content: {
@@ -6,7 +6,7 @@ export const useEmptyFollowersDescriptionStyles = makeStyles((theme) => ({
         textAlign: "center",
         "& .MuiTypography-subtitle1": {
             marginTop: 12,
-            marginBottom: 16,
-        },
-    },
+            marginBottom: 16
+        }
+    }
 }));

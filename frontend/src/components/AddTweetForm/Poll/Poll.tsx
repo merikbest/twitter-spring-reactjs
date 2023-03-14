@@ -1,7 +1,7 @@
-import React, {FC, ReactElement, ReactNode, useCallback, useState} from 'react';
-import {Grid, Paper, Typography} from "@material-ui/core";
+import React, { FC, ReactElement, ReactNode, useCallback, useState } from "react";
+import { Grid, Paper, Typography } from "@material-ui/core";
 
-import {usePollStyles} from "./PollStyles";
+import { usePollStyles } from "./PollStyles";
 import PollInput from "./PollInput/PollInput";
 import PollSelect from "./PollSelect/PollSelect";
 import PollFooter from "./PollFooter/PollFooter";
@@ -24,8 +24,8 @@ export const pollInitialState: PollInitialState = {
     choice4: "",
     day: 1,
     hour: 0,
-    minute: 0,
-}
+    minute: 0
+};
 
 interface PollProps {
     pollData: PollInitialState;
@@ -34,17 +34,17 @@ interface PollProps {
     onClose: () => void;
 }
 
-const Poll: FC<PollProps> = ({pollData, setPollData, visiblePoll, onClose}): ReactElement | null => {
+const Poll: FC<PollProps> = ({ pollData, setPollData, visiblePoll, onClose }): ReactElement | null => {
     const classes = usePollStyles();
     const [pollInputSize, setPollInputSize] = useState<number>(0);
-    const {choice1, choice2, choice3, choice4, day, hour, minute} = pollData;
+    const { choice1, choice2, choice3, choice4, day, hour, minute } = pollData;
 
     const addPollInput = useCallback((): void => {
         setPollInputSize((prev) => prev + 1);
     }, []);
 
     const changeChoice = useCallback((data: { [key: string]: any }): void => {
-        setPollData(prevVar => ({...prevVar, ...data}));
+        setPollData(prevVar => ({ ...prevVar, ...data }));
     }, []);
 
     const showOptions = useCallback((value: number): ReactNode[] => {
@@ -101,7 +101,7 @@ const Poll: FC<PollProps> = ({pollData, setPollData, visiblePoll, onClose}): Rea
                         )}
                     </Grid>
                     {(pollInputSize !== 2) && (
-                        <AddPollInputButton pollInputSize={pollInputSize} addPollInput={addPollInput}/>
+                        <AddPollInputButton pollInputSize={pollInputSize} addPollInput={addPollInput} />
                     )}
                 </Grid>
             </div>
@@ -135,7 +135,7 @@ const Poll: FC<PollProps> = ({pollData, setPollData, visiblePoll, onClose}): Rea
                     marginRight={0}
                 />
             </Paper>
-            <PollFooter onClosePoll={onClosePoll}/>
+            <PollFooter onClosePoll={onClosePoll} />
         </Paper>
     );
 };

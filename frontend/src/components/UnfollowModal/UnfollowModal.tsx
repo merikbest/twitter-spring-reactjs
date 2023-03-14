@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
+import React, { FC, ReactElement } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
-import {Button, Typography} from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 
-import {useUnfollowModalStyles} from "./UnfollowModalStyles";
+import { useUnfollowModalStyles } from "./UnfollowModalStyles";
 
 interface UnfollowModalProps {
     fullName: string;
@@ -34,7 +34,7 @@ const UnfollowModal: FC<UnfollowModalProps> = (
 
     return (
         <Dialog open={visible} onClose={onClose} onClick={(event) => handleClick(event)}>
-            <DialogContent style={{padding: 0}}>
+            <DialogContent style={{ padding: 0 }}>
                 <div className={classes.modalWrapper}>
                     <Typography variant={"h5"} component={"div"}>
                         Unfollow {fullName}?

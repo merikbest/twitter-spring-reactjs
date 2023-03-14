@@ -1,10 +1,10 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Link as MuiLink, Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Link as MuiLink, Typography } from "@material-ui/core";
 
-import {PUBLIC_AND_PROTECTED_TWEETS} from "../../../util/url";
-import {selectUserProfileUsername} from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { PUBLIC_AND_PROTECTED_TWEETS } from "../../../constants/url-constants";
+import { selectUserProfileUsername } from "../../../store/ducks/userProfile/selectors";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const UserPrivateProfileMessage = memo((): ReactElement => {
     const classes = useUserPageStyles();

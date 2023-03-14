@@ -1,18 +1,18 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useLocation} from "react-router-dom";
+import React, { FC, memo, ReactElement } from "react";
+import { useLocation } from "react-router-dom";
 
-import {MODAL} from "../../../util/pathConstants";
+import { MODAL } from "../../../constants/path-constants";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
-import {CloseIcon} from "../../../icons";
-import {ImageObj} from "../AddTweetForm";
-import {useAddTweetImageStyles} from "./AddTweetImageStyles";
+import { CloseIcon } from "../../../icons";
+import { ImageObj } from "../AddTweetForm";
+import { useAddTweetImageStyles } from "./AddTweetImageStyles";
 
 interface AddTweetImageProps {
-    images: ImageObj[]
+    images: ImageObj[];
     removeImage: () => void;
 }
 
-const AddTweetImage: FC<AddTweetImageProps> = memo(({images, removeImage}): ReactElement | null => {
+const AddTweetImage: FC<AddTweetImageProps> = memo(({ images, removeImage }): ReactElement | null => {
     const classes = useAddTweetImageStyles();
     const location = useLocation();
 
@@ -22,7 +22,7 @@ const AddTweetImage: FC<AddTweetImageProps> = memo(({images, removeImage}): Reac
 
     return (
         <div className={(location.pathname.includes(MODAL)) ? classes.imageSmall : classes.image}>
-            <img src={images[0].src} alt={images[0].src}/>
+            <img src={images[0].src} alt={images[0].src} />
             <div className={classes.imageRemove}>
                 <ActionIconButton
                     actionText={"Remove"}

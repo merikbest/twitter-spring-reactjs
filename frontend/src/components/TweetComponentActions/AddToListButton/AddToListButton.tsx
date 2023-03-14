@@ -1,7 +1,7 @@
-import React, {FC, memo, ReactElement, useState} from "react";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement, useState } from "react";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {AddListsIcon} from "../../../icons";
+import { AddListsIcon } from "../../../icons";
 import ListsModal from "../../ListsModal/ListsModal";
 
 interface AddToListButtonProps {
@@ -9,7 +9,7 @@ interface AddToListButtonProps {
     username: string;
 }
 
-const AddToListButton: FC<AddToListButtonProps> = memo(({userId, username}): ReactElement => {
+const AddToListButton: FC<AddToListButtonProps> = memo(({ userId, username }): ReactElement => {
     const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
 
     const onOpenListsModal = (): void => {
@@ -28,7 +28,7 @@ const AddToListButton: FC<AddToListButtonProps> = memo(({userId, username}): Rea
                     {`Add/remove @${username} from Lists`}
                 </Typography>
             </ListItem>
-            <ListsModal userId={userId} visible={visibleListsModal} onClose={onCloseListsModal}/>
+            <ListsModal userId={userId} visible={visibleListsModal} onClose={onCloseListsModal} />
         </>
     );
 });

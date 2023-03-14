@@ -1,4 +1,4 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
 export enum ActionSnackbarTypes {
     SET_OPEN_SNACKBAR = "actionSnackbar/SET_OPEN_SNACKBAR",

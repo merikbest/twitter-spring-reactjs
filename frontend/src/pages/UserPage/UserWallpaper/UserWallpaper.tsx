@@ -1,10 +1,10 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Link, useLocation} from "react-router-dom";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 
-import {PROFILE_HEADER_PHOTO} from "../../../util/pathConstants";
-import {selectUserProfileId, selectUserProfileWallpaper} from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { PROFILE_HEADER_PHOTO } from "../../../constants/path-constants";
+import { selectUserProfileId, selectUserProfileWallpaper } from "../../../store/ducks/userProfile/selectors";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const UserWallpaper = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -17,9 +17,9 @@ const UserWallpaper = memo((): ReactElement => {
             {wallpaper && (
                 <Link to={{
                     pathname: `${PROFILE_HEADER_PHOTO}/${userProfileId}`,
-                    state: {background: location, imageSrc: wallpaper}
+                    state: { background: location, imageSrc: wallpaper }
                 }}>
-                    <img key={wallpaper} src={wallpaper} alt={wallpaper}/>
+                    <img key={wallpaper} src={wallpaper} alt={wallpaper} />
                 </Link>
             )}
         </div>

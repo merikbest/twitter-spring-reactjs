@@ -1,16 +1,16 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
-import {TagsState} from "./state";
-import {LoadingStatus, PageableResponse} from "../../../types/common";
+import { TagsState } from "./state";
+import { LoadingStatus, PageableResponse } from "../../../../types/common";
 
 export enum TagsActionsType {
-    SET_TAGS = 'tags/SET_TAGS',
-    FETCH_TAGS = 'tags/FETCH_TAGS',
-    SET_TRENDS = 'tags/SET_TRENDS',
-    FETCH_TRENDS = 'tags/FETCH_TRENDS',
-    RESET_TRENDS_STATE = 'tags/RESET_TRENDS_STATE',
-    SET_TAGS_LOADING_STATE = 'tags/SET_TAGS_LOADING_STATE',
-    SET_TRENDS_LOADING_STATE = 'tags/SET_TRENDS_LOADING_STATE',
+    SET_TAGS = "tags/SET_TAGS",
+    FETCH_TAGS = "tags/FETCH_TAGS",
+    SET_TRENDS = "tags/SET_TRENDS",
+    FETCH_TRENDS = "tags/FETCH_TRENDS",
+    RESET_TRENDS_STATE = "tags/RESET_TRENDS_STATE",
+    SET_TAGS_LOADING_STATE = "tags/SET_TAGS_LOADING_STATE",
+    SET_TRENDS_LOADING_STATE = "tags/SET_TRENDS_LOADING_STATE",
 }
 
 export interface SetTagsActionInterface extends Action<TagsActionsType> {

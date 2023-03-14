@@ -1,7 +1,7 @@
-import React, {FC, memo, ReactElement, useState} from "react";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement, useState } from "react";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {TweetActivityIcon} from "../../../icons";
+import { TweetActivityIcon } from "../../../icons";
 import TweetAnalyticsModal from "../../TweetAnalyticsModal/TweetAnalyticsModal";
 
 interface TweetActivityButtonProps {
@@ -10,7 +10,7 @@ interface TweetActivityButtonProps {
     text: string;
 }
 
-const TweetActivityButton: FC<TweetActivityButtonProps> = memo(({fullName, username, text}): ReactElement => {
+const TweetActivityButton: FC<TweetActivityButtonProps> = memo(({ fullName, username, text }): ReactElement => {
     const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
 
     const onOpenTweetAnalyticsModalWindow = (): void => {

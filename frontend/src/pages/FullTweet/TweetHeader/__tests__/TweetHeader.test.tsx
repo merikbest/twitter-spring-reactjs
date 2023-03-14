@@ -1,15 +1,15 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
-import {LoadingStatus} from "../../../../store/types/common";
-import {mockFullTweet} from "../../../../util/mockData/mockData";
+import { LoadingStatus } from "../../../../types/common";
+import { mockFullTweet } from "../../../../util/test-utils/mock-test-data";
 import TweetHeader from "../TweetHeader";
 
 describe("TweetHeader", () => {
     it("should render correctly", () => {
         jest.useFakeTimers();
-        const wrapper = mountWithStore(<TweetHeader/>, createMockRootState(LoadingStatus.SUCCESS));
+        const wrapper = mountWithStore(<TweetHeader />, createMockRootState(LoadingStatus.SUCCESS));
         expect(wrapper.text().includes(mockFullTweet.user.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockFullTweet.user.username}`)).toBe(true);
         wrapper.find("#userInfo").at(0).simulate("mouseenter");

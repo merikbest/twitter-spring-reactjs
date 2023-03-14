@@ -4,8 +4,8 @@ import {Link} from "react-router-dom";
 
 import {useBlockedAccountItemStyles} from "./BlockedAccountItemStyles";
 import {useGlobalStyles} from "../../../../../../util/globalClasses";
-import {BlockedUserResponse} from "../../../../../../store/types/user";
-import {PROFILE} from "../../../../../../util/pathConstants";
+import {BlockedUserResponse} from "../../../../../../types/user";
+import {PROFILE} from "../../../../../../constants/path-constants";
 import BlockAccountButton from "./BlockAccountButton/BlockAccountButton";
 import BlockedAccountInfo from "./BlockedAccountInfo/BlockedAccountInfo";
 import BlockedAccountAvatar from "./BlockedAccountAvatar/BlockedAccountAvatar";

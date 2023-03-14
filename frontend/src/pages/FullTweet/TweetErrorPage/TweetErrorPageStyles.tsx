@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useTweetErrorPageStyles = makeStyles((theme: Theme) => ({
     error: {
@@ -7,11 +7,11 @@ export const useTweetErrorPageStyles = makeStyles((theme: Theme) => ({
         paddingTop: 200,
         paddingBottom: 20,
         fontWeight: 700,
-        textAlign: "center",
+        textAlign: "center"
     },
     searchButton: {
         display: "block",
         width: 76,
-        margin: "0 auto",
-    },
+        margin: "0 auto"
+    }
 }));

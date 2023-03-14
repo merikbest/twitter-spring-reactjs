@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 interface TweetImageStylesProps {
     // isUserCanReply: boolean;
@@ -13,7 +13,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         width: "100%",
         height: "100%",
         background: "rgba(0, 0, 0, 0.85)",
-        cursor: "auto",
+        cursor: "auto"
     },
     modalWrapper: {
         backgroundColor: theme.palette.background.paper,
@@ -21,7 +21,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         height: "100%",
         float: "right",
         overflowY: "scroll",
-        overflowX: "hidden",
+        overflowX: "hidden"
     },
     imageModal: {
         position: "absolute",
@@ -29,10 +29,10 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         left: "40%",
         transform: "translate(-50%, -50%)",
         maxWidth: "80%",
-        maxHeight: "80%",
+        maxHeight: "80%"
     },
     tweetInfo: {
-        padding: "0 16px",
+        padding: "0 16px"
     },
     tweetFooter: {
         display: "flex",
@@ -44,7 +44,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         left: 0,
         maxWidth: "100%",
         justifyContent: "space-around",
-        padding: "2px 0",
+        padding: "2px 0"
     },
     // tweetIcon: {
     //     "& .MuiIconButton-root": {
@@ -55,7 +55,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
     // },
     divider: {
         height: 12,
-        backgroundColor: theme.palette.divider,
+        backgroundColor: theme.palette.divider
     },
     imageFooterContainer: {
         position: "absolute",
@@ -65,7 +65,7 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         bottom: 0,
         "& svg": {
             color: theme.palette.common.white
-        },
+        }
     },
     imageFooterWrapper: {
         display: "flex",
@@ -74,6 +74,6 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         paddingBottom: 5,
         left: -13,
         justifyContent: "space-between",
-        maxWidth: 450,
-    },
+        maxWidth: 450
+    }
 }));

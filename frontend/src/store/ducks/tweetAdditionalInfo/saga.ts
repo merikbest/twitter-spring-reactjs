@@ -1,5 +1,5 @@
-import {AxiosResponse} from "axios";
-import {call, put, takeLatest} from "redux-saga/effects";
+import { AxiosResponse } from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
 
 import {
     setIsTweetBookmarkedAdditionalInfo,
@@ -11,11 +11,11 @@ import {
     FetchTweetAdditionalInfoActionInterface,
     TweetAdditionalInfoType
 } from "./contracts/actionTypes";
-import {TweetAdditionalInfoResponse} from "../../types/tweet";
-import {TweetApi} from "../../../services/api/tweetApi";
-import {LoadingStatus} from "../../types/common";
+import { TweetAdditionalInfoResponse } from "../../../types/tweet";
+import { TweetApi } from "../../../services/api/tweetApi";
+import { LoadingStatus } from "../../../types/common";
 
-export function* fetchTweetAdditionalInfoRequest({payload}: FetchTweetAdditionalInfoActionInterface) {
+export function* fetchTweetAdditionalInfoRequest({ payload }: FetchTweetAdditionalInfoActionInterface) {
     try {
         yield put(setTweetAdditionalInfoLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetAdditionalInfoResponse> = yield call(TweetApi.getTweetAdditionalInfoById, payload);
@@ -25,7 +25,7 @@ export function* fetchTweetAdditionalInfoRequest({payload}: FetchTweetAdditional
     }
 }
 
-export function* fetchIsTweetBookmarkedAdditionalInfoRequest({payload}: FetchIsTweetBookmarkedAdditionalInfoActionInterface) {
+export function* fetchIsTweetBookmarkedAdditionalInfoRequest({ payload }: FetchIsTweetBookmarkedAdditionalInfoActionInterface) {
     try {
         yield put(setTweetAdditionalInfoLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<boolean> = yield call(TweetApi.getIsTweetBookmarked, payload);

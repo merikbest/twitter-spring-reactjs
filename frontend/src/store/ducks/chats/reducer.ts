@@ -1,12 +1,12 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {ChatsActions, ChatsActionsType} from './contracts/actionTypes';
-import {ChatsState} from './contracts/state';
-import {LoadingStatus} from "../../types/common";
+import { ChatsActions, ChatsActionsType } from "./contracts/actionTypes";
+import { ChatsState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialChatsState: ChatsState = {
     items: [],
-    loadingState: LoadingStatus.LOADING,
+    loadingState: LoadingStatus.LOADING
 };
 
 export const chatsReducer = produce((draft: Draft<ChatsState>, action: ChatsActions) => {
@@ -23,7 +23,7 @@ export const chatsReducer = produce((draft: Draft<ChatsState>, action: ChatsActi
 
         case ChatsActionsType.LEAVE_FROM_CONVERSATION:
             draft.items = draft.items.filter((chat) => chat.id !== action.payload.chatId);
-            draft.loadingState = LoadingStatus.LOADED
+            draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case ChatsActionsType.RESET_CHATS_STATE:

@@ -1,8 +1,8 @@
 import React from "react";
 
-import {mockDispatch, mountWithStore} from "../../../../util/testHelper";
-import {UserActionsType} from "../../../../store/ducks/user/contracts/actionTypes";
-import {ActionSnackbarTypes} from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { UserActionsType } from "../../../../store/ducks/user/contracts/actionTypes";
+import { ActionSnackbarTypes } from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 import MuteUserButton from "../MuteUserButton";
 
 describe("MuteUserButton", () => {
@@ -32,7 +32,7 @@ describe("MuteUserButton", () => {
         expect(wrapper.text().includes(`${text} @test_username`)).toBe(true);
         wrapper.find("#onMuteUser").at(0).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: {userId: 1, tweetId: 1},
+            payload: { userId: 1, tweetId: 1 },
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {

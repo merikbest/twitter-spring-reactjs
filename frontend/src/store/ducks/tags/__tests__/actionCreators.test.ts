@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/testHelper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     fetchTags,
     fetchTrends,
@@ -8,14 +8,14 @@ import {
     setTrends,
     setTrendsLoadingState
 } from "../actionCreators";
-import {TagsActionsType} from "../contracts/actionTypes";
-import {TagResponse} from "../../../types/tag";
-import {LoadingStatus} from "../../../types/common";
+import { TagsActionsType } from "../contracts/actionTypes";
+import { TagResponse } from "../../../../types/tag";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("tags actions", () => {
-    testAction(setTags, setTags([{id: 1}] as TagResponse[]), {
+    testAction(setTags, setTags([{ id: 1 }] as TagResponse[]), {
         type: TagsActionsType.SET_TAGS,
-        payload: [{id: 1}] as TagResponse[]
+        payload: [{ id: 1 }] as TagResponse[]
     });
 
     testAction(fetchTags, fetchTags(), {
@@ -27,9 +27,9 @@ describe("tags actions", () => {
         payload: LoadingStatus.LOADING
     });
 
-    testAction(setTrends, setTrends({items: [{id: 1}] as TagResponse[], pagesCount: 1}), {
+    testAction(setTrends, setTrends({ items: [{ id: 1 }] as TagResponse[], pagesCount: 1 }), {
         type: TagsActionsType.SET_TRENDS,
-        payload: {items: [{id: 1}] as TagResponse[], pagesCount: 1}
+        payload: { items: [{ id: 1 }] as TagResponse[], pagesCount: 1 }
     });
 
     testAction(fetchTrends, fetchTrends(1), {

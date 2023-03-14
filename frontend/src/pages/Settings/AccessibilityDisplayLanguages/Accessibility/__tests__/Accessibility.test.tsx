@@ -1,12 +1,12 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore, testClickOnLink} from "../../../../../util/testHelper";
+import { createMockRootState, mountWithStore, testClickOnLink } from "../../../../../util/test-utils/test-helper";
 import Accessibility from "../Accessibility";
-import {SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY} from "../../../../../util/pathConstants";
+import { SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY } from "../../../../../constants/path-constants";
 
 describe("Accessibility", () => {
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<Accessibility/>, createMockRootState());
+        const wrapper = mountWithStore(<Accessibility />, createMockRootState());
 
         expect(wrapper.text().includes("Vision")).toBe(true);
         expect(wrapper.text().includes("Increase color contrast")).toBe(true);
@@ -17,6 +17,6 @@ describe("Accessibility", () => {
     });
 
     it("should link to Autoplay", () => {
-        testClickOnLink(<Accessibility/>, SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY, 0);
+        testClickOnLink(<Accessibility />, SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY, 0);
     });
 });

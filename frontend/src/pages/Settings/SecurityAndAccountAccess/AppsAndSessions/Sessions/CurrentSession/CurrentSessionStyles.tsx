@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
     sessionInfo: {
@@ -13,12 +13,12 @@ export const useCurrentSessionStyles = makeStyles((theme: Theme) => ({
         width: 48,
         height: 48,
         border: "1px solid rgb(229, 234, 236)",
-        borderRadius: "50%",
+        borderRadius: "50%"
     },
     deviceIcon: {
         "& svg": {
             color: theme.palette.text.primary,
             height: "1.7em"
-        },
-    },
+        }
+    }
 }));

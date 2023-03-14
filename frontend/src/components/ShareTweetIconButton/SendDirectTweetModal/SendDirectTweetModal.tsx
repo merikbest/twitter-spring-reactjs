@@ -1,30 +1,30 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Avatar, Chip, Dialog, InputAdornment, List} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Avatar, Chip, Dialog, InputAdornment, List } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
 import DialogContent from "@material-ui/core/DialogContent";
 
-import {useSendDirectTweetModalStyles} from "./SendDirectTweetModalStyles";
-import {MessagesModalInput} from "../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
-import {selectUsersPagesCount, selectUsersSearch} from "../../../store/ducks/usersSearch/selectors";
-import {fetchChats} from "../../../store/ducks/chats/actionCreators";
-import {selectChatsItems} from "../../../store/ducks/chats/selectors";
+import { useSendDirectTweetModalStyles } from "./SendDirectTweetModalStyles";
+import { MessagesModalInput } from "../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
+import { selectUsersPagesCount, selectUsersSearch } from "../../../store/ducks/usersSearch/selectors";
+import { fetchChats } from "../../../store/ducks/chats/actionCreators";
+import { selectChatsItems } from "../../../store/ducks/chats/selectors";
 import {
     fetchParticipantsByUsername,
     resetUsersState,
     setUsersSearch
 } from "../../../store/ducks/usersSearch/actionCreators";
-import {SearchIcon} from "../../../icons";
+import { SearchIcon } from "../../../icons";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
 import CloseButton from "../../CloseButton/CloseButton";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
-import {UserResponse} from "../../../store/types/user";
-import InfiniteScrollWrapper from '../../InfiniteScrollWrapper/InfiniteScrollWrapper';
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
+import { UserResponse } from "../../../types/user";
+import InfiniteScrollWrapper from "../../InfiniteScrollWrapper/InfiniteScrollWrapper";
 import SendDirectMessageFooter from "./SendDirectMessageFooter/SendDirectMessageFooter";
-import {ChatResponse} from "../../../store/types/chat";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
+import { ChatResponse } from "../../../types/chat";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
+import { DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
 
 interface SendDirectTweetModalProps {
     tweetId: number;
@@ -63,7 +63,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         if (text) {
             setSearchText(text);
             dispatch(resetUsersState());
-            dispatch(fetchParticipantsByUsername({username: encodeURIComponent(text), pageNumber: 0}));
+            dispatch(fetchParticipantsByUsername({ username: encodeURIComponent(text), pageNumber: 0 }));
         } else {
             setSearchText("");
             dispatch(fetchChats());
@@ -72,7 +72,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     };
 
     const loadParticipants = (page: number): void => {
-        dispatch(fetchParticipantsByUsername({username: encodeURIComponent(searchText), pageNumber: page}));
+        dispatch(fetchParticipantsByUsername({ username: encodeURIComponent(searchText), pageNumber: page }));
     };
 
     const handleDelete = (selectedUser: UserResponse) => (): void => {
@@ -119,7 +119,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     return (
         <Dialog open={visible}>
             <DialogTitle className={classes.header}>
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onClose} />
                 Send Tweet
             </DialogTitle>
             <DialogContent id="scrollableDiv" className={classes.content}>
@@ -134,7 +134,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                             <InputAdornment position="start">
                                 {SearchIcon}
                             </InputAdornment>
-                        ),
+                        )
                     }}
                 />
                 {selectedUsers && (
@@ -148,12 +148,12 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                                 />
                             }
                             label={selectedUser?.fullName}
-                            deleteIcon={<CloseIcon color="primary"/>}
+                            deleteIcon={<CloseIcon color="primary" />}
                             onDelete={handleDelete(selectedUser)}
                         />
                     ))
                 )}
-                <div className={classes.divider}/>
+                <div className={classes.divider} />
                 <InfiniteScrollWrapper
                     dataLength={users.length}
                     pagesCount={usersPagesCount}

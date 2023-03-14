@@ -1,6 +1,6 @@
-import React, {FC, memo, ReactElement, useState} from "react";
+import React, { FC, memo, ReactElement, useState } from "react";
 
-import {ScheduleIcon} from "../../../icons";
+import { ScheduleIcon } from "../../../icons";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import ScheduleModal from "../ScheduleModal/ScheduleModal";
 import UnsentTweetsModal from "../UnsentTweetsModal/UnsentTweetsModal";

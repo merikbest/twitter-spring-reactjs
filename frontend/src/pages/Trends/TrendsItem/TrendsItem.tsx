@@ -1,22 +1,22 @@
-import React, {FC, ReactElement} from "react";
-import {Link} from "react-router-dom";
-import {ListItem, ListItemText, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { ListItem, ListItemText, Typography } from "@material-ui/core";
 
-import {useTrendsItemStyles} from "./TrendsItemStyles";
-import {SEARCH} from "../../../util/pathConstants";
-import {EditIcon} from "../../../icons";
-import {TagResponse} from "../../../store/types/tag";
+import { useTrendsItemStyles } from "./TrendsItemStyles";
+import { SEARCH } from "../../../constants/path-constants";
+import { EditIcon } from "../../../icons";
+import { TagResponse } from "../../../types/tag";
 
 interface TrendsItemProps {
     tag: TagResponse;
 }
 
-const TrendsItem: FC<TrendsItemProps> = ({tag}): ReactElement => {
+const TrendsItem: FC<TrendsItemProps> = ({ tag }): ReactElement => {
     const classes = useTrendsItemStyles();
 
     return (
         <div className={classes.item}>
-            <Link to={{pathname: SEARCH, state: {tag: tag.tagName}}}>
+            <Link to={{ pathname: SEARCH, state: { tag: tag.tagName } }}>
                 <ListItem>
                     <ListItemText
                         primary={tag.tagName}

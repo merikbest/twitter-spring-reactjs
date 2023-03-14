@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/testHelper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     acceptFollowRequest,
     declineFollowRequest,
@@ -8,14 +8,17 @@ import {
     setFollowerRequests,
     setFollowerRequestsLoadingState
 } from "../actionCreators";
-import {FollowerRequestsActionsType} from "../contracts/actionTypes";
-import {FollowerUserResponse} from "../../../types/user";
-import {LoadingStatus} from "../../../types/common";
+import { FollowerRequestsActionsType } from "../contracts/actionTypes";
+import { FollowerUserResponse } from "../../../../types/user";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("followRequests actions", () => {
-    testAction(setFollowerRequests, setFollowerRequests({items: [{id: 1}] as FollowerUserResponse[], pagesCount: 1}), {
+    testAction(setFollowerRequests, setFollowerRequests({
+        items: [{ id: 1 }] as FollowerUserResponse[],
+        pagesCount: 1
+    }), {
         type: FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS,
-        payload: {items: [{id: 1}] as FollowerUserResponse[], pagesCount: 1}
+        payload: { items: [{ id: 1 }] as FollowerUserResponse[], pagesCount: 1 }
     });
 
     testAction(fetchFollowerRequests, fetchFollowerRequests(1), {

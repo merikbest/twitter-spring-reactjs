@@ -1,8 +1,8 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
-import {mockMyProfile} from "../../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { mockMyProfile } from "../../../../util/test-utils/mock-test-data";
 import UserPageHeader from "../UserPageHeader";
 
 describe("UserPageHeader", () => {
@@ -11,7 +11,7 @@ describe("UserPageHeader", () => {
         ...mockRootState,
         userProfile: {
             ...mockRootState.userProfile,
-            user: {...mockMyProfile, mediaTweetCount: 1, likeCount: 1, tweetCount: 1}
+            user: { ...mockMyProfile, mediaTweetCount: 1, likeCount: 1, tweetCount: 1 }
         }
     };
 

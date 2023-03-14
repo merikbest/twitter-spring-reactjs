@@ -1,17 +1,17 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
-import {ChatResponse} from "../../../types/chat";
-import {ChatsState, LeaveConversationRequest} from "./state";
-import {LoadingStatus} from "../../../types/common";
+import { ChatResponse } from "../../../../types/chat";
+import { ChatsState, LeaveConversationRequest } from "./state";
+import { LoadingStatus } from "../../../../types/common";
 
 export enum ChatsActionsType {
-    SET_CHATS = 'chats/SET_CHATS',
-    SET_CHAT = 'chats/SET_CHAT',
-    FETCH_CHATS = 'chats/FETCH_CHATS',
-    CREATE_CHAT = 'chats/CREATE_CHAT',
-    LEAVE_FROM_CONVERSATION = 'chats/LEAVE_FROM_CONVERSATION',
-    RESET_CHATS_STATE = 'chats/RESET_CHATS_STATE',
-    SET_LOADING_STATE = 'chats/SET_LOADING_STATE',
+    SET_CHATS = "chats/SET_CHATS",
+    SET_CHAT = "chats/SET_CHAT",
+    FETCH_CHATS = "chats/FETCH_CHATS",
+    CREATE_CHAT = "chats/CREATE_CHAT",
+    LEAVE_FROM_CONVERSATION = "chats/LEAVE_FROM_CONVERSATION",
+    RESET_CHATS_STATE = "chats/RESET_CHATS_STATE",
+    SET_LOADING_STATE = "chats/SET_LOADING_STATE",
 }
 
 export interface SetChatsActionInterface extends Action<ChatsActionsType> {

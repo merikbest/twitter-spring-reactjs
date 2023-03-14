@@ -1,47 +1,47 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
     dialog: {
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
             marginBottom: 0,
-            borderBottom: `1px solid ${theme.palette.divider}`,
+            borderBottom: `1px solid ${theme.palette.divider}`
         },
         "& .MuiDialogContent-root": {
-            paddingTop: 10,
+            paddingTop: 10
         },
         "& .MuiTypography-h3": {
-            padding: "16px 0px",
+            padding: "16px 0px"
         },
         "& .MuiTypography-subtitle1": {
-            marginBottom: 20,
-        },
+            marginBottom: 20
+        }
     },
     content: {
         width: 598,
         height: 650,
         position: "relative",
         overflowX: "hidden",
-        padding: "0px 32px",
+        padding: "0px 32px"
     },
     logoIcon: {
         margin: "0 auto",
         width: 53,
         "& svg": {
             height: "2.30em",
-            color: theme.palette.primary.main,
-        },
+            color: theme.palette.primary.main
+        }
     },
     infoWrapper: {
         marginTop: 38,
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "space-between"
     },
     selectWrapper: {
         marginBottom: 20,
         "& .MuiFormControl-root": {
             width: "100%"
-        },
+        }
     },
     footer: {
         width: "100%",
@@ -49,5 +49,5 @@ export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
         position: "absolute",
         paddingRight: 64,
         paddingBottom: 36
-    },
+    }
 }));

@@ -1,18 +1,18 @@
-import React, {FC, memo, ReactElement} from 'react';
-import {Link} from "react-router-dom";
-import {Button, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Button, Typography } from "@material-ui/core";
 
-import {useEmptyFollowersDescriptionStyles} from "./EmptyFollowersDescriptionStyles";
-import {HOME_CONNECT} from "../../../util/pathConstants";
-import {useSelector} from "react-redux";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
-import {selectUserProfileId, selectUserProfileUsername} from "../../../store/ducks/userProfile/selectors";
+import { useEmptyFollowersDescriptionStyles } from "./EmptyFollowersDescriptionStyles";
+import { HOME_CONNECT } from "../../../constants/path-constants";
+import { useSelector } from "react-redux";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
+import { selectUserProfileId, selectUserProfileUsername } from "../../../store/ducks/userProfile/selectors";
 
 interface EmptyFollowersDescriptionProps {
     activeTab: number;
 }
 
-const EmptyFollowersDescription: FC<EmptyFollowersDescriptionProps> = memo(({activeTab}): ReactElement => {
+const EmptyFollowersDescription: FC<EmptyFollowersDescriptionProps> = memo(({ activeTab }): ReactElement => {
     const classes = useEmptyFollowersDescriptionStyles();
     const myProfileId = useSelector(selectUserDataId);
     const userProfileId = useSelector(selectUserProfileId);

@@ -1,12 +1,12 @@
-import produce, {Draft} from 'immer';
+import produce, { Draft } from "immer";
 
-import {ChatMessageActions, ChatMessagesActionsType} from './contracts/actionTypes';
-import {ChatMessageState} from './contracts/state';
-import {LoadingStatus} from "../../types/common";
+import { ChatMessageActions, ChatMessagesActionsType } from "./contracts/actionTypes";
+import { ChatMessageState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialChatMessagesState: ChatMessageState = {
     items: [],
-    loadingState: LoadingStatus.LOADING,
+    loadingState: LoadingStatus.LOADING
 };
 
 export const chatMessagesReducer = produce((draft: Draft<ChatMessageState>, action: ChatMessageActions) => {

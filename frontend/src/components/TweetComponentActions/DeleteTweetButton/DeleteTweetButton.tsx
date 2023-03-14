@@ -1,12 +1,12 @@
-import React, {FC, memo, ReactElement, useState} from "react";
-import {useDispatch} from "react-redux";
-import {ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {DeleteIcon} from "../../../icons";
+import { DeleteIcon } from "../../../icons";
 import TweetComponentActionsModal from "../TweetComponentActionsModal/TweetComponentActionsModal";
-import {deleteTweetReply} from "../../../store/ducks/tweet/actionCreators";
-import {fetchDeleteTweet} from "../../../store/ducks/tweets/actionCreators";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import { deleteTweetReply } from "../../../store/ducks/tweet/actionCreators";
+import { fetchDeleteTweet } from "../../../store/ducks/tweets/actionCreators";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 
 interface DeleteTweetButtonProps {
     tweetId: number;

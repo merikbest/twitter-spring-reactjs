@@ -1,7 +1,7 @@
-import {RootState} from "../../store";
-import {NotificationsState} from "./contracts/state";
-import {NotificationResponse, NotificationUserResponse} from "../../types/notification";
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { NotificationsState } from "./contracts/state";
+import { NotificationResponse, NotificationUserResponse } from "../../../types/notification";
+import { LoadingStatus } from "../../../types/common";
 
 export const selectNotifications = (state: RootState): NotificationsState => state.notifications;
 export const selectNotificationsList = (state: RootState): NotificationResponse[] => selectNotifications(state).notificationsList;

@@ -1,8 +1,8 @@
-import {followerRequestsReducer, initialFollowerRequestsState} from "../reducer";
-import {testActionDispatch} from "../../../../util/testHelper";
-import {FollowerRequestsActions, FollowerRequestsActionsType} from "../contracts/actionTypes";
-import {FollowerUserResponse} from "../../../types/user";
-import {LoadingStatus} from "../../../types/common";
+import { followerRequestsReducer, initialFollowerRequestsState } from "../reducer";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { FollowerRequestsActions, FollowerRequestsActionsType } from "../contracts/actionTypes";
+import { FollowerUserResponse } from "../../../../types/user";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("followerRequestsReducer:", () => {
     describe("initial state:", () => {
@@ -16,11 +16,11 @@ describe("followerRequestsReducer:", () => {
             FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS,
             followerRequestsReducer(initialFollowerRequestsState, {
                 type: FollowerRequestsActionsType.SET_FOLLOWER_REQUESTS,
-                payload: {items: [{id: 1}] as FollowerUserResponse[], pagesCount: 2}
+                payload: { items: [{ id: 1 }] as FollowerUserResponse[], pagesCount: 2 }
             }),
             {
                 ...initialFollowerRequestsState,
-                items: [{id: 1}] as FollowerUserResponse[],
+                items: [{ id: 1 }] as FollowerUserResponse[],
                 pagesCount: 2,
                 loadingState: LoadingStatus.LOADED
             }
@@ -31,7 +31,7 @@ describe("followerRequestsReducer:", () => {
             followerRequestsReducer(
                 {
                     ...initialFollowerRequestsState,
-                    items: [{id: 1}] as FollowerUserResponse[],
+                    items: [{ id: 1 }] as FollowerUserResponse[]
                 },
                 {
                     type: FollowerRequestsActionsType.PROCESS_FOLLOW_REQUEST,
@@ -50,10 +50,10 @@ describe("followerRequestsReducer:", () => {
             followerRequestsReducer(
                 {
                     ...initialFollowerRequestsState,
-                    items: [{id: 1}] as FollowerUserResponse[],
+                    items: [{ id: 1 }] as FollowerUserResponse[]
                 },
                 {
-                    type: FollowerRequestsActionsType.RESET_FOLLOWER_REQUESTS_STATE,
+                    type: FollowerRequestsActionsType.RESET_FOLLOWER_REQUESTS_STATE
                 }
             ),
             {

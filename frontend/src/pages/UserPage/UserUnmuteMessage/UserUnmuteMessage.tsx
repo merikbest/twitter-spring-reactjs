@@ -1,15 +1,15 @@
-import React, {memo, ReactElement} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
 
-import {processUserToMuteList} from "../../../store/ducks/user/actionCreators";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
+import { processUserToMuteList } from "../../../store/ducks/user/actionCreators";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 import {
     selectUserProfileId,
     selectUserProfileIsUserMuted,
     selectUserProfileUsername
 } from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const UserUnmuteMessage = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -19,7 +19,7 @@ const UserUnmuteMessage = memo((): ReactElement => {
     const isUserMuted = useSelector(selectUserProfileIsUserMuted);
 
     const onMuteUser = (): void => {
-        dispatch(processUserToMuteList({userId: userProfileId!}));
+        dispatch(processUserToMuteList({ userId: userProfileId! }));
         dispatch(setOpenSnackBar(`@${username} has been ${isUserMuted ? "unmuted" : "muted"}.`));
     };
 

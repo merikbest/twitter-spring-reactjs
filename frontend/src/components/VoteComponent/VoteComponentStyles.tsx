@@ -1,8 +1,8 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useVoteComponentStyles = makeStyles((theme: Theme) => ({
     container: {
-        position: "relative",
+        position: "relative"
     },
     voteOption: {
         display: "flex",
@@ -10,12 +10,12 @@ export const useVoteComponentStyles = makeStyles((theme: Theme) => ({
         alignItems: "center",
         width: "100%",
         height: 30,
-        marginTop: 4,
+        marginTop: 4
 
     },
     voteChoice: {
         zIndex: 1,
-        padding: "0px 11px",
+        padding: "0px 11px"
     },
     voteScale: {
         top: 0,
@@ -23,12 +23,12 @@ export const useVoteComponentStyles = makeStyles((theme: Theme) => ({
         borderRadius: 4,
         position: "absolute",
         height: 30,
-        backgroundColor: theme.palette.grey[100],
+        backgroundColor: theme.palette.grey[100]
     },
     voteInfo: {
-        marginTop: 11,
+        marginTop: 11
     },
     voteButton: {
-        marginTop: 4,
-    },
+        marginTop: 4
+    }
 }));

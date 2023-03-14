@@ -1,16 +1,16 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
-import {List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { List, ListItem, Typography } from "@material-ui/core";
 
-import {AccessibilityIcon, ArrowRightIcon, DisplayIcon, LanguagesIcon, TweetActivityIcon} from "../../../icons";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import { AccessibilityIcon, ArrowRightIcon, DisplayIcon, LanguagesIcon, TweetActivityIcon } from "../../../icons";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
 import {
     SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY,
     SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA,
     SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY,
     SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES
-} from "../../../util/pathConstants";
+} from "../../../constants/path-constants";
 
 const AccessibilityDisplayLanguages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();

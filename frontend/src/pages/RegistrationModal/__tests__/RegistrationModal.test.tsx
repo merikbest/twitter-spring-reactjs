@@ -1,14 +1,14 @@
 import React from "react";
-import {Button, Dialog} from "@material-ui/core";
+import { Button, Dialog } from "@material-ui/core";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
 import RegistrationModal from "../RegistrationModal";
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import RegistrationInput from "../RegistrationInput/RegistrationInput";
-import {FilledSelect} from "../../../components/FilledSelect/FilledSelect";
-import {API_AUTH_REGISTRATION_CHECK} from "../../../util/endpoints";
-import {LoadingStatus} from "../../../store/types/common";
+import { FilledSelect } from "../../../components/FilledSelect/FilledSelect";
+import { API_AUTH_REGISTRATION_CHECK } from "../../../constants/endpoint-constants";
+import { LoadingStatus } from "../../../types/common";
 
 describe("RegistrationModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -71,7 +71,7 @@ describe("RegistrationModal", () => {
             username: "Please enter a valid name.",
             email: "Please enter a valid email address."
         };
-        const {mockRegistrationData, mock, wrapper} = initializeTest();
+        const { mockRegistrationData, mock, wrapper } = initializeTest();
 
         wrapper.find(Button).at(0).simulate("submit");
         mock.onPost(API_AUTH_REGISTRATION_CHECK, mockRegistrationData).reply(400, mockError);
@@ -89,7 +89,7 @@ describe("RegistrationModal", () => {
     const initializeTest = () => {
         const mockUsername = "test_username";
         const mockEmail = "test@test.test";
-        const mockRegistrationData = {username: mockUsername, email: mockEmail, birthday: "Feb 31, 1901"};
+        const mockRegistrationData = { username: mockUsername, email: mockEmail, birthday: "Feb 31, 1901" };
         const mockOnOpenCustomize = jest.fn();
         const mockOnChangeRegistrationInfo = jest.fn();
 
@@ -103,21 +103,21 @@ describe("RegistrationModal", () => {
             />, mockStore);
 
         wrapper.find(RegistrationInput).at(0).find("input").simulate("change",
-            {target: {value: mockUsername}});
+            { target: { value: mockUsername } });
         wrapper.find(RegistrationInput).at(1).find("input").simulate("change",
-            {target: {value: mockEmail}});
+            { target: { value: mockEmail } });
         wrapper.find(FilledSelect).at(0).find("select").simulate("change",
-            {target: {value: "Feb"}});
+            { target: { value: "Feb" } });
         wrapper.find(FilledSelect).at(1).find("select").simulate("change",
-            {target: {value: 31}});
+            { target: { value: 31 } });
         wrapper.find(FilledSelect).at(2).find("select").simulate("change",
-            {target: {value: 1901}});
+            { target: { value: 1901 } });
 
         expect(wrapper.find(RegistrationInput).at(0).prop("value")).toBe(mockUsername);
         expect(wrapper.find(RegistrationInput).at(1).prop("value")).toBe(mockEmail);
         expect(wrapper.find(FilledSelect).at(0).prop("value")).toBe("Feb");
         expect(wrapper.find(FilledSelect).at(1).prop("value")).toBe(31);
         expect(wrapper.find(FilledSelect).at(2).prop("value")).toBe(1901);
-        return {mockRegistrationData, mockOnOpenCustomize, mockOnChangeRegistrationInfo, mock, wrapper};
-    }
+        return { mockRegistrationData, mockOnOpenCustomize, mockOnChangeRegistrationInfo, mock, wrapper };
+    };
 });

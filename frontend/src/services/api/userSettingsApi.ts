@@ -1,8 +1,8 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 
-import {ChangePhoneResponse, Settings} from "../../store/ducks/user/contracts/state";
-import {axios} from "../../core/axios";
-import {AuthenticationResponse} from "../../store/types/auth";
+import { ChangePhoneResponse, Settings } from "../../store/ducks/user/contracts/state";
+import { axios } from "../../core/axios";
+import { AuthenticationResponse } from "../../types/auth";
 import {
     API_SETTINGS_UPDATE_BACKGROUND_COLOR,
     API_SETTINGS_UPDATE_COLOR_SCHEME,
@@ -14,7 +14,7 @@ import {
     API_SETTINGS_UPDATE_PHONE,
     API_SETTINGS_UPDATE_PRIVATE,
     API_SETTINGS_UPDATE_USERNAME
-} from "../../util/endpoints";
+} from "../../constants/endpoint-constants";
 
 export const UserSettingsApi = {
     async updateUsername(settings: Settings): Promise<AxiosResponse<string>> {
@@ -46,5 +46,5 @@ export const UserSettingsApi = {
     },
     async updateBackgroundColor(settings: Settings): Promise<AxiosResponse<string>> {
         return await axios.put<string>(API_SETTINGS_UPDATE_BACKGROUND_COLOR, settings);
-    },
-}
+    }
+};

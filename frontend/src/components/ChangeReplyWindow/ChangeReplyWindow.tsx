@@ -1,16 +1,16 @@
-import React, {FC, memo, ReactElement} from 'react';
-import {List, ListItem, Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { List, ListItem, Typography } from "@material-ui/core";
 
-import {useChangeReplyWindowStyles} from "./ChangeReplyWindowStyles";
-import {CheckIcon, EveryoneReplyOutlinedIcon, FollowReplyOutlinedIcon, MentionReplyOutlinedIcon} from "../../icons";
-import {ReplyType} from "../../store/types/common";
+import { useChangeReplyWindowStyles } from "./ChangeReplyWindowStyles";
+import { CheckIcon, EveryoneReplyOutlinedIcon, FollowReplyOutlinedIcon, MentionReplyOutlinedIcon } from "../../icons";
+import { ReplyType } from "../../types/common";
 
 interface ChangeReplyWindowProps {
     replyType: ReplyType;
     onChangeTweetReplyType: (replyType: ReplyType) => void;
 }
 
-const ChangeReplyWindow: FC<ChangeReplyWindowProps> = memo(({replyType, onChangeTweetReplyType}): ReactElement => {
+const ChangeReplyWindow: FC<ChangeReplyWindowProps> = memo(({ replyType, onChangeTweetReplyType }): ReactElement => {
     const classes = useChangeReplyWindowStyles();
 
     return (

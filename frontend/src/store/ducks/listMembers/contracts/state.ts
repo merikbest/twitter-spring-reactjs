@@ -1,5 +1,5 @@
-import {ListsOwnerMemberResponse} from "../../../types/lists";
-import {LoadingStatus} from "../../../types/common";
+import { ListsOwnerMemberResponse } from "../../../../types/lists";
+import { LoadingStatus } from "../../../../types/common";
 
 export interface ListMembersState {
     members: ListsOwnerMemberResponse[];

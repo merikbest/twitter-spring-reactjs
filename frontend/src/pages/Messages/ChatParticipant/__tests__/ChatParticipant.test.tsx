@@ -1,15 +1,15 @@
 import React from "react";
-import {ListItem} from "@material-ui/core";
+import { ListItem } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
-import {mockChats} from "../../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { mockChats } from "../../../../util/test-utils/mock-test-data";
 import ChatParticipant from "../ChatParticipant";
 
 describe("ChatParticipant", () => {
     it("should render correctly", () => {
         const mockChat = mockChats[0];
-        const mockHandleListItemClick = jest.fn()
+        const mockHandleListItemClick = jest.fn();
         const wrapper = mountWithStore(
             <ChatParticipant
                 chat={mockChat}

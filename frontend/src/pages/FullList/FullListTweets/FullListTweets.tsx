@@ -1,6 +1,6 @@
-import React, {memo, ReactElement, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import React, { memo, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import EmptyPageDescription from "../../../components/EmptyPageDescription/EmptyPageDescription";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
@@ -12,7 +12,7 @@ import {
     selectTweetsItems
 } from "../../../store/ducks/tweets/selectors";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
-import {fetchTweetsByListId, resetTweets} from "../../../store/ducks/tweets/actionCreators";
+import { fetchTweetsByListId, resetTweets } from "../../../store/ducks/tweets/actionCreators";
 
 const FullListTweets = memo((): ReactElement => {
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const FullListTweets = memo((): ReactElement => {
     }, []);
 
     const loadTweets = (page: number): void => {
-        dispatch(fetchTweetsByListId({listId: parseInt(params.listId), pageNumber: page}));
+        dispatch(fetchTweetsByListId({ listId: parseInt(params.listId), pageNumber: page }));
     };
 
     return (
@@ -43,8 +43,8 @@ const FullListTweets = memo((): ReactElement => {
                 />
             ) : (
                 <>
-                    {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet}/>)}
-                    {isTweetsLoading && <Spinner paddingTop={150}/>}
+                    {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)}
+                    {isTweetsLoading && <Spinner paddingTop={150} />}
                 </>
             )}
         </InfiniteScrollWrapper>

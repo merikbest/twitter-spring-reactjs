@@ -1,13 +1,13 @@
-import React, {memo, ReactElement, useEffect, useState} from "react";
-import {useSelector} from "react-redux";
-import {Button} from "@material-ui/core";
-import {useLocation} from "react-router-dom";
+import React, { memo, ReactElement, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Button } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
 
-import {selectUserProfileCustomized} from "../../../store/ducks/user/selectors";
+import { selectUserProfileCustomized } from "../../../store/ducks/user/selectors";
 import EditProfileModal from "../../../components/EditProfileModal/EditProfileModal";
 import SetupProfileModal from "../../SetupProfileModal/SetupProfileModal";
-import {selectUsersIsSuccessLoaded} from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { selectUsersIsSuccessLoaded } from "../../../store/ducks/userProfile/selectors";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const EditProfileButton = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -50,8 +50,8 @@ const EditProfileButton = memo((): ReactElement => {
             >
                 {myProfileCustomized ? "Edit profile" : "Setup profile"}
             </Button>
-            <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile}/>
-            <SetupProfileModal visible={visibleSetupProfile} onClose={onCloseSetupProfile}/>
+            <EditProfileModal visible={visibleEditProfile} onClose={onCloseEditProfile} />
+            <SetupProfileModal visible={visibleSetupProfile} onClose={onCloseSetupProfile} />
         </>
     );
 });

@@ -1,17 +1,17 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {useHistory, useParams} from "react-router-dom";
-import {Paper} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { Paper } from "@material-ui/core";
 
-import {UserApi} from "../../services/api/userApi";
+import { UserApi } from "../../services/api/userApi";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
-import {fetchUserProfile} from "../../store/ducks/userProfile/actionCreators";
-import {selectUserProfile} from "../../store/ducks/userProfile/selectors";
-import {selectUserDataId} from "../../store/ducks/user/selectors";
+import { fetchUserProfile } from "../../store/ducks/userProfile/actionCreators";
+import { selectUserProfile } from "../../store/ducks/userProfile/selectors";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
 import Spinner from "../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../util/globalClasses";
-import {UserResponse} from "../../store/types/user";
-import {PROFILE, USER} from "../../util/pathConstants";
+import { useGlobalStyles } from "../../util/globalClasses";
+import { UserResponse } from "../../types/user";
+import { PROFILE, USER } from "../../constants/path-constants";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
 import PageHeaderTitle from "../../components/PageHeaderTitle/PageHeaderTitle";
@@ -60,7 +60,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
                 )}
             </PageHeaderWrapper>
             {(isLoading && (overallFollowers.length === 0)) ? (
-                <Spinner paddingTop={150}/>
+                <Spinner paddingTop={150} />
             ) : (
                 (!isLoading && (overallFollowers.length === 0)) ? (
                     <div className={globalClasses.contentWrapper}>

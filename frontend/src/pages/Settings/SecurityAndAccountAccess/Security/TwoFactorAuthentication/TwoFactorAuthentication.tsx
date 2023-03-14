@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
-import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {TWO_FACTOR_AUTHENTICATION} from "../../../../../util/url";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { TWO_FACTOR_AUTHENTICATION } from "../../../../../constants/url-constants";
 
 const TwoFactorAuthentication: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -20,7 +20,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Text message
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Use your mobile phone to receive a text message with an authentication code to enter when
@@ -32,7 +32,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Authentication app
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     Use a mobile authentication app to get a verification code to enter every time you log in to
@@ -44,7 +44,7 @@ const TwoFactorAuthentication: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Security key
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`Use a security key that inserts into your computer or syncs to your mobile device when you 

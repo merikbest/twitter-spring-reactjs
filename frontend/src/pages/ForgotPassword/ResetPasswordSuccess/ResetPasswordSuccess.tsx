@@ -1,10 +1,10 @@
-import React, {FC, ReactElement} from 'react';
-import {Link} from "react-router-dom";
-import {Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useResetPasswordSuccessStyles} from "./ResetPasswordSuccessStyles";
-import {ACCOUNT_LOGIN} from '../../../util/pathConstants';
-import {DEVELOPER_ACCOUNT, HOW_TO_UPDATE_YOUR_ACCOUNT_PHONE_NUMBER} from "../../../util/url";
+import { useResetPasswordSuccessStyles } from "./ResetPasswordSuccessStyles";
+import { ACCOUNT_LOGIN } from "../../../constants/path-constants";
+import { DEVELOPER_ACCOUNT, HOW_TO_UPDATE_YOUR_ACCOUNT_PHONE_NUMBER } from "../../../constants/url-constants";
 
 const ResetPasswordSuccess: FC = (): ReactElement => {
     const classes = useResetPasswordSuccessStyles();

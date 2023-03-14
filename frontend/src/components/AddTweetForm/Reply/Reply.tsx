@@ -1,11 +1,11 @@
-import React, {FC, memo, MouseEvent, ReactElement, useState} from 'react';
-import {Divider, Popover} from "@material-ui/core";
+import React, { FC, memo, MouseEvent, ReactElement, useState } from "react";
+import { Divider, Popover } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
-import {useReplyStyles} from "./ReplyStyles";
-import {EveryoneReplyIcon, FollowReplyIcon, MentionReplyIcon} from "../../../icons";
+import { useReplyStyles } from "./ReplyStyles";
+import { EveryoneReplyIcon, FollowReplyIcon, MentionReplyIcon } from "../../../icons";
 import ChangeReplyWindow from "../../ChangeReplyWindow/ChangeReplyWindow";
-import {ReplyType} from '../../../store/types/common';
+import { ReplyType } from "../../../types/common";
 
 interface ReplyProps {
     replyType: ReplyType;
@@ -13,7 +13,7 @@ interface ReplyProps {
     isUnsentTweet: boolean;
 }
 
-const Reply: FC<ReplyProps> = memo(({replyType, setReplyType, isUnsentTweet}): ReactElement => {
+const Reply: FC<ReplyProps> = memo(({ replyType, setReplyType, isUnsentTweet }): ReactElement => {
     const classes = useReplyStyles();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openPopover = Boolean(anchorEl);
@@ -47,7 +47,7 @@ const Reply: FC<ReplyProps> = memo(({replyType, setReplyType, isUnsentTweet}): R
                         {replyType === ReplyType.MENTION && "Only people you mention"}
                     </span>
                 </Button>
-                <Divider/>
+                <Divider />
             </div>
             <Popover
                 id={popoverId}
@@ -56,7 +56,7 @@ const Reply: FC<ReplyProps> = memo(({replyType, setReplyType, isUnsentTweet}): R
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
             >
-                <ChangeReplyWindow replyType={replyType} onChangeTweetReplyType={handleListItemClick}/>
+                <ChangeReplyWindow replyType={replyType} onChangeTweetReplyType={handleListItemClick} />
             </Popover>
         </>
     );

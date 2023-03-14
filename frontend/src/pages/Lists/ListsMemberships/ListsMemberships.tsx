@@ -1,18 +1,18 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {useHistory, useParams} from "react-router-dom";
-import {Paper} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { Paper } from "@material-ui/core";
 
-import {fetchUserProfile} from "../../../store/ducks/userProfile/actionCreators";
-import {selectUserProfile, selectUsersIsSuccessLoaded} from "../../../store/ducks/userProfile/selectors";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
-import {fetchUserListsById, resetListsState} from "../../../store/ducks/lists/actionCreators";
-import {selectIsLoading, selectListsItems} from "../../../store/ducks/lists/selectors";
+import { fetchUserProfile } from "../../../store/ducks/userProfile/actionCreators";
+import { selectUserProfile, selectUsersIsSuccessLoaded } from "../../../store/ducks/userProfile/selectors";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
+import { fetchUserListsById, resetListsState } from "../../../store/ducks/lists/actionCreators";
+import { selectIsLoading, selectListsItems } from "../../../store/ducks/lists/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
-import {useGlobalStyles} from "../../../util/globalClasses";
-import {PROFILE} from "../../../util/pathConstants";
-import {withDocumentTitle} from "../../../hoc/withDocumentTitle";
+import { useGlobalStyles } from "../../../util/globalClasses";
+import { PROFILE } from "../../../constants/path-constants";
+import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 import EmptyPageDescription from "../../../components/EmptyPageDescription/EmptyPageDescription";
 import PageHeaderTitle from "../../../components/PageHeaderTitle/PageHeaderTitle";
@@ -36,7 +36,7 @@ const ListsMemberships: FC = (): ReactElement => {
             dispatch(resetListsState());
         };
     }, [params]);
-    
+
     useEffect(() => {
         if (isUserProfileLoaded && userProfile) {
             if ((userProfile.isPrivateProfile && !userProfile.isFollower) || userProfile.isMyProfileBlocked) {
@@ -45,19 +45,19 @@ const ListsMemberships: FC = (): ReactElement => {
                 dispatch(fetchUserListsById(Number(params.id)));
             }
         }
-    }, [isUserProfileLoaded])
+    }, [isUserProfileLoaded]);
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
             <PageHeaderWrapper backButton>
-                <PageHeaderTitle 
+                <PageHeaderTitle
                     title={`Lists ${(myProfileId === userProfile?.id) ? "you’re on" : ""}`}
                     subtitle={`@${userProfile?.username}`}
                 />
             </PageHeaderWrapper>
             <div className={globalClasses.contentWrapper}>
                 {(isListsLoading && !lists.length) ? (
-                    <Spinner/>
+                    <Spinner />
                 ) : (
                     (!isListsLoading && !lists.length) ? (
                         <EmptyPageDescription
@@ -73,7 +73,7 @@ const ListsMemberships: FC = (): ReactElement => {
                             )}
                         />
                     ) : (
-                        lists.map((list) => <ListsItem key={list.id} list={list}/>)
+                        lists.map((list) => <ListsItem key={list.id} list={list} />)
                     )
                 )}
             </div>

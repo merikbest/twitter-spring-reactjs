@@ -1,10 +1,10 @@
-import {RootState} from "../../store";
-import {TweetState} from "./contracts/state";
-import {TweetResponse} from "../../types/tweet";
-import {UserResponse} from "../../types/user";
+import { RootState } from "../../store";
+import { TweetState } from "./contracts/state";
+import { TweetResponse } from "../../../types/tweet";
+import { UserResponse } from "../../../types/user";
 
-import {DEFAULT_PROFILE_IMG} from "../../../util/url";
-import {LoadingStatus} from "../../types/common";
+import { DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
+import { LoadingStatus } from "../../../types/common";
 
 const selectTweetState = (state: RootState): TweetState => state.tweet;
 const selectLoadingState = (state: RootState): LoadingStatus => selectTweetState(state).loadingState;

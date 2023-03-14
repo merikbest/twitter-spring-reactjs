@@ -1,7 +1,7 @@
-import React, {memo, ReactElement, useState} from "react";
+import React, { memo, ReactElement, useState } from "react";
 import classnames from "classnames";
-import {Button} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
+import { Button } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
 import {
@@ -9,9 +9,9 @@ import {
     selectUserProfileIsUserBlocked,
     selectUserProfileUsername
 } from "../../../store/ducks/userProfile/selectors";
-import {processUserToBlocklist} from "../../../store/ducks/user/actionCreators";
-import {setOpenSnackBar} from "../../../store/ducks/actionSnackbar/actionCreators";
-import {useUserPageStyles} from "../UserPageStyles";
+import { processUserToBlocklist } from "../../../store/ducks/user/actionCreators";
+import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const BlockUserButton = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -31,7 +31,7 @@ const BlockUserButton = memo((): ReactElement => {
     };
 
     const onBlockUser = (): void => {
-        dispatch(processUserToBlocklist({userId: userProfileId!}));
+        dispatch(processUserToBlocklist({ userId: userProfileId! }));
         setVisibleBlockUserModal(false);
         setBtnText(isUserBlocked ? "Following" : "Blocked");
         dispatch(setOpenSnackBar(`@${username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`));

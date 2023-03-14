@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/testHelper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     addPoll,
     addQuoteTweet,
@@ -33,90 +33,90 @@ import {
     updateScheduledTweet,
     vote
 } from "../actionCreators";
-import {TweetsActionType} from "../contracts/actionTypes";
-import {TweetResponse} from "../../../types/tweet";
-import {AddQuoteTweet, AddTweet, Vote} from "../contracts/state";
-import {NotificationResponse} from "../../../types/notification";
-import {LoadingStatus, ReplyType} from "../../../types/common";
+import { TweetsActionType } from "../contracts/actionTypes";
+import { TweetResponse } from "../../../../types/tweet";
+import { AddQuoteTweet, AddTweet, Vote } from "../contracts/state";
+import { NotificationResponse } from "../../../../types/notification";
+import { LoadingStatus, ReplyType } from "../../../../types/common";
 
 describe("tweets actions", () => {
-    testAction(setFollowToTweetsState, setFollowToTweetsState({userId: 1, tweetId: 1, isFollower: true}), {
+    testAction(setFollowToTweetsState, setFollowToTweetsState({ userId: 1, tweetId: 1, isFollower: true }), {
         type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
-        payload: {userId: 1, tweetId: 1, isFollower: true}
+        payload: { userId: 1, tweetId: 1, isFollower: true }
     });
 
-    testAction(setBlockedToTweetsState, setBlockedToTweetsState({userId: 1, tweetId: 1, isUserBlocked: true}), {
+    testAction(setBlockedToTweetsState, setBlockedToTweetsState({ userId: 1, tweetId: 1, isUserBlocked: true }), {
         type: TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE,
-        payload: {userId: 1, tweetId: 1, isUserBlocked: true}
+        payload: { userId: 1, tweetId: 1, isUserBlocked: true }
     });
 
-    testAction(setMutedToTweetsState, setMutedToTweetsState({userId: 1, tweetId: 1, isUserMuted: true}), {
+    testAction(setMutedToTweetsState, setMutedToTweetsState({ userId: 1, tweetId: 1, isUserMuted: true }), {
         type: TweetsActionType.SET_MUTED_TO_TWEETS_STATE,
-        payload: {userId: 1, tweetId: 1, isUserMuted: true}
+        payload: { userId: 1, tweetId: 1, isUserMuted: true }
     });
 
-    testAction(setTweets, setTweets([{id: 1}] as TweetResponse[]), {
+    testAction(setTweets, setTweets([{ id: 1 }] as TweetResponse[]), {
         type: TweetsActionType.SET_TWEETS,
-        payload: [{id: 1}] as TweetResponse[]
+        payload: [{ id: 1 }] as TweetResponse[]
     });
 
-    testAction(setScheduledTweets, setScheduledTweets([{id: 1}] as TweetResponse[]), {
+    testAction(setScheduledTweets, setScheduledTweets([{ id: 1 }] as TweetResponse[]), {
         type: TweetsActionType.SET_SCHEDULED_TWEETS,
-        payload: [{id: 1}] as TweetResponse[]
+        payload: [{ id: 1 }] as TweetResponse[]
     });
 
-    testAction(setPageableTweets, setPageableTweets({items: [{id: 1}] as TweetResponse[], pagesCount: 1}), {
+    testAction(setPageableTweets, setPageableTweets({ items: [{ id: 1 }] as TweetResponse[], pagesCount: 1 }), {
         type: TweetsActionType.SET_PAGEABLE_TWEETS,
-        payload: {items: [{id: 1}] as TweetResponse[], pagesCount: 1}
+        payload: { items: [{ id: 1 }] as TweetResponse[], pagesCount: 1 }
     });
 
-    testAction(setTweet, setTweet({id: 1} as TweetResponse), {
+    testAction(setTweet, setTweet({ id: 1 } as TweetResponse), {
         type: TweetsActionType.SET_TWEET,
-        payload: {id: 1} as TweetResponse
+        payload: { id: 1 } as TweetResponse
     });
 
     testAction(resetTweets, resetTweets(), {
-        type: TweetsActionType.RESET_TWEETS,
+        type: TweetsActionType.RESET_TWEETS
     });
 
-    testAction(addTweet, addTweet({id: 1, text: "test"} as AddTweet), {
+    testAction(addTweet, addTweet({ id: 1, text: "test" } as AddTweet), {
         type: TweetsActionType.ADD_TWEET,
-        payload: {id: 1, text: "test"} as AddTweet
+        payload: { id: 1, text: "test" } as AddTweet
     });
 
-    testAction(addPoll, addPoll({id: 1, text: "test"} as AddTweet), {
+    testAction(addPoll, addPoll({ id: 1, text: "test" } as AddTweet), {
         type: TweetsActionType.ADD_POLL,
-        payload: {id: 1, text: "test"} as AddTweet
+        payload: { id: 1, text: "test" } as AddTweet
     });
 
-    testAction(addScheduledTweet, addScheduledTweet({id: 1, text: "test"} as AddTweet), {
+    testAction(addScheduledTweet, addScheduledTweet({ id: 1, text: "test" } as AddTweet), {
         type: TweetsActionType.ADD_SCHEDULED_TWEET,
-        payload: {id: 1, text: "test"} as AddTweet
+        payload: { id: 1, text: "test" } as AddTweet
     });
 
-    testAction(updateScheduledTweet, updateScheduledTweet({id: 1, text: "test"} as AddTweet), {
+    testAction(updateScheduledTweet, updateScheduledTweet({ id: 1, text: "test" } as AddTweet), {
         type: TweetsActionType.UPDATE_SCHEDULED_TWEET,
-        payload: {id: 1, text: "test"} as AddTweet
+        payload: { id: 1, text: "test" } as AddTweet
     });
 
-    testAction(addQuoteTweet, addQuoteTweet({tweetId: 1, text: "test"} as AddQuoteTweet), {
+    testAction(addQuoteTweet, addQuoteTweet({ tweetId: 1, text: "test" } as AddQuoteTweet), {
         type: TweetsActionType.ADD_QUOTE_TWEET,
-        payload: {tweetId: 1, text: "test"} as AddQuoteTweet
+        payload: { tweetId: 1, text: "test" } as AddQuoteTweet
     });
 
-    testAction(vote, vote({tweetId: 1, pollId: 1, pollChoiceId: 1} as Vote), {
+    testAction(vote, vote({ tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote), {
         type: TweetsActionType.VOTE,
-        payload: {tweetId: 1, pollId: 1, pollChoiceId: 1} as Vote
+        payload: { tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote
     });
 
-    testAction(changeReplyType, changeReplyType({tweetId: 1, replyType: ReplyType.FOLLOW}), {
+    testAction(changeReplyType, changeReplyType({ tweetId: 1, replyType: ReplyType.FOLLOW }), {
         type: TweetsActionType.CHANGE_REPLY_TYPE,
-        payload: {tweetId: 1, replyType: ReplyType.FOLLOW}
+        payload: { tweetId: 1, replyType: ReplyType.FOLLOW }
     });
 
-    testAction(setUpdatedTweet, setUpdatedTweet({id: 1} as NotificationResponse), {
+    testAction(setUpdatedTweet, setUpdatedTweet({ id: 1 } as NotificationResponse), {
         type: TweetsActionType.SET_UPDATED_TWEET,
-        payload: {id: 1} as NotificationResponse
+        payload: { id: 1 } as NotificationResponse
     });
 
     testAction(fetchDeleteTweet, fetchDeleteTweet(1), {
@@ -124,9 +124,9 @@ describe("tweets actions", () => {
         payload: 1
     });
 
-    testAction(deleteScheduledTweets, deleteScheduledTweets({tweetsIds: [1, 2]}), {
+    testAction(deleteScheduledTweets, deleteScheduledTweets({ tweetsIds: [1, 2] }), {
         type: TweetsActionType.DELETE_SCHEDULED_TWEETS,
-        payload: {tweetsIds: [1, 2]}
+        payload: { tweetsIds: [1, 2] }
     });
 
     testAction(deleteTweet, deleteTweet(1), {
@@ -134,14 +134,14 @@ describe("tweets actions", () => {
         payload: 1
     });
 
-    testAction(fetchTweetsByTag, fetchTweetsByTag({tag: "test", pageNumber: 1}), {
+    testAction(fetchTweetsByTag, fetchTweetsByTag({ tag: "test", pageNumber: 1 }), {
         type: TweetsActionType.FETCH_TWEETS_BY_TAG,
-        payload: {tag: "test", pageNumber: 1}
+        payload: { tag: "test", pageNumber: 1 }
     });
 
-    testAction(fetchTweetsByText, fetchTweetsByText({text: "test", pageNumber: 1}), {
+    testAction(fetchTweetsByText, fetchTweetsByText({ text: "test", pageNumber: 1 }), {
         type: TweetsActionType.FETCH_TWEETS_BY_TEXT,
-        payload: {text: "test", pageNumber: 1}
+        payload: { text: "test", pageNumber: 1 }
     });
 
     testAction(setTweetsLoadingState, setTweetsLoadingState(LoadingStatus.LOADING), {
@@ -149,19 +149,22 @@ describe("tweets actions", () => {
         payload: LoadingStatus.LOADING
     });
 
-    testAction(likeTweet, likeTweet({tweetId: 1}), {
+    testAction(likeTweet, likeTweet({ tweetId: 1 }), {
         type: TweetsActionType.LIKE_TWEET,
-        payload: {tweetId: 1}
+        payload: { tweetId: 1 }
     });
 
-    testAction(retweet, retweet({tweetId: 1}), {
+    testAction(retweet, retweet({ tweetId: 1 }), {
         type: TweetsActionType.RETWEET,
-        payload: {tweetId: 1}
+        payload: { tweetId: 1 }
     });
 
-    testAction(setUpdatedBookmarkedTweetTweetsState, setUpdatedBookmarkedTweetTweetsState({tweetId: 1, isTweetBookmarked: true}), {
+    testAction(setUpdatedBookmarkedTweetTweetsState, setUpdatedBookmarkedTweetTweetsState({
+        tweetId: 1,
+        isTweetBookmarked: true
+    }), {
         type: TweetsActionType.SET_UPDATED_BOOKMARKED_TWEET,
-        payload: {tweetId: 1, isTweetBookmarked: true}
+        payload: { tweetId: 1, isTweetBookmarked: true }
     });
 
     testAction(fetchTweets, fetchTweets(1), {
@@ -184,9 +187,9 @@ describe("tweets actions", () => {
         payload: 1
     });
 
-    testAction(fetchTweetsByListId, fetchTweetsByListId({listId: 1, pageNumber: 1}), {
+    testAction(fetchTweetsByListId, fetchTweetsByListId({ listId: 1, pageNumber: 1 }), {
         type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID,
-        payload: {listId: 1, pageNumber: 1}
+        payload: { listId: 1, pageNumber: 1 }
     });
 
     testAction(fetchUserBookmarks, fetchUserBookmarks(1), {

@@ -24,12 +24,12 @@ import {
     SetTweetDataActionInterface,
     SetTweetDataLoadingStateInterface,
     TweetActionType,
-    UpdateTweetDataActionInterface,
+    UpdateTweetDataActionInterface
 } from "./contracts/actionTypes";
-import {FetchTweetUsersPayload, ReplyTweet, TweetState} from "./contracts/state";
-import {NotificationReplyResponse, NotificationResponse} from "../../types/notification";
-import {LoadingStatus, PageableResponse} from "../../types/common";
-import {TweetResponse} from "../../types/tweet";
+import { FetchTweetUsersPayload, ReplyTweet, TweetState } from "./contracts/state";
+import { NotificationReplyResponse, NotificationResponse } from "../../../types/notification";
+import { LoadingStatus, PageableResponse } from "../../../types/common";
+import { TweetResponse } from "../../../types/tweet";
 
 export const setFollowToTweetState = (payload: boolean): SetFollowToTweetStateActionInterface => ({
     type: TweetActionType.SET_FOLLOW_TO_TWEET_STATE,
@@ -77,12 +77,12 @@ export const setErrorMessage = (payload: string): SetErrorMessageActionInterface
 
 export const addTweetToBookmarks = (payload: number): AddTweetToBookmarksActionInterface => ({
     type: TweetActionType.ADD_TWEET_TO_BOOKMARKS,
-    payload,
+    payload
 });
 
 export const setBookmarkedTweet = (payload: boolean): SetBookmarkedTweetActionInterface => ({
     type: TweetActionType.SET_BOOKMARKED_TWEET,
-    payload,
+    payload
 });
 
 export const fetchReplyTweet = (payload: ReplyTweet): FetchReplyTweetActionInterface => ({

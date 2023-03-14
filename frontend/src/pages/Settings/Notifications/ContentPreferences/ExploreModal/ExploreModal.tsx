@@ -1,11 +1,11 @@
-import React, {FC, ReactElement, useState} from 'react';
-import {Checkbox, Dialog, DialogContent, Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement, useState } from "react";
+import { Checkbox, Dialog, DialogContent, Divider, Link as MuiLink, Typography } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import {useExploreModalStyles} from "./ExploreModalStyles";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
+import { useExploreModalStyles } from "./ExploreModalStyles";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
 import CloseButton from "../../../../../components/CloseButton/CloseButton";
-import {TWITTER_SEARCH} from "../../../../../util/url";
+import { TWITTER_SEARCH } from "../../../../../constants/url-constants";
 
 export interface ExploreModalProps {
     visible?: boolean;
@@ -13,7 +13,7 @@ export interface ExploreModalProps {
     isSearchModal: boolean;
 }
 
-const ExploreModal: FC<ExploreModalProps> = ({visible, onClose, isSearchModal}): ReactElement | null => {
+const ExploreModal: FC<ExploreModalProps> = ({ visible, onClose, isSearchModal }): ReactElement | null => {
     const globalClasses = useGlobalStyles();
     const classes = useExploreModalStyles();
     const [checked1, setChecked1] = useState<boolean>(true);
@@ -26,7 +26,7 @@ const ExploreModal: FC<ExploreModalProps> = ({visible, onClose, isSearchModal}):
     return (
         <Dialog className={classes.dialog} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">
-                <CloseButton onClose={onClose}/>
+                <CloseButton onClose={onClose} />
                 {isSearchModal ? "Search settings" : "Explore settings"}
             </DialogTitle>
             <DialogContent className={classes.content}>
@@ -42,7 +42,7 @@ const ExploreModal: FC<ExploreModalProps> = ({visible, onClose, isSearchModal}):
                         <Typography variant={"body1"} component={"span"}>
                             {isSearchModal ? "Hide sensitive content" : "Show content in this location"}
                         </Typography>
-                        <Checkbox checked={checked1} onChange={() => setChecked1(prevState => !prevState)}/>
+                        <Checkbox checked={checked1} onChange={() => setChecked1(prevState => !prevState)} />
                     </div>
                     <Typography variant={"subtitle2"} component={"div"}>
                         {isSearchModal ? (
@@ -59,7 +59,7 @@ const ExploreModal: FC<ExploreModalProps> = ({visible, onClose, isSearchModal}):
                 </div>
                 {!isSearchModal && (
                     <>
-                        <Divider/>
+                        <Divider />
                         <div className={globalClasses.itemInfoWrapper}>
                             <Typography variant={"h5"} component={"div"}>
                                 Personalization
@@ -72,7 +72,7 @@ const ExploreModal: FC<ExploreModalProps> = ({visible, onClose, isSearchModal}):
                         <Typography variant={"body1"} component={"span"}>
                             {isSearchModal ? "Remove blocked and muted accounts" : "Trends for you"}
                         </Typography>
-                        <Checkbox checked={checked2} onChange={() => setChecked2(prevState => !prevState)}/>
+                        <Checkbox checked={checked2} onChange={() => setChecked2(prevState => !prevState)} />
                     </div>
                     <Typography variant={"subtitle2"} component={"div"}>
                         {isSearchModal ? (

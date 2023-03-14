@@ -1,12 +1,12 @@
 import React from "react";
-import {Dialog} from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {mockQuoteTweet} from "../../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { mockQuoteTweet } from "../../../../util/test-utils/mock-test-data";
 import QuoteTweetModal from "../QuoteTweetModal";
 import CloseButton from "../../../CloseButton/CloseButton";
 import AddTweetForm from "../../../AddTweetForm/AddTweetForm";
-import {LoadingStatus} from "../../../../store/types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("QuoteTweetModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

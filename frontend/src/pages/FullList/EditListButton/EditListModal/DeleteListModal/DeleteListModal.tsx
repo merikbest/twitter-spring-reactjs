@@ -1,20 +1,20 @@
-import React, {FC, ReactElement, useState} from 'react';
+import React, { ReactElement, useState } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
-import {Button} from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-import {useDispatch} from "react-redux";
-import {useHistory, useParams} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
 
-import {useDeleteListModalStyles} from "./DeleteListModalStyles";
-import {deleteList} from "../../../../../store/ducks/list/actionCreators";
-import {LISTS} from "../../../../../util/pathConstants";
+import { useDeleteListModalStyles } from "./DeleteListModalStyles";
+import { deleteList } from "../../../../../store/ducks/list/actionCreators";
+import { LISTS } from "../../../../../constants/path-constants";
 
 const DeleteListModal = (): ReactElement => {
-    const classes = useDeleteListModalStyles()
+    const classes = useDeleteListModalStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const {listId} = useParams<{ listId: string }>();
+    const { listId } = useParams<{ listId: string }>();
     const [visibleDeleteListModal, setVisibleDeleteListModal] = useState<boolean>(false);
 
     const onDeleteList = (): void => {
@@ -47,7 +47,7 @@ const DeleteListModal = (): ReactElement => {
                 onClose={onCloseDeleteListModal}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogContent style={{padding: 0}}>
+                <DialogContent style={{ padding: 0 }}>
                     <div className={classes.modalWrapper}>
                         <Typography variant={"h5"} component={"div"}>
                             Delete List?

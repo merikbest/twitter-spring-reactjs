@@ -1,8 +1,11 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import {testApiCall} from "../../../util/apiTestHelper";
+import { testApiCall } from "../../../util/test-utils/api-test-helper";
 import {
+    API_NOTIFICATION_SUBSCRIBES,
+    API_NOTIFICATION_TIMELINE,
+    API_NOTIFICATION_USER,
     API_USER,
     API_USER_ALL,
     API_USER_BLOCKED,
@@ -15,15 +18,12 @@ import {
     API_USER_FOLLOWERS,
     API_USER_FOLLOWING,
     API_USER_MUTED,
-    API_NOTIFICATION_USER,
-    API_NOTIFICATION_SUBSCRIBES,
-    API_NOTIFICATION_TIMELINE,
     API_USER_PIN_TWEET,
     API_USER_RELEVANT,
     API_USER_SEARCH,
     API_USER_START,
     API_USER_SUBSCRIBE
-} from "../../../util/endpoints";
+} from "../../../constants/endpoint-constants";
 import {
     mockBlockedUsers,
     mockMutedUsers,
@@ -31,8 +31,8 @@ import {
     mockTweets,
     mockUserDetailResponse,
     mockUsers
-} from "../../../util/mockData/mockData";
-import {UserApi} from "../userApi";
+} from "../../../util/test-utils/mock-test-data";
+import { UserApi } from "../userApi";
 
 describe("UserApi", () => {
     const mockAdapter = new MockAdapter(axios);
@@ -40,7 +40,7 @@ describe("UserApi", () => {
     const mockTweetErrorResponse = "Tweet not found";
     const mockUserNotFound = "User (id:1) not found";
     const mockUserBlocked = "User (id:1) is blocked";
-    const mockPageable = {userId: 1, page: 1};
+    const mockPageable = { userId: 1, page: 1 };
 
     beforeEach(() => mockAdapter.reset());
 
@@ -76,7 +76,7 @@ describe("UserApi", () => {
     });
 
     describe("should fetch UserApi.updateUserProfile", () => {
-        const mockUserRequest = {username: "test", location: "test"};
+        const mockUserRequest = { username: "test", location: "test" };
 
         it("[200] should update user profile Success", () => {
             testApiCall(mockAdapter, "onPut", API_USER, 200, mockMyProfile, UserApi.updateUserProfile, mockUserRequest);
@@ -117,13 +117,13 @@ describe("UserApi", () => {
 
     describe("should fetch UserApi.getFollowerRequests", () => {
         it("[200] should get follower requests Success", () => {
-            testApiCall(mockAdapter, "onGet", API_USER_FOLLOWER_REQUESTS, 200, [{id: 1}], UserApi.getFollowerRequests, 1);
+            testApiCall(mockAdapter, "onGet", API_USER_FOLLOWER_REQUESTS, 200, [{ id: 1 }], UserApi.getFollowerRequests, 1);
         });
     });
 
     describe("should fetch UserApi.follow", () => {
         it("[200] should follow Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW}/1`, 200, [{id: 1}], UserApi.follow, 1);
+            testApiCall(mockAdapter, "onGet", `${API_USER_FOLLOW}/1`, 200, [{ id: 1 }], UserApi.follow, 1);
         });
 
         it("[404] should user not found", () => {
@@ -173,19 +173,19 @@ describe("UserApi", () => {
 
     describe("should fetch UserApi.getUserNotifications", () => {
         it("[200] should get user notifications Success", () => {
-            testApiCall(mockAdapter, "onGet", API_NOTIFICATION_USER, 200, [{id: 1}], UserApi.getUserNotifications, 1);
+            testApiCall(mockAdapter, "onGet", API_NOTIFICATION_USER, 200, [{ id: 1 }], UserApi.getUserNotifications, 1);
         });
     });
 
     describe("should fetch UserApi.getTweetAuthorsNotifications", () => {
         it("[200] should get tweet authors notifications Success", () => {
-            testApiCall(mockAdapter, "onGet", API_NOTIFICATION_SUBSCRIBES, 200, [{id: 1}], UserApi.getTweetAuthorsNotifications);
+            testApiCall(mockAdapter, "onGet", API_NOTIFICATION_SUBSCRIBES, 200, [{ id: 1 }], UserApi.getTweetAuthorsNotifications);
         });
     });
 
     describe("should fetch UserApi.getUserNotificationById", () => {
         it("[200] should get user notification by id Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_NOTIFICATION_USER}/1`, 200, [{id: 1}], UserApi.getUserNotificationById, 1);
+            testApiCall(mockAdapter, "onGet", `${API_NOTIFICATION_USER}/1`, 200, [{ id: 1 }], UserApi.getUserNotificationById, 1);
         });
 
         it("[404] should user not found", () => {

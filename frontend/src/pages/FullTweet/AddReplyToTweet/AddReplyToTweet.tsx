@@ -1,12 +1,12 @@
-import React, {memo, ReactElement} from "react";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import React, { memo, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 
-import {ReplyType} from "../../../store/types/common";
-import {PROFILE} from "../../../util/pathConstants";
+import { ReplyType } from "../../../types/common";
+import { PROFILE } from "../../../constants/path-constants";
 import AddTweetForm from "../../../components/AddTweetForm/AddTweetForm";
-import {selectUserDataId} from "../../../store/ducks/user/selectors";
+import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import {
     selectTweetId,
     selectTweetReplyType,
@@ -14,7 +14,7 @@ import {
     selectTweetUserIsFollower,
     selectTweetUserUsername
 } from "../../../store/ducks/tweet/selectors";
-import {useFullTweetStyles} from "../FullTweetStyles";
+import { useFullTweetStyles } from "../FullTweetStyles";
 
 const AddReplyToTweet = memo((): ReactElement => {
     const classes = useFullTweetStyles();

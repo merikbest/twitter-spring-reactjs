@@ -1,16 +1,16 @@
-import React, {FC, ReactElement, useState} from "react";
-import {useDispatch} from "react-redux";
-import {Button} from "@material-ui/core";
+import React, { FC, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Button } from "@material-ui/core";
 
-import {useFollowListButtonStyles} from "./FollowListButtonStyles";
-import {followList, unfollowList} from "../../store/ducks/lists/actionCreators";
+import { useFollowListButtonStyles } from "./FollowListButtonStyles";
+import { followList, unfollowList } from "../../store/ducks/lists/actionCreators";
 
 interface FollowListButtonProps {
     listId: number;
     isFollower: boolean;
 }
 
-const FollowListButton: FC<FollowListButtonProps> = ({listId, isFollower}): ReactElement => {
+const FollowListButton: FC<FollowListButtonProps> = ({ listId, isFollower }): ReactElement => {
     const classes = useFollowListButtonStyles();
     const dispatch = useDispatch();
     const [btnText, setBtnText] = useState<string>("Following");

@@ -1,6 +1,6 @@
-import {RootState} from "../../store";
-import {UnsentTweetsState} from "./contracts/state";
-import {LoadingStatus} from "../../types/common";
+import { RootState } from "../../store";
+import { UnsentTweetsState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const selectUnsentTweetsState = (state: RootState): UnsentTweetsState => state.unsentTweets;
 export const selectIstUnsentTweetsLoading = (state: RootState): boolean => selectUnsentTweetsState(state).loadingState === LoadingStatus.LOADING;

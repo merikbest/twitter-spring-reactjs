@@ -1,10 +1,10 @@
 import React from "react";
-import {Button, ListItem, Popover} from "@material-ui/core";
+import { Button, ListItem, Popover } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import ChangeReplyWindow from "../../../ChangeReplyWindow/ChangeReplyWindow";
 import Reply from "../Reply";
-import {LoadingStatus, ReplyType} from "../../../../store/types/common";
+import { LoadingStatus, ReplyType } from "../../../../types/common";
 
 describe("Reply", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -17,15 +17,15 @@ describe("Reply", () => {
                 setReplyType={mockSetReplyType}
                 isUnsentTweet={false}
             />, mockRootState);
-        
+
         expect(wrapper.find(Popover).prop("open")).toBe(false);
 
         wrapper.find(Button).simulate("click");
 
         expect(wrapper.find(Popover).prop("open")).toBe(true);
-        
+
         wrapper.find(ChangeReplyWindow).find(ListItem).at(1).simulate("click");
-        
+
         expect(wrapper.find(ChangeReplyWindow).find(ListItem).at(1).text()).toEqual("People you follow");
         expect(mockSetReplyType).toHaveBeenCalled();
         expect(mockSetReplyType).toHaveBeenCalledWith(ReplyType.FOLLOW);
@@ -44,7 +44,7 @@ describe("Reply", () => {
     it("should render Only people you mention reply", () => {
         testReply(ReplyType.MENTION, "#mentionReplyIcon", "Only people you mention");
     });
-    
+
     const testReply = (replyType: ReplyType, replyIconId: string, buttonText: string): void => {
         const wrapper = mountWithStore(
             <Reply

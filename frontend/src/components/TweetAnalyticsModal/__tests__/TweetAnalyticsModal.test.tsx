@@ -1,10 +1,10 @@
 import React from "react";
-import {Dialog} from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../util/testHelper";
-import {mockFullTweet} from "../../../util/mockData/mockData";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
+import { mockFullTweet } from "../../../util/test-utils/mock-test-data";
 import TweetAnalyticsModal from "../TweetAnalyticsModal";
-import {LoadingStatus} from "../../../store/types/common";
+import { LoadingStatus } from "../../../types/common";
 
 describe("TweetAnalyticsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
@@ -26,7 +26,7 @@ describe("TweetAnalyticsModal", () => {
         expect(wrapper.text().includes("Promote your Tweet")).toBe(true);
         expect(wrapper.text().includes("Get more impressions on this Tweet!")).toBe(true);
     });
-    
+
     it("should render empty TweetAnalyticsModal", () => {
         const wrapper = mountWithStore(
             <TweetAnalyticsModal

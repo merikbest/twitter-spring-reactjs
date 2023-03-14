@@ -1,8 +1,8 @@
-import produce, {Draft} from "immer";
+import produce, { Draft } from "immer";
 
-import {LoadingStatus} from "../../types/common";
-import {TopicsState} from "./contracts/state";
-import {TopicsActions, TopicsActionsType} from "./contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
+import { TopicsState } from "./contracts/state";
+import { TopicsActions, TopicsActionsType } from "./contracts/actionTypes";
 
 export const initialTopicsState: TopicsState = {
     topics: [],
@@ -10,7 +10,7 @@ export const initialTopicsState: TopicsState = {
     followedTopics: [],
     followedTopicsLoadingState: LoadingStatus.LOADING,
     topicsByCategories: [],
-    topicsByCategoriesLoadingState: LoadingStatus.LOADING,
+    topicsByCategoriesLoadingState: LoadingStatus.LOADING
 };
 
 export const topicsReducer = produce((draft: Draft<TopicsState>, action: TopicsActions) => {

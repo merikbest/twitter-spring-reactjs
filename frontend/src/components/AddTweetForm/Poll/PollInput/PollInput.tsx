@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement, useState} from 'react';
+import React, { FC, memo, ReactElement, useState } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 
-import {usePollInputStyles} from "./PollInputField";
-import {PollInputField} from "./PollInputStyles";
+import { usePollInputStyles } from "./PollInputField";
+import { PollInputField } from "./PollInputStyles";
 
 interface PollInputProps {
     id: "choice1" | "choice2" | "choice3" | "choice4";
@@ -11,7 +11,7 @@ interface PollInputProps {
     label: string;
 }
 
-const PollInput: FC<PollInputProps> = memo(({id, onChange, value, label}): ReactElement => {
+const PollInput: FC<PollInputProps> = memo(({ id, onChange, value, label }): ReactElement => {
     const classes = usePollInputStyles();
     const [focused, setFocused] = useState<boolean>(false);
 
@@ -22,7 +22,7 @@ const PollInput: FC<PollInputProps> = memo(({id, onChange, value, label}): React
         <div className={classes.container}>
             <div className={classes.content}>
                 {focused && (
-                    <InputLabel style={{fontSize: 12}}>
+                    <InputLabel style={{ fontSize: 12 }}>
                         {!value?.length ? 0 : value.length} / {25}
                     </InputLabel>
                 )}
@@ -31,11 +31,11 @@ const PollInput: FC<PollInputProps> = memo(({id, onChange, value, label}): React
                 id={id}
                 label={label}
                 variant="filled"
-                onChange={(event) => onChange({[id]: event.target.value as string})}
+                onChange={(event) => onChange({ [id]: event.target.value as string })}
                 value={value}
                 onFocus={onFocus}
                 onBlur={onBlur}
-                inputProps={{maxLength: 25}}
+                inputProps={{ maxLength: 25 }}
                 fullWidth
             />
         </div>

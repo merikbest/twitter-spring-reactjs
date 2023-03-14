@@ -1,8 +1,8 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Checkbox} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Checkbox } from "@material-ui/core";
 
-import {TweetResponse} from "../../../../store/types/tweet";
-import {useUnsentTweetItemStyles} from "./UnsentTweetItemStyle";
+import { TweetResponse } from "../../../../types/tweet";
+import { useUnsentTweetItemStyles } from "./UnsentTweetItemStyle";
 import UnsentTweetItemInfo from "./UnsentTweetItemInfo/UnsentTweetItemInfo";
 
 interface UnsentTweetItemProps {
@@ -28,10 +28,10 @@ const UnsentTweetItem: FC<UnsentTweetItemProps> = memo((
         <div className={classes.tweetContainer} onClick={() => onOpenEditTweetModal(tweet)}>
             {visibleEditListFooter && (
                 <div>
-                    <Checkbox value={tweet.id} onClick={() => onToggleCheckTweet(tweet.id)} checked={isTweetSelected}/>
+                    <Checkbox value={tweet.id} onClick={() => onToggleCheckTweet(tweet.id)} checked={isTweetSelected} />
                 </div>
             )}
-            <UnsentTweetItemInfo scheduledDate={tweet.scheduledDate} text={tweet.text} images={tweet.images}/>
+            <UnsentTweetItemInfo scheduledDate={tweet.scheduledDate} text={tweet.text} images={tweet.images} />
         </div>
     );
 });

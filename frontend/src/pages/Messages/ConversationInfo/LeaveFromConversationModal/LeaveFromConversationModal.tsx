@@ -1,7 +1,7 @@
-import React, {FC, ReactElement} from 'react';
-import {Button, Dialog, DialogContent, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Button, Dialog, DialogContent, Typography } from "@material-ui/core";
 
-import {useLeaveFromConversationModalStyles} from "./LeaveFromConversationModalStyles";
+import { useLeaveFromConversationModalStyles } from "./LeaveFromConversationModalStyles";
 
 interface LeaveFromConversationModalProps {
     handleLeaveFromConversation: () => void;
@@ -24,7 +24,7 @@ const LeaveFromConversationModal: FC<LeaveFromConversationModalProps> = (
 
     return (
         <Dialog open={visible} onClose={onClose}>
-            <DialogContent style={{padding: 0}}>
+            <DialogContent style={{ padding: 0 }}>
                 <div className={classes.modalWrapper}>
                     <Typography variant={"h5"} component={"div"}>
                         Leave conversation?

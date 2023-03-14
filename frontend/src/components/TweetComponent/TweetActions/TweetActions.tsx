@@ -1,13 +1,13 @@
-import React, {FC, memo, ReactElement} from "react";
-import TweetActionResult, {TweetActionResults} from "../../TweetActionResult/TweetActionResult";
-import {useSelector} from "react-redux";
+import React, { FC, memo, ReactElement } from "react";
+import TweetActionResult, { TweetActionResults } from "../../TweetActionResult/TweetActionResult";
+import { useSelector } from "react-redux";
 
 import {
     selectUserProfileFullName,
     selectUserProfileId,
     selectUserProfilePinnedTweetId
 } from "../../../store/ducks/userProfile/selectors";
-import {selectUserDataId, selectUserPinnedTweetId} from "../../../store/ducks/user/selectors";
+import { selectUserDataId, selectUserPinnedTweetId } from "../../../store/ducks/user/selectors";
 
 interface TweetActionsProps {
     retweetsUserIds?: number[];
@@ -15,7 +15,7 @@ interface TweetActionsProps {
     activeTab?: number;
 }
 
-const TweetActions: FC<TweetActionsProps> = memo(({retweetsUserIds, tweetId, activeTab}): ReactElement => {
+const TweetActions: FC<TweetActionsProps> = memo(({ retweetsUserIds, tweetId, activeTab }): ReactElement => {
     const userProfileId = useSelector(selectUserProfileId);
     const userProfilePinnedTweetId = useSelector(selectUserProfilePinnedTweetId);
     const fullName = useSelector(selectUserProfileFullName);
@@ -32,7 +32,7 @@ const TweetActions: FC<TweetActionsProps> = memo(({retweetsUserIds, tweetId, act
                 />
             ) : null}
             {((myProfilePinnedTweetId === tweetId || userProfilePinnedTweetId === tweetId) && activeTab === 0) && (
-                <TweetActionResult action={TweetActionResults.PIN} text={"Pinned Tweet"}/>
+                <TweetActionResult action={TweetActionResults.PIN} text={"Pinned Tweet"} />
             )}
         </>
     );

@@ -1,10 +1,10 @@
-import React, {FC, ReactElement} from 'react';
-import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useLocationInformationStyles} from "./LocationInformationStyles";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {TWEET_LOCATION_SETTINGS} from "../../../../../util/url";
+import { useLocationInformationStyles } from "./LocationInformationStyles";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { TWEET_LOCATION_SETTINGS } from "../../../../../constants/url-constants";
 
 const LocationInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -25,7 +25,7 @@ const LocationInformation: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Add location information to your Tweets
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
             </div>
             <div className={classes.deleteLocationInformation}>

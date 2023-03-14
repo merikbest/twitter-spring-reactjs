@@ -1,10 +1,10 @@
-import React, {FC, ReactElement, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 
 import MutedAccountItem from "./MutedAccountItem/MutedAccountItem";
 import Spinner from "../../../../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
 import {
     selectIsBlockedAndMutedUsersLoaded,
     selectIsBlockedAndMutedUsersLoading,
@@ -15,8 +15,8 @@ import {
     fetchMutedUsers,
     resetBlockedAndMutedUsersState
 } from "../../../../../store/ducks/blockedAndMutedUsers/actionCreators";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {TWITTER_MUTE} from "../../../../../util/url";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { TWITTER_MUTE } from "../../../../../constants/url-constants";
 import InfiniteScrollWrapper from "../../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const MutedAccounts: FC = (): ReactElement => {
@@ -53,9 +53,9 @@ const MutedAccounts: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             {(isMutedUsersLoading && !mutedUsers.length) ? (
-                <Spinner/>
+                <Spinner />
             ) : (
                 (isMutedUsersLoaded && !mutedUsers.length) ? (
                     <div className={globalClasses.infoText}>
@@ -72,9 +72,9 @@ const MutedAccounts: FC = (): ReactElement => {
                 ) : (
                     <>
                         {mutedUsers.map((mutedUser) => (
-                            <MutedAccountItem key={mutedUser.id} mutedUser={mutedUser}/>
+                            <MutedAccountItem key={mutedUser.id} mutedUser={mutedUser} />
                         ))}
-                        {isMutedUsersLoading && <Spinner/>}
+                        {isMutedUsersLoading && <Spinner />}
                     </>
                 )
             )}

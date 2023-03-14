@@ -1,10 +1,10 @@
-import React, {FC, memo, ReactElement, useState} from "react";
-import {useSelector} from "react-redux";
+import React, { FC, memo, ReactElement, useState } from "react";
+import { useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {Button, Typography} from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
-import {useUserPageStyles} from "./UserPageStyles";
+import { useUserPageStyles } from "./UserPageStyles";
 import AddTweetModal from "../../components/AddTweetModal/AddTweetModal";
 import Spinner from "../../components/Spinner/Spinner";
 import {
@@ -12,8 +12,8 @@ import {
     selectPagesCount,
     selectUserTweetsItems
 } from "../../store/ducks/userTweets/selectors";
-import {selectUserDataId} from "../../store/ducks/user/selectors";
-import {selectUserProfileId, selectUserProfileUsername} from "../../store/ducks/userProfile/selectors";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
+import { selectUserProfileId, selectUserProfileUsername } from "../../store/ducks/userProfile/selectors";
 
 interface UserPageTweetsProps {
     activeTab: number;
@@ -21,7 +21,7 @@ interface UserPageTweetsProps {
     loadUserTweets: () => void;
 }
 
-const UserPageTweets: FC<UserPageTweetsProps> = memo(({activeTab, page, loadUserTweets}): ReactElement => {
+const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUserTweets }): ReactElement => {
     const classes = useUserPageStyles();
     const myProfileId = useSelector(selectUserDataId);
     const userProfileId = useSelector(selectUserProfileId);
@@ -69,7 +69,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({activeTab, page, loadUser
                         </Button>
                     )}
                 </div>
-            )
+            );
         } else if (tweets?.length === 0 && activeTab === 1 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
@@ -88,7 +88,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({activeTab, page, loadUser
                         )}
                     </Typography>
                 </div>
-            )
+            );
         } else if (tweets?.length === 0 && activeTab === 2 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
@@ -118,7 +118,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({activeTab, page, loadUser
                         </Button>
                     )}
                 </div>
-            )
+            );
         } else if (tweets?.length === 0 && activeTab === 3 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
@@ -137,14 +137,14 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({activeTab, page, loadUser
                         )}
                     </Typography>
                 </div>
-            )
+            );
         } else {
             return (
                 <>
                     {tweets?.map((tweet) => (
-                        <TweetComponent key={tweet.id} tweet={tweet} activeTab={activeTab}/>
+                        <TweetComponent key={tweet.id} tweet={tweet} activeTab={activeTab} />
                     ))}
-                    {isTweetsLoading && <Spinner/>}
+                    {isTweetsLoading && <Spinner />}
                 </>
             );
         }
@@ -152,14 +152,14 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({activeTab, page, loadUser
 
     return (
         <InfiniteScroll
-            style={{overflow: "unset"}}
+            style={{ overflow: "unset" }}
             dataLength={tweets.length}
             next={loadUserTweets}
             hasMore={page < pagesCount}
             loader={null}
         >
             {renderTweets()}
-            <AddTweetModal onClose={onCloseAddTweet} visible={visibleAddTweet}/>
+            <AddTweetModal onClose={onCloseAddTweet} visible={visibleAddTweet} />
         </InfiniteScroll>
     );
 });

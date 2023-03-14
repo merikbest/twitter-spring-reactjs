@@ -1,21 +1,21 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
+import React, { FC, memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 
-import {selectUserDataId} from "../../store/ducks/user/selectors";
-import {useUsersItemStyles} from "./UsersItemStyles";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
+import { useUsersItemStyles } from "./UsersItemStyles";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
-import {UserResponse} from "../../store/types/user";
-import {useHoverUser} from "../../hook/useHoverUser";
+import { UserResponse } from "../../types/user";
+import { useHoverUser } from "../../hook/useHoverUser";
 import BlockButton from "./BlockButton/BlockButton";
 import PendingButton from "./PendingButton/PendingButton";
 import FollowButton from "./FollowButton/FollowButton";
 import UnfollowButton from "./UnfollowButton/UnfollowButton";
 import LinkWrapper from "../LinkWrapper/LinkWrapper";
-import {PROFILE} from "../../util/pathConstants";
+import { PROFILE } from "../../constants/path-constants";
 import UserItemInfo from "./UserItemInfo/UserItemInfo";
 import UserItemAvatar from "./UserItemAvatar/UserItemAvatar";
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
+import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
 
 export interface UsersItemProps {
     user?: UserResponse,
@@ -28,15 +28,15 @@ export enum UserItemSize {
     LARGE = "LARGE",
 }
 
-const UsersItem: FC<UsersItemProps> = memo(({user, size}): ReactElement => {
-    const classes = useUsersItemStyles({size});
+const UsersItem: FC<UsersItemProps> = memo(({ user, size }): ReactElement => {
+    const classes = useUsersItemStyles({ size });
     const myProfileId = useSelector(selectUserDataId);
-    const {visiblePopperWindow, handleHoverPopper, handleLeavePopper} = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
 
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>
             <ListItem className={classes.container}>
-                <UserItemAvatar avatar={user?.avatar ?? DEFAULT_PROFILE_IMG}/>
+                <UserItemAvatar avatar={user?.avatar ?? DEFAULT_PROFILE_IMG} />
                 <div
                     id={"userInfo"}
                     className={classes.userInfo}
@@ -51,23 +51,23 @@ const UsersItem: FC<UsersItemProps> = memo(({user, size}): ReactElement => {
                         isMyProfileBlocked={user?.isMyProfileBlocked}
                         size={size}
                     />
-                    <PopperUserWindow visible={visiblePopperWindow}/>
+                    <PopperUserWindow visible={visiblePopperWindow} />
                 </div>
                 <div className={classes.buttonWrapper}>
                     {(myProfileId === user?.id) ? null : (
                         (user?.isMyProfileBlocked) ? null : (
                             (!user?.isFollower) ? (
                                 (user?.isUserBlocked) ? (
-                                    <BlockButton user={user}/>
+                                    <BlockButton user={user} />
                                 ) : (
                                     (user?.isWaitingForApprove) ? (
-                                        <PendingButton user={user}/>
+                                        <PendingButton user={user} />
                                     ) : (
-                                        <FollowButton user={user}/>
+                                        <FollowButton user={user} />
                                     )
                                 )
                             ) : (
-                                <UnfollowButton user={user}/>
+                                <UnfollowButton user={user} />
                             )
                         )
                     )}

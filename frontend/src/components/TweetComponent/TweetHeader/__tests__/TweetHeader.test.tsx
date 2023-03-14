@@ -1,9 +1,9 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {mockFullTweet} from "../../../../util/mockData/mockData";
-import {formatDate} from "../../../../util/formatDate";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { mockFullTweet } from "../../../../util/test-utils/mock-test-data";
+import { formatDate } from "../../../../util/format-date-helper";
+import { LoadingStatus } from "../../../../types/common";
 import PopperUserWindow from "../../../PopperUserWindow/PopperUserWindow";
 import TweetHeader from "../TweetHeader";
 

@@ -1,19 +1,19 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useLayoutStyles = makeStyles((theme: Theme) => ({
     wrapper: {
-        height: '100vh',
+        height: "100vh"
     },
     leftSideGrid: {
         "& .MuiGrid-item": {
             minWidth: "256px",
-            padding: "12px 0px",
-        },
+            padding: "12px 0px"
+        }
     },
     rightSide: {
         position: "sticky",
         top: 61,
-        paddingLeft: 12,
+        paddingLeft: 12
     },
     footer: {
         padding: "16px 16px",
@@ -25,16 +25,16 @@ export const useLayoutStyles = makeStyles((theme: Theme) => ({
             fontWeight: 400,
             color: theme.palette.text.secondary,
             "&:hover": {
-                textDecoration: "underline",
-            },
+                textDecoration: "underline"
+            }
         },
         "& svg": {
             verticalAlign: "unset",
             color: theme.palette.text.secondary,
-            height: "0.8em",
+            height: "0.8em"
         },
         "& a": {
-            textDecoration: "none",
-        },
-    },
+            textDecoration: "none"
+        }
+    }
 }));

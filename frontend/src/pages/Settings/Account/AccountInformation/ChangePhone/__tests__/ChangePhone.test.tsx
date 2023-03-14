@@ -1,12 +1,12 @@
 import React from "react";
 
 import ChangePhone from "../ChangePhone";
-import {createMockRootState, mockDispatch, mountWithStore} from "../../../../../../util/testHelper";
-import {UserActionsType} from "../../../../../../store/ducks/user/contracts/actionTypes";
-import {ChangeInfoTextField} from "../../../../ChangeInfoTextField/ChangeInfoTextField";
-import {getPhoneCode} from "../../../../../../util/countryCodes";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../util/test-utils/test-helper";
+import { UserActionsType } from "../../../../../../store/ducks/user/contracts/actionTypes";
+import { ChangeInfoTextField } from "../../../../ChangeInfoTextField/ChangeInfoTextField";
+import { getPhoneCode } from "../../../../../../util/country-code-helper";
 import ChangePhoneModal from "../ChangePhoneModal/ChangePhoneModal";
-import {LoadingStatus} from "../../../../../../store/types/common";
+import { LoadingStatus } from "../../../../../../types/common";
 
 describe("ChangePhone", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -17,7 +17,7 @@ describe("ChangePhone", () => {
     });
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<ChangePhone/>, mockStore);
+        const wrapper = mountWithStore(<ChangePhone />, mockStore);
 
         expect(wrapper.text().includes("Update phone number")).toBe(true);
         expect(wrapper.text().includes("Delete phone number")).toBe(true);
@@ -29,7 +29,7 @@ describe("ChangePhone", () => {
     });
 
     it("should open and close ChangePhoneModal", () => {
-        const wrapper = mountWithStore(<ChangePhone/>, mockStore);
+        const wrapper = mountWithStore(<ChangePhone />, mockStore);
 
         wrapper.find("#openChangePhoneModal").simulate("click");
         expect(wrapper.find(ChangePhoneModal).exists()).toBe(true);

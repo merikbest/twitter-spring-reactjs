@@ -1,13 +1,13 @@
 import React from "react";
-import {Checkbox} from "@material-ui/core";
+import { Checkbox } from "@material-ui/core";
 
 import PersonalizationAndData from "../PersonalizationAndData";
-import {createMockRootState, mountWithStore} from "../../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../../util/test-utils/test-helper";
 
 describe("PersonalizationAndData", () => {
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<PersonalizationAndData/>, createMockRootState());
+        const wrapper = mountWithStore(<PersonalizationAndData />, createMockRootState());
 
         expect(wrapper.text().includes("Control how Twitter personalizes content and collects and shares certain data.")).toBe(true);
         expect(wrapper.text().includes("Personalization and data")).toBe(true);
@@ -18,7 +18,7 @@ describe("PersonalizationAndData", () => {
     });
 
     it("should click on Checkbox", () => {
-        const wrapper = mountWithStore(<PersonalizationAndData/>, createMockRootState());
+        const wrapper = mountWithStore(<PersonalizationAndData />, createMockRootState());
 
         expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(false);
         expect(wrapper.find(Checkbox).at(1).prop("checked")).toBe(true);

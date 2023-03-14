@@ -1,4 +1,4 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
 import {
     ListMembersState,
@@ -7,21 +7,21 @@ import {
     SearchListUsersRequest,
     UserToListPayload
 } from "./state";
-import {LoadingStatus} from "../../../types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 export enum ListMembersActionsType {
-    SET_LIST_MEMBERS = 'listMembers/SET_LIST_MEMBERS',
-    SET_LIST_SUGGESTED = 'listMembers/SET_LIST_SUGGESTED',
-    FETCH_LIST_MEMBERS = 'listMembers/FETCH_LIST_MEMBERS',
-    FETCH_LIST_FOLLOWERS = 'listMembers/FETCH_LIST_FOLLOWERS',
-    FETCH_LIST_MEMBERS_BY_USERNAME = 'listMembers/FETCH_LIST_MEMBERS_BY_USERNAME',
-    PROCESS_USER_TO_LIST_MEMBERS = 'listMembers/PROCESS_USER_TO_LIST_MEMBERS',
-    SET_USER_TO_LIST = 'listMembers/SET_USER_TO_LIST',
-    RESET_LIST_MEMBERS_STATE = 'listMembers/RESET_LIST_MEMBERS_STATE',
-    RESET_LIST_SUGGESTED_STATE = 'listMembers/RESET_LIST_SUGGESTED_STATE',
-    RESET_LIST_MEMBERS = 'listMembers/RESET_LIST_MEMBERS',
-    SET_LOADING_MEMBERS_STATE = 'listMembers/SET_LOADING_MEMBERS_STATE',
-    SET_LOADING_SUGGESTED_STATE = 'listMembers/SET_LOADING_SUGGESTED_STATE',
+    SET_LIST_MEMBERS = "listMembers/SET_LIST_MEMBERS",
+    SET_LIST_SUGGESTED = "listMembers/SET_LIST_SUGGESTED",
+    FETCH_LIST_MEMBERS = "listMembers/FETCH_LIST_MEMBERS",
+    FETCH_LIST_FOLLOWERS = "listMembers/FETCH_LIST_FOLLOWERS",
+    FETCH_LIST_MEMBERS_BY_USERNAME = "listMembers/FETCH_LIST_MEMBERS_BY_USERNAME",
+    PROCESS_USER_TO_LIST_MEMBERS = "listMembers/PROCESS_USER_TO_LIST_MEMBERS",
+    SET_USER_TO_LIST = "listMembers/SET_USER_TO_LIST",
+    RESET_LIST_MEMBERS_STATE = "listMembers/RESET_LIST_MEMBERS_STATE",
+    RESET_LIST_SUGGESTED_STATE = "listMembers/RESET_LIST_SUGGESTED_STATE",
+    RESET_LIST_MEMBERS = "listMembers/RESET_LIST_MEMBERS",
+    SET_LOADING_MEMBERS_STATE = "listMembers/SET_LOADING_MEMBERS_STATE",
+    SET_LOADING_SUGGESTED_STATE = "listMembers/SET_LOADING_SUGGESTED_STATE",
 }
 
 export interface SetListMembersActionInterface extends Action<ListMembersActionsType> {

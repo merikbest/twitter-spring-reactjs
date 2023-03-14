@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useChangeCountryStyles = makeStyles((theme: Theme) => ({
     selectWrapper: {
@@ -6,7 +6,7 @@ export const useChangeCountryStyles = makeStyles((theme: Theme) => ({
             width: "100%"
         },
         "& .MuiTypography-subtitle2": {
-            paddingTop: 2,
-        },
-    },
+            paddingTop: 2
+        }
+    }
 }));

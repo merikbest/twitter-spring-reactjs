@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from 'react';
-import {Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {useLargeLinkPreviewStyles} from "./LargeLinkPreviewStyles";
-import {LinkIcon} from "../../icons";
+import { useLargeLinkPreviewStyles } from "./LargeLinkPreviewStyles";
+import { LinkIcon } from "../../icons";
 
 interface LargeLinkPreviewProps {
     link: string;
@@ -21,14 +21,14 @@ const LargeLinkPreview: FC<LargeLinkPreviewProps> = (
         isFullTweet
     }
 ): ReactElement => {
-    const classes = useLargeLinkPreviewStyles({isFullTweet: isFullTweet});
+    const classes = useLargeLinkPreviewStyles({ isFullTweet: isFullTweet });
     const matches = link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
     const domain = matches && matches[1];
 
     return (
         <a className={classes.siteLink} target="_blank" href={link}>
             <div className={classes.container}>
-                <img className={classes.linkCover} src={linkCover} alt={linkCover}/>
+                <img className={classes.linkCover} src={linkCover} alt={linkCover} />
                 <div className={classes.siteInfoWrapper}>
                     <Typography variant={"body1"} component={"div"}>
                         {linkTitle}

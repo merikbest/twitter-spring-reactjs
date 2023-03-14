@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useAddTweetImageStyles = makeStyles((theme) => ({
     image: {
@@ -10,8 +10,8 @@ export const useAddTweetImageStyles = makeStyles((theme) => ({
             width: 504,
             height: 280,
             borderRadius: 20,
-            borderColor: theme.palette.info.light,
-        },
+            borderColor: theme.palette.info.light
+        }
     },
     imageSmall: {
         position: "relative",
@@ -22,8 +22,8 @@ export const useAddTweetImageStyles = makeStyles((theme) => ({
             width: 260,
             height: 152,
             borderRadius: 20,
-            borderColor: theme.palette.info.light,
-        },
+            borderColor: theme.palette.info.light
+        }
     },
     imageRemove: {
         "& .MuiIconButton-root": {
@@ -37,11 +37,11 @@ export const useAddTweetImageStyles = makeStyles((theme) => ({
                 verticalAlign: "top",
                 fill: theme.palette.common.white,
                 width: 18,
-                height: 18,
+                height: 18
             },
             "&:hover": {
                 backgroundColor: "rgba(39, 44, 48, 0.75) !important"
-            },
-        },
-    },
+            }
+        }
+    }
 }));

@@ -1,8 +1,8 @@
-import produce, {Draft} from "immer";
+import produce, { Draft } from "immer";
 
-import {UnsentTweetActionType, UnsentTweetsActions} from "./contracts/actionTypes";
-import {UnsentTweetsState} from "./contracts/state";
-import {LoadingStatus} from "../../types/common";
+import { UnsentTweetActionType, UnsentTweetsActions } from "./contracts/actionTypes";
+import { UnsentTweetsState } from "./contracts/state";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialUnsentTweetsState: UnsentTweetsState = {
     items: [],
@@ -22,7 +22,7 @@ export const unsentTweetsReducer = produce((draft: Draft<UnsentTweetsState>, act
         case UnsentTweetActionType.RESET_UNSENT_TWEETS:
             draft.items = [];
             draft.pagesCount = 0;
-            draft.loadingState = LoadingStatus.LOADING
+            draft.loadingState = LoadingStatus.LOADING;
             break;
 
         case UnsentTweetActionType.SET_LOADING_STATE:

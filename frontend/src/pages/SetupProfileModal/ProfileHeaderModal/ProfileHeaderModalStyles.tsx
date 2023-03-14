@@ -1,43 +1,43 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useProfileHeaderModalStyles = makeStyles((theme) => ({
     container: {
         width: 598,
         height: 600,
         marginTop: 5,
-        position: "relative",
+        position: "relative"
     },
     logoIcon: {
         margin: "0 auto",
         width: 30,
         "& svg": {
             fontSize: 34,
-            color: theme.palette.primary.main,
-        },
+            color: theme.palette.primary.main
+        }
     },
     title: {
-        margin: "16px 0",
+        margin: "16px 0"
     },
     wallpaperWrapper: {
         height: 136,
         marginTop: 71,
         backgroundColor: "#B2B2B2",
         position: "relative",
-        zIndex: 1,
+        zIndex: 1
     },
     wallpaperImg: {
-        objectFit:"cover",
+        objectFit: "cover",
         position: "absolute",
         zIndex: 1,
         width: 534,
-        height: 136,
+        height: 136
     },
     wallpaperEditImg: {
         zIndex: 5,
         position: "absolute",
         top: "50%",
         left: "50%",
-        transform: "translate(-50%, -50%)",
+        transform: "translate(-50%, -50%)"
     },
     avatarWrapper: {
         position: "relative",
@@ -49,13 +49,13 @@ export const useProfileHeaderModalStyles = makeStyles((theme) => ({
             zIndex: 4,
             width: "125px !important",
             height: "125px !important",
-            border: "4px solid white",
-        },
+            border: "4px solid white"
+        }
     },
     button: {
         position: "absolute",
         bottom: 0,
         width: 530,
-        marginBottom: 30,
-    },
+        marginBottom: 30
+    }
 }));

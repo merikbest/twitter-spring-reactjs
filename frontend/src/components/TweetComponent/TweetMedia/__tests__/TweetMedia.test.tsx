@@ -1,15 +1,15 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {mockFullTweet} from "../../../../util/mockData/mockData";
-import {LinkCoverSize, LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { mockFullTweet } from "../../../../util/test-utils/mock-test-data";
+import { LinkCoverSize, LoadingStatus } from "../../../../types/common";
 import YouTubeVideo from "../../../YouTubeVideo/YouTubeVideo";
 import SmallLinkPreview from "../../../SmallLinkPreview/SmallLinkPreview";
 import LargeLinkPreview from "../../../LargeLinkPreview/LargeLinkPreview";
 import TweetMedia from "../TweetMedia";
 
 describe("TweetMedia", () => {
-    const mockTweet = createMockRootState(LoadingStatus.SUCCESS)
+    const mockTweet = createMockRootState(LoadingStatus.SUCCESS);
 
     it("should render empty tweet Link preview", () => {
         const wrapper = mountWithStore(

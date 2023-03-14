@@ -1,14 +1,14 @@
-import React, {FC, ReactElement} from 'react';
-import {useGlobalStyles} from "../../util/globalClasses";
+import React, { FC, ReactElement } from "react";
+import { useGlobalStyles } from "../../util/globalClasses";
 
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 interface DescriptionProps {
     title: string;
     subtitle: string;
 }
 
-const EmptyPageDescription: FC<DescriptionProps> = ({title, subtitle}): ReactElement => {
+const EmptyPageDescription: FC<DescriptionProps> = ({ title, subtitle }): ReactElement => {
     const globalClasses = useGlobalStyles();
 
     return (

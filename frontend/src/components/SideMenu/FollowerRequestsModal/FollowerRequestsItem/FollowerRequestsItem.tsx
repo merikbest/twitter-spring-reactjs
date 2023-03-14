@@ -1,13 +1,13 @@
-import React, {FC, memo, MouseEvent, ReactElement} from "react";
-import {useDispatch} from "react-redux";
-import {useHistory} from "react-router-dom";
-import {Button, Paper} from "@material-ui/core";
+import React, { FC, memo, MouseEvent, ReactElement } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Button, Paper } from "@material-ui/core";
 import classNames from "classnames";
 
-import {useFollowerRequestsItemStyles} from "./FollowerRequestsItemStyles";
-import {FollowerUserResponse} from "../../../../store/types/user";
-import {acceptFollowRequest, declineFollowRequest} from "../../../../store/ducks/followerRequests/actionCreators";
-import {PROFILE} from "../../../../util/pathConstants";
+import { useFollowerRequestsItemStyles } from "./FollowerRequestsItemStyles";
+import { FollowerUserResponse } from "../../../../types/user";
+import { acceptFollowRequest, declineFollowRequest } from "../../../../store/ducks/followerRequests/actionCreators";
+import { PROFILE } from "../../../../constants/path-constants";
 import UserRequestsInfo from "./UserRequestsInfo/UserRequestsInfo";
 import UserRequestsAvatar from "./UserRequestsAvatar/UserRequestsAvatar";
 
@@ -16,7 +16,7 @@ interface FollowerRequestsItemProps {
     onClose: () => void;
 }
 
-const FollowerRequestsItem: FC<FollowerRequestsItemProps> = memo(({user, onClose}): ReactElement => {
+const FollowerRequestsItem: FC<FollowerRequestsItemProps> = memo(({ user, onClose }): ReactElement => {
     const classes = useFollowerRequestsItemStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -40,9 +40,9 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps> = memo(({user, onClose
 
     return (
         <Paper onClick={onClickUser} className={classes.container} variant="outlined">
-            <UserRequestsAvatar avatar={user.avatar}/>
-            <div style={{flex: 1}}>
-                <UserRequestsInfo user={user}/>
+            <UserRequestsAvatar avatar={user.avatar} />
+            <div style={{ flex: 1 }}>
+                <UserRequestsInfo user={user} />
                 <div className={classes.buttonWrapper}>
                     <div className={classNames(classes.buttonItemWrapper, classes.declineButton)}>
                         <Button

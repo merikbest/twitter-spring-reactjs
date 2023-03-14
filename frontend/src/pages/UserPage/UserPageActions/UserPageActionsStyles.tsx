@@ -1,12 +1,12 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
     container: {
-        position: 'relative',
-        display: "inline-block",
+        position: "relative",
+        display: "inline-block"
     },
     dropdown: {
-        position: 'absolute',
+        position: "absolute",
         width: 358,
         zIndex: 2,
         borderRadius: 4,
@@ -15,25 +15,25 @@ export const useUserPageActionsStyles = makeStyles((theme: Theme) => ({
         "& .MuiList-root": {
             fontSize: 15,
             padding: 0,
-            margin: 0,
+            margin: 0
         },
-        '& .MuiListItem-root': {
+        "& .MuiListItem-root": {
             margin: 0,
             height: 52,
-            '&:hover': {
-                cursor: 'pointer',
-                backgroundColor: theme.palette.secondary.main,
-            },
+            "&:hover": {
+                cursor: "pointer",
+                backgroundColor: theme.palette.secondary.main
+            }
         },
         "& .MuiTypography-root": {
             marginLeft: 12,
             fontSize: 15,
-            fontWeight: 400,
+            fontWeight: 400
         },
         "& svg": {
             verticalAlign: "bottom",
             fill: theme.palette.text.secondary,
-            height: "1.30em",
-        },
-    },
+            height: "1.30em"
+        }
+    }
 }));

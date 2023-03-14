@@ -1,8 +1,8 @@
-import React, {ReactElement} from "react";
-import {Link as MuiLink, Typography} from "@material-ui/core";
+import React, { ReactElement } from "react";
+import { Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useChatUserBlockedStyles} from "./ChatUserBlockedStyles";
-import {DIRECT_MESSAGES} from "../../../../util/url";
+import { useChatUserBlockedStyles } from "./ChatUserBlockedStyles";
+import { DIRECT_MESSAGES } from "../../../../constants/url-constants";
 
 const ChatUserBlocked = (): ReactElement => {
     const classes = useChatUserBlockedStyles();

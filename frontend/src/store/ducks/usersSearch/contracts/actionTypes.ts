@@ -1,4 +1,4 @@
-import {Action} from "redux";
+import { Action } from "redux";
 import {
     BlockedUsersPayload,
     FollowersRequest,
@@ -7,22 +7,22 @@ import {
     SearchByNameRequest,
     UsersSearchState
 } from "./state";
-import {LoadingStatus, PageableResponse} from "../../../types/common";
+import { LoadingStatus, PageableResponse } from "../../../../types/common";
 
 export enum UsersSearchActionsType {
-    SET_USERS = 'usersSearch/SET_USERS',
-    SET_PAGEABLE_USERS = 'usersSearch/SET_PAGEABLE_USERS',
-    SET_PAGEABLE_FOLLOWERS = 'usersSearch/SET_PAGEABLE_FOLLOWERS',
-    SET_FOLLOW_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_TO_USERS_SEARCH_STATE',
-    SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE = 'usersSearch/SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE',
-    SET_BLOCK_USERS_SEARCH_STATE = 'usersSearch/SET_BLOCK_USERS_SEARCH_STATE',
-    FETCH_USERS = 'usersSearch/FETCH_USERS',
-    FETCH_USERS_BY_NAME = 'usersSearch/FETCH_USERS_BY_NAME',
-    FETCH_PARTICIPANTS_BY_NAME = 'usersSearch/FETCH_PARTICIPANTS_BY_NAME',
-    FETCH_FOLLOWERS = 'usersSearch/FETCH_FOLLOWERS',
-    FETCH_FOLLOWINGS = 'usersSearch/FETCH_FOLLOWINGS',
-    RESET_USERS_STATE = 'usersSearch/RESET_USERS_STATE',
-    SET_USERS_LOADING_STATE = 'usersSearch/SET_USER_LOADING_STATE',
+    SET_USERS = "usersSearch/SET_USERS",
+    SET_PAGEABLE_USERS = "usersSearch/SET_PAGEABLE_USERS",
+    SET_PAGEABLE_FOLLOWERS = "usersSearch/SET_PAGEABLE_FOLLOWERS",
+    SET_FOLLOW_TO_USERS_SEARCH_STATE = "usersSearch/SET_FOLLOW_TO_USERS_SEARCH_STATE",
+    SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE = "usersSearch/SET_FOLLOW_REQUEST_TO_USERS_SEARCH_STATE",
+    SET_BLOCK_USERS_SEARCH_STATE = "usersSearch/SET_BLOCK_USERS_SEARCH_STATE",
+    FETCH_USERS = "usersSearch/FETCH_USERS",
+    FETCH_USERS_BY_NAME = "usersSearch/FETCH_USERS_BY_NAME",
+    FETCH_PARTICIPANTS_BY_NAME = "usersSearch/FETCH_PARTICIPANTS_BY_NAME",
+    FETCH_FOLLOWERS = "usersSearch/FETCH_FOLLOWERS",
+    FETCH_FOLLOWINGS = "usersSearch/FETCH_FOLLOWINGS",
+    RESET_USERS_STATE = "usersSearch/RESET_USERS_STATE",
+    SET_USERS_LOADING_STATE = "usersSearch/SET_USER_LOADING_STATE",
 }
 
 export interface SetUsersSearchActionInterface extends Action<UsersSearchActionsType> {

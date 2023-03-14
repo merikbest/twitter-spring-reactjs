@@ -1,4 +1,4 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
 import {
     FollowedTopicPayload,
@@ -8,7 +8,7 @@ import {
     TopicsCategoriesRequest,
     TopicsState
 } from "./state";
-import {LoadingStatus} from "../../../types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 export enum TopicsActionsType {
     SET_TOPICS = "topics/SET_TOPICS",

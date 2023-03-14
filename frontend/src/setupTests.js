@@ -1,6 +1,7 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
-import {configure} from "enzyme";
+import { configure } from "enzyme";
+
 configure({ adapter: new Adapter() });
 
 window.matchMedia = (query) => ({
@@ -11,5 +12,5 @@ window.matchMedia = (query) => ({
     removeListener: jest.fn(), // Deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
+    dispatchEvent: jest.fn()
 });

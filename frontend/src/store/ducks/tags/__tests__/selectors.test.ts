@@ -5,9 +5,9 @@ import {
     selectTrendsItems,
     selectTrendsPagesCount
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {mockTags} from "../../../../util/mockData/mockData";
-import {LoadingStatus} from "../../../types/common";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockTags } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("tags selectors:", () => {
     const mockState = createMockRootState();
@@ -16,7 +16,7 @@ describe("tags selectors:", () => {
         it("should return TagResponse array", () => {
             expect(selectTagsItems({
                 ...mockState,
-                tags: {...mockState.tags, tags: mockTags}
+                tags: { ...mockState.tags, tags: mockTags }
             })).toBe(mockTags);
         });
     });
@@ -31,7 +31,7 @@ describe("tags selectors:", () => {
         it("should return TagResponse array", () => {
             expect(selectTrendsItems({
                 ...mockState,
-                tags: {...mockState.tags, trends: mockTags}
+                tags: { ...mockState.tags, trends: mockTags }
             })).toBe(mockTags);
         });
     });

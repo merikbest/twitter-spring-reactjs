@@ -1,7 +1,7 @@
-import {Action} from "redux";
+import { Action } from "redux";
 
-import {LoadingStatus, PageableResponse} from "../../../types/common";
-import {UnsentTweetsState} from "./state";
+import { LoadingStatus, PageableResponse } from "../../../../types/common";
+import { UnsentTweetsState } from "./state";
 
 export enum UnsentTweetActionType {
     SET_UNSENT_TWEETS = "unsentTweets/SET_UNSENT_TWEETS",

@@ -1,12 +1,12 @@
-import React, {FC, ReactElement} from 'react';
-import {Checkbox, Link as MuiLink, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import React, { FC, ReactElement } from "react";
+import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-import {ArrowRightIcon} from "../../../../icons";
-import {useGlobalStyles} from "../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../hoc/withDocumentTitle";
-import {SETTINGS_PRIVACY_AND_SAFETY_LOCATION} from "../../../../util/pathConstants";
-import {MEDIA_POLICY} from "../../../../util/url";
+import { ArrowRightIcon } from "../../../../icons";
+import { useGlobalStyles } from "../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
+import { SETTINGS_PRIVACY_AND_SAFETY_LOCATION } from "../../../../constants/path-constants";
+import { MEDIA_POLICY } from "../../../../constants/url-constants";
 
 const YourTweets: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -23,7 +23,7 @@ const YourTweets: FC = (): ReactElement => {
                     <Typography variant={"body1"} component={"span"}>
                         Mark media you Tweet as having material that may be sensitive
                     </Typography>
-                    <Checkbox/>
+                    <Checkbox />
                 </div>
                 <Typography variant={"subtitle2"} component={"div"}>
                     {`When enabled, pictures and videos you Tweet will be marked as sensitive for people who don’t want to

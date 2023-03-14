@@ -1,15 +1,15 @@
-import React, {FC, ReactElement, useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
-import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
-import axios from 'axios'
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
+import axios from "axios";
 import bowser from "bowser";
 
-import {useSessionsStyles} from "./SessionsStyles";
-import {ArrowRightIcon, DeviceIcon} from "../../../../../icons";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {SETTINGS_SECURITY_SESSIONS_CURRENT} from "../../../../../util/pathConstants";
-import {ACCESS_TO_THIRD_PARTY_APPS, FIND_USER_LOCATION} from "../../../../../util/url";
+import { useSessionsStyles } from "./SessionsStyles";
+import { ArrowRightIcon, DeviceIcon } from "../../../../../icons";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { SETTINGS_SECURITY_SESSIONS_CURRENT } from "../../../../../constants/path-constants";
+import { ACCESS_TO_THIRD_PARTY_APPS, FIND_USER_LOCATION } from "../../../../../constants/url-constants";
 
 const Sessions: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -25,7 +25,7 @@ const Sessions: FC = (): ReactElement => {
 
         axios.get(FIND_USER_LOCATION)
             .then((response) => {
-                setCountryName(response.data.country_name)
+                setCountryName(response.data.country_name);
             }).catch((error) => console.log(error));
     }, []);
 
@@ -50,7 +50,7 @@ const Sessions: FC = (): ReactElement => {
             <Link
                 to={{
                     pathname: SETTINGS_SECURITY_SESSIONS_CURRENT,
-                    state: {OSName: OSName, browserName: browserName, countryName: countryName}
+                    state: { OSName: OSName, browserName: browserName, countryName: countryName }
                 }}
                 className={classes.sessionWrapper}
             >
@@ -66,7 +66,8 @@ const Sessions: FC = (): ReactElement => {
                                 {OSName}
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {countryName} · <Typography component={"span"} className={classes.active}>Active now</Typography>
+                                {countryName} · <Typography component={"span"} className={classes.active}>Active
+                                now</Typography>
                             </Typography>
                         </div>
                     </div>
@@ -75,7 +76,7 @@ const Sessions: FC = (): ReactElement => {
                     </span>
                 </div>
             </Link>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h6"} component={"div"}>
                     Log out of other sessions

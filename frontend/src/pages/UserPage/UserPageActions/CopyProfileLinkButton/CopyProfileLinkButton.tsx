@@ -1,18 +1,18 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useDispatch} from "react-redux";
-import {useLocation} from "react-router-dom";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import CopyToClipboard from "react-copy-to-clipboard";
-import {ListItem, Typography} from "@material-ui/core";
+import { ListItem, Typography } from "@material-ui/core";
 
-import {CLIENT_URL} from "../../../../util/url";
-import {LinkIcon} from "../../../../icons";
-import {setOpenSnackBar} from "../../../../store/ducks/actionSnackbar/actionCreators";
+import { CLIENT_URL } from "../../../../constants/url-constants";
+import { LinkIcon } from "../../../../icons";
+import { setOpenSnackBar } from "../../../../store/ducks/actionSnackbar/actionCreators";
 
 interface CopyProfileLinkButtonProps {
     onCloseUserPageActions: () => void;
 }
 
-const CopyProfileLinkButton: FC<CopyProfileLinkButtonProps> = memo(({onCloseUserPageActions}): ReactElement => {
+const CopyProfileLinkButton: FC<CopyProfileLinkButtonProps> = memo(({ onCloseUserPageActions }): ReactElement => {
     const dispatch = useDispatch();
     const location = useLocation();
 

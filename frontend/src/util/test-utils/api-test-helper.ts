@@ -1,4 +1,4 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 export const testApiCall = (

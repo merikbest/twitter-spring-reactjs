@@ -1,9 +1,9 @@
-import React, {FC, ReactElement} from 'react';
-import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {PRIVACY_CONTROLS_FOR_TAILORED_ADS} from "../../../../../util/url";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { PRIVACY_CONTROLS_FOR_TAILORED_ADS } from "../../../../../constants/url-constants";
 
 const YourAdvertiserList: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -15,12 +15,13 @@ const YourAdvertiserList: FC = (): ReactElement => {
                     Tailored audiences are often built from email lists or browsing behaviors. They help advertisers
                     reach prospective customers or people who have already expressed interest in their business.
                     {" "}
-                    <MuiLink href={PRIVACY_CONTROLS_FOR_TAILORED_ADS} variant="subtitle2" target="_blank" rel="noopener">
+                    <MuiLink href={PRIVACY_CONTROLS_FOR_TAILORED_ADS} variant="subtitle2" target="_blank"
+                             rel="noopener">
                         Learn more
                     </MuiLink>
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"body1"} component={"div"}>
                     You are currently a part of
@@ -33,7 +34,7 @@ const YourAdvertiserList: FC = (): ReactElement => {
                     </Typography>
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"subtitle1"} component={"div"}>
                     You can opt out of interest-based advertising in your personalization and data settings. This will

@@ -1,15 +1,15 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {Button, Divider, Radio, Typography} from "@material-ui/core";
-import {CheckCircle, RadioButtonUnchecked} from "@material-ui/icons";
+import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Divider, Radio, Typography } from "@material-ui/core";
+import { CheckCircle, RadioButtonUnchecked } from "@material-ui/icons";
 
-import {useChangeGenderStyles} from "./ChangeGenderStyles";
-import {ChangeInfoTextField} from "../../../ChangeInfoTextField/ChangeInfoTextField";
-import {setUserLoadingStatus, updateGender} from "../../../../../store/ducks/user/actionCreators";
-import {selectUserIsLoading, selectUserProfileGender} from "../../../../../store/ducks/user/selectors";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { useChangeGenderStyles } from "./ChangeGenderStyles";
+import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
+import { setUserLoadingStatus, updateGender } from "../../../../../store/ducks/user/actionCreators";
+import { selectUserIsLoading, selectUserProfileGender } from "../../../../../store/ducks/user/selectors";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import { LoadingStatus } from "../../../../../types/common";
 
 const ChangeGender: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -44,9 +44,9 @@ const ChangeGender: FC = (): ReactElement => {
 
     const onSubmit = (): void => {
         if (selectedGender === "Other") {
-            dispatch(updateGender({gender: otherGender}));
+            dispatch(updateGender({ gender: otherGender }));
         } else {
-            dispatch(updateGender({gender: selectedGender}));
+            dispatch(updateGender({ gender: selectedGender }));
         }
     };
 
@@ -56,7 +56,7 @@ const ChangeGender: FC = (): ReactElement => {
                 If you haven’t already specified a gender, this is the one associated with your account based on
                 your profile and activity. This information won’t be displayed publicly.
             </Typography>
-            <Divider/>
+            <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <div className={globalClasses.infoItemRadioCheckbox}>
                     <Typography variant={"body1"} component={"span"}>
@@ -67,9 +67,9 @@ const ChangeGender: FC = (): ReactElement => {
                         onChange={handleSelectedGender}
                         value="Female"
                         name="radio-buttons"
-                        inputProps={{"aria-label": "Female"}}
-                        icon={<RadioButtonUnchecked color={"primary"}/>}
-                        checkedIcon={<CheckCircle color={"primary"}/>}
+                        inputProps={{ "aria-label": "Female" }}
+                        icon={<RadioButtonUnchecked color={"primary"} />}
+                        checkedIcon={<CheckCircle color={"primary"} />}
                         size="small"
                     />
                 </div>
@@ -82,9 +82,9 @@ const ChangeGender: FC = (): ReactElement => {
                         onChange={handleSelectedGender}
                         value="Male"
                         name="radio-buttons"
-                        inputProps={{"aria-label": "Male"}}
-                        icon={<RadioButtonUnchecked color={"primary"}/>}
-                        checkedIcon={<CheckCircle color={"primary"}/>}
+                        inputProps={{ "aria-label": "Male" }}
+                        icon={<RadioButtonUnchecked color={"primary"} />}
+                        checkedIcon={<CheckCircle color={"primary"} />}
                         size="small"
                     />
                 </div>
@@ -97,9 +97,9 @@ const ChangeGender: FC = (): ReactElement => {
                         onChange={handleSelectedGender}
                         value="Other"
                         name="radio-buttons"
-                        inputProps={{"aria-label": "Other"}}
-                        icon={<RadioButtonUnchecked color={"primary"}/>}
-                        checkedIcon={<CheckCircle color={"primary"}/>}
+                        inputProps={{ "aria-label": "Other" }}
+                        icon={<RadioButtonUnchecked color={"primary"} />}
+                        checkedIcon={<CheckCircle color={"primary"} />}
                         size="small"
                     />
                 </div>
@@ -116,7 +116,7 @@ const ChangeGender: FC = (): ReactElement => {
                     </div>
                 )}
             </div>
-            <Divider/>
+            <Divider />
             <div className={classes.buttonWrapper}>
                 <Button
                     onClick={onSubmit}

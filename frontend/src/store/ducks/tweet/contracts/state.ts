@@ -1,6 +1,6 @@
-import {Image, LoadingStatus, ReplyType} from "../../../types/common";
-import {TweetResponse} from "../../../types/tweet";
-import {UserResponse} from "../../../types/user";
+import { Image, LoadingStatus, ReplyType } from "../../../../types/common";
+import { TweetResponse } from "../../../../types/tweet";
+import { UserResponse } from "../../../../types/user";
 
 export interface ReplyTweet {
     tweetId: number;

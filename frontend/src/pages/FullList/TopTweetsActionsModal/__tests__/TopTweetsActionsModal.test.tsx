@@ -1,16 +1,16 @@
 import React from "react";
-import {ClickAwayListener, IconButton} from "@material-ui/core";
+import { ClickAwayListener, IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import TopTweetsActionsModal from "../TopTweetsActionsModal";
 import HoverAction from "../../../../components/HoverAction/HoverAction";
-import {LoadingStatus} from "../../../../store/types/common";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("TopTweetsActionsModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
 
     it("should render TopTweetsActionsModal correctly", () => {
-        const wrapper = mountWithStore(<TopTweetsActionsModal/>, mockStore);
+        const wrapper = mountWithStore(<TopTweetsActionsModal />, mockStore);
         wrapper.find(IconButton).simulate("click");
 
         expect(wrapper.text().includes("See top Tweets")).toBe(true);
@@ -20,7 +20,7 @@ describe("TopTweetsActionsModal", () => {
     });
 
     it("should click away TopTweetsActionsModal", () => {
-        const wrapper = mountWithStore(<TopTweetsActionsModal/>, mockStore);
+        const wrapper = mountWithStore(<TopTweetsActionsModal />, mockStore);
         // @ts-ignore
         wrapper.find(ClickAwayListener).prop("onClickAway")(jest.fn());
 
@@ -28,7 +28,7 @@ describe("TopTweetsActionsModal", () => {
     });
 
     it("should hover IconButton", () => {
-        const wrapper = mountWithStore(<TopTweetsActionsModal/>, mockStore);
+        const wrapper = mountWithStore(<TopTweetsActionsModal />, mockStore);
         wrapper.find(IconButton).simulate("mouseenter");
 
         expect(wrapper.find(HoverAction).exists()).toBeTruthy();

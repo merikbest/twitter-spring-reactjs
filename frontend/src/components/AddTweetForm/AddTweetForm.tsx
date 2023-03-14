@@ -1,38 +1,38 @@
-import React, {ChangeEvent, FC, ReactElement, useCallback, useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import {EmojiData} from 'emoji-mart'
-import 'emoji-mart/css/emoji-mart.css'
-import EmojiConvertor from 'emoji-js';
+import React, { ChangeEvent, FC, ReactElement, useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { EmojiData } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
+import EmojiConvertor from "emoji-js";
 
 import {
     addPoll,
     addQuoteTweet,
     addScheduledTweet,
     addTweet,
-    updateScheduledTweet,
+    updateScheduledTweet
 } from "../../store/ducks/tweets/actionCreators";
-import UploadImages from '../UploadImages/UploadImages';
-import {fetchReplyTweet} from "../../store/ducks/tweet/actionCreators";
-import {useAddTweetFormStyles} from "./AddTweetFormStyles";
-import {GifIcon, PullIcon} from "../../icons";
-import Poll, {PollInitialState, pollInitialState} from "./Poll/Poll";
+import UploadImages from "../UploadImages/UploadImages";
+import { fetchReplyTweet } from "../../store/ducks/tweet/actionCreators";
+import { useAddTweetFormStyles } from "./AddTweetFormStyles";
+import { GifIcon, PullIcon } from "../../icons";
+import Poll, { PollInitialState, pollInitialState } from "./Poll/Poll";
 import Reply from "./Reply/Reply";
 import Quote from "../Quote/Quote";
-import {formatScheduleDate} from "../../util/formatDate";
-import {QuoteTweetResponse, TweetResponse} from "../../store/types/tweet";
-import {Image, ReplyType} from "../../store/types/common";
+import { formatScheduleDate } from "../../util/format-date-helper";
+import { QuoteTweetResponse, TweetResponse } from "../../types/tweet";
+import { Image, ReplyType } from "../../types/common";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
-import {setOpenSnackBar} from "../../store/ducks/actionSnackbar/actionCreators";
+import { setOpenSnackBar } from "../../store/ducks/actionSnackbar/actionCreators";
 import EmojiIconButton from "./EmojiIconButton/EmojiIconButton";
 import ScheduleIconButton from "./ScheduleIconButton/ScheduleIconButton";
 import ProfileAvatar from "./ProfileAvatar/ProfileAvatar";
 import ScheduleDateInfo from "./ScheduleDateInfo/ScheduleDateInfo";
 import AddTweetImage from "./AddTweetImage/AddTweetImage";
-import {useParams} from "react-router-dom";
-import {TweetApi} from "../../services/api/tweetApi";
+import { useParams } from "react-router-dom";
+import { TweetApi } from "../../services/api/tweetApi";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -76,7 +76,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     const [selectedScheduleDate, setSelectedScheduleDate] = useState<Date | null>(null);
     const [visiblePoll, setVisiblePoll] = useState<boolean>(false);
     const [pollData, setPollData] = useState<PollInitialState>(pollInitialState);
-    const classes = useAddTweetFormStyles({quoteTweet: quoteTweet, isScheduled: selectedScheduleDate !== null});
+    const classes = useAddTweetFormStyles({ quoteTweet: quoteTweet, isScheduled: selectedScheduleDate !== null });
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
 
@@ -86,7 +86,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             setSelectedScheduleDate(new Date(unsentTweet.scheduledDate!));
             if (unsentTweet.images?.length !== 0) {
                 const newImages = [...images];
-                const newImage = {...images[0]};
+                const newImage = { ...images[0] };
                 newImage.src = unsentTweet.images![0].src;
                 newImages[0] = newImage;
                 setImages(newImages);
@@ -100,7 +100,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
 
     const addEmoji = useCallback((emoji: EmojiData): void => {
         const emojiConvertor = new EmojiConvertor();
-        emojiConvertor.replace_mode = 'unified';
+        emojiConvertor.replace_mode = "unified";
         const convertedEmoji = emojiConvertor.replace_colons(emoji.colons!);
         setText(text + " " + convertedEmoji);
     }, [text]);
@@ -111,14 +111,14 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         for (const image of images) {
             const formData = new FormData();
             formData.append("file", image.file);
-            const {data} = await TweetApi.uploadTweetImage(formData);
+            const { data } = await TweetApi.uploadTweetImage(formData);
             result.push(data);
         }
         return result;
     };
 
     const handleClickAddTweet = async (): Promise<void> => {
-        const {day, hour, minute, choice1, choice2, choice3, choice4} = pollData;
+        const { day, hour, minute, choice1, choice2, choice3, choice4 } = pollData;
         const pollDateTime = (day * 1440) + (hour * 60) + minute;
         const choices = [choice1, choice2, choice3, choice4].filter(item => item);
         const result = await uploadTweetImages();
@@ -143,7 +143,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                 id: unsentTweet?.id,
                 text: textConverter(),
                 images: result,
-                replyType: replyType,
+                replyType: replyType
             }));
             if (onCloseModal) onCloseModal();
         } else {
@@ -158,7 +158,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         ) : (
             "Your tweet was sent."
         )));
-        setText('');
+        setText("");
         setImages([]);
         setVisiblePoll(false);
         setSelectedScheduleDate(null);
@@ -172,7 +172,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             images: result,
             replyType: replyType,
             tweetId: quoteTweet!.id,
-            userId: params.userId,
+            userId: params.userId
         }));
 
         dispatch(setOpenSnackBar("Your tweet was sent."));
@@ -233,9 +233,9 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     return (
         <>
             <div className={classes.content}>
-                <ProfileAvatar/>
+                <ProfileAvatar />
                 <div className={classes.textareaWrapper}>
-                    <ScheduleDateInfo selectedScheduleDate={selectedScheduleDate}/>
+                    <ScheduleDateInfo selectedScheduleDate={selectedScheduleDate} />
                     <TextareaAutosize
                         onChange={handleChangeTextarea}
                         className={classes.contentTextarea}
@@ -246,14 +246,14 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                     />
                 </div>
             </div>
-            <AddTweetImage images={images} removeImage={removeImage}/>
-            {quoteTweet && <Quote quoteTweet={quoteTweet}/>}
-            <Poll pollData={pollData} setPollData={setPollData} visiblePoll={visiblePoll} onClose={onClosePoll}/>
-            <Reply replyType={replyType} setReplyType={setReplyType} isUnsentTweet={!!unsentTweet}/>
+            <AddTweetImage images={images} removeImage={removeImage} />
+            {quoteTweet && <Quote quoteTweet={quoteTweet} />}
+            <Poll pollData={pollData} setPollData={setPollData} visiblePoll={visiblePoll} onClose={onClosePoll} />
+            <Reply replyType={replyType} setReplyType={setReplyType} isUnsentTweet={!!unsentTweet} />
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
-                    <UploadImages onChangeImages={setImages}/>
-                    <ActionIconButton actionText={"GIF"} icon={GifIcon} size={"medium"}/>
+                    <UploadImages onChangeImages={setImages} />
+                    <ActionIconButton actionText={"GIF"} icon={GifIcon} size={"medium"} />
                     {(buttonName !== "Reply") && (
                         <div className={classes.quoteImage}>
                             <ActionIconButton
@@ -265,7 +265,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                             />
                         </div>
                     )}
-                    <EmojiIconButton addEmoji={addEmoji}/>
+                    <EmojiIconButton addEmoji={addEmoji} />
                     {(buttonName !== "Reply") && (
                         <ScheduleIconButton
                             disabled={!!quoteTweet}
@@ -285,10 +285,10 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                                     size={20}
                                     thickness={5}
                                     value={text.length >= MAX_LENGTH ? 100 : textLimitPercent}
-                                    style={text.length >= MAX_LENGTH ? {color: "red"} : undefined}
+                                    style={text.length >= MAX_LENGTH ? { color: "red" } : undefined}
                                 />
                                 <CircularProgress
-                                    style={{color: "rgba(0, 0, 0, 0.1)"}}
+                                    style={{ color: "rgba(0, 0, 0, 0.1)" }}
                                     variant="determinate"
                                     size={20}
                                     thickness={5}

@@ -1,8 +1,8 @@
 import React from "react";
-import {IconButton} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 
-import {createMockRootState, mountWithStore} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
 import ImageCloseButton from "../ImageCloseButton";
 
 describe("ImageCloseButton", () => {
@@ -13,6 +13,6 @@ describe("ImageCloseButton", () => {
                 onCloseModalWindow={mockOnCloseModalWindow}
             />, createMockRootState(LoadingStatus.SUCCESS));
         wrapper.find(IconButton).simulate("click");
-        expect(mockOnCloseModalWindow).toHaveBeenCalled()
+        expect(mockOnCloseModalWindow).toHaveBeenCalled();
     });
 });

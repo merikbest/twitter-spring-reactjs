@@ -1,14 +1,14 @@
-import React, {memo, ReactElement, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Button} from "@material-ui/core";
+import React, { memo, ReactElement, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@material-ui/core";
 
-import {processFollowRequest, unfollowUser} from "../../../store/ducks/user/actionCreators";
+import { processFollowRequest, unfollowUser } from "../../../store/ducks/user/actionCreators";
 import {
     selectUserProfileId,
     selectUserProfileIsFollower,
     selectUserProfileIsPrivateProfile
 } from "../../../store/ducks/userProfile/selectors";
-import {useUserPageStyles} from "../UserPageStyles";
+import { useUserPageStyles } from "../UserPageStyles";
 
 const UnfollowUserButton = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -22,7 +22,7 @@ const UnfollowUserButton = memo((): ReactElement => {
         if (isPrivateProfile && !isFollower) {
             dispatch(processFollowRequest(userProfileId!));
         } else {
-            dispatch(unfollowUser({userId: userProfileId!}));
+            dispatch(unfollowUser({ userId: userProfileId! }));
         }
     };
 

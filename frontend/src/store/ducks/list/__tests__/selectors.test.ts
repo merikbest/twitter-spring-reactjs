@@ -15,17 +15,17 @@ import {
     selectListItemOwnerUsername,
     selectListItemOwnerWallpaper
 } from "../selectors";
-import {createMockRootState} from "../../../../util/testHelper";
-import {LoadingStatus} from "../../../types/common";
-import {mockFullList} from "../../../../util/mockData/mockData";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../types/common";
+import { mockFullList } from "../../../../util/test-utils/mock-test-data";
 
 describe("list selectors:", () => {
     const mockState = createMockRootState();
     const mockListState = {
         ...mockState,
-        list: {...mockState.list, list: mockFullList}
+        list: { ...mockState.list, list: mockFullList }
     };
-    
+
     describe("selectListItem", () => {
         it("should return BaseListResponse", () => {
             expect(selectListItem(mockListState)).toBe(mockFullList);
@@ -82,7 +82,7 @@ describe("list selectors:", () => {
 
     describe("selectListItemOwnerAvatar", () => {
         it("should return OwnerAvatar string", () => {
-            expect(selectListItemOwnerAvatar(mockListState)).toBe(mockFullList.listOwner.avatar.src);
+            expect(selectListItemOwnerAvatar(mockListState)).toBe(mockFullList.listOwner.avatar);
         });
     });
 

@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useAppsAndSessionsStyles = makeStyles((theme: Theme) => ({
     listWrapper: {
@@ -9,17 +9,17 @@ export const useAppsAndSessionsStyles = makeStyles((theme: Theme) => ({
             padding: "14px 16px",
             "&:hover": {
                 cursor: "pointer",
-                backgroundColor: theme.palette.secondary.main,
-            },
+                backgroundColor: theme.palette.secondary.main
+            }
         },
         "& .Mui-selected": {
             borderRight: `2px solid ${theme.palette.primary.main}`,
             "& svg": {
                 marginRight: "-2px"
-            },
+            }
         },
         "& svg": {
-            marginLeft: "auto",
-        },
-    },
+            marginLeft: "auto"
+        }
+    }
 }));

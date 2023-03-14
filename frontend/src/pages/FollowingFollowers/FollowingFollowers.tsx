@@ -1,12 +1,12 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {useHistory, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import Paper from '@material-ui/core/Paper';
+import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {List} from "@material-ui/core";
+import { List } from "@material-ui/core";
 
-import {selectUserDataId} from "../../store/ducks/user/selectors";
+import { selectUserDataId } from "../../store/ducks/user/selectors";
 import {
     selectUserProfileFullName,
     selectUserProfileId,
@@ -16,16 +16,16 @@ import {
     selectUserProfileUsername,
     selectUsersIsSuccessLoaded
 } from "../../store/ducks/userProfile/selectors";
-import {fetchUserProfile, resetUserProfileState} from "../../store/ducks/userProfile/actionCreators";
-import {useFollowingFollowersStyles} from "./FollowingFollowersStyles";
-import {fetchFollowers, fetchFollowings, resetUsersState} from "../../store/ducks/usersSearch/actionCreators";
-import {useGlobalStyles} from "../../util/globalClasses";
-import {PROFILE, USER} from "../../util/pathConstants";
+import { fetchUserProfile, resetUserProfileState } from "../../store/ducks/userProfile/actionCreators";
+import { useFollowingFollowersStyles } from "./FollowingFollowersStyles";
+import { fetchFollowers, fetchFollowings, resetUsersState } from "../../store/ducks/usersSearch/actionCreators";
+import { useGlobalStyles } from "../../util/globalClasses";
+import { PROFILE, USER } from "../../constants/path-constants";
 import FollowingFollowersHeader from "./FollowingFollowersHeader/FollowingFollowersHeader";
-import {selectFollowers, selectUsersSearchIsLoading} from "../../store/ducks/usersSearch/selectors";
+import { selectFollowers, selectUsersSearchIsLoading } from "../../store/ducks/usersSearch/selectors";
 import Spinner from "../../components/Spinner/Spinner";
 import EmptyFollowersDescription from "./EmptyFollowersDescription/EmptyFollowersDescription";
-import UsersItem, {UserItemSize} from "../../components/UsersItem/UsersItem";
+import UsersItem, { UserItemSize } from "../../components/UsersItem/UsersItem";
 
 const FollowingFollowers: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -81,30 +81,30 @@ const FollowingFollowers: FC = (): ReactElement => {
     const fetchUsers = (activeTabIndex: number): void => {
         document.title = `People ${activeTabIndex ? "following" : "followed"} by ${fullName} (@${username}) / Twitter`;
         setActiveTab(activeTabIndex);
-        const user = {userId: params.id, page: 0};
+        const user = { userId: params.id, page: 0 };
         dispatch(resetUsersState());
         dispatch(activeTabIndex ? fetchFollowings(user) : fetchFollowers(user));
     };
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">
-            <FollowingFollowersHeader/>
+            <FollowingFollowersHeader />
             <div className={globalClasses.contentWrapper}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                        <Tab className={classes.tab} label="Following"/>
-                        <Tab className={classes.tab} label="Followers"/>
+                        <Tab className={classes.tab} label="Following" />
+                        <Tab className={classes.tab} label="Followers" />
                     </Tabs>
                 </div>
                 {(isUsersLoading && !users.length) ? (
-                    <Spinner/>
+                    <Spinner />
                 ) : (
                     (!isUsersLoading && !users.length) ? (
-                        <EmptyFollowersDescription activeTab={activeTab}/>
+                        <EmptyFollowersDescription activeTab={activeTab} />
                     ) : (
                         <List>
                             {users.map((user) => (
-                                <UsersItem key={user.id} user={user} size={UserItemSize.MEDIUM}/>
+                                <UsersItem key={user.id} user={user} size={UserItemSize.MEDIUM} />
                             ))}
                         </List>
                     )

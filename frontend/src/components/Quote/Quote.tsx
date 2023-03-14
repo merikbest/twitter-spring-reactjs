@@ -1,14 +1,14 @@
-import React, {FC, memo, ReactElement} from 'react';
-import {Link} from 'react-router-dom';
+import React, { FC, memo, ReactElement } from "react";
+import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
-import {Typography} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
-import {DEFAULT_PROFILE_IMG} from "../../util/url";
-import {formatDate} from "../../util/formatDate";
-import {textFormatter} from "../../util/textFormatter";
-import {useQuoteStyles} from "./QuoteStyles";
-import {QuoteTweetResponse} from "../../store/types/tweet";
-import {HOME_TWEET} from "../../util/pathConstants";
+import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
+import { formatDate } from "../../util/format-date-helper";
+import { textFormatter } from "../../util/text-formatter";
+import { useQuoteStyles } from "./QuoteStyles";
+import { QuoteTweetResponse } from "../../types/tweet";
+import { HOME_TWEET } from "../../constants/path-constants";
 
 interface QuoteProps {
     quoteTweet: QuoteTweetResponse;
@@ -16,8 +16,8 @@ interface QuoteProps {
     isFullTweet?: boolean;
 }
 
-const Quote: FC<QuoteProps> = memo(({quoteTweet, isTweetQuoted, isFullTweet}): ReactElement => {
-    const classes = useQuoteStyles({isTweetQuoted, isFullTweet});
+const Quote: FC<QuoteProps> = memo(({ quoteTweet, isTweetQuoted, isFullTweet }): ReactElement => {
+    const classes = useQuoteStyles({ isTweetQuoted, isFullTweet });
 
     return (
         <Link to={`${HOME_TWEET}/${quoteTweet.id}`} className={classes.quoteTweetLink}>

@@ -30,9 +30,9 @@ import {
     UnfollowListActionInterface,
     UnpinListActionInterface
 } from "./contracts/actionTypes";
-import {AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload} from "./contracts/state";
-import {ListUserResponse, PinnedListResponse} from "../../types/lists";
-import {LoadingStatus} from "../../types/common";
+import { AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload } from "./contracts/state";
+import { ListUserResponse, PinnedListResponse } from "../../../types/lists";
+import { LoadingStatus } from "../../../types/common";
 
 export const setLists = (payload: ListsState["lists"]): SetListsActionInterface => ({
     type: ListsActionType.SET_LISTS,
@@ -146,7 +146,7 @@ export const setPinedListToUserList = (payload: PinnedListResponse): SetPinedLis
 });
 
 export const resetListsState = (): ResetListsStateActionInterface => ({
-    type: ListsActionType.RESET_LISTS_STATE,
+    type: ListsActionType.RESET_LISTS_STATE
 });
 
 export const setLoadingState = (payload: LoadingStatus): SetLoadingStateInterface => ({

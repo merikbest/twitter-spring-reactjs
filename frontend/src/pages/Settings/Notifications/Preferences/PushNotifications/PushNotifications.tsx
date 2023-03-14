@@ -1,8 +1,8 @@
-import React, {FC, ReactElement} from 'react';
-import {Switch, Typography} from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Switch, Typography } from "@material-ui/core";
 
-import {useGlobalStyles} from "../../../../../util/globalClasses";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 
 const PushNotifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -13,7 +13,7 @@ const PushNotifications: FC = (): ReactElement => {
                 <Typography variant={"h6"} component={"div"}>
                     Push notifications
                     <span className={globalClasses.switch}>
-                        <Switch defaultChecked/>
+                        <Switch defaultChecked />
                     </span>
                 </Typography>
             </div>

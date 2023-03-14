@@ -1,17 +1,17 @@
-import React, {memo, ReactElement} from "react";
-import {useSelector} from "react-redux";
-import {Link} from "react-router-dom";
-import {Typography} from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Typography } from "@material-ui/core";
 
-import {PROFILE} from "../../../util/pathConstants";
-import {LockIcon} from "../../../icons";
+import { PROFILE } from "../../../constants/path-constants";
+import { LockIcon } from "../../../icons";
 import {
     selectUserDetailFullName,
     selectUserDetailId,
     selectUserDetailIsPrivateProfile,
     selectUserDetailUsername
 } from "../../../store/ducks/userDetail/selectors";
-import {usePopperInfoStyles} from "./PopperInfoStyles";
+import { usePopperInfoStyles } from "./PopperInfoStyles";
 
 const PopperInfo = memo((): ReactElement => {
     const classes = usePopperInfoStyles();

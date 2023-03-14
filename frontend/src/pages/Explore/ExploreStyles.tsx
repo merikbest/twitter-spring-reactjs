@@ -1,4 +1,4 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useExploreStyles = makeStyles((theme: Theme) => ({
     backButtonWrapper: {
@@ -16,13 +16,13 @@ export const useExploreStyles = makeStyles((theme: Theme) => ({
             marginLeft: 35,
             maxWidth: 50,
             height: 4,
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.main
         },
         "& .MuiTab-root": {
             fontSize: 15,
             textTransform: "none !important",
             minWidth: 120,
-            fontWeight: 700,
-        },
-    },
+            fontWeight: 700
+        }
+    }
 }));

@@ -12,28 +12,28 @@ export const SideSearchTextField = withStyles((theme: Theme) => ({
                 backgroundColor: theme.palette.background.paper,
                 "& fieldset": { borderWidth: 1, borderColor: theme.palette.primary.main },
                 "& svg path": {
-                    fill: theme.palette.primary.main,
-                },
+                    fill: theme.palette.primary.main
+                }
             },
             "& .MuiInputAdornment-root": {
-                "& svg" : {
+                "& svg": {
                     color: theme.palette.text.secondary,
                     height: "1.25em"
                 }
             },
             "&:hover": {
-                "& fieldset": { borderColor: "transparent" },
+                "& fieldset": { borderColor: "transparent" }
             },
             "& fieldset": {
                 borderColor: "transparent",
-                borderWidth: 1,
-            },
+                borderWidth: 1
+            }
         },
         "& .MuiOutlinedInput-input": {
-            padding: "12px 14px 14px 5px",
+            padding: "12px 14px 14px 5px"
         },
         "&.MuiFormControl-root": {
-            paddingLeft: 12,
-        },
-    },
+            paddingLeft: 12
+        }
+    }
 }))(TextField);

@@ -1,11 +1,11 @@
-import React, {ChangeEvent, FC, FormEvent, ReactElement, useState} from 'react';
-import {useHistory} from "react-router-dom";
-import {Button, Typography} from "@material-ui/core";
+import React, { ChangeEvent, FC, FormEvent, ReactElement, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { Button, Typography } from "@material-ui/core";
 
-import {useFindEmailStyles} from "./FindEmailStyles";
-import {ForgotPasswordTextField} from "../ForgotPasswordTextField/ForgotPasswordTextField";
-import {AuthApi} from "../../../services/api/authApi";
-import { ACCOUNT_FORGOT_SEND_PASSWORD_RESET } from '../../../util/pathConstants';
+import { useFindEmailStyles } from "./FindEmailStyles";
+import { ForgotPasswordTextField } from "../ForgotPasswordTextField/ForgotPasswordTextField";
+import { AuthApi } from "../../../services/api/authApi";
+import { ACCOUNT_FORGOT_SEND_PASSWORD_RESET } from "../../../constants/path-constants";
 
 const FindEmail: FC = (): ReactElement => {
     const classes = useFindEmailStyles();
@@ -15,10 +15,10 @@ const FindEmail: FC = (): ReactElement => {
 
     const findExistingEmail = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        AuthApi.findExistingEmail({email})
+        AuthApi.findExistingEmail({ email })
             .then(() => {
                 setError(false);
-                history.push({pathname: ACCOUNT_FORGOT_SEND_PASSWORD_RESET, state: {email: email}});
+                history.push({ pathname: ACCOUNT_FORGOT_SEND_PASSWORD_RESET, state: { email: email } });
             })
             .catch(() => setError(true));
     };

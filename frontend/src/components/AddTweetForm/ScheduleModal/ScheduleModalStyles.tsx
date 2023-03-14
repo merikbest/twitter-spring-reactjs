@@ -1,29 +1,29 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
     dialog: {
         "& .MuiDialogTitle-root": {
             padding: "5px 15px",
             marginBottom: 0,
-            borderBottom: `1px solid ${theme.palette.divider}`,
+            borderBottom: `1px solid ${theme.palette.divider}`
         },
         "& .MuiDialog-container": {
             height: "80%"
-        },
+        }
     },
     content: {
         width: 598,
         overflowX: "hidden",
-        padding: 0,
+        padding: 0
     },
     contentWrapper: {
-        padding: "12px 16px",
+        padding: "12px 16px"
     },
     buttonWrapper: {
         marginLeft: "auto",
         "& .MuiButton-text ": {
-            marginRight: 12,
-        },
+            marginRight: 12
+        }
     },
     infoWrapper: {
         marginBottom: 20,
@@ -31,27 +31,27 @@ export const useScheduleModalStyles = makeStyles((theme: Theme) => ({
             verticalAlign: "bottom",
             marginRight: 12,
             fill: theme.palette.text.secondary,
-            height: "1.30em",
-        },
+            height: "1.30em"
+        }
     },
     title: {
-        fontWeight: 400,
+        fontWeight: 400
     },
     subtitle: {
-        marginBottom: 2,
+        marginBottom: 2
     },
     errorText: {
-        color: theme.palette.error.main,
+        color: theme.palette.error.main
     },
     dateWrapper: {
-        marginBottom: 20,
+        marginBottom: 20
     },
     footer: {
         padding: "12px 16px",
         borderTop: `1px solid ${theme.palette.divider}`,
         "& .MuiButton-root": {
             height: 24,
-            padding: '0px 12px',
-        },
-    },
+            padding: "0px 12px"
+        }
+    }
 }));

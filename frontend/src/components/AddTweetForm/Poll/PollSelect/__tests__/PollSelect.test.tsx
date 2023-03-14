@@ -1,7 +1,7 @@
 import React from "react";
 
-import {createMockRootState, mountWithStore} from "../../../../../util/testHelper";
-import {LoadingStatus} from "../../../../../store/types/common";
+import { createMockRootState, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../types/common";
 import PollSelect from "../PollSelect";
 
 describe("PollSelect", () => {
@@ -18,7 +18,7 @@ describe("PollSelect", () => {
                 width={140}
                 marginRight={0}
             />, createMockRootState(LoadingStatus.SUCCESS));
-        wrapper.find("select").simulate("change", {target: {value: 7}});
+        wrapper.find("select").simulate("change", { target: { value: 7 } });
         expect(mockOnChange).toHaveBeenCalled();
         expect(mockShowOptions).toHaveBeenCalled();
     });

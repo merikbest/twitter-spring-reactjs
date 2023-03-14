@@ -1,13 +1,13 @@
-import produce, {Draft} from "immer";
+import produce, { Draft } from "immer";
 
-import {TweetAdditionalInfoState} from "./contracts/state";
-import {TweetAdditionalInfoActions, TweetAdditionalInfoType} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../types/common";
+import { TweetAdditionalInfoState } from "./contracts/state";
+import { TweetAdditionalInfoActions, TweetAdditionalInfoType } from "./contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialTweetAdditionalInfoState: TweetAdditionalInfoState = {
     tweetAdditionalInfo: undefined,
     isTweetBookmarked: false,
-    loadingState: LoadingStatus.LOADING,
+    loadingState: LoadingStatus.LOADING
 };
 
 export const tweetAdditionalInfoReducer = produce((draft: Draft<TweetAdditionalInfoState>, action: TweetAdditionalInfoActions) => {
