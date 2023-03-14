@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.service.util.UserServiceHelper;
+import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,9 +56,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, Object> searchByText(String text) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
         Long tweetCount = tweetClient.getTweetCountByText(text);
         List<String> tags = tagClient.getTagsByText(text);
-        List<CommonUserProjection> users = userRepository.searchUserByText(text);
+        List<CommonUserProjection> users = userRepository.searchUserByText(text, authUserId);
         return Map.of("tweetCount", tweetCount, "tags", tags, "users", users);
     }
 

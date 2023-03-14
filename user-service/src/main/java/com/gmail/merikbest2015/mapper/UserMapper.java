@@ -47,6 +47,7 @@ public class UserMapper {
     public SearchResultResponse searchByText(String text) {
         Map<String, Object> searchResult = userService.searchByText(text);
         SearchResultResponse searchResultResponse = new SearchResultResponse();
+        searchResultResponse.setText(text);
         searchResultResponse.setTweetCount((Long) searchResult.get("tweetCount"));
         searchResultResponse.setTags((List<String>) searchResult.get("tags"));
         List<CommonUserResponse> users = basicMapper.convertToResponseList(

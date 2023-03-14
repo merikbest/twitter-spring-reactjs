@@ -23,6 +23,7 @@ import { actionSnackbarReducer } from "./ducks/actionSnackbar/reducer";
 import { tweetAdditionalInfoReducer } from "./ducks/tweetAdditionalInfo/reducer";
 import { chatReducer } from "./ducks/chat/reducer";
 import { topicsReducer } from "./ducks/topics/reducer";
+import { searchReducer } from "./ducks/search/reducer";
 
 export const rootReducer = combineReducers({
     tweets: tweetsReducer,
@@ -47,5 +48,6 @@ export const rootReducer = combineReducers({
     unsentTweets: unsentTweetsReducer,
     actionSnackbar: actionSnackbarReducer,
     tweetAdditionalInfo: tweetAdditionalInfoReducer,
-    chat: chatReducer
+    chat: chatReducer,
+    search: searchReducer
 });

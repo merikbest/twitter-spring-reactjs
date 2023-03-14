@@ -299,6 +299,10 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             items: [],
             pagesCount: 0,
             loadingState: loadingStatus
+        },
+        search: {
+            searchResult: undefined,
+            searchLoadingState: loadingStatus
         }
     } as RootState;
 };

@@ -63,7 +63,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "AND (user.privateProfile = false " +
             "   OR (user.privateProfile = true AND (following.id = :userId OR user.id = :userId)) " +
             "   AND user.active = true)")
-    List<CommonUserProjection> searchUserByText(@Param("text") String text);
+    List<CommonUserProjection> searchUserByText(@Param("text") String text, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.profileStarted = true WHERE user.id = :userId")

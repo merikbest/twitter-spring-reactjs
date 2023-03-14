@@ -105,7 +105,7 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
         },
     },
     details: {
-        lineHeight: 20,
+        lineHeight: "20px",
         "& .MuiTypography-h6": {
             marginRight: 3,
         },
@@ -120,10 +120,10 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
     followLink: {
         cursor: "pointer",
         textDecoration: 'none',
-        lineHeight: 20,
+        lineHeight: "20px",
         color: theme.palette.text.secondary,
         "& span": {
-            lineHeight: 20,
+            lineHeight: "20px",
         },
         "&:hover": {
             textDecoration: "underline",

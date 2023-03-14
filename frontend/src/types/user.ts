@@ -53,6 +53,13 @@ export interface CommonUserResponse {
     isPrivateProfile: boolean;
 }
 
+export interface SearchResultResponse {
+    text: string;
+    tweetCount: number;
+    tags: string[];
+    users: CommonUserResponse[];
+}
+
 export interface AuthUserResponse {
     id: number;
     email: string;

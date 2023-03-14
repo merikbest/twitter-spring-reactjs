@@ -22,7 +22,7 @@ export const useSessionsStyles = makeStyles((theme: Theme) => ({
         height: 20,
         color: theme.palette.common.white,
         fontSize: 13,
-        lineHeight: 16
+        lineHeight: "16px"
     },
     deviceIconWrapper: {
         display: "flex",

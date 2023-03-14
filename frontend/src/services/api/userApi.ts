@@ -6,6 +6,7 @@ import {
     BlockedUserResponse,
     FollowerUserResponse,
     MutedUserResponse,
+    SearchResultResponse,
     UserDetailResponse,
     UserProfileResponse,
     UserResponse
@@ -34,9 +35,10 @@ import {
     API_USER_MUTED,
     API_USER_PIN_TWEET,
     API_USER_RELEVANT,
-    API_USER_SEARCH,
+    API_USER_SEARCH_USERNAME,
     API_USER_START,
-    API_USER_SUBSCRIBE
+    API_USER_SUBSCRIBE,
+    SEARCH_TEXT
 } from "../../constants/endpoint-constants";
 
 export const UserApi = {
@@ -47,7 +49,10 @@ export const UserApi = {
         return await axios.get<UserResponse[]>(API_USER_RELEVANT);
     },
     async searchUsersByUsername({ username, pageNumber }: SearchByNameRequest): Promise<AxiosResponse<UserResponse[]>> {
-        return await axios.get<UserResponse[]>(`${API_USER_SEARCH}/${username}`, { params: { page: pageNumber } });
+        return await axios.get<UserResponse[]>(`${API_USER_SEARCH_USERNAME}/${username}`, { params: { page: pageNumber } });
+    },
+    async searchByText(text: string): Promise<AxiosResponse<SearchResultResponse>> {
+        return await axios.get<SearchResultResponse>(`${SEARCH_TEXT}/${text}`);
     },
     async getUserInfo(userId: number): Promise<AxiosResponse<UserProfileResponse>> {
         return await axios.get<UserProfileResponse>(`${API_USER}/${userId}`);

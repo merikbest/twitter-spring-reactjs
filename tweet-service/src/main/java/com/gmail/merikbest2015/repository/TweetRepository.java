@@ -162,6 +162,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT COUNT(tweet) FROM Tweet tweet " +
             "WHERE tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
-            "AND tweet.text LIKE CONCAT('%',:text,'%')")
+            "AND UPPER(tweet.text) LIKE UPPER(CONCAT('%',:text,'%'))")
     Long getTweetCountByText(@Param("text") String text);
 }

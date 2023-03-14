@@ -20,7 +20,7 @@ import {
     API_USER_MUTED,
     API_USER_PIN_TWEET,
     API_USER_RELEVANT,
-    API_USER_SEARCH,
+    API_USER_SEARCH_USERNAME,
     API_USER_START,
     API_USER_SUBSCRIBE
 } from "../../../constants/endpoint-constants";
@@ -58,7 +58,7 @@ describe("UserApi", () => {
 
     describe("should fetch UserApi.searchUsersByUsername", () => {
         it("[200] should search users by username Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_USER_SEARCH}/test`, 200, mockUsers, UserApi.searchUsersByUsername, {
+            testApiCall(mockAdapter, "onGet", `${API_USER_SEARCH_USERNAME}/test`, 200, mockUsers, UserApi.searchUsersByUsername, {
                 username: "test",
                 pageNumber: 1
             });
