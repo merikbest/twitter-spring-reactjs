@@ -7,7 +7,10 @@ export const useSideSearchStyles = makeStyles((theme: Theme) => ({
         position: "sticky",
         top: 0,
         zIndex: 10,
-        height: 53
+        height: 53,
+        "& .MuiInputAdornment-positionEnd": {
+            marginRight: 12
+        }
     },
     dropdown: {
         padding: 0,

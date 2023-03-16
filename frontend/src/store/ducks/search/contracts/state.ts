@@ -5,3 +5,10 @@ export interface SearchState {
     searchResult?: SearchResultResponse;
     searchLoadingState: LoadingStatus;
 }
+
+
+export interface SearchTermsRequest {
+    users: number[];
+    tags: string[];
+    text: string[];
+}

@@ -9,6 +9,7 @@ import { updateBackgroundColor } from "../../../../store/ducks/user/actionCreato
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { BackgroundTheme, ColorScheme } from "../../../../types/common";
+import { BACKGROUND, COLOR } from "../../../../constants/common-constants";
 
 export interface DisplayProps {
     changeBackgroundColor: (background: BackgroundTheme) => void;
@@ -23,8 +24,8 @@ const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme })
     const [selectedColor, setSelectedColor] = React.useState<ColorScheme>(ColorScheme.BLUE);
 
     useEffect(() => {
-        const background = localStorage.getItem("background");
-        const color = localStorage.getItem("color");
+        const background = localStorage.getItem(BACKGROUND);
+        const color = localStorage.getItem(COLOR);
         setSelectedBackgroundColor((background !== null) ? background as BackgroundTheme : BackgroundTheme.DEFAULT);
         setSelectedColor((color !== null) ? color as ColorScheme : ColorScheme.BLUE);
     }, []);

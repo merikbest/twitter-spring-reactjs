@@ -1,5 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 import { QuoteTweetResponse } from "../../types/tweet";
+import { BACKGROUND } from "../../constants/common-constants";
 
 interface AddTweetFormStyles {
     quoteTweet?: QuoteTweetResponse;
@@ -23,8 +24,8 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         fontFamily: "inherit",
         resize: "none",
         backgroundColor: "transparent",
-        caretColor: localStorage.getItem("background") === "DEFAULT" ? "#000" : "#fff",
-        color: localStorage.getItem("background") === "DEFAULT" ? "#000" : "#fff"
+        caretColor: localStorage.getItem(BACKGROUND) === "DEFAULT" ? "#000" : "#fff",
+        color: localStorage.getItem(BACKGROUND) === "DEFAULT" ? "#000" : "#fff"
     },
     footer: {
         display: "flex",

@@ -4,14 +4,15 @@ import { Dialog, Radio } from "@material-ui/core";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { BackgroundTheme, ColorScheme, LoadingStatus } from "../../../../types/common";
 import DisplayModal from "../DisplayModal";
+import { BACKGROUND, COLOR } from "../../../../constants/common-constants";
 
 describe("DisplayModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
     let mockDispatchFn: jest.Mock;
 
     beforeEach(() => {
-        localStorage.setItem("color", "BLUE");
-        localStorage.setItem("background", "DEFAULT");
+        localStorage.setItem(COLOR, "BLUE");
+        localStorage.setItem(BACKGROUND, "DEFAULT");
         mockDispatchFn = mockDispatch();
     });
 
@@ -30,8 +31,8 @@ describe("DisplayModal", () => {
     });
 
     it("should render different colors", () => {
-        localStorage.setItem("color", "YELLOW");
-        localStorage.setItem("background", "DIM");
+        localStorage.setItem(COLOR, "YELLOW");
+        localStorage.setItem(BACKGROUND, "DIM");
         const { wrapper } = createDisplayModalWrapper();
 
         expect(wrapper.find("#blue").find("#checkIcon").exists()).toBeFalsy();
@@ -52,7 +53,7 @@ describe("DisplayModal", () => {
     });
 
     it("should click DEFAULT Background color", () => {
-        localStorage.setItem("background", "DIM");
+        localStorage.setItem(BACKGROUND, "DIM");
         const { wrapper, mockChangeBackgroundColor } = createDisplayModalWrapper();
 
         expect(wrapper.find(Radio).at(0).prop("checked")).toBe(false);
@@ -64,7 +65,7 @@ describe("DisplayModal", () => {
     });
 
     it("should click DEFAULT Background color", () => {
-        localStorage.setItem("background", "DIM");
+        localStorage.setItem(BACKGROUND, "DIM");
         testClickBackgroundColor("#default", 0, BackgroundTheme.DEFAULT);
     });
 
@@ -77,7 +78,7 @@ describe("DisplayModal", () => {
     });
 
     it("should click change BLUE Color scheme", () => {
-        localStorage.setItem("color", "YELLOW");
+        localStorage.setItem(COLOR, "YELLOW");
         testClickChangeColorScheme("#blue", ColorScheme.BLUE);
     });
 

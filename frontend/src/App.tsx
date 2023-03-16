@@ -92,7 +92,7 @@ import {
     TOPIC_FEED_SCHEDULE,
     TOPIC_NOTIFICATIONS
 } from "./constants/ws-constants";
-import { TOKEN } from "./constants/common-constants";
+import { BACKGROUND, COLOR, TOKEN } from "./constants/common-constants";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -137,8 +137,8 @@ const App: FC = (): ReactElement => {
             });
         });
 
-        const background = localStorage.getItem("background");
-        const color = localStorage.getItem("color");
+        const background = localStorage.getItem(BACKGROUND);
+        const color = localStorage.getItem(COLOR);
         processColorScheme((color !== null) ? color as ColorScheme : ColorScheme.BLUE);
         processBackgroundColor(background as BackgroundTheme);
     }, []);
@@ -175,12 +175,12 @@ const App: FC = (): ReactElement => {
 
     const changeBackgroundColor = (background: BackgroundTheme): void => {
         processBackgroundColor(background);
-        localStorage.setItem("background", background);
+        localStorage.setItem(BACKGROUND, background);
     };
 
     const changeColorScheme = (color: ColorScheme): void => {
         processColorScheme(color);
-        localStorage.setItem("color", color);
+        localStorage.setItem(COLOR, color);
     };
 
     const processBackgroundColor = (background: BackgroundTheme): void => {

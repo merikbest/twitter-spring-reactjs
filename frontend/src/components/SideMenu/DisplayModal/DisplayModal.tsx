@@ -8,6 +8,7 @@ import { CheckIcon, TweetIcon, VerifiedIcon } from "../../../icons";
 import { DisplayProps } from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
 import { updateBackgroundColor, updateColorScheme } from "../../../store/ducks/user/actionCreators";
 import { BackgroundTheme, ColorScheme } from "../../../types/common";
+import { BACKGROUND, COLOR } from "../../../constants/common-constants";
 
 interface DisplayModalProps {
     visible?: boolean;
@@ -29,8 +30,8 @@ const DisplayModal: FC<DisplayModalProps & DisplayProps> = (
 
     useEffect(() => {
         if (visible) {
-            const background = localStorage.getItem("background");
-            const color = localStorage.getItem("color");
+            const background = localStorage.getItem(BACKGROUND);
+            const color = localStorage.getItem(COLOR);
             setSelectedBackgroundColor((background !== null) ? background as BackgroundTheme : BackgroundTheme.DEFAULT);
             setSelectedColor((color !== null) ? color as ColorScheme : ColorScheme.BLUE);
         }

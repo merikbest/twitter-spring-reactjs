@@ -5,6 +5,7 @@ import Display from "../Display";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import { UserActionsType } from "../../../../../store/ducks/user/contracts/actionTypes";
 import { BackgroundTheme, ColorScheme } from "../../../../../types/common";
+import { BACKGROUND, COLOR } from "../../../../../constants/common-constants";
 
 describe("Display", () => {
     let mockDispatchFn: jest.Mock;
@@ -46,7 +47,7 @@ describe("Display", () => {
     });
 
     it("should change Color", () => {
-        localStorage.setItem("color", "BLUE");
+        localStorage.setItem(COLOR, "BLUE");
         const mockChangeColorScheme = jest.fn();
         const wrapper = mountWithStore(
             <Display
@@ -73,7 +74,7 @@ describe("Display", () => {
     });
 
     it("should click Background Default", () => {
-        localStorage.setItem("background", "DIM");
+        localStorage.setItem(BACKGROUND, "DIM");
         testOnClickBackground(0, BackgroundTheme.DEFAULT);
     });
 
