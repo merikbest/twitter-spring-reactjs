@@ -119,7 +119,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void updateMediaTweetCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
 
     @Query("SELECT user FROM User user WHERE user.id IN :userIds")
-    List<ListMemberProjection> getUsersByIds(@Param("userIds") List<Long> userIds);
+    <T> List<T> getUsersByIds(@Param("userIds") List<Long> userIds, Class<T> type);
 
     @Query("SELECT user FROM User user " +
             "WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true " +

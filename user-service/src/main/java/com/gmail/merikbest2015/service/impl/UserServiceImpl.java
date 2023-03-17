@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.TweetClient;
@@ -61,6 +62,11 @@ public class UserServiceImpl implements UserService {
         List<String> tags = tagClient.getTagsByText(text);
         List<CommonUserProjection> users = userRepository.searchUserByText(text, authUserId);
         return Map.of("tweetCount", tweetCount, "tags", tags, "users", users);
+    }
+
+    @Override
+    public List<CommonUserProjection> getSearchResults(SearchTermsRequest request) {
+        return userRepository.getUsersByIds(request.getUsers(), CommonUserProjection.class);
     }
 
     @Override

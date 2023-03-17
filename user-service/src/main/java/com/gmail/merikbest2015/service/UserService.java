@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ public interface UserService {
     <T> Page<T> searchUsersByUsername(String username, Pageable pageable, Class<T> type);
 
     Map<String, Object> searchByText(String text);
+
+    List<CommonUserProjection> getSearchResults(SearchTermsRequest request);
 
     Boolean startUseTwitter();
 

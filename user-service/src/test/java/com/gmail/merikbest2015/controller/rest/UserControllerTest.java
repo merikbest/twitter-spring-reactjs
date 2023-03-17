@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.dto.request.UserRequest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.jupiter.api.DisplayName;
@@ -13,15 +14,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.constants.PathConstants.*;
-import static com.gmail.merikbest2015.constants.PathConstants.USER_ID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -177,7 +178,25 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tweetCount").value(0L))
                 .andExpect(jsonPath("$.tags[*]", hasSize(0)))
-                .andExpect(jsonPath("$.users[*]", hasSize(6)));
+                .andExpect(jsonPath("$.users[*]", hasSize(7)));
+    }
+
+    @Test
+    @DisplayName("[200] POST /ui/v1/user/search/results - Get Search Results")
+    public void getSearchResults() throws Exception {
+        SearchTermsRequest request = new SearchTermsRequest();
+        request.setUsers(List.of(1L, 2L));
+        mockMvc.perform(post(UI_V1_USER + SEARCH_RESULTS)
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(2)))
+                .andExpect(jsonPath("$[1].id").value(TestConstants.USER_ID))
+                .andExpect(jsonPath("$[1].fullName").value(TestConstants.USERNAME))
+                .andExpect(jsonPath("$[1].username").value(TestConstants.USERNAME))
+                .andExpect(jsonPath("$[1].avatar").value(TestConstants.AVATAR_SRC_1))
+                .andExpect(jsonPath("$[1].isPrivateProfile").value(false));
     }
 
     @Test

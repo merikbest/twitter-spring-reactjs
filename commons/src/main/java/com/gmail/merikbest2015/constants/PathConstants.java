@@ -131,6 +131,7 @@ public class PathConstants {
     public static final String FOLLOWER = "/follower";
     public static final String SCHEDULE = "/schedule";
     public static final String SEARCH_TEXT = "/search/{text}";
+    public static final String SEARCH_RESULTS = "/search/results";
     public static final String REPLY_USER_ID_TWEET_ID = "/reply/{userId}/{tweetId}";
     public static final String QUOTE_USER_ID_TWEET_ID = "/quote/{userId}/{tweetId}";
     public static final String REPLY_CHANGE_USER_ID_TWEET_ID = "/reply/change/{userId}/{tweetId}";
