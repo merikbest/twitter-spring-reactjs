@@ -29,11 +29,5 @@ export const useSideSearchStyles = makeStyles((theme: Theme) => ({
                 backgroundColor: theme.palette.secondary.main
             }
         }
-    },
-    searchText: {
-        padding: 12,
-        paddingTop: 20,
-        textAlign: "center",
-        color: theme.palette.text.secondary
     }
 }));

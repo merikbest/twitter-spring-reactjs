@@ -9,4 +9,5 @@ export const selectSearchedText = (state: RootState): string | undefined => sele
 export const selectSearchTweetCount = (state: RootState): number | undefined => selectSearchResult(state)?.tweetCount;
 export const selectSearchTags = (state: RootState): string[] | undefined => selectSearchResult(state)?.tags;
 export const selectSearchUsers = (state: RootState): CommonUserResponse[] | undefined => selectSearchResult(state)?.users;
+export const selectRecentSearchResult = (state: RootState): CommonUserResponse[] => selectSearch(state).recentSearchResult;
 export const selectLoadingSearchResult = (state: RootState): boolean => selectSearch(state).searchLoadingState === LoadingStatus.LOADING;

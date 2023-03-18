@@ -1,8 +1,9 @@
 import { LoadingStatus } from "../../../../types/common";
-import { SearchResultResponse } from "../../../../types/user";
+import { CommonUserResponse, SearchResultResponse } from "../../../../types/user";
 
 export interface SearchState {
     searchResult?: SearchResultResponse;
+    recentSearchResult: CommonUserResponse[];
     searchLoadingState: LoadingStatus;
 }
 

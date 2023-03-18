@@ -4,6 +4,7 @@ import { axios } from "../../core/axios";
 import {
     AuthUserResponse,
     BlockedUserResponse,
+    CommonUserResponse,
     FollowerUserResponse,
     MutedUserResponse,
     SearchResultResponse,
@@ -35,11 +36,13 @@ import {
     API_USER_MUTED,
     API_USER_PIN_TWEET,
     API_USER_RELEVANT,
+    API_USER_SEARCH_RESULTS,
+    API_USER_SEARCH_TEXT,
     API_USER_SEARCH_USERNAME,
     API_USER_START,
-    API_USER_SUBSCRIBE,
-    SEARCH_TEXT
+    API_USER_SUBSCRIBE
 } from "../../constants/endpoint-constants";
+import { SearchTermsRequest } from "../../store/ducks/search/contracts/state";
 
 export const UserApi = {
     async getUsers(pageNumber: number): Promise<AxiosResponse<UserResponse[]>> {
@@ -52,7 +55,10 @@ export const UserApi = {
         return await axios.get<UserResponse[]>(`${API_USER_SEARCH_USERNAME}/${username}`, { params: { page: pageNumber } });
     },
     async searchByText(text: string): Promise<AxiosResponse<SearchResultResponse>> {
-        return await axios.get<SearchResultResponse>(`${SEARCH_TEXT}/${text}`);
+        return await axios.get<SearchResultResponse>(`${API_USER_SEARCH_TEXT}/${text}`);
+    },
+    async getSearchResults(request: SearchTermsRequest): Promise<AxiosResponse<CommonUserResponse[]>> {
+        return await axios.post<CommonUserResponse[]>(API_USER_SEARCH_RESULTS, request);
     },
     async getUserInfo(userId: number): Promise<AxiosResponse<UserProfileResponse>> {
         return await axios.get<UserProfileResponse>(`${API_USER}/${userId}`);
