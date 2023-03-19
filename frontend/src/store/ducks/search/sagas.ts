@@ -10,6 +10,7 @@ import { LoadingStatus } from "../../../types/common";
 import { setRecentSearchResult, setSearchLoadingState, setSearchResult } from "./actionCreators";
 import { CommonUserResponse, SearchResultResponse } from "../../../types/user";
 import { UserApi } from "../../../services/api/userApi";
+import { SEARCH_TERMS } from "../../../constants/common-constants";
 
 export function* fetchSearchByTextRequest({ payload }: FetchSearchByTextActionInterface) {
     try {
@@ -25,7 +26,12 @@ export function* fetchRecentSearchResultRequest({ payload }: FetchRecentSearchRe
     try {
         yield put(setSearchLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<CommonUserResponse[]> = yield call(UserApi.getSearchResults, payload);
-        yield put(setRecentSearchResult(response.data));
+        const localStorageItem = localStorage.getItem(SEARCH_TERMS);
+        yield put(setRecentSearchResult({
+            text: localStorageItem ? (JSON.parse(localStorageItem).text ?? []) : [],
+            tags: localStorageItem ? (JSON.parse(localStorageItem).tags ?? []) : [],
+            users: response.data
+        }));
     } catch (error) {
         yield put(setSearchLoadingState(LoadingStatus.ERROR));
     }

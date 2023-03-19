@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { ListItem, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
@@ -6,17 +6,19 @@ import { SearchIcon } from "../../../icons";
 import { useTextSearchResultStyles } from "./TextSearchResultStyles";
 import { SEARCH } from "../../../constants/path-constants";
 import { addToLocalStorage } from "../addToLocalStorage";
+import RemoveSearchResultButton from "../RemoveSearchResultButton/RemoveSearchResultButton";
 
 interface TextSearchResultProps {
     text: string;
     tweetCount?: number;
+    recentSearch?: boolean;
 }
 
-const TextSearchResult: FC<TextSearchResultProps> = ({ text, tweetCount }): ReactElement => {
+const TextSearchResult: FC<TextSearchResultProps> = memo(({ text, tweetCount, recentSearch }): ReactElement => {
     const classes = useTextSearchResultStyles();
     const history = useHistory();
 
-    const handleClickSearchResult = (): void => {
+    const onClickSearchResult = (): void => {
         const isHashTag = Array.from(text)[0] === "#";
         addToLocalStorage(isHashTag ? "tags" : "text", text);
         history.push({
@@ -26,8 +28,10 @@ const TextSearchResult: FC<TextSearchResultProps> = ({ text, tweetCount }): Reac
     };
 
     return (
-        <ListItem className={classes.searchTextResult} onClick={handleClickSearchResult}>
-            <>{SearchIcon}</>
+        <ListItem className={classes.searchTextResult} onClick={onClickSearchResult}>
+            <span className={classes.searchIcon}>
+                {SearchIcon}
+            </span>
             <div>
                 <Typography variant={"h6"} component={"div"}>
                     {text}
@@ -38,8 +42,9 @@ const TextSearchResult: FC<TextSearchResultProps> = ({ text, tweetCount }): Reac
                     </Typography>
                 )}
             </div>
+            {recentSearch && <RemoveSearchResultButton stateItem={Array.from(text)[0] === "#" ? "tags" : "text"} item={text} />}
         </ListItem>
     );
-};
+});
 
 export default TextSearchResult;

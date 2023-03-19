@@ -6,7 +6,7 @@ import { SideSearchTextField } from "../SearchTextField/SideSearchTextField";
 import { CloseIcon, SearchIcon } from "../../icons";
 import { useSideSearchStyles } from "./SideSearchStyles";
 import { useDebounce } from "../../hook/useDebounce";
-import { fetchSearchByText } from "../../store/ducks/search/actionCreators";
+import { fetchSearchByText, resetSearchResult } from "../../store/ducks/search/actionCreators";
 import RecentSearchResults from "./RecentSearchResults/RecentSearchResults";
 import SearchResults from "./SearchResults/SearchResults";
 
@@ -25,10 +25,15 @@ const SideSearch: FC = (): ReactElement => {
 
     const handleClickOpenPopup = (): void => {
         setOpenPopup((prev) => !prev);
+
+        if (textToSearch) {
+            dispatch(fetchSearchByText(encodeURIComponent(text)));
+        }
     };
 
     const handleClickClosePopup = (): void => {
         setOpenPopup(false);
+        dispatch(resetSearchResult());
     };
 
     const handleChangeText = (event: ChangeEvent<HTMLTextAreaElement>): void => {
@@ -37,6 +42,7 @@ const SideSearch: FC = (): ReactElement => {
 
     const handleClearText = (event: MouseEvent<HTMLButtonElement>): void => {
         event.stopPropagation();
+        dispatch(resetSearchResult());
         setText("");
     };
 

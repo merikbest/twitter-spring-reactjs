@@ -1,4 +1,5 @@
 import {
+    DeleteRecentSearchResultActionInterface,
     FetchRecentSearchResultActionInterface,
     FetchSearchByTextActionInterface,
     ResetSearchResultActionInterface,
@@ -7,7 +8,7 @@ import {
     SetSearchLoadingStateActionInterface,
     SetSearchResultActionInterface
 } from "./contracts/actionTypes";
-import { SearchState, SearchTermsRequest } from "./contracts/state";
+import { DeleteRecentSearchPayload, SearchState, SearchTermsRequest } from "./contracts/state";
 import { LoadingStatus } from "../../../types/common";
 
 export const setSearchResult = (payload: SearchState["searchResult"]): SetSearchResultActionInterface => ({
@@ -27,6 +28,11 @@ export const setRecentSearchResult = (payload: SearchState["recentSearchResult"]
 
 export const fetchRecentSearchResult = (payload: SearchTermsRequest): FetchRecentSearchResultActionInterface => ({
     type: SearchActionsType.FETCH_RECENT_SEARCH_RESULT,
+    payload
+});
+
+export const deleteRecentSearchResult = (payload: DeleteRecentSearchPayload): DeleteRecentSearchResultActionInterface => ({
+    type: SearchActionsType.DELETE_RECENT_SEARCH_RESULT,
     payload
 });
 

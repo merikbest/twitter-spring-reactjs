@@ -1,6 +1,6 @@
 import { Action } from "redux";
 
-import { SearchState, SearchTermsRequest } from "./state";
+import { DeleteRecentSearchPayload, SearchState, SearchTermsRequest } from "./state";
 import { LoadingStatus } from "../../../../types/common";
 
 export enum SearchActionsType {
@@ -8,6 +8,7 @@ export enum SearchActionsType {
     FETCH_SEARCH_BY_TEXT = "search/FETCH_SEARCH_BY_TEXT",
     SET_RECENT_SEARCH_RESULT = "search/SET_RECENT_SEARCH_RESULT",
     FETCH_RECENT_SEARCH_RESULT = "search/FETCH_RECENT_SEARCH_RESULT",
+    DELETE_RECENT_SEARCH_RESULT = "search/DELETE_RECENT_SEARCH_RESULT",
     RESET_SEARCH_RESULT = "search/RESET_SEARCH_RESULT",
     SET_SEARCH_LOADING_STATE = "search/SET_SEARCH_LOADING_STATE",
 }
@@ -32,6 +33,11 @@ export interface FetchRecentSearchResultActionInterface extends Action<SearchAct
     payload: SearchTermsRequest;
 }
 
+export interface DeleteRecentSearchResultActionInterface extends Action<SearchActionsType> {
+    type: SearchActionsType.DELETE_RECENT_SEARCH_RESULT;
+    payload: DeleteRecentSearchPayload;
+}
+
 export interface ResetSearchResultActionInterface extends Action<SearchActionsType> {
     type: SearchActionsType.RESET_SEARCH_RESULT;
 }
@@ -44,5 +50,6 @@ export interface SetSearchLoadingStateActionInterface extends Action<SearchActio
 export type SearchActions =
     | SetSearchResultActionInterface
     | SetRecentSearchResultActionInterface
+    | DeleteRecentSearchResultActionInterface
     | ResetSearchResultActionInterface
     | SetSearchLoadingStateActionInterface;

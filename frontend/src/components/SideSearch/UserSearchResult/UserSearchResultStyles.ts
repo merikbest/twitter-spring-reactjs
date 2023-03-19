@@ -14,5 +14,9 @@ export const useUserSearchResultStyles = makeStyles((theme: Theme) => ({
             whiteSpace: "nowrap",
             overflow: "hidden"
         }
+    },
+    closeIconButton: {
+        marginLeft: "auto",
+        float: "right"
     }
 }));

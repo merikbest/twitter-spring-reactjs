@@ -9,12 +9,14 @@ import { useGlobalStyles } from "../../../util/globalClasses";
 import { CommonUserResponse } from "../../../types/user";
 import { PROFILE } from "../../../constants/path-constants";
 import { addToLocalStorage } from "../addToLocalStorage";
+import RemoveSearchResultButton from "../RemoveSearchResultButton/RemoveSearchResultButton";
 
 interface UserSearchResultProps {
     user: CommonUserResponse;
+    recentSearch?: boolean;
 }
 
-const UserSearchResult: FC<UserSearchResultProps> = ({ user }): ReactElement => {
+const UserSearchResult: FC<UserSearchResultProps> = ({ user, recentSearch }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useUserSearchResultStyles();
     const history = useHistory();
@@ -37,6 +39,7 @@ const UserSearchResult: FC<UserSearchResultProps> = ({ user }): ReactElement => 
                     @{user.username}
                 </Typography>
             </div>
+            {recentSearch && <RemoveSearchResultButton stateItem={"users"} item={user.id} />}
         </ListItem>
     );
 };

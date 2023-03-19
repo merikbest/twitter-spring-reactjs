@@ -302,7 +302,7 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         },
         search: {
             searchResult: undefined,
-            recentSearchResult: [],
+            recentSearchResult: undefined,
             searchLoadingState: loadingStatus
         }
     } as RootState;
