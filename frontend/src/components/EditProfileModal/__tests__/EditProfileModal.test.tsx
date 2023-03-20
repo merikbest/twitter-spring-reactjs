@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, Button, Dialog } from "@material-ui/core";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
+import { setImmediate } from "timers";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
 import EditProfileModal from "../EditProfileModal";
@@ -26,7 +27,7 @@ describe("EditProfileModal", () => {
         expect(wrapper.text().includes("Edit Profile")).toBe(true);
         expect(wrapper.find("img").at(0).prop("src")).toBe(mockUser.wallpaper);
         expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar);
-        expect(wrapper.find(TweeterInput).at(0).prop("value")).toBe(mockUser.username);
+        expect(wrapper.find(TweeterInput).at(0).prop("value")).toBe(mockUser.fullName);
         expect(wrapper.find(TweeterInput).at(1).prop("value")).toBe(mockUser.about);
         expect(wrapper.find(TweeterInput).at(2).prop("value")).toBe(mockUser.location);
         expect(wrapper.find(TweeterInput).at(3).prop("value")).toBe(mockUser.website);
@@ -44,7 +45,7 @@ describe("EditProfileModal", () => {
             done();
             expect(mockDispatchFn).nthCalledWith(1, {
                 payload: {
-                    username: mockUser.username,
+                    fullName: mockUser.fullName,
                     location: mockUser.location,
                     website: mockUser.website,
                     avatar: undefined,

@@ -163,7 +163,7 @@ describe("listsSaga:", () => {
         { actionType: ListsActionType.FETCH_LISTS, workSaga: fetchListsRequest },
         { actionType: ListsActionType.FETCH_USER_LISTS, workSaga: fetchUserListsRequest },
         { actionType: ListsActionType.FETCH_USER_LISTS_BY_ID, workSaga: fetchUserListsByIdRequest },
-        { actionType: ListsActionType.FETCH_USER_LISTS_BY_ID, workSaga: fetchTweetListsWhichUserInRequest },
+        { actionType: ListsActionType.FETCH_TWEET_LISTS_WHICH_USER_IN, workSaga: fetchTweetListsWhichUserInRequest },
         { actionType: ListsActionType.FETCH_PINNED_LISTS, workSaga: fetchPinnedListsRequest },
         { actionType: ListsActionType.FETCH_SIMPLE_LISTS, workSaga: fetchSimpleListsRequest },
         { actionType: ListsActionType.CREATE_LIST, workSaga: createListRequest },

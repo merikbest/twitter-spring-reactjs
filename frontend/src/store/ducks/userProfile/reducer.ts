@@ -1,13 +1,13 @@
-import produce, {Draft} from 'immer';
-import {UserProfileState} from "./contracts/state";
-import {UserProfileActions, UserProfileActionsType} from "./contracts/actionTypes";
-import {LoadingStatus} from "../../../types/common";
+import produce, { Draft } from "immer";
+import { UserProfileState } from "./contracts/state";
+import { UserProfileActions, UserProfileActionsType } from "./contracts/actionTypes";
+import { LoadingStatus } from "../../../types/common";
 
 export const initialUserProfileState: UserProfileState = {
     user: undefined,
     images: [],
     imagesLoadingState: LoadingStatus.LOADING,
-    loadingState: LoadingStatus.LOADING,
+    loadingState: LoadingStatus.LOADING
 };
 
 export const userProfileReducer = produce((draft: Draft<UserProfileState>, action: UserProfileActions) => {
@@ -68,7 +68,7 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
         case UserProfileActionsType.SET_USER_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
-            
+
         case UserProfileActionsType.RESET_IMAGES_STATE:
             draft.images = [];
             draft.imagesLoadingState = LoadingStatus.LOADING;

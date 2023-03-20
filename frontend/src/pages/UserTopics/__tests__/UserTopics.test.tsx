@@ -22,16 +22,16 @@ describe("UserTopics", () => {
         const wrapper = mountWithStore(<UserTopics />, createMockRootState());
         expect(wrapper.text().includes("Topics")).toBe(true);
         expect(wrapper.find(Spinner).exists()).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: 2,
-            type: TopicsActionsType.FETCH_FOLLOWED_TOPICS_BY_USER_ID
-        });
     });
 
     it("should render list of Topics", () => {
         const mockState = { ...mockRootState, topics: { ...mockRootState.topics, followedTopics: mockTopics } };
         const wrapper = mountWithStore(<UserTopics />, mockState);
         expect(wrapper.find(TopicItem).length).toEqual(3);
+        expect(mockDispatchFn).nthCalledWith(2, {
+            payload: 2,
+            type: TopicsActionsType.FETCH_FOLLOWED_TOPICS_BY_USER_ID
+        });
     });
 
     it("should render empty list of Topics", () => {
@@ -44,6 +44,6 @@ describe("UserTopics", () => {
     it("should unmount UserTopics", () => {
         const wrapper = mountWithStore(<UserTopics />, mockRootState);
         wrapper.unmount();
-        expect(mockDispatchFn).nthCalledWith(2, { type: TopicsActionsType.RESET_TOPICS_STATE });
+        expect(mockDispatchFn).nthCalledWith(3, { type: TopicsActionsType.RESET_TOPICS_STATE });
     });
 });

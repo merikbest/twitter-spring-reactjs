@@ -35,7 +35,7 @@ export interface UserResponse {
     fullName: string;
     username: string;
     about: string;
-    avatar: string;
+    avatar: string | null;
     isPrivateProfile: boolean;
     isMutedDirectMessages: boolean;
     isUserBlocked: boolean;

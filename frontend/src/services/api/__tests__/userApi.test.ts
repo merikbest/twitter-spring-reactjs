@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { testApiCall } from "../../../util/test-utils/api-test-helper";
 import {
+    API_NOTIFICATION,
     API_NOTIFICATION_SUBSCRIBES,
     API_NOTIFICATION_TIMELINE,
     API_NOTIFICATION_USER,
@@ -185,11 +186,11 @@ describe("UserApi", () => {
 
     describe("should fetch UserApi.getUserNotificationById", () => {
         it("[200] should get user notification by id Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_NOTIFICATION_USER}/1`, 200, [{ id: 1 }], UserApi.getUserNotificationById, 1);
+            testApiCall(mockAdapter, "onGet", `${API_NOTIFICATION}/1`, 200, [{ id: 1 }], UserApi.getUserNotificationById, 1);
         });
 
         it("[404] should user not found", () => {
-            testApiCall(mockAdapter, "onGet", `${API_NOTIFICATION_USER}/1`, 404, "Notification not found", UserApi.getUserNotificationById, 1);
+            testApiCall(mockAdapter, "onGet", `${API_NOTIFICATION}/1`, 404, "Notification not found", UserApi.getUserNotificationById, 1);
         });
     });
 

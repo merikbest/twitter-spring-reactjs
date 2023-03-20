@@ -64,7 +64,7 @@ describe("SetupProfileModal", () => {
         expect(mockOnClose).toHaveBeenCalled();
         expect(mockDispatchFn).nthCalledWith(1, {
             payload: {
-                username: mockUser?.username,
+                fullName: mockUser?.fullName,
                 location: mockUser?.location,
                 website: mockUser?.website,
                 avatar: undefined,

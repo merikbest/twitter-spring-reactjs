@@ -161,12 +161,7 @@ describe("userSaga:", () => {
     });
 
     describe("processFollowUserRequest:", () => {
-        const mockNotificationUserResponse = {
-            data: {
-                id: 1,
-                isFollower: true
-            }
-        } as AxiosResponse<NotificationUserResponse>;
+        const mockNotificationUserResponse = { data: true } as AxiosResponse<boolean>;
         const mockPayload = { userId: 1, tweetId: 1, isFollower: true };
         const worker = processFollowUserRequest(followUser({ userId: 1, tweetId: 1 }));
 
@@ -174,7 +169,7 @@ describe("userSaga:", () => {
         testSetResponse(worker, mockNotificationUserResponse, setFollowToTweetsState, mockPayload, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToUsersTweetState, mockPayload, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setUserFollowing, true, "NotificationUserResponse");
-        testSetResponse(worker, mockNotificationUserResponse, setFollowToUserProfile, true, "NotificationUserResponse");
+        testSetResponse(worker, mockNotificationUserResponse, setFollowToUserProfile, { userId: 1, isFollower: true }, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToUserDetail, true, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToUsersState, {
             userId: 1,

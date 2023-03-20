@@ -21,7 +21,6 @@ import { FollowerUserResponse } from "../../../../types/user";
 import { setFollowersSize, setUserLoadingStatus } from "../../user/actionCreators";
 import { FollowerRequestsActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
-import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
 
 describe("fetchFollowerSaga:", () => {
 

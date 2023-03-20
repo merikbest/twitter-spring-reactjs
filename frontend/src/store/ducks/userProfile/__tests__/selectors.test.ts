@@ -32,15 +32,15 @@ import {
     selectUsersIsLoading,
     selectUsersIsSuccessLoaded
 } from "../selectors";
-import {createMockRootState} from "../../../../util/test-utils/test-helper";
-import {mockMyProfile, mockProfileImages} from "../../../../util/test-utils/mock-test-data";
-import {LoadingStatus} from "../../../../types/common";
+import { createMockRootState } from "../../../../util/test-utils/test-helper";
+import { mockMyProfile, mockProfileImages } from "../../../../util/test-utils/mock-test-data";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("userProfile selectors:", () => {
     const mockState = createMockRootState();
     const mockRootState = {
         ...mockState,
-        userProfile: {...mockState.userProfile, user: mockMyProfile}
+        userProfile: { ...mockState.userProfile, user: mockMyProfile }
     };
 
     describe("selectUserProfile", () => {

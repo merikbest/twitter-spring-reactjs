@@ -1,9 +1,9 @@
-import {initialUserProfileState, userProfileReducer} from "../reducer";
-import {UserProfileActions, UserProfileActionsType} from "../contracts/actionTypes";
-import {testActionDispatch} from "../../../../util/test-utils/test-helper";
-import {UserProfileResponse} from "../../../../types/user";
-import {TweetImageResponse} from "../../../../types/tweet";
-import {LoadingStatus} from "../../../../types/common";
+import { initialUserProfileState, userProfileReducer } from "../reducer";
+import { UserProfileActions, UserProfileActionsType } from "../contracts/actionTypes";
+import { testActionDispatch } from "../../../../util/test-utils/test-helper";
+import { UserProfileResponse } from "../../../../types/user";
+import { TweetImageResponse } from "../../../../types/tweet";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("userProfileReducer:", () => {
     describe("initial state:", () => {
@@ -17,11 +17,11 @@ describe("userProfileReducer:", () => {
             UserProfileActionsType.SET_USER,
             userProfileReducer(initialUserProfileState, {
                 type: UserProfileActionsType.SET_USER,
-                payload: {id: 1} as UserProfileResponse
+                payload: { id: 1 } as UserProfileResponse
             }),
             {
                 ...initialUserProfileState,
-                user: {id: 1} as UserProfileResponse,
+                user: { id: 1 } as UserProfileResponse,
                 loadingState: LoadingStatus.SUCCESS
             }
         );
@@ -30,11 +30,11 @@ describe("userProfileReducer:", () => {
             UserProfileActionsType.SET_IMAGES,
             userProfileReducer(initialUserProfileState, {
                 type: UserProfileActionsType.SET_IMAGES,
-                payload: [{tweetId: 1, imageId: 1, src: "test"}] as TweetImageResponse[]
+                payload: [{ tweetId: 1, imageId: 1, src: "test" }] as TweetImageResponse[]
             }),
             {
                 ...initialUserProfileState,
-                images: [{tweetId: 1, imageId: 1, src: "test"}] as TweetImageResponse[],
+                images: [{ tweetId: 1, imageId: 1, src: "test" }] as TweetImageResponse[],
                 imagesLoadingState: LoadingStatus.SUCCESS
             }
         );
@@ -44,16 +44,16 @@ describe("userProfileReducer:", () => {
             userProfileReducer(
                 {
                     ...initialUserProfileState,
-                    user: {id: 1, isFollower: false, followingSize: 0} as UserProfileResponse
+                    user: { id: 1, isFollower: false, followingSize: 0 } as UserProfileResponse
                 },
                 {
                     type: UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE,
-                    payload: true
+                    payload: { userId: 1, isFollower: true }
                 }
             ),
             {
                 ...initialUserProfileState,
-                user: {id: 1, isFollower: true, followingSize: 1} as UserProfileResponse,
+                user: { id: 1, isFollower: true, followingSize: 1 } as UserProfileResponse,
                 loadingState: LoadingStatus.SUCCESS
             }
         );
@@ -63,7 +63,7 @@ describe("userProfileReducer:", () => {
             userProfileReducer(
                 {
                     ...initialUserProfileState,
-                    user: {id: 1, isSubscriber: false} as UserProfileResponse
+                    user: { id: 1, isSubscriber: false } as UserProfileResponse
                 },
                 {
                     type: UserProfileActionsType.SET_SUBSCRIBE_TO_USER_PROFILE,
@@ -72,7 +72,7 @@ describe("userProfileReducer:", () => {
             ),
             {
                 ...initialUserProfileState,
-                user: {id: 1, isSubscriber: true} as UserProfileResponse,
+                user: { id: 1, isSubscriber: true } as UserProfileResponse,
                 loadingState: LoadingStatus.SUCCESS
             }
         );
@@ -82,7 +82,7 @@ describe("userProfileReducer:", () => {
             userProfileReducer(
                 {
                     ...initialUserProfileState,
-                    user: {id: 1, isWaitingForApprove: false} as UserProfileResponse
+                    user: { id: 1, isWaitingForApprove: false } as UserProfileResponse
                 },
                 {
                     type: UserProfileActionsType.SET_FOLLOW_REQUEST_TO_USER_PROFILE,
@@ -91,7 +91,7 @@ describe("userProfileReducer:", () => {
             ),
             {
                 ...initialUserProfileState,
-                user: {id: 1, isWaitingForApprove: true} as UserProfileResponse,
+                user: { id: 1, isWaitingForApprove: true } as UserProfileResponse,
                 loadingState: LoadingStatus.SUCCESS
             }
         );
@@ -101,7 +101,7 @@ describe("userProfileReducer:", () => {
             userProfileReducer(
                 {
                     ...initialUserProfileState,
-                    user: {id: 1, isUserBlocked: false} as UserProfileResponse
+                    user: { id: 1, isUserBlocked: false } as UserProfileResponse
                 },
                 {
                     type: UserProfileActionsType.SET_BLOCKED,
@@ -110,7 +110,7 @@ describe("userProfileReducer:", () => {
             ),
             {
                 ...initialUserProfileState,
-                user: {id: 1, isUserBlocked: true} as UserProfileResponse,
+                user: { id: 1, isUserBlocked: true } as UserProfileResponse,
                 loadingState: LoadingStatus.SUCCESS
             }
         );
@@ -120,7 +120,7 @@ describe("userProfileReducer:", () => {
             userProfileReducer(
                 {
                     ...initialUserProfileState,
-                    user: {id: 1, isUserMuted: false} as UserProfileResponse
+                    user: { id: 1, isUserMuted: false } as UserProfileResponse
                 },
                 {
                     type: UserProfileActionsType.SET_MUTED,
@@ -129,7 +129,7 @@ describe("userProfileReducer:", () => {
             ),
             {
                 ...initialUserProfileState,
-                user: {id: 1, isUserMuted: true} as UserProfileResponse,
+                user: { id: 1, isUserMuted: true } as UserProfileResponse,
                 loadingState: LoadingStatus.SUCCESS
             }
         );
@@ -139,10 +139,10 @@ describe("userProfileReducer:", () => {
             userProfileReducer(
                 {
                     ...initialUserProfileState,
-                    user: {id: 1} as UserProfileResponse
+                    user: { id: 1 } as UserProfileResponse
                 },
                 {
-                    type: UserProfileActionsType.RESET_USER_PROFILE_STATE,
+                    type: UserProfileActionsType.RESET_USER_PROFILE_STATE
                 }
             ),
             {
@@ -170,10 +170,10 @@ describe("userProfileReducer:", () => {
             userProfileReducer(
                 {
                     ...initialUserProfileState,
-                    images: [{tweetId: 1, imageId: 1, src: "test"}] as TweetImageResponse[]
+                    images: [{ tweetId: 1, imageId: 1, src: "test" }] as TweetImageResponse[]
                 },
                 {
-                    type: UserProfileActionsType.RESET_IMAGES_STATE,
+                    type: UserProfileActionsType.RESET_IMAGES_STATE
                 }
             ),
             {

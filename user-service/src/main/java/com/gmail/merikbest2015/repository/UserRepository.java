@@ -57,13 +57,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     <T> Page<T> searchUsersByUsername(@Param("username") String name, Pageable pageable, Class<T> type);
 
     @Query("SELECT user FROM User user " +
-            "LEFT JOIN user.following following " +
             "WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:text,'%')) AND user.active = true " +
-            "OR UPPER(user.username) LIKE UPPER(CONCAT('%',:text,'%')) AND user.active = true " +
-            "AND (user.privateProfile = false " +
-            "   OR (user.privateProfile = true AND (following.id = :userId OR user.id = :userId)) " +
-            "   AND user.active = true)")
-    List<CommonUserProjection> searchUserByText(@Param("text") String text, @Param("userId") Long userId);
+            "OR UPPER(user.username) LIKE UPPER(CONCAT('%',:text,'%')) AND user.active = true ")
+    List<CommonUserProjection> searchUserByText(@Param("text") String text);
 
     @Modifying
     @Query("UPDATE User user SET user.profileStarted = true WHERE user.id = :userId")

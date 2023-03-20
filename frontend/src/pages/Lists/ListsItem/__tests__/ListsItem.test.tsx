@@ -62,7 +62,7 @@ describe("ListsItem", () => {
     });
 
     it("should click pin ListsItem", () => {
-        const mockPinList = { ...mockMyList, pinnedDate: null } as unknown as ListResponse;
+        const mockPinList = { ...mockMyList, isListPinned: false } as unknown as ListResponse;
         const wrapper = mountWithStore(<ListsItem list={mockPinList} listIndex={2} isMyList={true} />, mockStore);
         wrapper.find(IconButton).at(0).simulate("click");
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { ClickAwayListener, IconButton } from "@material-ui/core";
 import { createMemoryHistory } from "history";
 
@@ -25,7 +24,6 @@ describe("UserPageActions", () => {
         const { wrapper } = createWrapper();
         expect(wrapper.text().includes("View Topics")).toBe(true);
         expect(wrapper.text().includes(`Add/remove @${mockUserProfile.username} from Lists`)).toBe(true);
-        expect(wrapper.find(Link).at(1).prop("to")).toBe(`${LISTS_MEMBERSHIPS}/${mockUserProfile.id}`);
         expect(wrapper.text().includes("View Lists")).toBe(true);
         expect(wrapper.text().includes("View Moments")).toBe(true);
         expect(wrapper.text().includes("Share profile via...")).toBe(true);
@@ -79,14 +77,14 @@ describe("UserPageActions", () => {
 
     it("should redirect to Topics page", () => {
         const { wrapper, pushSpy } = createWrapper();
-        wrapper.find(Link).at(0).simulate("click", { button: 0 });
+        wrapper.find("#viewUserTopics").simulate("click");
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${PROFILE}/${mockUserProfile.id}${TOPICS}`);
     });
 
     it("should redirect to Lists page", () => {
         const { wrapper, pushSpy } = createWrapper();
-        wrapper.find(Link).at(1).simulate("click", { button: 0 });
+        wrapper.find("#viewUserLists").simulate("click");
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${LISTS_MEMBERSHIPS}/${mockUserProfile.id}`);
     });

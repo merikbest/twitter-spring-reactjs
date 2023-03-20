@@ -1,12 +1,12 @@
-import React, {ChangeEvent, FC, ReactElement, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import {Divider, Link as MuiLink, Typography} from "@material-ui/core";
+import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 
 import BlockedAccountItem from "./BlockedAccountItem/BlockedAccountItem";
 import Spinner from "../../../../../components/Spinner/Spinner";
-import {useGlobalStyles} from "../../../../../util/globalClasses";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
 import {
     fetchBlockedUsers,
     resetBlockedAndMutedUsersState
@@ -17,8 +17,11 @@ import {
     selectIsBlockedAndMutedUsersLoading,
     selectUsersPagesCount
 } from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
-import {withDocumentTitle} from "../../../../../hoc/withDocumentTitle";
-import {ADVANCED_TWITTER_BLOCK_OPTIONS, BLOCKING_AND_UNBLOCKING_ACCOUNTS} from "../../../../../constants/url-constants";
+import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
+import {
+    ADVANCED_TWITTER_BLOCK_OPTIONS,
+    BLOCKING_AND_UNBLOCKING_ACCOUNTS
+} from "../../../../../constants/url-constants";
 import InfiniteScrollWrapper from "../../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const BlockedAccounts: FC = (): ReactElement => {
@@ -54,8 +57,8 @@ const BlockedAccounts: FC = (): ReactElement => {
         >
             <div className={globalClasses.tabs}>
                 <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                    <Tab className={globalClasses.tab} label="All"/>
-                    <Tab className={globalClasses.tab} label="Imported"/>
+                    <Tab className={globalClasses.tab} label="All" />
+                    <Tab className={globalClasses.tab} label="Imported" />
                 </Tabs>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -67,9 +70,9 @@ const BlockedAccounts: FC = (): ReactElement => {
                     </MuiLink>
                 </Typography>
             </div>
-            <Divider/>
+            <Divider />
             {isBlockedUsersLoading && !blockedUsers.length ? (
-                <Spinner/>
+                <Spinner />
             ) : (
                 (isBlockedUsersLoaded && !blockedUsers.length) ? (
                     <div className={globalClasses.infoText}>
@@ -85,7 +88,7 @@ const BlockedAccounts: FC = (): ReactElement => {
                                 <>
                                     {`When you block someone, that person won’t be able to follow or message you, and you
                                         won’t see notifications from them. `}
-                                    <MuiLink href={BLOCKING_AND_UNBLOCKING_ACCOUNTS} variant="subtitle1" target="_blank" 
+                                    <MuiLink href={BLOCKING_AND_UNBLOCKING_ACCOUNTS} variant="subtitle1" target="_blank"
                                              rel="noopener"
                                     >
                                         Learn more
@@ -95,7 +98,7 @@ const BlockedAccounts: FC = (): ReactElement => {
                                 <>
                                     {`Find out how you can import a block list. `}
                                     <MuiLink href={ADVANCED_TWITTER_BLOCK_OPTIONS} variant="subtitle1" target="_blank"
-                                        rel="noopener"
+                                             rel="noopener"
                                     >
                                         Learn more
                                     </MuiLink>
@@ -106,9 +109,9 @@ const BlockedAccounts: FC = (): ReactElement => {
                 ) : (
                     <>
                         {blockedUsers.map((blockedUser) => (
-                            <BlockedAccountItem key={blockedUser.id} blockedUser={blockedUser}/>
+                            <BlockedAccountItem key={blockedUser.id} blockedUser={blockedUser} />
                         ))}
-                        {isBlockedUsersLoading && <Spinner/>}
+                        {isBlockedUsersLoading && <Spinner />}
                     </>
                 )
             )}

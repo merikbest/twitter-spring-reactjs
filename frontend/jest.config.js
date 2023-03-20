@@ -3,7 +3,7 @@ module.exports = {
     preset: "ts-jest",
     testEnvironment: "jsdom",
     transform: {
-        "^.+\\.ts?$": "ts-jest",
+        "^.+\\.ts?$": "ts-jest"
     },
     moduleFileExtensions: ["ts", "tsx", "js", "json"],
     coverageThreshold: {
@@ -12,7 +12,7 @@ module.exports = {
             functions: 80,
             lines: 80,
             statements: 80
-        },
+        }
     },
     collectCoverage: true,
     collectCoverageFrom: ["**/*.{ts,tsx}"],

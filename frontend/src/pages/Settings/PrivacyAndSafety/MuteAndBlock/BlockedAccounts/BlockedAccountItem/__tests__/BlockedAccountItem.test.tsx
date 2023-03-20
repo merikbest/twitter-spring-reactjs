@@ -28,7 +28,7 @@ describe("BlockedAccountItem", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(<BlockedAccountItem blockedUser={mockBlockedUser}/>, mockStore);
 
-        expect(wrapper.find(Avatar).prop("src")).toEqual(mockBlockedUser.avatar.src);
+        expect(wrapper.find(Avatar).prop("src")).toEqual(mockBlockedUser.avatar);
         expect(wrapper.text().includes(mockBlockedUser.fullName)).toBe(true);
         expect(wrapper.text().includes(mockBlockedUser.username)).toBe(true);
         expect(wrapper.text().includes(mockBlockedUser.about)).toBe(true);

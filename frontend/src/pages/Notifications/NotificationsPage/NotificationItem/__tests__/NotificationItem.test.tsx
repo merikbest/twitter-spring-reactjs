@@ -49,7 +49,7 @@ describe("NotificationItem", () => {
         const mockNotificationRetweet = mockNotifications[2];
         const mockRetweetUser = {
             ...mockNotificationRetweet,
-            user: { ...mockNotificationRetweet.user, avatar: { src: undefined } }
+            user: { ...mockNotificationRetweet.user, avatar: undefined }
         } as unknown as NotificationResponse;
 
         const wrapper = mountWithStore(<NotificationItem notification={mockRetweetUser} />, mockStore);

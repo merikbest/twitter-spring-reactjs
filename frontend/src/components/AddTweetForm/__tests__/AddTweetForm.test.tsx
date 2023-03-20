@@ -4,6 +4,7 @@ import MockAdapter from "axios-mock-adapter";
 import { Link } from "react-router-dom";
 import { Avatar, Button, IconButton, Popover, TextareaAutosize } from "@material-ui/core";
 import { createMemoryHistory } from "history";
+import { setImmediate } from "timers";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
 import AddTweetForm from "../AddTweetForm";
@@ -17,7 +18,7 @@ import PollInput from "../Poll/PollInput/PollInput";
 import { TweetActionType } from "../../../store/ducks/tweet/contracts/actionTypes";
 import CloseButton from "../../CloseButton/CloseButton";
 import UnsentTweetsModal from "../UnsentTweetsModal/UnsentTweetsModal";
-import { API_USER_UPLOAD_IMAGE } from "../../../constants/endpoint-constants";
+import { API_TWEETS_UPLOAD, API_USER_UPLOAD_IMAGE } from "../../../constants/endpoint-constants";
 import { LoadingStatus, ReplyType } from "../../../types/common";
 import EmojiIconButton from "../EmojiIconButton/EmojiIconButton";
 import { ActionSnackbarTypes } from "../../../store/ducks/actionSnackbar/contracts/actionTypes";
@@ -58,7 +59,7 @@ describe("AddTweetForm", () => {
         expect(wrapper.find(IconButton).at(3).prop("disabled")).toBe(true);
         expect(wrapper.find(HoverAction).at(3).prop("actionText")).toBe("Poll");
 
-        mock.onPost(API_USER_UPLOAD_IMAGE).reply(200, mockFullTweet.images[0]);
+        mock.onPost(API_TWEETS_UPLOAD).reply(200, mockFullTweet.images[0]);
 
         wrapper.find(Button).at(1).simulate("click");
 

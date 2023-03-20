@@ -36,7 +36,7 @@ describe("DirectUserItem", () => {
     it("should render selected and private user", () => {
         const wrapper = mountWithStore(
             <DirectUserItem
-                user={{ ...mockUser, avatar: "", isPrivateProfile: true }}
+                user={{ ...mockUser, avatar: null, isPrivateProfile: true }}
                 userFromChat
                 myProfileId={2}
                 selected

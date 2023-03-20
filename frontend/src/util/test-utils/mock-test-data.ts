@@ -155,14 +155,8 @@ export const mockUser = {
     "profileStarted": true,
     "backgroundColor": "DEFAULT",
     "colorScheme": "BLUE",
-    "avatar": {
-        "id": 33,
-        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-    },
-    "wallpaper": {
-        "id": 44,
-        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg"
-    },
+    "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
+    "wallpaper": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg",
     "pinnedTweetId": 102,
     "followersSize": 1,
     "followingSize": 1,
@@ -216,14 +210,8 @@ export const createMockMyProfile = (followersSize: number = 1, followingSize: nu
         "mediaTweetCount": 25,
         "likeCount": 30,
         "notificationsCount": 0,
-        "avatar": {
-            "id": 33,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-        },
-        "wallpaper": {
-            "id": 44,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
+        "wallpaper": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg",
         "pinnedTweetId": 0,
         "followersSize": followersSize,
         "followingSize": followingSize,
@@ -231,10 +219,7 @@ export const createMockMyProfile = (followersSize: number = 1, followingSize: nu
             "id": 1,
             "fullName": "Random",
             "username": "Random",
-            "avatar": {
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
-                "id": 11
-            }
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
         }],
         "isMutedDirectMessages": false,
         "isPrivateProfile": false,
@@ -261,14 +246,8 @@ export const mockMyProfile = {
     "mediaTweetCount": 25,
     "likeCount": 30,
     "notificationsCount": 0,
-    "avatar": {
-        "id": 33,
-        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-    },
-    "wallpaper": {
-        "id": 44,
-        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg"
-    },
+    "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
+    "wallpaper": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg",
     "pinnedTweetId": 0,
     "followersSize": 1,
     "followingSize": 1,
@@ -276,10 +255,7 @@ export const mockMyProfile = {
         "id": 1,
         "fullName": "Random",
         "username": "Random",
-        "avatar": {
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
-            "id": 11
-        }
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
     }],
     "isMutedDirectMessages": false,
     "isPrivateProfile": false,
@@ -306,14 +282,8 @@ export const createMockUserProfile = (followersSize: number = 1, followingSize: 
         "mediaTweetCount": 0,
         "likeCount": 1,
         "notificationsCount": 1,
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        },
-        "wallpaper": {
-            "id": 22,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
+        "wallpaper": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg",
         "pinnedTweetId": 1,
         "followersSize": followersSize,
         "followingSize": followingSize,
@@ -343,14 +313,8 @@ export const mockUserProfile = {
     "mediaTweetCount": 0,
     "likeCount": 1,
     "notificationsCount": 1,
-    "avatar": {
-        "id": 11,
-        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-    },
-    "wallpaper": {
-        "id": 22,
-        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg"
-    },
+    "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
+    "wallpaper": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/dfc8a223-45fc-43da-8b7c-f76e2c2507cd_82ecbca14eb4999212c07257f41c70e7.jpg",
     "pinnedTweetId": 1,
     "followersSize": 2,
     "followingSize": 4,
@@ -379,10 +343,7 @@ export const mockUserPrivateProfile = {
     "mediaTweetCount": 0,
     "likeCount": 0,
     "notificationsCount": 2,
-    "avatar": {
-        "id": 3,
-        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
-    },
+    "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg",
     "wallpaper": null,
     "pinnedTweetId": 0,
     "followersSize": 1,
@@ -391,10 +352,7 @@ export const mockUserPrivateProfile = {
         "id": 1,
         "fullName": "Random",
         "username": "Random",
-        "avatar": {
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
-            "id": 11
-        }
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
     }],
     "isMutedDirectMessages": true,
     "isPrivateProfile": true,
@@ -419,10 +377,7 @@ export const mockUserDetailResponse = {
     sameFollowers: [],
     username: "Random",
     about: "About",
-    avatar: {
-        id: 11,
-        src: "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-    }
+    avatar: "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
 } as unknown as UserDetailResponse;
 
 export const mockProfileImages = [
@@ -444,10 +399,7 @@ export const mockBlockedUsers = [
         "fullName": "Random",
         "username": "Random",
         "about": "about",
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
         "isPrivateProfile": false,
         "isUserBlocked": true
     },
@@ -456,10 +408,7 @@ export const mockBlockedUsers = [
         "fullName": "Kitty",
         "username": "Kitty",
         "about": "Hello twitter!",
-        "avatar": {
-            "id": 3,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg",
         "isPrivateProfile": true,
         "isUserBlocked": true
     }
@@ -471,10 +420,7 @@ export const mockMutedUsers = [
         "fullName": "Random",
         "username": "Random",
         "about": "about",
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
         "isPrivateProfile": false,
         "isUserMuted": true
     },
@@ -483,10 +429,7 @@ export const mockMutedUsers = [
         "fullName": "Kitty",
         "username": "Kitty",
         "about": "Hello twitter!",
-        "avatar": {
-            "id": 3,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg",
         "isPrivateProfile": true,
         "isUserMuted": true
     }
@@ -498,20 +441,14 @@ export const mockFollowerUserResponse = [
         "fullName": "Random",
         "username": "Random",
         "about": "about",
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        }
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
     },
     {
         "id": 3,
         "fullName": "Kitty",
         "username": "Kitty",
         "about": "Hello twitter!",
-        "avatar": {
-            "id": 3,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
-        }
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg"
     }
 ] as unknown as FollowerUserResponse[];
 
@@ -520,19 +457,13 @@ export const mockSameFollowers = [
         "id": 1,
         "fullName": "Random",
         "username": "Random",
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        }
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
     },
     {
         "id": 11,
         "fullName": "Random11",
         "username": "Random11",
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        }
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
     }
 ] as unknown as SameFollowerResponse[];
 
@@ -556,10 +487,7 @@ export const mockMediaTweets = [
             "email": "user2018@gmail.com",
             "fullName": "КотБегемот",
             "username": "Кот Бегемот",
-            "avatar": {
-                "id": 7,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/68a7b0d5-2b0c-493e-85ff-098725c52ecc_Cl5DjoUWYAAslnd.jfif"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/68a7b0d5-2b0c-493e-85ff-098725c52ecc_Cl5DjoUWYAAslnd.jfif",
             "isPrivateProfile": false,
             "isFollower": false,
             "isMyProfileBlocked": false,
@@ -600,10 +528,7 @@ export const mockMediaTweets = [
             "email": "user2019@gmail.com",
             "fullName": "JavaCat",
             "username": "JavaCat",
-            "avatar": {
-                "id": 5,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
             "isPrivateProfile": false,
             "isFollower": false,
             "isMyProfileBlocked": false,
@@ -647,10 +572,7 @@ export const mockVideoTweets = [
             "email": "user2015@gmail.com",
             "fullName": "Random",
             "username": "Random",
-            "avatar": {
-                "id": 11,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
             "isPrivateProfile": false,
             "isFollower": true,
             "isMyProfileBlocked": false,
@@ -676,7 +598,7 @@ export const mockFullList = {
     "id": 3,
     "name": "Hello World!",
     "description": "Hello from my list",
-    "pinnedDate": "2022-03-29T20:03:47",
+    "isListPinned": true,
     "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
     "wallpaper": null,
     "listOwner": {
@@ -696,17 +618,14 @@ export const mockUserFullList = {
     "id": 1,
     "name": "Random List",
     "description": "Random List Description",
-    "pinnedDate": "2021-10-16T16:36:08",
+    "isListPinned": true,
     "altWallpaper": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small",
     "wallpaper": null,
     "listOwner": {
         "id": 1,
         "fullName": "Random",
         "username": "Random",
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
         "isPrivateProfile": false
     },
     "membersSize": 2,
@@ -721,10 +640,7 @@ export const mockListsOwnerMember = [
         "fullName": "MrCat",
         "username": "Cat",
         "about": "Hello twitter!",
-        "avatar": {
-            "id": 33,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
         "isPrivateProfile": false
     },
     {
@@ -732,10 +648,7 @@ export const mockListsOwnerMember = [
         "fullName": "JavaCat",
         "username": "JavaCat",
         "about": "Hello twitter!",
-        "avatar": {
-            "id": 5,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
         "isPrivateProfile": false
     },
     {
@@ -743,10 +656,7 @@ export const mockListsOwnerMember = [
         "fullName": "JavaCat",
         "username": "JavaCat",
         "about": "Hello twitter!",
-        "avatar": {
-            "id": 5,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
         "isPrivateProfile": false,
         "isMemberInList": true
     }
@@ -756,7 +666,7 @@ export const mockPinnedLists = [
     {
         "id": 3,
         "name": "Hello World!",
-        "pinnedDate": "2022-03-29T20:03:47",
+        "isListPinned": true,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
         "wallpaper": null,
         "isPrivate": false
@@ -768,17 +678,14 @@ export const mockLists = [
         "id": 2,
         "name": "Internal",
         "description": "Some description",
-        "pinnedDate": null,
+        "isListPinned": false,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ2w_qUcAMwN3x?format=png&name=small",
         "wallpaper": null,
         "listOwner": {
             "id": 1,
             "fullName": "Random",
             "username": "Random",
-            "avatar": {
-                "id": 11,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
             "isPrivateProfile": false
         },
         "isFollower": false
@@ -787,17 +694,14 @@ export const mockLists = [
         "id": 1,
         "name": "Random List",
         "description": "Random List Description",
-        "pinnedDate": "2021-10-16T16:36:08",
+        "isListPinned": true,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small",
         "wallpaper": null,
         "listOwner": {
             "id": 1,
             "fullName": "Random",
             "username": "Random",
-            "avatar": {
-                "id": 11,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
             "isPrivateProfile": false
         },
         "isFollower": false
@@ -806,17 +710,14 @@ export const mockLists = [
         "id": 3,
         "name": "Hello World!",
         "description": "Hello from my list",
-        "pinnedDate": "2022-03-29T20:03:47",
+        "isListPinned": true,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
         "wallpaper": null,
         "listOwner": {
             "id": 2,
             "fullName": "MrCat",
             "username": "Cat",
-            "avatar": {
-                "id": 33,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
             "isPrivateProfile": false
         },
         "isFollower": false
@@ -828,17 +729,14 @@ export const mockUserLists = [
         "id": 3,
         "name": "Hello World!",
         "description": "Hello from my list",
-        "pinnedDate": "2022-03-29T20:03:47",
+        "isListPinned": true,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
         "wallpaper": null,
         "listOwner": {
             "id": 2,
             "fullName": "MrCat",
             "username": "Cat",
-            "avatar": {
-                "id": 33,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
             "isPrivateProfile": false
         },
         "isPrivate": false
@@ -876,10 +774,7 @@ export const mockFullTweet = {
         "email": "user2019@gmail.com",
         "fullName": "JavaCat",
         "username": "JavaCat",
-        "avatar": {
-            "id": 5,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
         "isPrivateProfile": false,
         "isFollower": false,
         "isMyProfileBlocked": false,
@@ -906,10 +801,7 @@ export const mockFullTweet = {
             "email": "user2019@gmail.com",
             "fullName": "JavaCat",
             "username": "JavaCat",
-            "avatar": {
-                "id": 5,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
             "isFollower": false,
             "isMyProfileBlocked": false,
             "isPrivateProfile": false,
@@ -986,10 +878,7 @@ export const mockMyFullTweet = {
         "email": "user2016@gmail.com",
         "fullName": "MrCat",
         "username": "Cat",
-        "avatar": {
-            "id": 33,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
         "isPrivateProfile": false,
         "isFollower": false,
         "isMyProfileBlocked": false,
@@ -1028,10 +917,7 @@ export const mockQuoteTweet = {
         "isUserBlocked": false,
         "isUserMuted": false,
         "username": "JavaCat",
-        "avatar": {
-            "id": 5,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
-        }
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
     }
 } as unknown as QuoteTweetResponse;
 
@@ -1047,10 +933,7 @@ export const mockChats = [
                     "id": 1,
                     "fullName": "Random",
                     "username": "Random",
-                    "avatar": {
-                        "id": 11,
-                        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-                    },
+                    "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
                     "isMutedDirectMessages": false,
                     "isUserBlocked": false,
                     "isMyProfileBlocked": false
@@ -1063,10 +946,7 @@ export const mockChats = [
                     "id": 2,
                     "fullName": "MrCat",
                     "username": "Cat",
-                    "avatar": {
-                        "id": 33,
-                        "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-                    },
+                    "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
                     "isMutedDirectMessages": false,
                     "isUserBlocked": false,
                     "isMyProfileBlocked": false
@@ -1115,10 +995,7 @@ export const mockMessages = [
                 "id": 1,
                 "fullName": "Random",
                 "username": "Random",
-                "avatar": {
-                    "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
-                    "id": 11
-                }
+                "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
             }
         },
         "chat": { "id": 1 }
@@ -1143,20 +1020,14 @@ export const mockNotifications = [
             "id": 1,
             "username": "Random",
             "fullName": null,
-            "avatar": {
-                "id": 11,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
             "isFollower": false
         },
         "userToFollow": {
             "id": 2,
             "username": "Cat",
             "fullName": null,
-            "avatar": {
-                "id": 33,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
             "isFollower": false
         },
         "tweet": null
@@ -1169,10 +1040,7 @@ export const mockNotifications = [
             "id": 1,
             "username": "Random",
             "fullName": null,
-            "avatar": {
-                "id": 11,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
             "isFollower": false
         },
         "userToFollow": null,
@@ -1186,10 +1054,7 @@ export const mockNotifications = [
             "id": 1,
             "username": "Random",
             "fullName": null,
-            "avatar": {
-                "id": 11,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
             "isFollower": false
         },
         "userToFollow": null,
@@ -1202,20 +1067,14 @@ export const mockTweetAuthors = [
         "id": 1,
         "username": "Random",
         "fullName": "Random",
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
         "isFollower": false
     },
     {
         "id": 4,
         "username": "JavaCat",
         "fullName": "JavaCat",
-        "avatar": {
-            "id": 5,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/b999d944-c9ec-4a9c-b356-db937211df5c_Ec1OBK3XsAEjVZR.png",
         "isFollower": false
     }
 ] as unknown as NotificationUserResponse[];
@@ -1229,10 +1088,7 @@ export const mockNotificationInfo = {
         "fullName": "Random",
         "username": "Random",
         "about": null,
-        "avatar": {
-            "id": 11,
-            "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg"
-        },
+        "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
         "isPrivateProfile": false,
         "isMutedDirectMessages": false,
         "isUserBlocked": false,
@@ -1259,10 +1115,7 @@ export const mockNotificationInfo = {
             "email": "user2016@gmail.com",
             "fullName": "MrCat",
             "username": "Cat",
-            "avatar": {
-                "id": 33,
-                "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg"
-            },
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
             "isPrivateProfile": false,
             "isFollower": false,
             "isMyProfileBlocked": false,

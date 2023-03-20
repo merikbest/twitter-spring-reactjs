@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export const useBlockedAccountItemStyles = makeStyles((theme) => ({
     container: {
@@ -7,20 +7,20 @@ export const useBlockedAccountItemStyles = makeStyles((theme) => ({
         borderRight: 0,
         borderRadius: 0,
         display: "flex",
-        alignItems: 'flex-start',
+        alignItems: "flex-start",
         paddingLeft: 15,
         paddingTop: 8,
         paddingBottom: 8,
-        cursor: 'pointer',
+        cursor: "pointer",
         "& .MuiPaper-outlined": {
-            minHeight: "1vh",
+            minHeight: "1vh"
         },
-        '&:hover': {
-            backgroundColor: theme.palette.secondary.main,
-        },
+        "&:hover": {
+            backgroundColor: theme.palette.secondary.main
+        }
     },
     listAvatar: {
-        marginRight: 15,
+        marginRight: 15
     },
     userInfo: {
         position: "relative",
@@ -30,5 +30,5 @@ export const useBlockedAccountItemStyles = makeStyles((theme) => ({
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between"
-    },
+    }
 }));

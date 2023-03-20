@@ -19,7 +19,7 @@ const ViewUserListsButton: FC = memo((): ReactElement => {
     };
 
     return (
-        <div onClick={onClickViewUserLists}>
+        <div id={"viewUserLists"} onClick={onClickViewUserLists}>
             <UserItemAction title={"View Lists"} icon={ListsIcon} />
         </div>
     );

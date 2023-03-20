@@ -54,10 +54,10 @@ export const UserApi = {
     async searchUsersByUsername({ username, pageNumber }: SearchByNameRequest): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_USER_SEARCH_USERNAME}/${username}`, { params: { page: pageNumber } });
     },
-    async searchByText(text: string): Promise<AxiosResponse<SearchResultResponse>> {
+    async searchByText(text: string): Promise<AxiosResponse<SearchResultResponse>> { // TODO add tests
         return await axios.get<SearchResultResponse>(`${API_USER_SEARCH_TEXT}/${text}`);
     },
-    async getSearchResults(request: SearchTermsRequest): Promise<AxiosResponse<CommonUserResponse[]>> {
+    async getSearchResults(request: SearchTermsRequest): Promise<AxiosResponse<CommonUserResponse[]>> { // TODO add tests
         return await axios.post<CommonUserResponse[]>(API_USER_SEARCH_RESULTS, request);
     },
     async getUserInfo(userId: number): Promise<AxiosResponse<UserProfileResponse>> {

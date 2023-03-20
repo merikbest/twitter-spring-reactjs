@@ -1,6 +1,7 @@
 import React from "react";
 import { createMemoryHistory } from "history";
 import { Button, Dialog } from "@material-ui/core";
+import { setImmediate } from "timers";
 
 import SetPasswordModal from "../SetPasswordModal";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";

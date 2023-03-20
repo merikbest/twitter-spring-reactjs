@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { Button, Dialog } from "@material-ui/core";
+import { setImmediate } from "timers";
 
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import EmailVerificationModal from "../EmailVerificationModal";

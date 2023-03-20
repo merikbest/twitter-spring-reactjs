@@ -4,6 +4,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { createMemoryHistory } from "history";
 import routeData from "react-router";
+import { setImmediate } from "timers";
 
 import ResetPassword from "../ResetPassword";
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";

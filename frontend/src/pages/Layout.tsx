@@ -13,7 +13,7 @@ import { EditIcon } from "../icons";
 import { DisplayProps } from "./Settings/AccessibilityDisplayLanguages/Display/Display";
 import ProfileImages from "../components/ProfileImages/ProfileImages";
 import { selectImages } from "../store/ducks/userProfile/selectors";
-import { SETTINGS } from "../constants/path-constants";
+import { ACCOUNT, SETTINGS } from "../constants/path-constants";
 import { TWITTER_ADS_WORK, TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS } from "../constants/url-constants";
 
 interface Layout {
@@ -31,7 +31,7 @@ export const Layout: FC<Layout & DisplayProps> = (
     const location = useLocation();
     const tweetImages = useSelector(selectImages);
 
-    if (location.pathname.includes("/account")) {
+    if (location.pathname.includes(ACCOUNT)) {
         return <div>{children}</div>;
     }
 

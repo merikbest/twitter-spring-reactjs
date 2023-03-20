@@ -1,4 +1,4 @@
-import {testAction} from "../../../../util/test-utils/test-helper";
+import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     fetchChatParticipant,
     fetchImages,
@@ -16,10 +16,10 @@ import {
     setUserProfile,
     setUserProfileLoadingState
 } from "../actionCreators";
-import {UserProfileActionsType} from "../contracts/actionTypes";
-import {UserProfileResponse} from "../../../../types/user";
-import {TweetImageResponse} from "../../../../types/tweet";
-import {LoadingStatus} from "../../../../types/common";
+import { UserProfileActionsType } from "../contracts/actionTypes";
+import { UserProfileResponse } from "../../../../types/user";
+import { TweetImageResponse } from "../../../../types/tweet";
+import { LoadingStatus } from "../../../../types/common";
 
 describe("userProfile actions", () => {
     testAction(setBlocked, setBlocked(true), {
@@ -32,9 +32,9 @@ describe("userProfile actions", () => {
         payload: true
     });
 
-    testAction(setFollowToUserProfile, setFollowToUserProfile(true), {
+    testAction(setFollowToUserProfile, setFollowToUserProfile({ userId: 1, isFollower: true }), {
         type: UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE,
-        payload: true
+        payload: { userId: 1, isFollower: true }
     });
 
     testAction(setSubscribeToUserProfile, setSubscribeToUserProfile(true), {
@@ -42,9 +42,9 @@ describe("userProfile actions", () => {
         payload: true
     });
 
-    testAction(setUserProfile, setUserProfile({id: 1} as UserProfileResponse), {
+    testAction(setUserProfile, setUserProfile({ id: 1 } as UserProfileResponse), {
         type: UserProfileActionsType.SET_USER,
-        payload: {id: 1} as UserProfileResponse
+        payload: { id: 1 } as UserProfileResponse
     });
 
     testAction(fetchUserProfile, fetchUserProfile(1), {
@@ -57,13 +57,13 @@ describe("userProfile actions", () => {
         payload: 1
     });
 
-    testAction(setImages, setImages([{tweetId: 1, imageId: 1, src: "test"}] as TweetImageResponse[]), {
+    testAction(setImages, setImages([{ tweetId: 1, imageId: 1, src: "test" }] as TweetImageResponse[]), {
         type: UserProfileActionsType.SET_IMAGES,
-        payload: [{tweetId: 1, imageId: 1, src: "test"}] as TweetImageResponse[]
+        payload: [{ tweetId: 1, imageId: 1, src: "test" }] as TweetImageResponse[]
     });
 
     testAction(resetImagesState, resetImagesState(), {
-        type: UserProfileActionsType.RESET_IMAGES_STATE,
+        type: UserProfileActionsType.RESET_IMAGES_STATE
     });
 
     testAction(setImagesLoadingStatus, setImagesLoadingStatus(LoadingStatus.LOADING), {
@@ -71,9 +71,9 @@ describe("userProfile actions", () => {
         payload: LoadingStatus.LOADING
     });
 
-    testAction(fetchChatParticipant, fetchChatParticipant({participantId: 1, chatId: 1}), {
+    testAction(fetchChatParticipant, fetchChatParticipant({ participantId: 1, chatId: 1 }), {
         type: UserProfileActionsType.FETCH_CHAT_PARTICIPANT,
-        payload: {participantId: 1, chatId: 1}
+        payload: { participantId: 1, chatId: 1 }
     });
 
     testAction(processSubscribe, processSubscribe(1), {
@@ -87,7 +87,7 @@ describe("userProfile actions", () => {
     });
 
     testAction(resetUserProfileState, resetUserProfileState(), {
-        type: UserProfileActionsType.RESET_USER_PROFILE_STATE,
+        type: UserProfileActionsType.RESET_USER_PROFILE_STATE
     });
 
     testAction(setUserProfileLoadingState, setUserProfileLoadingState(LoadingStatus.LOADING), {

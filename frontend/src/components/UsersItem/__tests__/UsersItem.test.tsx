@@ -90,7 +90,10 @@ describe("UsersItem", () => {
         wrapper.find(Button).simulate("click");
         expect(wrapper.find(UnfollowModal).at(0).prop("visible")).toBe(true);
         wrapper.find(UnfollowModal).at(0).find(Button).at(1).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, { payload: 4, type: UserActionsType.PROCESS_FOLLOW_REQUEST });
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: { userId: 4 },
+            type: UserActionsType.UNFOLLOW_USER
+        });
     });
 
     it("should click open and close UnfollowModal", () => {

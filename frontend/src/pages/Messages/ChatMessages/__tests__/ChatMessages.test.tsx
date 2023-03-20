@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, IconButton, Popover } from "@material-ui/core";
 import { Picker } from "emoji-mart";
+import { setImmediate } from "timers";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { mockChats, mockMessages } from "../../../../util/test-utils/mock-test-data";

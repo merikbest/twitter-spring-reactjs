@@ -1,14 +1,14 @@
-import {AxiosResponse} from "axios";
-import {call, put, takeLatest} from 'redux-saga/effects';
+import { AxiosResponse } from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
 
 import {
     FetchChatParticipantActionInterface,
     FetchImagesActionInterface,
     FetchUserProfileActionInterface,
     ProcessSubscribeActionInterface,
-    UserProfileActionsType,
+    UserProfileActionsType
 } from "./contracts/actionTypes";
-import {UserApi} from "../../../services/api/userApi";
+import { UserApi } from "../../../services/api/userApi";
 import {
     setImages,
     setImagesLoadingStatus,
@@ -16,13 +16,13 @@ import {
     setUserProfile,
     setUserProfileLoadingState
 } from "./actionCreators";
-import {ChatApi} from "../../../services/api/chatApi";
-import {UserProfileResponse} from "../../../types/user";
-import {TweetImageResponse} from "../../../types/tweet";
-import {LoadingStatus} from "../../../types/common";
-import {TweetApi} from "../../../services/api/tweetApi";
+import { ChatApi } from "../../../services/api/chatApi";
+import { UserProfileResponse } from "../../../types/user";
+import { TweetImageResponse } from "../../../types/tweet";
+import { LoadingStatus } from "../../../types/common";
+import { TweetApi } from "../../../services/api/tweetApi";
 
-export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
+export function* fetchUserRequest({ payload }: FetchUserProfileActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserProfileResponse> = yield call(UserApi.getUserInfo, payload);
@@ -32,7 +32,7 @@ export function* fetchUserRequest({payload}: FetchUserProfileActionInterface) {
     }
 }
 
-export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterface) {
+export function* processSubscribeRequest({ payload }: ProcessSubscribeActionInterface) {
     try {
         const response: AxiosResponse<boolean> = yield call(UserApi.processSubscribeToNotifications, payload);
         yield put(setSubscribeToUserProfile(response.data));
@@ -41,7 +41,7 @@ export function* processSubscribeRequest({payload}: ProcessSubscribeActionInterf
     }
 }
 
-export function* fetchChatParticipantRequest({payload}: FetchChatParticipantActionInterface) {
+export function* fetchChatParticipantRequest({ payload }: FetchChatParticipantActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<UserProfileResponse> = yield call(ChatApi.getParticipant, payload);
@@ -51,7 +51,7 @@ export function* fetchChatParticipantRequest({payload}: FetchChatParticipantActi
     }
 }
 
-export function* fetchImagesRequest({payload}: FetchImagesActionInterface) {
+export function* fetchImagesRequest({ payload }: FetchImagesActionInterface) {
     try {
         yield put(setImagesLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<TweetImageResponse[]> = yield call(TweetApi.getUserTweetImages, payload);

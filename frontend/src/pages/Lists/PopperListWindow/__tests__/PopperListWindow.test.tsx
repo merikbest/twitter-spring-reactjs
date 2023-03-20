@@ -92,7 +92,7 @@ describe("PopperListWindow", () => {
                 item: {
                     ...mockUserFullList,
                     isFollower: true,
-                    wallpaper: { src: "testwallpaper" },
+                    wallpaper: "testwallpaper",
                     listOwner: {
                         ...mockUserFullList.listOwner,
                         avatar: undefined

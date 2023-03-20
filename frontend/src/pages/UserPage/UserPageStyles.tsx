@@ -1,19 +1,19 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
 export const useUserPageStyles = makeStyles((theme: Theme) => ({
     container: {
         "& .MuiTab-root": {
             textTransform: "none !important",
             minWidth: "150px !important",
-            padding: "14px 12px !important",
-        },
+            padding: "14px 12px !important"
+        }
     },
     lockIcon: {
         "& svg": {
             marginLeft: 3,
             marginBottom: -3,
-            height: "1.4em",
-        },
+            height: "1.4em"
+        }
     },
     wallpaper: {
         height: 200,
@@ -23,8 +23,8 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             objectFit: "cover",
             position: "absolute",
             width: 601,
-            height: 200,
-        },
+            height: 200
+        }
     },
     info: {
         marginTop: -70,
@@ -34,8 +34,8 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
             backgroundColor: theme.palette.grey[600],
             width: "140px !important",
             height: "140px !important",
-            border: `4px solid ${theme.palette.background.paper}`,
-        },
+            border: `4px solid ${theme.palette.background.paper}`
+        }
     },
     infoList: {
         "& .MuiList-root": {
@@ -52,94 +52,94 @@ export const useUserPageStyles = makeStyles((theme: Theme) => ({
                 "& svg": {
                     marginRight: 4,
                     height: "1.3em",
-                    verticalAlign: "top",
-                },
-            },
-        },
+                    verticalAlign: "top"
+                }
+            }
+        }
     },
     privateProfileInfo: {
         margin: "72px auto",
         width: 360,
-        textAlign: "center",
+        textAlign: "center"
     },
     tabs: {
         "& .MuiTabs-indicator": {
             marginLeft: 50,
             maxWidth: 50,
             height: 4,
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.main
         },
         "& .MuiTab-root": {
             fontSize: 15,
-            fontWeight: 700,
-        },
+            fontWeight: 700
+        }
     },
     buttonWrapper: {
-        float: 'right',
+        float: "right",
         display: "inline-block"
     },
     outlinedButton: {
-        float: 'right',
+        float: "right",
         marginTop: 84,
-        height: 42,
+        height: 42
     },
     primaryButton: {
         "&.MuiButtonBase-root": {
             marginTop: 84,
             width: 102,
-            '&:hover': {
-                backgroundColor: theme.palette.error.dark,
-            },
-        },
+            "&:hover": {
+                backgroundColor: theme.palette.error.dark
+            }
+        }
     },
     blockButton: {
-        backgroundColor: theme.palette.error.main,
+        backgroundColor: theme.palette.error.main
     },
     description: {
-        marginTop: 12,
+        marginTop: 12
     },
     skeletonDetails: {
         "& .MuiSkeleton-root": {
             display: "inline-block",
-            marginRight: 20,
-        },
+            marginRight: 20
+        }
     },
     details: {
         lineHeight: "20px",
         "& .MuiTypography-h6": {
-            marginRight: 3,
-        },
+            marginRight: 3
+        }
     },
     unfollowLink: {
         cursor: "pointer",
         color: theme.palette.primary.main,
         "&:hover": {
-            textDecoration: "underline",
-        },
+            textDecoration: "underline"
+        }
     },
     followLink: {
         cursor: "pointer",
-        textDecoration: 'none',
+        textDecoration: "none",
         lineHeight: "20px",
         color: theme.palette.text.secondary,
         "& span": {
-            lineHeight: "20px",
+            lineHeight: "20px"
         },
         "&:hover": {
-            textDecoration: "underline",
-        },
+            textDecoration: "underline"
+        }
     },
     tweets: {
-        borderTop: "1px solid rgba(0, 0, 0, 0.1)",
+        borderTop: "1px solid rgba(0, 0, 0, 0.1)"
     },
     textWrapper: {
         margin: "40px 20px",
         textAlign: "center",
         "& .MuiTypography-subtitle1": {
-            marginTop: 12,
-        },
+            marginTop: 12
+        }
     },
     button: {
-        marginTop: 15,
-    },
+        marginTop: 15
+    }
 }));

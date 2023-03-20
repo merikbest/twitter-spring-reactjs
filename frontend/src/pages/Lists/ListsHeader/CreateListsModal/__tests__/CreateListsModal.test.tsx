@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Checkbox, Dialog } from "@material-ui/core";
+import { setImmediate } from "timers";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import CreateListsModal from "../CreateListsModal";

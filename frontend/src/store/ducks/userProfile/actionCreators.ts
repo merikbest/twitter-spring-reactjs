@@ -14,30 +14,30 @@ import {
     SetSubscribeToUserProfileActionInterface,
     SetUserProfileActionInterface,
     SetUserProfileLoadingStatusActionInterface,
-    UserProfileActionsType,
-} from './contracts/actionTypes';
-import {ChatParticipantRequest, UserProfileState} from "./contracts/state";
-import {UserProfileResponse} from "../../../types/user";
-import {FollowUsersPayload} from "../users/contracts/state";
+    UserProfileActionsType
+} from "./contracts/actionTypes";
+import { ChatParticipantRequest, UserProfileState } from "./contracts/state";
+import { UserProfileResponse } from "../../../types/user";
+import { FollowUsersPayload } from "../users/contracts/state";
 
 export const setBlocked = (payload: boolean): SetBlockedActionInterface => ({
     type: UserProfileActionsType.SET_BLOCKED,
-    payload,
+    payload
 });
 
 export const setMuted = (payload: boolean): SetMutedActionInterface => ({
     type: UserProfileActionsType.SET_MUTED,
-    payload,
+    payload
 });
 
 export const setFollowToUserProfile = (payload: FollowUsersPayload): SetFollowToUserProfileActionInterface => ({
     type: UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE,
-    payload,
+    payload
 });
 
 export const setSubscribeToUserProfile = (payload: boolean): SetSubscribeToUserProfileActionInterface => ({
     type: UserProfileActionsType.SET_SUBSCRIBE_TO_USER_PROFILE,
-    payload,
+    payload
 });
 
 export const setUserProfile = (payload: UserProfileResponse): SetUserProfileActionInterface => ({
@@ -81,7 +81,7 @@ export const processSubscribe = (payload: number): ProcessSubscribeActionInterfa
 
 export const setFollowRequestToUserProfile = (payload: boolean): SetFollowRequestToUserProfileActionInterface => ({
     type: UserProfileActionsType.SET_FOLLOW_REQUEST_TO_USER_PROFILE,
-    payload,
+    payload
 });
 
 export const resetUserProfileState = (): ResetUserProfileStateActionInterface => ({

@@ -57,10 +57,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, Object> searchByText(String text) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
         Long tweetCount = tweetClient.getTweetCountByText(text);
         List<String> tags = tagClient.getTagsByText(text);
-        List<CommonUserProjection> users = userRepository.searchUserByText(text, authUserId);
+        List<CommonUserProjection> users = userRepository.searchUserByText(text);
         return Map.of("tweetCount", tweetCount, "tags", tags, "users", users);
     }
 

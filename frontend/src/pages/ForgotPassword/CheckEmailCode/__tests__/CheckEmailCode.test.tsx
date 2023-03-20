@@ -3,6 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 import { createMemoryHistory } from "history";
 import axios from "axios";
 import { Button, Link as MuiLink } from "@material-ui/core";
+import { setImmediate } from "timers";
 
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import CheckEmailCode from "../CheckEmailCode";
