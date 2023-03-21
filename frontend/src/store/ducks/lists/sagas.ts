@@ -58,7 +58,6 @@ export function* fetchUserListsByIdRequest({ payload }: FetchUserListsByIdAction
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<ListResponse[]> = yield call(ListsApi.getUserTweetListsById, payload);
-        // yield put(setUserLists(data)); TODO <---
         yield put(setLists(response.data));
     } catch (error) {
         yield put(setLoadingState(LoadingStatus.ERROR));
@@ -69,7 +68,6 @@ export function* fetchTweetListsWhichUserInRequest() {
     try {
         yield put(setLoadingState(LoadingStatus.LOADING));
         const response: AxiosResponse<ListResponse[]> = yield call(ListsApi.getTweetListsWhichUserIn);
-        // yield put(setUserLists(data)); TODO <---
         yield put(setLists(response.data));
     } catch (error) {
         yield put(setLoadingState(LoadingStatus.ERROR));

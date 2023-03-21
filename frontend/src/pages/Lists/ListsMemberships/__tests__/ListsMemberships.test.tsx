@@ -65,7 +65,7 @@ describe("ListsMemberships", () => {
             }
         });
 
-        expect(wrapper.find(ListsItem).length).toEqual(0); // TODO fix ERROR
+        expect(wrapper.find(ListsItem).length).toEqual(1);
     });
 
     it("should unmount ListsMemberships", () => {

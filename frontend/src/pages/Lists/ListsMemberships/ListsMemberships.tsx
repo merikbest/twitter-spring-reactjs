@@ -7,7 +7,7 @@ import { fetchUserProfile } from "../../../store/ducks/userProfile/actionCreator
 import { selectUserProfile, selectUsersIsSuccessLoaded } from "../../../store/ducks/userProfile/selectors";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import { fetchUserListsById, resetListsState } from "../../../store/ducks/lists/actionCreators";
-import { selectIsLoading, selectListsItems } from "../../../store/ducks/lists/selectors";
+import { selectIsLoading, selectUserListsItems } from "../../../store/ducks/lists/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
 import { useGlobalStyles } from "../../../util/globalClasses";
@@ -25,7 +25,7 @@ const ListsMemberships: FC = (): ReactElement => {
     const myProfileId = useSelector(selectUserDataId);
     const userProfile = useSelector(selectUserProfile);
     const isUserProfileLoaded = useSelector(selectUsersIsSuccessLoaded);
-    const lists = useSelector(selectListsItems);
+    const lists = useSelector(selectUserListsItems);
     const isListsLoading = useSelector(selectIsLoading);
 
     useEffect(() => {

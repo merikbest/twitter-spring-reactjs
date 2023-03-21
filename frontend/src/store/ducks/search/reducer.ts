@@ -4,7 +4,7 @@ import { LoadingStatus } from "../../../types/common";
 import { SearchState } from "./contracts/state";
 import { SearchActions, SearchActionsType } from "./contracts/actionTypes";
 
-const initialRecentSearchResult = { users: [], text: [], tags: [] };
+export const initialRecentSearchResult = { users: [], text: [], tags: [] };
 
 export const initialSearchState: SearchState = {
     searchResult: undefined,
