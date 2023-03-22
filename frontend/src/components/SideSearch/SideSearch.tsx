@@ -64,7 +64,7 @@ const SideSearch: FC = (): ReactElement => {
                         endAdornment: (
                             text && (
                                 <InputAdornment position="end">
-                                    <IconButton color="primary" onClick={handleClearText}>
+                                    <IconButton id={"clearText"} color="primary" onClick={handleClearText}>
                                         {CloseIcon}
                                     </IconButton>
                                 </InputAdornment>

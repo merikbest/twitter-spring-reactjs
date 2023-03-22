@@ -21,6 +21,8 @@ import {
     API_USER_MUTED,
     API_USER_PIN_TWEET,
     API_USER_RELEVANT,
+    API_USER_SEARCH_RESULTS,
+    API_USER_SEARCH_TEXT,
     API_USER_SEARCH_USERNAME,
     API_USER_START,
     API_USER_SUBSCRIBE
@@ -63,6 +65,18 @@ describe("UserApi", () => {
                 username: "test",
                 pageNumber: 1
             });
+        });
+    });
+
+    describe("should fetch UserApi.searchByText", () => {
+        it("[200] should get search by text Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_USER_SEARCH_TEXT}/test`, 200, {}, UserApi.searchByText, "test");
+        });
+    });
+
+    describe("should fetch UserApi.getSearchResults", () => {
+        it("[200] should get get search results Success", () => {
+            testApiCall(mockAdapter, "onPost", API_USER_SEARCH_RESULTS, 200, mockUsers, UserApi.getSearchResults, { text: ["test"] });
         });
     });
 
