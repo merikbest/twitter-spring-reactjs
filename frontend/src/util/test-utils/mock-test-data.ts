@@ -1173,7 +1173,7 @@ export const mockTopics = [
         "id": 2,
         "topicName": "PewDiePie",
         "topicCategory": TopicCategory.GAMING,
-        "isTopicFollowed": false,
+        "isTopicFollowed": true,
         "isTopicNotInterested": false
     },
     {
@@ -1181,6 +1181,6 @@ export const mockTopics = [
         "topicName": "Funny Tweets",
         "topicCategory": TopicCategory.ONLY_ON_TWITTER,
         "isTopicFollowed": false,
-        "isTopicNotInterested": false
+        "isTopicNotInterested": true
     }
 ] as unknown as TopicResponse[];

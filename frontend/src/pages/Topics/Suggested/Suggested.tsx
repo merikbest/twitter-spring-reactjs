@@ -74,6 +74,7 @@ const Suggested = (): ReactElement => {
             </div>
             {!showMoreCategories && (
                 <Typography
+                    id={"clickShowMoreCategories"}
                     className={classes.showMoreButton}
                     variant={"body1"}
                     component={"div"}
