@@ -16,7 +16,7 @@ const ImageFooterReplyIconButton = memo((): ReactElement => {
             <IconButton size="small">
                 <>{ReplyIcon}</>
             </IconButton>
-            {repliesCount && (
+            {repliesCount !== 0 && (
                 <Typography id={"repliesCount"} variant={"body1"} component={"span"}>
                     {repliesCount}
                 </Typography>

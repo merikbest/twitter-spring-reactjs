@@ -17,7 +17,7 @@ export const useTopicButtonStyles = makeStyles<Theme, UseTopicsButtonStyles>((th
             backgroundColor: props => props.isTopicFollowed ? theme.palette.primary.main : theme.palette.background.default
         },
         "& .MuiTypography-h6": {
-            color: props => props.isTopicFollowed ? theme.palette.common.white : theme.palette.common.black,
+            color: props => props.isTopicFollowed && theme.palette.common.white,
             fontWeight: 700,
             marginRight: 12
         },

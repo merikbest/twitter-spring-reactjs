@@ -25,7 +25,7 @@ const ImageFooterLikeButton = memo((): ReactElement => {
             <IconButton onClick={handleLike} size="small">
                 {isTweetLiked ? LikeIcon : LikeOutlinedIcon}
             </IconButton>
-            {likedTweetsCount && (
+            {likedTweetsCount !== 0 && (
                 <Typography id={"likedTweetsCount"} variant={"body1"} component={"span"}>
                     {likedTweetsCount}
                 </Typography>

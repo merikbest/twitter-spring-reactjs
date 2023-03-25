@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 
 import { fetchUserDetail } from "../store/ducks/userDetail/actionCreators";
+import { HOVER_DELAY_FETCH, HOVER_DELAY_SHOW } from "../constants/common-constants";
 
 interface UseHoverUser {
     visiblePopperWindow: boolean;
@@ -19,11 +20,11 @@ export const useHoverUser = (): UseHoverUser => {
     const handleHoverPopper = (userId: number): void => {
         setDelayHandler(setTimeout(() => {
             dispatch(fetchUserDetail({ userId, cancelTokenSource }));
-        }, 666));
+        }, HOVER_DELAY_FETCH));
 
         setDelayHandler(setTimeout(() => {
             setVisiblePopperWindow(true);
-        }, 1337));
+        }, HOVER_DELAY_SHOW));
     };
 
     const handleLeavePopper = (): void => {

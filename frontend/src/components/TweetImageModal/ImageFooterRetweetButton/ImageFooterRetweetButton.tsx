@@ -25,7 +25,7 @@ const ImageFooterRetweetButton = memo((): ReactElement => {
             <IconButton onClick={handleRetweet} size="small">
                 {isTweetRetweeted ? RetweetIcon : RetweetOutlinedIcon}
             </IconButton>
-            {retweetsCount && (
+            {retweetsCount !== 0 && (
                 <Typography id={"retweetsCount"} variant={"body1"} component={"span"}>
                     {retweetsCount}
                 </Typography>

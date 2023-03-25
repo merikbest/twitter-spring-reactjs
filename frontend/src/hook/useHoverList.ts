@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 
 import { fetchListDetail } from "../store/ducks/listDetail/actionCreators";
+import { HOVER_DELAY_FETCH, HOVER_DELAY_SHOW } from "../constants/common-constants";
 
 interface UseHoverList {
     visiblePopperWindow: boolean;
@@ -19,11 +20,11 @@ export const useHoverList = (): UseHoverList => {
     const handleHoverPopper = (listId: number): void => {
         setDelayHandler(setTimeout(() => {
             dispatch(fetchListDetail({ listId, cancelTokenSource }));
-        }, 666));
+        }, HOVER_DELAY_FETCH));
 
         setDelayHandler(setTimeout(() => {
             setVisiblePopperWindow(true);
-        }, 1337));
+        }, HOVER_DELAY_SHOW));
     };
 
     const handleLeavePopper = (): void => {

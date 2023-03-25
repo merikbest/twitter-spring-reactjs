@@ -71,8 +71,10 @@ public class ListsServiceImpl implements ListsService {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         BaseListProjection list = listsRepository.getListById(listId, authUserId)
                 .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
+        if (!authUserId.equals(list.getListOwnerId())) {
+            listsServiceHelper.checkIsPrivateUserProfile(list.getListOwnerId());
+        }
         listsServiceHelper.checkUserIsBlocked(list.getListOwnerId(), authUserId);
-        listsServiceHelper.checkIsPrivateUserProfile(list.getListOwnerId());
         return list;
     }
 

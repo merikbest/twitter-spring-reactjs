@@ -202,7 +202,7 @@ const SideMenu: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
                         <div>
                             <Hidden smDown>
                                 <>
-                                    {(unreadMessagesCount) && (
+                                    {(unreadMessagesCount !== 0) && (
                                         <span className={classes.count}>
                                             {unreadMessagesCount}
                                         </span>
