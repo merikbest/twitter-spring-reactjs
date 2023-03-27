@@ -30,7 +30,7 @@ public class LikeTweetController {
     private final WebSocketClient webSocketClient;
 
     @GetMapping(LIKED_USER_USER_ID)
-    public ResponseEntity<List<TweetResponse>> getUserLikedTweets(@PathVariable Long userId,
+    public ResponseEntity<List<TweetResponse>> getUserLikedTweets(@PathVariable("userId") Long userId,
                                                                   @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = likeTweetMapper.getUserLikedTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());

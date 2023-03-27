@@ -30,7 +30,7 @@ public class BlockUserController {
     }
 
     @GetMapping(BLOCKED_USER_ID)
-    public ResponseEntity<Boolean> processBlockList(@PathVariable Long userId) {
+    public ResponseEntity<Boolean> processBlockList(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(blockUserMapper.processBlockList(userId));
     }
 }

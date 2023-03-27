@@ -93,6 +93,10 @@ public interface UserClient {
     @GetMapping(TWEET_PINNED_USER_ID)
     Long getUserPinnedTweetId(@PathVariable("userId") Long userId);
 
+    @CircuitBreaker(name = USER_SERVICE)
+    @GetMapping(USER_ID_USERNAME)
+    Long getUserIdByUsername(@PathVariable("username") String username);
+
     default HeaderResponse<UserResponse> defaultEmptyUserResponse(Throwable throwable) {
         return new HeaderResponse<>(new ArrayList<>(), HttpHeaders.EMPTY);
     }

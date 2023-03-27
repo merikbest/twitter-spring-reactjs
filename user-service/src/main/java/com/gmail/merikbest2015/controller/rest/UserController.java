@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping(USER_ID)
-    public ResponseEntity<UserProfileResponse> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<UserProfileResponse> getUserById(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(userMapper.getUserById(userId));
     }
 
@@ -48,14 +48,14 @@ public class UserController {
     }
 
     @GetMapping(SEARCH_USERNAME)
-    public ResponseEntity<List<UserResponse>> searchUsersByUsername(@PathVariable String username,
+    public ResponseEntity<List<UserResponse>> searchUsersByUsername(@PathVariable("username") String username,
                                                                     @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = userMapper.searchUsersByUsername(username, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping(SEARCH_TEXT)
-    public ResponseEntity<SearchResultResponse> searchByText(@PathVariable String text) {
+    public ResponseEntity<SearchResultResponse> searchByText(@PathVariable("text") String text) {
         return ResponseEntity.ok(userMapper.searchByText(text));
     }
 
@@ -75,17 +75,17 @@ public class UserController {
     }
 
     @GetMapping(SUBSCRIBE_USER_ID)
-    public ResponseEntity<Boolean> processSubscribeToNotifications(@PathVariable Long userId) {
+    public ResponseEntity<Boolean> processSubscribeToNotifications(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(userMapper.processSubscribeToNotifications(userId));
     }
 
     @GetMapping(PIN_TWEET_ID)
-    public ResponseEntity<Long> processPinTweet(@PathVariable Long tweetId) {
+    public ResponseEntity<Long> processPinTweet(@PathVariable("tweetId") Long tweetId) {
         return ResponseEntity.ok(userMapper.processPinTweet(tweetId));
     }
 
     @GetMapping(DETAILS_USER_ID)
-    public ResponseEntity<UserDetailResponse> getUserDetails(@PathVariable Long userId) {
+    public ResponseEntity<UserDetailResponse> getUserDetails(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(userMapper.getUserDetails(userId));
     }
 }

@@ -20,6 +20,9 @@ public interface NotificationClient {
     @PostMapping(TWEET)
     NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request);
 
+    @PostMapping(MENTION)
+    void sendTweetMentionNotification(@RequestBody NotificationRequest request);
+
     @GetMapping(TWEET_TWEET_ID)
     void sendTweetNotificationToSubscribers(@PathVariable("tweetId") Long tweetId);
 }

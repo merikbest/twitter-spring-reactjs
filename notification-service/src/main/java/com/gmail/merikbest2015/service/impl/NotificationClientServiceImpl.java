@@ -51,6 +51,11 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     }
 
     @Override
+    public NotificationResponse sendTweetMentionNotification(Notification notification) {
+        return null;
+    }
+
+    @Override
     public void sendTweetNotificationToSubscribers(Long tweetId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         List<Long> subscribersIds = userClient.getSubscribersByUserId(authUserId);

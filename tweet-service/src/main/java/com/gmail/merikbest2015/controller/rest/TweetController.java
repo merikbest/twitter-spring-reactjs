@@ -39,14 +39,14 @@ public class TweetController {
     }
 
     @GetMapping(USER_USER_ID)
-    public ResponseEntity<List<TweetUserResponse>> getUserTweets(@PathVariable Long userId,
+    public ResponseEntity<List<TweetUserResponse>> getUserTweets(@PathVariable("userId") Long userId,
                                                                  @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetUserResponse> response = tweetMapper.getUserTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping(MEDIA_USER_USER_ID)
-    public ResponseEntity<List<TweetResponse>> getUserMediaTweets(@PathVariable Long userId,
+    public ResponseEntity<List<TweetResponse>> getUserMediaTweets(@PathVariable("userId") Long userId,
                                                                   @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = tweetMapper.getUserMediaTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
@@ -59,7 +59,7 @@ public class TweetController {
     }
 
     @GetMapping(IMAGES_USER_ID)
-    public ResponseEntity<List<ProfileTweetImageResponse>> getUserTweetImages(@PathVariable Long userId) {
+    public ResponseEntity<List<ProfileTweetImageResponse>> getUserTweetImages(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(tweetMapper.getUserTweetImages(userId));
     }
 

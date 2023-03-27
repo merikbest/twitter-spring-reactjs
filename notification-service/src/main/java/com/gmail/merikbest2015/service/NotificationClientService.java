@@ -7,5 +7,7 @@ public interface NotificationClientService {
 
     NotificationResponse sendNotification(Notification notification, boolean notificationCondition);
 
+    NotificationResponse sendTweetMentionNotification(Notification notification);
+
     void sendTweetNotificationToSubscribers(Long tweetId);
 }

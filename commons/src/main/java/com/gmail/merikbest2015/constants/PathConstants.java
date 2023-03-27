@@ -37,6 +37,7 @@ public class PathConstants {
     public static final String MUTED_USER_ID = MUTED + "/{userId}";
     public static final String TOKEN = "/token";
     public static final String USER_ID = "/{userId}";
+    public static final String USER_ID_USERNAME = "/id/{username}";
     public static final String ALL = "/all";
     public static final String RELEVANT = "/relevant";
     public static final String SEARCH_USERNAME = "/items/search/{username}";
@@ -130,6 +131,7 @@ public class PathConstants {
     public static final String VIDEO = "/video";
     public static final String FOLLOWER = "/follower";
     public static final String SCHEDULE = "/schedule";
+    public static final String MENTION = "/mention";
     public static final String SEARCH_TEXT = "/search/{text}";
     public static final String SEARCH_RESULTS = "/search/results";
     public static final String REPLY_USER_ID_TWEET_ID = "/reply/{userId}/{tweetId}";

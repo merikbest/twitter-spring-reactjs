@@ -36,6 +36,15 @@ public class NotificationApiController {
         }
     }
 
+    @PostMapping(MENTION)
+    public void sendTweetMentionNotification(@RequestBody NotificationRequest request) {
+        NotificationResponse notification = notificationClientMapper.sendTweetMentionNotification(request);
+
+        if (notification.getId() != null) {
+            webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getUser().getId(), notification);
+        }
+    }
+
     @PostMapping(TWEET)
     public NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request) {
         NotificationResponse notification = notificationClientMapper.sendNotification(request);

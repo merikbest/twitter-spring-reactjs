@@ -30,7 +30,7 @@ public class BookmarkController {
     }
 
     @GetMapping(USER_BOOKMARKS_TWEET_ID)
-    public ResponseEntity<Boolean> processUserBookmarks(@PathVariable Long tweetId) {
+    public ResponseEntity<Boolean> processUserBookmarks(@PathVariable("tweetId") Long tweetId) {
         return ResponseEntity.ok(bookmarkMapper.processUserBookmarks(tweetId));
     }
 

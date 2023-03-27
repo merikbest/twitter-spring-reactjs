@@ -71,6 +71,8 @@ public interface UserClientService {
 
     UserResponse getUserResponseById(Long userId);
 
+    Long getUserIdByUsername(String username);
+
     ChatTweetUserResponse getChatTweetUser(Long userId);
 
     List<Long> validateChatUsersIds(IdsRequest request);

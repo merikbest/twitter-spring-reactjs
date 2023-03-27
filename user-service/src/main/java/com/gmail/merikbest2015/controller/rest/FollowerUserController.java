@@ -26,13 +26,15 @@ public class FollowerUserController {
     private final FollowerUserMapper followerUserMapper;
 
     @GetMapping(FOLLOWERS_USER_ID)
-    public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
+    public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable("userId") Long userId,
+                                                           @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = followerUserMapper.getFollowers(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @GetMapping(FOLLOWING_USER_ID)
-    public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable Long userId, @PageableDefault(size = 15) Pageable pageable) {
+    public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable("userId") Long userId,
+                                                           @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = followerUserMapper.getFollowing(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
@@ -44,27 +46,27 @@ public class FollowerUserController {
     }
 
     @GetMapping(FOLLOW_USER_ID)
-    public ResponseEntity<Boolean> processFollow(@PathVariable Long userId) {
+    public ResponseEntity<Boolean> processFollow(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.processFollow(userId));
     }
 
     @GetMapping(FOLLOW_OVERALL) // TODO add pagination
-    public ResponseEntity<List<UserResponse>> overallFollowers(@PathVariable Long userId) {
+    public ResponseEntity<List<UserResponse>> overallFollowers(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.overallFollowers(userId));
     }
 
     @GetMapping(FOLLOW_PRIVATE)
-    public ResponseEntity<UserProfileResponse> processFollowRequestToPrivateProfile(@PathVariable Long userId) {
+    public ResponseEntity<UserProfileResponse> processFollowRequestToPrivateProfile(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.processFollowRequestToPrivateProfile(userId));
     }
 
     @GetMapping(FOLLOW_ACCEPT)
-    public ResponseEntity<String> acceptFollowRequest(@PathVariable Long userId) {
+    public ResponseEntity<String> acceptFollowRequest(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.acceptFollowRequest(userId));
     }
 
     @GetMapping(FOLLOW_DECLINE)
-    public ResponseEntity<String> declineFollowRequest(@PathVariable Long userId) {
+    public ResponseEntity<String> declineFollowRequest(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.declineFollowRequest(userId));
     }
 }

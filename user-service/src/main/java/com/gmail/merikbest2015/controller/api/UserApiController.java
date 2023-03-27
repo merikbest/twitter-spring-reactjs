@@ -166,6 +166,11 @@ public class UserApiController {
         return userService.getUserResponseById(userId);
     }
 
+    @GetMapping(USER_ID_USERNAME) // TODO add tests
+    public Long getUserIdByUsername(@PathVariable("username") String username) {
+        return userService.getUserIdByUsername(username);
+    }
+
     @GetMapping(CHAT_USER_ID)
     public ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId) {
         return userService.getChatTweetUser(userId);

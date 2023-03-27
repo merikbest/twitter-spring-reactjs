@@ -30,7 +30,7 @@ public class MuteUserController {
     }
 
     @GetMapping(MUTED_USER_ID)
-    public ResponseEntity<Boolean> processMutedList(@PathVariable Long userId) {
+    public ResponseEntity<Boolean> processMutedList(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(muteUserMapper.processMutedList(userId));
     }
 }
