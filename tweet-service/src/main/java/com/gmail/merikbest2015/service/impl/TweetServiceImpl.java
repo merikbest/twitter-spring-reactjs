@@ -196,7 +196,6 @@ public class TweetServiceImpl implements TweetService {
         reply.setAddressedTweetId(tweetId);
         Tweet newTweet = createTweet(reply);
         tweetRepository.addReply(tweetId, newTweet.getId());
-        parseUserMentionFromText(reply.getText(), tweetId);
         return tweetRepository.getTweetById(newTweet.getId(), TweetProjection.class).get();
     }
 
@@ -238,6 +237,7 @@ public class TweetServiceImpl implements TweetService {
         } else {
             userClient.updateTweetCount(true);
         }
+        parseUserMentionFromText(tweet);
         tagClient.parseHashtagsInText(tweet.getId(), new TweetTextRequest(tweet.getText()));
         notificationClient.sendTweetNotificationToSubscribers(tweet.getId());
         return tweet;
@@ -308,9 +308,9 @@ public class TweetServiceImpl implements TweetService {
         return element == null ? "" : element.attr("content");
     }
 
-    private void parseUserMentionFromText(String text, Long tweetId) {
+    private void parseUserMentionFromText(Tweet tweet) {
         Pattern pattern = Pattern.compile("(@\\w+)\\b");
-        Matcher match = pattern.matcher(text);
+        Matcher match = pattern.matcher(tweet.getText());
         List<String> usernames = new ArrayList<>();
 
         while (match.find()) {
@@ -327,7 +327,7 @@ public class TweetServiceImpl implements TweetService {
                             .notificationType(NotificationType.MENTION)
                             .notifiedUserId(userId)
                             .userId(authUserId)
-                            .tweetId(tweetId)
+                            .tweetId(tweet.getAddressedTweetId() != null ? tweet.getAddressedTweetId() : tweet.getId())
                             .build();
                     notificationClient.sendTweetMentionNotification(request);
                 }

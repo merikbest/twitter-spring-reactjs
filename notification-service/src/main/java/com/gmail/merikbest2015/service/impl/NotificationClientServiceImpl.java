@@ -52,7 +52,9 @@ public class NotificationClientServiceImpl implements NotificationClientService 
 
     @Override
     public NotificationResponse sendTweetMentionNotification(Notification notification) {
-        return null;
+        notificationRepository.save(notification);
+        userClient.increaseNotificationsCount(notification.getNotifiedUserId());
+        return convertToNotificationResponse(notification, true);
     }
 
     @Override
