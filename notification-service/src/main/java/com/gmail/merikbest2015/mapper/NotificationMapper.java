@@ -27,6 +27,11 @@ public class NotificationMapper {
         return basicMapper.getHeaderResponse(notifications, NotificationResponse.class);
     }
 
+    public HeaderResponse<TweetResponse> getUserMentionsNotifications(Pageable pageable) {
+        Page<TweetResponse> tweets = notificationService.getUserMentionsNotifications(pageable);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
+    }
+
     public List<NotificationUserResponse> getTweetAuthorsNotifications() {
         return notificationService.getTweetAuthorsNotifications();
     }
@@ -37,6 +42,7 @@ public class NotificationMapper {
     }
 
     public HeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
-        return notificationService.getNotificationsFromTweetAuthors(pageable);
+        Page<TweetResponse> tweets = notificationService.getNotificationsFromTweetAuthors(pageable);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 }

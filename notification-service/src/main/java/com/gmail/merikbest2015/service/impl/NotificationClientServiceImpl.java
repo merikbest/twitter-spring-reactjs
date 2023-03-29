@@ -15,6 +15,7 @@ import com.gmail.merikbest2015.service.NotificationClientService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     private final BasicMapper basicMapper;
 
     @Override
+    @Transactional
     public NotificationResponse sendNotification(Notification notification, boolean notificationCondition) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
@@ -51,13 +53,14 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     }
 
     @Override
-    public NotificationResponse sendTweetMentionNotification(Notification notification) {
+    @Transactional
+    public void sendTweetMentionNotification(Notification notification) {
         notificationRepository.save(notification);
         userClient.increaseNotificationsCount(notification.getNotifiedUserId());
-        return convertToNotificationResponse(notification, true);
     }
 
     @Override
+    @Transactional
     public void sendTweetNotificationToSubscribers(Long tweetId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         List<Long> subscribersIds = userClient.getSubscribersByUserId(authUserId);

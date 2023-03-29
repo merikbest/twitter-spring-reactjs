@@ -1,14 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
-import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.ListsClient;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.repository.NotificationRepository;
@@ -17,7 +12,9 @@ import com.gmail.merikbest2015.repository.projection.NotificationProjection;
 import com.gmail.merikbest2015.service.NotificationService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -34,7 +31,6 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final UserClient userClient;
     private final TweetClient tweetClient;
-    private final ListsClient listsClient;
 
     @Override
     @Transactional
@@ -42,6 +38,15 @@ public class NotificationServiceImpl implements NotificationService {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         userClient.resetNotificationCount();
         return notificationRepository.getNotificationsByUserId(authUserId, pageable);
+    }
+
+    @Override
+    @Transactional
+    public Page<TweetResponse> getUserMentionsNotifications(Pageable pageable) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        userClient.resetNotificationCount();
+        Page<Long> tweetIds = notificationRepository.getTweetNotificationMentionIds(authUserId, pageable);
+        return getTweetResponses(tweetIds, pageable);
     }
 
     @Override
@@ -59,30 +64,18 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public HeaderResponse<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
+    public Page<TweetResponse> getNotificationsFromTweetAuthors(Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         List<Long> userIds = userClient.getUserIdsWhichUserSubscribed();
-        List<Long> tweetIds = notificationRepository.getTweetIdsByNotificationType(userIds, authUserId);
-        return tweetClient.getTweetsByIds(new IdsRequest(tweetIds), pageable);
+        Page<Long> tweetIds = notificationRepository.getTweetIdsByNotificationType(userIds, authUserId, pageable);
+        return getTweetResponses(tweetIds, pageable);
     }
 
-    public UserResponse getUserById(Long userId) {
-        return userClient.getUserById(userId);
-    }
-
-    public TweetResponse getTweetById(Long tweetId) {
-        return tweetClient.getTweetById(tweetId);
-    }
-
-    public NotificationUserResponse getNotificationUser(Long userId) {
-        return userClient.getNotificationUser(userId);
-    }
-
-    public NotificationTweetResponse getNotificationTweet(Long userId) {
-        return tweetClient.getNotificationTweet(userId);
-    }
-
-    public NotificationListResponse getNotificationList(Long listId) {
-        return listsClient.getNotificationList(listId);
+    private Page<TweetResponse> getTweetResponses(Page<Long> tweetIds, Pageable pageable) {
+        List<TweetResponse> tweets = tweetClient.getTweetsByIds(new IdsRequest(tweetIds.getContent()));
+        PagedListHolder<TweetResponse> page = new PagedListHolder<>(tweets);
+        page.setPage(pageable.getPageNumber());
+        page.setPageSize(pageable.getPageSize());
+        return new PageImpl<>(page.getPageList(), pageable, tweets.size());
     }
 }

@@ -263,7 +263,7 @@ public class TweetControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/user/mentions - Get user mentions")
     public void getUserMentions() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + USER_MENTIONS)
+        mockMvc.perform(get(UI_V1_TWEETS + MENTIONS)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))

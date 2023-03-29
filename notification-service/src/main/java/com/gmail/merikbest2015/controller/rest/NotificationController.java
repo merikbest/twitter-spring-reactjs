@@ -32,6 +32,12 @@ public class NotificationController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
+    @GetMapping(MENTIONS)
+    public ResponseEntity<List<TweetResponse>> getUserMentionsNotifications(@PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = notificationMapper.getUserMentionsNotifications(pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
+    }
+
     @GetMapping(SUBSCRIBES)
     public ResponseEntity<List<NotificationUserResponse>> getTweetAuthorsNotifications() {
         return ResponseEntity.ok(notificationMapper.getTweetAuthorsNotifications());

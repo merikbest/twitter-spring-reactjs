@@ -14,9 +14,9 @@ public interface NotificationInfoProjection {
     Long getUserId();
     Long getTweetId();
 
-    @Value("#{target.userId == null ? null : @notificationServiceImpl.getUserById(target.userId)}")
+    @Value("#{target.userId == null ? null : @notificationServiceHelper.getUserById(target.userId)}")
     UserResponse getUser();
 
-    @Value("#{target.tweetId == null ? null : @notificationServiceImpl.getTweetById(target.tweetId)}")
+    @Value("#{target.tweetId == null ? null : @notificationServiceHelper.getTweetById(target.tweetId)}")
     TweetResponse getTweet();
 }

@@ -101,7 +101,6 @@ public class PathConstants {
 
     public static final String TWEETS = "/tweets";
     public static final String API_V1_TWEETS = API_V1 + TWEETS;
-    public static final String TAG_IDS = "/tag/ids";
     public static final String USER_IDS = "/user/ids";
     public static final String TWEET_ID = "/{tweetId}";
     public static final String NOTIFICATION_TWEET_ID = "/notification/{tweetId}";
@@ -122,7 +121,6 @@ public class PathConstants {
     public static final String RETWEET_USER_ID_TWEET_ID = "/retweet/{userId}/{tweetId}";
     public static final String USER_USER_ID = "/user/{userId}";
     public static final String MEDIA_USER_USER_ID = "/media/user/{userId}";
-    public static final String USER_MENTIONS = "/user/mentions";
     public static final String IMAGES_USER_ID = "/images/{userId}";
     public static final String TWEET_ID_INFO = "/{tweetId}/info";
     public static final String TWEET_ID_REPLIES = "/{tweetId}/replies";
@@ -187,6 +185,7 @@ public class PathConstants {
     public static final String TWEET_TWEET_ID = "/tweet/{tweetId}";
     public static final String UI_V1_NOTIFICATION = UI_V1 + NOTIFICATION;
     public static final String SUBSCRIBES = "/subscribes";
+    public static final String MENTIONS = "/mentions";
     public static final String NOTIFICATION_ID = "/{notificationId}";
     public static final String TIMELINE = "/timeline";
 

@@ -22,7 +22,7 @@ public class TweetApiController {
 
     private final TweetClientMapper tweetClientMapper;
 
-    @PostMapping(TAG_IDS)
+    @PostMapping(IDS)
     public List<TweetResponse> getTweetsByIds(@RequestBody IdsRequest requests) {
         return tweetClientMapper.getTweetsByIds(requests);
     }
@@ -36,11 +36,6 @@ public class TweetApiController {
     @GetMapping(TWEET_ID)
     public TweetResponse getTweetById(@PathVariable("tweetId") Long tweetId) {
         return tweetClientMapper.getTweetById(tweetId);
-    }
-
-    @PostMapping(IDS)
-    public HeaderResponse<TweetResponse> getTweetsByIds(@RequestBody IdsRequest request, Pageable pageable) {
-        return tweetClientMapper.getTweetsByIds(request, pageable);
     }
 
     @GetMapping(NOTIFICATION_TWEET_ID)

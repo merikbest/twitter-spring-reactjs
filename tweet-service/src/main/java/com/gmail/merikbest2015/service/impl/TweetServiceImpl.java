@@ -324,10 +324,10 @@ public class TweetServiceImpl implements TweetService {
                 if (userId != null) {
                     Long authUserId = AuthUtil.getAuthenticatedUserId();
                     NotificationRequest request = NotificationRequest.builder()
+                            .tweetId(tweet.getAddressedTweetId() != null ? tweet.getAddressedTweetId() : tweet.getId())
                             .notificationType(NotificationType.MENTION)
                             .notifiedUserId(userId)
                             .userId(authUserId)
-                            .tweetId(tweet.getAddressedTweetId() != null ? tweet.getAddressedTweetId() : tweet.getId())
                             .build();
                     notificationClient.sendTweetMentionNotification(request);
                 }

@@ -52,7 +52,7 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(USER_MENTIONS)
+    @GetMapping(MENTIONS) // TODO remove
     public ResponseEntity<List<TweetResponse>> getUserMentions(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = tweetMapper.getUserMentions(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());

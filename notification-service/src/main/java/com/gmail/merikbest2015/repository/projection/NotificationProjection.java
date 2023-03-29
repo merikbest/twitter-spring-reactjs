@@ -17,15 +17,15 @@ public interface NotificationProjection {
     Long getTweetId();
     Long getListId();
 
-    @Value("#{target.userId == null ? null : @notificationServiceImpl.getNotificationUser(target.userId)}")
+    @Value("#{target.userId == null ? null : @notificationServiceHelper.getNotificationUser(target.userId)}")
     NotificationUserResponse getUser();
 
-    @Value("#{target.userToFollowId == null ? null : @notificationServiceImpl.getNotificationUser(target.userToFollowId)}")
+    @Value("#{target.userToFollowId == null ? null : @notificationServiceHelper.getNotificationUser(target.userToFollowId)}")
     NotificationUserResponse getUserToFollow();
 
-    @Value("#{target.tweetId == null ? null : @notificationServiceImpl.getNotificationTweet(target.tweetId)}")
+    @Value("#{target.tweetId == null ? null : @notificationServiceHelper.getNotificationTweet(target.tweetId)}")
     NotificationTweetResponse getTweet();
 
-    @Value("#{target.listId == null ? null : @notificationServiceImpl.getNotificationList(target.listId)}")
+    @Value("#{target.listId == null ? null : @notificationServiceHelper.getNotificationList(target.listId)}")
     NotificationListResponse getList();
 }

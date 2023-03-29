@@ -20,45 +20,39 @@ public class NotificationApiController {
 
     @PostMapping(LIST)
     public void sendListNotification(@RequestBody NotificationRequest request) {
-        NotificationResponse notification = notificationClientMapper.sendNotification(request);
-
-        if (notification.getId() != null) {
-            webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getUser().getId(), notification);
-        }
+        sendNotification(request);
     }
 
     @PostMapping(USER)
     public void sendUserNotification(@RequestBody NotificationRequest request) {
-        NotificationResponse notification = notificationClientMapper.sendNotification(request);
-
-        if (notification.getId() != null) {
-            webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getUser().getId(), notification);
-        }
-    }
-
-    @PostMapping(MENTION)
-    public void sendTweetMentionNotification(@RequestBody NotificationRequest request) {
-        NotificationResponse notification = notificationClientMapper.sendTweetMentionNotification(request);
-
-        if (notification.getId() != null) {
-            webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getUser().getId(), notification);
-        }
+        sendNotification(request);
     }
 
     @PostMapping(TWEET)
     public NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request) {
-        NotificationResponse notification = notificationClientMapper.sendNotification(request);
-
-        if (notification.getId() != null) {
-            webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getTweet().getAuthorId(), notification);
-        }
+        NotificationResponse notification = sendNotification(request);
         webSocketClient.send(TOPIC_FEED, notification);
         webSocketClient.send(TOPIC_TWEET + notification.getTweet().getId(), notification);
         return notification;
     }
 
+    @PostMapping(MENTION) // TODO add tests
+    public void sendTweetMentionNotification(@RequestBody NotificationRequest request) {
+        notificationClientMapper.sendTweetMentionNotification(request);
+        webSocketClient.send(TOPIC_MENTIONS + request.getUserId(), request.getTweetId());
+    }
+
     @GetMapping(TWEET_TWEET_ID)
     public void sendTweetNotificationToSubscribers(@PathVariable("tweetId") Long tweetId) {
         notificationClientMapper.sendTweetNotificationToSubscribers(tweetId);
+    }
+
+    private NotificationResponse sendNotification(NotificationRequest request) {
+        NotificationResponse notification = notificationClientMapper.sendNotification(request);
+
+        if (notification.getId() != null) {
+            webSocketClient.send(TOPIC_NOTIFICATIONS + notification.getTweet().getAuthorId(), notification);
+        }
+        return notification;
     }
 }

@@ -41,7 +41,7 @@ public class TweetApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/tweets/tag/ids - Get tweets by ids")
     public void getTweetsByIds() throws Exception {
-        mockMvc.perform(post(API_V1_TWEETS + TAG_IDS)
+        mockMvc.perform(post(API_V1_TWEETS + IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(40L, 41L, 42L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))

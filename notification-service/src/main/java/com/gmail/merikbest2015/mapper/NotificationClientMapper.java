@@ -19,9 +19,9 @@ public class NotificationClientMapper {
         return notificationClientService.sendNotification(notification, request.isNotificationCondition());
     }
 
-    public NotificationResponse sendTweetMentionNotification(NotificationRequest request) {
+    public void sendTweetMentionNotification(NotificationRequest request) {
         Notification notification = basicMapper.convertToResponse(request, Notification.class);
-        return notificationClientService.sendTweetMentionNotification(notification);
+        notificationClientService.sendTweetMentionNotification(notification);
     }
 
     public void sendTweetNotificationToSubscribers(Long tweetId) {
