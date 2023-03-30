@@ -23,8 +23,6 @@ public interface TweetService {
 
     Page<TweetProjection> getUserMediaTweets(Long userId, Pageable pageable);
 
-    Page<TweetProjection> getUserMentions(Pageable pageable);
-
     List<ProfileTweetImageProjection> getUserTweetImages(Long userId);
 
     TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId);

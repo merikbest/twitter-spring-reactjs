@@ -7,14 +7,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_NOTIFICATION;
 import static com.gmail.merikbest2015.constants.FeignConstants.NOTIFICATION_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.LIST;
+import static com.gmail.merikbest2015.constants.PathConstants.API_V1_NOTIFICATION;
 
 @CircuitBreaker(name = NOTIFICATION_SERVICE)
 @FeignClient(value = NOTIFICATION_SERVICE, path = API_V1_NOTIFICATION, configuration = FeignConfiguration.class)
 public interface NotificationClient {
 
-    @PostMapping(LIST)
-    void sendListNotification(@RequestBody NotificationRequest request);
+    @PostMapping
+    void sendNotification(@RequestBody NotificationRequest request);
 }

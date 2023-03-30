@@ -7,3 +7,4 @@ INSERT INTO "notification-test".public.notifications (id, date, notification_typ
 INSERT INTO "notification-test".public.notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (42, '2021-10-03 20:39:51.000000', 'TWEET', 47, 2, null, null, 2);
 INSERT INTO "notification-test".public.notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (43, '2021-10-03 20:40:51.000000', 'TWEET', 48, 2, null, null, 2);
 INSERT INTO "notification-test".public.notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (44, '2021-10-03 20:40:51.000000', 'TWEET', 45, 2, null, null, 1);
+INSERT INTO "notification-test".public.notifications (id, date, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (45, '2021-10-03 20:40:51.000000', 'MENTION', 45, 1, null, null, 2);

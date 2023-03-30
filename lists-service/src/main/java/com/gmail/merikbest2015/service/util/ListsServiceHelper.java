@@ -83,7 +83,7 @@ public class ListsServiceHelper {
                 .userId(userId)
                 .listId(listId)
                 .build();
-        notificationClient.sendListNotification(request);
+        notificationClient.sendNotification(request);
     }
 
     public void validateListNameLength(String listName) {

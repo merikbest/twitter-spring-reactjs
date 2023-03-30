@@ -67,12 +67,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     List<TweetProjection> getRepliesByTweetId(@Param("tweetId") Long tweetId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.addressedId = :userId " +
-            "AND tweet.deleted = false " +
-            "ORDER BY tweet.dateTime DESC")
-    Page<TweetProjection> getUserMentions(@Param("userId") Long userId, Pageable pageable);
-
-    @Query("SELECT tweet FROM Tweet tweet " +
             "LEFT JOIN tweet.quoteTweet quoteTweet " +
             "WHERE tweet.authorId IN :userIds " +
             "AND quoteTweet.id = :tweetId " +

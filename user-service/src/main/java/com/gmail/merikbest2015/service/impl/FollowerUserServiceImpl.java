@@ -70,7 +70,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
                         .userToFollowId(userId)
                         .notifiedUserId(userId)
                         .build();
-                notificationClient.sendUserNotification(request);
+                notificationClient.sendNotification(request);
                 follower = true;
             } else {
                 followerUserRepository.addFollowerRequest(authUserId, userId);

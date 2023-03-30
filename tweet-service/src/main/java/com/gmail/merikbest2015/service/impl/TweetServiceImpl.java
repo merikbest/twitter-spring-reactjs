@@ -107,12 +107,6 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
-    public Page<TweetProjection> getUserMentions(Pageable pageable) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return tweetRepository.getUserMentions(authUserId, pageable);
-    }
-
-    @Override
     public List<ProfileTweetImageProjection> getUserTweetImages(Long userId) {
         tweetServiceHelper.validateUserProfile(userId);
         return tweetRepository.getUserTweetImages(userId, PageRequest.of(0, 6));

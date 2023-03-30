@@ -52,12 +52,6 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(MENTIONS) // TODO remove
-    public ResponseEntity<List<TweetResponse>> getUserMentions(@PageableDefault(size = 10) Pageable pageable) {
-        HeaderResponse<TweetResponse> response = tweetMapper.getUserMentions(pageable);
-        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
-    }
-
     @GetMapping(IMAGES_USER_ID)
     public ResponseEntity<List<ProfileTweetImageResponse>> getUserTweetImages(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(tweetMapper.getUserTweetImages(userId));

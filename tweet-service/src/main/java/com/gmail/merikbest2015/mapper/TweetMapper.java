@@ -45,11 +45,6 @@ public class TweetMapper {
         return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
-    public HeaderResponse<TweetResponse> getUserMentions(Pageable pageable) {
-        Page<TweetProjection> tweets = tweetService.getUserMentions(pageable);
-        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
-    }
-
     public List<ProfileTweetImageResponse> getUserTweetImages(Long userId) {
         List<ProfileTweetImageProjection> tweets = tweetService.getUserTweetImages(userId);
         return basicMapper.convertToResponseList(tweets, ProfileTweetImageResponse.class);

@@ -40,6 +40,15 @@ public class NotificationControllerTest {
     }
 
     @Test
+    @DisplayName("[200] GET /ui/v1/notification/mentions - Get user mentions notifications")
+    public void getUserMentionsNotifications() throws Exception {
+        mockMvc.perform(get(UI_V1_NOTIFICATION + MENTIONS)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(1)));
+    }
+
+    @Test
     @DisplayName("[200] GET /ui/v1/notification/subscribes - Get tweet authors notifications")
     public void getTweetAuthorsNotifications() throws Exception {
         mockMvc.perform(get(UI_V1_NOTIFICATION + SUBSCRIBES)
