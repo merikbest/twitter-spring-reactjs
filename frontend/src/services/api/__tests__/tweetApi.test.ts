@@ -3,9 +3,11 @@ import axios from "axios";
 import { testApiCall } from "../../../util/test-utils/api-test-helper";
 import {
     API_TWEETS,
+    API_TWEETS_BOOKMARKED,
     API_TWEETS_CHANGE_REPLY,
     API_TWEETS_FOLLOWER,
     API_TWEETS_IMAGES,
+    API_TWEETS_INFO,
     API_TWEETS_LIKE,
     API_TWEETS_LIKED_USERS,
     API_TWEETS_MEDIA,
@@ -16,6 +18,7 @@ import {
     API_TWEETS_RETWEET,
     API_TWEETS_SCHEDULE,
     API_TWEETS_SEARCH,
+    API_TWEETS_UPLOAD,
     API_TWEETS_USER_BOOKMARKS,
     API_TWEETS_USER_LIKED,
     API_TWEETS_USER_MEDIA,
@@ -25,7 +28,12 @@ import {
     API_TWEETS_VIDEO,
     API_TWEETS_VOTE
 } from "../../../constants/endpoint-constants";
-import { mockFullTweet, mockTweets, mockUsers } from "../../../util/test-utils/mock-test-data";
+import {
+    mockFullTweet,
+    mockTweets,
+    mockUsers,
+    mockUserTweetAdditionalInfo
+} from "../../../util/test-utils/mock-test-data";
 import { TweetApi } from "../tweetApi";
 import { ReplyType } from "../../../types/common";
 
@@ -40,43 +48,53 @@ describe("TweetApi", () => {
 
     beforeEach(() => mockAdapter.reset());
 
-    describe("should fetch TweetApi.fetchTweets", () => {
+    describe("should fetch TweetApi.getTweets", () => {
         it("[200] should fetch tweets Success", () => {
             testApiCall(mockAdapter, "onGet", API_TWEETS, 200, mockTweets, TweetApi.getTweets, 1);
         });
     });
 
-    describe("should fetch TweetApi.fetchMediaTweets", () => {
+    describe("should fetch TweetApi.getMediaTweets", () => {
         it("[200] should fetch media tweets Success", () => {
             testApiCall(mockAdapter, "onGet", API_TWEETS_MEDIA, 200, mockTweets, TweetApi.getMediaTweets, 1);
         });
     });
 
-    describe("should fetch TweetApi.fetchTweetsWithVideo", () => {
+    describe("should fetch TweetApi.getTweetsWithVideo", () => {
         it("[200] should fetch tweets with video Success", () => {
             testApiCall(mockAdapter, "onGet", API_TWEETS_VIDEO, 200, mockTweets, TweetApi.getTweetsWithVideo, 1);
         });
     });
 
-    describe("should fetch TweetApi.fetchFollowersTweets", () => {
+    describe("should fetch TweetApi.getFollowersTweets", () => {
         it("[200] should fetch followers tweets Success", () => {
             testApiCall(mockAdapter, "onGet", API_TWEETS_FOLLOWER, 200, mockTweets, TweetApi.getFollowersTweets, 1);
         });
     });
 
-    describe("should fetch TweetApi.fetchScheduledTweets", () => {
+    describe("should fetch TweetApi.getScheduledTweets", () => {
         it("[200] should fetch scheduled tweets Success", () => {
             testApiCall(mockAdapter, "onGet", API_TWEETS_SCHEDULE, 200, mockTweets, TweetApi.getScheduledTweets, 1);
         });
     });
 
-    describe("should fetch TweetApi.fetchTweetData", () => {
+    describe("should fetch TweetApi.getTweetById", () => {
         it("[200] should fetch tweet data Success", () => {
             testApiCall(mockAdapter, "onGet", `${API_TWEETS}/1`, 200, mockFullTweet, TweetApi.getTweetById, 1);
         });
 
         it("[404] should tweet not found", () => {
             testApiCall(mockAdapter, "onGet", `${API_TWEETS}/1`, 404, tweetNotFoundError, TweetApi.getTweetById, 1);
+        });
+    });
+
+    describe("should fetch TweetApi.getTweetAdditionalInfoById", () => {
+        it("[200] should get tweet additional info by id Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_INFO(1), 200, mockUserTweetAdditionalInfo, TweetApi.getTweetAdditionalInfoById, 1);
+        });
+
+        it("[404] should tweet not found", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_INFO(1), 404, tweetNotFoundError, TweetApi.getTweetAdditionalInfoById, 1);
         });
     });
 
@@ -255,6 +273,12 @@ describe("TweetApi", () => {
         });
     });
 
+    describe("should fetch TweetApi.getIsTweetBookmarked", () => {
+        it("[200] should get is tweet bookmarked Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_BOOKMARKED(1), 200, true, TweetApi.getIsTweetBookmarked, 1);
+        });
+    });
+
     describe("should fetch TweetApi.getUserLikedTweets", () => {
         it("[200] should get user liked tweets Success", () => {
             testApiCall(mockAdapter, "onGet", API_TWEETS_USER_LIKED(1), 200, mockTweets, TweetApi.getUserLikedTweets, mockPageable);
@@ -309,4 +333,13 @@ describe("TweetApi", () => {
         });
     });
 
+    describe("should fetch TweetApi.uploadTweetImage", () => {
+        const mockImage = [{ id: 1, src: "test" }];
+        const formData = new FormData();
+        formData.append("file", "");
+
+        it("[200] should upload tweet image Success", () => {
+            testApiCall(mockAdapter, "onPost", API_TWEETS_UPLOAD, 200, mockImage, TweetApi.uploadTweetImage, formData);
+        });
+    });
 });

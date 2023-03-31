@@ -64,7 +64,7 @@ export const TweetApi = {
         return await axios.get<TweetImageResponse[]>(`${API_TWEETS_IMAGES}/${userId}`);
     },
     async getTweetAdditionalInfoById(tweetId: number): Promise<AxiosResponse<TweetAdditionalInfoResponse>> {
-        return await axios.get<TweetAdditionalInfoResponse>(API_TWEETS_INFO(tweetId)); // TODO add tests
+        return await axios.get<TweetAdditionalInfoResponse>(API_TWEETS_INFO(tweetId));
     },
     async getRepliesByTweetId(tweetId: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(API_TWEETS_REPLIES(tweetId));
@@ -119,7 +119,7 @@ export const TweetApi = {
         return await axios.get<boolean>(`${API_TWEETS_USER_BOOKMARKS}/${tweetId}`);
     },
     async getIsTweetBookmarked(tweetId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(API_TWEETS_BOOKMARKED(tweetId)); // TODO add tests
+        return await axios.get<boolean>(API_TWEETS_BOOKMARKED(tweetId));
     },
     async getUserLikedTweets({ userId, page }: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(API_TWEETS_USER_LIKED(userId), { params: { page: page } });
@@ -145,7 +145,7 @@ export const TweetApi = {
     async getRetweetedUsersByTweetId({ tweetId, pageNumber }: FetchTweetUsersPayload): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(API_TWEETS_RETWEETED_USERS(tweetId), { params: { page: pageNumber } });
     },
-    async uploadTweetImage(formData: FormData): Promise<AxiosResponse<Image>> { // TODO add tests
+    async uploadTweetImage(formData: FormData): Promise<AxiosResponse<Image>> {
         return await axios.post<Image>(API_TWEETS_UPLOAD, formData, {
             headers: {
                 "Content-Type": "multipart/form-data"

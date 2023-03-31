@@ -375,6 +375,15 @@ public class UserApiControllerTest {
     }
 
     @Test
+    @DisplayName("[200] GET /api/v1/user/id/John - Get user id by username")
+    public void getUserIdByUsername() throws Exception {
+        mockMvc.perform(get(API_V1_USER + USER_ID_USERNAME, "John")
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value(1L));
+    }
+
+    @Test
     @DisplayName("[200] GET /api/v1/user/chat/2 - Get chat tweet user")
     public void getChatTweetUser() throws Exception {
         mockMvc.perform(get(API_V1_USER + CHAT_USER_ID, TestConstants.USER_ID)

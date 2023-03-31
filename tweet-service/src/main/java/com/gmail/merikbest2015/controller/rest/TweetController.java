@@ -92,7 +92,7 @@ public class TweetController {
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @PostMapping(UPLOAD) // TODO add endpoint to frontend
+    @PostMapping(UPLOAD)
     public ResponseEntity<TweetImageResponse> uploadTweetImage(@RequestPart("file") MultipartFile file) {
         return ResponseEntity.ok(tweetMapper.uploadTweetImage(file));
     }

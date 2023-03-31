@@ -166,7 +166,7 @@ public class UserApiController {
         return userService.getUserResponseById(userId);
     }
 
-    @GetMapping(USER_ID_USERNAME) // TODO add tests
+    @GetMapping(USER_ID_USERNAME)
     public Long getUserIdByUsername(@PathVariable("username") String username) {
         return userService.getUserIdByUsername(username);
     }
