@@ -5,7 +5,7 @@ import { fetchUserDetailRequest, userDetailSaga } from "../sagas";
 import { fetchUserDetail, setUserDetail, setUserDetailLoadingState } from "../actionCreators";
 import { testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
 import { UserDetailResponse } from "../../../../types/user";
-import { UserApi } from "../../../../services/api/userApi";
+import { UserApi } from "../../../../services/api/user-service/userApi";
 import { UserDetailActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
 

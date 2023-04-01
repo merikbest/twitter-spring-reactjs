@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios";
 import { call, put, takeEvery } from "redux-saga/effects";
 
-import { TweetApi } from "../../../services/api/tweetApi";
 import {
     AddTweetToBookmarksActionInterface,
     DeleteTweetReplyActionInterface,
@@ -31,6 +30,10 @@ import { deleteUserTweet, setUpdatedBookmarkedTweetUserTweetState } from "../use
 import { setIsTweetBookmarkedAdditionalInfo } from "../tweetAdditionalInfo/actionCreators";
 import { LoadingStatus } from "../../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
+import { BookmarkApi } from "../../../services/api/tweet-service/bookmarkApi";
+import { LikeTweetApi } from "../../../services/api/tweet-service/likeTweetApi";
+import { RetweetApi } from "../../../services/api/tweet-service/retweetApi";
+import { TweetApi } from "../../../services/api/tweet-service/tweetApi";
 
 export function* fetchTweetDataRequest({ payload: tweetId }: FetchTweetDataActionInterface) {
     try {
@@ -44,7 +47,7 @@ export function* fetchTweetDataRequest({ payload: tweetId }: FetchTweetDataActio
 
 export function* addTweetToBookmarksRequest({ payload }: AddTweetToBookmarksActionInterface) {
     try {
-        const { data }: AxiosResponse<boolean> = yield call(TweetApi.addTweetToBookmarks, payload);
+        const { data }: AxiosResponse<boolean> = yield call(BookmarkApi.addTweetToBookmarks, payload);
         yield put(setBookmarkedTweet(data));
         yield put(setUpdatedBookmarkedTweetTweetsState({ tweetId: payload, isTweetBookmarked: data }));
         yield put(setUpdatedBookmarkedTweetUserTweetState({ tweetId: payload, isTweetBookmarked: data }));
@@ -76,7 +79,7 @@ export function* deleteTweetReplyRequest({ payload }: DeleteTweetReplyActionInte
 export function* fetchLikedUsersRequest({ payload }: FetchLikedUsersActionInterface) {
     try {
         yield put(setLikedUsersLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<UserResponse[]> = yield call(TweetApi.getLikedUsersByTweetId, payload);
+        const response: AxiosResponse<UserResponse[]> = yield call(LikeTweetApi.getLikedUsersByTweetId, payload);
         yield put(setLikedUsers({
             items: response.data,
             pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
@@ -89,7 +92,7 @@ export function* fetchLikedUsersRequest({ payload }: FetchLikedUsersActionInterf
 export function* fetchRetweetedUsersRequest({ payload }: FetchRetweetedUsersActionInterface) {
     try {
         yield put(setRetweetedUsersLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<UserResponse[]> = yield call(TweetApi.getRetweetedUsersByTweetId, payload);
+        const response: AxiosResponse<UserResponse[]> = yield call(RetweetApi.getRetweetedUsersByTweetId, payload);
         yield put(setRetweetedUsers({
             items: response.data,
             pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])

@@ -8,7 +8,7 @@ import {
     ProcessSubscribeActionInterface,
     UserProfileActionsType
 } from "./contracts/actionTypes";
-import { UserApi } from "../../../services/api/userApi";
+import { UserApi } from "../../../services/api/user-service/userApi";
 import {
     setImages,
     setImagesLoadingStatus,
@@ -16,16 +16,16 @@ import {
     setUserProfile,
     setUserProfileLoadingState
 } from "./actionCreators";
-import { ChatApi } from "../../../services/api/chatApi";
+import { ChatParticipantApi } from "../../../services/api/chat-service/chatParticipantApi";
 import { UserProfileResponse } from "../../../types/user";
 import { TweetImageResponse } from "../../../types/tweet";
 import { LoadingStatus } from "../../../types/common";
-import { TweetApi } from "../../../services/api/tweetApi";
+import { TweetApi } from "../../../services/api/tweet-service/tweetApi";
 
 export function* fetchUserRequest({ payload }: FetchUserProfileActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<UserProfileResponse> = yield call(UserApi.getUserInfo, payload);
+        const response: AxiosResponse<UserProfileResponse> = yield call(UserApi.getUserById, payload);
         yield put(setUserProfile(response.data));
     } catch (error) {
         yield put(setUserProfileLoadingState(LoadingStatus.ERROR));
@@ -44,7 +44,7 @@ export function* processSubscribeRequest({ payload }: ProcessSubscribeActionInte
 export function* fetchChatParticipantRequest({ payload }: FetchChatParticipantActionInterface) {
     try {
         yield put(setUserProfileLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<UserProfileResponse> = yield call(ChatApi.getParticipant, payload);
+        const response: AxiosResponse<UserProfileResponse> = yield call(ChatParticipantApi.getParticipant, payload);
         yield put(setUserProfile(response.data));
     } catch (error) {
         yield put(setUserProfileLoadingState(LoadingStatus.ERROR));

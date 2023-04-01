@@ -15,11 +15,11 @@ import {
     testSetResponse,
     testWatchSaga
 } from "../../../../util/test-utils/test-helper";
-import { UserApi } from "../../../../services/api/userApi";
 import { BlockedUserResponse, MutedUserResponse } from "../../../../types/user";
 import { BlockedAndMutedUsersActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
-import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
+import { BlockUserApi } from "../../../../services/api/user-service/blockUserApi";
+import { MuteUserApi } from "../../../../services/api/user-service/muteUserApi";
 
 describe("blockedAndMutedUsersSaga:", () => {
 
@@ -31,7 +31,7 @@ describe("blockedAndMutedUsersSaga:", () => {
         const worker = fetchBlockedUsersRequest(fetchBlockedUsers(1));
 
         testLoadingStatus(worker, setBlockedAndMutedUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getBlockList, 1);
+        testCall(worker, BlockUserApi.getBlockList, 1);
         testSetResponse(worker, mockBlockedUserResponse, setBlockedUsers, mockExpectedResponse(mockBlockedUserResponse), "BlockedUserResponse");
         testLoadingStatus(worker, setBlockedAndMutedUsersLoadingState, LoadingStatus.ERROR);
     });
@@ -44,7 +44,7 @@ describe("blockedAndMutedUsersSaga:", () => {
         const worker = fetchMutedUsersRequest(fetchMutedUsers(1));
 
         testLoadingStatus(worker, setBlockedAndMutedUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getMutedList, 1);
+        testCall(worker, MuteUserApi.getMutedList, 1);
         testSetResponse(worker, mockMutedUserResponse, setMutedUsers, mockExpectedResponse(mockMutedUserResponse), "BlockedUserResponse");
         testLoadingStatus(worker, setBlockedAndMutedUsersLoadingState, LoadingStatus.ERROR);
     });

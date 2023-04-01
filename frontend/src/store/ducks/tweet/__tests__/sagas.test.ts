@@ -30,7 +30,6 @@ import {
     setTweetLoadingState
 } from "../actionCreators";
 import { TweetResponse } from "../../../../types/tweet";
-import { TweetApi } from "../../../../services/api/tweetApi";
 import { setUpdatedBookmarkedTweetTweetsState } from "../../tweets/actionCreators";
 import { setUpdatedBookmarkedTweetUserTweetState } from "../../userTweets/actionCreators";
 import { ReplyTweet } from "../contracts/state";
@@ -44,7 +43,10 @@ import {
 } from "../../../../util/test-utils/test-helper";
 import { TweetActionType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
-import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
+import { BookmarkApi } from "../../../../services/api/tweet-service/bookmarkApi";
+import { LikeTweetApi } from "../../../../services/api/tweet-service/likeTweetApi";
+import { RetweetApi } from "../../../../services/api/tweet-service/retweetApi";
+import { TweetApi } from "../../../../services/api/tweet-service/tweetApi";
 
 describe("tweetSaga:", () => {
     const mockTweet = { data: { id: 1 } } as AxiosResponse<TweetResponse>;
@@ -65,7 +67,7 @@ describe("tweetSaga:", () => {
         const mockResponse = { data: true } as AxiosResponse<boolean>;
         const mockPayload = { tweetId: 1, isTweetBookmarked: true };
 
-        testCall(worker, TweetApi.addTweetToBookmarks, 1, true);
+        testCall(worker, BookmarkApi.addTweetToBookmarks, 1, true);
         testSetResponse(worker, mockResponse, setBookmarkedTweet, mockResponse.data, "boolean");
         testSetResponse(worker, true, setUpdatedBookmarkedTweetTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setUpdatedBookmarkedTweetUserTweetState, mockPayload, "boolean");
@@ -88,7 +90,7 @@ describe("tweetSaga:", () => {
     describe("fetchLikedUsersRequest:", () => {
         const worker = fetchLikedUsersRequest(fetchLikedUsers({ tweetId: 1, pageNumber: 2 }));
         testLoadingStatus(worker, setLikedUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getLikedUsersByTweetId, { tweetId: 1, pageNumber: 2 }, usersMock);
+        testCall(worker, LikeTweetApi.getLikedUsersByTweetId, { tweetId: 1, pageNumber: 2 }, usersMock);
         testSetResponse(worker, usersMock, setLikedUsers, mockExpectedResponse(usersMock), "UserResponse");
         testLoadingStatus(worker, setLikedUsersLoadingState, LoadingStatus.ERROR);
     });
@@ -96,7 +98,7 @@ describe("tweetSaga:", () => {
     describe("fetchRetweetedUsersRequest:", () => {
         const worker = fetchRetweetedUsersRequest(fetchRetweetedUsers({ tweetId: 1, pageNumber: 2 }));
         testLoadingStatus(worker, setRetweetedUsersLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getRetweetedUsersByTweetId, { tweetId: 1, pageNumber: 2 }, usersMock);
+        testCall(worker, RetweetApi.getRetweetedUsersByTweetId, { tweetId: 1, pageNumber: 2 }, usersMock);
         testSetResponse(worker, usersMock, setRetweetedUsers, mockExpectedResponse(usersMock), "UserResponse");
         testLoadingStatus(worker, setRetweetedUsersLoadingState, LoadingStatus.ERROR);
     });

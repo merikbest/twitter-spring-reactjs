@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import { testApiCall } from "../../../util/test-utils/api-test-helper";
+import { testApiCall } from "../../../../util/test-utils/api-test-helper";
 import {
     API_LISTS,
     API_LISTS_ADD_USER,
@@ -15,7 +15,7 @@ import {
     API_LISTS_TWEETS,
     API_LISTS_USER,
     API_LISTS_USER_CONSIST
-} from "../../../constants/endpoint-constants";
+} from "../../../../constants/endpoint-constants";
 import {
     mockFullList,
     mockLists,
@@ -24,7 +24,7 @@ import {
     mockSimpleList,
     mockTweets,
     mockUserLists
-} from "../../../util/test-utils/mock-test-data";
+} from "../../../../util/test-utils/mock-test-data";
 import { ListsApi } from "../listsApi";
 
 describe("ListsApi", () => {

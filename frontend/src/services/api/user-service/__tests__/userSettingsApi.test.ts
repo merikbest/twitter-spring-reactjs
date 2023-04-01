@@ -1,7 +1,7 @@
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
 
-import { testApiCall } from "../../../util/test-utils/api-test-helper";
+import { testApiCall } from "../../../../util/test-utils/api-test-helper";
 import {
     API_SETTINGS_UPDATE_BACKGROUND_COLOR,
     API_SETTINGS_UPDATE_COLOR_SCHEME,
@@ -13,10 +13,10 @@ import {
     API_SETTINGS_UPDATE_PHONE,
     API_SETTINGS_UPDATE_PRIVATE,
     API_SETTINGS_UPDATE_USERNAME
-} from "../../../constants/endpoint-constants";
+} from "../../../../constants/endpoint-constants";
 import { UserSettingsApi } from "../userSettingsApi";
-import { BackgroundTheme, ColorScheme } from "../../../types/common";
-import { mockUser } from "../../../util/test-utils/mock-test-data";
+import { BackgroundTheme, ColorScheme } from "../../../../types/common";
+import { mockUser } from "../../../../util/test-utils/mock-test-data";
 
 describe("UserSettingsApi", () => {
     const mockAdapter = new MockAdapter(axios);

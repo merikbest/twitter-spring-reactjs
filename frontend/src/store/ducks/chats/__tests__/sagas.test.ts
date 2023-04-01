@@ -3,7 +3,8 @@ import { AxiosResponse } from "axios";
 import { chatsSaga, createChatRequest, fetchChatsRequest, leaveFromConversationRequest } from "../sagas";
 import { createChat, leaveFromConversation, setChat, setChats, setChatsLoadingState } from "../actionCreators";
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
-import { ChatApi } from "../../../../services/api/chatApi";
+import { ChatApi } from "../../../../services/api/chat-service/chatApi";
+import { ChatParticipantApi } from "../../../../services/api/chat-service/chatParticipantApi";
 import { ChatResponse } from "../../../../types/chat";
 import { ChatsActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
@@ -34,7 +35,7 @@ describe("chatsSaga:", () => {
         const worker = leaveFromConversationRequest(leaveFromConversation({ participantId: 1, chatId: 1 }));
 
         testLoadingStatus(worker, setChatsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, ChatApi.leaveFromConversation, { participantId: 1, chatId: 1 });
+        testCall(worker, ChatParticipantApi.leaveFromConversation, { participantId: 1, chatId: 1 });
         testLoadingStatus(worker, setChatsLoadingState, LoadingStatus.ERROR);
     });
 

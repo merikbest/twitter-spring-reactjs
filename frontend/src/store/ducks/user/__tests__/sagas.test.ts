@@ -64,10 +64,9 @@ import {
 } from "../actionCreators";
 
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
-import { UserApi } from "../../../../services/api/userApi";
+import { UserApi } from "../../../../services/api/user-service/userApi";
 import { AuthUserResponse, UserProfileResponse } from "../../../../types/user";
 import { Settings, UserRequest } from "../contracts/state";
-import { AuthApi } from "../../../../services/api/authApi";
 import { AuthenticationResponse, LoginRequest } from "../../../../types/auth";
 import { RegistrationProps } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import { NotificationUserResponse } from "../../../../types/notification";
@@ -105,11 +104,16 @@ import {
     setFollowRequestToNotificationInfo,
     setFollowToNotificationInfo
 } from "../../notifications/actionCreators";
-import { ChatApi } from "../../../../services/api/chatApi";
-import { UserSettingsApi } from "../../../../services/api/userSettingsApi";
+import { ChatMessageApi } from "../../../../services/api/chat-service/chatMessageApi";
+import { UserSettingsApi } from "../../../../services/api/user-service/userSettingsApi";
 import { setBlockedUser, setMutedUser } from "../../blockedAndMutedUsers/actionCreators";
 import { UserActionsType } from "../contracts/actionTypes";
 import { BackgroundTheme, ColorScheme, LoadingStatus } from "../../../../types/common";
+import { AuthenticationApi } from "../../../../services/api/user-service/authenticationApi";
+import { BlockUserApi } from "../../../../services/api/user-service/blockUserApi";
+import { FollowerUserApi } from "../../../../services/api/user-service/followerUserApi";
+import { MuteUserApi } from "../../../../services/api/user-service/muteUserApi";
+import { RegistrationApi } from "../../../../services/api/user-service/registrationApi";
 
 describe("userSaga:", () => {
     const mockAuthUser = { id: 1, email: "test@test.test" } as AuthUserResponse;
@@ -136,7 +140,7 @@ describe("userSaga:", () => {
         const worker = fetchSignInRequest(fetchSignIn(mockLoginProps));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, AuthApi.signIn, mockLoginProps);
+        testCall(worker, AuthenticationApi.login, mockLoginProps);
         testSetResponse(worker, mockAxiosAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
@@ -146,7 +150,7 @@ describe("userSaga:", () => {
         const worker = fetchSignUpRequest(fetchSignUp(mockRegistrationProps));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, AuthApi.endRegistration, mockRegistrationProps);
+        testCall(worker, RegistrationApi.endRegistration, mockRegistrationProps);
         testSetResponse(worker, mockAxiosAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
@@ -155,7 +159,7 @@ describe("userSaga:", () => {
         const worker = fetchUserDataRequest();
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, AuthApi.getMe);
+        testCall(worker, UserApi.getUserByToken);
         testSetResponse(worker, mockAxiosAuthentication, setUserData, mockAuthUser, "AuthenticationResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
@@ -165,7 +169,7 @@ describe("userSaga:", () => {
         const mockPayload = { userId: 1, tweetId: 1, isFollower: true };
         const worker = processFollowUserRequest(followUser({ userId: 1, tweetId: 1 }));
 
-        testCall(worker, UserApi.follow, 1);
+        testCall(worker, FollowerUserApi.processFollow, 1);
         testSetResponse(worker, mockNotificationUserResponse, setFollowToTweetsState, mockPayload, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToUsersTweetState, mockPayload, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setUserFollowing, true, "NotificationUserResponse");
@@ -197,7 +201,7 @@ describe("userSaga:", () => {
         const worker = fetchPinTweetRequest(fetchPinTweet(1));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.pinTweet, 1, 1);
+        testCall(worker, UserApi.processPinTweet, 1, 1);
         testSetResponse(worker, { data: 1 }, setPinTweetId, 1, "number");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
@@ -207,7 +211,7 @@ describe("userSaga:", () => {
         const worker = fetchReadMessagesRequest(fetchReadMessages(1));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, ChatApi.readChatMessages, 1, 1);
+        testCall(worker, ChatMessageApi.readChatMessages, 1, 1);
         testSetResponse(worker, mockResponse, setReadMessage, mockResponse.data, "number");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
@@ -298,7 +302,7 @@ describe("userSaga:", () => {
         const mockPayload = { userId: 1, tweetId: 1, isUserBlocked: true };
         const worker = processUserToBlocklistRequest(processUserToBlocklist({ userId: 1, tweetId: 1 }));
 
-        testCall(worker, UserApi.processBlockList, 1, true);
+        testCall(worker, BlockUserApi.processBlockList, 1, true);
         testSetResponse(worker, { data: true }, setBlockedToTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setBlockedUsersTweetState, mockPayload, "boolean");
         testSetResponse(worker, true, setBlocked, true, "boolean");
@@ -315,7 +319,7 @@ describe("userSaga:", () => {
         const mockPayload = { userId: 1, tweetId: 1, isUserMuted: true };
         const worker = processUserToMuteListRequest(processUserToMuteList({ userId: 1, tweetId: 1 }));
 
-        testCall(worker, UserApi.processMutedList, 1, true);
+        testCall(worker, MuteUserApi.processMutedList, 1, true);
         testSetResponse(worker, { data: true }, setMutedToTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setMutedUsersTweetState, mockPayload, "boolean");
         testSetResponse(worker, true, setMuted, true, "boolean");
@@ -335,7 +339,7 @@ describe("userSaga:", () => {
         const mockPayload = { userId: 1, isWaitingForApprove: true };
         const worker = processFollowRequests(processFollowRequest(1));
 
-        testCall(worker, UserApi.processFollowRequestToPrivateProfile, 1, mockUserProfileResponse);
+        testCall(worker, FollowerUserApi.processFollowRequestToPrivateProfile, 1, mockUserProfileResponse);
         testSetResponse(worker, mockUserProfileResponse, setFollowRequestToUserProfile, true, "boolean");
         testSetResponse(worker, mockUserProfileResponse, setFollowRequestToUserDetail, true, "boolean");
         testSetResponse(worker, mockUserProfileResponse, setFollowRequestToUsers, mockPayload, "boolean");

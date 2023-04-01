@@ -42,10 +42,9 @@ import {
     UpdateUsernameActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
-import { AuthApi } from "../../../services/api/authApi";
-import { UserApi } from "../../../services/api/userApi";
-import { ChatApi } from "../../../services/api/chatApi";
-import { UserSettingsApi } from "../../../services/api/userSettingsApi";
+import { UserApi } from "../../../services/api/user-service/userApi";
+import { ChatMessageApi } from "../../../services/api/chat-service/chatMessageApi";
+import { UserSettingsApi } from "../../../services/api/user-service/userSettingsApi";
 import { AuthenticationResponse } from "../../../types/auth";
 import { AuthUserResponse, UserProfileResponse } from "../../../types/user";
 import {
@@ -88,6 +87,11 @@ import {
 } from "../tweetAdditionalInfo/actionCreators";
 import { LoadingStatus } from "../../../types/common";
 import { TOKEN } from "../../../constants/common-constants";
+import { AuthenticationApi } from "../../../services/api/user-service/authenticationApi";
+import { BlockUserApi } from "../../../services/api/user-service/blockUserApi";
+import { FollowerUserApi } from "../../../services/api/user-service/followerUserApi";
+import { MuteUserApi } from "../../../services/api/user-service/muteUserApi";
+import { RegistrationApi } from "../../../services/api/user-service/registrationApi";
 
 export function* updateUserDataRequest({ payload }: UpdateUserDataActionInterface) {
     try {
@@ -102,7 +106,7 @@ export function* updateUserDataRequest({ payload }: UpdateUserDataActionInterfac
 export function* fetchSignInRequest({ payload }: FetchSignInActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const response: AxiosResponse<AuthenticationResponse> = yield call(AuthApi.signIn, payload);
+        const response: AxiosResponse<AuthenticationResponse> = yield call(AuthenticationApi.login, payload);
         localStorage.setItem(TOKEN, response.data.token);
         yield put(setUserData(response.data.user));
         payload.history.push(HOME);
@@ -114,7 +118,7 @@ export function* fetchSignInRequest({ payload }: FetchSignInActionInterface) {
 export function* fetchSignUpRequest({ payload }: FetchSignUpActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const response: AxiosResponse<AuthenticationResponse> = yield call(AuthApi.endRegistration, payload);
+        const response: AxiosResponse<AuthenticationResponse> = yield call(RegistrationApi.endRegistration, payload);
         localStorage.setItem(TOKEN, response.data.token);
         yield put(setUserData(response.data.user));
         payload.history.push({ pathname: `${PROFILE}/${response.data.user.id}`, state: { isRegistered: true } });
@@ -126,7 +130,7 @@ export function* fetchSignUpRequest({ payload }: FetchSignUpActionInterface) {
 export function* fetchUserDataRequest() {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const response: AxiosResponse<AuthenticationResponse> = yield call(AuthApi.getMe);
+        const response: AxiosResponse<AuthenticationResponse> = yield call(UserApi.getUserByToken);
         localStorage.setItem(TOKEN, response.data.token);
         yield put(setUserData(response.data.user));
     } catch (error) {
@@ -138,7 +142,7 @@ export function* fetchUserDataRequest() {
 
 export function* processFollowUserRequest({ payload }: FollowUserActionInterface) {
     try {
-        const { data }: AxiosResponse<boolean> = yield call(UserApi.follow, payload.userId);
+        const { data }: AxiosResponse<boolean> = yield call(FollowerUserApi.processFollow, payload.userId);
         yield put(setFollowToTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isFollower: data }));
         yield put(setFollowToUsersTweetState({ userId: payload.userId, tweetId: payload.tweetId!, isFollower: data }));
         yield put(setUserFollowing(data));
@@ -167,7 +171,7 @@ export function* startUseTwitterRequest({ payload }: StartUseTwitterActionInterf
 export function* fetchPinTweetRequest({ payload }: FetchPinTweetActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const response: AxiosResponse<number> = yield call(UserApi.pinTweet, payload);
+        const response: AxiosResponse<number> = yield call(UserApi.processPinTweet, payload);
         yield put(setPinTweetId(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -177,7 +181,7 @@ export function* fetchPinTweetRequest({ payload }: FetchPinTweetActionInterface)
 export function* fetchReadMessagesRequest({ payload }: FetchReadMessagesActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: AxiosResponse<number> = yield call(ChatApi.readChatMessages, payload);
+        const item: AxiosResponse<number> = yield call(ChatMessageApi.readChatMessages, payload);
         yield put(setReadMessage(item.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
@@ -286,7 +290,7 @@ export function* updateBackgroundColorRequest({ payload }: UpdateBackgroundColor
 
 export function* processUserToBlocklistRequest({ payload }: ProcessUserToBlocklistActionInterface) {
     try {
-        const { data }: AxiosResponse<boolean> = yield call(UserApi.processBlockList, payload.userId);
+        const { data }: AxiosResponse<boolean> = yield call(BlockUserApi.processBlockList, payload.userId);
         yield put(setBlockedToTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: data }));
         yield put(setBlockedUsersTweetState({
             userId: payload.userId,
@@ -308,7 +312,7 @@ export function* processUserToBlocklistRequest({ payload }: ProcessUserToBlockli
 
 export function* processUserToMuteListRequest({ payload }: ProcessUserToMuteListActionInterface) {
     try {
-        const { data }: AxiosResponse<boolean> = yield call(UserApi.processMutedList, payload.userId);
+        const { data }: AxiosResponse<boolean> = yield call(MuteUserApi.processMutedList, payload.userId);
         yield put(setMutedToTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: data }));
         yield put(setMutedUsersTweetState({ userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: data }));
         yield put(setMuted(data));
@@ -323,7 +327,7 @@ export function* processUserToMuteListRequest({ payload }: ProcessUserToMuteList
 
 export function* processFollowRequests({ payload }: ProcessFollowRequestActionInterface) {
     try {
-        const { data }: AxiosResponse<UserProfileResponse> = yield call(UserApi.processFollowRequestToPrivateProfile, payload);
+        const { data }: AxiosResponse<UserProfileResponse> = yield call(FollowerUserApi.processFollowRequestToPrivateProfile, payload);
         yield put(setFollowRequestToUserProfile(data.isWaitingForApprove));
         yield put(setFollowRequestToUserDetail(data.isWaitingForApprove));
         yield put(setFollowRequestToUsers({ userId: data.id, isWaitingForApprove: data.isWaitingForApprove }));

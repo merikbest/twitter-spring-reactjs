@@ -15,7 +15,7 @@ import {
     ListMembersActionsType,
     ProcessUserToListMembersActionInterface
 } from "./contracts/actionTypes";
-import { ListsApi } from "../../../services/api/listsApi";
+import { ListsApi } from "../../../services/api/lists-service/listsApi";
 import { ListsOwnerMemberResponse } from "../../../types/lists";
 import { setMembersSize } from "../list/actionCreators";
 import { LoadingStatus } from "../../../types/common";

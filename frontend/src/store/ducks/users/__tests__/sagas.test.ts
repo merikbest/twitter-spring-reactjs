@@ -10,10 +10,9 @@ import {
     testWatchSaga
 } from "../../../../util/test-utils/test-helper";
 import { UserResponse } from "../../../../types/user";
-import { UserApi } from "../../../../services/api/userApi";
+import { UserApi } from "../../../../services/api/user-service/userApi";
 import { UsersActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
-import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
 
 describe("usersSaga:", () => {
     const mockUserResponse = {

@@ -10,7 +10,7 @@ import {
     setSearchLoadingState,
     setSearchResult
 } from "../actionCreators";
-import { UserApi } from "../../../../services/api/userApi";
+import { UserApi } from "../../../../services/api/user-service/userApi";
 import { CommonUserResponse, SearchResultResponse } from "../../../../types/user";
 import { SearchTermsRequest } from "../contracts/state";
 

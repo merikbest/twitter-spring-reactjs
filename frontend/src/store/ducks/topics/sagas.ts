@@ -20,7 +20,7 @@ import {
     setTopicsByCategoriesLoadingState,
     setTopicsLoadingState
 } from "./actionCreators";
-import { TopicApi } from "../../../services/api/topicApi";
+import { TopicApi } from "../../../services/api/topic-service/topicApi";
 import { TopicResponse } from "../../../types/topic";
 import { TopicsByCategoriesResponse } from "./contracts/state";
 

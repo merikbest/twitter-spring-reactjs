@@ -3,7 +3,7 @@ import { AxiosResponse } from "axios";
 
 import { FetchUsersActionInterface, UsersActionsType } from "./contracts/actionTypes";
 import { setPageableUsers, setUsers, setUsersLoadingState } from "./actionCreators";
-import { UserApi } from "../../../services/api/userApi";
+import { UserApi } from "../../../services/api/user-service/userApi";
 import { UserResponse } from "../../../types/user";
 import { LoadingStatus } from "../../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";

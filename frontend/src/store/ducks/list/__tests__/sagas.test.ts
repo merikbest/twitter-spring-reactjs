@@ -4,7 +4,7 @@ import { takeEvery } from "redux-saga/effects";
 import { deleteListRequest, editListRequest, fetchListByIdRequest, listSaga } from "../sagas";
 import { deleteList, editList, fetchListById, setList, setListLoadingState } from "../actionCreators";
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
-import { ListsApi } from "../../../../services/api/listsApi";
+import { ListsApi } from "../../../../services/api/lists-service/listsApi";
 import { BaseListResponse } from "../../../../types/lists";
 import { EditListsRequest } from "../contracts/state";
 import { ListActionType } from "../contracts/actionTypes";

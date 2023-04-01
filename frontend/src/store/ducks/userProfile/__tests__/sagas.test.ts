@@ -20,12 +20,12 @@ import {
 } from "../actionCreators";
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
 import { UserProfileResponse } from "../../../../types/user";
-import { UserApi } from "../../../../services/api/userApi";
-import { ChatApi } from "../../../../services/api/chatApi";
+import { UserApi } from "../../../../services/api/user-service/userApi";
+import { ChatParticipantApi } from "../../../../services/api/chat-service/chatParticipantApi";
 import { TweetImageResponse } from "../../../../types/tweet";
 import { UserProfileActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
-import { TweetApi } from "../../../../services/api/tweetApi";
+import { TweetApi } from "../../../../services/api/tweet-service/tweetApi";
 
 describe("userProfileSaga:", () => {
     const mockUserProfileResponse = { data: { id: 1 } } as AxiosResponse<UserProfileResponse>;
@@ -34,7 +34,7 @@ describe("userProfileSaga:", () => {
         const worker = fetchUserRequest(fetchUserProfile(1));
 
         testLoadingStatus(worker, setUserProfileLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserInfo, 1);
+        testCall(worker, UserApi.getUserById, 1);
         testSetResponse(worker, mockUserProfileResponse, setUserProfile, mockUserProfileResponse.data, "UserProfileResponse");
         testLoadingStatus(worker, setUserProfileLoadingState, LoadingStatus.ERROR);
     });
@@ -52,7 +52,7 @@ describe("userProfileSaga:", () => {
         const worker = fetchChatParticipantRequest(fetchChatParticipant({ participantId: 1, chatId: 1 }));
 
         testLoadingStatus(worker, setUserProfileLoadingState, LoadingStatus.LOADING);
-        testCall(worker, ChatApi.getParticipant, { participantId: 1, chatId: 1 });
+        testCall(worker, ChatParticipantApi.getParticipant, { participantId: 1, chatId: 1 });
         testSetResponse(worker, mockUserProfileResponse, setUserProfile, mockUserProfileResponse.data, "UserProfileResponse");
         testLoadingStatus(worker, setUserProfileLoadingState, LoadingStatus.ERROR);
     });

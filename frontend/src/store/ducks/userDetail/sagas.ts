@@ -4,7 +4,7 @@ import { AxiosResponse } from "axios";
 import { setUserDetail, setUserDetailLoadingState } from "./actionCreators";
 import { FetchUserDetailActionInterface, UserDetailActionsType } from "./contracts/actionTypes";
 import { UserDetailResponse } from "../../../types/user";
-import { UserApi } from "../../../services/api/userApi";
+import { UserApi } from "../../../services/api/user-service/userApi";
 import { LoadingStatus } from "../../../types/common";
 
 export function* fetchUserDetailRequest({ payload }: FetchUserDetailActionInterface) {

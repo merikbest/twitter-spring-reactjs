@@ -20,7 +20,7 @@ import {
     setUserToList
 } from "../actionCreators";
 import { testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
-import { ListsApi } from "../../../../services/api/listsApi";
+import { ListsApi } from "../../../../services/api/lists-service/listsApi";
 import { ListsOwnerMemberResponse } from "../../../../types/lists";
 import { setMembersSize } from "../../list/actionCreators";
 import { ListMembersActionsType } from "../contracts/actionTypes";

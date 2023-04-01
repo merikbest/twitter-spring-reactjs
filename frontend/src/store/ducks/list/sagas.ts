@@ -8,7 +8,7 @@ import {
     ListActionType
 } from "./contracts/actionTypes";
 import { setList, setListLoadingState } from "./actionCreators";
-import { ListsApi } from "../../../services/api/listsApi";
+import { ListsApi } from "../../../services/api/lists-service/listsApi";
 import { BaseListResponse } from "../../../types/lists";
 import { LoadingStatus } from "../../../types/common";
 

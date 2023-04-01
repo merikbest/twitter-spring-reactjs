@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../types/common";
-import { TopicApi } from "../../../../services/api/topicApi";
+import { TopicApi } from "../../../../services/api/topic-service/topicApi";
 import {
     fetchFollowedTopicsByUserId,
     fetchTopicsByCategories,

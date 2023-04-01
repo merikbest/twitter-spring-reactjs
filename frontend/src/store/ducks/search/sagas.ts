@@ -9,7 +9,7 @@ import {
 import { LoadingStatus } from "../../../types/common";
 import { setRecentSearchResult, setSearchLoadingState, setSearchResult } from "./actionCreators";
 import { CommonUserResponse, SearchResultResponse } from "../../../types/user";
-import { UserApi } from "../../../services/api/userApi";
+import { UserApi } from "../../../services/api/user-service/userApi";
 import { SEARCH_TERMS } from "../../../constants/common-constants";
 
 export function* fetchSearchByTextRequest({ payload }: FetchSearchByTextActionInterface) {

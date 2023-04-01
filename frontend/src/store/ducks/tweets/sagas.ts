@@ -2,7 +2,6 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 
 import { deleteTweet, setPageableTweets, setTweets, setTweetsLoadingState } from "./actionCreators";
-import { TweetApi } from "../../../services/api/tweetApi";
 import {
     AddPollActionInterface,
     AddQuoteTweetActionInterface,
@@ -26,12 +25,18 @@ import {
     UpdateScheduledTweetActionInterface,
     VoteActionInterface
 } from "./contracts/actionTypes";
-import { TagApi } from "../../../services/api/tagApi";
+import { TagApi } from "../../../services/api/tag-service/tagApi";
 import { TweetResponse } from "../../../types/tweet";
-import { ListsApi } from "../../../services/api/listsApi";
+import { ListsApi } from "../../../services/api/lists-service/listsApi";
 import { deleteUserTweet } from "../userTweets/actionCreators";
 import { LoadingStatus } from "../../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
+import { BookmarkApi } from "../../../services/api/tweet-service/bookmarkApi";
+import { LikeTweetApi } from "../../../services/api/tweet-service/likeTweetApi";
+import { PollApi } from "../../../services/api/tweet-service/pollApi";
+import { RetweetApi } from "../../../services/api/tweet-service/retweetApi";
+import { ScheduledTweetApi } from "../../../services/api/tweet-service/scheduledTweetApi";
+import { TweetApi } from "../../../services/api/tweet-service/tweetApi";
 
 export function* fetchTweetsRequest({ payload }: FetchTweetsActionInterface) {
     try {
@@ -88,7 +93,7 @@ export function* fetchFollowersTweetsRequest({ payload }: FetchFollowersTweetsAc
 export function* fetchTweetsByTagRequest({ payload }: FetchTweetsByTagActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TagApi.fetchTweetsByTag, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(TagApi.getTweetsByTag, payload);
         yield put(setTweets(response.data));
     } catch (error) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
@@ -144,7 +149,7 @@ export function* addTweetRequest({ payload }: AddTweetActionInterface) {
 
 export function* addPollRequest({ payload }: AddPollActionInterface) {
     try {
-        yield call(TweetApi.createPoll, payload);
+        yield call(PollApi.createPoll, payload);
     } catch (error) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -152,7 +157,7 @@ export function* addPollRequest({ payload }: AddPollActionInterface) {
 
 export function* addScheduledTweetRequest({ payload }: AddScheduledTweetActionInterface) {
     try {
-        yield call(TweetApi.createScheduledTweet, payload);
+        yield call(ScheduledTweetApi.createScheduledTweet, payload);
     } catch (error) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -160,7 +165,7 @@ export function* addScheduledTweetRequest({ payload }: AddScheduledTweetActionIn
 
 export function* updateScheduledTweetRequest({ payload }: UpdateScheduledTweetActionInterface) {
     try {
-        yield call(TweetApi.updateScheduledTweet, payload);
+        yield call(ScheduledTweetApi.updateScheduledTweet, payload);
     } catch (error) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -176,7 +181,7 @@ export function* addQuoteTweetRequest({ payload }: AddQuoteTweetActionInterface)
 
 export function* voteRequest({ payload }: VoteActionInterface) {
     try {
-        yield call(TweetApi.voteInPoll, payload);
+        yield call(PollApi.voteInPoll, payload);
     } catch (error) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
@@ -202,24 +207,24 @@ export function* fetchDeleteTweetRequest({ payload }: FetchDeleteTweetActionInte
 
 export function* deleteScheduledTweetsTweetRequest({ payload }: DeleteScheduledTweetsActionInterface) {
     try {
-        yield call(TweetApi.deleteScheduledTweets, payload);
+        yield call(ScheduledTweetApi.deleteScheduledTweets, payload);
     } catch (error) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));
     }
 }
 
 export function* likeTweetRequest({ payload }: LikeTweetActionInterface) {
-    yield call(TweetApi.likeTweet, payload);
+    yield call(LikeTweetApi.likeTweet, payload);
 }
 
 export function* retweetRequest({ payload }: RetweetActionInterface) {
-    yield call(TweetApi.retweet, payload);
+    yield call(RetweetApi.retweet, payload);
 }
 
 export function* fetchUserBookmarksRequest({ payload }: FetchBookmarksActionInterface) {
     try {
         yield put(setTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserBookmarks, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(BookmarkApi.getUserBookmarks, payload);
         yield put(setPageableTweets({
             items: response.data,
             pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])

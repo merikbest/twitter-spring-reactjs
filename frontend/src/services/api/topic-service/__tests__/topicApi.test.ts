@@ -1,15 +1,15 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
-import { testApiCall } from "../../../util/test-utils/api-test-helper";
+import { testApiCall } from "../../../../util/test-utils/api-test-helper";
 import {
     API_TOPICS_CATEGORY,
     API_TOPICS_FOLLOW,
     API_TOPICS_FOLLOWED,
     API_TOPICS_NOT_INTERESTED,
     API_TOPICS_SUGGESTED
-} from "../../../constants/endpoint-constants";
-import { mockTopics } from "../../../util/test-utils/mock-test-data";
+} from "../../../../constants/endpoint-constants";
+import { mockTopics } from "../../../../util/test-utils/mock-test-data";
 import { TopicApi } from "../topicApi";
 
 describe("TopicApi", () => {

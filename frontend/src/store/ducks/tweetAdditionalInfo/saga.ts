@@ -12,8 +12,9 @@ import {
     TweetAdditionalInfoType
 } from "./contracts/actionTypes";
 import { TweetAdditionalInfoResponse } from "../../../types/tweet";
-import { TweetApi } from "../../../services/api/tweetApi";
 import { LoadingStatus } from "../../../types/common";
+import { BookmarkApi } from "../../../services/api/tweet-service/bookmarkApi";
+import { TweetApi } from "../../../services/api/tweet-service/tweetApi";
 
 export function* fetchTweetAdditionalInfoRequest({ payload }: FetchTweetAdditionalInfoActionInterface) {
     try {
@@ -28,7 +29,7 @@ export function* fetchTweetAdditionalInfoRequest({ payload }: FetchTweetAddition
 export function* fetchIsTweetBookmarkedAdditionalInfoRequest({ payload }: FetchIsTweetBookmarkedAdditionalInfoActionInterface) {
     try {
         yield put(setTweetAdditionalInfoLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<boolean> = yield call(TweetApi.getIsTweetBookmarked, payload);
+        const response: AxiosResponse<boolean> = yield call(BookmarkApi.getIsTweetBookmarked, payload);
         yield put(setIsTweetBookmarkedAdditionalInfo(response.data));
     } catch (error) {
         yield put(setTweetAdditionalInfoLoadingState(LoadingStatus.ERROR));

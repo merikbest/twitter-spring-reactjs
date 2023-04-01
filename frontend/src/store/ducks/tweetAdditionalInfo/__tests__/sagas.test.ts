@@ -10,9 +10,10 @@ import {
     setTweetAdditionalInfoLoadingState
 } from "../actionCreators";
 import { fetchIsTweetBookmarkedAdditionalInfoRequest, fetchTweetAdditionalInfoRequest } from "../saga";
-import { TweetApi } from "../../../../services/api/tweetApi";
 import { mockUserTweetAdditionalInfo } from "../../../../util/test-utils/mock-test-data";
 import { TweetAdditionalInfoResponse } from "../../../../types/tweet";
+import { BookmarkApi } from "../../../../services/api/tweet-service/bookmarkApi";
+import { TweetApi } from "../../../../services/api/tweet-service/tweetApi";
 
 describe("tweetAdditionalInfoSaga:", () => {
     describe("fetchTweetAdditionalInfoRequest:", () => {
@@ -28,7 +29,7 @@ describe("tweetAdditionalInfoSaga:", () => {
         const worker = fetchIsTweetBookmarkedAdditionalInfoRequest(fetchIsTweetBookmarkedAdditionalInfo(1));
         const mockResponse = { data: true } as AxiosResponse<boolean>;
         testLoadingStatus(worker, setTweetAdditionalInfoLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getIsTweetBookmarked, 1, mockUserTweetAdditionalInfo);
+        testCall(worker, BookmarkApi.getIsTweetBookmarked, 1, mockUserTweetAdditionalInfo);
         testSetResponse(worker, mockResponse, setIsTweetBookmarkedAdditionalInfo, mockResponse.data, "TweetAdditionalInfoResponse");
         testLoadingStatus(worker, setTweetAdditionalInfoLoadingState, LoadingStatus.ERROR);
     });

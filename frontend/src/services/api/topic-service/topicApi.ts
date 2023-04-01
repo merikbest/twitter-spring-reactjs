@@ -6,13 +6,13 @@ import {
     API_TOPICS_FOLLOWED,
     API_TOPICS_NOT_INTERESTED,
     API_TOPICS_SUGGESTED
-} from "../../constants/endpoint-constants";
-import { TopicResponse } from "../../types/topic";
+} from "../../../constants/endpoint-constants";
+import { TopicResponse } from "../../../types/topic";
 import {
     SuggestedTopicsRequest,
     TopicsByCategoriesResponse,
     TopicsCategoriesRequest
-} from "../../store/ducks/topics/contracts/state";
+} from "../../../store/ducks/topics/contracts/state";
 
 export const TopicApi = {
     async getTopicsByIds(request: SuggestedTopicsRequest): Promise<AxiosResponse<TopicResponse[]>> {

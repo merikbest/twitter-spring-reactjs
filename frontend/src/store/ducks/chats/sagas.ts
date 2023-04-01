@@ -7,7 +7,8 @@ import {
     LeaveFromConversationActionInterface
 } from "./contracts/actionTypes";
 import { setChat, setChats, setChatsLoadingState } from "./actionCreators";
-import { ChatApi } from "../../../services/api/chatApi";
+import { ChatApi } from "../../../services/api/chat-service/chatApi";
+import { ChatParticipantApi } from "../../../services/api/chat-service/chatParticipantApi";
 import { ChatResponse } from "../../../types/chat";
 import { LoadingStatus } from "../../../types/common";
 
@@ -34,7 +35,7 @@ export function* createChatRequest({ payload }: CreateChatActionInterface) {
 export function* leaveFromConversationRequest({ payload }: LeaveFromConversationActionInterface) {
     try {
         yield put(setChatsLoadingState(LoadingStatus.LOADING));
-        yield call(ChatApi.leaveFromConversation, payload);
+        yield call(ChatParticipantApi.leaveFromConversation, payload);
     } catch (error) {
         yield put(setChatsLoadingState(LoadingStatus.ERROR));
     }

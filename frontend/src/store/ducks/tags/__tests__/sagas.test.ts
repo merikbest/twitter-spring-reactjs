@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 
 import { fetchTagsRequest, fetchTrendsRequest, tagsSaga } from "../sagas";
-import { TagApi } from "../../../../services/api/tagApi";
+import { TagApi } from "../../../../services/api/tag-service/tagApi";
 import { fetchTrends, setTags, setTagsLoadingState, setTrends, setTrendsLoadingState } from "../actionCreators";
 import { TagResponse } from "../../../../types/tag";
 import {
@@ -13,7 +13,6 @@ import {
 } from "../../../../util/test-utils/test-helper";
 import { TagsActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
-import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
 
 describe("tagsSaga:", () => {
     const mockTags = {
@@ -25,7 +24,7 @@ describe("tagsSaga:", () => {
         const worker = fetchTagsRequest();
 
         testLoadingStatus(worker, setTagsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TagApi.fetchTags);
+        testCall(worker, TagApi.getTags);
         testSetResponse(worker, mockTags, setTags, mockTags.data, "TagResponse");
         testLoadingStatus(worker, setTagsLoadingState, LoadingStatus.ERROR);
     });
@@ -34,7 +33,7 @@ describe("tagsSaga:", () => {
         const worker = fetchTrendsRequest(fetchTrends(1));
 
         testLoadingStatus(worker, setTrendsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TagApi.fetchTrends, 1);
+        testCall(worker, TagApi.getTrends, 1);
         testSetResponse(worker, mockTags, setTrends, mockExpectedResponse(mockTags), "TagResponse");
         testLoadingStatus(worker, setTrendsLoadingState, LoadingStatus.ERROR);
     });

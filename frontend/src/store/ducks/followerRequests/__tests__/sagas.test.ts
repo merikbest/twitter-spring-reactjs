@@ -16,11 +16,11 @@ import {
     testSetResponse,
     testWatchSaga
 } from "../../../../util/test-utils/test-helper";
-import { UserApi } from "../../../../services/api/userApi";
 import { FollowerUserResponse } from "../../../../types/user";
 import { setFollowersSize, setUserLoadingStatus } from "../../user/actionCreators";
 import { FollowerRequestsActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
+import { FollowerUserApi } from "../../../../services/api/user-service/followerUserApi";
 
 describe("fetchFollowerSaga:", () => {
 
@@ -32,7 +32,7 @@ describe("fetchFollowerSaga:", () => {
         const worker = fetchFollowRequests(fetchFollowerRequests(1));
 
         testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getFollowerRequests, 1);
+        testCall(worker, FollowerUserApi.getFollowerRequests, 1);
         testSetResponse(worker, mockFollowerUserResponse, setFollowerRequests, mockExpectedResponse(mockFollowerUserResponse), "FollowerUserResponse");
         testLoadingStatus(worker, setFollowerRequestsLoadingState, LoadingStatus.ERROR);
     });
@@ -41,7 +41,7 @@ describe("fetchFollowerSaga:", () => {
         const worker = acceptFollowRequests(acceptFollowRequest(1));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.acceptFollowRequest, 1);
+        testCall(worker, FollowerUserApi.acceptFollowRequest, 1);
         testSetResponse(worker, {}, setFollowersSize, {}, "void");
         testSetResponse(worker, {}, processFollowRequest, 1, "void");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
@@ -51,7 +51,7 @@ describe("fetchFollowerSaga:", () => {
         const worker = declineFollowRequests(declineFollowRequest(1));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserApi.declineFollowRequest, 1);
+        testCall(worker, FollowerUserApi.declineFollowRequest, 1);
         testSetResponse(worker, {}, processFollowRequest, 1, "void");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });

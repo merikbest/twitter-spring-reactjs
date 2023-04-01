@@ -3,7 +3,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 
 import { FetchUnsentTweetsActionInterface, UnsentTweetActionType } from "./contracts/actionTypes";
 import { TweetResponse } from "../../../types/tweet";
-import { TweetApi } from "../../../services/api/tweetApi";
+import { ScheduledTweetApi } from "../../../services/api/tweet-service/scheduledTweetApi";
 import { setUnsentTweets, setUnsentTweetsLoadingState } from "./actionCreators";
 import { LoadingStatus } from "../../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
@@ -11,7 +11,7 @@ import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
 export function* fetchUnsentTweetsRequest({ payload }: FetchUnsentTweetsActionInterface) {
     try {
         yield put(setUnsentTweetsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getScheduledTweets, payload);
+        const response: AxiosResponse<TweetResponse[]> = yield call(ScheduledTweetApi.getScheduledTweets, payload);
         yield put(setUnsentTweets({
             items: response.data,
             pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])

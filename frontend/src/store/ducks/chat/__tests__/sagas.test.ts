@@ -1,8 +1,9 @@
 import { AxiosResponse } from "axios";
+
 import { ChatResponse } from "../../../../types/chat";
 import { testCall, testLoadingStatus, testSetResponse } from "../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../types/common";
-import { ChatApi } from "../../../../services/api/chatApi";
+import { ChatApi } from "../../../../services/api/chat-service/chatApi";
 import { fetchChatRequest } from "../sagas";
 import { fetchChat, setChat, setChatLoadingState } from "../actionCreators";
 import { mockChats } from "../../../../util/test-utils/mock-test-data";

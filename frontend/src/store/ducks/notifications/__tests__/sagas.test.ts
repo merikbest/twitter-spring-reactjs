@@ -32,13 +32,11 @@ import {
     NotificationsResponse,
     NotificationUserResponse
 } from "../../../../types/notification";
-import { UserApi } from "../../../../services/api/userApi";
 import { setPageableTweets, setTweetsLoadingState } from "../../tweets/actionCreators";
 import { TweetResponse } from "../../../../types/tweet";
 import { NotificationsActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
-import { TweetApi } from "../../../../services/api/tweetApi";
-import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
+import { NotificationApi } from "../../../../services/api/notification-service/notificationApi";
 
 describe("notificationsSaga:", () => {
 
@@ -50,7 +48,7 @@ describe("notificationsSaga:", () => {
         const worker = fetchNotificationsRequest(fetchNotifications(0));
 
         testLoadingStatus(worker, setNotificationsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getUserNotifications, 0);
+        testCall(worker, NotificationApi.getUserNotifications, 0);
         testSetResponse(worker, mockPageableNotifications, setNotifications, mockExpectedResponse(mockPageableNotifications), "NotificationsResponse");
         testLoadingStatus(worker, setNotificationsLoadingState, LoadingStatus.ERROR);
     });
@@ -60,7 +58,7 @@ describe("notificationsSaga:", () => {
         const worker = fetchFetchTweetAuthorsNotificationsRequest();
 
         testLoadingStatus(worker, setTweetAuthorsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getTweetAuthorsNotifications);
+        testCall(worker, NotificationApi.getTweetAuthorsNotifications);
         testSetResponse(worker, mockNotificationInfoResponse, setTweetAuthorsNotifications, mockNotificationInfoResponse.data, "NotificationInfoResponse");
         testLoadingStatus(worker, setTweetAuthorsLoadingState, LoadingStatus.ERROR);
     });
@@ -73,7 +71,7 @@ describe("notificationsSaga:", () => {
         const worker = fetchNotificationsFromTweetAuthorsRequest(fetchNotificationsFromTweetAuthors(1));
 
         testLoadingStatus(worker, setNotificationsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, UserApi.getNotificationsFromTweetAuthors, 1);
+        testCall(worker, NotificationApi.getNotificationsFromTweetAuthors, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
         testLoadingStatus(worker, setNotificationsLoadingState, LoadingStatus.ERROR);
     });
@@ -86,7 +84,7 @@ describe("notificationsSaga:", () => {
         const worker = fetchMentionsRequest(fetchMentions(1));
 
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getUserMentions, 1);
+        testCall(worker, NotificationApi.getUserMentionsNotifications, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
@@ -95,7 +93,7 @@ describe("notificationsSaga:", () => {
         const mockNotificationInfoResponse = { data: { id: 1 } } as AxiosResponse<NotificationInfoResponse>;
         const worker = fetchNotificationInfoRequest(fetchNotificationInfo(1));
 
-        testCall(worker, UserApi.getUserNotificationById, 1);
+        testCall(worker, NotificationApi.getUserNotificationById, 1);
         testSetResponse(worker, mockNotificationInfoResponse, setNotificationInfo, mockNotificationInfoResponse.data, "NotificationInfoResponse");
         testLoadingStatus(worker, setNotificationsLoadingState, LoadingStatus.ERROR);
     });

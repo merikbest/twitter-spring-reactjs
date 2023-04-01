@@ -3,7 +3,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 
 import { setListDetail, setListDetailLoadingState } from "./actionCreators";
 import { FetchListDetailActionInterface, ListDetailActionsType } from "./contracts/actionTypes";
-import { ListsApi } from "../../../services/api/listsApi";
+import { ListsApi } from "../../../services/api/lists-service/listsApi";
 import { BaseListResponse } from "../../../types/lists";
 import { LoadingStatus } from "../../../types/common";
 

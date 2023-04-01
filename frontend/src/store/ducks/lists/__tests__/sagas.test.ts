@@ -41,7 +41,7 @@ import {
     unpinList
 } from "../actionCreators";
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
-import { ListsApi } from "../../../../services/api/listsApi";
+import { ListsApi } from "../../../../services/api/lists-service/listsApi";
 import { ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse } from "../../../../types/lists";
 import { AddLists, AddUserToListsRequest } from "../contracts/state";
 import { updateFollowToFullList } from "../../list/actionCreators";

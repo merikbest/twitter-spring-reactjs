@@ -4,7 +4,7 @@ import { call } from "redux-saga/effects";
 import { fetchListDetailRequest, listDetailSaga } from "../sagas";
 import { fetchListDetail, setListDetail, setListDetailLoadingState } from "../actionCreators";
 import { testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
-import { ListsApi } from "../../../../services/api/listsApi";
+import { ListsApi } from "../../../../services/api/lists-service/listsApi";
 import { BaseListResponse } from "../../../../types/lists";
 import { ListDetailActionsType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";

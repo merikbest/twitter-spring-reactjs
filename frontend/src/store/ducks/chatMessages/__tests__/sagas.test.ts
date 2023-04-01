@@ -14,7 +14,7 @@ import {
     setChatMessagesLoadingState
 } from "../actionCreators";
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
-import { ChatApi } from "../../../../services/api/chatApi";
+import { ChatMessageApi } from "../../../../services/api/chat-service/chatMessageApi";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { ChatMessageRequest, ChatMessageWithTweetRequest } from "../contracts/state";
 import { ChatMessagesActionsType } from "../contracts/actionTypes";
@@ -27,7 +27,7 @@ describe("chatMessagesSaga:", () => {
         const worker = fetchChatMessagesRequest(fetchChatMessages(1));
 
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.LOADING);
-        testCall(worker, ChatApi.getChatMessages, 1);
+        testCall(worker, ChatMessageApi.getChatMessages, 1);
         testSetResponse(worker, mockChatMessageResponse, setChatMessages, mockChatMessageResponse.data, "ChatMessageResponse");
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR);
     });
@@ -37,7 +37,7 @@ describe("chatMessagesSaga:", () => {
         const worker = addChatMessageRequest(addChatMessage(mockChatMessageRequest));
 
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.LOADING);
-        testCall(worker, ChatApi.addMessage, mockChatMessageRequest);
+        testCall(worker, ChatMessageApi.addMessage, mockChatMessageRequest);
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR);
     });
 
@@ -50,7 +50,7 @@ describe("chatMessagesSaga:", () => {
         const worker = addChatMessageWithTweetRequest(addChatMessageWithTweet(mockChatMessageWithTweetRequest));
 
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.LOADING);
-        testCall(worker, ChatApi.addMessageWithTweet, mockChatMessageWithTweetRequest);
+        testCall(worker, ChatMessageApi.addMessageWithTweet, mockChatMessageWithTweetRequest);
         testLoadingStatus(worker, setChatMessagesLoadingState, LoadingStatus.ERROR);
     });
 

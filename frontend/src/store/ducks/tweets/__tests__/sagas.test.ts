@@ -48,11 +48,11 @@ import {
     updateScheduledTweet,
     vote
 } from "../actionCreators";
-import { TweetApi } from "../../../../services/api/tweetApi";
+import { TweetApi } from "../../../../services/api/tweet-service/tweetApi";
 import { TweetResponse } from "../../../../types/tweet";
 import { AxiosResponse } from "axios";
-import { TagApi } from "../../../../services/api/tagApi";
-import { ListsApi } from "../../../../services/api/listsApi";
+import { TagApi } from "../../../../services/api/tag-service/tagApi";
+import { ListsApi } from "../../../../services/api/lists-service/listsApi";
 import { AddQuoteTweet, AddTweet, Vote } from "../contracts/state";
 import {
     mockExpectedResponse,
@@ -64,6 +64,11 @@ import {
 import { TweetsActionType } from "../contracts/actionTypes";
 import { LoadingStatus, ReplyType } from "../../../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
+import { BookmarkApi } from "../../../../services/api/tweet-service/bookmarkApi";
+import { LikeTweetApi } from "../../../../services/api/tweet-service/likeTweetApi";
+import { PollApi } from "../../../../services/api/tweet-service/pollApi";
+import { RetweetApi } from "../../../../services/api/tweet-service/retweetApi";
+import { ScheduledTweetApi } from "../../../../services/api/tweet-service/scheduledTweetApi";
 
 describe("tweetsSaga:", () => {
     const mockTweets = [{ id: 1 }, { id: 2 }] as TweetResponse[];
@@ -120,7 +125,7 @@ describe("tweetsSaga:", () => {
     describe("fetchTweetsByTagRequest:", () => {
         const worker = fetchTweetsByTagRequest(fetchTweetsByTag({ tag: "test", pageNumber: 1 }));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TagApi.fetchTweetsByTag, { tag: "test", pageNumber: 1 });
+        testCall(worker, TagApi.getTweetsByTag, { tag: "test", pageNumber: 1 });
         testSetResponse(worker, mockPageableTweets, setTweets, mockPageableTweets.data, "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
@@ -171,19 +176,19 @@ describe("tweetsSaga:", () => {
 
     describe("addPollRequest:", () => {
         const worker = addPollRequest(addPoll(mockAddTweet));
-        testCall(worker, TweetApi.createPoll, mockAddTweet);
+        testCall(worker, PollApi.createPoll, mockAddTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("addScheduledTweetRequest:", () => {
         const worker = addScheduledTweetRequest(addScheduledTweet(mockAddTweet));
-        testCall(worker, TweetApi.createScheduledTweet, mockAddTweet);
+        testCall(worker, ScheduledTweetApi.createScheduledTweet, mockAddTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("updateScheduledTweetRequest:", () => {
         const worker = updateScheduledTweetRequest(updateScheduledTweet(mockAddTweet));
-        testCall(worker, TweetApi.updateScheduledTweet, mockAddTweet);
+        testCall(worker, ScheduledTweetApi.updateScheduledTweet, mockAddTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
@@ -197,7 +202,7 @@ describe("tweetsSaga:", () => {
     describe("voteRequest:", () => {
         const mockVote = { tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote;
         const worker = voteRequest(vote(mockVote));
-        testCall(worker, TweetApi.voteInPoll, mockVote);
+        testCall(worker, PollApi.voteInPoll, mockVote);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
@@ -216,24 +221,24 @@ describe("tweetsSaga:", () => {
 
     describe("deleteScheduledTweetsTweetRequest:", () => {
         const worker = deleteScheduledTweetsTweetRequest(deleteScheduledTweets({ tweetsIds: [1, 2, 3] }));
-        testCall(worker, TweetApi.deleteScheduledTweets, { tweetsIds: [1, 2, 3] });
+        testCall(worker, ScheduledTweetApi.deleteScheduledTweets, { tweetsIds: [1, 2, 3] });
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("likeTweetRequest:", () => {
         const worker = likeTweetRequest(likeTweet({ tweetId: 1 }));
-        testCall(worker, TweetApi.likeTweet, { tweetId: 1 });
+        testCall(worker, LikeTweetApi.likeTweet, { tweetId: 1 });
     });
 
     describe("retweetRequest:", () => {
         const worker = retweetRequest(retweet({ tweetId: 1 }));
-        testCall(worker, TweetApi.retweet, { tweetId: 1 });
+        testCall(worker, RetweetApi.retweet, { tweetId: 1 });
     });
 
     describe("fetchUserBookmarksRequest:", () => {
         const worker = fetchUserBookmarksRequest(fetchUserBookmarks(1));
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getUserBookmarks, 1);
+        testCall(worker, BookmarkApi.getUserBookmarks, 1);
         testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });

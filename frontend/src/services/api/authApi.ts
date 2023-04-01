@@ -18,10 +18,25 @@ import {
 } from "../../constants/endpoint-constants";
 
 export const AuthApi = {
-    async signIn(postData: LoginRequest): Promise<AxiosResponse<AuthenticationResponse>> {
+    async login(postData: LoginRequest): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.post<AuthenticationResponse>(API_AUTH_LOGIN, postData);
     },
-    async checkEmail(postData: RegistrationInfo): Promise<AxiosResponse<string>> {
+    async getExistingEmail(postData: { email: string }): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(API_AUTH_FORGOT_EMAIL, postData);
+    },
+    async sendPasswordResetCode(postData: { email: string }): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(API_AUTH_FORGOT, postData);
+    },
+    async getUserByPasswordResetCode(resetCode: string): Promise<AxiosResponse<AuthUserResponse>> {
+        return await axios.get<AuthUserResponse>(`${API_AUTH_RESET}/${resetCode}`);
+    },
+    async passwordReset(postData: { email: string; password: string, password2: string }): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(API_AUTH_RESET, postData);
+    },
+    async currentPasswordReset(postData: { currentPassword: string; password: string, password2: string }): Promise<AxiosResponse<string>> {
+        return await axios.post<string>(API_AUTH_RESET_CURRENT, postData);
+    },
+    async registration(postData: RegistrationInfo): Promise<AxiosResponse<string>> {
         return await axios.post<string>(API_AUTH_REGISTRATION_CHECK, postData);
     },
     async sendRegistrationCode(postData: RegistrationInfo): Promise<AxiosResponse<string>> {
@@ -33,22 +48,7 @@ export const AuthApi = {
     async endRegistration(postData: RegistrationProps): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.post<AuthenticationResponse>(API_AUTH_REGISTRATION_CONFIRM, postData);
     },
-    async findExistingEmail(postData: { email: string }): Promise<AxiosResponse<string>> {
-        return await axios.post<string>(API_AUTH_FORGOT_EMAIL, postData);
-    },
-    async sendPasswordResetCode(postData: { email: string }): Promise<AxiosResponse<string>> {
-        return await axios.post<string>(API_AUTH_FORGOT, postData);
-    },
-    async getUserByResetCode(resetCode: string): Promise<AxiosResponse<AuthUserResponse>> {
-        return await axios.get<AuthUserResponse>(`${API_AUTH_RESET}/${resetCode}`);
-    },
-    async passwordReset(postData: { email: string; password: string, password2: string }): Promise<AxiosResponse<string>> {
-        return await axios.post<string>(API_AUTH_RESET, postData);
-    },
-    async currentPasswordReset(postData: { currentPassword: string; password: string, password2: string }): Promise<AxiosResponse<string>> {
-        return await axios.post<string>(API_AUTH_RESET_CURRENT, postData);
-    },
-    async getMe(): Promise<AxiosResponse<AuthenticationResponse>> {
+    async getUserByToken(): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.get<AuthenticationResponse>(API_USER_TOKEN);
     }
 };

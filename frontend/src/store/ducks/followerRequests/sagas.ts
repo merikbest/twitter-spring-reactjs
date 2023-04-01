@@ -9,15 +9,15 @@ import {
 } from "./contracts/actionTypes";
 import { processFollowRequest, setFollowerRequests, setFollowerRequestsLoadingState } from "./actionCreators";
 import { FollowerUserResponse } from "../../../types/user";
-import { UserApi } from "../../../services/api/userApi";
 import { setFollowersSize, setUserLoadingStatus } from "../user/actionCreators";
 import { LoadingStatus } from "../../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../../constants/common-constants";
+import { FollowerUserApi } from "../../../services/api/user-service/followerUserApi";
 
 export function* fetchFollowRequests({ payload }: FetchFollowerRequestsActionInterface) {
     try {
         yield put(setFollowerRequestsLoadingState(LoadingStatus.LOADING));
-        const response: AxiosResponse<FollowerUserResponse[]> = yield call(UserApi.getFollowerRequests, payload);
+        const response: AxiosResponse<FollowerUserResponse[]> = yield call(FollowerUserApi.getFollowerRequests, payload);
         yield put(setFollowerRequests({
             items: response.data,
             pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
@@ -30,7 +30,7 @@ export function* fetchFollowRequests({ payload }: FetchFollowerRequestsActionInt
 export function* acceptFollowRequests({ payload }: AcceptFollowerRequestActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        yield call(UserApi.acceptFollowRequest, payload);
+        yield call(FollowerUserApi.acceptFollowRequest, payload);
         yield put(setFollowersSize());
         yield put(processFollowRequest(payload));
     } catch (error) {
@@ -41,7 +41,7 @@ export function* acceptFollowRequests({ payload }: AcceptFollowerRequestActionIn
 export function* declineFollowRequests({ payload }: DeclineFollowerRequestActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        yield call(UserApi.declineFollowRequest, payload);
+        yield call(FollowerUserApi.declineFollowRequest, payload);
         yield put(processFollowRequest(payload));
     } catch (error) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));

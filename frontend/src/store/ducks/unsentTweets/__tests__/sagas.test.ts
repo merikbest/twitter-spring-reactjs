@@ -1,13 +1,13 @@
 import { AxiosResponse } from "axios";
 
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
-import { TweetApi } from "../../../../services/api/tweetApi";
 import { fetchUnsentTweetsRequest, unsentTweetsSaga } from "../sagas";
 import { fetchUnsentTweets, setUnsentTweets, setUnsentTweetsLoadingState } from "../actionCreators";
 import { TweetResponse } from "../../../../types/tweet";
 import { UnsentTweetActionType } from "../contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../../../constants/common-constants";
+import { ScheduledTweetApi } from "../../../../services/api/tweet-service/scheduledTweetApi";
 
 describe("unsentTweetsSaga:", () => {
 
@@ -20,7 +20,7 @@ describe("unsentTweetsSaga:", () => {
         const worker = fetchUnsentTweetsRequest(fetchUnsentTweets(1));
 
         testLoadingStatus(worker, setUnsentTweetsLoadingState, LoadingStatus.LOADING);
-        testCall(worker, TweetApi.getScheduledTweets, 1);
+        testCall(worker, ScheduledTweetApi.getScheduledTweets, 1);
         testSetResponse(worker, mockPageableTweets, setUnsentTweets, {
             items: mockPageableTweets.data,
             pagesCount: parseInt(mockPageableTweets.headers[PAGE_TOTAL_COUNT])
