@@ -32,7 +32,7 @@ import ProfileAvatar from "./ProfileAvatar/ProfileAvatar";
 import ScheduleDateInfo from "./ScheduleDateInfo/ScheduleDateInfo";
 import AddTweetImage from "./AddTweetImage/AddTweetImage";
 import { useParams } from "react-router-dom";
-import { TweetApi } from "../../services/api/tweetApi";
+import { TweetApi } from "../../services/api/tweet-service/tweetApi";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;

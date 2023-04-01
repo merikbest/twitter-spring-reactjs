@@ -4,8 +4,8 @@ import { Button, Dialog, DialogContent, Link as MuiLink, Typography } from "@mat
 
 import { useEmailVerificationModalStyles } from "./EmailVerificationModalStyles";
 import { RegistrationInputField } from "../RegistrationInput/RegistrationInputField";
-import { AuthApi } from "../../../services/api/authApi";
 import { useGlobalStyles } from "../../../util/globalClasses";
+import { RegistrationApi } from "../../../services/api/user-service/registrationApi";
 
 interface CustomizeModalProps {
     email: string;
@@ -21,7 +21,7 @@ const EmailVerificationModal: FC<CustomizeModalProps> = ({ email, open, onClose,
     const [error, setError] = useState<string>("");
 
     const checkEmailVerificationCode = (): void => {
-        AuthApi.checkRegistrationCode(verificationCode)
+        RegistrationApi.checkRegistrationCode(verificationCode)
             .then(() => onOpenSetPassword(true))
             .catch((error) => setError(error.response.data));
     };

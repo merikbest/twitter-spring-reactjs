@@ -8,9 +8,9 @@ import * as yup from "yup";
 
 import { useRegistrationModalStyles } from "./RegistrationModalStyles";
 import RegistrationInput from "./RegistrationInput/RegistrationInput";
-import { AuthApi } from "../../services/api/authApi";
 import { FilledSelect } from "../../components/FilledSelect/FilledSelect";
 import { RegistrationInfo } from "../../types/auth";
+import { RegistrationApi } from "../../services/api/user-service/registrationApi";
 
 interface RegistrationModalProps {
     open: boolean;
@@ -52,7 +52,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
             birthday = month + " " + day + ", " + year;
         }
         const registrationData: RegistrationInfo = { username: data.username, email: data.email, birthday: birthday };
-        AuthApi.checkEmail(registrationData)
+        RegistrationApi.registration(registrationData)
             .then(() => {
                 onChangeRegistrationInfo(registrationData);
                 onOpenCustomize(true);

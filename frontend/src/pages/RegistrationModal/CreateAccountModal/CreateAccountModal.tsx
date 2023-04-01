@@ -3,11 +3,11 @@ import { Button, Dialog, DialogContent, Link as MuiLink, Typography } from "@mat
 
 import { useCreateAccountModalStyles } from "./CreateAccountModalStyles";
 import { RegistrationInputField } from "../RegistrationInput/RegistrationInputField";
-import { AuthApi } from "../../../services/api/authApi";
 import Spinner from "../../../components/Spinner/Spinner";
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS_NEW } from "../../../constants/url-constants";
 import { RegistrationInfo } from "../../../types/auth";
+import { RegistrationApi } from "../../../services/api/user-service/registrationApi";
 
 interface CustomizeModalProps {
     open: boolean;
@@ -31,7 +31,7 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
     const onSubmit = (): void => {
         setIsLoading(true);
 
-        AuthApi.sendRegistrationCode(registrationInfo)
+        RegistrationApi.sendRegistrationCode(registrationInfo)
             .then((response) => {
                 setIsLoading(false);
                 onOpenEmailVerification(true);

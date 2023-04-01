@@ -2,7 +2,6 @@ import React, { ChangeEvent, FC, ReactElement, useCallback, useEffect, useState 
 import { Button, Dialog, DialogContent } from "@material-ui/core";
 
 import { useUnsentTweetsModalStyles } from "./UnsentTweetsModalStyles";
-import { TweetApi } from "../../../services/api/tweetApi";
 import AddTweetForm from "../AddTweetForm";
 import Spinner from "../../Spinner/Spinner";
 import { TweetResponse } from "../../../types/tweet";
@@ -18,6 +17,7 @@ import {
 import InfiniteScrollWrapper from "../../InfiniteScrollWrapper/InfiniteScrollWrapper";
 import UnsentTweetsHeader from "./UnsentTweetItem/UnsentTweetsHeader/UnsentTweetsHeader";
 import UnsentTweetsTab from "./UnsentTweetItem/UnsentTweetsTab/UnsentTweetsTab";
+import { ScheduledTweetApi } from "../../../services/api/tweet-service/scheduledTweetApi";
 
 interface UnsentTweetsModalProps {
     visible?: boolean;
@@ -101,7 +101,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({ visible, onClose }): Re
 
     const handleDeleteScheduledTweets = (): void => {
         if (checkboxIndexes.length !== 0) {
-            TweetApi.deleteScheduledTweets({ tweetsIds: checkboxIndexes.map(value => Number(value)) })
+            ScheduledTweetApi.deleteScheduledTweets({ tweetsIds: checkboxIndexes.map(value => Number(value)) })
                 .then(() => dispatch(fetchUnsentTweets(0)));
             setCheckboxIndexes([]);
             setVisibleEditListFooter(false);

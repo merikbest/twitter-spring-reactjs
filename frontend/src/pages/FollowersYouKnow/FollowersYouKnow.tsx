@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Paper } from "@material-ui/core";
 
-import { UserApi } from "../../services/api/userApi";
+import { UserApi } from "../../services/api/user-service/userApi";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import { fetchUserProfile } from "../../store/ducks/userProfile/actionCreators";
 import { selectUserProfile } from "../../store/ducks/userProfile/selectors";
@@ -15,6 +15,7 @@ import { PROFILE, USER } from "../../constants/path-constants";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPageDescription";
 import PageHeaderTitle from "../../components/PageHeaderTitle/PageHeaderTitle";
+import { FollowerUserApi } from "../../services/api/user-service/followerUserApi";
 
 const FollowersYouKnow: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -30,7 +31,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
         dispatch(fetchUserProfile(parseInt(params.id)));
         setOverallFollowers([]);
         setIsLoading(true);
-        UserApi.overallFollowers(params.id)
+        FollowerUserApi.overallFollowers(params.id)
             .then(response => {
                 setOverallFollowers(response.data);
                 setIsLoading(false);

@@ -8,7 +8,7 @@ export const BookmarkApi = {
     async getUserBookmarks(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(API_TWEETS_USER_BOOKMARKS, { params: { page: pageNumber } });
     },
-    async addTweetToBookmarks(tweetId: number): Promise<AxiosResponse<boolean>> { // TODO rename to processUserBookmarks
+    async processUserBookmarks(tweetId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(`${API_TWEETS_USER_BOOKMARKS}/${tweetId}`);
     },
     async getIsTweetBookmarked(tweetId: number): Promise<AxiosResponse<boolean>> {

@@ -2,10 +2,10 @@ import React, { FC, FormEvent, ReactElement, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Button, Link as MuiLink, Radio, Typography } from "@material-ui/core";
 
-import { AuthApi } from "../../../services/api/authApi";
 import { useResetPasswordOptionStyles } from "./ResetPasswordOptionStyles";
 import { ACCOUNT_FORGOT_CONFIRM_PIN_RESET } from "../../../constants/path-constants";
 import { REGAIN_ACCESS } from "../../../constants/url-constants";
+import { AuthenticationApi } from "../../../services/api/user-service/authenticationApi";
 
 const ResetPasswordOption: FC = (): ReactElement => {
     const classes = useResetPasswordOptionStyles();
@@ -16,7 +16,7 @@ const ResetPasswordOption: FC = (): ReactElement => {
     const sendResetCode = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         setIsLoading(true);
-        AuthApi.sendPasswordResetCode({ email: location.state.email })
+        AuthenticationApi.sendPasswordResetCode({ email: location.state.email })
             .then(() => {
                 history.push(ACCOUNT_FORGOT_CONFIRM_PIN_RESET);
                 setIsLoading(false);

@@ -47,7 +47,7 @@ export function* fetchTweetDataRequest({ payload: tweetId }: FetchTweetDataActio
 
 export function* addTweetToBookmarksRequest({ payload }: AddTweetToBookmarksActionInterface) {
     try {
-        const { data }: AxiosResponse<boolean> = yield call(BookmarkApi.addTweetToBookmarks, payload);
+        const { data }: AxiosResponse<boolean> = yield call(BookmarkApi.processUserBookmarks, payload);
         yield put(setBookmarkedTweet(data));
         yield put(setUpdatedBookmarkedTweetTweetsState({ tweetId: payload, isTweetBookmarked: data }));
         yield put(setUpdatedBookmarkedTweetUserTweetState({ tweetId: payload, isTweetBookmarked: data }));

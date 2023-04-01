@@ -18,13 +18,13 @@ describe("BookmarkApi", () => {
         });
     });
 
-    describe("should fetch BookmarkApi.addTweetToBookmarks", () => {
+    describe("should fetch BookmarkApi.processUserBookmarks", () => {
         it("[200] should add tweet to bookmarks Success", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS_USER_BOOKMARKS}/1`, 200, true, BookmarkApi.addTweetToBookmarks, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_USER_BOOKMARKS}/1`, 200, true, BookmarkApi.processUserBookmarks, 1);
         });
 
         it("[404] should tweet not found", () => {
-            testApiCall(mockAdapter, "onGet", `${API_TWEETS_USER_BOOKMARKS}/1`, 404, tweetNotFoundError, BookmarkApi.addTweetToBookmarks, 1);
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_USER_BOOKMARKS}/1`, 404, tweetNotFoundError, BookmarkApi.processUserBookmarks, 1);
         });
     });
 

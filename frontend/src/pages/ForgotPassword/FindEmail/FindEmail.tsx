@@ -4,8 +4,8 @@ import { Button, Typography } from "@material-ui/core";
 
 import { useFindEmailStyles } from "./FindEmailStyles";
 import { ForgotPasswordTextField } from "../ForgotPasswordTextField/ForgotPasswordTextField";
-import { AuthApi } from "../../../services/api/authApi";
 import { ACCOUNT_FORGOT_SEND_PASSWORD_RESET } from "../../../constants/path-constants";
+import { AuthenticationApi } from "../../../services/api/user-service/authenticationApi";
 
 const FindEmail: FC = (): ReactElement => {
     const classes = useFindEmailStyles();
@@ -15,7 +15,7 @@ const FindEmail: FC = (): ReactElement => {
 
     const findExistingEmail = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        AuthApi.findExistingEmail({ email })
+        AuthenticationApi.getExistingEmail({ email })
             .then(() => {
                 setError(false);
                 history.push({ pathname: ACCOUNT_FORGOT_SEND_PASSWORD_RESET, state: { email: email } });

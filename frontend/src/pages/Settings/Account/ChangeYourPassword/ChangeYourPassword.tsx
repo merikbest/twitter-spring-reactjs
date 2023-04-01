@@ -9,8 +9,8 @@ import { useDispatch } from "react-redux";
 import { useChangeYourPasswordStyles } from "./ChangeYourPasswordStyles";
 import { ChangeInfoTextField } from "../../ChangeInfoTextField/ChangeInfoTextField";
 import { useGlobalStyles } from "../../../../util/globalClasses";
-import { AuthApi } from "../../../../services/api/authApi";
 import { setOpenSnackBar } from "../../../../store/ducks/actionSnackbar/actionCreators";
+import { AuthenticationApi } from "../../../../services/api/user-service/authenticationApi";
 
 interface ChangeYourPasswordFormProps {
     currentPassword: string;
@@ -36,7 +36,7 @@ const ChangeYourPassword = (): ReactElement => {
     }, []);
 
     const onSubmit = (data: ChangeYourPasswordFormProps): void => {
-        AuthApi.currentPasswordReset({
+        AuthenticationApi.currentPasswordReset({
             currentPassword: data.currentPassword,
             password: data.password,
             password2: data.password2

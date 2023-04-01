@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 import { Button, Link as MuiLink, Typography } from "@material-ui/core";
 
 import { ForgotPasswordTextField } from "../ForgotPasswordTextField/ForgotPasswordTextField";
-import { AuthApi } from "../../../services/api/authApi";
 import { useCheckEmailCodeStyles } from "./CheckEmailCodeStyles";
 import { ACCOUNT_FORGOT_RESET_PASSWORD } from "../../../constants/path-constants";
 import { REGAIN_ACCESS } from "../../../constants/url-constants";
+import { AuthenticationApi } from "../../../services/api/user-service/authenticationApi";
 
 const CheckEmailCode: FC = (): ReactElement => {
     const classes = useCheckEmailCodeStyles();
@@ -20,7 +20,7 @@ const CheckEmailCode: FC = (): ReactElement => {
         if (!resetCode) {
             setError(true);
         } else {
-            AuthApi.getUserByResetCode(resetCode)
+            AuthenticationApi.getUserByPasswordResetCode(resetCode)
                 .then((response) => {
                     history.push({ pathname: ACCOUNT_FORGOT_RESET_PASSWORD, state: { user: response.data } });
                 })

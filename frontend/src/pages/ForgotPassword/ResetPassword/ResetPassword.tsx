@@ -9,10 +9,10 @@ import * as yup from "yup";
 
 import { ForgotPasswordTextField } from "../ForgotPasswordTextField/ForgotPasswordTextField";
 import { ACCOUNT_SECURITY_TIPS, DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
-import { AuthApi } from "../../../services/api/authApi";
 import { useResetPasswordStyles } from "./ResetPasswordStyles";
 import { AuthUserResponse } from "../../../types/user";
 import { ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE } from "../../../constants/path-constants";
+import { AuthenticationApi } from "../../../services/api/user-service/authenticationApi";
 
 interface ResetPasswordFormProps {
     password: string;
@@ -33,7 +33,7 @@ const ResetPassword: FC = (): ReactElement => {
     });
 
     const onSubmit = (data: ResetPasswordFormProps): void => {
-        AuthApi.passwordReset({
+        AuthenticationApi.passwordReset({
             email: location.state.user?.email!,
             password: data.password, password2: data.password2
         })

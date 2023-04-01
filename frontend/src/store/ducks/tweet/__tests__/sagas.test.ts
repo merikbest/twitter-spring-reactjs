@@ -67,7 +67,7 @@ describe("tweetSaga:", () => {
         const mockResponse = { data: true } as AxiosResponse<boolean>;
         const mockPayload = { tweetId: 1, isTweetBookmarked: true };
 
-        testCall(worker, BookmarkApi.addTweetToBookmarks, 1, true);
+        testCall(worker, BookmarkApi.processUserBookmarks, 1, true);
         testSetResponse(worker, mockResponse, setBookmarkedTweet, mockResponse.data, "boolean");
         testSetResponse(worker, true, setUpdatedBookmarkedTweetTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setUpdatedBookmarkedTweetUserTweetState, mockPayload, "boolean");
