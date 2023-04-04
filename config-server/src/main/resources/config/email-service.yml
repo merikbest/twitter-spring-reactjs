@@ -39,3 +39,16 @@ eureka:
         register-with-eureka: true
     instance:
         hostname: ${EUREKA_HOST:localhost}
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: 'prometheus, health'
+    metrics:
+        export:
+            prometheus:
+                enabled: true
+        distribution:
+            percentiles-histogram:
+                "[http.server.requests]": true

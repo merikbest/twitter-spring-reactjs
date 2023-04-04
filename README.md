@@ -4,7 +4,7 @@ Twitter clone developed with a microservice approach using the Spring Framework 
 The project is always updated with new features. </br>
 See more demo screenshots below.
 
-![Home page](screenshots/1_Preview.jpg)
+![Home page](https://i.ibb.co/vBsQTZT/1-Preview.jpg)
 
 ## Used Technologies:
 
@@ -85,61 +85,61 @@ Password: qwerty123
 ## Screenshots
 
 #### Add tweet
-![AddTweet](screenshots/2_Add_tweet.jpg)
+![AddTweet](https://i.ibb.co/D51M0Q5/2-Add-tweet.jpg)
 ___
 #### Add Poll
-![AddTPoll](screenshots/3_Add_Poll.jpg)
+![AddTPoll](https://i.ibb.co/Dw8B0Qf/3-Add-Poll.jpg)
 ___
 #### Reply tweet
-![Reply](screenshots/4_Reply_tweet.jpg)
+![Reply](https://i.ibb.co/SR3qtMG/4-Reply-tweet.jpg)
 ___
 #### Tweet image modal
-![TweetImageModal](screenshots/5_Tweet_image_modal.jpg)
+![TweetImageModal](https://i.ibb.co/gZD9L6p/5-Tweet-image-modal.jpg)
 ___
 #### Notifications
-![Notifications](screenshots/6_Notifications.jpg)
+![Notifications](https://i.ibb.co/8Y8CLyj/6-Notifications.jpg)
 ___
 #### Full Notifications
-![FullNotifications](screenshots/7_Full_Notifications.jpg)
+![FullNotifications](https://i.ibb.co/dKZjYCF/7-Full-Notifications.jpg)
 ___
 #### Search
-![Search](screenshots/8_Search.jpg)
+![Search](https://i.ibb.co/MCk2r0q/8-Search.jpg)
 ___
 #### Search Videos
-![SearchVideos](screenshots/9_Search_Videos.jpg)
+![SearchVideos](https://i.ibb.co/pnFN638/9-Search-Videos.jpg)
 ___
 #### Full tweet
-![FullTweet](screenshots/10_Full_tweet.jpg)
+![FullTweet](https://i.ibb.co/SN5Z3bD/10-Full-tweet.jpg)
 ___
 #### Liked by Modal window
-![LikedByModalWindow](screenshots/11_Liked_by_Modal_window.jpg)
+![LikedByModalWindow](https://i.ibb.co/vYts3qF/11-Liked-by-Modal-window.jpg)
 ___
 #### Following and Followers
-![FollowingAndFollowers](screenshots/12_Following_and_Followers.jpg)
+![FollowingAndFollowers](https://i.ibb.co/BjMSzf3/12-Following-and-Followers.jpg)
 ___
 #### Trends
-![Trends](screenshots/13_Trends.jpg)
+![Trends](https://i.ibb.co/BfJPZ8G/13-Trends.jpg)
 ___
 #### Bookmarks
-![Bookmarks](screenshots/14_Bookmarks.jpg)
+![Bookmarks](https://i.ibb.co/crYxw7V/14-Bookmarks.jpg)
 ___
 #### Chat
-![Chat](screenshots/15_Chat.jpg)
+![Chat](https://i.ibb.co/PM6qZ8n/15-Chat.jpg)
 ___
 #### Lists
-![Lists](screenshots/16_Lists.jpg)
+![Lists](https://i.ibb.co/ftpCZj8/16-Lists.jpg)
 ___
 #### Full List
-![FullList](screenshots/17_Full_List.jpg)
+![FullList](https://i.ibb.co/WVZrRX7/17-Full-List.jpg)
 ___
 #### Suggested Lists
-![SuggestedLists](screenshots/18_Suggested_Lists.jpg)
+![SuggestedLists](https://i.ibb.co/rsrgqZn/18-Suggested-Lists.jpg)
 ___
 #### Settings
-![Settings](screenshots/19_Settings.jpg)
+![Settings](https://i.ibb.co/r3BRZnM/19-Settings.jpg)
 ___
 #### Customization
-![Customization](screenshots/20_Profile_Customization.jpg)
+![Customization](https://i.ibb.co/bsqWhmN/20-Profile-Customization.jpg)
 ___
 #### Dark theme profile
-![Customization](screenshots/21_Profile_with_color_theme.jpg)
+![Customization](https://i.ibb.co/h1z1BCT/21-Profile-with-color-theme.jpg)

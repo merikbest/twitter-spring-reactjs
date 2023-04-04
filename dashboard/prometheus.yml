@@ -1,0 +1,51 @@
+scrape_configs:
+    -   job_name: 'user-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8001' ]
+    -   job_name: 'tweet-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8002' ]
+    -   job_name: 'topic-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8003' ]
+    -   job_name: 'tag-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8004' ]
+    -   job_name: 'lists-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8005' ]
+    -   job_name: 'chat-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8006' ]
+    -   job_name: 'notification-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8007' ]
+    -   job_name: 'email-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8020' ]
+    -   job_name: 'image-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8021' ]
+    -   job_name: 'websocket-service'
+        scrape_interval: 5s
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+            -   targets: [ 'host.docker.internal:8022' ]
