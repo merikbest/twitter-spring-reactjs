@@ -77,7 +77,6 @@ export const API_TWEETS_USER_LIKED = (userId: string | number) => `${API_ENDPOIN
 export const API_TWEETS_USER_REPLIES = (userId: string | number) => `${API_ENDPOINT}/tweets/replies/user/${userId}`;
 export const API_TWEETS_USER_MEDIA = (userId: string | number) => `${API_ENDPOINT}/tweets/media/user/${userId}`;
 export const API_TWEETS_USER_TWEETS = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}`;
-export const API_TWEETS_USER_MENTIONS = `${API_ENDPOINT}/tweets/user/mentions`;
 export const API_TWEETS_IMAGES = `${API_ENDPOINT}/tweets/images`;
 export const API_TWEETS_UPLOAD = `${API_ENDPOINT}/tweets/upload`;
 
@@ -100,6 +99,7 @@ export const API_USER_FOLLOW_DECLINE = `${API_ENDPOINT}/user/follow/decline`;
 export const API_USER_SUBSCRIBE = `${API_ENDPOINT}/user/subscribe`;
 export const API_NOTIFICATION = `${API_ENDPOINT}/notification`;
 export const API_NOTIFICATION_USER = `${API_ENDPOINT}/notification/user`;
+export const API_NOTIFICATION_MENTIONS = `${API_ENDPOINT}/notification/mentions`;
 export const API_NOTIFICATION_SUBSCRIBES = `${API_ENDPOINT}/notification/subscribes`;
 export const API_NOTIFICATION_TIMELINE = `${API_ENDPOINT}/notification/timeline`;
 export const API_USER_START = (userId: number) => `${API_ENDPOINT}/user/${userId}/start`;

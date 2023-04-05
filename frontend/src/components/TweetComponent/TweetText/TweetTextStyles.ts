@@ -11,6 +11,9 @@ export const useTweetTextStyles = makeStyles((theme) => ({
         "& #hashtag": {
             color: theme.palette.primary.main
         },
+        "& #mention": {
+            color: theme.palette.primary.main
+        },
         "& #link": {
             color: theme.palette.primary.main
         }

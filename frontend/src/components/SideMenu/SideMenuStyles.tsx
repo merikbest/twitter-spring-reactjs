@@ -69,7 +69,8 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
     },
     homeNotification: {
         position: "absolute",
-        marginLeft: 18,
+        marginLeft: 20,
+        marginBottom: 25,
         width: 6,
         height: 6,
         borderRadius: "50%",

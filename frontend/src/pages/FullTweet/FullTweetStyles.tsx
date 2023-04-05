@@ -41,6 +41,9 @@ export const useFullTweetStyles = makeStyles((theme) => ({
         "& #hashtag": {
             color: theme.palette.primary.main
         },
+        "& #mention": {
+            color: theme.palette.primary.main
+        },
         "& #link": {
             textDecoration: "none",
             color: theme.palette.primary.main

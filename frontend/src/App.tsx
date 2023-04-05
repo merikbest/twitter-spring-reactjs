@@ -90,6 +90,7 @@ import {
     TOPIC_FEED,
     TOPIC_FEED_ADD,
     TOPIC_FEED_SCHEDULE,
+    TOPIC_MENTIONS,
     TOPIC_NOTIFICATIONS
 } from "./constants/ws-constants";
 import { BACKGROUND, COLOR, TOKEN } from "./constants/common-constants";
@@ -168,6 +169,10 @@ const App: FC = (): ReactElement => {
                         dispatch(setNotification(JSON.parse(response.body)));
                         dispatch(setNewNotification());
                     }
+                });
+
+                stompClient?.subscribe(TOPIC_MENTIONS(myProfileId), () => {
+                    dispatch(setNewNotification());
                 });
             });
         }

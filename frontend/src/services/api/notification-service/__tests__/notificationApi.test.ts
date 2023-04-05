@@ -7,7 +7,7 @@ import {
     API_NOTIFICATION_SUBSCRIBES,
     API_NOTIFICATION_TIMELINE,
     API_NOTIFICATION_USER,
-    API_TWEETS_USER_MENTIONS
+    API_NOTIFICATION_MENTIONS
 } from "../../../../constants/endpoint-constants";
 import { mockTweets } from "../../../../util/test-utils/mock-test-data";
 import { NotificationApi } from "../notificationApi";
@@ -25,7 +25,7 @@ describe("NotificationApi", () => {
 
     describe("should fetch NotificationApi.getUserMentionsNotifications", () => {
         it("[200] should get user mentions Success", () => {
-            testApiCall(mockAdapter, "onGet", API_TWEETS_USER_MENTIONS, 200, mockTweets, NotificationApi.getUserMentionsNotifications, 1);
+            testApiCall(mockAdapter, "onGet", API_NOTIFICATION_MENTIONS, 200, mockTweets, NotificationApi.getUserMentionsNotifications, 1);
         });
     });
 

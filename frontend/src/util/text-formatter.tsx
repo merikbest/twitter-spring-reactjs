@@ -15,6 +15,10 @@ export const textFormatter = (text: string): ReactNodeArray => {
         <b key={index++} id="hashtag">{match}</b>
     ));
 
+    replacedText = reactStringReplace(replacedText, /(@\w+)\b/ig, (match) => (
+        <b key={index++} id="mention">{match}</b>
+    ));
+
     replacedText = reactStringReplace(replacedText, /(https?:\/\/[^\s]+)/g, (match) => (
         <a key={index++} href={match} id="link" target="_blank">{match}</a>
     ));

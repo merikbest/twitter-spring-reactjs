@@ -7,7 +7,7 @@ import {
     API_NOTIFICATION_SUBSCRIBES,
     API_NOTIFICATION_TIMELINE,
     API_NOTIFICATION_USER,
-    API_TWEETS_USER_MENTIONS
+    API_NOTIFICATION_MENTIONS
 } from "../../../constants/endpoint-constants";
 import { TweetResponse } from "../../../types/tweet";
 
@@ -16,7 +16,7 @@ export const NotificationApi = {
         return await axios.get<NotificationResponse[]>(API_NOTIFICATION_USER, { params: { page: pageNumber } });
     },
     async getUserMentionsNotifications(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
-        return await axios.get<TweetResponse[]>(API_TWEETS_USER_MENTIONS, { params: { page: pageNumber } });
+        return await axios.get<TweetResponse[]>(API_NOTIFICATION_MENTIONS, { params: { page: pageNumber } });
     },
     async getTweetAuthorsNotifications(): Promise<AxiosResponse<NotificationUserResponse[]>> {
         return await axios.get<NotificationUserResponse[]>(API_NOTIFICATION_SUBSCRIBES);
