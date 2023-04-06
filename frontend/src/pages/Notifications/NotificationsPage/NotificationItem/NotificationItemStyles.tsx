@@ -51,6 +51,10 @@ export const useNotificationItemStyles = makeStyles((theme: Theme) => ({
         marginBottom: 11
     },
     notificationText: {
+        "& a": {
+            color: theme.palette.primary.main,
+            textDecoration: "none"
+        },
         "& #hashtag": {
             color: theme.palette.primary.main
         }

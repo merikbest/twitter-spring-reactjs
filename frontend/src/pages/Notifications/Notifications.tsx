@@ -29,7 +29,7 @@ const Notifications: FC = (): ReactElement => {
     };
 
     return (
-        <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
+        <Paper className={globalClasses.pageContainer} variant="outlined">
             <Paper className={classnames(globalClasses.pageHeader, classes.header)}>
                 <div className={globalClasses.pageHeaderTitleWrapper}>
                     <Typography variant="h5">
@@ -41,7 +41,11 @@ const Notifications: FC = (): ReactElement => {
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
                         <Tab className={classes.tab} label="All" />
-                        <Tab className={classes.tab} label="Mentions" />
+                        <Tab
+                            className={classes.tab}
+                            label="Mentions"
+                            icon={<span className={classes.mentionNotification} />}
+                        />
                     </Tabs>
                 </div>
                 <Route exact path={NOTIFICATIONS} component={NotificationsPage} />

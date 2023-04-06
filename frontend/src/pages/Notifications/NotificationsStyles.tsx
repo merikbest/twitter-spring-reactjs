@@ -1,12 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
 export const useNotificationsStyles = makeStyles((theme: Theme) => ({
-    container: {
-        "& a": {
-            color: theme.palette.primary.main,
-            textDecoration: "none"
-        }
-    },
     header: {
         border: 0
     },
@@ -20,6 +14,10 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
         },
         "& .MuiTab-root": {
             fontWeight: 700
+        },
+        "& .MuiTab-labelIcon": {
+            minHeight: 0,
+            paddingTop: 0
         }
     },
     tab: {
@@ -28,5 +26,14 @@ export const useNotificationsStyles = makeStyles((theme: Theme) => ({
         "&:hover": {
             backgroundColor: theme.palette.secondary.light
         }
+    },
+    mentionNotification: {
+        position: "absolute",
+        marginBottom: "25px !important",
+        marginLeft: 75,
+        width: 6,
+        height: 6,
+        borderRadius: "50%",
+        backgroundColor: theme.palette.primary.main
     }
 }));
