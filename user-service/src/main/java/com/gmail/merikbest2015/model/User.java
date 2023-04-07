@@ -88,6 +88,9 @@ public class User {
     @Column(name = "notifications_count", columnDefinition = "int8 default 0")
     private Long notificationsCount = 0L;
 
+    @Column(name = "mentions_count", columnDefinition = "int8 default 0")
+    private Long mentionsCount = 0L;
+
     @Column(name = "active", columnDefinition = "boolean default false")
     private boolean active = false;
 

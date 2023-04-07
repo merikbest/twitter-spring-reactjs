@@ -56,7 +56,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     @Transactional
     public void sendTweetMentionNotification(Notification notification) {
         notificationRepository.save(notification);
-        userClient.increaseNotificationsCount(notification.getNotifiedUserId());
+        userClient.increaseMentionsCount(notification.getNotifiedUserId());
     }
 
     @Override

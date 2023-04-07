@@ -20,7 +20,6 @@ public class UserProfileResponse {
     private Long tweetCount;
     private Long mediaTweetCount;
     private Long likeCount;
-    private Long notificationsCount;
     private String avatar;
     private String wallpaper;
     private Long pinnedTweetId;

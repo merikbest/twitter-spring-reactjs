@@ -27,6 +27,7 @@ public class AuthUserResponse {
     private Long mediaTweetCount;
     private Long likeCount;
     private Long notificationsCount;
+    private Long mentionsCount;
     private boolean active;
     private boolean profileCustomized;
     private boolean profileStarted;

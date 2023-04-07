@@ -23,11 +23,17 @@ public interface UserClient {
     @GetMapping(NOTIFICATION_USER_ID)
     void increaseNotificationsCount(@PathVariable("userId") Long userId);
 
+    @GetMapping(MENTION_USER_ID)
+    void increaseMentionsCount(@PathVariable("userId") Long userId);
+
     @GetMapping(NOTIFICATION_USER_USER_ID)
     NotificationUserResponse getNotificationUser(@PathVariable("userId") Long userId);
 
     @GetMapping(NOTIFICATION_RESET)
     void resetNotificationCount();
+
+    @GetMapping(MENTION_RESET)
+    void resetMentionCount();
 
     @GetMapping(SUBSCRIBERS_USER_ID)
     List<Long> getSubscribersByUserId(@PathVariable("userId") Long userId);

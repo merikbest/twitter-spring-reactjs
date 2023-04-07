@@ -97,6 +97,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void increaseNotificationsCount(@Param("userId") Long userId);
 
     @Modifying
+    @Query("UPDATE User user SET user.mentionsCount = user.mentionsCount + 1 WHERE user.id = :userId")
+    void increaseMentionsCount(@Param("userId") Long userId);
+
+    @Modifying
     @Query("UPDATE User user SET user.likeCount = " +
             "CASE WHEN :increaseCount = true THEN (user.likeCount + 1) " +
             "ELSE (user.likeCount - 1) END " +
@@ -183,6 +187,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User user SET user.notificationsCount = 0 WHERE user.id = :userId")
     void resetNotificationCount(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE User user SET user.mentionsCount = 0 WHERE user.id = :userId")
+    void resetMentionCount(@Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.subscribers subscriber " +

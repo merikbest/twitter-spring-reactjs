@@ -44,7 +44,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional
     public Page<TweetResponse> getUserMentionsNotifications(Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        userClient.resetNotificationCount();
+        userClient.resetMentionCount();
         Page<Long> tweetIds = notificationRepository.getTweetNotificationMentionIds(authUserId, pageable);
         return getTweetResponses(tweetIds, pageable);
     }

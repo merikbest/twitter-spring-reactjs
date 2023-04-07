@@ -21,6 +21,7 @@ create table users
     media_tweet_count     int8    default 0,
     muted_direct_messages boolean default false,
     notifications_count   int8    default 0,
+    mentions_count        int8    default 0,
     password              varchar(255) not null,
     password_reset_code   varchar(255),
     phone                 int8,

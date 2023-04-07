@@ -74,6 +74,11 @@ public class UserApiController {
         userService.increaseNotificationsCount(userId);
     }
 
+    @GetMapping(MENTION_USER_ID)
+    public void increaseMentionsCount(@PathVariable("userId") Long userId) {
+        userService.increaseMentionsCount(userId);
+    }
+
     @PutMapping(LIKE_COUNT)
     public void updateLikeCount(@PathVariable("increaseCount") boolean increaseCount) {
         userService.updateLikeCount(increaseCount);
@@ -194,5 +199,10 @@ public class UserApiController {
     @GetMapping(NOTIFICATION_RESET)
     public void resetNotificationCount() {
         userService.resetNotificationCount();
+    }
+
+    @GetMapping(MENTION_RESET)
+    public void resetMentionCount() {
+        userService.resetMentionCount();
     }
 }

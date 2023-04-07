@@ -68,6 +68,7 @@ public class PathConstants {
     public static final String IS_USER_BLOCKED_USER_ID = "/is_user_blocked/{userId}";
     public static final String IS_MY_PROFILE_BLOCKED_USER_ID = "/is_my_profile_blocked/{userId}";
     public static final String NOTIFICATION_USER_ID = "/notification/{userId}";
+    public static final String MENTION_USER_ID = "/mention/{userId}";
     public static final String LIKE_COUNT = "/like/count/{increaseCount}";
     public static final String TWEET_COUNT = "/tweet/count/{increaseCount}";
     public static final String MEDIA_COUNT = "/media/count/{increaseCount}";
@@ -90,6 +91,7 @@ public class PathConstants {
     public static final String SUBSCRIBERS = "/subscribers";
     public static final String SUBSCRIBERS_IDS = SUBSCRIBERS + "/ids";
     public static final String NOTIFICATION_RESET = "/notification/reset";
+    public static final String MENTION_RESET = "/mention/reset";
 
     public static final String TAGS = "/tags";
     public static final String UI_V1_TAGS = UI_V1 + TAGS;

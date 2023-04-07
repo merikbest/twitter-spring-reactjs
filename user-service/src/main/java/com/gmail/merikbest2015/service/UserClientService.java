@@ -35,6 +35,8 @@ public interface UserClientService {
 
     void increaseNotificationsCount(Long userId);
 
+    void increaseMentionsCount(Long userId);
+
     void updateLikeCount(boolean increase);
 
     void updateTweetCount(boolean increaseCount);
@@ -82,4 +84,6 @@ public interface UserClientService {
     List<Long> getUserIdsWhichUserSubscribed();
 
     void resetNotificationCount();
+
+    void resetMentionCount();
 }
