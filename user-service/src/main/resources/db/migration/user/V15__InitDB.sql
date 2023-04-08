@@ -22,7 +22,7 @@ create table users
     muted_direct_messages boolean default false,
     notifications_count   int8    default 0,
     mentions_count        int8    default 0,
-    password              varchar(255) not null,
+    password              varchar(255),
     password_reset_code   varchar(255),
     phone                 int8,
     pinned_tweet_id       int8,

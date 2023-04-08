@@ -39,7 +39,7 @@ public class TweetApiControllerTest {
     private ObjectMapper mapper;
 
     @Test
-    @DisplayName("[200] POST /api/v1/tweets/tag/ids - Get tweets by ids")
+    @DisplayName("[200] POST /api/v1/tweets/ids - Get tweets by ids")
     public void getTweetsByIds() throws Exception {
         mockMvc.perform(post(API_V1_TWEETS + IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(40L, 41L, 42L))))
@@ -91,17 +91,6 @@ public class TweetApiControllerTest {
                 .andExpect(jsonPath("$.isUserFollowByOtherUser").value(false))
                 .andExpect(jsonPath("$.isTweetDeleted").value(false))
                 .andExpect(jsonPath("$.isTweetBookmarked").value(false));
-    }
-
-    @Test
-    @DisplayName("[200] POST /api/v1/tweets/ids - Get tweets by ids")
-    public void getTweetsByIds2() throws Exception {
-        mockMvc.perform(post(API_V1_TWEETS + IDS)
-                        .content(mapper.writeValueAsString(new IdsRequest(List.of(40L, 41L, 42L))))
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(2)));
     }
 
     @Test

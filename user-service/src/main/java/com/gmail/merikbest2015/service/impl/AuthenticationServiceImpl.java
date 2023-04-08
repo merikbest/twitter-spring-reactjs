@@ -89,13 +89,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
                 .orElseThrow(() -> new ApiRequestException(EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updatePasswordResetCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
+        String passwordResetCode = userRepository.getPasswordResetCode(user.getId());
         EmailRequest request = EmailRequest.builder()
                 .to(user.getEmail())
                 .subject("Password reset")
                 .template("password-reset-template")
                 .attributes(Map.of(
                         "fullName", user.getFullName(),
-                        "passwordResetCode", user.getPasswordResetCode()))
+                        "passwordResetCode", passwordResetCode))
                 .build();
         amqpProducer.sendEmail(request);
         return "Reset password code is send to your E-mail";

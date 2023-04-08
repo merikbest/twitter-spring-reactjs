@@ -41,7 +41,7 @@ public class TestConstants {
     public static final String AUTH_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMjAxNkBnbWFpbC5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTY2NzY0ODcyMSwiZXhwIjoxNjczNjk2NzIxfQ.KgiNzoq1UPNoeWaY00aPOinDdvv2e6NNlfupyaW2JxU";
 
     public static final String TEST_TWEET_TEXT = "test text";
-    public static final String USERNAME2 = "John Doe";
+    public static final String USERNAME2 = "John_Doe";
     public static final String ABOUT2 = "Hello2";
 
     public static final String TWEET_TEXT = "#JetBrains https://www.jetbrains.com/ ";

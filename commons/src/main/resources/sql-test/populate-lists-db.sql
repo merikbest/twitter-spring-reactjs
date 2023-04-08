@@ -5,7 +5,7 @@ INSERT INTO "lists-test".public.lists (id, alt_wallpaper, description, private, 
 INSERT INTO "lists-test".public.lists (id, alt_wallpaper, description, private, name, list_owner_id, wallpaper) VALUES (7, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', true, 'test list name', 1, null);
 INSERT INTO "lists-test".public.lists (id, alt_wallpaper, description, private, name, list_owner_id, wallpaper) VALUES (8, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', true, 'test list name', 1, null);
 INSERT INTO "lists-test".public.lists (id, alt_wallpaper, description, private, name, list_owner_id, wallpaper) VALUES (9, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 1, null);
-INSERT INTO "lists-test".public.lists (id, alt_wallpaper, description, private, name, list_owner_id, wallpaper) VALUES (10, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 5, null);
+INSERT INTO "lists-test".public.lists (id, alt_wallpaper, description, private, name, list_owner_id, wallpaper) VALUES (10, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 6, null);
 INSERT INTO "lists-test".public.lists (id, alt_wallpaper, description, private, name, list_owner_id, wallpaper) VALUES (11, 'https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small', 'test list description', false, 'test list name', 3, null);
 
 -- pinned_lists

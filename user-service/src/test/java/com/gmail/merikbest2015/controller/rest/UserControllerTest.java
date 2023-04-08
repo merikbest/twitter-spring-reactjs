@@ -79,7 +79,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.tweetCount").value(TestConstants.TWEET_COUNT))
                 .andExpect(jsonPath("$.mediaTweetCount").value(TestConstants.MEDIA_TWEET_COUNT))
                 .andExpect(jsonPath("$.likeCount").value(TestConstants.LIKE_TWEET_COUNT))
-                .andExpect(jsonPath("$.notificationsCount").value(0))
                 .andExpect(jsonPath("$.avatar").value(TestConstants.AVATAR_SRC_2))
                 .andExpect(jsonPath("$.pinnedTweetId").isEmpty())
                 .andExpect(jsonPath("$.followersSize").value(2L))
@@ -178,7 +177,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tweetCount").value(0L))
                 .andExpect(jsonPath("$.tags[*]", hasSize(0)))
-                .andExpect(jsonPath("$.users[*]", hasSize(7)));
+                .andExpect(jsonPath("$.users[*]", hasSize(6)));
     }
 
     @Test

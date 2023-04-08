@@ -66,13 +66,14 @@ public class RegistrationServiceImpl implements RegistrationService {
         UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updateActivationCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
+        String activationCode = userRepository.getActivationCode(user.getId());
         EmailRequest request = EmailRequest.builder()
                 .to(user.getEmail())
                 .subject("Registration code")
                 .template("registration-template")
                 .attributes(Map.of(
                         "fullName", user.getFullName(),
-                        "registrationCode", user.getActivationCode()))
+                        "registrationCode", activationCode))
                 .build();
         amqpProducer.sendEmail(request);
         return "Registration code sent successfully";

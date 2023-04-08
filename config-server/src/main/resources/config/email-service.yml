@@ -11,7 +11,7 @@ spring:
     mail:
         host: smtp.gmail.com
         username: twitter.spring.reactjs@gmail.com
-        password: Fcnhfk-rbtd
+        password: tqzkgmxlwyukvwpt
         port: 465
         protocol: smtps
         properties:

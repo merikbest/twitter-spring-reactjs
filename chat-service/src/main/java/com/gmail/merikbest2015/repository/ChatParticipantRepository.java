@@ -29,8 +29,9 @@ public interface ChatParticipantRepository extends JpaRepository<ChatParticipant
     Optional<Long> getParticipantUserId(@Param("participantId") Long participantId, @Param("chatId") Long chatId);
 
     @Query("SELECT chatParticipant.userId FROM ChatParticipant chatParticipant " +
-            "WHERE chatParticipant.id <> :authUserId " +
-            "AND chatParticipant.chat.id = :chatId")
+            "WHERE chatParticipant.chat.id = :chatId " +
+            "GROUP BY chatParticipant.userId " +
+            "HAVING chatParticipant.userId <> :authUserId")
     Long getChatParticipantId(@Param("authUserId") Long authUserId, @Param("chatId") Long chatId);
 
     @Modifying

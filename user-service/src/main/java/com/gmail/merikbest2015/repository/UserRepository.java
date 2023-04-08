@@ -25,8 +25,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user FROM User user WHERE user.activationCode = :code")
     Optional<UserCommonProjection> getCommonUserByActivationCode(@Param("code") String code);
 
+    @Query("SELECT user.activationCode FROM User user WHERE user.id = :userId")
+    String getActivationCode(@Param("userId") Long userId);
+
     @Query("SELECT user FROM User user WHERE user.passwordResetCode = :code")
     Optional<AuthUserProjection> getByPasswordResetCode(@Param("code") String code);
+
+    @Query("SELECT user.passwordResetCode FROM User user WHERE user.id = :userId")
+    String getPasswordResetCode(@Param("userId") Long userId);
 
     @Query("SELECT user.password FROM User user WHERE user.id = :userId")
     String getUserPasswordById(@Param("userId") Long userId);

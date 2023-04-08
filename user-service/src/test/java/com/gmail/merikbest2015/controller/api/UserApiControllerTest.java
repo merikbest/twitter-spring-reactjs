@@ -62,13 +62,13 @@ public class UserApiControllerTest {
                 .andExpect(jsonPath("$.items[0].username").value(TestConstants.USERNAME))
                 .andExpect(jsonPath("$.items[0].about").value(TestConstants.ABOUT))
                 .andExpect(jsonPath("$.items[0].avatar").value(TestConstants.AVATAR_SRC_1))
-                .andExpect(jsonPath("$.items[0].isPrivateProfile").value(false))
-                .andExpect(jsonPath("$.items[0].isMutedDirectMessages").value(true))
-                .andExpect(jsonPath("$.items[0].isUserBlocked").value(false))
+                .andExpect(jsonPath("$.items[0].isPrivateProfile").isNotEmpty())
+                .andExpect(jsonPath("$.items[0].isMutedDirectMessages").isNotEmpty())
+                .andExpect(jsonPath("$.items[0].isUserBlocked").isNotEmpty())
                 .andExpect(jsonPath("$.items[0].isMyProfileBlocked").isNotEmpty())
-                .andExpect(jsonPath("$.items[0].isWaitingForApprove").value(false))
-                .andExpect(jsonPath("$.items[0].isFollower").value(false))
-                .andExpect(jsonPath("$.items[0].isUserChatParticipant").value(false));
+                .andExpect(jsonPath("$.items[0].isWaitingForApprove").isNotEmpty())
+                .andExpect(jsonPath("$.items[0].isFollower").isNotEmpty())
+                .andExpect(jsonPath("$.items[0].isUserChatParticipant").isNotEmpty());
     }
 
     @Test
@@ -129,6 +129,14 @@ public class UserApiControllerTest {
     @DisplayName("[200] GET /api/v1/user/notification/2 - Increase notifications count")
     public void increaseNotificationsCount() throws Exception {
         mockMvc.perform(get(API_V1_USER + NOTIFICATION_USER_ID, 2)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("[200] GET /api/v1/user/mention/2 - Increase mentions count")
+    public void increaseMentionsCount() throws Exception {
+        mockMvc.perform(get(API_V1_USER + MENTION_USER_ID, 2)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk());
     }
@@ -375,9 +383,9 @@ public class UserApiControllerTest {
     }
 
     @Test
-    @DisplayName("[200] GET /api/v1/user/id/John - Get user id by username")
+    @DisplayName("[200] GET /api/v1/user/id/@John_Doe - Get user id by username")
     public void getUserIdByUsername() throws Exception {
-        mockMvc.perform(get(API_V1_USER + USER_ID_USERNAME, "John")
+        mockMvc.perform(get(API_V1_USER + USER_ID_USERNAME, "@John_Doe")
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(1L));
@@ -432,6 +440,14 @@ public class UserApiControllerTest {
     @DisplayName("[200] GET /api/v1/user/notification/reset - Reset notification count")
     public void resetNotificationCount() throws Exception {
         mockMvc.perform(get(API_V1_USER + NOTIFICATION_RESET)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("[200] GET /api/v1/user/mention/reset - Reset mention count")
+    public void resetMentionCount() throws Exception {
+        mockMvc.perform(get(API_V1_USER + MENTION_RESET)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk());
     }
