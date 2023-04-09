@@ -50,6 +50,9 @@ export enum UserActionsType {
     FETCH_READ_MESSAGES = "user/FETCH_READ_MESSAGES",
     SET_UNREAD_MESSAGE = "user/SET_UNREAD_MESSAGE",
     SET_NEW_NOTIFICATION = "user/SET_NEW_NOTIFICATION",
+    RESET_NOTIFICATIONS = "user/RESET_NOTIFICATIONS",
+    SET_NEW_MENTION = "user/SET_NEW_MENTION",
+    RESET_MENTIONS = "user/RESET_MENTIONS",
 }
 
 export interface SignOutActionInterface extends Action<UserActionsType> {
@@ -208,6 +211,18 @@ export interface SetNewNotificationActionInterface extends Action<UserActionsTyp
     type: UserActionsType.SET_NEW_NOTIFICATION;
 }
 
+export interface ResetNotificationsActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.RESET_NOTIFICATIONS;
+}
+
+export interface SetNewMentionActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.SET_NEW_MENTION;
+}
+
+export interface ResetMentionsActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.RESET_MENTIONS;
+}
+
 export interface SetUsernameActionInterface extends Action<UserActionsType> {
     type: UserActionsType.SET_USERNAME;
     payload: string;
@@ -263,6 +278,9 @@ export type UserActions =
     | SetUserLoadingStateActionInterface
     | SetUnreadMessageActionInterface
     | SetNewNotificationActionInterface
+    | ResetNotificationsActionInterface
+    | SetNewMentionActionInterface
+    | ResetMentionsActionInterface
     | SignOutActionInterface
     | SetUsernameActionInterface
     | SetEmailActionInterface

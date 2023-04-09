@@ -6,7 +6,15 @@ import { LoadingStatus } from "../../../types/common";
 export const selectUserState = (state: RootState): UserState => state.user;
 export const selectUserData = (state: RootState): UserState["data"] => selectUserState(state).data;
 export const selectUserDataId = (state: RootState) => selectUserData(state)?.id;
-export const selectUserDataNotificationsCount = (state: RootState) => selectUserData(state)?.notificationsCount;
+export const selectUserDataNotificationsCount = (state: RootState) => {
+    const userData = selectUserData(state);
+    if (userData) {
+        return userData.notificationsCount + userData.mentionsCount;
+    } else {
+        return 0;
+    }
+};
+export const selectUserDataMentionsCount = (state: RootState) => selectUserData(state)?.mentionsCount;
 export const selectUserDataUnreadMessagesCount = (state: RootState) => selectUserData(state)?.unreadMessagesCount;
 export const selectUserDataFollowerRequestsSize = (state: RootState) => selectUserData(state)?.followerRequestsSize;
 export const selectUserDataIsPrivateProfile = (state: RootState) => selectUserData(state)?.isPrivateProfile;

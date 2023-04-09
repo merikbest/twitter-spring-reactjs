@@ -14,7 +14,7 @@ import Home from "./pages/Home/Home";
 import { Layout } from "./pages/Layout";
 import UserPage from "./pages/UserPage/UserPage";
 import { selectIsAuth, selectUserDataId, selectUserStatus } from "./store/ducks/user/selectors";
-import { fetchUserData, setNewNotification, setUnreadMessage } from "./store/ducks/user/actionCreators";
+import { fetchUserData, setNewMention, setNewNotification, setUnreadMessage } from "./store/ducks/user/actionCreators";
 import Explore from "./pages/Explore/Explore";
 import FollowingFollowers from "./pages/FollowingFollowers/FollowingFollowers";
 import TweetImageModal from "./components/TweetImageModal/TweetImageModal";
@@ -172,7 +172,7 @@ const App: FC = (): ReactElement => {
                 });
 
                 stompClient?.subscribe(TOPIC_MENTIONS(myProfileId), () => {
-                    dispatch(setNewNotification());
+                    dispatch(setNewMention());
                 });
             });
         }

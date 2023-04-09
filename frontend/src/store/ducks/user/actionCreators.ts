@@ -9,6 +9,8 @@ import {
     ProcessFollowRequestActionInterface,
     ProcessUserToBlocklistActionInterface,
     ProcessUserToMuteListActionInterface,
+    ResetMentionsActionInterface,
+    ResetNotificationsActionInterface,
     SetBackgroundColorActionInterface,
     SetColorSchemeActionInterface,
     SetCountryActionInterface,
@@ -17,6 +19,7 @@ import {
     SetFollowersSizeActionInterface,
     SetGenderActionInterface,
     SetLanguageActionInterface,
+    SetNewMentionActionInterface,
     SetNewNotificationActionInterface,
     SetPhoneActionInterface,
     SetPinTweetIdActionInterface,
@@ -152,6 +155,18 @@ export const setUnreadMessage = (payload: ChatMessageResponse): SetUnreadMessage
 
 export const setNewNotification = (): SetNewNotificationActionInterface => ({
     type: UserActionsType.SET_NEW_NOTIFICATION
+});
+
+export const resetNotifications = (): ResetNotificationsActionInterface => ({
+    type: UserActionsType.RESET_NOTIFICATIONS
+});
+
+export const setNewMention = (): SetNewMentionActionInterface => ({
+    type: UserActionsType.SET_NEW_MENTION
+});
+
+export const resetMentions = (): ResetMentionsActionInterface => ({
+    type: UserActionsType.RESET_MENTIONS
 });
 
 export const updateUsername = (payload: Settings): UpdateUsernameActionInterface => ({

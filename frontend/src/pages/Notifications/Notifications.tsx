@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, ReactElement, useState } from "react";
 import { Route, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Typography } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -12,11 +13,13 @@ import { withDocumentTitle } from "../../hoc/withDocumentTitle";
 import { NOTIFICATIONS, NOTIFICATIONS_MENTIONS } from "../../constants/path-constants";
 import NotificationsPage from "./NotificationsPage/NotificationsPage";
 import MentionsPage from "./MentionsPage/MentionsPage";
+import { selectUserDataMentionsCount } from "../../store/ducks/user/selectors";
 
 const Notifications: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useNotificationsStyles();
     const history = useHistory();
+    const userMentionsCount = useSelector(selectUserDataMentionsCount);
     const [activeTab, setActiveTab] = useState<number>(0);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
@@ -44,7 +47,7 @@ const Notifications: FC = (): ReactElement => {
                         <Tab
                             className={classes.tab}
                             label="Mentions"
-                            icon={<span className={classes.mentionNotification} />}
+                            icon={userMentionsCount ? <span className={classes.mentionNotification} /> : undefined}
                         />
                     </Tabs>
                 </div>

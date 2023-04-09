@@ -8,6 +8,7 @@ import { resetTweets } from "../../../store/ducks/tweets/actionCreators";
 import { fetchMentions } from "../../../store/ducks/notifications/actionCreators";
 import EmptyNotifications from "../EmptyNotifications/EmptyNotifications";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import { resetMentions } from "../../../store/ducks/user/actionCreators";
 
 const MentionsPage: FC = (): ReactElement => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const MentionsPage: FC = (): ReactElement => {
     useEffect(() => {
         window.scrollTo(0, 0);
         loadTweets(0);
+        dispatch(resetMentions());
 
         return () => {
             dispatch(resetTweets());

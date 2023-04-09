@@ -18,7 +18,6 @@ public interface UserProfileProjection {
     Long getTweetCount();
     Long getMediaTweetCount();
     Long getLikeCount();
-    Long getNotificationsCount();
     boolean isMutedDirectMessages();
     boolean isPrivateProfile();
     String getAvatar();

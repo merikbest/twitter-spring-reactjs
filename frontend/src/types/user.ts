@@ -13,7 +13,6 @@ export interface UserProfileResponse {
     tweetCount: number;
     mediaTweetCount: number;
     likeCount: number;
-    notificationsCount: number;
     isMutedDirectMessages: boolean;
     isPrivateProfile: boolean;
     avatar: string;
@@ -79,6 +78,7 @@ export interface AuthUserResponse {
     mediaTweetCount: number;
     likeCount: number;
     notificationsCount: number;
+    mentionsCount: number;
     active: boolean;
     profileCustomized: boolean;
     profileStarted: boolean;

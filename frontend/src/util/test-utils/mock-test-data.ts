@@ -150,6 +150,7 @@ export const mockUser = {
     "mediaTweetCount": 25,
     "likeCount": 30,
     "notificationsCount": 0,
+    "mentionsCount": 0,
     "active": true,
     "profileCustomized": false,
     "profileStarted": true,

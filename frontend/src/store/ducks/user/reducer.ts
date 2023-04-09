@@ -107,6 +107,27 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
             }
             break;
 
+        case UserActionsType.RESET_NOTIFICATIONS:
+            if (draft.data) {
+                draft.data.notificationsCount = 0;
+                draft.status = LoadingStatus.LOADED;
+            }
+            break;
+
+        case UserActionsType.SET_NEW_MENTION:
+            if (draft.data) {
+                draft.data.mentionsCount = draft.data.mentionsCount + 1;
+                draft.status = LoadingStatus.LOADED;
+            }
+            break;
+
+        case UserActionsType.RESET_MENTIONS:
+            if (draft.data) {
+                draft.data.mentionsCount = 0;
+                draft.status = LoadingStatus.LOADED;
+            }
+            break;
+
         case UserActionsType.SET_FOLLOWERS_SIZE:
             if (draft.data) {
                 draft.data.followersSize = draft.data.followersSize + 1;

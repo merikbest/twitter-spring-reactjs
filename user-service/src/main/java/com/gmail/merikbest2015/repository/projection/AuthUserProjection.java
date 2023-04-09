@@ -25,6 +25,7 @@ public interface AuthUserProjection { // TODO refactor
     Long getMediaTweetCount();
     Long getLikeCount();
     Long getNotificationsCount();
+    Long getMentionsCount();
     boolean isActive();
     boolean isProfileCustomized();
     boolean isProfileStarted();
