@@ -267,6 +267,60 @@ describe("userReducer:", () => {
         );
 
         testActionDispatch(
+            UserActionsType.RESET_NOTIFICATIONS,
+            userReducer(
+                {
+                    ...initialUserState,
+                    data: { id: 1, notificationsCount: 111 } as AuthUserResponse
+                },
+                {
+                    type: UserActionsType.RESET_NOTIFICATIONS
+                }
+            ),
+            {
+                ...initialUserState,
+                data: { id: 1, notificationsCount: 0 } as AuthUserResponse,
+                status: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
+            UserActionsType.SET_NEW_MENTION,
+            userReducer(
+                {
+                    ...initialUserState,
+                    data: { id: 1, mentionsCount: 0 } as AuthUserResponse
+                },
+                {
+                    type: UserActionsType.SET_NEW_MENTION
+                }
+            ),
+            {
+                ...initialUserState,
+                data: { id: 1, mentionsCount: 1 } as AuthUserResponse,
+                status: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
+            UserActionsType.RESET_MENTIONS,
+            userReducer(
+                {
+                    ...initialUserState,
+                    data: { id: 1, mentionsCount: 111 } as AuthUserResponse
+                },
+                {
+                    type: UserActionsType.RESET_MENTIONS
+                }
+            ),
+            {
+                ...initialUserState,
+                data: { id: 1, mentionsCount: 0 } as AuthUserResponse,
+                status: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
             UserActionsType.SET_FOLLOWERS_SIZE,
             userReducer(
                 {

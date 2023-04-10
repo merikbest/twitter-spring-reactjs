@@ -9,6 +9,8 @@ import {
     processFollowRequest,
     processUserToBlocklist,
     processUserToMuteList,
+    resetMentions,
+    resetNotifications,
     setBackgroundColor,
     setColorScheme,
     setCountry,
@@ -17,6 +19,7 @@ import {
     setFollowersSize,
     setGender,
     setLanguage,
+    setNewMention,
     setNewNotification,
     setPhone,
     setPinTweetId,
@@ -155,6 +158,18 @@ describe("user actions", () => {
 
     testAction(setNewNotification, setNewNotification(), {
         type: UserActionsType.SET_NEW_NOTIFICATION
+    });
+
+    testAction(resetNotifications, resetNotifications(), {
+        type: UserActionsType.RESET_NOTIFICATIONS
+    });
+
+    testAction(setNewMention, setNewMention(), {
+        type: UserActionsType.SET_NEW_MENTION
+    });
+
+    testAction(resetMentions, resetMentions(), {
+        type: UserActionsType.RESET_MENTIONS
     });
 
     testAction(updateUsername, updateUsername({ username: "text" } as Settings), {

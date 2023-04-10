@@ -39,6 +39,6 @@ describe("MentionsPage", () => {
     it("should unmount MentionsPage", () => {
         const wrapper = mountWithStore(<MentionsPage />, mockStore);
         wrapper.unmount();
-        expect(mockDispatchFn).nthCalledWith(2, { type: TweetsActionType.RESET_TWEETS });
+        expect(mockDispatchFn).nthCalledWith(3, { type: TweetsActionType.RESET_TWEETS });
     });
 });
