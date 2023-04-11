@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,6 +124,10 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query(value = "INSERT INTO replies (tweet_id, reply_id) VALUES (?1, ?2)", nativeQuery = true)
     void addReply(@Param("tweetId") Long tweetId, @Param("replyId") Long replyId);
 
+    @Modifying
+    @Query(value = "INSERT INTO quotes (tweet_id, quote_id) VALUES (?1, ?2)", nativeQuery = true)
+    void addQuote(@Param("tweetId") Long tweetId, @Param("quoteTweetId") Long quoteTweetId);
+
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.authorId = :userId")
     Optional<Tweet> getTweetByAuthorIdAndTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
 
@@ -158,4 +163,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "AND tweet.deleted = false " +
             "AND UPPER(tweet.text) LIKE UPPER(CONCAT('%',:text,'%'))")
     Long getTweetCountByText(@Param("text") String text);
+
+    List<Tweet> findAllByScheduledDate(LocalDateTime now);
 }

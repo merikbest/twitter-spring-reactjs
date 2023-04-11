@@ -36,7 +36,7 @@ public class NotificationApiController {
     @PostMapping(MENTION)
     public void sendTweetMentionNotification(@RequestBody NotificationRequest request) {
         notificationClientMapper.sendTweetMentionNotification(request);
-        webSocketClient.send(TOPIC_MENTIONS + request.getUserId(), request.getTweetId());
+        webSocketClient.send(TOPIC_MENTIONS + request.getUserId(), request.getTweet());
     }
 
     @GetMapping(TWEET_TWEET_ID)

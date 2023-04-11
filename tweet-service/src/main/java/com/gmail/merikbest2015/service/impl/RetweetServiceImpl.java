@@ -13,8 +13,9 @@ import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.service.RetweetService;
+import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import com.gmail.merikbest2015.util.AuthUtil;
-import com.gmail.merikbest2015.util.TweetServiceHelper;
+import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,12 +30,13 @@ public class RetweetServiceImpl implements RetweetService {
 
     private final TweetRepository tweetRepository;
     private final TweetServiceHelper tweetServiceHelper;
+    private final TweetValidationHelper tweetValidationHelper;
     private final RetweetRepository retweetRepository;
     private final UserClient userClient;
 
     @Override
     public Page<TweetUserProjection> getUserRetweetsAndReplies(Long userId, Pageable pageable) {
-        tweetServiceHelper.validateUserProfile(userId);
+        tweetValidationHelper.validateUserProfile(userId);
         List<TweetUserProjection> replies = tweetRepository.getRepliesByUserId(userId);
         List<RetweetProjection> retweets = retweetRepository.getRetweetsByUserId(userId);
         List<TweetUserProjection> userTweets = tweetServiceHelper.combineTweetsArrays(replies, retweets);
@@ -43,7 +45,7 @@ public class RetweetServiceImpl implements RetweetService {
 
     @Override
     public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
-        tweetServiceHelper.checkValidTweet(tweetId);
+        tweetValidationHelper.checkValidTweet(tweetId);
         List<Long> retweetedUserIds = retweetRepository.getRetweetedUserIds(tweetId);
         return userClient.getRetweetedUsersByIds(new IdsRequest(retweetedUserIds), pageable);
     }
@@ -51,7 +53,7 @@ public class RetweetServiceImpl implements RetweetService {
     @Override
     @Transactional
     public NotificationResponse retweet(Long tweetId) {
-        Tweet tweet = tweetServiceHelper.checkValidTweet(tweetId);
+        Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Retweet retweet = retweetRepository.isTweetRetweeted(authUserId, tweetId);
         boolean isRetweeted;

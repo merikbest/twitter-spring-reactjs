@@ -4,8 +4,8 @@ import com.gmail.merikbest2015.model.Bookmark;
 import com.gmail.merikbest2015.repository.BookmarkRepository;
 import com.gmail.merikbest2015.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.service.BookmarkService;
+import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import com.gmail.merikbest2015.util.AuthUtil;
-import com.gmail.merikbest2015.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookmarkServiceImpl implements BookmarkService {
 
     private final BookmarkRepository bookmarkRepository;
-    private final TweetServiceHelper tweetServiceHelper;
+    private final TweetValidationHelper tweetValidationHelper;
 
     @Override
     public Page<BookmarkProjection> getUserBookmarks(Pageable pageable) {
@@ -28,7 +28,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     @Transactional
     public Boolean processUserBookmarks(Long tweetId) {
-        tweetServiceHelper.checkValidTweet(tweetId);
+        tweetValidationHelper.checkValidTweet(tweetId);
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Bookmark bookmark = bookmarkRepository.getUserBookmark(authUserId, tweetId);
 

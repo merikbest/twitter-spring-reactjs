@@ -6,6 +6,7 @@ public class WebsocketConstants {
     public static final String TOPIC_MENTIONS = TOPIC + "/mentions/";
     public static final String TOPIC_FEED = TOPIC + "/feed";
     public static final String TOPIC_FEED_ADD = TOPIC + "/feed/add";
+    public static final String TOPIC_FEED_SCHEDULE = TOPIC + "/feed/add/schedule";
     public static final String TOPIC_CHAT = TOPIC + "/chat/";
     public static final String TOPIC_TWEET = TOPIC + "/tweet/";
     public static final String TOPIC_USER_UPDATE_TWEET = TOPIC + "/user/update/tweet/";

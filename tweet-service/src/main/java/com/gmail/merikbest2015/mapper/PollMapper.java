@@ -18,9 +18,7 @@ public class PollMapper {
 
     public TweetResponse createPoll(TweetRequest tweetRequest) {
         Tweet tweet = basicMapper.convertToResponse(tweetRequest, Tweet.class);
-        TweetProjection tweetProjection = pollService.createPoll(tweetRequest.getPollDateTime(),
-                tweetRequest.getChoices(), tweet);
-        return basicMapper.convertToResponse(tweetProjection, TweetResponse.class);
+        return pollService.createPoll(tweetRequest.getPollDateTime(), tweetRequest.getChoices(), tweet);
     }
 
     public TweetResponse voteInPoll(VoteRequest voteRequest) {

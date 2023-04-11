@@ -1,12 +1,14 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.ScheduledTweetService;
+import com.gmail.merikbest2015.service.util.TweetServiceHelper;
+import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import com.gmail.merikbest2015.util.AuthUtil;
-import com.gmail.merikbest2015.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,7 @@ public class ScheduledTweetServiceImpl implements ScheduledTweetService {
     private final TweetRepository tweetRepository;
     private final TweetServiceImpl tweetService;
     private final TweetServiceHelper tweetServiceHelper;
+    private final TweetValidationHelper tweetValidationHelper;
 
     @Override
     public Page<TweetProjection> getScheduledTweets(Pageable pageable) {
@@ -34,8 +37,8 @@ public class ScheduledTweetServiceImpl implements ScheduledTweetService {
 
     @Override
     @Transactional
-    public TweetProjection createScheduledTweet(Tweet tweet) {
-        return tweetService.createNewTweet(tweet);
+    public TweetResponse createScheduledTweet(Tweet tweet) {
+        return tweetServiceHelper.createTweet(tweet);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class ScheduledTweetServiceImpl implements ScheduledTweetService {
     public TweetProjection updateScheduledTweet(Tweet tweetInfo) {
         Tweet tweet = tweetRepository.findById(tweetInfo.getId())
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
-        tweetServiceHelper.checkTweetTextLength(tweetInfo.getText());
+        tweetValidationHelper.checkTweetTextLength(tweetInfo.getText());
         tweet.setText(tweetInfo.getText());
         tweet.setImages(tweetInfo.getImages());
         return tweetService.getTweetById(tweet.getId());

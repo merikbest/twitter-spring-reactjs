@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.util;
+package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
@@ -10,6 +10,7 @@ import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
+import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

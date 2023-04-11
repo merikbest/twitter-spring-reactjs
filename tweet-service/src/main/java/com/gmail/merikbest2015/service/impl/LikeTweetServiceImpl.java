@@ -11,8 +11,9 @@ import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.LikeTweetRepository;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.service.LikeTweetService;
+import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import com.gmail.merikbest2015.util.AuthUtil;
-import com.gmail.merikbest2015.util.TweetServiceHelper;
+import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,17 +28,18 @@ public class LikeTweetServiceImpl implements LikeTweetService {
 
     private final LikeTweetRepository likeTweetRepository;
     private final TweetServiceHelper tweetServiceHelper;
+    private final TweetValidationHelper tweetValidationHelper;
     private final UserClient userClient;
 
     @Override
     public Page<LikeTweetProjection> getUserLikedTweets(Long userId, Pageable pageable) {
-        tweetServiceHelper.validateUserProfile(userId);
+        tweetValidationHelper.validateUserProfile(userId);
         return likeTweetRepository.getUserLikedTweets(userId, pageable);
     }
 
     @Override
     public HeaderResponse<UserResponse> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
-        tweetServiceHelper.checkValidTweet(tweetId);
+        tweetValidationHelper.checkValidTweet(tweetId);
         List<Long> likedUserIds = likeTweetRepository.getLikedUserIds(tweetId);
         return userClient.getTweetLikedUsersByIds(new IdsRequest(likedUserIds), pageable);
     }
@@ -45,7 +47,7 @@ public class LikeTweetServiceImpl implements LikeTweetService {
     @Override
     @Transactional
     public NotificationResponse likeTweet(Long tweetId) {
-        Tweet tweet = tweetServiceHelper.checkValidTweet(tweetId);
+        Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         LikeTweet likedTweet = likeTweetRepository.getLikedTweet(authUserId, tweetId);
         boolean isTweetLiked;

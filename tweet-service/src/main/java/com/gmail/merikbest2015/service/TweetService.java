@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
@@ -39,15 +40,15 @@ public interface TweetService {
 
     TweetImage uploadTweetImage(MultipartFile file);
 
-    TweetProjection createNewTweet(Tweet tweet);
+    TweetResponse createNewTweet(Tweet tweet);
 
     String deleteTweet(Long tweetId);
 
     Page<TweetProjection> searchTweets(String text, Pageable pageable);
 
-    TweetProjection replyTweet(Long tweetId, Tweet reply);
+    TweetResponse replyTweet(Long tweetId, Tweet reply);
 
-    TweetProjection quoteTweet(Long tweetId, Tweet quote);
+    TweetResponse quoteTweet(Long tweetId, Tweet quote);
 
     TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType);
 }
