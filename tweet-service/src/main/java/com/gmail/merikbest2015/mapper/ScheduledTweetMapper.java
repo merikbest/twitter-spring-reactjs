@@ -25,7 +25,8 @@ public class ScheduledTweetMapper {
     }
 
     public TweetResponse createScheduledTweet(TweetRequest tweetRequest) {
-        return scheduledTweetService.createScheduledTweet(basicMapper.convertToResponse(tweetRequest, Tweet.class));
+        TweetProjection tweet = scheduledTweetService.createScheduledTweet(basicMapper.convertToResponse(tweetRequest, Tweet.class));
+        return basicMapper.convertToResponse(tweet, TweetResponse.class);
     }
 
     public TweetResponse updateScheduledTweet(TweetRequest tweetRequest) {

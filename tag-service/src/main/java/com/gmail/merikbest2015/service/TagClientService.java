@@ -6,7 +6,7 @@ public interface TagClientService {
 
     List<String> getTagsByText(String text);
 
-    void parseHashtagsInText(Long tweetId, String text);
+    void parseHashtagsFromText(Long tweetId, String text);
 
     void deleteTagsByTweetId(Long tweetId);
 }

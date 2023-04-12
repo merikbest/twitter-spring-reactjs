@@ -17,7 +17,7 @@ import static com.gmail.merikbest2015.constants.PathConstants.*;
 public interface TagClient {
 
     @PostMapping(PARSE_TWEET_ID)
-    void parseHashtagsInText(@PathVariable("tweetId") Long tweetId, @RequestBody TweetTextRequest request);
+    void parseHashtagsFromText(@PathVariable("tweetId") Long tweetId, @RequestBody TweetTextRequest request);
 
     @DeleteMapping(DELETE_TWEET_ID)
     void deleteTagsByTweetId(@PathVariable("tweetId") Long tweetId);

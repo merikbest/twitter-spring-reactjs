@@ -22,8 +22,8 @@ public class TagApiController {
     }
 
     @PostMapping(PARSE_TWEET_ID)
-    public void parseHashtagsInText(@PathVariable("tweetId") Long tweetId, @RequestBody TweetTextRequest request) {
-        tagClientService.parseHashtagsInText(tweetId, request.getText());
+    public void parseHashtagsFromText(@PathVariable("tweetId") Long tweetId, @RequestBody TweetTextRequest request) {
+        tagClientService.parseHashtagsFromText(tweetId, request.getText());
     }
 
     @DeleteMapping(DELETE_TWEET_ID)

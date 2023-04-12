@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
@@ -37,8 +36,13 @@ public class ScheduledTweetServiceImpl implements ScheduledTweetService {
 
     @Override
     @Transactional
-    public TweetResponse createScheduledTweet(Tweet tweet) {
-        return tweetServiceHelper.createTweet(tweet);
+    public TweetProjection createScheduledTweet(Tweet tweet) {
+        tweetValidationHelper.checkTweetTextLength(tweet.getText());
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        tweet.setAuthorId(authUserId);
+        tweetServiceHelper.parseMetadataFromURL(tweet);
+        tweetRepository.save(tweet);
+        return tweetService.getTweetById(tweet.getId());
     }
 
     @Override

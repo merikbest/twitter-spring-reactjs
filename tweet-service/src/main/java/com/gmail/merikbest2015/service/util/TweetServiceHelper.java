@@ -73,16 +73,11 @@ public class TweetServiceHelper {
                 userClient.updateTweetCount(true);
             }
         }
-        TweetProjection tweetProjection = tweetRepository.getTweetById(tweet.getId(), TweetProjection.class).get();
-        TweetResponse tweetResponse = basicMapper.convertToResponse(tweetProjection, TweetResponse.class);
-        parseUserMentionFromText(tweetResponse);
-        tagClient.parseHashtagsInText(tweet.getId(), new TweetTextRequest(tweet.getText()));
-        notificationClient.sendTweetNotificationToSubscribers(tweet.getId());
-        return tweetResponse;
+        return processTweetResponse(tweet);
     }
 
     @SneakyThrows
-    private boolean parseMetadataFromURL(Tweet tweet) {
+    public boolean parseMetadataFromURL(Tweet tweet) {
         Pattern urlRegex = Pattern.compile("https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+", Pattern.CASE_INSENSITIVE);
         Pattern imgRegex = Pattern.compile("\\.(jpeg|jpg|gif|png)$", Pattern.CASE_INSENSITIVE);
         Pattern youTubeUrlRegex = Pattern.compile("(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*", Pattern.CASE_INSENSITIVE);
@@ -144,6 +139,15 @@ public class TweetServiceHelper {
 
     private String getContent(Element element) {
         return element == null ? "" : element.attr("content");
+    }
+
+    public TweetResponse processTweetResponse(Tweet tweet) {
+        TweetProjection tweetProjection = tweetRepository.getTweetById(tweet.getId(), TweetProjection.class).get();
+        TweetResponse tweetResponse = basicMapper.convertToResponse(tweetProjection, TweetResponse.class);
+        parseUserMentionFromText(tweetResponse);
+        tagClient.parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
+        notificationClient.sendTweetNotificationToSubscribers(tweet.getId());
+        return tweetResponse;
     }
 
     private void parseUserMentionFromText(TweetResponse tweetResponse) {

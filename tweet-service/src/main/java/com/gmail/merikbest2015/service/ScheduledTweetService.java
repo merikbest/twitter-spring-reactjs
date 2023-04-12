@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,7 @@ public interface ScheduledTweetService {
 
     Page<TweetProjection> getScheduledTweets(Pageable pageable);
 
-    TweetResponse createScheduledTweet(Tweet tweet);
+    TweetProjection createScheduledTweet(Tweet tweet);
 
     TweetProjection updateScheduledTweet(Tweet tweet);
 

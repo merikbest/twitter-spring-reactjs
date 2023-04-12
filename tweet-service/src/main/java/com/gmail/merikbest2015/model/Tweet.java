@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -69,7 +70,7 @@ public class Tweet {
     private Long authorId;
 
     @OneToMany
-    private List<TweetImage> images;
+    private List<TweetImage> images = new ArrayList<>();
 
     @OneToOne
     @JoinTable(name = "tweet_quote",
