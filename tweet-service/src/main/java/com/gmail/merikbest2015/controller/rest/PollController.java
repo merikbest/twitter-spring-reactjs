@@ -31,11 +31,11 @@ public class PollController {
         return ResponseEntity.ok(tweet);
     }
 
-    @PostMapping(VOTE) // TODO validate and fix
+    @PostMapping(VOTE)
     public ResponseEntity<TweetResponse> voteInPoll(@RequestBody VoteRequest voteRequest) {
         TweetResponse tweet = pollMapper.voteInPoll(voteRequest);
-        webSocketClient.send(TOPIC_FEED, tweet);
-        webSocketClient.send(TOPIC_TWEET + tweet.getId(), tweet);
+        webSocketClient.send(TOPIC_FEED_VOTE, tweet);
+        webSocketClient.send(TOPIC_TWEET_VOTE + tweet.getId(), tweet);
         webSocketClient.send(TOPIC_USER_UPDATE_TWEET + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }

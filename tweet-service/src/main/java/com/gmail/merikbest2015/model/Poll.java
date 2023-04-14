@@ -1,9 +1,6 @@
 package com.gmail.merikbest2015.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Table(name = "polls")
 public class Poll {
@@ -22,12 +20,15 @@ public class Poll {
     @SequenceGenerator(name = "polls_seq", sequenceName = "polls_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
+    @NonNull
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
+    @NonNull
     @OneToOne(mappedBy = "poll")
     private Tweet tweet;
 
+    @NonNull
     @OneToMany
     private List<PollChoice> pollChoices;
 }

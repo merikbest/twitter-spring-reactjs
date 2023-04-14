@@ -44,10 +44,6 @@ public class PollServiceImpl implements PollService {
         if (choices.size() < 2 || choices.size() > 4) {
             throw new ApiRequestException(INCORRECT_POLL_CHOICES, HttpStatus.BAD_REQUEST);
         }
-        TweetResponse tweetResponse = tweetServiceHelper.createTweet(tweet);
-        Poll poll = new Poll();
-        poll.setTweet(tweet);
-        poll.setDateTime(LocalDateTime.now().plusMinutes(pollDateTime));
         List<PollChoice> pollChoices = new ArrayList<>();
         choices.forEach(choice -> {
             if (choice.length() == 0 || choice.length() > 25) {
@@ -57,10 +53,10 @@ public class PollServiceImpl implements PollService {
             pollChoiceRepository.save(pollChoice);
             pollChoices.add(pollChoice);
         });
-        poll.setPollChoices(pollChoices);
+        Poll poll = new Poll(LocalDateTime.now().plusMinutes(pollDateTime), tweet, pollChoices);
         pollRepository.save(poll);
         tweet.setPoll(poll);
-        return tweetResponse;
+        return tweetServiceHelper.createTweet(tweet);
     }
 
     @Override
