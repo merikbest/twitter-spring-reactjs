@@ -9,6 +9,7 @@ export enum TweetActionType {
     SET_BLOCKED_TO_TWEET_STATE = "tweet/SET_BLOCKED_TO_TWEET_STATE",
     SET_MUTED_TO_TWEET_STATE = "tweet/SET_MUTED_TO_TWEET_STATE",
     SET_TWEET_DATA = "tweet/SET_TWEET_DATA",
+    SET_VOTE_DATA = "tweet/SET_TWEET_DATA",
     UPDATE_TWEET_DATA = "tweet/UPDATE_TWEET_DATA",
     FETCH_TWEET_DATA = "tweet/FETCH_TWEET_DATA",
     RESET_TWEET_STATE = "tweet/RESET_TWEET_STATE",
@@ -51,6 +52,11 @@ export interface SetMutedToTweetStateActionInterface extends Action<TweetActionT
 
 export interface SetTweetDataActionInterface extends Action<TweetActionType> {
     type: TweetActionType.SET_TWEET_DATA;
+    payload: TweetState["tweet"];
+}
+
+export interface SetVoteDataActionInterface extends Action<TweetActionType> {
+    type: TweetActionType.SET_VOTE_DATA;
     payload: TweetState["tweet"];
 }
 
@@ -159,6 +165,7 @@ export interface SetRepliesLoadingStateInterface extends Action<TweetActionType>
 
 export type TweetActions =
     | SetTweetDataActionInterface
+    | SetVoteDataActionInterface
     | UpdateTweetDataActionInterface
     | ResetTweetStateActionInterface
     | SetTweetDataLoadingStateInterface

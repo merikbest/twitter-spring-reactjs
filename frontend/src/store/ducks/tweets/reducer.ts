@@ -83,6 +83,11 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
             draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
             break;
 
+        case TweetsActionType.SET_VOTE:
+            const tweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
+            if (tweetIndex !== -1) draft.items[tweetIndex].poll.pollChoices = action.payload.poll.pollChoices;
+            break;
+
         case TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE:
             if (action.payload.tweetId) {
                 const followUserTweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.tweetId);

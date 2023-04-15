@@ -28,6 +28,12 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
+        case TweetActionType.SET_VOTE_DATA:
+            if (draft.tweet) {
+                draft.tweet.poll.pollChoices = action.payload!.poll.pollChoices;
+            }
+            break;
+
         case TweetActionType.UPDATE_TWEET_DATA:
             if (draft.tweet) {
                 if ("notificationType" in action.payload) {
@@ -48,9 +54,6 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
                         draft.replies = [...draft.replies, payload.tweet];
                         draft.repliesLoadingState = LoadingStatus.SUCCESS;
                     }
-                } else {
-                    draft.tweet = action.payload;
-                    // TODO add Quote and Vote (look websocket on backend)
                 }
             }
             break;

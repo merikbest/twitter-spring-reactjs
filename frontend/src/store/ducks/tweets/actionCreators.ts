@@ -43,6 +43,7 @@ import {
     SetTweetsLoadingStateInterface,
     SetUpdatedBookmarkedTweetActionInterface,
     SetUpdatedTweetActionInterface,
+    SetVoteActionInterface,
     TweetsActionType,
     UpdateScheduledTweetActionInterface,
     VoteActionInterface
@@ -122,6 +123,11 @@ export const addQuoteTweet = (payload: AddQuoteTweet): AddQuoteTweetActionInterf
 
 export const vote = (payload: Vote): VoteActionInterface => ({
     type: TweetsActionType.VOTE,
+    payload
+});
+
+export const setVote = (payload: TweetResponse): SetVoteActionInterface => ({
+    type: TweetsActionType.SET_VOTE,
     payload
 });
 

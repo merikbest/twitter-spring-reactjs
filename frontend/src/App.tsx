@@ -28,7 +28,7 @@ import { setChatMessage } from "./store/ducks/chatMessages/actionCreators";
 import { WS_URL } from "./constants/endpoint-constants";
 import { setNotification, updateNotificationInfoTweet } from "./store/ducks/notifications/actionCreators";
 import { selectNotificationsList } from "./store/ducks/notifications/selectors";
-import { setScheduledTweets, setTweet, setUpdatedTweet } from "./store/ducks/tweets/actionCreators";
+import { setScheduledTweets, setTweet, setUpdatedTweet, setVote } from "./store/ducks/tweets/actionCreators";
 import Lists from "./pages/Lists/Lists";
 import FullList from "./pages/FullList/FullList";
 import SuggestedLists from "./pages/SuggestedLists/SuggestedLists";
@@ -90,6 +90,7 @@ import {
     TOPIC_FEED,
     TOPIC_FEED_ADD,
     TOPIC_FEED_SCHEDULE,
+    TOPIC_FEED_VOTE,
     TOPIC_MENTIONS,
     TOPIC_NOTIFICATIONS
 } from "./constants/ws-constants";
@@ -135,6 +136,10 @@ const App: FC = (): ReactElement => {
 
             stompClient?.subscribe(TOPIC_FEED_SCHEDULE, (response) => {
                 dispatch(setScheduledTweets(JSON.parse(response.body)));
+            });
+
+            stompClient?.subscribe(TOPIC_FEED_VOTE, (response) => {
+                dispatch(setVote(JSON.parse(response.body)));
             });
         });
 

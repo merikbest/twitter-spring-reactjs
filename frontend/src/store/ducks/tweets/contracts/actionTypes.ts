@@ -46,6 +46,7 @@ export enum TweetsActionType {
     ADD_QUOTE_TWEET = "tweets/ADD_QUOTE_TWEET",
     FETCH_BOOKMARKS = "tweets/FETCH_BOOKMARKS",
     VOTE = "tweets/VOTE",
+    SET_VOTE = "tweets/SET_VOTE",
     CHANGE_REPLY_TYPE = "tweets/CHANGE_REPLY_TYPE",
     DELETE_SCHEDULED_TWEETS = "tweets/DELETE_SCHEDULED_TWEETS",
     REMOVE_TWEET_FROM_BOOKMARKS = "tweets/REMOVE_TWEET_FROM_BOOKMARKS",
@@ -172,6 +173,11 @@ export interface VoteActionInterface extends Action<TweetsActionType> {
     payload: Vote;
 }
 
+export interface SetVoteActionInterface extends Action<TweetsActionType> {
+    type: TweetsActionType.SET_VOTE;
+    payload: TweetResponse;
+}
+
 export interface ChangeReplyTypeActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.CHANGE_REPLY_TYPE;
     payload: ChangeReplyTypeRequest;
@@ -231,6 +237,7 @@ export type TweetsActions =
     | SetUpdatedTweetActionInterface
     | DeleteTweetActionInterface
     | SetTweetActionInterface
+    | SetVoteActionInterface
     | RemoveTweetFromBookmarksActionInterface
     | SetFollowToTweetsStateActionInterface
     | SetBlockedToTweetsStateActionInterface

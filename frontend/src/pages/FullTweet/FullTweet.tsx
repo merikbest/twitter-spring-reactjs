@@ -22,6 +22,7 @@ import {
     fetchTweetData,
     resetRepliesState,
     resetTweetState,
+    setVoteData,
     updateTweetData
 } from "../../store/ducks/tweet/actionCreators";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
@@ -47,7 +48,7 @@ import TweetPoll from "./TweetPoll/TweetPoll";
 import TweetQuote from "./TweetQuote/TweetQuote";
 import TweetErrorPage from "./TweetErrorPage/TweetErrorPage";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
-import { TOPIC_TWEET } from "../../constants/ws-constants";
+import { TOPIC_TWEET, TOPIC_TWEET_VOTE } from "../../constants/ws-constants";
 
 let stompClient: CompatClient | null = null;
 
@@ -74,6 +75,10 @@ const FullTweet = (): ReactElement | null => {
             stompClient.connect({}, () => {
                 stompClient?.subscribe(TOPIC_TWEET(params.id), (response) => {
                     dispatch(updateTweetData(JSON.parse(response.body)));
+                });
+
+                stompClient?.subscribe(TOPIC_TWEET_VOTE(params.id), (response) => {
+                    dispatch(setVoteData(JSON.parse(response.body)));
                 });
             });
         }

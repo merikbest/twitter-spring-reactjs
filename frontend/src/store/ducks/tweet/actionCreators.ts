@@ -23,6 +23,7 @@ import {
     SetRetweetedUsersLoadingStateInterface,
     SetTweetDataActionInterface,
     SetTweetDataLoadingStateInterface,
+    SetVoteDataActionInterface,
     TweetActionType,
     UpdateTweetDataActionInterface
 } from "./contracts/actionTypes";
@@ -48,6 +49,11 @@ export const setMutedToTweetState = (payload: boolean): SetMutedToTweetStateActi
 
 export const setTweetData = (payload: TweetState["tweet"]): SetTweetDataActionInterface => ({
     type: TweetActionType.SET_TWEET_DATA,
+    payload
+});
+
+export const setVoteData = (payload: TweetState["tweet"]): SetVoteDataActionInterface => ({
+    type: TweetActionType.SET_VOTE_DATA,
     payload
 });
 

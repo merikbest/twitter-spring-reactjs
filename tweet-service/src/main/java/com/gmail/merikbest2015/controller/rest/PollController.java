@@ -27,7 +27,7 @@ public class PollController {
     public ResponseEntity<TweetResponse> createPoll(@RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = pollMapper.createPoll(tweetRequest);
         webSocketClient.send(TOPIC_FEED_ADD, tweet);
-        webSocketClient.send(TOPIC_USER_UPDATE_TWEET + tweet.getUser().getId(), tweet);
+        webSocketClient.send(TOPIC_USER_ADD_TWEET + tweet.getUser().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 
