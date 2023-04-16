@@ -12,7 +12,8 @@ import {
     fetchUserTweets,
     resetUserTweets,
     setAddedUserTweet,
-    setUpdatedUserTweet
+    setUpdatedUserTweet,
+    setUserVote
 } from "../../store/ducks/userTweets/actionCreators";
 import {
     selectUserProfileFullName,
@@ -57,7 +58,7 @@ import UserBlockedMessage from "./UserBlockedMessage/UserBlockedMessage";
 import UserPrivateProfileMessage from "./UserPrivateProfileMessage/UserPrivateProfileMessage";
 import UserTweets from "./UserTweets/UserTweets";
 import UserPageActions from "./UserPageActions/UserPageActions";
-import {TOPIC_USER_ADD_TWEET, TOPIC_USER_UPDATE_TWEET} from "../../constants/ws-constants";
+import { TOPIC_USER_ADD_TWEET, TOPIC_USER_UPDATE_TWEET, TOPIC_USER_VOTE_TWEET } from "../../constants/ws-constants";
 
 let stompClient: CompatClient | null = null;
 
@@ -98,6 +99,9 @@ const UserPage = (): ReactElement => {
             });
             stompClient?.subscribe(TOPIC_USER_UPDATE_TWEET(params.userId), (response) => {
                 dispatch(setUpdatedUserTweet(JSON.parse(response.body)));
+            });
+            stompClient?.subscribe(TOPIC_USER_VOTE_TWEET(params.userId), (response) => {
+                dispatch(setUserVote(JSON.parse(response.body)));
             });
         });
 

@@ -17,7 +17,7 @@ describe("TweetInteractionCount", () => {
     });
 
     it("should open/close LikesModalWindow", () => {
-        testClickModalWindow("2Likes", 1, UsersListModalAction.LIKED);
+        testClickModalWindow("2Likes", 5, UsersListModalAction.LIKED);
     });
 
     it("should render empty TweetInteractionCount", () => {
@@ -36,7 +36,7 @@ describe("TweetInteractionCount", () => {
         const wrapper = mountWithStore(<TweetInteractionCount />, mockRootState);
         expect(wrapper.text().includes(text)).toBe(true);
         expect(wrapper.find(UsersListModal).prop("visible")).toBe(false);
-        wrapper.find("a").at(index).simulate("click");
+        wrapper.find("span").at(index).simulate("click");
         expect(wrapper.find(UsersListModal).prop("visible")).toBe(true);
         expect(wrapper.find(UsersListModal).prop("usersListModalAction")).toBe(modalAction);
         wrapper.find(UsersListModal).find(CloseButton).find(IconButton).simulate("click");

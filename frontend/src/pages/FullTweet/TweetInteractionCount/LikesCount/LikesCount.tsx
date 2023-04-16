@@ -23,7 +23,7 @@ const LikesCount = memo((): ReactElement => {
     return (
         <>
             {(likedTweetsCount !== 0) && (
-                <a href={"javascript:void(0);"} onClick={onOpenUsersListModal}>
+                <span className={classes.interactionCount} onClick={onOpenUsersListModal}>
                     <div className={classes.contentItem}>
                         <Typography variant={"h6"} component={"span"}>
                             {likedTweetsCount}
@@ -32,7 +32,7 @@ const LikesCount = memo((): ReactElement => {
                             Likes
                         </Typography>
                     </div>
-                </a>
+                </span>
             )}
             <UsersListModal
                 tweetId={tweetId!}

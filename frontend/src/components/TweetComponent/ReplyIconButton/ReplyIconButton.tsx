@@ -47,7 +47,11 @@ const ReplyIconButton: FC<TweetReplyIconButtonProps> = memo((
                 onClick={onOpenReplyModalWindow}
                 disabled={isUserCanReply}
             />
-            {(repliesCount !== 0) && <span id={"repliesCount"}>{repliesCount}</span>}
+            {(repliesCount !== 0) && (
+                <span id={"repliesCount"} className={classes.repliesCount}>
+                    {repliesCount}
+                </span>
+            )}
             <ReplyModal
                 user={tweetUser!}
                 tweetId={tweetId!}

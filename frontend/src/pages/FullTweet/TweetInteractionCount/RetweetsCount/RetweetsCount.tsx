@@ -23,7 +23,7 @@ const RetweetsCount = memo((): ReactElement => {
     return (
         <>
             {(retweetsCount !== 0) && (
-                <a href={"javascript:void(0);"} onClick={onOpenUsersListModal}>
+                <span className={classes.interactionCount} onClick={onOpenUsersListModal}>
                     <div className={classes.contentItem}>
                         <Typography variant={"h6"} component={"span"}>
                             {retweetsCount}
@@ -32,7 +32,7 @@ const RetweetsCount = memo((): ReactElement => {
                             Retweets
                         </Typography>
                     </div>
-                </a>
+                </span>
             )}
             <UsersListModal
                 tweetId={tweetId!}

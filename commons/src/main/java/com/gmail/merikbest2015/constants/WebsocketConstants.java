@@ -13,4 +13,5 @@ public class WebsocketConstants {
     public static final String TOPIC_TWEET_VOTE = TOPIC + "/tweet/vote/";
     public static final String TOPIC_USER_UPDATE_TWEET = TOPIC + "/user/update/tweet/";
     public static final String TOPIC_USER_ADD_TWEET = TOPIC + "/user/add/tweet/";
+    public static final String TOPIC_USER_VOTE_TWEET = TOPIC + "/user/vote/tweet/";
 }

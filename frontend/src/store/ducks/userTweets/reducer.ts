@@ -113,6 +113,11 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
             }
             break;
 
+        case UserTweetsActionType.SET_USER_VOTE:
+            const tweetIndex = draft.items.findIndex((tweet) => tweet.id === action.payload.id);
+            if (tweetIndex !== -1) draft.items[tweetIndex].poll.pollChoices = action.payload.poll.pollChoices;
+            break;
+
         case UserTweetsActionType.DELETE_TWEET:
             draft.items = draft.items.filter((tweet) => tweet.id !== action.payload);
             break;

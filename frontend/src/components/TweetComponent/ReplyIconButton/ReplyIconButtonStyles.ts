@@ -15,5 +15,9 @@ export const useReplyIconButtonStyles = makeStyles<Theme, ReplyIconButtonProps>(
             verticalAlign: "middle",
             color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary
         }
+    },
+    repliesCount: {
+        position: "absolute",
+        marginTop: 7
     }
 }));

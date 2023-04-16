@@ -120,7 +120,7 @@ describe("FullTweet", () => {
 
     it("should click open Retweets Modal Window on FullTweet", () => {
         const wrapper = mountWithStore(<FullTweet />, mockStore);
-        wrapper.find(TweetInteractionCount).find(RetweetsCount).find("a").simulate("click");
+        wrapper.find(TweetInteractionCount).find(RetweetsCount).find("span").at(0).simulate("click");
 
         expect(wrapper.find(UsersListModal).at(0).prop("tweetId")).toBe(9);
         expect(wrapper.find(UsersListModal).at(0).prop("usersListModalAction")).toBe(UsersListModalAction.RETWEETED);
@@ -131,7 +131,7 @@ describe("FullTweet", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<FullTweet />, mockStore, history);
-        wrapper.find(TweetInteractionCount).find(QuotesCount).find("a").simulate("click");
+        wrapper.find(TweetInteractionCount).find(QuotesCount).find("span").at(0).simulate("click");
 
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${QUOTES}/9`);
@@ -139,7 +139,7 @@ describe("FullTweet", () => {
 
     it("should click open Liked Modal Window on FullTweet", () => {
         const wrapper = mountWithStore(<FullTweet />, mockStore);
-        wrapper.find(TweetInteractionCount).find(LikesCount).find("a").simulate("click");
+        wrapper.find(TweetInteractionCount).find(LikesCount).find("span").at(0).simulate("click");
 
         expect(wrapper.find(UsersListModal).at(1).prop("tweetId")).toBe(9);
         expect(wrapper.find(UsersListModal).at(1).prop("usersListModalAction")).toBe(UsersListModalAction.LIKED);
@@ -148,7 +148,7 @@ describe("FullTweet", () => {
 
     it("should click open Liked Modal Window on FullTweet and close", () => {
         const wrapper = mountWithStore(<FullTweet />, mockStore);
-        wrapper.find(TweetInteractionCount).find(LikesCount).find("a").simulate("click");
+        wrapper.find(TweetInteractionCount).find(LikesCount).find("span").at(0).simulate("click");
         wrapper.find(UsersListModal).at(1).find(CloseButton).find(IconButton).simulate("click");
 
         expect(wrapper.find(UsersListModal).at(1).prop("tweetId")).toBe(9);

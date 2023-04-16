@@ -4,7 +4,7 @@ interface QuoteTweetStyles {
     isTweetRetweetedByMe?: boolean;
 }
 
-export const useIconButtonStyles = makeStyles<Theme, QuoteTweetStyles>((theme) => ({
+export const useQuoteIconButtonStyles = makeStyles<Theme, QuoteTweetStyles>((theme) => ({
     footerIcon: {
         "& .MuiIconButton-root": {
             "& svg": {
@@ -43,5 +43,9 @@ export const useIconButtonStyles = makeStyles<Theme, QuoteTweetStyles>((theme) =
                 marginRight: 15
             }
         }
+    },
+    retweetsCount: {
+        position: "absolute",
+        marginTop: 7
     }
 }));

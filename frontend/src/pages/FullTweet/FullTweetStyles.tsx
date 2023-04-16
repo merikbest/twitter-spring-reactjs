@@ -61,16 +61,18 @@ export const useFullTweetStyles = makeStyles((theme) => ({
     content: {
         display: "flex",
         alignItems: "center",
-        margin: "16px 0",
-        "& a": {
-            color: theme.palette.text.primary,
-            textDecoration: "none"
-        }
+        margin: "16px 0"
     },
     contentItem: {
         marginRight: 20,
         "& span": {
             marginLeft: 5
+        }
+    },
+    interactionCount: {
+        "&:hover": {
+            textDecoration: "underline",
+            cursor: "pointer"
         }
     },
     info: {

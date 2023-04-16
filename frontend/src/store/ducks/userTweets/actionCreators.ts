@@ -14,6 +14,7 @@ import {
     SetUpdatedUserTweetActionInterface,
     SetUserTweetsActionInterface,
     SetUserTweetsLoadingStatusInterface,
+    SetUserVoteActionInterface,
     UserTweetsActionType
 } from "./contracts/actionTypes";
 import {
@@ -56,6 +57,11 @@ export const setAddedUserTweet = (payload: TweetResponse): SetAddedUserTweetActi
 
 export const setUpdatedUserTweet = (payload: NotificationResponse | NotificationReplyResponse): SetUpdatedUserTweetActionInterface => ({
     type: UserTweetsActionType.SET_UPDATED_TWEET,
+    payload
+});
+
+export const setUserVote = (payload: TweetResponse): SetUserVoteActionInterface => ({
+    type: UserTweetsActionType.SET_USER_VOTE,
     payload
 });
 

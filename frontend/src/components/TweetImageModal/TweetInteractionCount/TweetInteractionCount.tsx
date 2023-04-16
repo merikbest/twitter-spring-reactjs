@@ -33,9 +33,9 @@ const TweetInteractionCount = memo((): ReactElement => {
             {(retweetsCount !== 0 || likedTweetsCount !== 0) && (
                 <div id={"content"} className={classes.content}>
                     {(retweetsCount !== 0) && (
-                        <a
+                        <span
                             id={"onOpenRetweetsModalWindow"}
-                            href={"javascript:void(0);"}
+                            className={classes.interactionCount}
                             onClick={onOpenRetweetsModalWindow}
                         >
                             <span style={{ marginRight: 20 }}>
@@ -46,12 +46,12 @@ const TweetInteractionCount = memo((): ReactElement => {
                                     Retweets
                                 </Typography>
                             </span>
-                        </a>
+                        </span>
                     )}
                     {(likedTweetsCount !== 0) && (
-                        <a
+                        <span
                             id={"onOpenLikesModalWindow"}
-                            href={"javascript:void(0);"}
+                            className={classes.interactionCount}
                             onClick={onOpenLikesModalWindow}
                         >
                             <span style={{ marginRight: 20 }}>
@@ -62,7 +62,7 @@ const TweetInteractionCount = memo((): ReactElement => {
                                     Likes
                                 </Typography>
                             </span>
-                        </a>
+                        </span>
                     )}
                 </div>
             )}

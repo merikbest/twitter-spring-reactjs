@@ -18,6 +18,7 @@ export enum UserTweetsActionType {
     RESET_TWEETS = "userTweets/RESET_TWEETS",
     SET_ADDED_TWEET = "userTweets/SET_ADDED_TWEET",
     SET_UPDATED_TWEET = "userTweets/SET_UPDATED_TWEET",
+    SET_USER_VOTE = "userTweets/SET_USER_VOTE",
     SET_UPDATED_BOOKMARKED_TWEET = "userTweets/SET_UPDATED_BOOKMARKED_TWEET",
     DELETE_TWEET = "userTweets/DELETE_TWEET",
     FETCH_TWEETS = "userTweets/FETCH_TWEETS",
@@ -59,6 +60,11 @@ export interface SetAddedUserTweetActionInterface extends Action<UserTweetsActio
 export interface SetUpdatedUserTweetActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.SET_UPDATED_TWEET;
     payload: NotificationResponse | NotificationReplyResponse;
+}
+
+export interface SetUserVoteActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.SET_USER_VOTE;
+    payload: TweetResponse;
 }
 
 export interface SetUpdatedBookmarkedTweetActionInterface extends Action<UserTweetsActionType> {
@@ -104,6 +110,7 @@ export type UserTweetsActions =
     | ResetUserTweetsActionInterface
     | SetAddedUserTweetActionInterface
     | SetUpdatedUserTweetActionInterface
+    | SetUserVoteActionInterface
     | SetUpdatedBookmarkedTweetActionInterface
     | DeleteUserTweetActionInterface
     | SetUserTweetsLoadingStatusInterface;

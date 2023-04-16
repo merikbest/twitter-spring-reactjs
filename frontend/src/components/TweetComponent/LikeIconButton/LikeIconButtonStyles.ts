@@ -21,5 +21,9 @@ export const useLikeIconButtonStyles = makeStyles<Theme, TweetLikeIconButtonProp
             verticalAlign: "middle",
             color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary
         }
+    },
+    likedTweetsCount: {
+        position: "absolute",
+        marginTop: 7
     }
 }));

@@ -35,7 +35,11 @@ const LikeIconButton: FC<TweetLikeIconButtonProps> = memo((
                 icon={isTweetLiked ? LikeIcon : LikeOutlinedIcon}
                 onClick={handleLike}
             />
-            {(likedTweetsCount !== 0) && <span id={"likedTweetsCount"}>{likedTweetsCount}</span>}
+            {(likedTweetsCount !== 0) && (
+                <span id={"likedTweetsCount"} className={classes.likedTweetsCount}>
+                    {likedTweetsCount}
+                </span>
+            )}
         </div>
     );
 });

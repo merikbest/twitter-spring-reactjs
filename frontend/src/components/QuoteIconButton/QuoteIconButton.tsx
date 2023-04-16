@@ -3,7 +3,7 @@ import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core
 import { useParams } from "react-router-dom";
 import classnames from "classnames";
 
-import { useIconButtonStyles } from "./QuoteIconButtonSyles";
+import { useQuoteIconButtonStyles } from "./QuoteIconButtonSyles";
 import { QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon } from "../../icons";
 import QuoteTweetModal from "./QuoteTweetModal/QuoteTweetModal";
 import { useGlobalStyles } from "../../util/globalClasses";
@@ -33,7 +33,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
     }
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
-    const classes = useIconButtonStyles({ isTweetRetweetedByMe: isTweetRetweeted });
+    const classes = useQuoteIconButtonStyles({ isTweetRetweetedByMe: isTweetRetweeted });
     const dispatch = useDispatch();
     const params = useParams<{ userId: string }>();
     const myProfileId = useSelector(selectUserDataId);
@@ -72,7 +72,11 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
                     icon={isTweetRetweeted ? RetweetIcon : RetweetOutlinedIcon}
                     onClick={handleClick}
                 />
-                {(retweetsCount !== 0) && (<span id={"retweets"}>{retweetsCount}</span>)}
+                {(retweetsCount !== 0) && (
+                    <span id={"retweets"} className={classes.retweetsCount}>
+                        {retweetsCount}
+                    </span>
+                )}
                 {open && (
                     <div className={classnames(classes.dropdown, globalClasses.svg)}>
                         <List>

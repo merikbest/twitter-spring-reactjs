@@ -9,4 +9,5 @@ export const TOPIC_MENTIONS = (myProfileId: number) => `${TOPIC}/mentions/${myPr
 export const TOPIC_TWEET = (tweetId: number | string) => `${TOPIC}/tweet/${tweetId}`;
 export const TOPIC_TWEET_VOTE = (tweetId: number | string) => `${TOPIC}/tweet/vote/${tweetId}`;
 export const TOPIC_USER_ADD_TWEET = (userId: number | string) => `${TOPIC}/user/add/tweet/${userId}`;
+export const TOPIC_USER_VOTE_TWEET = (userId: number | string) => `${TOPIC}/user/vote/tweet/${userId}`;
 export const TOPIC_USER_UPDATE_TWEET = (userId: number | string) => `${TOPIC}/user/update/tweet/${userId}`;

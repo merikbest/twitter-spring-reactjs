@@ -46,13 +46,6 @@ export const useTweetImageStyles = makeStyles<Theme, TweetImageStylesProps>((the
         justifyContent: "space-around",
         padding: "2px 0"
     },
-    // tweetIcon: {
-    //     "& .MuiIconButton-root": {
-    //         "& svg" : {
-    //             color: props => props.isUserCanReply ? "rgb(185, 192, 197)" : theme.palette.text.secondary,
-    //         },
-    //     },
-    // },
     divider: {
         height: 12,
         backgroundColor: theme.palette.divider
