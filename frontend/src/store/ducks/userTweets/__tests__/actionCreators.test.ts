@@ -13,7 +13,8 @@ import {
     setUpdatedBookmarkedTweetUserTweetState,
     setUpdatedUserTweet,
     setUserTweets,
-    setUserTweetsLoadingStatus
+    setUserTweetsLoadingStatus,
+    setUserVote
 } from "../actionCreators";
 import { UserTweetsActionType } from "../contracts/actionTypes";
 import { TweetResponse } from "../../../../types/tweet";
@@ -53,6 +54,11 @@ describe("userTweets actions", () => {
     testAction(setUpdatedUserTweet, setUpdatedUserTweet({ id: 1 } as NotificationResponse), {
         type: UserTweetsActionType.SET_UPDATED_TWEET,
         payload: { id: 1 } as NotificationResponse
+    });
+
+    testAction(setUserVote, setUserVote({ id: 1 } as TweetResponse), {
+        type: UserTweetsActionType.SET_USER_VOTE,
+        payload: { id: 1 } as TweetResponse
     });
 
     testAction(setUpdatedBookmarkedTweetUserTweetState, setUpdatedBookmarkedTweetUserTweetState({

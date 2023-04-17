@@ -24,6 +24,7 @@ import {
     setRetweetedUsersLoadingState,
     setTweetData,
     setTweetLoadingState,
+    setVoteData,
     updateTweetData
 } from "../actionCreators";
 import { TweetResponse } from "../../../../types/tweet";
@@ -51,6 +52,11 @@ describe("tweet actions", () => {
 
     testAction(setTweetData, setTweetData({ id: 1 } as TweetResponse), {
         type: TweetActionType.SET_TWEET_DATA,
+        payload: { id: 1 } as TweetResponse
+    });
+
+    testAction(setVoteData, setVoteData({ id: 1 } as TweetResponse), {
+        type: TweetActionType.SET_VOTE_DATA,
         payload: { id: 1 } as TweetResponse
     });
 

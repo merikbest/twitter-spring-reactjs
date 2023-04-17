@@ -4,6 +4,7 @@ import { TweetResponse } from "../../../../types/tweet";
 import { testActionDispatch } from "../../../../util/test-utils/test-helper";
 import { LoadingStatus, NotificationType } from "../../../../types/common";
 import { NotificationReplyResponse, NotificationResponse } from "../../../../types/notification";
+import { initialUserTweetsState } from "../../userTweets/reducer";
 
 describe("tweetsReducer:", () => {
     describe("initial state:", () => {
@@ -209,6 +210,30 @@ describe("tweetsReducer:", () => {
             {
                 ...initialTweetsState,
                 items: []
+            }
+        );
+
+        testActionDispatch(
+            TweetsActionType.SET_VOTE,
+            tweetsReducer(
+                {
+                    ...initialUserTweetsState,
+                    items: [
+                        { id: 1, poll: { id: 1, pollChoices: [ { id: 1, choice: "test" } ] } },
+                        { id: 2, poll: null }
+                    ] as unknown as TweetResponse[]
+                },
+                {
+                    type: TweetsActionType.SET_VOTE,
+                    payload: { id: 1, poll: { id: 1, pollChoices: [ { id: 1, choice: "test" } ] } } as TweetResponse
+                }
+            ),
+            {
+                ...initialTweetsState,
+                items: [
+                    { id: 1, poll: { id: 1, pollChoices: [ { id: 1, choice: "test" } ] } },
+                    { id: 2, poll: null }
+                ] as unknown as TweetResponse[]
             }
         );
 

@@ -185,6 +185,30 @@ describe("userTweetsReducer:", () => {
         );
 
         testActionDispatch(
+            UserTweetsActionType.SET_USER_VOTE,
+            userTweetsReducer(
+                {
+                    ...initialUserTweetsState,
+                    items: [
+                        { id: 1, poll: { id: 1, pollChoices: [ { id: 1, choice: "test" } ] } },
+                        { id: 2, poll: null }
+                    ] as unknown as TweetResponse[]
+                },
+                {
+                    type: UserTweetsActionType.SET_USER_VOTE,
+                    payload: { id: 1, poll: { id: 1, pollChoices: [ { id: 1, choice: "test" } ] } } as TweetResponse
+                }
+            ),
+            {
+                ...initialUserTweetsState,
+                items: [
+                    { id: 1, poll: { id: 1, pollChoices: [ { id: 1, choice: "test" } ] } },
+                    { id: 2, poll: null }
+                ] as unknown as TweetResponse[]
+            }
+        );
+
+        testActionDispatch(
             UserTweetsActionType.DELETE_TWEET,
             userTweetsReducer({
                     ...initialUserTweetsState,

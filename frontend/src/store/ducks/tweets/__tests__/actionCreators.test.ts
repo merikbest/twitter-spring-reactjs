@@ -30,6 +30,7 @@ import {
     setTweetsLoadingState,
     setUpdatedBookmarkedTweetTweetsState,
     setUpdatedTweet,
+    setVote,
     updateScheduledTweet,
     vote
 } from "../actionCreators";
@@ -107,6 +108,11 @@ describe("tweets actions", () => {
     testAction(vote, vote({ tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote), {
         type: TweetsActionType.VOTE,
         payload: { tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote
+    });
+
+    testAction(setVote, setVote({ id: 1 } as TweetResponse), {
+        type: TweetsActionType.SET_VOTE,
+        payload: { id: 1 } as TweetResponse
     });
 
     testAction(changeReplyType, changeReplyType({ tweetId: 1, replyType: ReplyType.FOLLOW }), {
