@@ -2,12 +2,12 @@ import React, { memo, ReactElement } from "react";
 import { Button, Typography } from "@material-ui/core";
 
 import { useEmptyChatMessagesStyles } from "./EmptyChatMessagesStyles";
-import { useMessagesModal } from "../../MessagesModal/useMessagesModal";
+import { useModalWindow } from "../../../../hook/useModalWindow";
 import MessagesModal from "../../MessagesModal/MessagesModal";
 
 const EmptyChatMessages = memo((): ReactElement => {
     const classes = useEmptyChatMessagesStyles();
-    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useMessagesModal();
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <div className={classes.chatInfoWrapper}>

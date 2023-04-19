@@ -3,11 +3,11 @@ import { Button, Typography } from "@material-ui/core";
 
 import { useStartConversationStyles } from "./StartConversationStyles";
 import MessagesModal from "../MessagesModal/MessagesModal";
-import { useMessagesModal } from "../MessagesModal/useMessagesModal";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 const StartConversation = memo((): ReactElement => {
     const classes = useStartConversationStyles();
-    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useMessagesModal();
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <>

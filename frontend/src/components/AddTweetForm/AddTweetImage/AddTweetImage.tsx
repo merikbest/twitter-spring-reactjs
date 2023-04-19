@@ -6,6 +6,8 @@ import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { CloseIcon } from "../../../icons";
 import { ImageObj } from "../AddTweetForm";
 import { useAddTweetImageStyles } from "./AddTweetImageStyles";
+import TagPeople from "./TagPeople/TagPeople";
+import AddDescription from "./AddDescription/AddDescription";
 
 interface AddTweetImageProps {
     images: ImageObj[];
@@ -23,6 +25,10 @@ const AddTweetImage: FC<AddTweetImageProps> = memo(({ images, removeImage }): Re
     return (
         <div className={(location.pathname.includes(MODAL)) ? classes.imageSmall : classes.image}>
             <img src={images[0].src} alt={images[0].src} />
+            <div className={classes.imageActionContainer}>
+                <TagPeople />
+                <AddDescription />
+            </div>
             <div className={classes.imageRemove}>
                 <ActionIconButton
                     actionText={"Remove"}

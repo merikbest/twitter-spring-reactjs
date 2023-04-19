@@ -43,5 +43,8 @@ export const useAddTweetImageStyles = makeStyles((theme) => ({
                 backgroundColor: "rgba(39, 44, 48, 0.75) !important"
             }
         }
+    },
+    imageActionContainer: {
+        marginLeft: 58
     }
 }));

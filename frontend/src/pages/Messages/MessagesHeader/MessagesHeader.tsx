@@ -8,12 +8,12 @@ import { useGlobalStyles } from "../../../util/globalClasses";
 import { useMessagesHeaderStyles } from "./MessagesHeaderStyles";
 import ActionIcon from "../ActionIcon/ActionIcon";
 import MessagesModal from "../MessagesModal/MessagesModal";
-import { useMessagesModal } from "../MessagesModal/useMessagesModal";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 const MessagesHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useMessagesHeaderStyles();
-    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useMessagesModal();
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">

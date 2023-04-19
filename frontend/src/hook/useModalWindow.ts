@@ -6,7 +6,7 @@ interface UseMessagesModal {
     onCloseModalWindow: () => void;
 }
 
-export const useMessagesModal = (): UseMessagesModal => {
+export const useModalWindow = (): UseMessagesModal => {
     const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
 
     const onOpenModalWindow = (): void => {
