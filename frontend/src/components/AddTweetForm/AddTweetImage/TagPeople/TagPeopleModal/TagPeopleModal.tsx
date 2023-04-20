@@ -1,11 +1,22 @@
 import React, { FC, ReactElement, useState } from "react";
-import { Button, Dialog, DialogContent, Divider, InputAdornment } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Dialog, DialogContent, Divider, InputAdornment, List } from "@material-ui/core";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useTagPeopleModalStyles } from "./TagPeopleModalStyles";
 import CloseButton from "../../../../CloseButton/CloseButton";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { MessagesModalInput } from "../../../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
 import { SearchIcon } from "../../../../../icons";
+import {
+    fetchUsersSearchByUsername,
+    resetUsersState,
+    setUsersSearch
+} from "../../../../../store/ducks/usersSearch/actionCreators";
+import { selectUserDataId } from "../../../../../store/ducks/user/selectors";
+import { selectUsersPagesCount, selectUsersSearch } from "../../../../../store/ducks/usersSearch/selectors";
+import { UserResponse } from "../../../../../types/user";
+import InfiniteScrollWrapper from "../../../../InfiniteScrollWrapper/InfiniteScrollWrapper";
+import TagPeopleItem from "./TagPeopleItem/TagPeopleItem";
 
 interface TagPeopleModalProps {
     visible?: boolean;
@@ -14,10 +25,27 @@ interface TagPeopleModalProps {
 
 const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactElement | null => {
     const classes = useTagPeopleModalStyles();
-    const [text, setText] = useState("");
+    const dispatch = useDispatch();
+    const myProfileId = useSelector(selectUserDataId);
+    const users = useSelector(selectUsersSearch);
+    const usersPagesCount = useSelector(selectUsersPagesCount);
+    const [searchText, setSearchText] = useState<string>("");
+    const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
+    const [selectedUsers, setSelectedUsers] = useState<UserResponse[]>([]);
 
     const onSearch = (text: string): void => {
+        if (text) {
+            setSearchText(text);
+            dispatch(resetUsersState());
+            dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: 0 }));
+        } else {
+            setSearchText("");
+            dispatch(setUsersSearch([]));
+        }
+    };
 
+    const loadParticipants = (page: number): void => {
+        dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(searchText), pageNumber: page }));
     };
 
     if (!visible) {
@@ -35,29 +63,36 @@ const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactEle
                     variant="contained"
                     color="primary"
                     size="small"
-                    // disabled={!selectedIndex}
+                    disabled={selectedUsers.length === 0}
                 >
                     Done
                 </Button>
             </DialogTitle>
             <DialogContent id="scrollableDiv" className={classes.content}>
-                <form>
-                    <MessagesModalInput
-                        fullWidth
-                        placeholder="Search people"
-                        variant="outlined"
-                        onChange={(event) => onSearch(event.target.value)}
-                        value={text}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {SearchIcon}
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                </form>
+                <MessagesModalInput
+                    fullWidth
+                    placeholder="Search people"
+                    variant="outlined"
+                    onChange={(event) => onSearch(event.target.value)}
+                    value={searchText}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                {SearchIcon}
+                            </InputAdornment>
+                        )
+                    }}
+                />
                 <Divider />
+                <InfiniteScrollWrapper
+                    dataLength={users.length}
+                    pagesCount={usersPagesCount}
+                    loadItems={loadParticipants}
+                >
+                    <List component="nav">
+                        {users.map((user) => <TagPeopleItem key={user.id} user={user} />)}
+                    </List>
+                </InfiniteScrollWrapper>
             </DialogContent>
         </Dialog>
     );

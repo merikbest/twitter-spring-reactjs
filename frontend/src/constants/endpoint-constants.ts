@@ -23,7 +23,7 @@ export const API_CHAT_ADD_MESSAGE = `${API_ENDPOINT}/chat/add/message`;
 export const API_CHAT_ADD_MESSAGE_TWEET = `${API_ENDPOINT}/chat/add/message/tweet`;
 export const API_CHAT_PARTICIPANT = `${API_ENDPOINT}/chat/participant`;
 export const API_CHAT_LEAVE = `${API_ENDPOINT}/chat/leave`;
-export const API_CHAT_SEARCH = `${API_ENDPOINT}/chat/search`;
+export const API_CHAT_SEARCH = `${API_ENDPOINT}/chat/items/search`;
 
 // ListsApi
 export const API_LISTS = `${API_ENDPOINT}/lists`;

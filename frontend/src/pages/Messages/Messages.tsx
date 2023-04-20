@@ -21,6 +21,7 @@ import ChatParticipant from "./ChatParticipant/ChatParticipant";
 import MessageSettings from "./MessageSettings/MessageSettings";
 import SearchChatParticipant from "./SearchChatParticipant/SearchChatParticipant";
 import { resetChatState } from "../../store/ducks/chat/actionCreators";
+import { resetUserProfileState } from "../../store/ducks/userProfile/actionCreators";
 
 const Messages: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -39,6 +40,7 @@ const Messages: FC = (): ReactElement => {
         return () => {
             dispatch(resetChatsState());
             dispatch(resetChatState());
+            dispatch(resetUserProfileState());
         };
     }, []);
 
