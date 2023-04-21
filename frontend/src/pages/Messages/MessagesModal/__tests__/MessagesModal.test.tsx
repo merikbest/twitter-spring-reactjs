@@ -6,7 +6,7 @@ import { createMockRootState, mockDispatch, mountWithStore } from "../../../../u
 import MessagesModal from "../MessagesModal";
 import MessagesModalUser from "../MessagesModalUser/MessagesModalUser";
 import { UsersSearchActionsType } from "../../../../store/ducks/usersSearch/contracts/actionTypes";
-import { MessagesModalInput } from "../MessagesModalInput/MessagesModalInput";
+import { ModalInputWrapper } from "../../../../components/ModalInput/ModalInputWrapper";
 import { ChatsActionsType } from "../../../../store/ducks/chats/contracts/actionTypes";
 import { LoadingStatus } from "../../../../types/common";
 
@@ -35,7 +35,7 @@ describe("MessagesModal", () => {
 
     it("should change and submit MessagesModalInput", () => {
         const wrapper = mountWithStore(<MessagesModal visible={true} onClose={jest.fn()} />, mockStore);
-        const input = wrapper.find(MessagesModalInput).find("input").at(0);
+        const input = wrapper.find(ModalInputWrapper).find("input").at(0);
 
         input.simulate("change", { target: { value: "test" } });
 
@@ -88,7 +88,7 @@ describe("MessagesModal", () => {
     it("should scroll list of Users by input text", () => {
         const mockUserSearchStore = { ...mockStore, usersSearch: { ...mockStore.usersSearch, pagesCount: 10 } };
         const wrapper = mountWithStore(<MessagesModal visible={true} onClose={jest.fn()} />, mockUserSearchStore);
-        const input = wrapper.find(MessagesModalInput).find("input").at(0);
+        const input = wrapper.find(ModalInputWrapper).find("input").at(0);
         input.simulate("change", { target: { value: "test" } });
         wrapper.find(InfiniteScroll).prop("next")();
 

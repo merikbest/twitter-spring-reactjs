@@ -1,7 +1,7 @@
 import { Theme, withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 
-export const MessagesModalInput = withStyles((theme: Theme) => ({
+export const ModalInputWrapper = withStyles((theme: Theme) => ({
     root: {
         "& .MuiOutlinedInput-root": {
             "&.Mui-focused": {

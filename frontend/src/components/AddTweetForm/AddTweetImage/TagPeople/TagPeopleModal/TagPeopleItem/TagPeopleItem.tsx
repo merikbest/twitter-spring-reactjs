@@ -10,16 +10,17 @@ import { selectUserDataId } from "../../../../../../store/ducks/user/selectors";
 
 interface TagPeopleItemProps {
     user: UserResponse;
+    handleListItemClick: (user: UserResponse) => void;
 }
 
-const TagPeopleItem: FC<TagPeopleItemProps> = ({ user }): ReactElement => {
+const TagPeopleItem: FC<TagPeopleItemProps> = ({ user, handleListItemClick }): ReactElement => {
     const isUserCanTagged = user?.isPrivateProfile && !user.isFollower;
     const classes = useTagPeopleItemStyles({ isUserCanTagged });
     const myProfileId = useSelector(selectUserDataId);
     const userAvatar = user?.avatar ?? DEFAULT_PROFILE_IMG;
 
     return (
-        <ListItem>
+        <ListItem onClick={() => handleListItemClick(user)}>
             <div className={classes.container}>
                 <Avatar className={classes.listAvatar} src={userAvatar} />
                 <div style={{ flex: 1 }}>

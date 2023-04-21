@@ -1,12 +1,10 @@
 import React, { FC, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Dialog, DialogContent, Divider, InputAdornment, List } from "@material-ui/core";
+import { Button, Dialog, DialogContent, List } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useTagPeopleModalStyles } from "./TagPeopleModalStyles";
 import CloseButton from "../../../../CloseButton/CloseButton";
-import { MessagesModalInput } from "../../../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
-import { SearchIcon } from "../../../../../icons";
 import {
     fetchUsersSearchByUsername,
     resetUsersState,
@@ -14,9 +12,11 @@ import {
 } from "../../../../../store/ducks/usersSearch/actionCreators";
 import { selectUserDataId } from "../../../../../store/ducks/user/selectors";
 import { selectUsersPagesCount, selectUsersSearch } from "../../../../../store/ducks/usersSearch/selectors";
-import { UserResponse } from "../../../../../types/user";
 import InfiniteScrollWrapper from "../../../../InfiniteScrollWrapper/InfiniteScrollWrapper";
 import TagPeopleItem from "./TagPeopleItem/TagPeopleItem";
+import UserChip from "../../../../UserChip/UserChip";
+import { useSelectUsers } from "../../../../../hook/useSelectUsers";
+import ModalInput from "../../../../ModalInput/ModalInput";
 
 interface TagPeopleModalProps {
     visible?: boolean;
@@ -30,8 +30,7 @@ const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactEle
     const users = useSelector(selectUsersSearch);
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const [searchText, setSearchText] = useState<string>("");
-    const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
-    const [selectedUsers, setSelectedUsers] = useState<UserResponse[]>([]);
+    const { selectedUsers, handleDelete, handleListItemClick } = useSelectUsers();
 
     const onSearch = (text: string): void => {
         if (text) {
@@ -69,28 +68,21 @@ const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactEle
                 </Button>
             </DialogTitle>
             <DialogContent id="scrollableDiv" className={classes.content}>
-                <MessagesModalInput
-                    fullWidth
-                    placeholder="Search people"
-                    variant="outlined"
-                    onChange={(event) => onSearch(event.target.value)}
-                    value={searchText}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                {SearchIcon}
-                            </InputAdornment>
-                        )
-                    }}
-                />
-                <Divider />
+                <ModalInput placeholder={"Search people"} searchText={searchText} onSearch={onSearch} />
+                {selectedUsers && (selectedUsers.map((selectedUser) => (
+                        <UserChip key={selectedUser.id} selectedUser={selectedUser} onDeleteUser={handleDelete} />
+                    ))
+                )}
+                <div className={classes.divider} />
                 <InfiniteScrollWrapper
                     dataLength={users.length}
                     pagesCount={usersPagesCount}
                     loadItems={loadParticipants}
                 >
                     <List component="nav">
-                        {users.map((user) => <TagPeopleItem key={user.id} user={user} />)}
+                        {users.map((user) => (
+                            <TagPeopleItem key={user.id} user={user} handleListItemClick={handleListItemClick} />
+                        ))}
                     </List>
                 </InfiniteScrollWrapper>
             </DialogContent>

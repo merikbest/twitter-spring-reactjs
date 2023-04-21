@@ -1,12 +1,10 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Avatar, Chip, Dialog, InputAdornment, List } from "@material-ui/core";
+import { Dialog, List } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import CloseIcon from "@material-ui/icons/Close";
 import DialogContent from "@material-ui/core/DialogContent";
 
 import { useSendDirectTweetModalStyles } from "./SendDirectTweetModalStyles";
-import { MessagesModalInput } from "../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
 import { selectUsersPagesCount, selectUsersSearch } from "../../../store/ducks/usersSearch/selectors";
 import { fetchChats } from "../../../store/ducks/chats/actionCreators";
 import { selectChatsItems } from "../../../store/ducks/chats/selectors";
@@ -15,7 +13,6 @@ import {
     resetUsersState,
     setUsersSearch
 } from "../../../store/ducks/usersSearch/actionCreators";
-import { SearchIcon } from "../../../icons";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
 import CloseButton from "../../CloseButton/CloseButton";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
@@ -24,7 +21,9 @@ import InfiniteScrollWrapper from "../../InfiniteScrollWrapper/InfiniteScrollWra
 import SendDirectMessageFooter from "./SendDirectMessageFooter/SendDirectMessageFooter";
 import { ChatResponse } from "../../../types/chat";
 import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
-import { DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
+import UserChip from "../../UserChip/UserChip";
+import ModalInput from "../../ModalInput/ModalInput";
+import { useSelectUsers } from "../../../hook/useSelectUsers";
 
 interface SendDirectTweetModalProps {
     tweetId: number;
@@ -46,8 +45,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     const chats = useSelector(selectChatsItems);
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const [searchText, setSearchText] = useState<string>("");
-    const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
-    const [selectedUsers, setSelectedUsers] = useState<UserResponse[]>([]);
+    const { selectedIndexes, selectedUsers, handleDelete, handleListItemClick, resetSelectedUsers } = useSelectUsers();
 
     useEffect(() => {
         if (visible) {
@@ -75,32 +73,10 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         dispatch(fetchParticipantsByUsername({ username: encodeURIComponent(searchText), pageNumber: page }));
     };
 
-    const handleDelete = (selectedUser: UserResponse) => (): void => {
-        setSelectedIndexes((indexes) => indexes.filter((index) => index !== selectedUser.id));
-        setSelectedUsers((users) => users.filter((user) => user.id !== selectedUser.id));
-    };
-
-    const handleListItemClick = (user: UserResponse): void => {
-        const currentIndex = selectedIndexes.indexOf(user?.id!);
-        const newChecked = [...selectedIndexes];
-        const newSelectedUsers = [...selectedUsers];
-
-        if (currentIndex === -1) {
-            newChecked.push(user?.id!);
-            newSelectedUsers.push(user);
-        } else {
-            newChecked.splice(currentIndex, 1);
-            newSelectedUsers.splice(currentIndex, 1);
-        }
-        setSelectedIndexes(newChecked);
-        setSelectedUsers(newSelectedUsers);
-    };
-
     const onSendMessageFinish = (): void => {
         dispatch(setOpenSnackBar("Your Tweet was sent"));
         setSearchText("");
-        setSelectedIndexes([]);
-        setSelectedUsers([]);
+        resetSelectedUsers();
         onClose();
     };
 
@@ -123,34 +99,9 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                 Send Tweet
             </DialogTitle>
             <DialogContent id="scrollableDiv" className={classes.content}>
-                <MessagesModalInput
-                    fullWidth
-                    placeholder="Search people"
-                    variant="outlined"
-                    onChange={(event) => onSearch(event.target.value)}
-                    value={searchText}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                {SearchIcon}
-                            </InputAdornment>
-                        )
-                    }}
-                />
-                {selectedUsers && (
-                    selectedUsers.map(selectedUser => (
-                        <Chip
-                            key={selectedUser.id}
-                            avatar={
-                                <Avatar
-                                    alt={selectedUser?.fullName}
-                                    src={selectedUser?.avatar ?? DEFAULT_PROFILE_IMG}
-                                />
-                            }
-                            label={selectedUser?.fullName}
-                            deleteIcon={<CloseIcon color="primary" />}
-                            onDelete={handleDelete(selectedUser)}
-                        />
+                <ModalInput placeholder={"Search people"} searchText={searchText} onSearch={onSearch} />
+                {selectedUsers && (selectedUsers.map((selectedUser) => (
+                        <UserChip key={selectedUser.id} selectedUser={selectedUser} onDeleteUser={handleDelete} />
                     ))
                 )}
                 <div className={classes.divider} />

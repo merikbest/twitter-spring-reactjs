@@ -1,11 +1,10 @@
 import React, { FC, FormEvent, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Dialog, Divider, InputAdornment, List, ListItem } from "@material-ui/core";
+import { Button, Dialog, Divider, List, ListItem } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 
 import { useMessagesModalStyles } from "./MessagesModalStyles";
-import { MessagesModalInput } from "./MessagesModalInput/MessagesModalInput";
 import {
     fetchUsersSearchByUsername,
     resetUsersState,
@@ -14,11 +13,11 @@ import {
 import { selectUsersPagesCount, selectUsersSearch } from "../../../store/ducks/usersSearch/selectors";
 import MessagesModalUser from "./MessagesModalUser/MessagesModalUser";
 import { createChat } from "../../../store/ducks/chats/actionCreators";
-import { SearchIcon } from "../../../icons";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import { UserResponse } from "../../../types/user";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import ModalInput from "../../../components/ModalInput/ModalInput";
 
 interface MessagesModalProps {
     visible?: boolean;
@@ -101,20 +100,7 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
                     loadItems={loadParticipants}
                 >
                     <form onSubmit={handleSubmitSearch}>
-                        <MessagesModalInput
-                            fullWidth
-                            placeholder="Explore people"
-                            variant="outlined"
-                            onChange={(event) => onSearch(event.target.value)}
-                            value={text}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {SearchIcon}
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
+                        <ModalInput placeholder={"Explore people"} searchText={text} onSearch={onSearch} />
                     </form>
                     <Divider />
                     <List component="nav">

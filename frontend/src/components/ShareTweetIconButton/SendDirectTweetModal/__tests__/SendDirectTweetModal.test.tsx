@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { mockChats, mockUsers } from "../../../../util/test-utils/mock-test-data";
 import { ChatsActionsType } from "../../../../store/ducks/chats/contracts/actionTypes";
-import { MessagesModalInput } from "../../../../pages/Messages/MessagesModal/MessagesModalInput/MessagesModalInput";
+import { ModalInputWrapper } from "../../../ModalInput/ModalInputWrapper";
 import { UsersSearchActionsType } from "../../../../store/ducks/usersSearch/contracts/actionTypes";
 import SendDirectTweetModal from "../SendDirectTweetModal";
 import { ChatMessagesActionsType } from "../../../../store/ducks/chatMessages/contracts/actionTypes";
@@ -35,8 +35,8 @@ describe("SendDirectTweetModal", () => {
     it("should search by text and cancel", () => {
         const { wrapper } = createWrapper();
 
-        wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", { target: { value: mockText } });
-        expect(wrapper.find(MessagesModalInput).prop("value")).toBe(mockText);
+        wrapper.find(ModalInputWrapper).find("input").at(0).simulate("change", { target: { value: mockText } });
+        expect(wrapper.find(ModalInputWrapper).prop("value")).toBe(mockText);
         expect(wrapper.find(DirectUserItem).length).toEqual(2);
         expect(mockDispatchFn).nthCalledWith(2, { type: UsersSearchActionsType.RESET_USERS_STATE });
         expect(mockDispatchFn).nthCalledWith(3, {
@@ -44,14 +44,14 @@ describe("SendDirectTweetModal", () => {
             type: UsersSearchActionsType.FETCH_PARTICIPANTS_BY_NAME
         });
 
-        wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", { target: { value: "" } });
-        expect(wrapper.find(MessagesModalInput).prop("value")).toBe("");
+        wrapper.find(ModalInputWrapper).find("input").at(0).simulate("change", { target: { value: "" } });
+        expect(wrapper.find(ModalInputWrapper).prop("value")).toBe("");
     });
 
     it("should click select and click deselect user", () => {
         const { wrapper } = createWrapper();
 
-        wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", { target: { value: mockText } });
+        wrapper.find(ModalInputWrapper).find("input").at(0).simulate("change", { target: { value: mockText } });
         wrapper.find(ListItem).at(0).simulate("click");
         expect(wrapper.find(ListItem).at(0).prop("selected")).toBe(true);
 
@@ -64,7 +64,7 @@ describe("SendDirectTweetModal", () => {
 
         expect(wrapper.find(Chip).exists()).toBeFalsy();
 
-        wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", { target: { value: mockText } });
+        wrapper.find(ModalInputWrapper).find("input").at(0).simulate("change", { target: { value: mockText } });
         wrapper.find(ListItem).at(0).simulate("click");
         expect(wrapper.find(ListItem).at(0).prop("selected")).toBe(true);
         expect(wrapper.find(Chip).at(0).prop("label")).toBe(mockUsers[0].fullName);
@@ -78,7 +78,7 @@ describe("SendDirectTweetModal", () => {
 
         expect(wrapper.find(IconButton).at(1).prop("disabled")).toBe(true);
 
-        wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", { target: { value: mockText } });
+        wrapper.find(ModalInputWrapper).find("input").at(0).simulate("change", { target: { value: mockText } });
         wrapper.find(SendDirectMessageInput).find("textarea").at(0).simulate("change", { target: { value: mockText } });
         wrapper.find(ListItem).at(0).simulate("click");
         expect(wrapper.find(IconButton).at(1).prop("disabled")).toBe(false);
@@ -108,7 +108,7 @@ describe("SendDirectTweetModal", () => {
     it("should scroll list of Users by input text", () => {
         const mockState = { ...mockRootState, usersSearch: { ...mockRootState.usersSearch, pagesCount: 10 } };
         const { wrapper } = createWrapper(mockState);
-        wrapper.find(MessagesModalInput).find("input").at(0).simulate("change", { target: { value: mockText } });
+        wrapper.find(ModalInputWrapper).find("input").at(0).simulate("change", { target: { value: mockText } });
         wrapper.find(InfiniteScroll).prop("next")();
 
         expect(mockDispatchFn).nthCalledWith(4, {
