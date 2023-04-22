@@ -21,7 +21,7 @@ public class NotificationApiController {
     @PostMapping
     public void sendNotification(@RequestBody NotificationRequest request) {
         NotificationResponse notification = notificationClientMapper.sendNotification(request);
-        sendTopicNotification(notification, notification.getUser().getId());
+        sendTopicNotification(notification, notification.getNotifiedUserId());
     }
 
     @PostMapping(TWEET)

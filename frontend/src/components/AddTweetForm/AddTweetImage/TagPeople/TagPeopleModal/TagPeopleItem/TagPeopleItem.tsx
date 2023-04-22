@@ -1,12 +1,10 @@
 import React, { FC, ReactElement } from "react";
-import { useSelector } from "react-redux";
 import { Avatar, ListItem, Typography } from "@material-ui/core";
 
 import { useTagPeopleItemStyles } from "./TagPeopleItemStyles";
 import { UserResponse } from "../../../../../../types/user";
 import { DEFAULT_PROFILE_IMG } from "../../../../../../constants/url-constants";
 import LockIcon from "../../../../../LockIcon/LockIcon";
-import { selectUserDataId } from "../../../../../../store/ducks/user/selectors";
 
 interface TagPeopleItemProps {
     user: UserResponse;
@@ -16,11 +14,10 @@ interface TagPeopleItemProps {
 const TagPeopleItem: FC<TagPeopleItemProps> = ({ user, handleListItemClick }): ReactElement => {
     const isUserCanTagged = user?.isPrivateProfile && !user.isFollower;
     const classes = useTagPeopleItemStyles({ isUserCanTagged });
-    const myProfileId = useSelector(selectUserDataId);
     const userAvatar = user?.avatar ?? DEFAULT_PROFILE_IMG;
 
     return (
-        <ListItem onClick={() => handleListItemClick(user)}>
+        <ListItem onClick={isUserCanTagged ? undefined : () => handleListItemClick(user)}>
             <div className={classes.container}>
                 <Avatar className={classes.listAvatar} src={userAvatar} />
                 <div style={{ flex: 1 }}>

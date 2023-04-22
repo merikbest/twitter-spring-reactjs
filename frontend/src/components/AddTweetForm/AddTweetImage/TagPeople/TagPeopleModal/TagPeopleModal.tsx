@@ -10,27 +10,35 @@ import {
     resetUsersState,
     setUsersSearch
 } from "../../../../../store/ducks/usersSearch/actionCreators";
-import { selectUserDataId } from "../../../../../store/ducks/user/selectors";
 import { selectUsersPagesCount, selectUsersSearch } from "../../../../../store/ducks/usersSearch/selectors";
 import InfiniteScrollWrapper from "../../../../InfiniteScrollWrapper/InfiniteScrollWrapper";
 import TagPeopleItem from "./TagPeopleItem/TagPeopleItem";
 import UserChip from "../../../../UserChip/UserChip";
-import { useSelectUsers } from "../../../../../hook/useSelectUsers";
 import ModalInput from "../../../../ModalInput/ModalInput";
+import { UserResponse } from "../../../../../types/user";
 
 interface TagPeopleModalProps {
     visible?: boolean;
     onClose: () => void;
+    selectedUsers: UserResponse[];
+    handleDelete: (selectedUser: UserResponse) => void
+    handleListItemClick: (user: UserResponse) => void,
 }
 
-const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactElement | null => {
+const TagPeopleModal: FC<TagPeopleModalProps> = (
+    {
+        visible,
+        onClose,
+        selectedUsers,
+        handleDelete,
+        handleListItemClick
+    }
+): ReactElement | null => {
     const classes = useTagPeopleModalStyles();
     const dispatch = useDispatch();
-    const myProfileId = useSelector(selectUserDataId);
     const users = useSelector(selectUsersSearch);
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const [searchText, setSearchText] = useState<string>("");
-    const { selectedUsers, handleDelete, handleListItemClick } = useSelectUsers();
 
     const onSearch = (text: string): void => {
         if (text) {
@@ -58,11 +66,12 @@ const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactEle
                 Tag people
                 <Button
                     className={classes.button}
+                    disabled={selectedUsers.length === 0}
+                    onClick={onClose}
                     type="submit"
                     variant="contained"
                     color="primary"
                     size="small"
-                    disabled={selectedUsers.length === 0}
                 >
                     Done
                 </Button>
