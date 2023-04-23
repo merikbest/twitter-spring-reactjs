@@ -1,26 +1,17 @@
-import React, { FC, memo, MouseEvent, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { EmojiData, Picker } from "emoji-mart";
 import { Popover } from "@material-ui/core";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { EmojiIcon } from "../../../icons";
+import { usePopup } from "../../../hook/usePopup";
 
 interface EmojiIconButtonProps {
     addEmoji: (emoji: EmojiData) => void;
 }
 
 const EmojiIconButton: FC<EmojiIconButtonProps> = memo(({ addEmoji }): ReactElement => {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const openPopover = Boolean(anchorEl);
-    const popoverId = openPopover ? "simple-popover" : undefined;
-
-    const handleOpenPopup = (event: MouseEvent<HTMLDivElement>): void => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClosePopup = (): void => {
-        setAnchorEl(null);
-    };
+    const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     return (
         <>

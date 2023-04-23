@@ -61,6 +61,7 @@ import {
 } from "../../constants/path-constants";
 import { HELP_TWITTER, TWITTER_ABOUT, TWITTER_LOGIN } from "../../constants/url-constants";
 import { LoadingStatus } from "../../types/common";
+import { usePopup } from "../../hook/usePopup";
 
 const SideMenu: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -77,9 +78,7 @@ const SideMenu: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
     const [visibleHomeNotification, setVisibleHomeNotification] = useState<boolean>(false);
     const [visibleDisplayModal, setVisibleDisplayModal] = useState<boolean>(false);
     const [visibleFollowerRequestsModal, setVisibleFollowerRequestsModal] = useState<boolean>(false);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const openPopover = Boolean(anchorEl);
-    const popoverId = openPopover ? "simple-popover" : undefined;
+    const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     useEffect(() => {
         if (loadingStatus === LoadingStatus.SUCCESS) {
@@ -95,14 +94,6 @@ const SideMenu: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
 
     const onCloseAddTweet = (): void => {
         setVisibleAddTweet(false);
-    };
-
-    const handleOpenPopup = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClosePopup = (): void => {
-        setAnchorEl(null);
     };
 
     const onOpenDisplayModal = (): void => {

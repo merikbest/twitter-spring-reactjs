@@ -1,4 +1,4 @@
-import React, { FC, memo, MouseEvent, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { Divider, Popover } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 
@@ -6,6 +6,7 @@ import { useReplyStyles } from "./ReplyStyles";
 import { EveryoneReplyIcon, FollowReplyIcon, MentionReplyIcon } from "../../../icons";
 import ChangeReplyWindow from "../../ChangeReplyWindow/ChangeReplyWindow";
 import { ReplyType } from "../../../types/common";
+import { usePopup } from "../../../hook/usePopup";
 
 interface ReplyProps {
     replyType: ReplyType;
@@ -15,21 +16,11 @@ interface ReplyProps {
 
 const Reply: FC<ReplyProps> = memo(({ replyType, setReplyType, isUnsentTweet }): ReactElement => {
     const classes = useReplyStyles();
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const openPopover = Boolean(anchorEl);
-    const popoverId = openPopover ? "simple-popover" : undefined;
+    const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     const handleListItemClick = (reply: ReplyType): void => {
         setReplyType(reply);
-        setAnchorEl(null);
-    };
-
-    const handleOpenPopup = (event: MouseEvent<HTMLButtonElement>): void => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClosePopup = (): void => {
-        setAnchorEl(null);
+        handleClosePopup();
     };
 
     return (

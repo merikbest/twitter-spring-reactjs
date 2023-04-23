@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import { Paper, Popover } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { EmojiData, Picker } from "emoji-mart";
@@ -9,6 +9,7 @@ import { MessageInput } from "../../MessageInput/MessageInput";
 import { useChatFooterStyles } from "./ChatFooterStyles";
 import { addChatMessage } from "../../../../store/ducks/chatMessages/actionCreators";
 import ActionIcon from "../../ActionIcon/ActionIcon";
+import { usePopup } from "../../../../hook/usePopup";
 
 interface ChatFooterProps {
     chatId: number;
@@ -18,10 +19,7 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
     const classes = useChatFooterStyles();
     const dispatch = useDispatch();
     const [message, setMessage] = useState<string>("");
-    // Popover
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const openPopover = Boolean(anchorEl);
-    const popoverId = openPopover ? "simple-popover" : undefined;
+    const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     const onSendMessage = (): void => {
         if (message !== "") {
@@ -35,14 +33,6 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
         emojiConvertor.replace_mode = "unified";
         const convertedEmoji = emojiConvertor.replace_colons(emoji.colons!);
         setMessage(message + " " + convertedEmoji);
-    };
-
-    const handleOpenPopup = (event: MouseEvent<HTMLDivElement>): void => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClosePopup = (): void => {
-        setAnchorEl(null);
     };
 
     const textConverter = (): string => {

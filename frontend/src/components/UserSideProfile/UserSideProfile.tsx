@@ -16,6 +16,7 @@ import { useUserSideProfileStyles } from "./UserSideProfileStyles";
 import { CheckIcon, EditIcon } from "../../icons";
 import LogoutModal from "./LogoutModal/LogoutModal";
 import LockIcon from "../LockIcon/LockIcon";
+import { usePopup } from "../../hook/usePopup";
 
 const UserSideProfile: FC = (): ReactElement | null => {
     const classes = useUserSideProfileStyles();
@@ -24,17 +25,7 @@ const UserSideProfile: FC = (): ReactElement | null => {
     const fullName = useSelector(selectUserProfileFullName);
     const username = useSelector(selectUserProfileUsername);
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const openPopover = Boolean(anchorEl);
-    const popoverId = openPopover ? "simple-popover" : undefined;
-
-    const handleOpenPopup = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClosePopup = (): void => {
-        setAnchorEl(null);
-    };
+    const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     if (!myProfileId) {
         return null;
@@ -62,17 +53,9 @@ const UserSideProfile: FC = (): ReactElement | null => {
                 open={openPopover}
                 anchorEl={anchorEl}
                 onClose={handleClosePopup}
-                classes={{
-                    paper: classes.popover
-                }}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "center"
-                }}
-                transformOrigin={{
-                    vertical: "bottom",
-                    horizontal: "center"
-                }}
+                classes={{ paper: classes.popover }}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                transformOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
                 <List>
                     <ListItem>

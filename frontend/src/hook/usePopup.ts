@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 interface UsePopup {
     anchorEl: HTMLElement | null,
-    handleOpenPopup: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+    handleOpenPopup: (event: React.MouseEvent<HTMLDivElement| HTMLButtonElement, MouseEvent>) => void,
     handleClosePopup: () => void,
     popoverId: string | undefined,
     openPopover: boolean
@@ -13,7 +13,7 @@ export const usePopup = (): UsePopup => {
     const openPopover = Boolean(anchorEl);
     const popoverId = openPopover ? "simple-popover" : undefined;
 
-    const handleOpenPopup = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+    const handleOpenPopup = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement, MouseEvent>): void => {
         setAnchorEl(event.currentTarget);
     };
 
