@@ -12,9 +12,11 @@ interface TweeterInputProps {
     name: string;
     label: string;
     maxTextLength: number;
+    multiline?: boolean;
+    rows?: number;
 }
 
-const TweeterInput: FC<TweeterInputProps> = (
+const TweetInput: FC<TweeterInputProps> = (
     {
         onChange,
         value,
@@ -22,7 +24,9 @@ const TweeterInput: FC<TweeterInputProps> = (
         error,
         name,
         label,
-        maxTextLength
+        maxTextLength,
+        multiline,
+        rows
     }
 ): ReactElement => {
     const classes = useTweetInputStyles();
@@ -61,12 +65,12 @@ const TweeterInput: FC<TweeterInputProps> = (
                 onFocus={onFocus}
                 onBlur={onBlur}
                 fullWidth
-                multiline={label === "Bio"}
-                rows={label === "Bio" ? 3 : 1}
+                multiline={multiline}
+                rows={rows}
             />
         </div>
     );
 };
 
-export default TweeterInput;
+export default TweetInput;
 

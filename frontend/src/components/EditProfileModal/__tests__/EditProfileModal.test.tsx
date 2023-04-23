@@ -7,7 +7,7 @@ import { setImmediate } from "timers";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
 import EditProfileModal from "../EditProfileModal";
 import { mockFullTweet, mockUser } from "../../../util/test-utils/mock-test-data";
-import TweeterInput from "../TweetInput/TweeterInput";
+import TweetInput from "../../TweetInput/TweetInput";
 import { API_USER_UPLOAD_IMAGE } from "../../../constants/endpoint-constants";
 import { UserActionsType } from "../../../store/ducks/user/contracts/actionTypes";
 import { LoadingStatus } from "../../../types/common";
@@ -27,10 +27,10 @@ describe("EditProfileModal", () => {
         expect(wrapper.text().includes("Edit Profile")).toBe(true);
         expect(wrapper.find("img").at(0).prop("src")).toBe(mockUser.wallpaper);
         expect(wrapper.find(Avatar).prop("src")).toBe(mockUser.avatar);
-        expect(wrapper.find(TweeterInput).at(0).prop("value")).toBe(mockUser.fullName);
-        expect(wrapper.find(TweeterInput).at(1).prop("value")).toBe(mockUser.about);
-        expect(wrapper.find(TweeterInput).at(2).prop("value")).toBe(mockUser.location);
-        expect(wrapper.find(TweeterInput).at(3).prop("value")).toBe(mockUser.website);
+        expect(wrapper.find(TweetInput).at(0).prop("value")).toBe(mockUser.fullName);
+        expect(wrapper.find(TweetInput).at(1).prop("value")).toBe(mockUser.about);
+        expect(wrapper.find(TweetInput).at(2).prop("value")).toBe(mockUser.location);
+        expect(wrapper.find(TweetInput).at(3).prop("value")).toBe(mockUser.website);
     });
 
     it("should submit Edit Profile Modal form", (done) => {

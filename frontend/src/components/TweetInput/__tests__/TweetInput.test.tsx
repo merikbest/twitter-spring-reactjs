@@ -1,17 +1,17 @@
 import React from "react";
 import { InputLabel } from "@material-ui/core";
 
-import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import { TweetInputField } from "../TweetInputField";
-import TweeterInput from "../TweeterInput";
-import { LoadingStatus } from "../../../../types/common";
+import TweetInput from "../TweetInput";
+import { LoadingStatus } from "../../../types/common";
 
 describe("TweeterInput", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
 
     it("should focus and blur input field", () => {
         const wrapper = mountWithStore(
-            <TweeterInput
+            <TweetInput
                 onChange={jest.fn()}
                 value={undefined}
                 name={"username"}
@@ -30,7 +30,7 @@ describe("TweeterInput", () => {
 
     it("should render TweeterInput Bio", () => {
         const wrapper = mountWithStore(
-            <TweeterInput
+            <TweetInput
                 onChange={jest.fn()}
                 value={"50"}
                 name={"username"}

@@ -10,7 +10,7 @@ import { Avatar, Button } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 
-import TweeterInput from "./TweetInput/TweeterInput";
+import TweetInput from "../TweetInput/TweetInput";
 import { ImageObj } from "../AddTweetForm/AddTweetForm";
 import { selectUserData } from "../../store/ducks/user/selectors";
 import { uploadImage } from "../../util/upload-image-helper";
@@ -115,7 +115,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                     control={control}
                                     defaultValue=""
                                     render={({ field: { onChange, value } }) => (
-                                        <TweeterInput
+                                        <TweetInput
                                             name="fullName"
                                             helperText={errors.fullName?.message}
                                             error={!!errors.fullName}
@@ -131,12 +131,14 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                     control={control}
                                     defaultValue=""
                                     render={({ field: { onChange, value } }) => (
-                                        <TweeterInput
+                                        <TweetInput
                                             name="about"
                                             label={"Bio"}
                                             maxTextLength={160}
                                             onChange={onChange}
                                             value={value}
+                                            rows={3}
+                                            multiline
                                         />
                                     )}
                                 />
@@ -145,7 +147,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                     control={control}
                                     defaultValue=""
                                     render={({ field: { onChange, value } }) => (
-                                        <TweeterInput
+                                        <TweetInput
                                             name="location"
                                             label={"Location"}
                                             maxTextLength={30}
@@ -159,7 +161,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                     control={control}
                                     defaultValue=""
                                     render={({ field: { onChange, value } }) => (
-                                        <TweeterInput
+                                        <TweetInput
                                             name="website"
                                             label={"Website"}
                                             maxTextLength={100}

@@ -14,7 +14,7 @@ export const useTagPeopleModalStyles = makeStyles((theme) => ({
         padding: 0,
         "& .MuiListItem-root.Mui-selected": {
             backgroundColor: theme.palette.secondary.main
-        },
+        }
     },
     divider: {
         marginTop: 8,

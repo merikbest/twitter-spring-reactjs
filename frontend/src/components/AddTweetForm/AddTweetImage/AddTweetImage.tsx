@@ -27,7 +27,7 @@ const AddTweetImage: FC<AddTweetImageProps> = memo(({ images, removeImage }): Re
             <img src={images[0].src} alt={images[0].src} />
             <div className={classes.imageActionContainer}>
                 <TagPeople />
-                <AddDescription />
+                <AddDescription imageSrc={images[0].src} />
             </div>
             <div className={classes.imageRemove}>
                 <ActionIconButton
