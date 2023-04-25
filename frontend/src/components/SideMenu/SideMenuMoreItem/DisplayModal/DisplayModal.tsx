@@ -4,11 +4,11 @@ import { CheckCircle, RadioButtonUnchecked } from "@material-ui/icons";
 import { useDispatch } from "react-redux";
 
 import { useDisplayModalStyles } from "./DisplayModalStyles";
-import { CheckIcon, TweetIcon, VerifiedIcon } from "../../../icons";
-import { DisplayProps } from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
-import { updateBackgroundColor, updateColorScheme } from "../../../store/ducks/user/actionCreators";
-import { BackgroundTheme, ColorScheme } from "../../../types/common";
-import { BACKGROUND, COLOR } from "../../../constants/common-constants";
+import { CheckIcon, TweetIcon, VerifiedIcon } from "../../../../icons";
+import { DisplayProps } from "../../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import { updateBackgroundColor, updateColorScheme } from "../../../../store/ducks/user/actionCreators";
+import { BackgroundTheme, ColorScheme } from "../../../../types/common";
+import { BACKGROUND, COLOR } from "../../../../constants/common-constants";
 
 interface DisplayModalProps {
     visible?: boolean;

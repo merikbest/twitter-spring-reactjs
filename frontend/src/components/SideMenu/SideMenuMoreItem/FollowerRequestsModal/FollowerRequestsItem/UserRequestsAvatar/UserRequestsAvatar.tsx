@@ -1,7 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Avatar } from "@material-ui/core";
 
-import { DEFAULT_PROFILE_IMG } from "../../../../../constants/url-constants";
+import { DEFAULT_PROFILE_IMG } from "../../../../../../constants/url-constants";
 import { useFollowerRequestsItemStyles } from "../FollowerRequestsItemStyles";
 
 interface UserRequestsAvatarProps {

@@ -5,9 +5,9 @@ import { Button, Paper } from "@material-ui/core";
 import classNames from "classnames";
 
 import { useFollowerRequestsItemStyles } from "./FollowerRequestsItemStyles";
-import { FollowerUserResponse } from "../../../../types/user";
-import { acceptFollowRequest, declineFollowRequest } from "../../../../store/ducks/followerRequests/actionCreators";
-import { PROFILE } from "../../../../constants/path-constants";
+import { FollowerUserResponse } from "../../../../../types/user";
+import { acceptFollowRequest, declineFollowRequest } from "../../../../../store/ducks/followerRequests/actionCreators";
+import { PROFILE } from "../../../../../constants/path-constants";
 import UserRequestsInfo from "./UserRequestsInfo/UserRequestsInfo";
 import UserRequestsAvatar from "./UserRequestsAvatar/UserRequestsAvatar";
 

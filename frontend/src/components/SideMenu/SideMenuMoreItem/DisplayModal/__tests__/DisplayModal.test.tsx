@@ -1,10 +1,10 @@
 import React from "react";
 import { Dialog, Radio } from "@material-ui/core";
 
-import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
-import { BackgroundTheme, ColorScheme, LoadingStatus } from "../../../../types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { BackgroundTheme, ColorScheme, LoadingStatus } from "../../../../../types/common";
 import DisplayModal from "../DisplayModal";
-import { BACKGROUND, COLOR } from "../../../../constants/common-constants";
+import { BACKGROUND, COLOR } from "../../../../../constants/common-constants";
 
 describe("DisplayModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

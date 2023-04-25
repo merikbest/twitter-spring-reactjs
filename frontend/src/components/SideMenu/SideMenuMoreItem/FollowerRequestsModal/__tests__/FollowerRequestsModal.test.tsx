@@ -1,13 +1,13 @@
 import React from "react";
 import { Dialog } from "@material-ui/core";
 
-import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
-import { mockFollowerUserResponse, mockUser } from "../../../../util/test-utils/mock-test-data";
-import Spinner from "../../../Spinner/Spinner";
-import FollowerRequestsItem from "../FollowerRequestsItem/FollowerRequestsItem";
-import { FollowerRequestsActionsType } from "../../../../store/ducks/followerRequests/contracts/actionTypes";
+import { LoadingStatus } from "../../../../../types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import FollowerRequestsModal from "../FollowerRequestsModal";
-import { LoadingStatus } from "../../../../types/common";
+import { FollowerRequestsActionsType } from "../../../../../store/ducks/followerRequests/contracts/actionTypes";
+import { mockFollowerUserResponse, mockUser } from "../../../../../util/test-utils/mock-test-data";
+import Spinner from "../../../../Spinner/Spinner";
+import FollowerRequestsItem from "../FollowerRequestsItem/FollowerRequestsItem";
 
 describe("FollowerRequestsModal", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

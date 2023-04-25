@@ -4,21 +4,21 @@ import { Dialog, DialogContent } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useFollowerRequestsModalStyles } from "./FollowerRequestsModalSyles";
-import CloseButton from "../../CloseButton/CloseButton";
-import { useGlobalStyles } from "../../../util/globalClasses";
+import CloseButton from "../../../CloseButton/CloseButton";
+import { useGlobalStyles } from "../../../../util/globalClasses";
 import {
     fetchFollowerRequests,
     resetFollowerRequestsState
-} from "../../../store/ducks/followerRequests/actionCreators";
+} from "../../../../store/ducks/followerRequests/actionCreators";
 import {
     selectFollowerRequestsItems,
     selectFollowerRequestsPagesCount,
     selectIsFollowerRequestsLoading
-} from "../../../store/ducks/followerRequests/selectors";
-import Spinner from "../../Spinner/Spinner";
+} from "../../../../store/ducks/followerRequests/selectors";
+import Spinner from "../../../Spinner/Spinner";
 import FollowerRequestsItem from "./FollowerRequestsItem/FollowerRequestsItem";
-import EmptyPageDescription from "../../EmptyPageDescription/EmptyPageDescription";
-import InfiniteScrollWrapper from "../../InfiniteScrollWrapper/InfiniteScrollWrapper";
+import EmptyPageDescription from "../../../EmptyPageDescription/EmptyPageDescription";
+import InfiniteScrollWrapper from "../../../InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 interface FollowerRequestsModalProps {
     visible?: boolean;

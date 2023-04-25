@@ -1,10 +1,10 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Typography } from "@material-ui/core";
 
-import PopperUserWindow from "../../../../PopperUserWindow/PopperUserWindow";
-import { useHoverUser } from "../../../../../hook/useHoverUser";
+import PopperUserWindow from "../../../../../PopperUserWindow/PopperUserWindow";
+import { useHoverUser } from "../../../../../../hook/useHoverUser";
 import { useFollowerRequestsItemStyles } from "../FollowerRequestsItemStyles";
-import { FollowerUserResponse } from "../../../../../types/user";
+import { FollowerUserResponse } from "../../../../../../types/user";
 
 interface UserRequestsInfoProps {
     user: FollowerUserResponse;

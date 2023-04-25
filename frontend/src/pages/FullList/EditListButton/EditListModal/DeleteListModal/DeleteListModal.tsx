@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
@@ -9,26 +9,19 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDeleteListModalStyles } from "./DeleteListModalStyles";
 import { deleteList } from "../../../../../store/ducks/list/actionCreators";
 import { LISTS } from "../../../../../constants/path-constants";
+import { useModalWindow } from "../../../../../hook/useModalWindow";
 
 const DeleteListModal = (): ReactElement => {
     const classes = useDeleteListModalStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const { listId } = useParams<{ listId: string }>();
-    const [visibleDeleteListModal, setVisibleDeleteListModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const onDeleteList = (): void => {
-        setVisibleDeleteListModal(false);
+        onCloseModalWindow();
         dispatch(deleteList(parseInt(listId)));
         history.push(LISTS);
-    };
-
-    const onOpenDeleteListModal = (): void => {
-        setVisibleDeleteListModal(true);
-    };
-
-    const onCloseDeleteListModal = (): void => {
-        setVisibleDeleteListModal(false);
     };
 
     return (
@@ -36,17 +29,13 @@ const DeleteListModal = (): ReactElement => {
             <Typography
                 id={"onOpenDeleteListModal"}
                 className={classes.deleteList}
-                onClick={onOpenDeleteListModal}
+                onClick={onOpenModalWindow}
                 variant={"body1"}
                 component={"div"}
             >
                 Delete List
             </Typography>
-            <Dialog
-                open={visibleDeleteListModal}
-                onClose={onCloseDeleteListModal}
-                aria-labelledby="form-dialog-title"
-            >
+            <Dialog open={visibleModalWindow} onClose={onCloseModalWindow} aria-labelledby="form-dialog-title">
                 <DialogContent style={{ padding: 0 }}>
                     <div className={classes.modalWrapper}>
                         <Typography variant={"h5"} component={"div"}>
@@ -58,7 +47,7 @@ const DeleteListModal = (): ReactElement => {
                         <div className={classes.modalButtonWrapper}>
                             <Button
                                 className={classes.modalCancelButton}
-                                onClick={onCloseDeleteListModal}
+                                onClick={onCloseModalWindow}
                                 variant="contained"
                                 size="large"
                             >

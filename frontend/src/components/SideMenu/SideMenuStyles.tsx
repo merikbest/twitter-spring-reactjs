@@ -127,7 +127,6 @@ export const useSideMenuStyles = makeStyles((theme: Theme) => ({
         marginLeft: 4,
         padding: "0px 7px",
         borderRadius: "50%",
-        // border: `1px solid ${theme.palette.common.white}`,
         backgroundColor: theme.palette.primary.main,
         fontSize: 12,
         color: theme.palette.common.white,

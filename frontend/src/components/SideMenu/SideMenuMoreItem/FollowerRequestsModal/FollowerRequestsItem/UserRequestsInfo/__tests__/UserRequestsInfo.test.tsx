@@ -1,9 +1,9 @@
 import React from "react";
 
-import { createMockRootState, mountWithStore } from "../../../../../../util/test-utils/test-helper";
-import { LoadingStatus } from "../../../../../../types/common";
-import { mockFollowerUserResponse } from "../../../../../../util/test-utils/mock-test-data";
-import PopperUserWindow from "../../../../../PopperUserWindow/PopperUserWindow";
+import { createMockRootState, mountWithStore } from "../../../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../../../types/common";
+import { mockFollowerUserResponse } from "../../../../../../../util/test-utils/mock-test-data";
+import PopperUserWindow from "../../../../../../PopperUserWindow/PopperUserWindow";
 import UserRequestsInfo from "../UserRequestsInfo";
 
 describe("UserRequestsInfo", () => {

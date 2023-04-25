@@ -13,8 +13,8 @@ import { BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH } from
 import { mockUser } from "../../../util/test-utils/mock-test-data";
 import AddTweetModal from "../../AddTweetModal/AddTweetModal";
 import CloseButton from "../../CloseButton/CloseButton";
-import DisplayModal from "../DisplayModal/DisplayModal";
-import FollowerRequestsModal from "../FollowerRequestsModal/FollowerRequestsModal";
+import DisplayModal from "../SideMenuMoreItem/DisplayModal/DisplayModal";
+import FollowerRequestsModal from "../SideMenuMoreItem/FollowerRequestsModal/FollowerRequestsModal";
 import SideMenu from "../SideMenu";
 import { LoadingStatus } from "../../../types/common";
 

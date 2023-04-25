@@ -2,13 +2,13 @@ import React from "react";
 import { Avatar, Button, Paper } from "@material-ui/core";
 import { createMemoryHistory } from "history";
 
-import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
-import { mockFollowerUserResponse, mockUserDetailResponse } from "../../../../../util/test-utils/mock-test-data";
-import { FollowerRequestsActionsType } from "../../../../../store/ducks/followerRequests/contracts/actionTypes";
-import { PROFILE } from "../../../../../constants/path-constants";
-import PopperUserWindow from "../../../../PopperUserWindow/PopperUserWindow";
+import { LoadingStatus } from "../../../../../../types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../util/test-utils/test-helper";
+import { mockFollowerUserResponse, mockUserDetailResponse } from "../../../../../../util/test-utils/mock-test-data";
 import FollowerRequestsItem from "../FollowerRequestsItem";
-import { LoadingStatus } from "../../../../../types/common";
+import { FollowerRequestsActionsType } from "../../../../../../store/ducks/followerRequests/contracts/actionTypes";
+import { PROFILE } from "../../../../../../constants/path-constants";
+import PopperUserWindow from "../../../../../PopperUserWindow/PopperUserWindow";
 
 describe("FollowerRequestsItem", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

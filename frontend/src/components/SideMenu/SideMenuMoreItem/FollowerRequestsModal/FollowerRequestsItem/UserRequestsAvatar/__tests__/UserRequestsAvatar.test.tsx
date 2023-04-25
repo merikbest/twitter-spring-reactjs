@@ -1,11 +1,11 @@
 import React from "react";
 import { Avatar } from "@material-ui/core";
 
-import { createMockRootState, mountWithStore } from "../../../../../../util/test-utils/test-helper";
-import { LoadingStatus } from "../../../../../../types/common";
-import { mockFollowerUserResponse } from "../../../../../../util/test-utils/mock-test-data";
+import { createMockRootState, mountWithStore } from "../../../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../../../types/common";
+import { mockFollowerUserResponse } from "../../../../../../../util/test-utils/mock-test-data";
 import UserRequestsAvatar from "../UserRequestsAvatar";
-import { DEFAULT_PROFILE_IMG } from "../../../../../../constants/url-constants";
+import { DEFAULT_PROFILE_IMG } from "../../../../../../../constants/url-constants";
 
 describe("UserRequestsAvatar", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
