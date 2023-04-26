@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider, Typography } from "@material-ui/core";
 
@@ -9,26 +9,19 @@ import ChangeEmailModal from "./ChangeEmailModal/ChangeEmailModal";
 import { setUserLoadingStatus } from "../../../../../store/ducks/user/actionCreators";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { LoadingStatus } from "../../../../../types/common";
+import { useModalWindow } from "../../../../../hook/useModalWindow";
 
 const ChangeEmail: FC = (): ReactElement => {
     const classes = useChangeEmailStyles();
     const dispatch = useDispatch();
     const myProfileEmail = useSelector(selectUserProfileEmail);
     const isUpdatedSuccess = useSelector(selectUserIsSuccess);
-    const [visibleChangeEmailModal, setVisibleChangeEmailModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     useEffect(() => {
-        setVisibleChangeEmailModal(false);
+        onCloseModalWindow();
         dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
     }, [isUpdatedSuccess]);
-
-    const onOpenChangeEmailModal = (): void => {
-        setVisibleChangeEmailModal(true);
-    };
-
-    const onCloseChangeEmailModal = (): void => {
-        setVisibleChangeEmailModal(false);
-    };
 
     return (
         <>
@@ -46,18 +39,13 @@ const ChangeEmail: FC = (): ReactElement => {
             <div
                 id={"openChangeEmailModal"}
                 className={classes.updateEmailAddress}
-                onClick={onOpenChangeEmailModal}
+                onClick={onOpenModalWindow}
             >
                 <Typography variant={"body1"} component={"span"}>
                     Update email address
                 </Typography>
             </div>
-            {visibleChangeEmailModal && (
-                <ChangeEmailModal
-                    visible={visibleChangeEmailModal}
-                    onClose={onCloseChangeEmailModal}
-                />
-            )}
+            <ChangeEmailModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );
 };

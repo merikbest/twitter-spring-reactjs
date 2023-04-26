@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button/Button";
 
 import { useUnfollowTopicButtonStyles } from "./UnfollowTopicButtonStyles";
 import UnfollowModal from "../../../../components/UnfollowModal/UnfollowModal";
+import { useModalWindow } from "../../../../hook/useModalWindow";
 
 interface UnfollowTopicButtonProps {
     topicName: string;
@@ -12,16 +13,12 @@ interface UnfollowTopicButtonProps {
 const UnfollowTopicButton: FC<UnfollowTopicButtonProps> = ({ topicName, onClickFollowTopic }): ReactElement => {
     const classes = useUnfollowTopicButtonStyles();
     const [btnText, setBtnText] = useState<string>("Following");
-    const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
     const infoText = "Even if you unfollow this Topic, you could still see Tweets about it depending on which accounts you’re following.";
 
     const handleClickOpenUnfollowModal = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        setVisibleUnfollowModal(true);
-    };
-
-    const onCloseUnfollowModal = (): void => {
-        setVisibleUnfollowModal(false);
+        onOpenModalWindow();
     };
 
     return (
@@ -40,8 +37,8 @@ const UnfollowTopicButton: FC<UnfollowTopicButtonProps> = ({ topicName, onClickF
             <UnfollowModal
                 fullName={topicName}
                 infoText={infoText}
-                visible={visibleUnfollowModal}
-                onClose={onCloseUnfollowModal}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
                 handleUnfollow={onClickFollowTopic}
             />
         </>

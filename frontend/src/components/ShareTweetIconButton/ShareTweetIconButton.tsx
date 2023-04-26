@@ -20,6 +20,7 @@ import {
 } from "../../store/ducks/tweetAdditionalInfo/selectors";
 import Spinner from "../Spinner/Spinner";
 import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
+import { useModalWindow } from "../../hook/useModalWindow";
 
 interface ShareTweetProps {
     tweetId: number;
@@ -33,7 +34,7 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);
     const isTweetBookmarked = useSelector(selectIsTweetBookmarkedAdditionalInfo);
     const [shareTweetOpen, setShareTweetOpen] = useState<boolean>(false);
-    const [visibleSendDirectTweetModal, setVisibleSendDirectTweetModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     useEffect(() => {
         if (shareTweetOpen) {
@@ -52,14 +53,6 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
         setShareTweetOpen(false);
     };
 
-    const onClickSendViaDirectMessage = (): void => {
-        setVisibleSendDirectTweetModal(true);
-    };
-
-    const onCloseSendViaDirectMessage = (): void => {
-        setVisibleSendDirectTweetModal(false);
-    };
-
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.root}>
@@ -75,7 +68,7 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
                             <Spinner paddingTop={90} />
                         ) : (
                             <List>
-                                <SendViaDirectMessageButton onClickSendViaDirectMessage={onClickSendViaDirectMessage} />
+                                <SendViaDirectMessageButton onClickSendViaDirectMessage={onOpenModalWindow} />
                                 <AddTweetToBookmarksButton
                                     tweetId={tweetId}
                                     isTweetBookmarked={isTweetBookmarked}
@@ -94,8 +87,8 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
                 )}
                 <SendDirectTweetModal
                     tweetId={tweetId}
-                    visible={visibleSendDirectTweetModal}
-                    onClose={onCloseSendViaDirectMessage}
+                    visible={visibleModalWindow}
+                    onClose={onCloseModalWindow}
                 />
             </div>
         </ClickAwayListener>

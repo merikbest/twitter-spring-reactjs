@@ -1,4 +1,4 @@
-import React, { memo, ReactElement, useState } from "react";
+import React, { memo, ReactElement } from "react";
 import { useSelector } from "react-redux";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
@@ -16,6 +16,7 @@ import {
 import { ReplyType } from "../../../types/common";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import { useTweetReplyIconButtonStyles } from "./TweetReplyIconButtonStyles";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 const TweetReplyIconButton = memo((): ReactElement => {
     const myProfileId = useSelector(selectUserDataId);
@@ -28,22 +29,14 @@ const TweetReplyIconButton = memo((): ReactElement => {
     const tweetReplyType = useSelector(selectTweetReplyType);
     const isUserCanReply = (tweetReplyType === ReplyType.MENTION) && (myProfileId !== tweetUserId);
     const classes = useTweetReplyIconButtonStyles({ isUserCanReply });
-    const [visibleReplyModalWindow, setVisibleReplyModalWindow] = useState<boolean>(false);
-
-    const onOpenReplyModalWindow = (): void => {
-        setVisibleReplyModalWindow(true);
-    };
-
-    const onCloseReplyModalWindow = (): void => {
-        setVisibleReplyModalWindow(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <div className={classes.tweetIcon}>
             <ActionIconButton
                 actionText={"Reply"}
                 icon={ReplyIcon}
-                onClick={onOpenReplyModalWindow}
+                onClick={onOpenModalWindow}
                 disabled={isUserCanReply}
             />
             <ReplyModal
@@ -52,8 +45,8 @@ const TweetReplyIconButton = memo((): ReactElement => {
                 text={text!}
                 image={images?.[0]}
                 dateTime={dateTime!}
-                visible={visibleReplyModalWindow}
-                onClose={onCloseReplyModalWindow}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
             />
         </div>
     );

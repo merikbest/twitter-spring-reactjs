@@ -7,28 +7,21 @@ import { useSettingsModalStyles } from "./SettingsModalStyles";
 import CloseButton from "../../CloseButton/CloseButton";
 import { SettingsIcon } from "../../../icons";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 const SettingsModal = (): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useSettingsModalStyles();
     const [checked1, setChecked1] = useState<boolean>(true);
     const [checked2, setChecked2] = useState<boolean>(true);
-    const [visibleSettingsModal, setVisibleSettingsModal] = useState<boolean>(false);
-
-    const onOpenSettingsModal = (): void => {
-        setVisibleSettingsModal(true);
-    };
-
-    const onCloseSettingsModal = (): void => {
-        setVisibleSettingsModal(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <>
-            <ActionIconButton actionText={"Settings"} onClick={onOpenSettingsModal} icon={SettingsIcon} />
-            <Dialog className={classes.dialog} open={visibleSettingsModal} onClose={onCloseSettingsModal}>
+            <ActionIconButton actionText={"Settings"} onClick={onOpenModalWindow} icon={SettingsIcon} />
+            <Dialog className={classes.dialog} open={visibleModalWindow} onClose={onCloseModalWindow}>
                 <DialogTitle>
-                    <CloseButton onClose={onCloseSettingsModal} />
+                    <CloseButton onClose={onCloseModalWindow} />
                     Trends
                 </DialogTitle>
                 <DialogContent className={classes.content}>

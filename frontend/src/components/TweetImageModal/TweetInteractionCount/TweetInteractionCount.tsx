@@ -5,27 +5,24 @@ import { useSelector } from "react-redux";
 import { selectLikedTweetsCount, selectRetweetsCount, selectTweetId } from "../../../store/ducks/tweet/selectors";
 import UsersListModal, { UsersListModalAction } from "../../UsersListModal/UsersListModal";
 import { useTweetInteractionCountStyles } from "./TweetInteractionCountStyles";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 const TweetInteractionCount = memo((): ReactElement => {
     const classes = useTweetInteractionCountStyles();
     const tweetId = useSelector(selectTweetId);
     const retweetsCount = useSelector(selectRetweetsCount);
     const likedTweetsCount = useSelector(selectLikedTweetsCount);
-    const [visibleUsersListModalWindow, setVisibleUsersListModalWindow] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
     const [usersListModalAction, setUsersListModalAction] = useState<UsersListModalAction>(UsersListModalAction.LIKED);
 
     const onOpenLikesModalWindow = (): void => {
-        setVisibleUsersListModalWindow(true);
+        onOpenModalWindow();
         setUsersListModalAction(UsersListModalAction.LIKED);
     };
 
     const onOpenRetweetsModalWindow = (): void => {
-        setVisibleUsersListModalWindow(true);
+        onOpenModalWindow();
         setUsersListModalAction(UsersListModalAction.RETWEETED);
-    };
-
-    const onCloseUsersListModalWindow = (): void => {
-        setVisibleUsersListModalWindow(false);
     };
 
     return (
@@ -69,8 +66,8 @@ const TweetInteractionCount = memo((): ReactElement => {
             <UsersListModal
                 tweetId={tweetId!}
                 usersListModalAction={usersListModalAction}
-                visible={visibleUsersListModalWindow}
-                onClose={onCloseUsersListModalWindow}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
             />
         </>
     );

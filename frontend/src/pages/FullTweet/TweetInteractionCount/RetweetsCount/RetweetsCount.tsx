@@ -1,29 +1,22 @@
-import React, { memo, ReactElement, useState } from "react";
+import React, { memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import Typography from "@material-ui/core/Typography";
+
 import { useFullTweetStyles } from "../../FullTweetStyles";
 import UsersListModal, { UsersListModalAction } from "../../../../components/UsersListModal/UsersListModal";
-import Typography from "@material-ui/core/Typography";
-import { useSelector } from "react-redux";
-
 import { selectRetweetsCount, selectTweetId } from "../../../../store/ducks/tweet/selectors";
+import { useModalWindow } from "../../../../hook/useModalWindow";
 
 const RetweetsCount = memo((): ReactElement => {
     const classes = useFullTweetStyles();
     const tweetId = useSelector(selectTweetId);
     const retweetsCount = useSelector(selectRetweetsCount);
-    const [visibleModalWindow, setVisibleModalWindow] = useState<boolean>(false);
-
-    const onOpenUsersListModal = (): void => {
-        setVisibleModalWindow(true);
-    };
-
-    const onCloseModalWindow = (): void => {
-        setVisibleModalWindow(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <>
             {(retweetsCount !== 0) && (
-                <span className={classes.interactionCount} onClick={onOpenUsersListModal}>
+                <span className={classes.interactionCount} onClick={onOpenModalWindow}>
                     <div className={classes.contentItem}>
                         <Typography variant={"h6"} component={"span"}>
                             {retweetsCount}

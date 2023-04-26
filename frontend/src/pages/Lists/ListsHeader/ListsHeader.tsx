@@ -11,22 +11,15 @@ import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderW
 import { selectIsLoading } from "../../../store/ducks/lists/selectors";
 import { selectUserDataId, selectUserProfileUsername } from "../../../store/ducks/user/selectors";
 import CreateListsModal from "./CreateListsModal/CreateListsModal";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 const ListsHeader = (): ReactElement => {
     const classes = useListsHeaderStyles();
     const isLoading = useSelector(selectIsLoading);
     const myProfileUsername = useSelector(selectUserProfileUsername);
     const myProfileId = useSelector(selectUserDataId);
-    const [visibleCreateListModal, setVisibleCreateListModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
     const [openPopover, setOpenPopover] = useState<boolean>(false);
-
-    const onOpenCreateListModal = (): void => {
-        setVisibleCreateListModal(true);
-    };
-
-    const onCloseCreateListModal = (): void => {
-        setVisibleCreateListModal(false);
-    };
 
     const handleClick = (): void => {
         setOpenPopover((prev) => !prev);
@@ -49,7 +42,7 @@ const ListsHeader = (): ReactElement => {
                 </div>
             )}
             <div className={classes.iconGroup}>
-                <ActionIconButton onClick={onOpenCreateListModal} actionText={"Create"} icon={AddListsIcon} />
+                <ActionIconButton onClick={onOpenModalWindow} actionText={"Create"} icon={AddListsIcon} />
                 <div className={classes.icon}>
                     <ClickAwayListener onClickAway={handleClickAway}>
                         <div>
@@ -70,7 +63,7 @@ const ListsHeader = (): ReactElement => {
                     </ClickAwayListener>
                 </div>
             </div>
-            <CreateListsModal visible={visibleCreateListModal} onClose={onCloseCreateListModal} />
+            <CreateListsModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </PageHeaderWrapper>
     );
 };

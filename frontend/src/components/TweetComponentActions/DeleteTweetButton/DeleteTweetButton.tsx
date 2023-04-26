@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import { ListItem, Typography } from "@material-ui/core";
 
@@ -7,6 +7,7 @@ import TweetComponentActionsModal from "../TweetComponentActionsModal/TweetCompo
 import { deleteTweetReply } from "../../../store/ducks/tweet/actionCreators";
 import { fetchDeleteTweet } from "../../../store/ducks/tweets/actionCreators";
 import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 interface DeleteTweetButtonProps {
     tweetId: number;
@@ -22,7 +23,7 @@ const DeleteTweetButton: FC<DeleteTweetButtonProps> = memo((
     }
 ): ReactElement => {
     const dispatch = useDispatch();
-    const [visibleDeleteTweetModal, setVisibleDeleteTweetModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const onDeleteUserTweet = (): void => {
         if (addressedTweetId) {
@@ -31,21 +32,13 @@ const DeleteTweetButton: FC<DeleteTweetButtonProps> = memo((
             dispatch(fetchDeleteTweet(tweetId));
         }
         dispatch(setOpenSnackBar("Your Tweet was deleted"));
-        setVisibleDeleteTweetModal(false);
+        onCloseModalWindow();
         onCloseActionsDropdown();
-    };
-
-    const onOpenTweetComponentActionsModal = (): void => {
-        setVisibleDeleteTweetModal(true);
-    };
-
-    const onCloseTweetComponentActionsModal = (): void => {
-        setVisibleDeleteTweetModal(false);
     };
 
     return (
         <>
-            <ListItem id={"delete"} onClick={onOpenTweetComponentActionsModal}>
+            <ListItem id={"delete"} onClick={onOpenModalWindow}>
                 <>{DeleteIcon}</>
                 <Typography variant={"body1"} component={"span"}>
                     Delete
@@ -53,8 +46,8 @@ const DeleteTweetButton: FC<DeleteTweetButtonProps> = memo((
             </ListItem>
             <TweetComponentActionsModal
                 modalTitle={"Delete"}
-                visibleTweetComponentActionsModal={visibleDeleteTweetModal}
-                onCloseTweetComponentActionsModal={onCloseTweetComponentActionsModal}
+                visibleTweetComponentActionsModal={visibleModalWindow}
+                onCloseTweetComponentActionsModal={onCloseModalWindow}
                 onClick={onDeleteUserTweet}
             />
         </>

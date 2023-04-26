@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
+import React, { ChangeEvent, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent, DialogTitle, InputAdornment, Typography } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
@@ -23,6 +23,7 @@ import {
 import Spinner from "../../../../../components/Spinner/Spinner";
 import { ManageMembersInput } from "./ManageMembersInput/ManageMembersInput";
 import EmptyPageDescription from "../../../../../components/EmptyPageDescription/EmptyPageDescription";
+import { useModalWindow } from "../../../../../hook/useModalWindow";
 
 const ManageMembersModal = (): ReactElement => {
     const classes = useManageMembersModalStyles();
@@ -33,10 +34,10 @@ const ManageMembersModal = (): ReactElement => {
     const isMembersLoading = useSelector(selectIsListMembersLoading);
     const [activeTab, setActiveTab] = React.useState<number>(0);
     const [searchText, setSearchText] = React.useState<string>("");
-    const [visibleManageMembersModal, setVisibleManageMembersModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     useEffect(() => {
-        if (visibleManageMembersModal) {
+        if (visibleModalWindow) {
             dispatch(fetchListMembers({ listId: list?.id!, listOwnerId: list?.listOwner.id! }));
         }
 
@@ -44,7 +45,7 @@ const ManageMembersModal = (): ReactElement => {
             dispatch(resetListMembersState());
             dispatch(resetListSuggested());
         };
-    }, [visibleManageMembersModal]);
+    }, [visibleModalWindow]);
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
         setActiveTab(newValue);
@@ -66,20 +67,12 @@ const ManageMembersModal = (): ReactElement => {
         }
     };
 
-    const onOpenManageMembersModal = (): void => {
-        setVisibleManageMembersModal(true);
-    };
-
-    const onCloseManageMembersModal = (): void => {
-        setVisibleManageMembersModal(false);
-    };
-
     return (
         <>
             <Typography
                 id={"onOpenManageMembersModal"}
                 className={classes.manageMembers}
-                onClick={onOpenManageMembersModal}
+                onClick={onOpenModalWindow}
                 variant={"body1"}
                 component={"div"}
             >
@@ -88,12 +81,12 @@ const ManageMembersModal = (): ReactElement => {
             </Typography>
             <Dialog
                 className={classes.dialog}
-                open={visibleManageMembersModal}
-                onClose={onCloseManageMembersModal}
+                open={visibleModalWindow}
+                onClose={onCloseModalWindow}
                 hideBackdrop
             >
                 <DialogTitle>
-                    <IconButton onClick={onCloseManageMembersModal} color="primary" size="small">
+                    <IconButton onClick={onCloseModalWindow} color="primary" size="small">
                         <>{ArrowIcon}</>
                     </IconButton>
                     Manage members

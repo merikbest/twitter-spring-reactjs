@@ -1,9 +1,10 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { AnalyticsIcon } from "../../../icons";
 import TweetAnalyticsModal from "../../TweetAnalyticsModal/TweetAnalyticsModal";
 import { useAnalyticsIconButtonStyles } from "./AnalyticsIconButtonStyles";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 interface AnalyticsIconButtonProps {
     tweetUserFullName?: string;
@@ -21,30 +22,22 @@ const AnalyticsIconButton: FC<AnalyticsIconButtonProps> = memo((
     }
 ): ReactElement => {
     const classes = useAnalyticsIconButtonStyles();
-    const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
-
-    const onOpenTweetAnalyticsModalWindow = (): void => {
-        setVisibleAnalyticsModalWindow(true);
-    };
-
-    const onCloseTweetAnalyticsModalWindow = (): void => {
-        setVisibleAnalyticsModalWindow(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <div id={"analytics"} className={classes.replyIcon}>
             <ActionIconButton
                 actionText={"Analytics"}
                 icon={AnalyticsIcon}
-                onClick={onOpenTweetAnalyticsModalWindow}
+                onClick={onOpenModalWindow}
                 disabled={isUserCanReply}
             />
             <TweetAnalyticsModal
                 fullName={tweetUserFullName!}
                 username={tweetUserName!}
                 text={tweetText!}
-                visible={visibleAnalyticsModalWindow}
-                onClose={onCloseTweetAnalyticsModalWindow}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
             />
         </div>
     );

@@ -1,8 +1,9 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { ListItem, Typography } from "@material-ui/core";
 
 import { AddListsIcon } from "../../../icons";
 import ListsModal from "../../ListsModal/ListsModal";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 interface AddToListButtonProps {
     userId: number;
@@ -10,25 +11,17 @@ interface AddToListButtonProps {
 }
 
 const AddToListButton: FC<AddToListButtonProps> = memo(({ userId, username }): ReactElement => {
-    const [visibleListsModal, setVisibleListsModal] = useState<boolean>(false);
-
-    const onOpenListsModal = (): void => {
-        setVisibleListsModal(true);
-    };
-
-    const onCloseListsModal = (): void => {
-        setVisibleListsModal(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <>
-            <ListItem id={"openListsModal"} onClick={onOpenListsModal}>
+            <ListItem id={"openListsModal"} onClick={onOpenModalWindow}>
                 <>{AddListsIcon}</>
                 <Typography variant={"body1"} component={"span"}>
                     {`Add/remove @${username} from Lists`}
                 </Typography>
             </ListItem>
-            <ListsModal userId={userId} visible={visibleListsModal} onClose={onCloseListsModal} />
+            <ListsModal userId={userId} visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );
 });

@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button/Button";
 import { useUnfollowButtonStyles } from "./UnfollowButtonStyles";
 import UnfollowModal from "../../UnfollowModal/UnfollowModal";
 import { processFollowRequest, unfollowUser } from "../../../store/ducks/user/actionCreators";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 interface UnfollowButtonProps {
     userId: number;
@@ -26,15 +27,11 @@ const UnfollowButton: FC<UnfollowButtonProps> = (
     const classes = useUnfollowButtonStyles();
     const dispatch = useDispatch();
     const [btnText, setBtnText] = useState<string>("Following");
-    const [visibleUnfollowModal, setVisibleUnfollowModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const handleClickOpenUnfollowModal = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        setVisibleUnfollowModal(true);
-    };
-
-    const onCloseUnfollowModal = (): void => {
-        setVisibleUnfollowModal(false);
+        onOpenModalWindow();
     };
 
     const handleUnfollow = (): void => {
@@ -42,7 +39,7 @@ const UnfollowButton: FC<UnfollowButtonProps> = (
             dispatch(processFollowRequest(userId));
         } else {
             dispatch(unfollowUser({ userId }));
-            setVisibleUnfollowModal(false);
+            onCloseModalWindow();
         }
     };
 
@@ -61,8 +58,8 @@ const UnfollowButton: FC<UnfollowButtonProps> = (
             </Button>
             <UnfollowModal
                 fullName={fullName}
-                visible={visibleUnfollowModal}
-                onClose={onCloseUnfollowModal}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
                 handleUnfollow={handleUnfollow}
             />
         </>

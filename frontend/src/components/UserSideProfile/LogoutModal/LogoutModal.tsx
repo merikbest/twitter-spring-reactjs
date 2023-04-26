@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import Typography from "@material-ui/core/Typography";
@@ -12,13 +12,14 @@ import { selectUserProfileUsername } from "../../../store/ducks/user/selectors";
 import { signOut } from "../../../store/ducks/user/actionCreators";
 import { ACCOUNT_SIGNIN } from "../../../constants/path-constants";
 import { TOKEN } from "../../../constants/common-constants";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 const LogoutModal = (): ReactElement => {
     const classes = useLogoutModalStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const username = useSelector(selectUserProfileUsername);
-    const [visibleLogoutModal, setVisibleLogoutModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const handleSignOut = (): void => {
         window.localStorage.removeItem(TOKEN);
@@ -26,22 +27,14 @@ const LogoutModal = (): ReactElement => {
         history.push(ACCOUNT_SIGNIN);
     };
 
-    const onOpenLogoutModal = (): void => {
-        setVisibleLogoutModal(true);
-    };
-
-    const onCloseLogoutModal = (): void => {
-        setVisibleLogoutModal(false);
-    };
-
     return (
         <>
-            <ListItem id={"onOpenLogoutModal"} onClick={onOpenLogoutModal}>
+            <ListItem id={"onOpenLogoutModal"} onClick={onOpenModalWindow}>
                 <Typography variant="body1" component="div">
                     Log out @{username}
                 </Typography>
             </ListItem>
-            <Dialog open={visibleLogoutModal} onClose={onCloseLogoutModal}>
+            <Dialog open={visibleModalWindow} onClose={onCloseModalWindow}>
                 <DialogContent style={{ padding: 0 }}>
                     <div className={classes.modalWrapper}>
                         <TwitterIcon />
@@ -55,7 +48,7 @@ const LogoutModal = (): ReactElement => {
                         <div className={classes.modalButtonWrapper}>
                             <Button
                                 className={classes.modalCancelButton}
-                                onClick={onCloseLogoutModal}
+                                onClick={onCloseModalWindow}
                                 variant="contained"
                                 size="large"
                             >

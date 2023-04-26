@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ListItem, Typography } from "@material-ui/core";
 
@@ -7,6 +7,7 @@ import { selectUserPinnedTweetId } from "../../../store/ducks/user/selectors";
 import { fetchPinTweet } from "../../../store/ducks/user/actionCreators";
 import { PinIcon } from "../../../icons";
 import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 interface PinTweetButtonProps {
     tweetId: number;
@@ -16,7 +17,7 @@ interface PinTweetButtonProps {
 const PinTweetButton: FC<PinTweetButtonProps> = memo(({ tweetId, onCloseActionsDropdown }): ReactElement => {
     const dispatch = useDispatch();
     const pinnedTweetId = useSelector(selectUserPinnedTweetId);
-    const [visibleTweetPinModal, setVisibleTweetPinModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
     const isTweetPinned = pinnedTweetId === tweetId;
 
     const onPinUserTweet = (): void => {
@@ -26,21 +27,13 @@ const PinTweetButton: FC<PinTweetButtonProps> = memo(({ tweetId, onCloseActionsD
         } else {
             dispatch(setOpenSnackBar("Your Tweet was pinned to your profile."));
         }
-        setVisibleTweetPinModal(false);
+        onCloseModalWindow();
         onCloseActionsDropdown();
-    };
-
-    const onOpenTweetComponentActionsModal = (): void => {
-        setVisibleTweetPinModal(true);
-    };
-
-    const onCloseTweetComponentActionsModal = (): void => {
-        setVisibleTweetPinModal(false);
     };
 
     return (
         <>
-            <ListItem id={"pin"} onClick={onOpenTweetComponentActionsModal}>
+            <ListItem id={"pin"} onClick={onOpenModalWindow}>
                 <>{PinIcon}</>
                 <Typography variant={"body1"} component={"span"}>
                     {(isTweetPinned) ? (
@@ -53,8 +46,8 @@ const PinTweetButton: FC<PinTweetButtonProps> = memo(({ tweetId, onCloseActionsD
             <TweetComponentActionsModal
                 modalTitle={"Pin"}
                 isTweetPinned={isTweetPinned}
-                visibleTweetComponentActionsModal={visibleTweetPinModal}
-                onCloseTweetComponentActionsModal={onCloseTweetComponentActionsModal}
+                visibleTweetComponentActionsModal={visibleModalWindow}
+                onCloseTweetComponentActionsModal={onCloseModalWindow}
                 onClick={onPinUserTweet}
             />
         </>

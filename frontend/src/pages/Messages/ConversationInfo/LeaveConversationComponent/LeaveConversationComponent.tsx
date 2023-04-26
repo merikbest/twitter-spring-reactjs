@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import classnames from "classnames";
@@ -8,6 +8,7 @@ import { useConversationInfoStyles } from "../ConversationInfoStyles";
 import { leaveFromConversation } from "../../../../store/ducks/chats/actionCreators";
 import { MESSAGES } from "../../../../constants/path-constants";
 import LeaveFromConversationModal from "../LeaveFromConversationModal/LeaveFromConversationModal";
+import { useModalWindow } from "../../../../hook/useModalWindow";
 
 interface LeaveConversationComponentProps {
     participantId?: number;
@@ -23,20 +24,12 @@ const LeaveConversationComponent: FC<LeaveConversationComponentProps> = memo((
     const classes = useConversationInfoStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const [visibleLeaveFromConversationModal, setVisibleLeaveFromConversationModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const handleLeaveFromConversation = (): void => {
         dispatch(leaveFromConversation({ participantId: participantId!, chatId: chatId! }));
         history.push({ pathname: MESSAGES, state: { removeParticipant: true } });
-        setVisibleLeaveFromConversationModal(false);
-    };
-
-    const handleClickOpenLeaveFromConversationModal = (): void => {
-        setVisibleLeaveFromConversationModal(true);
-    };
-
-    const onCloseLeaveFromConversationModal = (): void => {
-        setVisibleLeaveFromConversationModal(false);
+        onCloseModalWindow();
     };
 
     return (
@@ -44,7 +37,7 @@ const LeaveConversationComponent: FC<LeaveConversationComponentProps> = memo((
             <div
                 id={"leaveFromConversation"}
                 className={classnames(classes.conversationInfoButton, classes.leaveConversation)}
-                onClick={handleClickOpenLeaveFromConversationModal}
+                onClick={onOpenModalWindow}
             >
                 <Typography variant={"body1"} component={"span"}>
                     Leave conversation
@@ -52,8 +45,8 @@ const LeaveConversationComponent: FC<LeaveConversationComponentProps> = memo((
             </div>
             <LeaveFromConversationModal
                 handleLeaveFromConversation={handleLeaveFromConversation}
-                visible={visibleLeaveFromConversationModal}
-                onClose={onCloseLeaveFromConversationModal}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
             />
         </>
     );

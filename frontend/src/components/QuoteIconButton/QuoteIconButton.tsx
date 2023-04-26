@@ -12,6 +12,7 @@ import ActionIconButton from "../ActionIconButton/ActionIconButton";
 import { retweet } from "../../store/ducks/tweets/actionCreators";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserDataId } from "../../store/ducks/user/selectors";
+import { useModalWindow } from "../../hook/useModalWindow";
 
 export interface QuoteTweetProps {
     tweetId?: number;
@@ -38,7 +39,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
     const params = useParams<{ userId: string }>();
     const myProfileId = useSelector(selectUserDataId);
     const [open, setOpen] = useState<boolean>(false);
-    const [visibleAddTweet, setVisibleAddTweet] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const handleClick = (): void => {
         setOpen((prev) => !prev);
@@ -56,12 +57,8 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
     };
 
     const handleClickOpenAddTweet = (): void => {
-        setVisibleAddTweet(true);
+        onOpenModalWindow();
         setOpen(false);
-    };
-
-    const onCloseAddTweet = (): void => {
-        setVisibleAddTweet(false);
     };
 
     return (
@@ -97,8 +94,8 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
                 )}
                 <QuoteTweetModal
                     quoteTweet={{ id: tweetId, dateTime, text, user } as QuoteTweetResponse}
-                    onClose={onCloseAddTweet}
-                    visible={visibleAddTweet}
+                    onClose={onCloseModalWindow}
+                    visible={visibleModalWindow}
                 />
             </div>
         </ClickAwayListener>

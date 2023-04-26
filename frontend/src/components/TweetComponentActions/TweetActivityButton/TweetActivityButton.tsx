@@ -1,8 +1,9 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { ListItem, Typography } from "@material-ui/core";
 
 import { TweetActivityIcon } from "../../../icons";
 import TweetAnalyticsModal from "../../TweetAnalyticsModal/TweetAnalyticsModal";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 interface TweetActivityButtonProps {
     fullName: string;
@@ -11,19 +12,11 @@ interface TweetActivityButtonProps {
 }
 
 const TweetActivityButton: FC<TweetActivityButtonProps> = memo(({ fullName, username, text }): ReactElement => {
-    const [visibleAnalyticsModalWindow, setVisibleAnalyticsModalWindow] = useState<boolean>(false);
-
-    const onOpenTweetAnalyticsModalWindow = (): void => {
-        setVisibleAnalyticsModalWindow(true);
-    };
-
-    const onCloseTweetAnalyticsModalWindow = (): void => {
-        setVisibleAnalyticsModalWindow(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <>
-            <ListItem id={"tweetAnalytics"} onClick={onOpenTweetAnalyticsModalWindow}>
+            <ListItem id={"tweetAnalytics"} onClick={onOpenModalWindow}>
                 <>{TweetActivityIcon}</>
                 <Typography variant={"body1"} component={"span"}>
                     View Tweet activity
@@ -33,8 +26,8 @@ const TweetActivityButton: FC<TweetActivityButtonProps> = memo(({ fullName, user
                 fullName={fullName}
                 username={username}
                 text={text}
-                visible={visibleAnalyticsModalWindow}
-                onClose={onCloseTweetAnalyticsModalWindow}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
             />
         </>
     );

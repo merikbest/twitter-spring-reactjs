@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Button, Typography } from "@material-ui/core";
@@ -14,6 +14,7 @@ import {
 } from "../../store/ducks/userTweets/selectors";
 import { selectUserDataId } from "../../store/ducks/user/selectors";
 import { selectUserProfileId, selectUserProfileUsername } from "../../store/ducks/userProfile/selectors";
+import { useModalWindow } from "../../hook/useModalWindow";
 
 interface UserPageTweetsProps {
     activeTab: number;
@@ -29,15 +30,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
     const tweets = useSelector(selectUserTweetsItems);
     const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
-    const [visibleAddTweet, setSetVisibleAddTweet] = useState<boolean>(false);
-
-    const handleClickOpenAddTweet = (): void => {
-        setSetVisibleAddTweet(true);
-    };
-
-    const onCloseAddTweet = (): void => {
-        setSetVisibleAddTweet(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const renderTweets = () => {
         if (tweets?.length === 0 && activeTab === 0 && !isTweetsLoading) {
@@ -60,7 +53,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
                     {(userProfileId === myProfileId) && (
                         <Button
                             className={classes.button}
-                            onClick={handleClickOpenAddTweet}
+                            onClick={onOpenModalWindow}
                             variant="contained"
                             color="primary"
                             size="medium"
@@ -109,7 +102,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
                     {(userProfileId === myProfileId) && (
                         <Button
                             className={classes.button}
-                            onClick={handleClickOpenAddTweet}
+                            onClick={onOpenModalWindow}
                             variant="contained"
                             color="primary"
                             size="medium"
@@ -159,7 +152,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
             loader={null}
         >
             {renderTweets()}
-            <AddTweetModal onClose={onCloseAddTweet} visible={visibleAddTweet} />
+            <AddTweetModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </InfiniteScroll>
     );
 });

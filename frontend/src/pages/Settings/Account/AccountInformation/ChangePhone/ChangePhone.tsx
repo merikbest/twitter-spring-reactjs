@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider, Typography } from "@material-ui/core";
 
@@ -14,6 +14,7 @@ import { getPhoneCode } from "../../../../../util/country-code-helper";
 import { setUserLoadingStatus } from "../../../../../store/ducks/user/actionCreators";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { LoadingStatus } from "../../../../../types/common";
+import { useModalWindow } from "../../../../../hook/useModalWindow";
 
 const ChangePhone: FC = (): ReactElement => {
     const classes = useChangePhoneStyles();
@@ -21,20 +22,12 @@ const ChangePhone: FC = (): ReactElement => {
     const countryCode = useSelector(selectUserProfileCountryCode);
     const phone = useSelector(selectUserProfilePhone);
     const isUpdatedSuccess = useSelector(selectUserIsSuccess);
-    const [visibleChangePhoneModal, setVisibleChangePhoneModal] = useState<boolean>(false);
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     useEffect(() => {
-        setVisibleChangePhoneModal(false);
+        onCloseModalWindow();
         dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
     }, [isUpdatedSuccess]);
-
-    const onOpenChangePhoneModal = (): void => {
-        setVisibleChangePhoneModal(true);
-    };
-
-    const onCloseChangePhoneModal = (): void => {
-        setVisibleChangePhoneModal(false);
-    };
 
     return (
         <>
@@ -52,7 +45,7 @@ const ChangePhone: FC = (): ReactElement => {
             <div
                 id={"openChangePhoneModal"}
                 className={classes.updatePhoneNumber}
-                onClick={onOpenChangePhoneModal}
+                onClick={onOpenModalWindow}
             >
                 <Typography variant={"body1"} component={"span"}>
                     Update phone number
@@ -63,8 +56,7 @@ const ChangePhone: FC = (): ReactElement => {
                     Delete phone number
                 </Typography>
             </div>
-            {visibleChangePhoneModal &&
-                <ChangePhoneModal visible={visibleChangePhoneModal} onClose={onCloseChangePhoneModal} />}
+            <ChangePhoneModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );
 };

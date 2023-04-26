@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 
 import { UserTweetResponse } from "../../../types/tweet";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
@@ -6,6 +6,7 @@ import { ReplyIcon } from "../../../icons";
 import ReplyModal from "../../ReplyModal/ReplyModal";
 import { Image } from "../../../types/common";
 import { useReplyIconButtonStyles } from "./ReplyIconButtonStyles";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 interface TweetReplyIconButtonProps {
     tweetId?: number;
@@ -29,22 +30,14 @@ const ReplyIconButton: FC<TweetReplyIconButtonProps> = memo((
     }
 ): ReactElement => {
     const classes = useReplyIconButtonStyles({ isUserCanReply });
-    const [visibleReplyModalWindow, setVisibleReplyModalWindow] = useState<boolean>(false);
-
-    const onOpenReplyModalWindow = (): void => {
-        setVisibleReplyModalWindow(true);
-    };
-
-    const onCloseReplyModalWindow = (): void => {
-        setVisibleReplyModalWindow(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
         <div className={classes.replyIcon}>
             <ActionIconButton
                 actionText={"Reply"}
                 icon={ReplyIcon}
-                onClick={onOpenReplyModalWindow}
+                onClick={onOpenModalWindow}
                 disabled={isUserCanReply}
             />
             {(repliesCount !== 0) && (
@@ -58,8 +51,8 @@ const ReplyIconButton: FC<TweetReplyIconButtonProps> = memo((
                 text={text!}
                 image={image}
                 dateTime={dateTime!}
-                visible={visibleReplyModalWindow}
-                onClose={onCloseReplyModalWindow}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
             />
         </div>
     );

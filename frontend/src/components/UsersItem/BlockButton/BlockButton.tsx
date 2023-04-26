@@ -8,6 +8,7 @@ import BlockUserModal from "../../BlockUserModal/BlockUserModal";
 import { processUserToBlocklist } from "../../../store/ducks/user/actionCreators";
 import { UserResponse } from "../../../types/user";
 import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 interface BlockButtonProps {
     user?: UserResponse;
@@ -16,21 +17,17 @@ interface BlockButtonProps {
 const BlockButton: FC<BlockButtonProps> = ({ user }): ReactElement => {
     const classes = useBlockButtonStyles();
     const dispatch = useDispatch();
-    const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
     const [btnText, setBtnText] = useState<string>("Blocked");
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const onOpenBlockUserModal = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
-        setVisibleBlockUserModal(true);
-    };
-
-    const onCloseBlockUserModal = (): void => {
-        setVisibleBlockUserModal(false);
+        onOpenModalWindow();
     };
 
     const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({ userId: user?.id! }));
-        setVisibleBlockUserModal(false);
+        onCloseModalWindow();
         dispatch(setOpenSnackBar(`@${user?.username} has been ${user?.isUserBlocked ? "unblocked" : "blocked"}.`));
     };
 
@@ -50,8 +47,8 @@ const BlockButton: FC<BlockButtonProps> = ({ user }): ReactElement => {
             <BlockUserModal
                 username={user?.username!}
                 isUserBlocked={user?.isUserBlocked!}
-                visible={visibleBlockUserModal}
-                onClose={onCloseBlockUserModal}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
                 onBlockUser={onBlockUser}
             />
         </>

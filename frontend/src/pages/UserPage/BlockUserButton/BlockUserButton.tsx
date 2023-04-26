@@ -12,6 +12,7 @@ import {
 import { processUserToBlocklist } from "../../../store/ducks/user/actionCreators";
 import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 import { useUserPageStyles } from "../UserPageStyles";
+import { useModalWindow } from "../../../hook/useModalWindow";
 
 const BlockUserButton = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -20,19 +21,11 @@ const BlockUserButton = memo((): ReactElement => {
     const username = useSelector(selectUserProfileUsername);
     const isUserBlocked = useSelector(selectUserProfileIsUserBlocked);
     const [btnText, setBtnText] = useState<string>("Blocked");
-    const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
-
-    const onOpenBlockUserModal = (): void => {
-        setVisibleBlockUserModal(true);
-    };
-
-    const onCloseBlockUserModal = (): void => {
-        setVisibleBlockUserModal(false);
-    };
+    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({ userId: userProfileId! }));
-        setVisibleBlockUserModal(false);
+        onCloseModalWindow();
         setBtnText(isUserBlocked ? "Following" : "Blocked");
         dispatch(setOpenSnackBar(`@${username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`));
     };
@@ -41,7 +34,7 @@ const BlockUserButton = memo((): ReactElement => {
         <>
             <Button
                 className={classnames(classes.primaryButton, classes.blockButton)}
-                onClick={onOpenBlockUserModal}
+                onClick={onOpenModalWindow}
                 onMouseOver={() => setBtnText("Unblock")}
                 onMouseLeave={() => setBtnText("Blocked")}
                 color="primary"
@@ -53,8 +46,8 @@ const BlockUserButton = memo((): ReactElement => {
             <BlockUserModal
                 username={username!}
                 isUserBlocked={isUserBlocked!}
-                visible={visibleBlockUserModal}
-                onClose={onCloseBlockUserModal}
+                visible={visibleModalWindow}
+                onClose={onCloseModalWindow}
                 onBlockUser={onBlockUser}
             />
         </>
