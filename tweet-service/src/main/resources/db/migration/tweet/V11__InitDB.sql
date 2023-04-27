@@ -21,6 +21,7 @@ create table tweets
     link_title         varchar(255),
     link_description   varchar(255),
     link_cover         varchar(255),
+    image_description  varchar(255),
     deleted            boolean default false,
     link_cover_size    varchar(255),
     author_id          int8 not null,
@@ -94,6 +95,11 @@ create table retweets
     user_id      int8 not null,
     primary key (id)
 );
+create table tagged_image_users
+(
+    tweet_id             int8 not null,
+    tagged_image_user_id int8
+);
 create table bookmarks
 (
     id            int8 not null,
@@ -121,6 +127,8 @@ alter table replies
     add constraint FKftas7wbrv961d6th8yy5nqdq7 foreign key (reply_id) references tweets;
 alter table replies
     add constraint FKc0y0dqmqpv2b19wgb7f7a7r8i foreign key (tweet_id) references tweets;
+alter table tagged_image_users
+    add constraint FKo9g42eoe3cq8c3l55o23ysek3 foreign key (tweet_id) references tweets;
 alter table tweet_quote
     add constraint FKftie7ivytjuvpm6118d05upa7 foreign key (quote_tweet_id) references tweets;
 alter table tweet_quote

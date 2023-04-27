@@ -72,6 +72,14 @@ public class Tweet {
     @OneToMany
     private List<TweetImage> images = new ArrayList<>();
 
+    @Column(name = "image_description")
+    private String imageDescription;
+
+    @ElementCollection
+    @CollectionTable(name = "tagged_image_users", joinColumns = @JoinColumn(name = "tweet_id"))
+    @Column(name = "tagged_image_user_id")
+    private List<Long> taggedImageUsers;
+
     @OneToOne
     @JoinTable(name = "tweet_quote",
             joinColumns = @JoinColumn(name = "tweet_id"),
