@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.ImageClient;
@@ -131,6 +133,13 @@ public class TweetServiceImpl implements TweetService {
     public TweetImage uploadTweetImage(MultipartFile file) {
         String imageSrc = imageClient.uploadImage(file);
         return tweetImageRepository.save(new TweetImage(imageSrc));
+    }
+
+    @Override
+    public HeaderResponse<UserResponse> getTaggedImageUsers(Long tweetId, Pageable pageable) {
+        tweetValidationHelper.checkValidTweet(tweetId);
+        List<Long> taggedImageUserIds = tweetRepository.getTaggedImageUserIds(tweetId);
+        return userClient.getRetweetedUsersByIds(new IdsRequest(taggedImageUserIds), pageable);
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.gmail.merikbest2015.controller.api;
 
-import com.gmail.merikbest2015.dto.*;
+import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
-import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
@@ -131,9 +131,15 @@ public class UserApiController {
     }
 
     @PostMapping(TWEET_RETWEETED)
-    public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(@RequestBody IdsRequest request,
-                                                                   @SpringQueryMap Pageable pageable) {
-        return userService.getRetweetedUsersByTweetId(request, pageable);
+    public HeaderResponse<UserResponse> getRetweetedUsersByIds(@RequestBody IdsRequest request,
+                                                               @SpringQueryMap Pageable pageable) {
+        return userService.getRetweetedUsersByIds(request, pageable);
+    }
+
+    @PostMapping(TWEET_TAGGED)
+    public HeaderResponse<UserResponse> getTaggedImageUserByIds(@RequestBody IdsRequest request,
+                                                                @SpringQueryMap Pageable pageable) {
+        return userService.getTaggedImageUserByIds(request, pageable);
     }
 
     @PutMapping(TWEET_PINNED_TWEET_ID)

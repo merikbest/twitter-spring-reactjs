@@ -17,6 +17,8 @@ public class TweetRequest {
     private ReplyType replyType;
     private LinkCoverSize linkCoverSize;
     private List<TweetImageResponse> images;
+    private String imageDescription;
+    private List<Long> taggedImageUsers;
     private Long pollDateTime;
     private List<String> choices;
     private LocalDateTime scheduledDate;

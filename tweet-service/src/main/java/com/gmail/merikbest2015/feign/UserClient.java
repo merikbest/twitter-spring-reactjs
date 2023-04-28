@@ -53,6 +53,11 @@ public interface UserClient {
     HeaderResponse<UserResponse> getRetweetedUsersByIds(@RequestBody IdsRequest request,
                                                         @SpringQueryMap Pageable pageable);
 
+    @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyUserResponse")
+    @PostMapping(TWEET_TAGGED)
+    HeaderResponse<UserResponse> getTaggedImageUserByIds(@RequestBody IdsRequest request,
+                                                         @SpringQueryMap Pageable pageable);
+
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyIdsList")
     @GetMapping(IDS)
     List<Long> getUserFollowersIds();

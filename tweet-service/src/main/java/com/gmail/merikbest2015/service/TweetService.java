@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
@@ -39,6 +41,8 @@ public interface TweetService {
     Page<TweetProjection> getFollowersTweets(Pageable pageable);
 
     TweetImage uploadTweetImage(MultipartFile file);
+
+    HeaderResponse<UserResponse> getTaggedImageUsers(Long tweetId, Pageable pageable);
 
     TweetResponse createNewTweet(Tweet tweet);
 

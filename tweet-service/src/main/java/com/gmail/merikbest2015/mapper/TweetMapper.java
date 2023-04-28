@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.*;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
@@ -83,6 +84,10 @@ public class TweetMapper {
     public TweetImageResponse uploadTweetImage(MultipartFile file) {
         TweetImage tweetImage = tweetService.uploadTweetImage(file);
         return basicMapper.convertToResponse(tweetImage, TweetImageResponse.class);
+    }
+
+    public HeaderResponse<UserResponse> getTaggedImageUsers(Long tweetId, Pageable pageable) {
+        return tweetService.getTaggedImageUsers(tweetId, pageable);
     }
 
     public TweetResponse createTweet(TweetRequest tweetRequest) {

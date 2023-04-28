@@ -57,7 +57,9 @@ public interface UserClientService {
 
     HeaderResponse<UserResponse> getTweetLikedUsersByIds(IdsRequest request, Pageable pageable);
 
-    HeaderResponse<UserResponse> getRetweetedUsersByTweetId(IdsRequest request, Pageable pageable);
+    HeaderResponse<UserResponse> getRetweetedUsersByIds(IdsRequest request, Pageable pageable);
+
+    HeaderResponse<UserResponse> getTaggedImageUserByIds(IdsRequest request, Pageable pageable);
 
     void updatePinnedTweetId(Long tweetId);
 

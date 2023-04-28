@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.*;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.feign.WebSocketClient;
 import com.gmail.merikbest2015.mapper.TweetMapper;
@@ -95,6 +96,13 @@ public class TweetController {
     @PostMapping(UPLOAD)
     public ResponseEntity<TweetImageResponse> uploadTweetImage(@RequestPart("file") MultipartFile file) {
         return ResponseEntity.ok(tweetMapper.uploadTweetImage(file));
+    }
+
+    @GetMapping(IMAGE_TAGGED)
+    public ResponseEntity<List<UserResponse>> getTaggedImageUsers(@PathVariable("tweetId") Long tweetId,
+                                                                  @PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<UserResponse> response = tweetMapper.getTaggedImageUsers(tweetId, pageable);
+        return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
     @PostMapping

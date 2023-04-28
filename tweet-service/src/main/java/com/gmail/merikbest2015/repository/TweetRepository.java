@@ -164,5 +164,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "AND UPPER(tweet.text) LIKE UPPER(CONCAT('%',:text,'%'))")
     Long getTweetCountByText(@Param("text") String text);
 
+    @Query("SELECT tweet.taggedImageUsers FROM Tweet tweet WHERE tweet.id = :tweetId")
+    List<Long> getTaggedImageUserIds(@Param("tweetId") Long tweetId);
+
     List<Tweet> findAllByScheduledDate(LocalDateTime now);
 }

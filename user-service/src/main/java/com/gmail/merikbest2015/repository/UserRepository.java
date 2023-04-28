@@ -136,10 +136,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<ListMemberProjection> searchListMembersByUsername(@Param("username") String username);
 
     @Query("SELECT user FROM User user WHERE user.id IN :userIds")
-    Page<UserProjection> getTweetLikedUsersByIds(@Param("userIds") List<Long> userIds, Pageable pageable);
-
-    @Query("SELECT user FROM User user WHERE user.id IN :userIds")
-    Page<UserProjection> getRetweetedUsersByTweetId(@Param("userIds") List<Long> userIds, Pageable pageable);
+    Page<UserProjection> getUsersByIds(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT user.pinnedTweetId FROM User user WHERE user.id = :userId")
     Long getPinnedTweetId(@Param("userId") Long userId);

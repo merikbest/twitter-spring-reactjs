@@ -80,6 +80,7 @@ public class PathConstants {
     public static final String TWEET_ADDITIONAL_INFO_USER_ID = "/tweet/additional/info/{userId}";
     public static final String TWEET_LIKED = "/tweet/liked";
     public static final String TWEET_RETWEETED = "/tweet/retweeted";
+    public static final String TWEET_TAGGED = "/tweet/tagged";
     public static final String TWEET_PINNED_TWEET_ID = "/tweet/pinned/{tweetId}";
     public static final String TWEET_PINNED_USER_ID = "/tweet/pinned/{userId}";
     public static final String TWEET_VALID_IDS = "/tweet/valid/ids/{text}";
@@ -132,6 +133,7 @@ public class PathConstants {
     public static final String FOLLOWER = "/follower";
     public static final String SCHEDULE = "/schedule";
     public static final String MENTION = "/mention";
+    public static final String IMAGE_TAGGED = "/image/tagged/{tweetId}";
     public static final String SEARCH_TEXT = "/search/{text}";
     public static final String SEARCH_RESULTS = "/search/results";
     public static final String REPLY_USER_ID_TWEET_ID = "/reply/{userId}/{tweetId}";
