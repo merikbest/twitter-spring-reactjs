@@ -44,22 +44,11 @@ public interface UserClient {
     TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(@PathVariable("userId") Long userId);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyUserResponse")
-    @PostMapping(TWEET_LIKED)
-    HeaderResponse<UserResponse> getTweetLikedUsersByIds(@RequestBody IdsRequest request,
-                                                         @SpringQueryMap Pageable pageable);
-
-    @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyUserResponse")
-    @PostMapping(TWEET_RETWEETED)
-    HeaderResponse<UserResponse> getRetweetedUsersByIds(@RequestBody IdsRequest request,
-                                                        @SpringQueryMap Pageable pageable);
-
-    @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyUserResponse")
-    @PostMapping(TWEET_TAGGED)
-    HeaderResponse<UserResponse> getTaggedImageUserByIds(@RequestBody IdsRequest request,
-                                                         @SpringQueryMap Pageable pageable);
+    @PostMapping(IDS)
+    HeaderResponse<UserResponse> getUsersByIds(@RequestBody IdsRequest request, @SpringQueryMap Pageable pageable);
 
     @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyIdsList")
-    @GetMapping(IDS)
+    @GetMapping(FOLLOWERS_IDS)
     List<Long> getUserFollowersIds();
 
     @CircuitBreaker(name = USER_SERVICE)

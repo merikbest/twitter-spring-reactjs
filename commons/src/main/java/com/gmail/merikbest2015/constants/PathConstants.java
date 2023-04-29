@@ -61,6 +61,7 @@ public class PathConstants {
     public static final String API_V1_AUTH = API_V1 + AUTH;
     public static final String USER_EMAIL = "/user/{email}";
     public static final String IDS = "/ids";
+    public static final String FOLLOWERS_IDS = "/followers/ids";
     public static final String SUBSCRIBERS_USER_ID = "/subscribers/{userId}";
     public static final String IS_FOLLOWED_USER_ID = "/is_followed/{userId}";
     public static final String IS_PRIVATE_USER_ID = "/is_private/{userId}";
@@ -78,9 +79,6 @@ public class PathConstants {
     public static final String NOTIFICATION_USER_USER_ID = "/notification/user/{userId}";
     public static final String TWEET_AUTHOR_USER_ID = "/tweet/author/{userId}";
     public static final String TWEET_ADDITIONAL_INFO_USER_ID = "/tweet/additional/info/{userId}";
-    public static final String TWEET_LIKED = "/tweet/liked";
-    public static final String TWEET_RETWEETED = "/tweet/retweeted";
-    public static final String TWEET_TAGGED = "/tweet/tagged";
     public static final String TWEET_PINNED_TWEET_ID = "/tweet/pinned/{tweetId}";
     public static final String TWEET_PINNED_USER_ID = "/tweet/pinned/{userId}";
     public static final String TWEET_VALID_IDS = "/tweet/valid/ids/{text}";

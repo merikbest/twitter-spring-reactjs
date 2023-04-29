@@ -595,6 +595,25 @@ public class TweetControllerTest {
     }
 
     @Test
+    @DisplayName("[200] GET /ui/v1/tweets/image/tagged/45 - Get tagged image users")
+    public void getTaggedImageUsers() throws Exception {
+        mockMvc.perform(get(UI_V1_TWEETS + IMAGE_TAGGED, 45)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].fullName").value(TestConstants.USERNAME2))
+                .andExpect(jsonPath("$[0].username").value(TestConstants.USERNAME2))
+                .andExpect(jsonPath("$[0].about").value(TestConstants.ABOUT2))
+                .andExpect(jsonPath("$[0].isPrivateProfile").value(false))
+                .andExpect(jsonPath("$[0].isMutedDirectMessages").value(true))
+                .andExpect(jsonPath("$[0].isUserBlocked").value(false))
+                .andExpect(jsonPath("$[0].isMyProfileBlocked").value(false))
+                .andExpect(jsonPath("$[0].isWaitingForApprove").value(false))
+                .andExpect(jsonPath("$[0].isFollower").value(true));
+    }
+
+    @Test
     @DisplayName("[400] POST /ui/v1/tweets - Should tweet text length more than 280 symbols")
     public void createTweet_ShouldTweetTextLengthMoreThan280Symbols() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();

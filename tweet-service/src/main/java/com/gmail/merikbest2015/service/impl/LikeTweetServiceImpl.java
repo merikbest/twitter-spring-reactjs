@@ -41,7 +41,7 @@ public class LikeTweetServiceImpl implements LikeTweetService {
     public HeaderResponse<UserResponse> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
         tweetValidationHelper.checkValidTweet(tweetId);
         List<Long> likedUserIds = likeTweetRepository.getLikedUserIds(tweetId);
-        return userClient.getTweetLikedUsersByIds(new IdsRequest(likedUserIds), pageable);
+        return userClient.getUsersByIds(new IdsRequest(likedUserIds), pageable);
     }
 
     @Override

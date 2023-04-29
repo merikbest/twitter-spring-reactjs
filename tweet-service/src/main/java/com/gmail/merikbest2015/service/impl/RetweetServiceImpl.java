@@ -47,7 +47,7 @@ public class RetweetServiceImpl implements RetweetService {
     public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
         tweetValidationHelper.checkValidTweet(tweetId);
         List<Long> retweetedUserIds = retweetRepository.getRetweetedUserIds(tweetId);
-        return userClient.getRetweetedUsersByIds(new IdsRequest(retweetedUserIds), pageable);
+        return userClient.getUsersByIds(new IdsRequest(retweetedUserIds), pageable);
     }
 
     @Override

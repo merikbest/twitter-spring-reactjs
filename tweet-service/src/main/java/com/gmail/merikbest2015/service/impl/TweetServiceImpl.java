@@ -139,7 +139,7 @@ public class TweetServiceImpl implements TweetService {
     public HeaderResponse<UserResponse> getTaggedImageUsers(Long tweetId, Pageable pageable) {
         tweetValidationHelper.checkValidTweet(tweetId);
         List<Long> taggedImageUserIds = tweetRepository.getTaggedImageUserIds(tweetId);
-        return userClient.getRetweetedUsersByIds(new IdsRequest(taggedImageUserIds), pageable);
+        return userClient.getUsersByIds(new IdsRequest(taggedImageUserIds), pageable);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class UserApiController {
 
     private final UserClientService userService;
 
-    @GetMapping(IDS)
+    @GetMapping(FOLLOWERS_IDS)
     public List<Long> getUserFollowersIds() {
         return userService.getUserFollowersIds();
     }
@@ -124,22 +124,10 @@ public class UserApiController {
         return userService.getTweetAdditionalInfoUser(userId);
     }
 
-    @PostMapping(TWEET_LIKED)
-    public HeaderResponse<UserResponse> getTweetLikedUsersByIds(@RequestBody IdsRequest request,
-                                                                @SpringQueryMap Pageable pageable) {
-        return userService.getTweetLikedUsersByIds(request, pageable);
-    }
-
-    @PostMapping(TWEET_RETWEETED)
-    public HeaderResponse<UserResponse> getRetweetedUsersByIds(@RequestBody IdsRequest request,
-                                                               @SpringQueryMap Pageable pageable) {
-        return userService.getRetweetedUsersByIds(request, pageable);
-    }
-
-    @PostMapping(TWEET_TAGGED)
-    public HeaderResponse<UserResponse> getTaggedImageUserByIds(@RequestBody IdsRequest request,
-                                                                @SpringQueryMap Pageable pageable) {
-        return userService.getTaggedImageUserByIds(request, pageable);
+    @PostMapping(IDS)
+    public HeaderResponse<UserResponse> getUsersByIds(@RequestBody IdsRequest request,
+                                                      @SpringQueryMap Pageable pageable) {
+        return userService.getUsersByIds(request, pageable);
     }
 
     @PutMapping(TWEET_PINNED_TWEET_ID)

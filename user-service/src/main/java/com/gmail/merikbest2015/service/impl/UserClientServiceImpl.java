@@ -156,19 +156,7 @@ public class UserClientServiceImpl implements UserClientService {
     }
 
     @Override
-    public HeaderResponse<UserResponse> getTweetLikedUsersByIds(IdsRequest request, Pageable pageable) {
-        Page<UserProjection> users = userRepository.getUsersByIds(request.getIds(), pageable);
-        return basicMapper.getHeaderResponse(users, UserResponse.class);
-    }
-
-    @Override
-    public HeaderResponse<UserResponse> getRetweetedUsersByIds(IdsRequest request, Pageable pageable) {
-        Page<UserProjection> users = userRepository.getUsersByIds(request.getIds(), pageable);
-        return basicMapper.getHeaderResponse(users, UserResponse.class);
-    }
-
-    @Override
-    public HeaderResponse<UserResponse> getTaggedImageUserByIds(IdsRequest request, Pageable pageable) {
+    public HeaderResponse<UserResponse> getUsersByIds(IdsRequest request, Pageable pageable) {
         Page<UserProjection> users = userRepository.getUsersByIds(request.getIds(), pageable);
         return basicMapper.getHeaderResponse(users, UserResponse.class);
     }

@@ -17,10 +17,7 @@ import java.util.List;
 
 import static com.gmail.merikbest2015.constants.PathConstants.*;
 import static com.gmail.merikbest2015.constants.PathConstants.TWEET_COUNT;
-import static com.gmail.merikbest2015.util.TestConstants.*;
 import static com.gmail.merikbest2015.util.TestConstants.USERNAME;
-import static com.gmail.merikbest2015.util.TestConstants.USER_EMAIL;
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -43,9 +40,9 @@ public class UserApiControllerTest {
     private ObjectMapper mapper;
 
     @Test
-    @DisplayName("[200] GET /api/v1/user/ids - Get user followers ids")
+    @DisplayName("[200] GET /api/v1/user/followers/ids - Get user followers ids")
     public void getUserFollowersIds() throws Exception {
-        mockMvc.perform(get(API_V1_USER + IDS)
+        mockMvc.perform(get(API_V1_USER + FOLLOWERS_IDS)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(List.of(1, 4, 2))));
@@ -257,31 +254,9 @@ public class UserApiControllerTest {
     }
 
     @Test
-    @DisplayName("[200] POST /api/v1/user/tweet/liked - Get tweet liked users by ids")
+    @DisplayName("[200] POST /api/v1/user/ids - Get tweet users by ids")
     public void getTweetLikedUsersByIds() throws Exception {
-        mockMvc.perform(post(API_V1_USER + TWEET_LIKED)
-                        .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(2)))
-                .andExpect(jsonPath("$.items[0].id").value(TestConstants.USER_ID))
-                .andExpect(jsonPath("$.items[0].fullName").value(TestConstants.USERNAME))
-                .andExpect(jsonPath("$.items[0].username").value(TestConstants.USERNAME))
-                .andExpect(jsonPath("$.items[0].about").value(TestConstants.ABOUT))
-                .andExpect(jsonPath("$.items[0].avatar").value(TestConstants.AVATAR_SRC_1))
-                .andExpect(jsonPath("$.items[0].isPrivateProfile").value(false))
-                .andExpect(jsonPath("$.items[0].isMutedDirectMessages").value(true))
-                .andExpect(jsonPath("$.items[0].isUserBlocked").value(false))
-                .andExpect(jsonPath("$.items[0].isMyProfileBlocked").value(false))
-                .andExpect(jsonPath("$.items[0].isWaitingForApprove").value(false))
-                .andExpect(jsonPath("$.items[0].isFollower").value(false));
-    }
-
-    @Test
-    @DisplayName("[200] POST /api/v1/user/tweet/retweeted - Get retweeted users by tweet id")
-    public void getRetweetedUsersByTweetId() throws Exception {
-        mockMvc.perform(post(API_V1_USER + TWEET_RETWEETED)
+        mockMvc.perform(post(API_V1_USER + IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
