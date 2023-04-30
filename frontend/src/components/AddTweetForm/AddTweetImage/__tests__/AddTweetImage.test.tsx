@@ -12,17 +12,30 @@ describe("AddTweetImage", () => {
     const mockImages = [{ src: "test", file: new File([""], "filename", { type: "text/html" }) }] as ImageObj[];
 
     it("should render default image", () => {
-        mountWithStore(<AddTweetImage images={mockImages} removeImage={jest.fn()} />, mockStore);
+        testMountAddTweetImage(mockImages);
     });
 
     it("should render small image", () => {
         jest.spyOn(routeData, "useLocation").mockReturnValue({
             pathname: MODAL, hash: "", search: "", state: undefined
         });
-        mountWithStore(<AddTweetImage images={mockImages} removeImage={jest.fn()} />, mockStore);
+        testMountAddTweetImage(mockImages);
     });
 
     it("should render empty component", () => {
-        mountWithStore(<AddTweetImage images={[]} removeImage={jest.fn()} />, mockStore);
+        testMountAddTweetImage([]);
     });
+
+    const testMountAddTweetImage = (mockImages: ImageObj[]): void => {
+        mountWithStore(
+            <AddTweetImage
+                images={mockImages}
+                removeImage={jest.fn()}
+                imageDescription={""}
+                handleChangeDescription={jest.fn()}
+                selectedUsers={[]}
+                handleDelete={jest.fn()}
+                handleListItemClick={jest.fn()}
+            />, mockStore);
+    };
 });

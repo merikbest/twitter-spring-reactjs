@@ -82,7 +82,7 @@ describe("Poll", () => {
         const wrapper = mountWithStore(
             <Poll
                 pollData={pollInitialState}
-                setPollData={mockSetPollData}
+                onChangePoll={mockSetPollData}
                 visiblePoll={visiblePoll}
                 onClose={mockOnClose}
             />, createMockRootState(LoadingStatus.LOADED));

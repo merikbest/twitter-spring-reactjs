@@ -1,4 +1,4 @@
-import React, { FC, memo, ReactElement, useEffect, useState } from "react";
+import React, { FC, memo, ReactElement, useEffect } from "react";
 import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
 import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ import {
 import Spinner from "../Spinner/Spinner";
 import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
 import { useModalWindow } from "../../hook/useModalWindow";
+import { useClickAway } from "../../hook/useClickAway";
 
 interface ShareTweetProps {
     tweetId: number;
@@ -33,36 +34,28 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
     const dispatch = useDispatch();
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);
     const isTweetBookmarked = useSelector(selectIsTweetBookmarkedAdditionalInfo);
-    const [shareTweetOpen, setShareTweetOpen] = useState<boolean>(false);
+    const { open, onClickOpen, onClickClose } = useClickAway();
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     useEffect(() => {
-        if (shareTweetOpen) {
+        if (open) {
             dispatch(fetchIsTweetBookmarkedAdditionalInfo(tweetId));
         }
         return () => {
             dispatch(resetTweetAdditionalInfo());
         };
-    }, [tweetId, shareTweetOpen]);
-
-    const handleClick = (): void => {
-        setShareTweetOpen((prev) => !prev);
-    };
-
-    const handleClickAway = (): void => {
-        setShareTweetOpen(false);
-    };
+    }, [tweetId, open]);
 
     return (
-        <ClickAwayListener onClickAway={handleClickAway}>
+        <ClickAwayListener onClickAway={onClickClose}>
             <div className={classes.root}>
                 <ActionIconButton
                     actionText={"Share"}
-                    onClick={handleClick}
+                    onClick={onClickOpen}
                     size={isFullTweet ? "medium" : "small"}
                     icon={ShareIcon}
                 />
-                {shareTweetOpen && (
+                {open && (
                     <div className={classnames(classes.dropdown, globalClasses.svg)}>
                         {isTweetAdditionalInfoLoading ? (
                             <Spinner paddingTop={90} />
@@ -72,9 +65,9 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
                                 <AddTweetToBookmarksButton
                                     tweetId={tweetId}
                                     isTweetBookmarked={isTweetBookmarked}
-                                    closeShareTweet={handleClickAway}
+                                    closeShareTweet={onClickClose}
                                 />
-                                <CopyLinkToTweetButton closeShareTweet={handleClickAway} />
+                                <CopyLinkToTweetButton closeShareTweet={onClickClose} />
                                 <ListItem>
                                     <>{ShareIcon}</>
                                     <Typography variant={"body1"} component={"span"}>

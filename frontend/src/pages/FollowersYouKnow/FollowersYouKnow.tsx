@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Paper } from "@material-ui/core";
 
-import { UserApi } from "../../services/api/user-service/userApi";
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import { fetchUserProfile } from "../../store/ducks/userProfile/actionCreators";
 import { selectUserProfile } from "../../store/ducks/userProfile/selectors";

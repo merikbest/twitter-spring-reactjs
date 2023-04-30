@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, MouseEvent, ReactElement, useEffect } from "react";
+import React, { FC, MouseEvent, ReactElement, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { ClickAwayListener, IconButton, InputAdornment } from "@material-ui/core";
 
@@ -9,12 +9,14 @@ import { useDebounce } from "../../hook/useDebounce";
 import { fetchSearchByText, resetSearchResult } from "../../store/ducks/search/actionCreators";
 import RecentSearchResults from "./RecentSearchResults/RecentSearchResults";
 import SearchResults from "./SearchResults/SearchResults";
+import { useClickAway } from "../../hook/useClickAway";
+import { useInputText } from "../../hook/useInputText";
 
 const SideSearch: FC = (): ReactElement => {
     const classes = useSideSearchStyles();
     const dispatch = useDispatch();
-    const [openPopup, setOpenPopup] = React.useState<boolean>(false);
-    const [text, setText] = React.useState<string>("");
+    const { open, onClickOpen, onClickClose } = useClickAway();
+    const { text, setText, handleChangeText } = useInputText();
     const textToSearch = useDebounce(text, 300);
 
     useEffect(() => {
@@ -24,7 +26,7 @@ const SideSearch: FC = (): ReactElement => {
     }, [textToSearch]);
 
     const handleClickOpenPopup = (): void => {
-        setOpenPopup((prev) => !prev);
+        onClickOpen();
 
         if (textToSearch) {
             dispatch(fetchSearchByText(encodeURIComponent(text)));
@@ -32,12 +34,8 @@ const SideSearch: FC = (): ReactElement => {
     };
 
     const handleClickClosePopup = (): void => {
-        setOpenPopup(false);
+        onClickClose();
         dispatch(resetSearchResult());
-    };
-
-    const handleChangeText = (event: ChangeEvent<HTMLTextAreaElement>): void => {
-        setText(event.target.value);
     };
 
     const handleClearText = (event: MouseEvent<HTMLButtonElement>): void => {
@@ -73,7 +71,7 @@ const SideSearch: FC = (): ReactElement => {
                     }}
                     fullWidth
                 />
-                {openPopup && (
+                {open && (
                     <div className={classes.dropdown}>
                         {text ? (
                             <SearchResults />

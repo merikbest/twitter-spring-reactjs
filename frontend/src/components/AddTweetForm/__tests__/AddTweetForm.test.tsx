@@ -71,6 +71,8 @@ describe("AddTweetForm", () => {
                     id: mockFullTweet.id,
                     text: mockFullTweet.text,
                     images: [mockFullTweet.images[0]],
+                    imageDescription: "",
+                    taggedImageUsers: [],
                     replyType: ReplyType.EVERYONE
                 }, type: TweetsActionType.UPDATE_SCHEDULED_TWEET
             });
@@ -102,6 +104,8 @@ describe("AddTweetForm", () => {
                 payload: {
                     text: `${mockTestMessage} :+1:`,
                     images: [],
+                    imageDescription: "",
+                    taggedImageUsers: [],
                     replyType: ReplyType.EVERYONE
                 }, type: TweetsActionType.ADD_TWEET
             });
@@ -161,6 +165,8 @@ describe("AddTweetForm", () => {
                 payload: {
                     text: mockTestMessage,
                     images: [],
+                    imageDescription: "",
+                    taggedImageUsers: [],
                     pollDateTime: 1440,
                     choices: ["test poll 1", "test poll 2"],
                     replyType: ReplyType.EVERYONE
@@ -199,6 +205,8 @@ describe("AddTweetForm", () => {
                 payload: {
                     text: mockTestMessage,
                     images: [mockFullTweet.images[0]],
+                    imageDescription: "",
+                    taggedImageUsers: [],
                     replyType: ReplyType.EVERYONE,
                     tweetId: 13
                 }, type: TweetsActionType.ADD_QUOTE_TWEET
@@ -240,6 +248,8 @@ describe("AddTweetForm", () => {
                     addressedUsername: mockMyProfile.username,
                     addressedId: mockMyProfile.id,
                     images: [mockFullTweet.images[0]],
+                    imageDescription: "",
+                    taggedImageUsers: [],
                     replyType: ReplyType.EVERYONE
                 }, type: TweetActionType.FETCH_REPLY_TWEET
             });

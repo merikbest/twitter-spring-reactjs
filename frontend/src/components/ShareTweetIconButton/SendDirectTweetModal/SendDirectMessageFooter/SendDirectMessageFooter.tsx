@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch } from "react-redux";
 
@@ -7,6 +7,7 @@ import { SendDirectMessageInput } from "../SendDirectMessageInput";
 import { SendMessageIcon } from "../../../../icons";
 import { addChatMessageWithTweet } from "../../../../store/ducks/chatMessages/actionCreators";
 import { UserResponse } from "../../../../types/user";
+import { useInputText } from "../../../../hook/useInputText";
 
 interface SendDirectMessageFooterProps {
     tweetId: number;
@@ -23,7 +24,7 @@ const SendDirectMessageFooter: FC<SendDirectMessageFooterProps> = memo((
 ): ReactElement => {
     const classes = useSendDirectTweetModalStyles();
     const dispatch = useDispatch();
-    const [text, setText] = useState<string>("");
+    const { text, setText, handleChangeText } = useInputText();
 
     const handleClickSendMessage = (): void => {
         dispatch(addChatMessageWithTweet({
@@ -35,16 +36,12 @@ const SendDirectMessageFooter: FC<SendDirectMessageFooterProps> = memo((
         onSendMessageFinish();
     };
 
-    const handleSetMessage = (event: ChangeEvent<HTMLInputElement>): void => {
-        setText(event.target.value);
-    };
-
     return (
         <div className={classes.footer}>
             <SendDirectMessageInput
                 multiline
                 value={text}
-                onChange={handleSetMessage}
+                onChange={handleChangeText}
                 variant="outlined"
                 placeholder="Add a comment"
             />

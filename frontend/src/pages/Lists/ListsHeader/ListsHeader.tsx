@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ClickAwayListener, Typography } from "@material-ui/core";
@@ -12,6 +12,7 @@ import { selectIsLoading } from "../../../store/ducks/lists/selectors";
 import { selectUserDataId, selectUserProfileUsername } from "../../../store/ducks/user/selectors";
 import CreateListsModal from "./CreateListsModal/CreateListsModal";
 import { useModalWindow } from "../../../hook/useModalWindow";
+import { useClickAway } from "../../../hook/useClickAway";
 
 const ListsHeader = (): ReactElement => {
     const classes = useListsHeaderStyles();
@@ -19,15 +20,7 @@ const ListsHeader = (): ReactElement => {
     const myProfileUsername = useSelector(selectUserProfileUsername);
     const myProfileId = useSelector(selectUserDataId);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
-    const [openPopover, setOpenPopover] = useState<boolean>(false);
-
-    const handleClick = (): void => {
-        setOpenPopover((prev) => !prev);
-    };
-
-    const handleClickAway = (): void => {
-        setOpenPopover(false);
-    };
+    const { open, onClickOpen, onClickClose } = useClickAway();
 
     return (
         <PageHeaderWrapper backButton>
@@ -44,10 +37,10 @@ const ListsHeader = (): ReactElement => {
             <div className={classes.iconGroup}>
                 <ActionIconButton onClick={onOpenModalWindow} actionText={"Create"} icon={AddListsIcon} />
                 <div className={classes.icon}>
-                    <ClickAwayListener onClickAway={handleClickAway}>
+                    <ClickAwayListener onClickAway={onClickClose}>
                         <div>
-                            <ActionIconButton onClick={handleClick} actionText={"More"} icon={EditIcon} />
-                            {openPopover && (
+                            <ActionIconButton onClick={onClickOpen} actionText={"More"} icon={EditIcon} />
+                            {open && (
                                 <Link to={`${LISTS_MEMBERSHIPS}/${myProfileId}`} className={classes.dropdownLink}>
                                     <div className={classes.dropdown}>
                                         <span className={classes.textIcon}>

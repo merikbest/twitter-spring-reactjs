@@ -112,17 +112,15 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         } else {
             dispatch(addTweet(tweet));
         }
-        tweetPostProcessing(selectedScheduleDate ? (
-            `Your Tweet will be sent on ${formatScheduleDate(selectedScheduleDate)}`
-        ) : (
-            "Your tweet was sent."
-        ));
+        tweetPostProcessing(selectedScheduleDate
+            ? `Your Tweet will be sent on ${formatScheduleDate(selectedScheduleDate)}`
+            : "Your tweet was sent.");
     };
 
     const handleClickQuoteTweet = async (): Promise<void> => {
         const tweet = await tweetPreProcessing();
         dispatch(addQuoteTweet({ ...tweet, tweetId: quoteTweet!.id, userId: params.userId }));
-        tweetPostProcessing("Your tweet was sent.");
+        tweetPostProcessing();
     };
 
     const handleClickReplyTweet = async (): Promise<void> => {
@@ -134,7 +132,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             addressedUsername: addressedUsername!,
             addressedId: addressedId!,
         }));
-        tweetPostProcessing("Your tweet was sent.");
+        tweetPostProcessing();
     };
 
     const tweetPreProcessing = async () => {
@@ -150,8 +148,8 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         return { text: textConverter(), images: result, imageDescription, taggedImageUsers, replyType };
     };
 
-    const tweetPostProcessing = (snackBarText: string): void => {
-        dispatch(setOpenSnackBar(snackBarText));
+    const tweetPostProcessing = (snackBarText?: string): void => {
+        dispatch(setOpenSnackBar(snackBarText ?? "Your tweet was sent."));
         setText("");
         setImages([]);
         setImageDescription("");

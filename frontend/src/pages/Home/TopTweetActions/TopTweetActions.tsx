@@ -7,6 +7,7 @@ import { SeeLatestIcon, SettingsIcon, ShowLatestTweets, ShowTopTweets, TopTweets
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { SETTINGS_CONTENT_PREFERENCES } from "../../../constants/path-constants";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
+import { useClickAway } from "../../../hook/useClickAway";
 
 interface TopTweetActionsProps {
     switchTweets: boolean;
@@ -23,27 +24,15 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
 ): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useTopTweetActionsStyles();
-    const [openTopTweetActions, setOpenTopTweetActions] = React.useState<boolean>(false);
-
-    const handleClickTopTweetActions = (): void => {
-        setOpenTopTweetActions((prevState) => !prevState);
-    };
-
-    const handleClickAwayTopTweetActions = (): void => {
-        setOpenTopTweetActions(false);
-    };
+    const { open, onClickOpen, onClickClose } = useClickAway();
 
     return (
-        <ClickAwayListener onClickAway={handleClickAwayTopTweetActions}>
+        <ClickAwayListener onClickAway={onClickClose}>
             <div>
                 <div className={classes.headerIcon}>
-                    <ActionIconButton
-                        actionText={"Top Tweets"}
-                        icon={TopTweets}
-                        onClick={handleClickTopTweetActions}
-                    />
+                    <ActionIconButton actionText={"Top Tweets"} icon={TopTweets} onClick={onClickOpen} />
                 </div>
-                {openTopTweetActions && (
+                {open && (
                     <div className={classes.dropdown}>
                         <div className={classes.dropdownHeader}>
                             <div className={classes.dropdownHeaderImage}>
