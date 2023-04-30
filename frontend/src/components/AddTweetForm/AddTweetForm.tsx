@@ -1,11 +1,9 @@
-import React, { ChangeEvent, FC, ReactElement, useCallback, useEffect, useState } from "react";
+import React, { FC, ReactElement, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import { EmojiData } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
-import EmojiConvertor from "emoji-js";
 
 import {
     addPoll,
@@ -33,6 +31,8 @@ import ScheduleDateInfo from "./ScheduleDateInfo/ScheduleDateInfo";
 import AddTweetImage from "./AddTweetImage/AddTweetImage";
 import { useParams } from "react-router-dom";
 import { TweetApi } from "../../services/api/tweet-service/tweetApi";
+import { useSelectUsers } from "../../hook/useSelectUsers";
+import { useInputText } from "../../hook/useInputText";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -70,14 +70,16 @@ const AddTweetForm: FC<AddTweetFormProps> = (
 ): ReactElement => {
     const dispatch = useDispatch();
     const params = useParams<{ userId: string }>();
-    const [text, setText] = useState<string>("");
     const [images, setImages] = useState<ImageObj[]>([]);
     const [replyType, setReplyType] = useState<ReplyType>(ReplyType.EVERYONE);
     const [selectedScheduleDate, setSelectedScheduleDate] = useState<Date | null>(null);
     const [visiblePoll, setVisiblePoll] = useState<boolean>(false);
     const [pollData, setPollData] = useState<PollInitialState>(pollInitialState);
+    const [imageDescription, setImageDescription] = useState<string>("");
+    const { text, setText, handleChangeText, addEmoji, textConverter } = useInputText();
+    const { selectedUsers, handleDelete, handleListItemClick, resetSelectedUsers } = useSelectUsers();
     const classes = useAddTweetFormStyles({ quoteTweet: quoteTweet, isScheduled: selectedScheduleDate !== null });
-    const textLimitPercent = Math.round((text.length / 280) * 100);
+    const textLimitPercent = Math.round((text.length / MAX_LENGTH) * 100);
     const textCount = MAX_LENGTH - text.length;
 
     useEffect(() => {
@@ -94,18 +96,48 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         }
     }, [unsentTweet]);
 
-    const handleChangeTextarea = (event: ChangeEvent<HTMLTextAreaElement>): void => {
-        setText(event.target.value);
+    const handleClickAddTweet = async (): Promise<void> => {
+        const tweet = await tweetPreProcessing();
+
+        if (visiblePoll) {
+            const { day, hour, minute, choice1, choice2, choice3, choice4 } = pollData;
+            const pollDateTime = (day * 1440) + (hour * 60) + minute;
+            const choices = [choice1, choice2, choice3, choice4].filter(item => item);
+            dispatch(addPoll({ ...tweet, pollDateTime, choices }));
+        } else if (selectedScheduleDate !== null && unsentTweet === undefined) {
+            dispatch(addScheduledTweet({ ...tweet, scheduledDate: selectedScheduleDate }));
+        } else if (unsentTweet) {
+            dispatch(updateScheduledTweet({ ...tweet, id: unsentTweet?.id }));
+            if (onCloseModal) onCloseModal();
+        } else {
+            dispatch(addTweet(tweet));
+        }
+        tweetPostProcessing(selectedScheduleDate ? (
+            `Your Tweet will be sent on ${formatScheduleDate(selectedScheduleDate)}`
+        ) : (
+            "Your tweet was sent."
+        ));
     };
 
-    const addEmoji = useCallback((emoji: EmojiData): void => {
-        const emojiConvertor = new EmojiConvertor();
-        emojiConvertor.replace_mode = "unified";
-        const convertedEmoji = emojiConvertor.replace_colons(emoji.colons!);
-        setText(text + " " + convertedEmoji);
-    }, [text]);
+    const handleClickQuoteTweet = async (): Promise<void> => {
+        const tweet = await tweetPreProcessing();
+        dispatch(addQuoteTweet({ ...tweet, tweetId: quoteTweet!.id, userId: params.userId }));
+        tweetPostProcessing("Your tweet was sent.");
+    };
 
-    const uploadTweetImages = async (): Promise<Array<Image>> => {
+    const handleClickReplyTweet = async (): Promise<void> => {
+        const tweet = await tweetPreProcessing();
+        dispatch(fetchReplyTweet({
+            ...tweet,
+            tweetId: tweetId!,
+            userId: params.userId,
+            addressedUsername: addressedUsername!,
+            addressedId: addressedId!,
+        }));
+        tweetPostProcessing("Your tweet was sent.");
+    };
+
+    const tweetPreProcessing = async () => {
         let result: Array<Image> = [];
 
         for (const image of images) {
@@ -114,112 +146,44 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             const { data } = await TweetApi.uploadTweetImage(formData);
             result.push(data);
         }
-        return result;
+        const taggedImageUsers = selectedUsers.map((user) => user.id);
+        return { text: textConverter(), images: result, imageDescription, taggedImageUsers, replyType };
     };
 
-    const handleClickAddTweet = async (): Promise<void> => {
-        const { day, hour, minute, choice1, choice2, choice3, choice4 } = pollData;
-        const pollDateTime = (day * 1440) + (hour * 60) + minute;
-        const choices = [choice1, choice2, choice3, choice4].filter(item => item);
-        const result = await uploadTweetImages();
-
-        if (visiblePoll) {
-            dispatch(addPoll({
-                text: textConverter(),
-                images: result,
-                pollDateTime: pollDateTime,
-                choices: choices,
-                replyType: replyType
-            }));
-        } else if (selectedScheduleDate !== null && unsentTweet === undefined) {
-            dispatch(addScheduledTweet({
-                text: textConverter(),
-                images: result,
-                replyType: replyType,
-                scheduledDate: selectedScheduleDate
-            }));
-        } else if (unsentTweet) {
-            dispatch(updateScheduledTweet({
-                id: unsentTweet?.id,
-                text: textConverter(),
-                images: result,
-                replyType: replyType
-            }));
-            if (onCloseModal) onCloseModal();
-        } else {
-            dispatch(addTweet({
-                text: textConverter(),
-                images: result,
-                replyType: replyType
-            }));
-        }
-        dispatch(setOpenSnackBar(selectedScheduleDate ? (
-            `Your Tweet will be sent on ${formatScheduleDate(selectedScheduleDate)}`
-        ) : (
-            "Your tweet was sent."
-        )));
+    const tweetPostProcessing = (snackBarText: string): void => {
+        dispatch(setOpenSnackBar(snackBarText));
         setText("");
         setImages([]);
+        setImageDescription("");
+        resetSelectedUsers();
         setVisiblePoll(false);
+        setPollData(pollInitialState);
         setSelectedScheduleDate(null);
-    };
-
-    const handleClickQuoteTweet = async (): Promise<void> => {
-        const result = await uploadTweetImages();
-
-        dispatch(addQuoteTweet({
-            text: textConverter(),
-            images: result,
-            replyType: replyType,
-            tweetId: quoteTweet!.id,
-            userId: params.userId
-        }));
-
-        dispatch(setOpenSnackBar("Your tweet was sent."));
-        setText("");
-        setImages([]);
-
         if (onCloseModal) onCloseModal();
-    };
-
-    const handleClickReplyTweet = async (): Promise<void> => {
-        const result = await uploadTweetImages();
-
-        dispatch(fetchReplyTweet({
-            tweetId: tweetId!,
-            userId: params.userId,
-            text: textConverter(),
-            addressedUsername: addressedUsername!,
-            addressedId: addressedId!,
-            images: result,
-            replyType: replyType
-        }));
-
-        dispatch(setOpenSnackBar("Your tweet was sent."));
-        setText("");
-        setImages([]);
-
-        if (onCloseModal) onCloseModal();
-    };
-
-    const textConverter = (): string => {
-        const emojiConvertor = new EmojiConvertor();
-        emojiConvertor.colons_mode = true;
-        return emojiConvertor.replace_unified(text);
     };
 
     const removeImage = useCallback((): void => {
         setImages((prev) => prev.filter((obj) => obj.src !== images[0].src));
+        setImageDescription("");
+        resetSelectedUsers();
     }, [images]);
 
-    const onOpenPoll = (): void => {
-        setVisiblePoll(true);
-    };
+    const handleChangeDescription = useCallback((description: string): void => {
+        setImageDescription(description);
+    }, [imageDescription]);
 
-    const onClosePoll = (): void => {
+    const onOpenPoll = useCallback((): void => {
+        setVisiblePoll(true);
+    }, []);
+
+    const onClosePoll = useCallback((): void => {
         setPollData(pollInitialState);
         setVisiblePoll(false);
-    };
+    }, []);
+
+    const onChangePoll = useCallback((pollState: PollInitialState): void => {
+        setPollData(prevState => ({ ...prevState, ...pollState }));
+    }, [pollData]);
 
     const handleScheduleDate = useCallback((date: Date): void => {
         setSelectedScheduleDate(date);
@@ -237,7 +201,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                 <div className={classes.textareaWrapper}>
                     <ScheduleDateInfo selectedScheduleDate={selectedScheduleDate} />
                     <TextareaAutosize
-                        onChange={handleChangeTextarea}
+                        onChange={handleChangeText}
                         className={classes.contentTextarea}
                         placeholder={visiblePoll ? "Ask a question..." : title}
                         value={text}
@@ -246,9 +210,17 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                     />
                 </div>
             </div>
-            <AddTweetImage images={images} removeImage={removeImage} />
+            <AddTweetImage
+                images={images}
+                removeImage={removeImage}
+                imageDescription={imageDescription}
+                handleChangeDescription={handleChangeDescription}
+                selectedUsers={selectedUsers}
+                handleDelete={handleDelete}
+                handleListItemClick={handleListItemClick}
+            />
             {quoteTweet && <Quote quoteTweet={quoteTweet} />}
-            <Poll pollData={pollData} setPollData={setPollData} visiblePoll={visiblePoll} onClose={onClosePoll} />
+            <Poll pollData={pollData} onChangePoll={onChangePoll} visiblePoll={visiblePoll} onClose={onClosePoll} />
             <Reply replyType={replyType} setReplyType={setReplyType} isUnsentTweet={!!unsentTweet} />
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>

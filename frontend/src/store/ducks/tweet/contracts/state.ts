@@ -10,6 +10,8 @@ export interface ReplyTweet {
     addressedId: number;
     replyType: ReplyType;
     images: Image[];
+    imageDescription: string;
+    taggedImageUsers: number[];
 }
 
 export interface FetchTweetUsersPayload {

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 
 import ImageAction from "../ImageAction/ImageAction";
 import { ListsIcon } from "../../../../icons";
@@ -7,20 +7,23 @@ import AddDescriptionModal from "./AddDescriptionModal/AddDescriptionModal";
 
 interface AddDescriptionProps {
     imageSrc: string;
+    imageDescription: string;
+    handleChangeDescription: (description: string) => void;
 }
 
-const AddDescription: FC<AddDescriptionProps> = ({ imageSrc }): ReactElement => {
+const AddDescription: FC<AddDescriptionProps> = (
+    {
+        imageSrc,
+        imageDescription,
+        handleChangeDescription
+    }
+): ReactElement => {
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
-    const [description, setDescription] = useState("");
-
-    const handleChangeDescription = (description: string): void => {
-        setDescription(description);
-    };
 
     return (
         <>
             <ImageAction
-                subtitle={(description === "") ? "Add description" : description}
+                subtitle={(imageDescription === "") ? "Add description" : imageDescription}
                 icon={ListsIcon}
                 onClick={onOpenModalWindow}
             />

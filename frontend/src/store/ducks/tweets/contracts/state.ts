@@ -12,6 +12,8 @@ export interface AddTweet {
     id?: number;
     text: string;
     images: Image[];
+    imageDescription: string;
+    taggedImageUsers: number[];
     replyType: ReplyType;
     pollDateTime?: number;
     scheduledDate?: Date;
@@ -21,6 +23,8 @@ export interface AddTweet {
 export interface AddQuoteTweet {
     text: string;
     images: Image[];
+    imageDescription: string;
+    taggedImageUsers: number[];
     replyType: ReplyType;
     tweetId: number;
     userId?: string;

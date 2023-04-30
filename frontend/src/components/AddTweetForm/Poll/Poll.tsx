@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, ReactNode, useCallback, useState } from "react";
+import React, { FC, memo, ReactElement, ReactNode, useCallback, useState } from "react";
 import { Grid, Paper, Typography } from "@material-ui/core";
 
 import { usePollStyles } from "./PollStyles";
@@ -29,12 +29,12 @@ export const pollInitialState: PollInitialState = {
 
 interface PollProps {
     pollData: PollInitialState;
-    setPollData: (value: PollInitialState | ((prevVar: PollInitialState) => PollInitialState)) => void;
+    onChangePoll: (pollState: PollInitialState) => void;
     visiblePoll: boolean;
     onClose: () => void;
 }
 
-const Poll: FC<PollProps> = ({ pollData, setPollData, visiblePoll, onClose }): ReactElement | null => {
+const Poll: FC<PollProps> = memo(({ pollData, onChangePoll, visiblePoll, onClose }): ReactElement | null => {
     const classes = usePollStyles();
     const [pollInputSize, setPollInputSize] = useState<number>(0);
     const { choice1, choice2, choice3, choice4, day, hour, minute } = pollData;
@@ -44,7 +44,7 @@ const Poll: FC<PollProps> = ({ pollData, setPollData, visiblePoll, onClose }): R
     }, []);
 
     const changeChoice = useCallback((data: { [key: string]: any }): void => {
-        setPollData(prevVar => ({ ...prevVar, ...data }));
+        onChangePoll({ ...data } as PollInitialState);
     }, []);
 
     const showOptions = useCallback((value: number): ReactNode[] => {
@@ -138,6 +138,6 @@ const Poll: FC<PollProps> = ({ pollData, setPollData, visiblePoll, onClose }): R
             <PollFooter onClosePoll={onClosePoll} />
         </Paper>
     );
-};
+});
 
 export default Poll;

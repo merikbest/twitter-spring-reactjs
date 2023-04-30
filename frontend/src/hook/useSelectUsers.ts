@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { UserResponse } from "../types/user";
 
 interface UseSelectUsers {
@@ -13,12 +13,12 @@ export const useSelectUsers = (): UseSelectUsers => {
     const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
     const [selectedUsers, setSelectedUsers] = useState<UserResponse[]>([]);
 
-    const handleDelete = (selectedUser: UserResponse): void => {
+    const handleDelete = useCallback((selectedUser: UserResponse): void => {
         setSelectedIndexes((indexes) => indexes.filter((index) => index !== selectedUser.id));
         setSelectedUsers((users) => users.filter((user) => user.id !== selectedUser.id));
-    };
+    }, [selectedIndexes, selectedUsers]);
 
-    const handleListItemClick = (user: UserResponse): void => {
+    const handleListItemClick = useCallback((user: UserResponse): void => {
         const currentIndex = selectedIndexes.indexOf(user?.id!);
         const newChecked = [...selectedIndexes];
         const newSelectedUsers = [...selectedUsers];
@@ -32,7 +32,7 @@ export const useSelectUsers = (): UseSelectUsers => {
         }
         setSelectedIndexes(newChecked);
         setSelectedUsers(newSelectedUsers);
-    };
+    }, [selectedIndexes, selectedUsers]);
 
     const resetSelectedUsers = (): void => {
         setSelectedIndexes([]);

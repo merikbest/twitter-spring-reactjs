@@ -4,11 +4,22 @@ import ImageAction from "../ImageAction/ImageAction";
 import { ProfileIcon } from "../../../../icons";
 import { useModalWindow } from "../../../../hook/useModalWindow";
 import TagPeopleModal from "./TagPeopleModal/TagPeopleModal";
-import { useSelectUsers } from "../../../../hook/useSelectUsers";
+import { UserResponse } from "../../../../types/user";
 
-const TagPeople: FC = (): ReactElement => {
+interface TagPeopleProps {
+    selectedUsers: UserResponse[];
+    handleDelete: (selectedUser: UserResponse) => void;
+    handleListItemClick: (user: UserResponse) => void;
+}
+
+const TagPeople: FC<TagPeopleProps> = (
+    {
+        selectedUsers,
+        handleDelete,
+        handleListItemClick
+    }
+): ReactElement => {
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
-    const { selectedUsers, handleDelete, handleListItemClick } = useSelectUsers();
     const subtitle = (selectedUsers.length === 0)
         ? "Tag people"
         : (selectedUsers.length === 1)

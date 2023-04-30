@@ -1,8 +1,7 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 import { Paper, Popover } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { EmojiData, Picker } from "emoji-mart";
-import EmojiConvertor from "emoji-js";
+import { Picker } from "emoji-mart";
 
 import { EmojiIcon, GifIcon, MediaIcon, SendMessageIcon } from "../../../../icons";
 import { MessageInput } from "../../MessageInput/MessageInput";
@@ -10,6 +9,7 @@ import { useChatFooterStyles } from "./ChatFooterStyles";
 import { addChatMessage } from "../../../../store/ducks/chatMessages/actionCreators";
 import ActionIcon from "../../ActionIcon/ActionIcon";
 import { usePopup } from "../../../../hook/usePopup";
+import { useInputText } from "../../../../hook/useInputText";
 
 interface ChatFooterProps {
     chatId: number;
@@ -18,27 +18,14 @@ interface ChatFooterProps {
 const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
     const classes = useChatFooterStyles();
     const dispatch = useDispatch();
-    const [message, setMessage] = useState<string>("");
+    const { text, setText, handleChangeText, addEmoji, textConverter } = useInputText();
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     const onSendMessage = (): void => {
-        if (message !== "") {
+        if (text !== "") {
             dispatch(addChatMessage({ chatId: chatId, text: textConverter() }));
-            setMessage("");
+            setText("");
         }
-    };
-
-    const addEmoji = (emoji: EmojiData): void => {
-        const emojiConvertor = new EmojiConvertor();
-        emojiConvertor.replace_mode = "unified";
-        const convertedEmoji = emojiConvertor.replace_colons(emoji.colons!);
-        setMessage(message + " " + convertedEmoji);
-    };
-
-    const textConverter = (): string => {
-        const emojiConvertor = new EmojiConvertor();
-        emojiConvertor.colons_mode = true;
-        return emojiConvertor.replace_unified(message);
     };
 
     return (
@@ -57,8 +44,8 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
             />
             <MessageInput
                 multiline
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
+                value={text}
+                onChange={handleChangeText}
                 variant="outlined"
                 placeholder="Start a new message"
             />
@@ -76,7 +63,7 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
                     actionText={"Send"}
                     className={"chatIcon"}
                     icon={SendMessageIcon}
-                    disabled={message.length === 0}
+                    disabled={text.length === 0}
                     positionTop
                 />
             </div>
