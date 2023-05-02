@@ -8,7 +8,6 @@ import { ImageObj } from "../../AddTweetForm";
 import { MODAL } from "../../../../constants/path-constants";
 
 describe("AddTweetImage", () => {
-    const mockStore = createMockRootState(LoadingStatus.SUCCESS);
     const mockImages = [{ src: "test", file: new File([""], "filename", { type: "text/html" }) }] as ImageObj[];
 
     it("should render default image", () => {
@@ -36,6 +35,6 @@ describe("AddTweetImage", () => {
                 selectedUsers={[]}
                 handleDelete={jest.fn()}
                 handleListItemClick={jest.fn()}
-            />, mockStore);
+            />, createMockRootState(LoadingStatus.SUCCESS));
     };
 });
