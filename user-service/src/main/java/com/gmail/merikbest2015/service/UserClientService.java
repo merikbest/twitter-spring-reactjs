@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import org.springframework.data.domain.Pageable;
@@ -56,6 +57,8 @@ public interface UserClientService {
     TweetAdditionalInfoUserResponse getTweetAdditionalInfoUser(Long userId);
 
     HeaderResponse<UserResponse> getUsersByIds(IdsRequest request, Pageable pageable);
+
+    List<TaggedUserResponse> getTaggedImageUsers(IdsRequest request);
 
     void updatePinnedTweetId(Long tweetId);
 

@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -75,6 +76,10 @@ public interface UserClient {
     @PostMapping(VALID_IDS)
     List<Long> getValidUserIds(@RequestBody IdsRequest request);
 
+    @CircuitBreaker(name = USER_SERVICE, fallbackMethod = "defaultEmptyUsersList")
+    @PostMapping(TAGGED_IMAGE)
+    List<TaggedUserResponse> getTaggedImageUsers(@RequestBody IdsRequest idsRequest);
+
     @CircuitBreaker(name = USER_SERVICE)
     @GetMapping(CHAT_USER_ID)
     ChatTweetUserResponse getChatTweetUser(@PathVariable("userId") Long userId);
@@ -96,6 +101,10 @@ public interface UserClient {
     }
 
     default ArrayList<Long> defaultEmptyIdsList(Throwable throwable) {
+        return new ArrayList<>();
+    }
+
+    default ArrayList<TaggedUserResponse> defaultEmptyUsersList(Throwable throwable) {
         return new ArrayList<>();
     }
 

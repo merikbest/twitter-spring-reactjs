@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.dto.response.tweet;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.gmail.merikbest2015.dto.ImageResponse;
+import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
 import lombok.Data;
@@ -26,6 +27,8 @@ public class TweetResponse {
     private LinkCoverSize linkCoverSize;
     private TweetAuthorResponse user;
     private List<ImageResponse> images;
+    private String imageDescription;
+    private List<TaggedUserResponse> taggedImageUsers;
     private QuoteTweetResponse quoteTweet;
     private PollResponse poll;
     private Long retweetsCount;

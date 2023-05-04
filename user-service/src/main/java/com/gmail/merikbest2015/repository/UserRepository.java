@@ -208,4 +208,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "DELETE FROM subscribers WHERE subscriber_id = ?1 AND user_id = ?2", nativeQuery = true)
     void unsubscribe(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Query("SELECT user FROM User user WHERE user.id IN :userIds")
+    List<TaggedUserProjection> getTaggedImageUsers(@Param("userIds") List<Long> userIds);
 }

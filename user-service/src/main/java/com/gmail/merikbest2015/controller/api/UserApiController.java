@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.service.UserClientService;
@@ -128,6 +129,11 @@ public class UserApiController {
     public HeaderResponse<UserResponse> getUsersByIds(@RequestBody IdsRequest request,
                                                       @SpringQueryMap Pageable pageable) {
         return userService.getUsersByIds(request, pageable);
+    }
+
+    @PostMapping(TAGGED_IMAGE)
+    public List<TaggedUserResponse> getTaggedImageUsers(@RequestBody IdsRequest request) {
+        return userService.getTaggedImageUsers(request);
     }
 
     @PutMapping(TWEET_PINNED_TWEET_ID)

@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
@@ -159,6 +160,12 @@ public class UserClientServiceImpl implements UserClientService {
     public HeaderResponse<UserResponse> getUsersByIds(IdsRequest request, Pageable pageable) {
         Page<UserProjection> users = userRepository.getUsersByIds(request.getIds(), pageable);
         return basicMapper.getHeaderResponse(users, UserResponse.class);
+    }
+
+    @Override
+    public List<TaggedUserResponse> getTaggedImageUsers(IdsRequest request) {
+        List<TaggedUserProjection> users = userRepository.getTaggedImageUsers(request.getIds());
+        return basicMapper.convertToResponseList(users, TaggedUserResponse.class);
     }
 
     @Override
