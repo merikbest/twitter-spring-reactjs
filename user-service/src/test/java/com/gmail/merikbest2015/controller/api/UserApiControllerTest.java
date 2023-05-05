@@ -276,6 +276,19 @@ public class UserApiControllerTest {
     }
 
     @Test
+    @DisplayName("[200] POST /api/v1/user/tagged/image - Get tagged image users")
+    public void getTaggedImageUsers() throws Exception {
+        mockMvc.perform(post(API_V1_USER + TAGGED_IMAGE)
+                        .content(mapper.writeValueAsString(new IdsRequest(List.of(2L, 3L))))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(TestConstants.USER_ID))
+                .andExpect(jsonPath("$[0].fullName").value(TestConstants.USERNAME));
+    }
+
+    @Test
     @DisplayName("[200] PUT /api/v1/user/tweet/pinned/99 - Update pinned tweet id")
     public void updatePinnedTweetId() throws Exception {
         mockMvc.perform(put(API_V1_USER + TWEET_PINNED_TWEET_ID, 99)
