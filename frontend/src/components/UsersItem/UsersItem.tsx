@@ -6,7 +6,7 @@ import { selectUserDataId } from "../../store/ducks/user/selectors";
 import { useUsersItemStyles } from "./UsersItemStyles";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import { UserResponse } from "../../types/user";
-import { useHoverItem } from "../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../hook/useHoverItem";
 import BlockButton from "./BlockButton/BlockButton";
 import PendingButton from "./PendingButton/PendingButton";
 import FollowButton from "./FollowButton/FollowButton";
@@ -16,6 +16,7 @@ import { PROFILE } from "../../constants/path-constants";
 import UserItemInfo from "./UserItemInfo/UserItemInfo";
 import UserItemAvatar from "./UserItemAvatar/UserItemAvatar";
 import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
+import { fetchUserDetail } from "../../store/ducks/userDetail/actionCreators";
 
 export interface UsersItemProps {
     user?: UserResponse,
@@ -31,7 +32,7 @@ export enum UserItemSize {
 const UsersItem: FC<UsersItemProps> = memo(({ user, size }): ReactElement => {
     const classes = useUsersItemStyles({ size });
     const myProfileId = useSelector(selectUserDataId);
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
 
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>
@@ -40,7 +41,7 @@ const UsersItem: FC<UsersItemProps> = memo(({ user, size }): ReactElement => {
                 <div
                     id={"userInfo"}
                     className={classes.userInfo}
-                    onMouseEnter={() => handleHoverPopper(user?.id!)}
+                    onMouseEnter={() => handleHoverPopper({ userId: user?.id} as HoverItemDetail)}
                     onMouseLeave={handleLeavePopper}
                 >
                     <UserItemInfo

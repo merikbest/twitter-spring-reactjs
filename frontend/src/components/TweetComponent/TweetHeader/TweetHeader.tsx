@@ -6,8 +6,9 @@ import { LockIcon } from "../../../icons";
 import { formatDate } from "../../../util/format-date-helper";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import LinkWrapper from "../../LinkWrapper/LinkWrapper";
-import { useHoverItem } from "../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../hook/useHoverItem";
 import { useTweetHeaderStyles } from "./TweetHeaderStyles";
+import { fetchUserDetail } from "../../../store/ducks/userDetail/actionCreators";
 
 interface TweetHeaderProps {
     dateTime?: string;
@@ -27,11 +28,14 @@ const TweetHeader: FC<TweetHeaderProps> = memo((
     }
 ): ReactElement => {
     const classes = useTweetHeaderStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
 
     return (
         <LinkWrapper path={`${PROFILE}/${userId}`} visiblePopperWindow={visiblePopperWindow}>
-            <span onMouseEnter={() => handleHoverPopper(userId!)} onMouseLeave={handleLeavePopper}>
+            <span
+                onMouseEnter={() => handleHoverPopper({ userId: userId! } as HoverItemDetail)}
+                onMouseLeave={handleLeavePopper}
+            >
                 <Typography variant={"h6"} component={"span"}>
                     {fullName}
                 </Typography>

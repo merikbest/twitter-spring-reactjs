@@ -3,6 +3,8 @@ import reactStringReplace from "react-string-replace";
 import { Emoji } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
 
+import { TaggedUserResponse, UserResponse } from "../types/user";
+
 export const textFormatter = (text: string): ReactNodeArray => {
     let replacedText: ReactNodeArray;
     let index: number = 1;
@@ -28,4 +30,12 @@ export const textFormatter = (text: string): ReactNodeArray => {
     ));
 
     return replacedText;
+};
+
+export const getUsersInImage = (users: UserResponse[] | TaggedUserResponse[]): string => {
+    return (users.length === 0)
+        ? "Tag people"
+        : (users.length === 1)
+            ? users[0].fullName
+            : `${users[0].fullName} and ${(users.length === 2) ? users[1].fullName : `${users.length - 1} others`}`;
 };

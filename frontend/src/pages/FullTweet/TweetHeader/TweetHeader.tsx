@@ -14,7 +14,8 @@ import {
     selectTweetUserId,
     selectTweetUserUsername
 } from "../../../store/ducks/tweet/selectors";
-import { useHoverItem } from "../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../hook/useHoverItem";
+import { fetchUserDetail } from "../../../store/ducks/userDetail/actionCreators";
 
 const TweetHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -23,7 +24,7 @@ const TweetHeader = memo((): ReactElement => {
     const tweetUserAvatar = useSelector(selectTweetUserAvatar);
     const tweetUserUsername = useSelector(selectTweetUserUsername);
     const tweetUserFullName = useSelector(selectTweetUserFullName);
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
 
     return (
         <div className={classes.headerWrapper}>
@@ -31,7 +32,7 @@ const TweetHeader = memo((): ReactElement => {
             <div
                 id={"userInfo"}
                 className={classes.headerUserInfo}
-                onMouseEnter={() => handleHoverPopper(tweetUserId!)}
+                onMouseEnter={() => handleHoverPopper({ userId: tweetUserId } as HoverItemDetail)}
                 onMouseLeave={handleLeavePopper}
             >
                 <Link to={`${PROFILE}/${tweetUserId}`}>

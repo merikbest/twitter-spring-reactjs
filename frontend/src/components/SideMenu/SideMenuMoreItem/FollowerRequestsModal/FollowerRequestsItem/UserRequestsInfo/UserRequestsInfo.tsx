@@ -2,9 +2,10 @@ import React, { FC, memo, ReactElement } from "react";
 import { Typography } from "@material-ui/core";
 
 import PopperUserWindow from "../../../../../PopperUserWindow/PopperUserWindow";
-import { useHoverItem } from "../../../../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../../../../hook/useHoverItem";
 import { useFollowerRequestsItemStyles } from "../FollowerRequestsItemStyles";
 import { FollowerUserResponse } from "../../../../../../types/user";
+import { fetchUserDetail } from "../../../../../../store/ducks/userDetail/actionCreators";
 
 interface UserRequestsInfoProps {
     user: FollowerUserResponse;
@@ -12,12 +13,15 @@ interface UserRequestsInfoProps {
 
 const UserRequestsInfo: FC<UserRequestsInfoProps> = memo(({ user }): ReactElement => {
     const classes = useFollowerRequestsItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
 
     return (
         <div className={classes.header}>
             <div id={"handleLeavePopper"} onMouseLeave={handleLeavePopper} className={classes.headerUserInfo}>
-                <Typography id={"handleHoverPopper"} variant={"h6"} onMouseEnter={() => handleHoverPopper(user.id!)}>
+                <Typography
+                    id={"handleHoverPopper"}
+                    variant={"h6"}
+                    onMouseEnter={() => handleHoverPopper({ userId: user.id } as HoverItemDetail)}>
                     {user?.fullName}
                 </Typography>
                 <Typography variant={"subtitle1"}>

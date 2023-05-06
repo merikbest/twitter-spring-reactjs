@@ -25,6 +25,7 @@ public interface TweetProjection {
     LinkCoverSize getLinkCoverSize();
     Long getAuthorId();
     List<TweetImageProjection> getImages();
+    String getImageDescription();
     QuoteTweetProjection getQuoteTweet();
     PollProjection getPoll();
     boolean isDeleted();

@@ -4,8 +4,9 @@ import { Avatar, Typography } from "@material-ui/core";
 import LockIcon from "../../../../components/LockIcon/LockIcon";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
 import { useListsItemStyles } from "../ListsItemStyles";
-import { useHoverItem } from "../../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../../hook/useHoverItem";
 import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
+import { fetchListDetail } from "../../../../store/ducks/listDetail/actionCreators";
 
 interface ListInfoDescriptionProps {
     listId?: number;
@@ -29,14 +30,14 @@ const ListInfoDescription: FC<ListInfoDescriptionProps> = memo((
     }
 ): ReactElement => {
     const classes = useListsItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchListDetail);
     const avatar = listOwnerAvatar ? listOwnerAvatar : DEFAULT_PROFILE_IMG;
 
     return (
         <div
             id={"listInfoWrapper"}
             className={classes.listInfoWrapper}
-            onMouseEnter={() => handleHoverPopper(listId!)}
+            onMouseEnter={() => handleHoverPopper({ listId: listId! } as HoverItemDetail)}
             onMouseLeave={handleLeavePopper}
         >
             <div>

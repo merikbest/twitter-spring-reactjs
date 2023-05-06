@@ -5,7 +5,8 @@ import { useNotificationAuthorItemStyles } from "./NotificationAuthorItemStyles"
 import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
 import { NotificationUserResponse } from "../../../../types/notification";
 import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
-import { useHoverItem } from "../../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../../hook/useHoverItem";
+import { fetchUserDetail } from "../../../../store/ducks/userDetail/actionCreators";
 
 interface NotificationAuthorItemProps {
     tweetAuthor: NotificationUserResponse;
@@ -13,12 +14,12 @@ interface NotificationAuthorItemProps {
 
 const NotificationAuthorItem: FC<NotificationAuthorItemProps> = memo(({ tweetAuthor }): ReactElement => {
     const classes = useNotificationAuthorItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
 
     return (
         <div
             className={classes.notificationAvatarWrapper}
-            onMouseEnter={() => handleHoverPopper(tweetAuthor?.id!)}
+            onMouseEnter={() => handleHoverPopper({ userId: tweetAuthor?.id } as HoverItemDetail)}
             onMouseLeave={handleLeavePopper}
         >
             <Avatar

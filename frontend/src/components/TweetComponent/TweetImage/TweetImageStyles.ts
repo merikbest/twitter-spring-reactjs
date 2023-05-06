@@ -42,5 +42,11 @@ export const useTweetImageStyles = makeStyles((theme) => ({
             marginTop: 8,
             marginBottom: 24
         }
+    },
+    taggedImageUsers: {
+        "&:hover": {
+            textDecoration: "underline",
+            cursor: "pointer"
+        },
     }
 }));

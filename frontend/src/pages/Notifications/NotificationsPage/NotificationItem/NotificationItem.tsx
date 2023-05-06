@@ -9,9 +9,10 @@ import { LikeIcon, ListsIconFilled, ProfileIconFilled, RetweetIcon } from "../..
 import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
 import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
 import { textFormatter } from "../../../../util/text-formatter";
-import { useHoverItem } from "../../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../../hook/useHoverItem";
 import { LISTS, NOTIFICATION, PROFILE } from "../../../../constants/path-constants";
 import LinkWrapper from "../../../../components/LinkWrapper/LinkWrapper";
+import { fetchUserDetail } from "../../../../store/ducks/userDetail/actionCreators";
 
 export interface NotificationItemProps {
     notification: NotificationResponse;
@@ -19,7 +20,7 @@ export interface NotificationItemProps {
 
 const NotificationItem: FC<NotificationItemProps> = memo(({ notification }): ReactElement => {
     const classes = useNotificationItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
     const avatar = notification.user.avatar ?? DEFAULT_PROFILE_IMG;
 
     return (
@@ -57,7 +58,7 @@ const NotificationItem: FC<NotificationItemProps> = memo(({ notification }): Rea
                     <LinkWrapper path={`${PROFILE}/${notification.user.id!}`} visiblePopperWindow={visiblePopperWindow}>
                         <div
                             id={"userInfo"}
-                            onMouseEnter={() => handleHoverPopper(notification.user.id!)}
+                            onMouseEnter={() => handleHoverPopper({ userId: notification.user.id } as HoverItemDetail)}
                             onMouseLeave={handleLeavePopper}
                         >
                             <Avatar className={classes.notificationAvatar} src={avatar} alt={avatar} />

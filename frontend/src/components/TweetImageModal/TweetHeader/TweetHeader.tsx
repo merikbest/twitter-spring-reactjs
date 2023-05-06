@@ -15,13 +15,14 @@ import {
     selectTweetUserUsername
 } from "../../../store/ducks/tweet/selectors";
 import { useGlobalStyles } from "../../../util/globalClasses";
-import { useHoverItem } from "../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../hook/useHoverItem";
 import { useTweetHeaderStyles } from "./TweetHeaderStyles";
+import { fetchUserDetail } from "../../../store/ducks/userDetail/actionCreators";
 
 const TweetHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = useTweetHeaderStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
     const tweetUserId = useSelector(selectTweetUserId);
     const avatar = useSelector(selectTweetUserAvatar);
     const userFullName = useSelector(selectTweetUserFullName);
@@ -35,7 +36,7 @@ const TweetHeader = memo((): ReactElement => {
             <LinkWrapper path={`${PROFILE}/${tweetUserId}`} visiblePopperWindow={visiblePopperWindow}>
                 <div
                     id={"userInfo"}
-                    onMouseEnter={() => handleHoverPopper(tweetUserId!)}
+                    onMouseEnter={() => handleHoverPopper({ userId: tweetUserId } as HoverItemDetail)}
                     onMouseLeave={handleLeavePopper}
                 >
                     <Typography variant={"h6"} component={"div"} id={"link"}>

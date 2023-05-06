@@ -8,7 +8,8 @@ import { useGlobalStyles } from "../../../../util/globalClasses";
 import { PinnedListResponse } from "../../../../types/lists";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
 import { LISTS } from "../../../../constants/path-constants";
-import { useHoverItem } from "../../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../../hook/useHoverItem";
+import { fetchListDetail } from "../../../../store/ducks/listDetail/actionCreators";
 
 interface PinnedListsItemProps {
     pinnedList?: PinnedListResponse;
@@ -17,14 +18,14 @@ interface PinnedListsItemProps {
 const PinnedListsItem: FC<PinnedListsItemProps> = memo(({ pinnedList }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = usePinnedListsItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchListDetail);
 
     return (
         <Link to={`${LISTS}/${pinnedList?.id}`} className={globalClasses.link}>
             <div
                 id={"pinnedListWrapper"}
                 className={classes.pinnedListWrapper}
-                onMouseEnter={() => handleHoverPopper(pinnedList?.id!)}
+                onMouseEnter={() => handleHoverPopper({ listId: pinnedList?.id } as HoverItemDetail)}
                 onMouseLeave={handleLeavePopper}
             >
                 <Avatar variant="square" className={classes.listAvatar}

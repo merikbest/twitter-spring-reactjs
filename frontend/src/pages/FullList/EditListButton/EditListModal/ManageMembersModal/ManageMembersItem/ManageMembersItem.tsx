@@ -6,13 +6,14 @@ import { useManageMembersItemStyles } from "./ManageMembersItemStyles";
 import { selectUserDataId } from "../../../../../../store/ducks/user/selectors";
 import { ListsOwnerMemberResponse } from "../../../../../../types/lists";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
-import { useHoverItem } from "../../../../../../hook/useHoverItem";
+import { HoverItemDetail, useHoverItem } from "../../../../../../hook/useHoverItem";
 import LinkWrapper from "../../../../../../components/LinkWrapper/LinkWrapper";
 import { PROFILE } from "../../../../../../constants/path-constants";
 import ManageMemberButton from "./ManageMemberButton/ManageMemberButton";
 import MemberItemInfo from "./MemberItemInfo/MemberItemInfo";
 import MemberItemAvatar from "./MemberItemAvatar/MemberItemAvatar";
 import { DEFAULT_PROFILE_IMG } from "../../../../../../constants/url-constants";
+import { fetchUserDetail } from "../../../../../../store/ducks/userDetail/actionCreators";
 
 interface ManageMembersItemProps {
     listId?: number;
@@ -31,7 +32,7 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
 ): ReactElement => {
     const classes = useManageMembersItemStyles();
     const myProfileId = useSelector(selectUserDataId);
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
 
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>
@@ -41,8 +42,8 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
                     <div className={classes.header}>
                         <div
                             id={"fullName"}
+                            onMouseEnter={() => handleHoverPopper({ userId: user?.id} as HoverItemDetail)}
                             onMouseLeave={handleLeavePopper}
-                            onMouseEnter={() => handleHoverPopper(user?.id!)}
                             className={classes.headerUserInfo}
                         >
                             <MemberItemInfo
