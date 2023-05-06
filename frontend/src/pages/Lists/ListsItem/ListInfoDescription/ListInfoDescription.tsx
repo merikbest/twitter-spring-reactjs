@@ -4,7 +4,7 @@ import { Avatar, Typography } from "@material-ui/core";
 import LockIcon from "../../../../components/LockIcon/LockIcon";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
 import { useListsItemStyles } from "../ListsItemStyles";
-import { useHoverList } from "../../../../hook/useHoverList";
+import { useHoverItem } from "../../../../hook/useHoverItem";
 import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
 
 interface ListInfoDescriptionProps {
@@ -29,7 +29,7 @@ const ListInfoDescription: FC<ListInfoDescriptionProps> = memo((
     }
 ): ReactElement => {
     const classes = useListsItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverList();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
     const avatar = listOwnerAvatar ? listOwnerAvatar : DEFAULT_PROFILE_IMG;
 
     return (

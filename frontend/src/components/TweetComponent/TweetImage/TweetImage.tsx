@@ -9,9 +9,10 @@ import { usePopup } from "../../../hook/usePopup";
 interface TweetImageProps {
     tweetId?: number;
     imageSrc?: string;
+    imageDescription?: string;
 }
 
-const TweetImage: FC<TweetImageProps> = memo(({ tweetId, imageSrc }): ReactElement => {
+const TweetImage: FC<TweetImageProps> = memo(({ tweetId, imageSrc, imageDescription }): ReactElement => {
     const classes = useTweetImageStyles();
     const location = useLocation();
     const isModal = location.pathname.includes(MODAL);
@@ -39,7 +40,7 @@ const TweetImage: FC<TweetImageProps> = memo(({ tweetId, imageSrc }): ReactEleme
                         Image description
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        Image description
+                        {imageDescription}
                     </Typography>
                     <Button
                         onClick={handleClosePopup}

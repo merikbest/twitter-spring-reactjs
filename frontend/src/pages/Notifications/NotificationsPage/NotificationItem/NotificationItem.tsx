@@ -9,7 +9,7 @@ import { LikeIcon, ListsIconFilled, ProfileIconFilled, RetweetIcon } from "../..
 import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
 import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
 import { textFormatter } from "../../../../util/text-formatter";
-import { useHoverUser } from "../../../../hook/useHoverUser";
+import { useHoverItem } from "../../../../hook/useHoverItem";
 import { LISTS, NOTIFICATION, PROFILE } from "../../../../constants/path-constants";
 import LinkWrapper from "../../../../components/LinkWrapper/LinkWrapper";
 
@@ -19,7 +19,7 @@ export interface NotificationItemProps {
 
 const NotificationItem: FC<NotificationItemProps> = memo(({ notification }): ReactElement => {
     const classes = useNotificationItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
     const avatar = notification.user.avatar ?? DEFAULT_PROFILE_IMG;
 
     return (

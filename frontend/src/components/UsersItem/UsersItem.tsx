@@ -6,7 +6,7 @@ import { selectUserDataId } from "../../store/ducks/user/selectors";
 import { useUsersItemStyles } from "./UsersItemStyles";
 import PopperUserWindow from "../PopperUserWindow/PopperUserWindow";
 import { UserResponse } from "../../types/user";
-import { useHoverUser } from "../../hook/useHoverUser";
+import { useHoverItem } from "../../hook/useHoverItem";
 import BlockButton from "./BlockButton/BlockButton";
 import PendingButton from "./PendingButton/PendingButton";
 import FollowButton from "./FollowButton/FollowButton";
@@ -31,7 +31,7 @@ export enum UserItemSize {
 const UsersItem: FC<UsersItemProps> = memo(({ user, size }): ReactElement => {
     const classes = useUsersItemStyles({ size });
     const myProfileId = useSelector(selectUserDataId);
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
 
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>

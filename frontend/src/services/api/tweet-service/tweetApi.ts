@@ -6,6 +6,7 @@ import {
     API_TWEETS,
     API_TWEETS_CHANGE_REPLY,
     API_TWEETS_FOLLOWER,
+    API_TWEETS_IMAGE_TAGGED,
     API_TWEETS_IMAGES,
     API_TWEETS_INFO,
     API_TWEETS_MEDIA,
@@ -23,6 +24,7 @@ import { UserTweetRequest } from "../../../store/ducks/userTweets/contracts/stat
 import { Image } from "../../../types/common";
 import { AddQuoteTweet, AddTweet, ChangeReplyTypeRequest } from "../../../store/ducks/tweets/contracts/state";
 import { ReplyTweet } from "../../../store/ducks/tweet/contracts/state";
+import { UserResponse } from "../../../types/user";
 
 export const TweetApi = {
     async getTweets(pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
@@ -64,6 +66,9 @@ export const TweetApi = {
                 "Content-Type": "multipart/form-data"
             }
         });
+    },
+    async getTaggedImageUsers(tweetId: number, pageNumber: number): Promise<AxiosResponse<UserResponse[]>> {
+        return await axios.get<UserResponse[]>(`${API_TWEETS_IMAGE_TAGGED}/${tweetId}`, { params: { page: pageNumber } });
     },
     async createTweet(request: AddTweet): Promise<AxiosResponse<TweetResponse>> {
         return await axios.post<TweetResponse>(API_TWEETS, request);

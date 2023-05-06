@@ -52,6 +52,11 @@ export interface CommonUserResponse {
     isPrivateProfile: boolean;
 }
 
+export interface TaggedUserResponse {
+    id: number;
+    fullName: string;
+}
+
 export interface SearchResultResponse {
     text: string;
     tweetCount: number;

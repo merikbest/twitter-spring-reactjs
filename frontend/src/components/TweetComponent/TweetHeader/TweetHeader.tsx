@@ -6,7 +6,7 @@ import { LockIcon } from "../../../icons";
 import { formatDate } from "../../../util/format-date-helper";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import LinkWrapper from "../../LinkWrapper/LinkWrapper";
-import { useHoverUser } from "../../../hook/useHoverUser";
+import { useHoverItem } from "../../../hook/useHoverItem";
 import { useTweetHeaderStyles } from "./TweetHeaderStyles";
 
 interface TweetHeaderProps {
@@ -27,7 +27,7 @@ const TweetHeader: FC<TweetHeaderProps> = memo((
     }
 ): ReactElement => {
     const classes = useTweetHeaderStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
 
     return (
         <LinkWrapper path={`${PROFILE}/${userId}`} visiblePopperWindow={visiblePopperWindow}>

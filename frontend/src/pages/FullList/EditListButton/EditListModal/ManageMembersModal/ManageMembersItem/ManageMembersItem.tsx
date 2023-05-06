@@ -6,7 +6,7 @@ import { useManageMembersItemStyles } from "./ManageMembersItemStyles";
 import { selectUserDataId } from "../../../../../../store/ducks/user/selectors";
 import { ListsOwnerMemberResponse } from "../../../../../../types/lists";
 import PopperUserWindow from "../../../../../../components/PopperUserWindow/PopperUserWindow";
-import { useHoverUser } from "../../../../../../hook/useHoverUser";
+import { useHoverItem } from "../../../../../../hook/useHoverItem";
 import LinkWrapper from "../../../../../../components/LinkWrapper/LinkWrapper";
 import { PROFILE } from "../../../../../../constants/path-constants";
 import ManageMemberButton from "./ManageMemberButton/ManageMemberButton";
@@ -31,7 +31,7 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
 ): ReactElement => {
     const classes = useManageMembersItemStyles();
     const myProfileId = useSelector(selectUserDataId);
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
 
     return (
         <LinkWrapper path={`${PROFILE}/${user?.id}`} visiblePopperWindow={visiblePopperWindow}>

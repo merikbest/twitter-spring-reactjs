@@ -5,7 +5,7 @@ import { useNotificationAuthorItemStyles } from "./NotificationAuthorItemStyles"
 import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
 import { NotificationUserResponse } from "../../../../types/notification";
 import PopperUserWindow from "../../../../components/PopperUserWindow/PopperUserWindow";
-import { useHoverUser } from "../../../../hook/useHoverUser";
+import { useHoverItem } from "../../../../hook/useHoverItem";
 
 interface NotificationAuthorItemProps {
     tweetAuthor: NotificationUserResponse;
@@ -13,7 +13,7 @@ interface NotificationAuthorItemProps {
 
 const NotificationAuthorItem: FC<NotificationAuthorItemProps> = memo(({ tweetAuthor }): ReactElement => {
     const classes = useNotificationAuthorItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
 
     return (
         <div

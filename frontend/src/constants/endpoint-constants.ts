@@ -64,6 +64,7 @@ export const API_TWEETS_QUOTES = (tweetId: number) => `${API_ENDPOINT}/tweets/${
 export const API_TWEETS_LIKED_USERS = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/liked-users`;
 export const API_TWEETS_RETWEETED_USERS = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/retweeted-users`;
 export const API_TWEETS_BOOKMARKED = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/bookmarked`;
+export const API_TWEETS_IMAGE_TAGGED = `${API_ENDPOINT}/tweets/image/tagged`;
 export const API_TWEETS_POOL = `${API_ENDPOINT}/tweets/poll`;
 export const API_TWEETS_SEARCH = `${API_ENDPOINT}/tweets/search`;
 export const API_TWEETS_LIKE = `${API_ENDPOINT}/tweets/like`;

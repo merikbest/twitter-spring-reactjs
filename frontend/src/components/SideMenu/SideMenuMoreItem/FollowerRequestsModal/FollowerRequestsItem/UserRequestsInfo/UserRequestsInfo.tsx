@@ -2,7 +2,7 @@ import React, { FC, memo, ReactElement } from "react";
 import { Typography } from "@material-ui/core";
 
 import PopperUserWindow from "../../../../../PopperUserWindow/PopperUserWindow";
-import { useHoverUser } from "../../../../../../hook/useHoverUser";
+import { useHoverItem } from "../../../../../../hook/useHoverItem";
 import { useFollowerRequestsItemStyles } from "../FollowerRequestsItemStyles";
 import { FollowerUserResponse } from "../../../../../../types/user";
 
@@ -12,7 +12,7 @@ interface UserRequestsInfoProps {
 
 const UserRequestsInfo: FC<UserRequestsInfoProps> = memo(({ user }): ReactElement => {
     const classes = useFollowerRequestsItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
 
     return (
         <div className={classes.header}>

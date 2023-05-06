@@ -14,7 +14,7 @@ import {
     selectTweetUserId,
     selectTweetUserUsername
 } from "../../../store/ducks/tweet/selectors";
-import { useHoverUser } from "../../../hook/useHoverUser";
+import { useHoverItem } from "../../../hook/useHoverItem";
 
 const TweetHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles();
@@ -23,7 +23,7 @@ const TweetHeader = memo((): ReactElement => {
     const tweetUserAvatar = useSelector(selectTweetUserAvatar);
     const tweetUserUsername = useSelector(selectTweetUserUsername);
     const tweetUserFullName = useSelector(selectTweetUserFullName);
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverUser();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
 
     return (
         <div className={classes.headerWrapper}>

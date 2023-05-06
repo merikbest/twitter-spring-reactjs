@@ -8,7 +8,7 @@ import { useGlobalStyles } from "../../../../util/globalClasses";
 import { PinnedListResponse } from "../../../../types/lists";
 import PopperListWindow from "../../PopperListWindow/PopperListWindow";
 import { LISTS } from "../../../../constants/path-constants";
-import { useHoverList } from "../../../../hook/useHoverList";
+import { useHoverItem } from "../../../../hook/useHoverItem";
 
 interface PinnedListsItemProps {
     pinnedList?: PinnedListResponse;
@@ -17,7 +17,7 @@ interface PinnedListsItemProps {
 const PinnedListsItem: FC<PinnedListsItemProps> = memo(({ pinnedList }): ReactElement => {
     const globalClasses = useGlobalStyles();
     const classes = usePinnedListsItemStyles();
-    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverList();
+    const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem();
 
     return (
         <Link to={`${LISTS}/${pinnedList?.id}`} className={globalClasses.link}>
