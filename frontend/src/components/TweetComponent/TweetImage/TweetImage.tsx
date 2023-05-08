@@ -1,12 +1,11 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Button, Popover, Typography } from "@material-ui/core";
 
 import { MODAL } from "../../../constants/path-constants";
 import { useTweetImageStyles } from "./TweetImageStyles";
-import { usePopup } from "../../../hook/usePopup";
 import { TaggedUserResponse } from "../../../types/user";
-import { getUsersInImage } from "../../../util/text-formatter";
+import ImageDescription from "./ImageDescription/ImageDescription";
+import TaggedImageUsers from "./TaggedImageUsers/TaggedImageUsers";
 
 interface TweetImageProps {
     tweetId?: number;
@@ -26,52 +25,15 @@ const TweetImage: FC<TweetImageProps> = memo((
     const classes = useTweetImageStyles();
     const location = useLocation();
     const isModal = location.pathname.includes(MODAL);
-    const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     return (
         <div id={"tweetImage"} className={classes.image}>
             <Link to={{ pathname: `${MODAL}/${tweetId}`, state: { background: location } }}>
                 <img className={isModal ? "small" : ""} src={imageSrc} alt={imageSrc} />
             </Link>
-            {imageDescription && (
-                <>
-                    <div className={classes.altButton} onClick={handleOpenPopup}>
-                        ALT
-                    </div>
-                    <Popover
-                        id={popoverId}
-                        open={openPopover}
-                        anchorEl={anchorEl}
-                        onClose={handleClosePopup}
-                        classes={{ paper: classes.popover }}
-                        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                        transformOrigin={{ vertical: "top", horizontal: "left" }}
-                    >
-                        <div className={classes.popoverContainer}>
-                            <Typography variant={"h3"} component={"div"}>
-                                Image description
-                            </Typography>
-                            <Typography variant={"subtitle1"} component={"div"}>
-                                {imageDescription}
-                            </Typography>
-                            <Button
-                                onClick={handleClosePopup}
-                                color="primary"
-                                variant="outlined"
-                                size="large"
-                                fullWidth
-                            >
-                                Dismiss
-                            </Button>
-                        </div>
-                    </Popover>
-                </>
-            )}
-            {(taggedImageUsers && taggedImageUsers.length !== 0) && (
-                <Typography className={classes.taggedImageUsers} variant={"subtitle2"} component={"span"}>
-                    {getUsersInImage(taggedImageUsers)}
-                </Typography>
-            )}
+            {imageDescription && <ImageDescription imageDescription={imageDescription} />}
+            {(taggedImageUsers && taggedImageUsers.length !== 0) &&
+                <TaggedImageUsers taggedImageUsers={taggedImageUsers} />}
         </div>
     );
 });
