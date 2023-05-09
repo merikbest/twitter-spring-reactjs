@@ -55,6 +55,10 @@ export const selectRetweetedUsers = (state: RootState): UserResponse[] => select
 const selectRetweetedUsersLoadingState = (state: RootState): LoadingStatus => selectTweetState(state).retweetedUsersLoadingState;
 export const selectIsRetweetedUsersLoading = (state: RootState): boolean => selectRetweetedUsersLoadingState(state) === LoadingStatus.LOADING;
 
+export const selectTaggedImageUsers = (state: RootState): UserResponse[] => selectTweetState(state).taggedImageUsers;
+const selectTaggedImageUsersLoadingState = (state: RootState): LoadingStatus => selectTweetState(state).taggedImageUsersLoadingState;
+export const selectIsTaggedImageUsersLoading = (state: RootState): boolean => selectTaggedImageUsersLoadingState(state) === LoadingStatus.LOADING;
+
 // replies
 export const selectReplies = (state: RootState): TweetResponse[] => selectTweetState(state).replies;
 const selectRepliesLoadingState = (state: RootState): LoadingStatus => selectTweetState(state).repliesLoadingState;

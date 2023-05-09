@@ -14,6 +14,8 @@ export const initialTweetState: TweetState = {
     likedUsersLoadingState: LoadingStatus.LOADING,
     retweetedUsers: [],
     retweetedUsersLoadingState: LoadingStatus.LOADING,
+    taggedImageUsers: [],
+    taggedImageUsersLoadingState: LoadingStatus.LOADING,
     usersPagesCount: 0,
     // replies
     replies: [],
@@ -132,6 +134,22 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
 
         case TweetActionType.SET_RETWEETED_USERS_LOADING_STATE:
             draft.retweetedUsersLoadingState = action.payload;
+            break;
+
+        case TweetActionType.SET_TAGGED_IMAGE_USERS:
+            draft.taggedImageUsers = [...draft.taggedImageUsers, ...action.payload.items];
+            draft.usersPagesCount = action.payload.pagesCount;
+            draft.taggedImageUsersLoadingState = LoadingStatus.SUCCESS;
+            break;
+
+        case TweetActionType.RESET_TAGGED_IMAGE_USERS_STATE:
+            draft.taggedImageUsers = [];
+            draft.usersPagesCount = 0;
+            draft.taggedImageUsersLoadingState = LoadingStatus.LOADING;
+            break;
+
+        case TweetActionType.SET_TAGGED_IMAGE_USERS_LOADING_STATE:
+            draft.taggedImageUsersLoadingState = action.payload;
             break;
 
         // replies

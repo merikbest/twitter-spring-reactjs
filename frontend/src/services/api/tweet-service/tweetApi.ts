@@ -23,7 +23,7 @@ import {
 import { UserTweetRequest } from "../../../store/ducks/userTweets/contracts/state";
 import { Image } from "../../../types/common";
 import { AddQuoteTweet, AddTweet, ChangeReplyTypeRequest } from "../../../store/ducks/tweets/contracts/state";
-import { ReplyTweet } from "../../../store/ducks/tweet/contracts/state";
+import { FetchTweetUsersPayload, ReplyTweet } from "../../../store/ducks/tweet/contracts/state";
 import { UserResponse } from "../../../types/user";
 
 export const TweetApi = {
@@ -67,7 +67,7 @@ export const TweetApi = {
             }
         });
     },
-    async getTaggedImageUsers(tweetId: number, pageNumber: number): Promise<AxiosResponse<UserResponse[]>> {
+    async getTaggedImageUsers({ tweetId, pageNumber }: FetchTweetUsersPayload): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_TWEETS_IMAGE_TAGGED}/${tweetId}`, { params: { page: pageNumber } });
     },
     async createTweet(request: AddTweet): Promise<AxiosResponse<TweetResponse>> {

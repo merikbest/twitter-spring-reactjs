@@ -256,11 +256,13 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             errorMessage: "",
             likedUsers: mockUsers,
             retweetedUsers: mockUsers,
+            taggedImageUsers: mockUsers,
             usersPagesCount: 0,
             replies: mockTweets,
             loadingState: loadingStatus,
             likedUsersLoadingState: loadingStatus,
             retweetedUsersLoadingState: loadingStatus,
+            taggedImageUsersLoadingState: loadingStatus,
             repliesLoadingState: loadingStatus,
             quotedUsersLoadingState: loadingStatus
         },

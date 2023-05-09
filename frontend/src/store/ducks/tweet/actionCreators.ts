@@ -5,10 +5,12 @@ import {
     FetchRepliesActionInterface,
     FetchReplyTweetActionInterface,
     FetchRetweetedUsersActionInterface,
+    FetchTaggedImageUsersActionInterface,
     FetchTweetDataActionInterface,
     ResetLikedUsersStateActionInterface,
     ResetRepliesStateActionInterface,
     ResetRetweetedUsersStateActionInterface,
+    ResetTaggedImageUsersStateActionInterface,
     ResetTweetStateActionInterface,
     SetBlockedToTweetStateActionInterface,
     SetBookmarkedTweetActionInterface,
@@ -21,6 +23,8 @@ import {
     SetRepliesLoadingStateInterface,
     SetRetweetedUsersActionInterface,
     SetRetweetedUsersLoadingStateInterface,
+    SetTaggedImageUsersActionInterface,
+    SetTaggedImageUsersLoadingStateInterface,
     SetTweetDataActionInterface,
     SetTweetDataLoadingStateInterface,
     SetVoteDataActionInterface,
@@ -137,6 +141,25 @@ export const resetRetweetedUsersState = (): ResetRetweetedUsersStateActionInterf
 
 export const setRetweetedUsersLoadingState = (payload: LoadingStatus): SetRetweetedUsersLoadingStateInterface => ({
     type: TweetActionType.SET_RETWEETED_USERS_LOADING_STATE,
+    payload
+});
+
+export const fetchTaggedImageUsers = (payload: FetchTweetUsersPayload): FetchTaggedImageUsersActionInterface => ({
+    type: TweetActionType.FETCH_TAGGED_IMAGE_USERS,
+    payload
+});
+
+export const setTaggedImageUsers = (payload: PageableResponse<TweetState["taggedImageUsers"]>): SetTaggedImageUsersActionInterface => ({
+    type: TweetActionType.SET_TAGGED_IMAGE_USERS,
+    payload
+});
+
+export const resetTaggedImageUsers = (): ResetTaggedImageUsersStateActionInterface => ({
+    type: TweetActionType.RESET_TAGGED_IMAGE_USERS_STATE
+});
+
+export const setTaggedImageUsersLoadingState = (payload: LoadingStatus): SetTaggedImageUsersLoadingStateInterface => ({
+    type: TweetActionType.SET_TAGGED_IMAGE_USERS_LOADING_STATE,
     payload
 });
 

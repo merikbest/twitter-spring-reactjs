@@ -25,10 +25,12 @@ export interface TweetState {
     errorMessage: string;
     likedUsers: UserResponse[];
     retweetedUsers: UserResponse[];
+    taggedImageUsers: UserResponse[];
     usersPagesCount: number;
     replies: TweetResponse[];
     loadingState: LoadingStatus;
     likedUsersLoadingState: LoadingStatus;
     retweetedUsersLoadingState: LoadingStatus;
+    taggedImageUsersLoadingState: LoadingStatus;
     repliesLoadingState: LoadingStatus;
 }

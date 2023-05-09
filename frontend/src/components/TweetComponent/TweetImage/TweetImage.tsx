@@ -33,7 +33,7 @@ const TweetImage: FC<TweetImageProps> = memo((
             </Link>
             {imageDescription && <ImageDescription imageDescription={imageDescription} />}
             {(taggedImageUsers && taggedImageUsers.length !== 0) &&
-                <TaggedImageUsers taggedImageUsers={taggedImageUsers} />}
+                <TaggedImageUsers tweetId={tweetId!} taggedImageUsers={taggedImageUsers} />}
         </div>
     );
 });

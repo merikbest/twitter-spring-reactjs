@@ -8,6 +8,7 @@ import {
     FetchRepliesActionInterface,
     FetchReplyTweetActionInterface,
     FetchRetweetedUsersActionInterface,
+    FetchTaggedImageUsersActionInterface,
     FetchTweetDataActionInterface,
     TweetActionType
 } from "./contracts/actionTypes";
@@ -20,6 +21,8 @@ import {
     setRepliesLoadingState,
     setRetweetedUsers,
     setRetweetedUsersLoadingState,
+    setTaggedImageUsers,
+    setTaggedImageUsersLoadingState,
     setTweetData,
     setTweetLoadingState
 } from "./actionCreators";
@@ -102,6 +105,19 @@ export function* fetchRetweetedUsersRequest({ payload }: FetchRetweetedUsersActi
     }
 }
 
+export function* fetchTaggedImageUsersRequest({ payload }: FetchTaggedImageUsersActionInterface) {
+    try {
+        yield put(setTaggedImageUsersLoadingState(LoadingStatus.LOADING));
+        const response: AxiosResponse<UserResponse[]> = yield call(TweetApi.getTaggedImageUsers, payload);
+        yield put(setTaggedImageUsers({
+            items: response.data,
+            pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT])
+        }));
+    } catch (error) {
+        yield put(setTaggedImageUsersLoadingState(LoadingStatus.ERROR));
+    }
+}
+
 // replies
 export function* fetchRepliesRequest({ payload }: FetchRepliesActionInterface) {
     try {
@@ -121,6 +137,7 @@ export function* tweetSaga() {
     // liked and retweeted users
     yield takeEvery(TweetActionType.FETCH_LIKED_USERS, fetchLikedUsersRequest);
     yield takeEvery(TweetActionType.FETCH_RETWEETED_USERS, fetchRetweetedUsersRequest);
+    yield takeEvery(TweetActionType.FETCH_TAGGED_IMAGE_USERS, fetchTaggedImageUsersRequest);
     // replies
     yield takeEvery(TweetActionType.FETCH_REPLIES, fetchRepliesRequest);
 }

@@ -28,6 +28,10 @@ export enum TweetActionType {
     SET_RETWEETED_USERS = "tweet/SET_RETWEETED_USERS",
     RESET_RETWEETED_USERS_STATE = "tweet/RESET_RETWEETED_USERS_STATE",
     SET_RETWEETED_USERS_LOADING_STATE = "tweet/SET_RETWEETED_USERS_LOADING_STATE",
+    FETCH_TAGGED_IMAGE_USERS = "tweet/FETCH_TAGGED_IMAGE_USERS",
+    SET_TAGGED_IMAGE_USERS = "tweet/SET_TAGGED_IMAGE_USERS",
+    RESET_TAGGED_IMAGE_USERS_STATE = "tweet/RESET_TAGGED_IMAGE_USERS_STATE",
+    SET_TAGGED_IMAGE_USERS_LOADING_STATE = "tweet/SET_TAGGED_IMAGE_USERS_LOADING_STATE",
     // replies
     FETCH_REPLIES = "tweet/FETCH_REPLIES",
     SET_REPLIES = "tweet/SET_REPLIES",
@@ -143,6 +147,25 @@ export interface SetRetweetedUsersLoadingStateInterface extends Action<TweetActi
     payload: LoadingStatus;
 }
 
+export interface FetchTaggedImageUsersActionInterface extends Action<TweetActionType> {
+    type: TweetActionType.FETCH_TAGGED_IMAGE_USERS;
+    payload: FetchTweetUsersPayload;
+}
+
+export interface SetTaggedImageUsersActionInterface extends Action<TweetActionType> {
+    type: TweetActionType.SET_TAGGED_IMAGE_USERS;
+    payload: PageableResponse<TweetState["taggedImageUsers"]>;
+}
+
+export interface ResetTaggedImageUsersStateActionInterface extends Action<TweetActionType> {
+    type: TweetActionType.RESET_TAGGED_IMAGE_USERS_STATE;
+}
+
+export interface SetTaggedImageUsersLoadingStateInterface extends Action<TweetActionType> {
+    type: TweetActionType.SET_TAGGED_IMAGE_USERS_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
 // replies
 export interface FetchRepliesActionInterface extends Action<TweetActionType> {
     type: TweetActionType.FETCH_REPLIES;
@@ -181,6 +204,9 @@ export type TweetActions =
     | SetRetweetedUsersActionInterface
     | ResetRetweetedUsersStateActionInterface
     | SetRetweetedUsersLoadingStateInterface
+    | SetTaggedImageUsersActionInterface
+    | ResetTaggedImageUsersStateActionInterface
+    | SetTaggedImageUsersLoadingStateInterface
     // replies
     | SetRepliesActionInterface
     | ResetRepliesStateActionInterface
