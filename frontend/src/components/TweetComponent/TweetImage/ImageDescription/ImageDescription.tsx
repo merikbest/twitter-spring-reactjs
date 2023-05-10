@@ -14,7 +14,7 @@ const ImageDescription: FC<ImageDescriptionProps> = ({ imageDescription }): Reac
 
     return (
         <>
-            <div className={classes.altButton} onClick={handleOpenPopup}>
+            <div id={"altImageDescription"} className={classes.altButton} onClick={handleOpenPopup}>
                 ALT
             </div>
             <Popover

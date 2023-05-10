@@ -50,6 +50,7 @@ const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers
     return (
         <>
             <Typography
+                id={"onClickGetTaggedImageUsers"}
                 className={classes.taggedImageUsers}
                 onClick={onClickGetTaggedImageUsers}
                 variant={"subtitle2"}
