@@ -7,6 +7,7 @@ import {
     API_TWEETS,
     API_TWEETS_CHANGE_REPLY,
     API_TWEETS_FOLLOWER,
+    API_TWEETS_IMAGE_TAGGED,
     API_TWEETS_IMAGES,
     API_TWEETS_INFO,
     API_TWEETS_MEDIA,
@@ -20,7 +21,12 @@ import {
     API_TWEETS_USER_TWEETS,
     API_TWEETS_VIDEO
 } from "../../../../constants/endpoint-constants";
-import { mockFullTweet, mockTweets, mockUserTweetAdditionalInfo } from "../../../../util/test-utils/mock-test-data";
+import {
+    mockFullTweet,
+    mockTweets,
+    mockUsers,
+    mockUserTweetAdditionalInfo
+} from "../../../../util/test-utils/mock-test-data";
 import { TweetApi } from "../tweetApi";
 
 describe("TweetApi", () => {
@@ -123,6 +129,15 @@ describe("TweetApi", () => {
 
         it("[200] should upload tweet image Success", () => {
             testApiCall(mockAdapter, "onPost", API_TWEETS_UPLOAD, 200, mockImage, TweetApi.uploadTweetImage, formData);
+        });
+    });
+
+    describe("should fetch TweetApi.getTaggedImageUsers", () => {
+        it("[200] should get Tagged Image Users Success", () => {
+            testApiCall(mockAdapter, "onGet", `${API_TWEETS_IMAGE_TAGGED}/1`, 200, mockUsers, TweetApi.getTaggedImageUsers, {
+                tweetId: 1,
+                pageNumber: 1
+            });
         });
     });
 

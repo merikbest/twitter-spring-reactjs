@@ -8,6 +8,7 @@ import {
     fetchRepliesRequest,
     fetchReplyTweetRequest,
     fetchRetweetedUsersRequest,
+    fetchTaggedImageUsersRequest,
     fetchTweetDataRequest,
     tweetSaga
 } from "../sagas";
@@ -18,6 +19,7 @@ import {
     fetchReplies,
     fetchReplyTweet,
     fetchRetweetedUsers,
+    fetchTaggedImageUsers,
     fetchTweetData,
     setBookmarkedTweet,
     setLikedUsers,
@@ -26,6 +28,8 @@ import {
     setRepliesLoadingState,
     setRetweetedUsers,
     setRetweetedUsersLoadingState,
+    setTaggedImageUsers,
+    setTaggedImageUsersLoadingState,
     setTweetData,
     setTweetLoadingState
 } from "../actionCreators";
@@ -103,6 +107,14 @@ describe("tweetSaga:", () => {
         testLoadingStatus(worker, setRetweetedUsersLoadingState, LoadingStatus.ERROR);
     });
 
+    describe("fetchTaggedImageUsersRequest:", () => {
+        const worker = fetchTaggedImageUsersRequest(fetchTaggedImageUsers({ tweetId: 1, pageNumber: 2 }));
+        testLoadingStatus(worker, setTaggedImageUsersLoadingState, LoadingStatus.LOADING);
+        testCall(worker, TweetApi.getTaggedImageUsers, { tweetId: 1, pageNumber: 2 }, usersMock);
+        testSetResponse(worker, usersMock, setTaggedImageUsers, mockExpectedResponse(usersMock), "UserResponse");
+        testLoadingStatus(worker, setTaggedImageUsersLoadingState, LoadingStatus.ERROR);
+    });
+
     describe("fetchRepliesRequest", () => {
         const worker = fetchRepliesRequest(fetchReplies(1));
         const tweetsMock = { data: [{ id: 1 }, { id: 2 }] } as AxiosResponse<TweetResponse[]>;
@@ -119,6 +131,7 @@ describe("tweetSaga:", () => {
         { actionType: TweetActionType.DELETE_TWEET_REPLY, workSaga: deleteTweetReplyRequest },
         { actionType: TweetActionType.FETCH_LIKED_USERS, workSaga: fetchLikedUsersRequest },
         { actionType: TweetActionType.FETCH_RETWEETED_USERS, workSaga: fetchRetweetedUsersRequest },
+        { actionType: TweetActionType.FETCH_TAGGED_IMAGE_USERS, workSaga: fetchTaggedImageUsersRequest },
         { actionType: TweetActionType.FETCH_REPLIES, workSaga: fetchRepliesRequest }
     ], takeEvery);
 });

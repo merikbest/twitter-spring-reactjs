@@ -6,10 +6,12 @@ import {
     fetchReplies,
     fetchReplyTweet,
     fetchRetweetedUsers,
+    fetchTaggedImageUsers,
     fetchTweetData,
     resetLikedUsersState,
     resetRepliesState,
     resetRetweetedUsersState,
+    resetTaggedImageUsers,
     resetTweetState,
     setBlockedToTweetState,
     setBookmarkedTweet,
@@ -22,6 +24,8 @@ import {
     setRepliesLoadingState,
     setRetweetedUsers,
     setRetweetedUsersLoadingState,
+    setTaggedImageUsers,
+    setTaggedImageUsersLoadingState,
     setTweetData,
     setTweetLoadingState,
     setVoteData,
@@ -144,6 +148,25 @@ describe("tweet actions", () => {
 
     testAction(setRetweetedUsersLoadingState, setRetweetedUsersLoadingState(LoadingStatus.LOADING), {
         type: TweetActionType.SET_RETWEETED_USERS_LOADING_STATE,
+        payload: LoadingStatus.LOADING
+    });
+
+    testAction(fetchTaggedImageUsers, fetchTaggedImageUsers({ tweetId: 1, pageNumber: 2 }), {
+        type: TweetActionType.FETCH_TAGGED_IMAGE_USERS,
+        payload: { tweetId: 1, pageNumber: 2 }
+    });
+
+    testAction(setTaggedImageUsers, setTaggedImageUsers({ items: [{ id: 1 }] as UserResponse[], pagesCount: 2 }), {
+        type: TweetActionType.SET_TAGGED_IMAGE_USERS,
+        payload: { items: [{ id: 1 }] as UserResponse[], pagesCount: 2 }
+    });
+
+    testAction(resetTaggedImageUsers, resetTaggedImageUsers(), {
+        type: TweetActionType.RESET_TAGGED_IMAGE_USERS_STATE
+    });
+
+    testAction(setTaggedImageUsersLoadingState, setTaggedImageUsersLoadingState(LoadingStatus.LOADING), {
+        type: TweetActionType.SET_TAGGED_IMAGE_USERS_LOADING_STATE,
         payload: LoadingStatus.LOADING
     });
 

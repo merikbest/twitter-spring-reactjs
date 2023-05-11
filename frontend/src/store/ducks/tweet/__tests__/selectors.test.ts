@@ -3,6 +3,7 @@ import {
     selectIsLikedUsersLoading,
     selectIsRepliesLoading,
     selectIsRetweetedUsersLoading,
+    selectIsTaggedImageUsersLoading,
     selectIsTweetError,
     selectIsTweetLiked,
     selectIsTweetLoadedSuccess,
@@ -19,6 +20,7 @@ import {
     selectRepliesCount,
     selectRetweetedUsers,
     selectRetweetsCount,
+    selectTaggedImageUsers,
     selectTweetData,
     selectTweetDateTime,
     selectTweetId,
@@ -255,6 +257,18 @@ describe("tweet selectors:", () => {
     describe("selectIsRetweetedUsersLoading", () => {
         it("should return correct result", () => {
             expect(selectIsRetweetedUsersLoading(createMockRootState(LoadingStatus.LOADING))).toBe(true);
+        });
+    });
+
+    describe("selectTaggedImageUsers", () => {
+        it("should return UserResponse array", () => {
+            expect(selectTaggedImageUsers(mockTweetState)).toBe(mockUsers);
+        });
+    });
+
+    describe("selectIsTaggedImageUsersLoading", () => {
+        it("should return correct result", () => {
+            expect(selectIsTaggedImageUsersLoading(createMockRootState(LoadingStatus.LOADING))).toBe(true);
         });
     });
 

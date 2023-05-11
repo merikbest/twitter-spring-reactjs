@@ -2,8 +2,12 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 import { testApiCall } from "../../../../util/test-utils/api-test-helper";
-import { API_TWEETS_RETWEET, API_TWEETS_USER_REPLIES } from "../../../../constants/endpoint-constants";
-import { mockTweets } from "../../../../util/test-utils/mock-test-data";
+import {
+    API_TWEETS_RETWEET,
+    API_TWEETS_RETWEETED_USERS,
+    API_TWEETS_USER_REPLIES
+} from "../../../../constants/endpoint-constants";
+import { mockTweets, mockUsers } from "../../../../util/test-utils/mock-test-data";
 import { RetweetApi } from "../retweetApi";
 
 describe("RetweetApi", () => {
@@ -23,6 +27,15 @@ describe("RetweetApi", () => {
 
         it("[404] should user not found", () => {
             testApiCall(mockAdapter, "onGet", API_TWEETS_USER_REPLIES(1), 404, mockUserErrorResponse, RetweetApi.getUserRetweetsAndReplies, mockPageable);
+        });
+    });
+
+    describe("should fetch RetweetApi.getRetweetedUsersByTweetId", () => {
+        it("[200] should get retweeted users by tweet id Success", () => {
+            testApiCall(mockAdapter, "onGet", API_TWEETS_RETWEETED_USERS(1), 200, mockUsers, RetweetApi.getRetweetedUsersByTweetId, {
+                tweetId: 1,
+                pageNumber: 1
+            });
         });
     });
 

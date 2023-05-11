@@ -17,7 +17,6 @@ export const RetweetApi = {
     async getUserRetweetsAndReplies({ userId, page }: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(API_TWEETS_USER_REPLIES(userId), { params: { page: page } });
     },
-    // TODO add tests
     async getRetweetedUsersByTweetId({ tweetId, pageNumber }: FetchTweetUsersPayload): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(API_TWEETS_RETWEETED_USERS(tweetId), { params: { page: pageNumber } });
     },

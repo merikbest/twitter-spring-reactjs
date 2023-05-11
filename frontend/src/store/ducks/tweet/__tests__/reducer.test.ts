@@ -308,6 +308,57 @@ describe("tweetReducer:", () => {
         );
 
         testActionDispatch(
+            TweetActionType.SET_TAGGED_IMAGE_USERS,
+            tweetReducer(initialTweetState,
+                {
+                    type: TweetActionType.SET_TAGGED_IMAGE_USERS,
+                    payload: { items: [{ id: 1 }] as UserResponse[], pagesCount: 2 }
+                }
+            ),
+            {
+                ...initialTweetState,
+                taggedImageUsers: [{ id: 1 }],
+                usersPagesCount: 2,
+                taggedImageUsersLoadingState: LoadingStatus.SUCCESS
+            }
+        );
+
+        testActionDispatch(
+            TweetActionType.RESET_TAGGED_IMAGE_USERS_STATE,
+            tweetReducer(
+                {
+                    ...initialTweetState,
+                    taggedImageUsersLoadingState: LoadingStatus.SUCCESS
+                },
+                {
+                    type: TweetActionType.RESET_TAGGED_IMAGE_USERS_STATE
+                }
+            ),
+            {
+                ...initialTweetState,
+                taggedImageUsersLoadingState: LoadingStatus.LOADING
+            }
+        );
+
+        testActionDispatch(
+            TweetActionType.SET_TAGGED_IMAGE_USERS_LOADING_STATE,
+            tweetReducer(
+                {
+                    ...initialTweetState,
+                    taggedImageUsersLoadingState: LoadingStatus.LOADING
+                },
+                {
+                    type: TweetActionType.SET_TAGGED_IMAGE_USERS_LOADING_STATE,
+                    payload: LoadingStatus.SUCCESS
+                }
+            ),
+            {
+                ...initialTweetState,
+                taggedImageUsersLoadingState: LoadingStatus.SUCCESS
+            }
+        );
+
+        testActionDispatch(
             TweetActionType.SET_REPLIES,
             tweetReducer(initialTweetState,
                 {
