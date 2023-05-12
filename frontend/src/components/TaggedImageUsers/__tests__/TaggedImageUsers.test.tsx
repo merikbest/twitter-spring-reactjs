@@ -1,14 +1,14 @@
 import React from "react";
 import { Dialog, IconButton } from "@material-ui/core";
 
-import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
-import { LoadingStatus } from "../../../../../types/common";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../types/common";
 import TaggedImageUsers from "../TaggedImageUsers";
-import { mockUsers } from "../../../../../util/test-utils/mock-test-data";
-import { TweetActionType } from "../../../../../store/ducks/tweet/contracts/actionTypes";
-import CloseButton from "../../../../CloseButton/CloseButton";
-import Spinner from "../../../../Spinner/Spinner";
-import UsersItem from "../../../../UsersItem/UsersItem";
+import { mockUsers } from "../../../util/test-utils/mock-test-data";
+import { TweetActionType } from "../../../store/ducks/tweet/contracts/actionTypes";
+import CloseButton from "../../CloseButton/CloseButton";
+import Spinner from "../../Spinner/Spinner";
+import UsersItem from "../../UsersItem/UsersItem";
 
 describe("TaggedImageUsers", () => {
     const mockRootState = createMockRootState(LoadingStatus.SUCCESS);

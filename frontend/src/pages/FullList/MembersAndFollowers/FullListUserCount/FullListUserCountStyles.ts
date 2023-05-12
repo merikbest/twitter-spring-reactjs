@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useMembersAndFollowersStyles = makeStyles((theme: Theme) => ({
+export const useFullListUserCountStyles = makeStyles(() => ({
     listMembers: {
         marginLeft: 20,
         "&:hover": {

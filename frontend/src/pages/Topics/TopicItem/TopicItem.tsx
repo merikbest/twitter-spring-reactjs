@@ -8,6 +8,7 @@ import { processFollowTopic } from "../../../store/ducks/topics/actionCreators";
 import { TopicResponse } from "../../../types/topic";
 import UnfollowTopicButton from "./UnfollowTopicButton/UnfollowTopicButton";
 import FollowTopicButton from "./FollowTopicButton/FollowTopicButton";
+import { capitalize } from "../../../util/text-formatter";
 
 interface TopicItemProps {
     topic: TopicResponse;
@@ -26,7 +27,7 @@ const TopicItem: FC<TopicItemProps> = ({ topic }): ReactElement => {
             return null;
         } else {
             const categoryString = category.replace(/_/g, " ").toLowerCase();
-            return categoryString.charAt(0).toUpperCase() + categoryString.slice(1);
+            return capitalize(categoryString);
         }
     };
 

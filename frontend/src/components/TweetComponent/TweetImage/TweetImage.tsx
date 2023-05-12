@@ -4,8 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import { MODAL } from "../../../constants/path-constants";
 import { useTweetImageStyles } from "./TweetImageStyles";
 import { TaggedUserResponse } from "../../../types/user";
-import ImageDescription from "./ImageDescription/ImageDescription";
-import TaggedImageUsers from "./TaggedImageUsers/TaggedImageUsers";
+import ImageDescription from "../../ImageDescription/ImageDescription";
+import TaggedImageUsers from "../../TaggedImageUsers/TaggedImageUsers";
 
 interface TweetImageProps {
     tweetId?: number;

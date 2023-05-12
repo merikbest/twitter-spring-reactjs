@@ -1,17 +1,25 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Theme } from "@material-ui/core";
 
-export const useImageDescriptionStyles = makeStyles((theme) => ({
+interface ImageDescriptionStyles {
+    isFullTweet?: boolean;
+}
+
+export const useImageDescriptionStyles = makeStyles<Theme, ImageDescriptionStyles>((theme) => ({
     altButton: {
         position: "absolute",
-        fontWeight: 500,
+        fontWeight: 700,
+        fontSize: 13,
         color: theme.palette.common.white,
         backgroundColor: theme.palette.common.black,
         opacity: 0.75,
-        marginTop: -35,
+        marginTop: props => props.isFullTweet ? -45 : -35,
         marginLeft: 15,
         paddingLeft: 4,
         paddingRight: 4,
-        borderRadius: 4
+        borderRadius: 4,
+        "&:hover": {
+            cursor: "pointer"
+        }
     },
     popover: {
         width: 300,

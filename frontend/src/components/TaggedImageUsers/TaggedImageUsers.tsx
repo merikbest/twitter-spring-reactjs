@@ -6,26 +6,28 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useTaggedImageUsersStyles } from "./TaggedImageUsersStyles";
-import { getUsersInImage } from "../../../../util/text-formatter";
-import { TaggedUserResponse } from "../../../../types/user";
-import { useModalWindow } from "../../../../hook/useModalWindow";
-import CloseButton from "../../../CloseButton/CloseButton";
-import { fetchTaggedImageUsers, resetTaggedImageUsers } from "../../../../store/ducks/tweet/actionCreators";
+import { getUsersInImage } from "../../util/text-formatter";
+import { TaggedUserResponse } from "../../types/user";
+import { useModalWindow } from "../../hook/useModalWindow";
+import CloseButton from "../CloseButton/CloseButton";
+import { fetchTaggedImageUsers, resetTaggedImageUsers } from "../../store/ducks/tweet/actionCreators";
 import {
     selectIsTaggedImageUsersLoading,
     selectTaggedImageUsers,
     selectUsersPagesCount
-} from "../../../../store/ducks/tweet/selectors";
-import InfiniteScrollWrapper from "../../../InfiniteScrollWrapper/InfiniteScrollWrapper";
-import Spinner from "../../../Spinner/Spinner";
-import UsersItem, { UserItemSize } from "../../../UsersItem/UsersItem";
+} from "../../store/ducks/tweet/selectors";
+import InfiniteScrollWrapper from "../InfiniteScrollWrapper/InfiniteScrollWrapper";
+import Spinner from "../Spinner/Spinner";
+import UsersItem, { UserItemSize } from "../UsersItem/UsersItem";
+import { ProfileIconFilled } from "../../icons";
 
 interface TaggedImageUsersProps {
     tweetId: number;
     taggedImageUsers: TaggedUserResponse[];
+    isFullTweet?: boolean;
 }
 
-const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers }): ReactElement => {
+const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers, isFullTweet }): ReactElement => {
     const classes = useTaggedImageUsersStyles();
     const dispatch = useDispatch();
     const users = useSelector(selectTaggedImageUsers);
@@ -53,9 +55,10 @@ const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers
                 id={"onClickGetTaggedImageUsers"}
                 className={classes.taggedImageUsers}
                 onClick={onClickGetTaggedImageUsers}
-                variant={"subtitle2"}
+                variant={isFullTweet ? "subtitle1" : "subtitle2"}
                 component={"span"}
             >
+                {isFullTweet && ProfileIconFilled}
                 {getUsersInImage(taggedImageUsers)}
             </Typography>
             <Dialog className={classes.dialog} open={visibleModalWindow} onClose={onCloseTaggedImageUsers}>

@@ -2,14 +2,15 @@ import React, { FC, ReactElement } from "react";
 import { Button, Popover, Typography } from "@material-ui/core";
 
 import { useImageDescriptionStyles } from "./ImageDescriptionStyles";
-import { usePopup } from "../../../../hook/usePopup";
+import { usePopup } from "../../hook/usePopup";
 
 interface ImageDescriptionProps {
     imageDescription: string;
+    isFullTweet?: boolean;
 }
 
-const ImageDescription: FC<ImageDescriptionProps> = ({ imageDescription }): ReactElement => {
-    const classes = useImageDescriptionStyles();
+const ImageDescription: FC<ImageDescriptionProps> = ({ imageDescription, isFullTweet }): ReactElement => {
+    const classes = useImageDescriptionStyles({ isFullTweet });
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     return (

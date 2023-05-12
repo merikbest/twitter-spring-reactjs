@@ -1,8 +1,8 @@
 import React from "react";
 import { Popover } from "@material-ui/core";
 
-import { createMockRootState, mountWithStore } from "../../../../../util/test-utils/test-helper";
-import { LoadingStatus } from "../../../../../types/common";
+import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../types/common";
 import ImageDescription from "../ImageDescription";
 
 describe("ImageDescription", () => {

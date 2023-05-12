@@ -1,8 +1,6 @@
-import React, { memo, ReactElement, useState } from "react";
-import { Typography } from "@material-ui/core";
+import React, { memo, ReactElement } from "react";
 import { useSelector } from "react-redux";
 
-import { useMembersAndFollowersStyles } from "./MembersAndFollowersStyles";
 import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import {
     selectListItemFollowersSize,
@@ -10,49 +8,30 @@ import {
     selectListItemMembersSize,
     selectListItemOwnerId
 } from "../../../store/ducks/list/selectors";
+import FullListUserCount from "./FullListUserCount/FullListUserCount";
+import { useListModal } from "../../../hook/useListModal";
 
 const MembersAndFollowers = memo((): ReactElement => {
-    const classes = useMembersAndFollowersStyles();
     const listId = useSelector(selectListItemId);
     const listOwnerId = useSelector(selectListItemOwnerId);
     const membersSize = useSelector(selectListItemMembersSize);
     const followersSize = useSelector(selectListItemFollowersSize);
-    const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
-    const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
-
-    const onOpenMembersModalWindow = (): void => {
-        setVisibleMembersAndFollowersModal(true);
-        setModalWindowTitle("List members");
-    };
-
-    const onOpenFollowersModalWindow = (): void => {
-        setVisibleMembersAndFollowersModal(true);
-        setModalWindowTitle("List followers");
-    };
-
-    const onCloseModalWindow = (): void => {
-        setVisibleMembersAndFollowersModal(false);
-        setModalWindowTitle("");
-    };
+    const { visibleMembersAndFollowersModal, modalWindowTitle, onOpenModalWindow, onCloseModalWindow } = useListModal();
 
     return (
         <div>
-            <span id={"listMembers"} onClick={onOpenMembersModalWindow} className={classes.listMembers}>
-                <Typography variant={"h6"} component={"span"}>
-                    {membersSize}
-                </Typography>
-                <Typography variant={"subtitle1"} component={"span"}>
-                    {" Members"}
-                </Typography>
-            </span>
-            <span id={"listFollowers"} onClick={onOpenFollowersModalWindow} className={classes.listMembers}>
-                <Typography variant={"h6"} component={"span"}>
-                    {followersSize}
-                </Typography>
-                <Typography variant={"subtitle1"} component={"span"}>
-                    {" Followers"}
-                </Typography>
-           </span>
+            <FullListUserCount
+                id={"listMembers"}
+                userCount={membersSize}
+                title={"members"}
+                onOpenModalWindow={onOpenModalWindow}
+            />
+            <FullListUserCount
+                id={"listFollowers"}
+                userCount={followersSize}
+                title={"followers"}
+                onOpenModalWindow={onOpenModalWindow}
+            />
             <MembersAndFollowersModal
                 listId={listId!}
                 listOwnerId={listOwnerId!}

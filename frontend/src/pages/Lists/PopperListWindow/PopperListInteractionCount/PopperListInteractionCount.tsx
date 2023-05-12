@@ -1,55 +1,37 @@
-import React, { memo, ReactElement, useState } from "react";
+import React, { memo, ReactElement } from "react";
 import { useSelector } from "react-redux";
-
-import { usePopperListWindowStyles } from "../PopperListWindowStyles";
-import { selectListDetailItemId, selectListDetailItemOwnerId } from "../../../../store/ducks/listDetail/selectors";
+import {
+    selectListDetailItemFollowersSize,
+    selectListDetailItemId,
+    selectListDetailItemMembersSize,
+    selectListDetailItemOwnerId
+} from "../../../../store/ducks/listDetail/selectors";
 import MembersAndFollowersModal
     from "../../../FullList/FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
-import MembersCount from "./MembersCount/MembersCount";
-import FollowersCount from "./FollowersCount/FollowersCount";
+import { useListModal } from "../../../../hook/useListModal";
+import PopperListUserCount from "./PopperListUserCount/PopperListUserCount";
 
 const PopperListInteractionCount = memo((): ReactElement => {
-    const classes = usePopperListWindowStyles();
     const listId = useSelector(selectListDetailItemId);
     const listOwnerId = useSelector(selectListDetailItemOwnerId);
-    const [visibleMembersAndFollowersModal, setVisibleMembersAndFollowersModal] = useState<boolean>(false);
-    const [modalWindowTitle, setModalWindowTitle] = useState<string>("");
-
-    const onOpenMembersModalWindow = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>): void => {
-        event.preventDefault();
-        event.stopPropagation();
-        setVisibleMembersAndFollowersModal(true);
-        setModalWindowTitle("List members");
-    };
-
-    const onOpenFollowersModalWindow = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>): void => {
-        event.preventDefault();
-        event.stopPropagation();
-        setVisibleMembersAndFollowersModal(true);
-        setModalWindowTitle("List followers");
-    };
-
-    const onCloseModalWindow = (): void => {
-        setVisibleMembersAndFollowersModal(false);
-        setModalWindowTitle("");
-    };
+    const membersSize = useSelector(selectListDetailItemMembersSize);
+    const followersSize = useSelector(selectListDetailItemFollowersSize);
+    const { visibleMembersAndFollowersModal, modalWindowTitle, onOpenModalWindow, onCloseModalWindow } = useListModal();
 
     return (
         <div>
-            <span
+            <PopperListUserCount
                 id={"openMembersModalWindow"}
-                className={classes.popperListMembers}
-                onClick={onOpenMembersModalWindow}
-            >
-                <MembersCount />
-            </span>
-            <span
+                userCount={membersSize}
+                title={"members"}
+                onOpenModalWindow={onOpenModalWindow}
+            />
+            <PopperListUserCount
                 id={"openFollowersModalWindow"}
-                className={classes.popperListMembers}
-                onClick={onOpenFollowersModalWindow}
-            >
-                <FollowersCount />
-            </span>
+                userCount={followersSize}
+                title={"followers"}
+                onOpenModalWindow={onOpenModalWindow}
+            />
             <MembersAndFollowersModal
                 listId={listId!}
                 listOwnerId={listOwnerId!}

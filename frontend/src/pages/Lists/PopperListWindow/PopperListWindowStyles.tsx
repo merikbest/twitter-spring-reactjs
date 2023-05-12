@@ -55,16 +55,6 @@ export const usePopperListWindowStyles = makeStyles((theme: Theme) => ({
     popperListOwnerUsername: {
         verticalAlign: "top"
     },
-    popperListMembers: {
-        marginLeft: 20,
-        "& .MuiTypography-h6": {
-            fontWeight: 700
-        },
-        "&:hover": {
-            cursor: "pointer",
-            textDecoration: "underline"
-        }
-    },
     buttonWrapper: {
         marginTop: 20,
         marginBottom: 12
