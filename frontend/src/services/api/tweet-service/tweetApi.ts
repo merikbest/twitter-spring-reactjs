@@ -22,8 +22,8 @@ import {
 } from "../../../constants/endpoint-constants";
 import { UserTweetRequest } from "../../../store/ducks/userTweets/contracts/state";
 import { Image } from "../../../types/common";
-import { AddQuoteTweet, AddTweet, ChangeReplyTypeRequest } from "../../../store/ducks/tweets/contracts/state";
-import { FetchTweetUsersPayload, ReplyTweet } from "../../../store/ducks/tweet/contracts/state";
+import { AddQuoteTweetRequest, TweetRequest, ChangeReplyTypeRequest } from "../../../store/ducks/tweets/contracts/state";
+import { FetchTweetUsersPayload, ReplyTweetRequest } from "../../../store/ducks/tweet/contracts/state";
 import { UserResponse } from "../../../types/user";
 
 export const TweetApi = {
@@ -70,7 +70,7 @@ export const TweetApi = {
     async getTaggedImageUsers({ tweetId, pageNumber }: FetchTweetUsersPayload): Promise<AxiosResponse<UserResponse[]>> {
         return await axios.get<UserResponse[]>(`${API_TWEETS_IMAGE_TAGGED}/${tweetId}`, { params: { page: pageNumber } });
     },
-    async createTweet(request: AddTweet): Promise<AxiosResponse<TweetResponse>> {
+    async createTweet(request: TweetRequest): Promise<AxiosResponse<TweetResponse>> {
         return await axios.post<TweetResponse>(API_TWEETS, request);
     },
     async deleteTweet(tweetId: number): Promise<AxiosResponse<string>> {
@@ -79,10 +79,10 @@ export const TweetApi = {
     async searchTweets(text: string, pageNumber: number): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(`${API_TWEETS_SEARCH}/${text}`, { params: { page: pageNumber } });
     },
-    async replyTweet(request: ReplyTweet): Promise<AxiosResponse<TweetResponse>> {
+    async replyTweet(request: ReplyTweetRequest): Promise<AxiosResponse<TweetResponse>> {
         return await axios.post<TweetResponse>(`${API_TWEETS_REPLY}/${request.userId ?? 0}/${request.tweetId}`, request);
     },
-    async quoteTweet(request: AddQuoteTweet): Promise<AxiosResponse<TweetResponse>> {
+    async quoteTweet(request: AddQuoteTweetRequest): Promise<AxiosResponse<TweetResponse>> {
         return await axios.post<TweetResponse>(`${API_TWEETS_QUOTE}/${request.userId ?? 0}/${request.tweetId}`, request);
     },
     async changeTweetReplyType(request: ChangeReplyTypeRequest): Promise<AxiosResponse<TweetResponse>> {

@@ -30,7 +30,7 @@ import {
     UnfollowListActionInterface,
     UnpinListActionInterface
 } from "./contracts/actionTypes";
-import { AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload } from "./contracts/state";
+import { ListsRequest, AddUserToListsRequest, ListsState, UpdateListsPayload } from "./contracts/state";
 import { ListUserResponse, PinnedListResponse } from "../../../types/lists";
 import { LoadingStatus } from "../../../types/common";
 
@@ -89,7 +89,7 @@ export const setUnfollowList = (payload: ListUserResponse): SetUnfollowListActio
     payload
 });
 
-export const createList = (payload: AddLists): CreateListActionInterface => ({
+export const createList = (payload: ListsRequest): CreateListActionInterface => ({
     type: ListsActionType.CREATE_LIST,
     payload
 });

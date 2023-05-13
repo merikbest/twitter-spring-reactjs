@@ -43,7 +43,7 @@ import {
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
 import { ListsApi } from "../../../../services/api/lists-service/listsApi";
 import { ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse } from "../../../../types/lists";
-import { AddLists, AddUserToListsRequest } from "../contracts/state";
+import { ListsRequest, AddUserToListsRequest } from "../contracts/state";
 import { updateFollowToFullList } from "../../list/actionCreators";
 import { updateFollowListDetail } from "../../listDetail/actionCreators";
 import { ListsActionType } from "../contracts/actionTypes";
@@ -105,7 +105,7 @@ describe("listsSaga:", () => {
 
     describe("createListRequest:", () => {
         const mockListUserResponse = { data: { id: 1 } } as AxiosResponse<ListUserResponse>;
-        const mockAddLists = { name: "test", description: "test", isPrivate: true } as AddLists;
+        const mockAddLists = { name: "test", description: "test", isPrivate: true } as ListsRequest;
         const worker = createListRequest(createList(mockAddLists));
         testLoadingStatus(worker, setLoadingState, LoadingStatus.LOADING);
         testCall(worker, ListsApi.createTweetList, mockAddLists);

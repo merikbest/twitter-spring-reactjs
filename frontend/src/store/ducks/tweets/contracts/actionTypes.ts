@@ -1,8 +1,8 @@
 import { Action } from "redux";
 
 import {
-    AddQuoteTweet,
-    AddTweet,
+    AddQuoteTweetRequest,
+    TweetRequest,
     ChangeReplyTypeRequest,
     FetchTweetsByTagRequest,
     FetchTweetsByTextRequest,
@@ -11,7 +11,7 @@ import {
     TweetsState,
     TweetsWithQuotesByIdRequest,
     UpdatedBookmarkedTweetPayload,
-    Vote
+    VoteRequest
 } from "./state";
 import {
     BlockedToTweetsPayload,
@@ -135,17 +135,17 @@ export interface FetchTweetsByTextActionInterface extends Action<TweetsActionTyp
 
 export interface AddTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.ADD_TWEET;
-    payload: AddTweet;
+    payload: TweetRequest;
 }
 
 export interface AddPollActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.ADD_POLL;
-    payload: AddTweet;
+    payload: TweetRequest;
 }
 
 export interface AddScheduledTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.ADD_SCHEDULED_TWEET;
-    payload: AddTweet;
+    payload: TweetRequest;
 }
 
 export interface SetTweetActionInterface extends Action<TweetsActionType> {
@@ -155,12 +155,12 @@ export interface SetTweetActionInterface extends Action<TweetsActionType> {
 
 export interface UpdateScheduledTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.UPDATE_SCHEDULED_TWEET;
-    payload: AddTweet;
+    payload: TweetRequest;
 }
 
 export interface AddQuoteTweetActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.ADD_QUOTE_TWEET;
-    payload: AddQuoteTweet;
+    payload: AddQuoteTweetRequest;
 }
 
 export interface FetchBookmarksActionInterface extends Action<TweetsActionType> {
@@ -170,7 +170,7 @@ export interface FetchBookmarksActionInterface extends Action<TweetsActionType> 
 
 export interface VoteActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.VOTE;
-    payload: Vote;
+    payload: VoteRequest;
 }
 
 export interface SetVoteActionInterface extends Action<TweetsActionType> {

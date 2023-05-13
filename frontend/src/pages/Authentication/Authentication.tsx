@@ -11,12 +11,12 @@ import CreateAccountModal from "../RegistrationModal/CreateAccountModal/CreateAc
 import EmailVerificationModal from "../RegistrationModal/EmailVerificationModal/EmailVerificationModal";
 import SetPasswordModal from "../RegistrationModal/SetPasswordModal/SetPasswordModal";
 import { ACCOUNT_LOGIN } from "../../constants/path-constants";
-import { RegistrationInfo } from "../../types/auth";
+import { RegistrationRequest } from "../../types/auth";
 
 const Authentication: FC = (): ReactElement => {
     const classes = useAuthenticationStyles();
     const history = useHistory();
-    const [registrationInfo, setRegistrationInfo] = useState<RegistrationInfo>({
+    const [registrationInfo, setRegistrationInfo] = useState<RegistrationRequest>({
         username: "", email: "", birthday: ""
     });
     const [visibleRegistrationModal, setVisibleRegistrationModal] = useState<boolean>(false);
@@ -41,7 +41,7 @@ const Authentication: FC = (): ReactElement => {
         setVisibleSetPasswordModal(false);
     };
 
-    const onChangeRegistrationInfo = (data: RegistrationInfo): void => {
+    const onChangeRegistrationInfo = (data: RegistrationRequest): void => {
         setRegistrationInfo(data);
     };
 

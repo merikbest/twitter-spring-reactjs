@@ -6,7 +6,7 @@ export interface UserState {
     status: LoadingStatus;
 }
 
-export interface Settings {
+export interface SettingsRequest {
     username?: string;
     email?: string;
     countryCode?: string;

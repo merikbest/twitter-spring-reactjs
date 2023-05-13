@@ -46,9 +46,9 @@ import {
     updateUsername
 } from "../actionCreators";
 import { UserActionsType } from "../contracts/actionTypes";
-import { Settings, UserRequest } from "../contracts/state";
+import { SettingsRequest, UserRequest } from "../contracts/state";
 import { AuthUserResponse } from "../../../../types/user";
-import { RegistrationProps } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { EndRegistrationRequest } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
 import { LoginRequest } from "../../../../types/auth";
@@ -92,9 +92,9 @@ describe("user actions", () => {
         payload: { email: "test@test.test" } as LoginRequest
     });
 
-    testAction(fetchSignUp, fetchSignUp({ email: "test@test.test" } as RegistrationProps), {
+    testAction(fetchSignUp, fetchSignUp({ email: "test@test.test" } as EndRegistrationRequest), {
         type: UserActionsType.FETCH_SIGN_UP,
-        payload: { email: "test@test.test" } as RegistrationProps
+        payload: { email: "test@test.test" } as EndRegistrationRequest
     });
 
     testAction(fetchUserData, fetchUserData(), {
@@ -172,49 +172,49 @@ describe("user actions", () => {
         type: UserActionsType.RESET_MENTIONS
     });
 
-    testAction(updateUsername, updateUsername({ username: "text" } as Settings), {
+    testAction(updateUsername, updateUsername({ username: "text" } as SettingsRequest), {
         type: UserActionsType.UPDATE_USERNAME,
-        payload: { username: "text" } as Settings
+        payload: { username: "text" } as SettingsRequest
     });
 
-    testAction(updateEmail, updateEmail({ email: "test@test.test" } as Settings), {
+    testAction(updateEmail, updateEmail({ email: "test@test.test" } as SettingsRequest), {
         type: UserActionsType.UPDATE_EMAIL,
-        payload: { email: "test@test.test" } as Settings
+        payload: { email: "test@test.test" } as SettingsRequest
     });
 
-    testAction(updatePhone, updatePhone({ phone: 12345 } as Settings), {
+    testAction(updatePhone, updatePhone({ phone: 12345 } as SettingsRequest), {
         type: UserActionsType.UPDATE_PHONE,
-        payload: { phone: 12345 } as Settings
+        payload: { phone: 12345 } as SettingsRequest
     });
 
-    testAction(updateCountry, updateCountry({ country: "test" } as Settings), {
+    testAction(updateCountry, updateCountry({ country: "test" } as SettingsRequest), {
         type: UserActionsType.UPDATE_COUNTRY,
-        payload: { country: "test" } as Settings
+        payload: { country: "test" } as SettingsRequest
     });
 
-    testAction(updateGender, updateGender({ gender: "test" } as Settings), {
+    testAction(updateGender, updateGender({ gender: "test" } as SettingsRequest), {
         type: UserActionsType.UPDATE_GENDER,
-        payload: { gender: "test" } as Settings
+        payload: { gender: "test" } as SettingsRequest
     });
 
-    testAction(updateLanguage, updateLanguage({ language: "test" } as Settings), {
+    testAction(updateLanguage, updateLanguage({ language: "test" } as SettingsRequest), {
         type: UserActionsType.UPDATE_LANGUAGE,
-        payload: { language: "test" } as Settings
+        payload: { language: "test" } as SettingsRequest
     });
 
-    testAction(updateDirect, updateDirect({ mutedDirectMessages: true } as Settings), {
+    testAction(updateDirect, updateDirect({ mutedDirectMessages: true } as SettingsRequest), {
         type: UserActionsType.UPDATE_DIRECT,
-        payload: { mutedDirectMessages: true } as Settings
+        payload: { mutedDirectMessages: true } as SettingsRequest
     });
 
-    testAction(updatePrivateProfile, updatePrivateProfile({ privateProfile: true } as Settings), {
+    testAction(updatePrivateProfile, updatePrivateProfile({ privateProfile: true } as SettingsRequest), {
         type: UserActionsType.UPDATE_PRIVATE_PROFILE,
-        payload: { privateProfile: true } as Settings
+        payload: { privateProfile: true } as SettingsRequest
     });
 
-    testAction(updateColorScheme, updateColorScheme({ colorScheme: "BLUE" } as Settings), {
+    testAction(updateColorScheme, updateColorScheme({ colorScheme: "BLUE" } as SettingsRequest), {
         type: UserActionsType.UPDATE_COLOR_SCHEME,
-        payload: { colorScheme: "BLUE" } as Settings
+        payload: { colorScheme: "BLUE" } as SettingsRequest
     });
 
     testAction(setUsername, setUsername("test"), {

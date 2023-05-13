@@ -1,12 +1,10 @@
 import React, { FC, ReactElement, useEffect } from "react";
-import { NavLink, Route, useLocation } from "react-router-dom";
-import { Grid, List, ListItem, Paper, Typography } from "@material-ui/core";
+import { Route, useLocation } from "react-router-dom";
+import { Grid, List, Paper, Typography } from "@material-ui/core";
 import classnames from "classnames";
 
 import { useSettingsStyles } from "./SettingsStyles";
-import { ArrowRightIcon } from "../../icons";
 import { useGlobalStyles } from "../../util/globalClasses";
-import BackButton from "../../components/BackButton/BackButton";
 import Account from "./Account/Account";
 import AccountInformation from "./Account/AccountInformation/AccountInformation";
 import ChangeUsername from "./Account/AccountInformation/ChangeUsername/ChangeUsername";
@@ -64,7 +62,6 @@ import Languages from "./AccessibilityDisplayLanguages/Languages/Languages";
 import Autoplay from "./AccessibilityDisplayLanguages/DataUsage/Autoplay/Autoplay";
 import ContentPreferences from "./Notifications/ContentPreferences/ContentPreferences";
 import PersonalizationAndData from "./Notifications/PersonalizationAndData/PersonalizationAndData";
-import { withDocumentTitle } from "../../hoc/withDocumentTitle";
 import {
     SETTINGS,
     SETTINGS_ABOUT,
@@ -123,6 +120,9 @@ import {
     SETTINGS_SECURITY_SESSIONS_CURRENT,
     SETTINGS_TEAMS
 } from "../../constants/path-constants";
+import SettingsHeader from "./SettingsHeader/SettingsHeader";
+import { withDocumentTitle } from "../../hoc/withDocumentTitle";
+import SettingsItem from "./SettingsItem/SettingsItem";
 
 export interface LocationState {
     pathname: string;
@@ -166,408 +166,122 @@ const Settings: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
                         </Typography>
                     </Paper>
                     <div className={classnames(classes.listWrapper, globalClasses.contentWrapper, globalClasses.svg)}>
-                        <List component="nav" aria-label="main mailbox folders">
-                            <NavLink to={SETTINGS}>
-                                <ListItem
-                                    selected={selectedIndex === 1}
-                                    onClick={() => handleListItemClick(1)}
-                                >
-                                    <Typography variant={"body1"} component={"span"}>
-                                        Your account
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
-                            </NavLink>
-                            <NavLink to={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS}>
-                                <ListItem
-                                    selected={selectedIndex === 2}
-                                    onClick={() => handleListItemClick(2)}
-                                >
-                                    <Typography variant={"body1"} component={"span"}>
-                                        Security and account access
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
-                            </NavLink>
-                            <NavLink to={SETTINGS_PRIVACY_AND_SAFETY}>
-                                <ListItem
-                                    selected={selectedIndex === 3}
-                                    onClick={() => handleListItemClick(3)}
-                                >
-                                    <Typography variant={"body1"} component={"span"}>
-                                        Privacy and safety
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
-                            </NavLink>
-                            <NavLink to={SETTINGS_NOTIFICATION}>
-                                <ListItem
-                                    selected={selectedIndex === 4}
-                                    onClick={() => handleListItemClick(4)}
-                                >
-                                    <Typography variant={"body1"} component={"span"}>
-                                        Notifications
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
-                            </NavLink>
-                            <NavLink to={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}>
-                                <ListItem
-                                    selected={selectedIndex === 5}
-                                    onClick={() => handleListItemClick(5)}
-                                >
-                                    <Typography variant={"body1"} component={"span"}>
-                                        Accessibility, display, and languages
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
-                            </NavLink>
-                            <NavLink to={SETTINGS_ABOUT}>
-                                <ListItem
-                                    selected={selectedIndex === 6}
-                                    onClick={() => handleListItemClick(6)}
-                                >
-                                    <Typography variant={"body1"} component={"span"}>
-                                        Additional resources
-                                    </Typography>
-                                    {ArrowRightIcon}
-                                </ListItem>
-                            </NavLink>
+                        <List component="nav">
+                            <SettingsItem
+                                index={1}
+                                linkTo={SETTINGS}
+                                selectedIndex={selectedIndex}
+                                handleListItemClick={handleListItemClick}
+                                title={"Your account"}
+                            />
+                            <SettingsItem
+                                index={2}
+                                linkTo={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS}
+                                selectedIndex={selectedIndex}
+                                handleListItemClick={handleListItemClick}
+                                title={"Security and account access"}
+                            />
+                            <SettingsItem
+                                index={3}
+                                linkTo={SETTINGS_PRIVACY_AND_SAFETY}
+                                selectedIndex={selectedIndex}
+                                handleListItemClick={handleListItemClick}
+                                title={"Privacy and safety"}
+                            />
+                            <SettingsItem
+                                index={4}
+                                linkTo={SETTINGS_NOTIFICATION}
+                                selectedIndex={selectedIndex}
+                                handleListItemClick={handleListItemClick}
+                                title={"Notifications"}
+                            />
+                            <SettingsItem
+                                index={5}
+                                linkTo={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}
+                                selectedIndex={selectedIndex}
+                                handleListItemClick={handleListItemClick}
+                                title={"Accessibility, display, and languages"}
+                            />
+                            <SettingsItem
+                                index={6}
+                                linkTo={SETTINGS_ABOUT}
+                                selectedIndex={selectedIndex}
+                                handleListItemClick={handleListItemClick}
+                                title={"Additional resources"}
+                            />
                         </List>
                     </div>
                 </Paper>
             </Grid>
             <Grid className={classes.grid} md={5} item>
                 <Paper className={classnames(globalClasses.pageHeader, classes.rightSideHeader)} variant="outlined">
-                    <Route exact path={SETTINGS}>
-                        <Typography variant="h5">
-                            Your Account
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_INFO}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Account information
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_INFO_USERNAME}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Change username
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_INFO_PHONE}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Change phone
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_INFO_EMAIL}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Change email
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_INFO_COUNTRY}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Change country
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_INFO_LANGUAGES}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Change display language
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_INFO_GENDER}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Gender
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_INFO_AGE}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Age
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PASSWORD}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Change your password
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_TEAMS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            TweetDeck Teams
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_DEACTIVATE}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Deactivate account
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS}>
-                        <Typography variant="h5">
-                            Security and account access
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Security
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY_LOGIN_VERIFICATION}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Two-factor authentication
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY_APPS_AND_SESSIONS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Apps and sessions
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY_CONNECTED_APPS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Connected apps
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY_SESSIONS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Sessions
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY_SESSIONS_CURRENT}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Current session
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY_LOGIN_HISTORY}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Account access history
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_SECURITY_DEVICES}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Logged-in devices and apps
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY}>
-                        <Typography variant="h5">
-                            Privacy and safety
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Audience and tagging
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_TAGGING}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Photo tagging
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Your Tweets
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Add location information to your Tweets
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Content you see
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Mute and block
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_BLOCKED}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Blocked accounts
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTED}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Muted accounts
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Muted words
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Muted notifications
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Direct Messages
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_SPACES}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Spaces
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Discoverability and contacts
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Manage contacts
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Ads preferences
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Your advertiser list
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Off-Twitter activity
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Data sharing with business partners
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Location information
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            See places you’ve been
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_NOTIFICATION}>
-                        <Typography variant="h5">
-                            Notifications
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_NOTIFICATION_FILTERS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Filters
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_NOTIFICATION_PREFERENCES}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Preferences
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Push notifications
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Email notifications
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}>
-                        <Typography variant="h5">
-                            Accessibility, display and languages
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Accessibility
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Display
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Languages
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Data usage
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Autoplay
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_PERSONALIZATION}>
-                        <BackButton />
-                        <Typography variant="h5">
-                            Personalization and data
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_ABOUT}>
-                        <Typography variant="h5">
-                            Additional resources
-                        </Typography>
-                    </Route>
-                    <Route exact path={SETTINGS_CONTENT_PREFERENCES}>
-                        <Typography variant="h5">
-                            Content preferences
-                        </Typography>
-                    </Route>
+                    <SettingsHeader path={SETTINGS} title={"Your Account"} excludeBackButton />
+                    <SettingsHeader path={SETTINGS_INFO} title={"Account information"} />
+                    <SettingsHeader path={SETTINGS_INFO_USERNAME} title={"Change username"} />
+                    <SettingsHeader path={SETTINGS_INFO_PHONE} title={"Change phone"} />
+                    <SettingsHeader path={SETTINGS_INFO_EMAIL} title={"Change email"} />
+                    <SettingsHeader path={SETTINGS_INFO_COUNTRY} title={"Change country"} />
+                    <SettingsHeader path={SETTINGS_INFO_LANGUAGES} title={"Change display language"} />
+                    <SettingsHeader path={SETTINGS_INFO_GENDER} title={"Gender"} />
+                    <SettingsHeader path={SETTINGS_INFO_AGE} title={"Age"} />
+                    <SettingsHeader path={SETTINGS_PASSWORD} title={"Change your password"} />
+                    <SettingsHeader path={SETTINGS_TEAMS} title={"TweetDeck Teams"} />
+                    <SettingsHeader path={SETTINGS_DEACTIVATE} title={"Deactivate account"} />
+                    <SettingsHeader path={SETTINGS_SECURITY_AND_ACCOUNT_ACCESS} title={"Security and account access"}
+                                    excludeBackButton />
+                    <SettingsHeader path={SETTINGS_SECURITY} title={"Security"} />
+                    <SettingsHeader path={SETTINGS_SECURITY_LOGIN_VERIFICATION} title={"Two-factor authentication"} />
+                    <SettingsHeader path={SETTINGS_SECURITY_APPS_AND_SESSIONS} title={"Apps and sessions"} />
+                    <SettingsHeader path={SETTINGS_SECURITY_CONNECTED_APPS} title={"Connected apps"} />
+                    <SettingsHeader path={SETTINGS_SECURITY_SESSIONS} title={"Sessions"} />
+                    <SettingsHeader path={SETTINGS_SECURITY_SESSIONS_CURRENT} title={"Current session"} />
+                    <SettingsHeader path={SETTINGS_SECURITY_LOGIN_HISTORY} title={"Account access history"} />
+                    <SettingsHeader path={SETTINGS_SECURITY_DEVICES} title={"Logged-in devices and apps"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY} title={"Privacy and safety"} excludeBackButton />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCE} title={"Audience and tagging"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_TAGGING} title={"Photo tagging"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_YOUR_TWEETS} title={"Your Tweets"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION}
+                                    title={"Add location information to your Tweets"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_CONTENT_YOU_SEE} title={"Content you see"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_MUTE_AND_BLOCK} title={"Mute and block"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_BLOCKED} title={"Blocked accounts"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_MUTED} title={"Muted accounts"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_MUTED_KEYWORDS} title={"Muted words"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS} title={"Muted notifications"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_DIRECT_MESSAGES} title={"Direct Messages"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_SPACES} title={"Spaces"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS}
+                                    title={"Discoverability and contacts"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_CONTACTS_DASHBOARD} title={"Manage contacts"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES} title={"Ads preferences"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES} title={"Your advertiser list"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY}
+                                    title={"Off-Twitter activity"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_DATA_SHARING_WITH_BUSINESS_PARTNERS}
+                                    title={"Data sharing with business partners"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_LOCATION_INFORMATION}
+                                    title={"Location information"} />
+                    <SettingsHeader path={SETTINGS_PRIVACY_AND_SAFETY_LOCATIONS} title={"See places you’ve been"} />
+                    <SettingsHeader path={SETTINGS_NOTIFICATION} title={"Notifications"} excludeBackButton />
+                    <SettingsHeader path={SETTINGS_NOTIFICATION_FILTERS} title={"Filters"} />
+                    <SettingsHeader path={SETTINGS_NOTIFICATION_PREFERENCES} title={"Preferences"} />
+                    <SettingsHeader path={SETTINGS_NOTIFICATION_PUSH_NOTIFICATIONS} title={"Push notifications"} />
+                    <SettingsHeader path={SETTINGS_NOTIFICATION_EMAIL_NOTIFICATIONS} title={"Email notifications"} />
+                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES}
+                                    title={"Accessibility, display and languages"} excludeBackButton />
+                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_ACCESSIBILITY}
+                                    title={"Accessibility"} />
+                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DISPLAY} title={"Display"} />
+                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES}
+                                    title={"Languages"} />
+                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_DATA} title={"Data usage"} />
+                    <SettingsHeader path={SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY}
+                                    title={"Autoplay"} />
+                    <SettingsHeader path={SETTINGS_PERSONALIZATION} title={"Personalization and data"} />
+                    <SettingsHeader path={SETTINGS_ABOUT} title={"Additional resources"} excludeBackButton />
+                    <SettingsHeader path={SETTINGS_CONTENT_PREFERENCES} title={"Content preferences"}
+                                    excludeBackButton />
                 </Paper>
                 <Paper className={classnames(globalClasses.pageContainer, classes.pageContainer)} variant="outlined">
                     <div className={globalClasses.contentWrapper}>

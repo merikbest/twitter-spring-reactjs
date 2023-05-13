@@ -66,9 +66,9 @@ import {
 import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../../../../util/test-utils/test-helper";
 import { UserApi } from "../../../../services/api/user-service/userApi";
 import { AuthUserResponse, UserProfileResponse } from "../../../../types/user";
-import { Settings, UserRequest } from "../contracts/state";
+import { SettingsRequest, UserRequest } from "../contracts/state";
 import { AuthenticationResponse, LoginRequest } from "../../../../types/auth";
-import { RegistrationProps } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { EndRegistrationRequest } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import { NotificationUserResponse } from "../../../../types/notification";
 import { setBlockedToTweetsState, setFollowToTweetsState, setMutedToTweetsState } from "../../tweets/actionCreators";
 import {
@@ -146,7 +146,7 @@ describe("userSaga:", () => {
     });
 
     describe("fetchSignUpRequest:", () => {
-        const mockRegistrationProps = { email: "test@test.test", password: "test" } as RegistrationProps;
+        const mockRegistrationProps = { email: "test@test.test", password: "test" } as EndRegistrationRequest;
         const worker = fetchSignUpRequest(fetchSignUp(mockRegistrationProps));
 
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
@@ -252,7 +252,7 @@ describe("userSaga:", () => {
     });
 
     describe("updateGenderRequest:", () => {
-        const worker = updateGenderRequest(updateGender({ updateGender: "testGender" } as Settings));
+        const worker = updateGenderRequest(updateGender({ updateGender: "testGender" } as SettingsRequest));
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
         testCall(worker, UserSettingsApi.updateGender, { updateGender: "testGender" }, "testGender");
         testSetResponse(worker, { data: "testGender" }, setGender, "testGender", "string");

@@ -1,6 +1,6 @@
 import { Action } from "redux";
 
-import { AddLists, AddUserToListsRequest, ListsState, UpdateListsPayload } from "./state";
+import { ListsRequest, AddUserToListsRequest, ListsState, UpdateListsPayload } from "./state";
 import { ListUserResponse, PinnedListResponse } from "../../../../types/lists";
 import { LoadingStatus } from "../../../../types/common";
 
@@ -93,7 +93,7 @@ export interface SetUnfollowListActionInterface extends Action<ListsActionType> 
 
 export interface CreateListActionInterface extends Action<ListsActionType> {
     type: ListsActionType.CREATE_LIST;
-    payload: AddLists;
+    payload: ListsRequest;
 }
 
 export interface FetchListsActionInterface extends Action<ListsActionType> {

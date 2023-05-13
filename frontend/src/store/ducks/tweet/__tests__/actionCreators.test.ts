@@ -33,7 +33,7 @@ import {
 } from "../actionCreators";
 import { TweetResponse } from "../../../../types/tweet";
 import { NotificationReplyResponse, NotificationResponse } from "../../../../types/notification";
-import { ReplyTweet } from "../contracts/state";
+import { ReplyTweetRequest } from "../contracts/state";
 import { UserResponse } from "../../../../types/user";
 import { testAction } from "../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../types/common";
@@ -103,9 +103,9 @@ describe("tweet actions", () => {
         payload: true
     });
 
-    testAction(fetchReplyTweet, fetchReplyTweet({ tweetId: 1 } as ReplyTweet), {
+    testAction(fetchReplyTweet, fetchReplyTweet({ tweetId: 1 } as ReplyTweetRequest), {
         type: TweetActionType.FETCH_REPLY_TWEET,
-        payload: { tweetId: 1 } as ReplyTweet
+        payload: { tweetId: 1 } as ReplyTweetRequest
     });
 
     testAction(deleteTweetReply, deleteTweetReply(1), {

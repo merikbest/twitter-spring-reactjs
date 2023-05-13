@@ -8,7 +8,7 @@ export interface TweetsState {
 }
 
 
-export interface AddTweet {
+export interface TweetRequest {
     id?: number;
     text: string;
     images: Image[];
@@ -20,7 +20,7 @@ export interface AddTweet {
     choices?: string[];
 }
 
-export interface AddQuoteTweet {
+export interface AddQuoteTweetRequest {
     text: string;
     images: Image[];
     imageDescription: string;
@@ -30,7 +30,7 @@ export interface AddQuoteTweet {
     userId?: string;
 }
 
-export interface Vote {
+export interface VoteRequest {
     tweetId: number;
     pollId: number;
     pollChoiceId: number;

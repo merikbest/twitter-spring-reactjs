@@ -23,7 +23,7 @@ interface PasswordFormProps {
     password: string;
 }
 
-export interface RegistrationProps {
+export interface EndRegistrationRequest {
     email: string;
     password: string;
     history: History<LocationState>;
@@ -44,7 +44,7 @@ const SetPasswordModal: FC<SetPasswordProps> = ({ email, open, onClose }): React
     });
 
     const onSubmit = (data: PasswordFormProps): void => {
-        const registrationData: RegistrationProps = { email: email, password: data.password, history: history };
+        const registrationData: EndRegistrationRequest = { email: email, password: data.password, history: history };
         dispatch(fetchSignUp(registrationData));
     };
 

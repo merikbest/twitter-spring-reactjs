@@ -1,6 +1,6 @@
 import {
-    AddQuoteTweet,
-    AddTweet,
+    AddQuoteTweetRequest,
+    TweetRequest,
     ChangeReplyTypeRequest,
     FetchTweetsByTagRequest,
     FetchTweetsByTextRequest,
@@ -9,7 +9,7 @@ import {
     TweetsState,
     TweetsWithQuotesByIdRequest,
     UpdatedBookmarkedTweetPayload,
-    Vote
+    VoteRequest
 } from "./contracts/state";
 import {
     AddPollActionInterface,
@@ -96,32 +96,32 @@ export const resetTweets = (): ResetTweetsActionInterface => ({
     type: TweetsActionType.RESET_TWEETS
 });
 
-export const addTweet = (payload: AddTweet): AddTweetActionInterface => ({
+export const addTweet = (payload: TweetRequest): AddTweetActionInterface => ({
     type: TweetsActionType.ADD_TWEET,
     payload
 });
 
-export const addPoll = (payload: AddTweet): AddPollActionInterface => ({
+export const addPoll = (payload: TweetRequest): AddPollActionInterface => ({
     type: TweetsActionType.ADD_POLL,
     payload
 });
 
-export const addScheduledTweet = (payload: AddTweet): AddScheduledTweetActionInterface => ({
+export const addScheduledTweet = (payload: TweetRequest): AddScheduledTweetActionInterface => ({
     type: TweetsActionType.ADD_SCHEDULED_TWEET,
     payload
 });
 
-export const updateScheduledTweet = (payload: AddTweet): UpdateScheduledTweetActionInterface => ({
+export const updateScheduledTweet = (payload: TweetRequest): UpdateScheduledTweetActionInterface => ({
     type: TweetsActionType.UPDATE_SCHEDULED_TWEET,
     payload
 });
 
-export const addQuoteTweet = (payload: AddQuoteTweet): AddQuoteTweetActionInterface => ({
+export const addQuoteTweet = (payload: AddQuoteTweetRequest): AddQuoteTweetActionInterface => ({
     type: TweetsActionType.ADD_QUOTE_TWEET,
     payload
 });
 
-export const vote = (payload: Vote): VoteActionInterface => ({
+export const vote = (payload: VoteRequest): VoteActionInterface => ({
     type: TweetsActionType.VOTE,
     payload
 });

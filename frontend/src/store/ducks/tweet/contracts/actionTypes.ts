@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { FetchTweetUsersPayload, ReplyTweet, TweetState } from "./state";
+import { FetchTweetUsersPayload, ReplyTweetRequest, TweetState } from "./state";
 import { NotificationReplyResponse, NotificationResponse } from "../../../../types/notification";
 import { LoadingStatus, PageableResponse } from "../../../../types/common";
 import { TweetResponse } from "../../../../types/tweet";
@@ -100,7 +100,7 @@ export interface SetBookmarkedTweetActionInterface extends Action<TweetActionTyp
 
 export interface FetchReplyTweetActionInterface extends Action<TweetActionType> {
     type: TweetActionType.FETCH_REPLY_TWEET;
-    payload: ReplyTweet;
+    payload: ReplyTweetRequest;
 }
 
 export interface DeleteTweetReplyActionInterface extends Action<TweetActionType> {

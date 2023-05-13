@@ -31,7 +31,7 @@ import {
     TweetActionType,
     UpdateTweetDataActionInterface
 } from "./contracts/actionTypes";
-import { FetchTweetUsersPayload, ReplyTweet, TweetState } from "./contracts/state";
+import { FetchTweetUsersPayload, ReplyTweetRequest, TweetState } from "./contracts/state";
 import { NotificationReplyResponse, NotificationResponse } from "../../../types/notification";
 import { LoadingStatus, PageableResponse } from "../../../types/common";
 import { TweetResponse } from "../../../types/tweet";
@@ -95,7 +95,7 @@ export const setBookmarkedTweet = (payload: boolean): SetBookmarkedTweetActionIn
     payload
 });
 
-export const fetchReplyTweet = (payload: ReplyTweet): FetchReplyTweetActionInterface => ({
+export const fetchReplyTweet = (payload: ReplyTweetRequest): FetchReplyTweetActionInterface => ({
     type: TweetActionType.FETCH_REPLY_TWEET,
     payload
 });

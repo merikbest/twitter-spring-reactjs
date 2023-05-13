@@ -32,7 +32,7 @@ import {
 import { ListResponse, ListUserResponse, PinnedListResponse, SimpleListResponse } from "../../../../types/lists";
 import { ListsActionType } from "../contracts/actionTypes";
 import { testAction } from "../../../../util/test-utils/test-helper";
-import { AddLists, AddUserToListsRequest } from "../contracts/state";
+import { ListsRequest, AddUserToListsRequest } from "../contracts/state";
 import { LoadingStatus } from "../../../../types/common";
 
 describe("lists actions", () => {
@@ -94,9 +94,9 @@ describe("lists actions", () => {
         payload: { id: 1 } as ListUserResponse
     });
 
-    testAction(createList, createList({ name: "test list", isPrivate: true } as AddLists), {
+    testAction(createList, createList({ name: "test list", isPrivate: true } as ListsRequest), {
         type: ListsActionType.CREATE_LIST,
-        payload: { name: "test list", isPrivate: true } as AddLists
+        payload: { name: "test list", isPrivate: true } as ListsRequest
     });
 
     testAction(fetchLists, fetchLists(), {

@@ -2,7 +2,7 @@ import { Image, LoadingStatus, ReplyType } from "../../../../types/common";
 import { TweetResponse } from "../../../../types/tweet";
 import { UserResponse } from "../../../../types/user";
 
-export interface ReplyTweet {
+export interface ReplyTweetRequest {
     tweetId: number;
     userId?: string;
     text: string;

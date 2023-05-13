@@ -13,7 +13,7 @@ export interface ListsState {
     loadingState: LoadingStatus;
 }
 
-export interface AddLists {
+export interface ListsRequest {
     name: string;
     description?: string;
     isPrivate: boolean;

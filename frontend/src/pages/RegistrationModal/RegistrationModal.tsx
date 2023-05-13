@@ -9,14 +9,14 @@ import * as yup from "yup";
 import { useRegistrationModalStyles } from "./RegistrationModalStyles";
 import RegistrationInput from "./RegistrationInput/RegistrationInput";
 import { FilledSelect } from "../../components/FilledSelect/FilledSelect";
-import { RegistrationInfo } from "../../types/auth";
+import { RegistrationRequest } from "../../types/auth";
 import { RegistrationApi } from "../../services/api/user-service/registrationApi";
 
 interface RegistrationModalProps {
     open: boolean;
     onClose: () => void;
     onOpenCustomize: (value: boolean | ((prevVar: boolean) => boolean)) => void;
-    onChangeRegistrationInfo: (data: RegistrationInfo) => void;
+    onChangeRegistrationInfo: (data: RegistrationRequest) => void;
 }
 
 interface RegistrationFormProps {
@@ -51,7 +51,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
         if (month !== "" && day !== 0 && year !== 0) {
             birthday = month + " " + day + ", " + year;
         }
-        const registrationData: RegistrationInfo = { username: data.username, email: data.email, birthday: birthday };
+        const registrationData: RegistrationRequest = { username: data.username, email: data.email, birthday: birthday };
         RegistrationApi.registration(registrationData)
             .then(() => {
                 onChangeRegistrationInfo(registrationData);

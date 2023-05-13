@@ -53,7 +53,7 @@ import { TweetResponse } from "../../../../types/tweet";
 import { AxiosResponse } from "axios";
 import { TagApi } from "../../../../services/api/tag-service/tagApi";
 import { ListsApi } from "../../../../services/api/lists-service/listsApi";
-import { AddQuoteTweet, AddTweet, Vote } from "../contracts/state";
+import { AddQuoteTweetRequest, TweetRequest, VoteRequest } from "../contracts/state";
 import {
     mockExpectedResponse,
     testCall,
@@ -76,7 +76,7 @@ describe("tweetsSaga:", () => {
         data: mockTweets,
         headers: { PAGE_TOTAL_COUNT: 1 }
     } as AxiosResponse<TweetResponse[]>;
-    const mockAddTweet = { text: "test" } as AddTweet;
+    const mockAddTweet = { text: "test" } as TweetRequest;
 
     describe("fetchTweetsRequest:", () => {
         const worker = fetchTweetsRequest(fetchTweets(1));
@@ -193,14 +193,14 @@ describe("tweetsSaga:", () => {
     });
 
     describe("addQuoteTweetRequest:", () => {
-        const mockAddQuoteTweet = { text: "test", tweetId: 1 } as AddQuoteTweet;
+        const mockAddQuoteTweet = { text: "test", tweetId: 1 } as AddQuoteTweetRequest;
         const worker = addQuoteTweetRequest(addQuoteTweet(mockAddQuoteTweet));
         testCall(worker, TweetApi.quoteTweet, mockAddQuoteTweet);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
     });
 
     describe("voteRequest:", () => {
-        const mockVote = { tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote;
+        const mockVote = { tweetId: 1, pollId: 1, pollChoiceId: 1 } as VoteRequest;
         const worker = voteRequest(vote(mockVote));
         testCall(worker, PollApi.voteInPoll, mockVote);
         testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);

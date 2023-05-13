@@ -36,7 +36,7 @@ import {
 } from "../actionCreators";
 import { TweetsActionType } from "../contracts/actionTypes";
 import { TweetResponse } from "../../../../types/tweet";
-import { AddQuoteTweet, AddTweet, Vote } from "../contracts/state";
+import { AddQuoteTweetRequest, TweetRequest, VoteRequest } from "../contracts/state";
 import { NotificationResponse } from "../../../../types/notification";
 import { LoadingStatus, ReplyType } from "../../../../types/common";
 
@@ -80,34 +80,34 @@ describe("tweets actions", () => {
         type: TweetsActionType.RESET_TWEETS
     });
 
-    testAction(addTweet, addTweet({ id: 1, text: "test" } as AddTweet), {
+    testAction(addTweet, addTweet({ id: 1, text: "test" } as TweetRequest), {
         type: TweetsActionType.ADD_TWEET,
-        payload: { id: 1, text: "test" } as AddTweet
+        payload: { id: 1, text: "test" } as TweetRequest
     });
 
-    testAction(addPoll, addPoll({ id: 1, text: "test" } as AddTweet), {
+    testAction(addPoll, addPoll({ id: 1, text: "test" } as TweetRequest), {
         type: TweetsActionType.ADD_POLL,
-        payload: { id: 1, text: "test" } as AddTweet
+        payload: { id: 1, text: "test" } as TweetRequest
     });
 
-    testAction(addScheduledTweet, addScheduledTweet({ id: 1, text: "test" } as AddTweet), {
+    testAction(addScheduledTweet, addScheduledTweet({ id: 1, text: "test" } as TweetRequest), {
         type: TweetsActionType.ADD_SCHEDULED_TWEET,
-        payload: { id: 1, text: "test" } as AddTweet
+        payload: { id: 1, text: "test" } as TweetRequest
     });
 
-    testAction(updateScheduledTweet, updateScheduledTweet({ id: 1, text: "test" } as AddTweet), {
+    testAction(updateScheduledTweet, updateScheduledTweet({ id: 1, text: "test" } as TweetRequest), {
         type: TweetsActionType.UPDATE_SCHEDULED_TWEET,
-        payload: { id: 1, text: "test" } as AddTweet
+        payload: { id: 1, text: "test" } as TweetRequest
     });
 
-    testAction(addQuoteTweet, addQuoteTweet({ tweetId: 1, text: "test" } as AddQuoteTweet), {
+    testAction(addQuoteTweet, addQuoteTweet({ tweetId: 1, text: "test" } as AddQuoteTweetRequest), {
         type: TweetsActionType.ADD_QUOTE_TWEET,
-        payload: { tweetId: 1, text: "test" } as AddQuoteTweet
+        payload: { tweetId: 1, text: "test" } as AddQuoteTweetRequest
     });
 
-    testAction(vote, vote({ tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote), {
+    testAction(vote, vote({ tweetId: 1, pollId: 1, pollChoiceId: 1 } as VoteRequest), {
         type: TweetsActionType.VOTE,
-        payload: { tweetId: 1, pollId: 1, pollChoiceId: 1 } as Vote
+        payload: { tweetId: 1, pollId: 1, pollChoiceId: 1 } as VoteRequest
     });
 
     testAction(setVote, setVote({ id: 1 } as TweetResponse), {

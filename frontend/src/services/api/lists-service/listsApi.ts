@@ -1,7 +1,7 @@
 import { AxiosResponse, CancelTokenSource } from "axios";
 
 import { axios } from "../../../core/axios";
-import { AddLists, AddUserToListsRequest } from "../../../store/ducks/lists/contracts/state";
+import { ListsRequest, AddUserToListsRequest } from "../../../store/ducks/lists/contracts/state";
 import {
     BaseListResponse,
     ListResponse,
@@ -46,7 +46,7 @@ export const ListsApi = {
     async getListById(listId: number): Promise<AxiosResponse<BaseListResponse>> {
         return await axios.get<BaseListResponse>(`${API_LISTS}/${listId}`);
     },
-    async createTweetList(request: AddLists): Promise<AxiosResponse<ListUserResponse>> {
+    async createTweetList(request: ListsRequest): Promise<AxiosResponse<ListUserResponse>> {
         return await axios.post<ListUserResponse>(API_LISTS, request);
     },
     async editList(request: EditListsRequest): Promise<AxiosResponse<BaseListResponse>> {

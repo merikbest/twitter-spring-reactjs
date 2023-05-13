@@ -6,7 +6,7 @@ export interface AuthenticationResponse {
     token: string;
 }
 
-export interface RegistrationInfo {
+export interface RegistrationRequest {
     username: string;
     email: string;
     birthday: string;

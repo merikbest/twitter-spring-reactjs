@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { ChangePhoneResponse, Settings } from "../../../store/ducks/user/contracts/state";
+import { ChangePhoneResponse, SettingsRequest } from "../../../store/ducks/user/contracts/state";
 import { axios } from "../../../core/axios";
 import { AuthenticationResponse } from "../../../types/auth";
 import {
@@ -17,34 +17,34 @@ import {
 } from "../../../constants/endpoint-constants";
 
 export const UserSettingsApi = {
-    async updateUsername(settings: Settings): Promise<AxiosResponse<string>> {
+    async updateUsername(settings: SettingsRequest): Promise<AxiosResponse<string>> {
         return await axios.put<string>(API_SETTINGS_UPDATE_USERNAME, settings);
     },
-    async updateEmail(settings: Settings): Promise<AxiosResponse<AuthenticationResponse>> {
+    async updateEmail(settings: SettingsRequest): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.put<AuthenticationResponse>(API_SETTINGS_UPDATE_EMAIL, settings);
     },
-    async updatePhone(settings: Settings): Promise<AxiosResponse<ChangePhoneResponse>> {
+    async updatePhone(settings: SettingsRequest): Promise<AxiosResponse<ChangePhoneResponse>> {
         return await axios.put<ChangePhoneResponse>(API_SETTINGS_UPDATE_PHONE, settings);
     },
-    async updateCountry(settings: Settings): Promise<AxiosResponse<string>> {
+    async updateCountry(settings: SettingsRequest): Promise<AxiosResponse<string>> {
         return await axios.put<string>(API_SETTINGS_UPDATE_COUNTRY, settings);
     },
-    async updateGender(settings: Settings): Promise<AxiosResponse<string>> {
+    async updateGender(settings: SettingsRequest): Promise<AxiosResponse<string>> {
         return await axios.put<string>(API_SETTINGS_UPDATE_GENDER, settings);
     },
-    async updateLanguage(settings: Settings): Promise<AxiosResponse<string>> {
+    async updateLanguage(settings: SettingsRequest): Promise<AxiosResponse<string>> {
         return await axios.put<string>(API_SETTINGS_UPDATE_LANGUAGE, settings);
     },
-    async updateDirectMessageRequests(settings: Settings): Promise<AxiosResponse<boolean>> {
+    async updateDirectMessageRequests(settings: SettingsRequest): Promise<AxiosResponse<boolean>> {
         return await axios.put<boolean>(API_SETTINGS_UPDATE_DIRECT, settings);
     },
-    async updatePrivateProfile(settings: Settings): Promise<AxiosResponse<boolean>> {
+    async updatePrivateProfile(settings: SettingsRequest): Promise<AxiosResponse<boolean>> {
         return await axios.put<boolean>(API_SETTINGS_UPDATE_PRIVATE, settings);
     },
-    async updateColorScheme(settings: Settings): Promise<AxiosResponse<string>> {
+    async updateColorScheme(settings: SettingsRequest): Promise<AxiosResponse<string>> {
         return await axios.put<string>(API_SETTINGS_UPDATE_COLOR_SCHEME, settings);
     },
-    async updateBackgroundColor(settings: Settings): Promise<AxiosResponse<string>> {
+    async updateBackgroundColor(settings: SettingsRequest): Promise<AxiosResponse<string>> {
         return await axios.put<string>(API_SETTINGS_UPDATE_BACKGROUND_COLOR, settings);
     }
 };

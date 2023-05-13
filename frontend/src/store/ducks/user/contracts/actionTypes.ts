@@ -1,7 +1,7 @@
 import { Action } from "redux";
 
-import { ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState } from "./state";
-import { RegistrationProps } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { ChangePhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./state";
+import { EndRegistrationRequest } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
 import { LoginRequest } from "../../../../types/auth";
@@ -66,7 +66,7 @@ export interface FetchSignInActionInterface extends Action<UserActionsType> {
 
 export interface FetchSignUpActionInterface extends Action<UserActionsType> {
     type: UserActionsType.FETCH_SIGN_UP;
-    payload: RegistrationProps;
+    payload: EndRegistrationRequest;
 }
 
 export interface SetUserDataActionInterface extends Action<UserActionsType> {
@@ -144,52 +144,52 @@ export interface ProcessUserToMuteListActionInterface extends Action<UserActions
 
 export interface UpdateUsernameActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_USERNAME;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdateEmailActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_EMAIL;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdatePhoneActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_PHONE;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdateCountryActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_COUNTRY;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdateGenderActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_GENDER;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdateLanguageActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_LANGUAGE;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdateDirectActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_DIRECT;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdatePrivateProfileActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_PRIVATE_PROFILE;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdateColorSchemeActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_COLOR_SCHEME;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface UpdateBackgroundColorActionInterface extends Action<UserActionsType> {
     type: UserActionsType.UPDATE_BACKGROUND_COLOR;
-    payload: Settings;
+    payload: SettingsRequest;
 }
 
 export interface StartUseTwitterActionInterface extends Action<UserActionsType> {

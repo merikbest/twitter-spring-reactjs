@@ -1,4 +1,4 @@
-import { ChangePhoneResponse, Settings, UserActionRequest, UserRequest, UserState } from "./contracts/state";
+import { ChangePhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./contracts/state";
 import {
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
@@ -47,7 +47,7 @@ import {
     UpdateUsernameActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
-import { RegistrationProps } from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { EndRegistrationRequest } from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../types/chat";
 import { LoginRequest } from "../../../types/auth";
 
@@ -89,7 +89,7 @@ export const fetchSignIn = (payload: LoginRequest): FetchSignInActionInterface =
     payload
 });
 
-export const fetchSignUp = (payload: RegistrationProps): FetchSignUpActionInterface => ({
+export const fetchSignUp = (payload: EndRegistrationRequest): FetchSignUpActionInterface => ({
     type: UserActionsType.FETCH_SIGN_UP,
     payload
 });
@@ -169,52 +169,52 @@ export const resetMentions = (): ResetMentionsActionInterface => ({
     type: UserActionsType.RESET_MENTIONS
 });
 
-export const updateUsername = (payload: Settings): UpdateUsernameActionInterface => ({
+export const updateUsername = (payload: SettingsRequest): UpdateUsernameActionInterface => ({
     type: UserActionsType.UPDATE_USERNAME,
     payload
 });
 
-export const updateEmail = (payload: Settings): UpdateEmailActionInterface => ({
+export const updateEmail = (payload: SettingsRequest): UpdateEmailActionInterface => ({
     type: UserActionsType.UPDATE_EMAIL,
     payload
 });
 
-export const updatePhone = (payload: Settings): UpdatePhoneActionInterface => ({
+export const updatePhone = (payload: SettingsRequest): UpdatePhoneActionInterface => ({
     type: UserActionsType.UPDATE_PHONE,
     payload
 });
 
-export const updateCountry = (payload: Settings): UpdateCountryActionInterface => ({
+export const updateCountry = (payload: SettingsRequest): UpdateCountryActionInterface => ({
     type: UserActionsType.UPDATE_COUNTRY,
     payload
 });
 
-export const updateGender = (payload: Settings): UpdateGenderActionInterface => ({
+export const updateGender = (payload: SettingsRequest): UpdateGenderActionInterface => ({
     type: UserActionsType.UPDATE_GENDER,
     payload
 });
 
-export const updateLanguage = (payload: Settings): UpdateLanguageActionInterface => ({
+export const updateLanguage = (payload: SettingsRequest): UpdateLanguageActionInterface => ({
     type: UserActionsType.UPDATE_LANGUAGE,
     payload
 });
 
-export const updateDirect = (payload: Settings): UpdateDirectActionInterface => ({
+export const updateDirect = (payload: SettingsRequest): UpdateDirectActionInterface => ({
     type: UserActionsType.UPDATE_DIRECT,
     payload
 });
 
-export const updatePrivateProfile = (payload: Settings): UpdatePrivateProfileActionInterface => ({
+export const updatePrivateProfile = (payload: SettingsRequest): UpdatePrivateProfileActionInterface => ({
     type: UserActionsType.UPDATE_PRIVATE_PROFILE,
     payload
 });
 
-export const updateColorScheme = (payload: Settings): UpdateColorSchemeActionInterface => ({
+export const updateColorScheme = (payload: SettingsRequest): UpdateColorSchemeActionInterface => ({
     type: UserActionsType.UPDATE_COLOR_SCHEME,
     payload
 });
 
-export const updateBackgroundColor = (payload: Settings): UpdateBackgroundColorActionInterface => ({
+export const updateBackgroundColor = (payload: SettingsRequest): UpdateBackgroundColorActionInterface => ({
     type: UserActionsType.UPDATE_BACKGROUND_COLOR,
     payload
 });

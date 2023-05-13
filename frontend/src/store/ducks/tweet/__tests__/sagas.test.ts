@@ -36,7 +36,7 @@ import {
 import { TweetResponse } from "../../../../types/tweet";
 import { setUpdatedBookmarkedTweetTweetsState } from "../../tweets/actionCreators";
 import { setUpdatedBookmarkedTweetUserTweetState } from "../../userTweets/actionCreators";
-import { ReplyTweet } from "../contracts/state";
+import { ReplyTweetRequest } from "../contracts/state";
 import { UserResponse } from "../../../../types/user";
 import {
     mockExpectedResponse,
@@ -79,7 +79,7 @@ describe("tweetSaga:", () => {
     });
 
     describe("fetchReplyTweetRequest:", () => {
-        const mockReplyTweet = { tweetId: 1 } as ReplyTweet;
+        const mockReplyTweet = { tweetId: 1 } as ReplyTweetRequest;
         const worker = fetchReplyTweetRequest(fetchReplyTweet(mockReplyTweet));
         testCall(worker, TweetApi.replyTweet, mockReplyTweet, mockReplyTweet);
         testLoadingStatus(worker, setTweetLoadingState, LoadingStatus.ERROR);
