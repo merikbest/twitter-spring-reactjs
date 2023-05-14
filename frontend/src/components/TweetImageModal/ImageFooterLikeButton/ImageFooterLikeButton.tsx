@@ -1,16 +1,13 @@
 import React, { memo, ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Typography from "@material-ui/core/Typography";
-import { IconButton } from "@material-ui/core";
 
 import { LikeIcon, LikeOutlinedIcon } from "../../../icons";
 import { likeTweet } from "../../../store/ducks/tweets/actionCreators";
 import { selectIsTweetLiked, selectLikedTweetsCount } from "../../../store/ducks/tweet/selectors";
-import { useImageFooterButtonStyles } from "../ImageFooterButtonStyles";
+import ImageFooterButton from "../ImageFooterButton/ImageFooterButton";
 
 const ImageFooterLikeButton = memo((): ReactElement => {
-    const classes = useImageFooterButtonStyles();
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
     const isTweetLiked = useSelector(selectIsTweetLiked);
@@ -21,16 +18,12 @@ const ImageFooterLikeButton = memo((): ReactElement => {
     };
 
     return (
-        <div className={classes.imageFooterIcon}>
-            <IconButton onClick={handleLike} size="small">
-                {isTweetLiked ? LikeIcon : LikeOutlinedIcon}
-            </IconButton>
-            {likedTweetsCount !== 0 && (
-                <Typography id={"likedTweetsCount"} variant={"body1"} component={"span"}>
-                    {likedTweetsCount}
-                </Typography>
-            )}
-        </div>
+        <ImageFooterButton
+            id={"likedTweetsCount"}
+            icon={isTweetLiked ? LikeIcon : LikeOutlinedIcon}
+            count={likedTweetsCount ?? 0}
+            onClick={handleLike}
+        />
     );
 });
 
