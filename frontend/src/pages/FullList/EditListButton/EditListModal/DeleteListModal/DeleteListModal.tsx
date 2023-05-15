@@ -35,7 +35,7 @@ const DeleteListModal = (): ReactElement => {
             >
                 Delete List
             </Typography>
-            <Dialog open={visibleModalWindow} onClose={onCloseModalWindow} aria-labelledby="form-dialog-title">
+            <Dialog open={visibleModalWindow} onClose={onCloseModalWindow}>
                 <DialogContent style={{ padding: 0 }}>
                     <div className={classes.modalWrapper}>
                         <Typography variant={"h5"} component={"div"}>

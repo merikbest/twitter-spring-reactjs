@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useSetupProfileModalStyles = makeStyles((theme) => ({
+export const useSetupProfileModalStyles = makeStyles(() => ({
     container: {
         "& .MuiDialog-root": {
             height: 666,

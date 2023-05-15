@@ -17,7 +17,7 @@ describe("ProfilePictureModal", () => {
     it("should render empty ProfilePictureModal", () => {
         const wrapper = mountWithStore(
             <ProfilePictureModal
-                open={false}
+                isOpen={false}
                 onClose={jest.fn()}
                 avatar={mockImage}
                 onChangeAvatar={jest.fn()}
@@ -30,7 +30,7 @@ describe("ProfilePictureModal", () => {
     it("should render correctly and empty avatar", () => {
         const wrapper = mountWithStore(
             <ProfilePictureModal
-                open={true}
+                isOpen={true}
                 onClose={jest.fn()}
                 avatar={undefined}
                 onChangeAvatar={jest.fn()}
@@ -48,7 +48,7 @@ describe("ProfilePictureModal", () => {
         const mockOnOpenProfileHeaderModal = jest.fn();
         const wrapper = mountWithStore(
             <ProfilePictureModal
-                open={true}
+                isOpen={true}
                 onClose={jest.fn()}
                 avatar={mockImage}
                 onChangeAvatar={jest.fn()}

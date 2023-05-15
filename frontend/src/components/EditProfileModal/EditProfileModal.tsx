@@ -71,9 +71,9 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
     }
 
     return (
-        <Dialog className={classes.dialog} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitle id="form-dialog-title">
+                <DialogTitle>
                     <CloseButton onClose={onClose} />
                     Edit Profile
                     <Button

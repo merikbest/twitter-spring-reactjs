@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useBackButtonStyles = makeStyles((theme: Theme) => ({
+export const useBackButtonStyles = makeStyles(() => ({
     container: {
         display: "inline-block",
         "& .MuiIconButton-root": {

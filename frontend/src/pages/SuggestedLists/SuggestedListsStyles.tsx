@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useSuggestedListsStyles = makeStyles((theme: Theme) => ({
+export const useSuggestedListsStyles = makeStyles(() => ({
     content: {
         borderTop: 0,
         borderLeft: 0,

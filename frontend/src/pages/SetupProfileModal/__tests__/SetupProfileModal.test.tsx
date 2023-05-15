@@ -20,7 +20,7 @@ describe("SetupProfileModal", () => {
 
     it("should render ProfilePictureModal", () => {
         const wrapper = mountWithStore(<SetupProfileModal visible={true} onClose={jest.fn()} />, mockRootState);
-        expect(wrapper.find(ProfilePictureModal).prop("open")).toBe(true);
+        expect(wrapper.find(ProfilePictureModal).prop("isOpen")).toBe(true);
     });
 
     it("should render ProfileHeaderModal", () => {
@@ -29,7 +29,7 @@ describe("SetupProfileModal", () => {
             .mockImplementationOnce(() => [false, () => null])
             .mockImplementationOnce(() => [false, () => null]);
         const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()} />, mockRootState);
-        expect(wrapper.find(ProfileHeaderModal).prop("open")).toBe(true);
+        expect(wrapper.find(ProfileHeaderModal).prop("isOpen")).toBe(true);
     });
 
     it("should render ProfileDescriptionModal", () => {
@@ -38,7 +38,7 @@ describe("SetupProfileModal", () => {
             .mockImplementationOnce(() => [true, () => null])
             .mockImplementationOnce(() => [false, () => null]);
         const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()} />, mockRootState);
-        expect(wrapper.find(ProfileDescriptionModal).prop("open")).toBe(true);
+        expect(wrapper.find(ProfileDescriptionModal).prop("isOpen")).toBe(true);
     });
 
     it("should render ProfileUpdatedModal", () => {
@@ -47,7 +47,7 @@ describe("SetupProfileModal", () => {
             .mockImplementationOnce(() => [false, () => null])
             .mockImplementationOnce(() => [true, () => null]);
         const wrapper = mountWithStore(<SetupProfileModal visible={false} onClose={jest.fn()} />, mockRootState);
-        expect(wrapper.find(ProfileUpdatedModal).prop("open")).toBe(true);
+        expect(wrapper.find(ProfileUpdatedModal).prop("isOpen")).toBe(true);
     });
 
     it("should click on submit", () => {

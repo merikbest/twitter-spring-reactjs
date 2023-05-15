@@ -8,11 +8,5 @@ export const useTweetInteractionCountStyles = makeStyles((theme) => ({
         "& .MuiTypography-subtitle1": {
             marginLeft: 5
         }
-    },
-    interactionCount: {
-        "&:hover": {
-            textDecoration: "underline",
-            cursor: "pointer"
-        }
     }
 }));

@@ -19,7 +19,7 @@ const SettingsModal = (): ReactElement => {
     return (
         <>
             <ActionIconButton actionText={"Settings"} onClick={onOpenModalWindow} icon={SettingsIcon} />
-            <Dialog className={classes.dialog} open={visibleModalWindow} onClose={onCloseModalWindow}>
+            <Dialog open={visibleModalWindow} onClose={onCloseModalWindow}>
                 <DialogTitle>
                     <CloseButton onClose={onCloseModalWindow} />
                     Trends

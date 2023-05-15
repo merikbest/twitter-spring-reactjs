@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useAutoplayStyles = makeStyles((theme: Theme) => ({
+export const useAutoplayStyles = makeStyles(() => ({
     infoItemWrapper: {
         padding: "12px 16px",
         "& .MuiTypography-h6, .MuiTypography-subtitle2": {

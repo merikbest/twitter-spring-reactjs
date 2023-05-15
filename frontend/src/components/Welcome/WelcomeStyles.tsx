@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useWelcomeStyles = makeStyles((theme: Theme) => ({
+export const useWelcomeStyles = makeStyles(() => ({
     info: {
         padding: "40px 20px",
         textAlign: "center",

@@ -81,9 +81,8 @@ const commonTheme = {
         },
         MuiDialogTitle: {
             root: {
-                borderBottom: "1px solid rgb(204, 214, 221)",
-                marginBottom: 10,
-                padding: "10px 15px",
+                padding: "5px 15px",
+                marginBottom: 0,
                 "& h2": {
                     display: "flex",
                     alignItems: "center",
@@ -242,6 +241,11 @@ export const dimTheme = createTheme(deepmerge({
             root: {
                 backgroundColor: "rgba(91, 112, 131, 0.4)"
             }
+        },
+        MuiDialogTitle: {
+            root: {
+                borderBottom: "1px solid rgb(56, 68, 77)"
+            }
         }
     }
 }, commonTheme));
@@ -322,6 +326,11 @@ export const lightsOutTheme = createTheme(deepmerge({
             root: {
                 backgroundColor: "rgba(91, 112, 131, 0.4)"
             }
+        },
+        MuiDialogTitle: {
+            root: {
+                borderBottom: "1px solid rgb(47, 51, 54)"
+            }
         }
     }
 }, commonTheme));
@@ -401,6 +410,11 @@ export const defaultTheme = createTheme(deepmerge({
         MuiBackdrop: {
             root: {
                 backgroundColor: "rgba(0, 0, 0, 0.4)"
+            }
+        },
+        MuiDialogTitle: {
+            root: {
+                borderBottom: "1px solid rgb(239, 243, 244)"
             }
         }
     }

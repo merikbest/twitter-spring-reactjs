@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const usePersonalizationAndDataStyles = makeStyles((theme: Theme) => ({
+export const usePersonalizationAndDataStyles = makeStyles(() => ({
     switch: {
         float: "right"
     },

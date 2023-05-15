@@ -31,8 +31,8 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = (
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} className={classes.container} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">
+        <Dialog open={visible} onClose={onClose} className={classes.container}>
+            <DialogTitle>
                 <CloseButton onClose={onClose} />
                 Tweet Analytics
             </DialogTitle>

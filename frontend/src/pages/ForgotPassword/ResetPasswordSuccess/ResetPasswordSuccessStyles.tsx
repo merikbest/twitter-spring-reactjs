@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useResetPasswordSuccessStyles = makeStyles((theme: Theme) => ({
+export const useResetPasswordSuccessStyles = makeStyles(() => ({
     infoWrapper: {
         margin: "7px 0px"
     },

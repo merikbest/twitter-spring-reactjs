@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useLockIconStyles = makeStyles((theme: Theme) => ({
+export const useLockIconStyles = makeStyles(() => ({
     lockIcon: {
         "& svg": {
             marginLeft: 3,

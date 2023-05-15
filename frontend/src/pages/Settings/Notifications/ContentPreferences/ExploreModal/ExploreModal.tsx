@@ -1,11 +1,11 @@
-import React, { FC, ReactElement, useState } from "react";
-import { Checkbox, Dialog, DialogContent, Divider, Link as MuiLink, Typography } from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { Dialog, DialogContent, Link as MuiLink } from "@material-ui/core";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import { useExploreModalStyles } from "./ExploreModalStyles";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
 import CloseButton from "../../../../../components/CloseButton/CloseButton";
 import { TWITTER_SEARCH } from "../../../../../constants/url-constants";
+import ExploreModalInfo from "./ExploreModalInfo/ExploreModalInfo";
 
 export interface ExploreModalProps {
     visible?: boolean;
@@ -15,78 +15,48 @@ export interface ExploreModalProps {
 
 const ExploreModal: FC<ExploreModalProps> = ({ visible, onClose, isSearchModal }): ReactElement | null => {
     const globalClasses = useGlobalStyles();
-    const classes = useExploreModalStyles();
-    const [checked1, setChecked1] = useState<boolean>(true);
-    const [checked2, setChecked2] = useState<boolean>(true);
 
     if (!visible) {
         return null;
     }
 
     return (
-        <Dialog className={classes.dialog} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">
+        <Dialog open={visible} onClose={onClose}>
+            <DialogTitle>
                 <CloseButton onClose={onClose} />
                 {isSearchModal ? "Search settings" : "Explore settings"}
             </DialogTitle>
-            <DialogContent className={classes.content}>
-                {!isSearchModal && (
-                    <div className={globalClasses.itemInfoWrapper}>
-                        <Typography variant={"h5"} component={"div"}>
-                            Location
-                        </Typography>
-                    </div>
-                )}
-                <div className={globalClasses.itemInfoWrapper}>
-                    <div className={globalClasses.infoItemCheckbox}>
-                        <Typography variant={"body1"} component={"span"}>
-                            {isSearchModal ? "Hide sensitive content" : "Show content in this location"}
-                        </Typography>
-                        <Checkbox checked={checked1} onChange={() => setChecked1(prevState => !prevState)} />
-                    </div>
-                    <Typography variant={"subtitle2"} component={"div"}>
-                        {isSearchModal ? (
-                            <>
-                                {`This prevents Tweets with potentially sensitive content from displaying in your search results. `}
-                                <MuiLink href={TWITTER_SEARCH} variant="subtitle2" target="_blank" rel="noopener">
-                                    Learn more
-                                </MuiLink>
-                            </>
-                        ) : (
-                            "When this is on, you’ll see what’s happening around you right now."
-                        )}
-                    </Typography>
-                </div>
-                {!isSearchModal && (
-                    <>
-                        <Divider />
-                        <div className={globalClasses.itemInfoWrapper}>
-                            <Typography variant={"h5"} component={"div"}>
-                                Personalization
-                            </Typography>
-                        </div>
-                    </>
-                )}
-                <div className={globalClasses.itemInfoWrapper}>
-                    <div className={globalClasses.infoItemCheckbox}>
-                        <Typography variant={"body1"} component={"span"}>
-                            {isSearchModal ? "Remove blocked and muted accounts" : "Trends for you"}
-                        </Typography>
-                        <Checkbox checked={checked2} onChange={() => setChecked2(prevState => !prevState)} />
-                    </div>
-                    <Typography variant={"subtitle2"} component={"div"}>
-                        {isSearchModal ? (
-                            <>
-                                {`Use this to eliminate search results from accounts you’ve blocked or muted. `}
-                                <MuiLink href={TWITTER_SEARCH} variant="subtitle2" target="_blank" rel="noopener">
-                                    Learn more
-                                </MuiLink>
-                            </>
-                        ) : (
-                            "You can personalize trends based on your location and who you follow."
-                        )}
-                    </Typography>
-                </div>
+            <DialogContent className={globalClasses.dialogContent}>
+                <ExploreModalInfo
+                    isSearchModal={isSearchModal}
+                    searchModalTitle={"Location"}
+                    title={isSearchModal ? "Hide sensitive content" : "Show content in this location"}
+                    subtitle={isSearchModal ? (
+                        <>
+                            {`This prevents Tweets with potentially sensitive content from displaying in your search results. `}
+                            <MuiLink href={TWITTER_SEARCH} variant="subtitle2" target="_blank" rel="noopener">
+                                Learn more
+                            </MuiLink>
+                        </>
+                    ) : (
+                        "When this is on, you’ll see what’s happening around you right now."
+                    )}
+                />
+                <ExploreModalInfo
+                    isSearchModal={isSearchModal}
+                    searchModalTitle={"Personalization"}
+                    title={isSearchModal ? "Remove blocked and muted accounts" : "Trends for you"}
+                    subtitle={isSearchModal ? (
+                        <>
+                            {`Use this to eliminate search results from accounts you’ve blocked or muted. `}
+                            <MuiLink href={TWITTER_SEARCH} variant="subtitle2" target="_blank" rel="noopener">
+                                Learn more
+                            </MuiLink>
+                        </>
+                    ) : (
+                        "You can personalize trends based on your location and who you follow."
+                    )}
+                />
             </DialogContent>
         </Dialog>
     );

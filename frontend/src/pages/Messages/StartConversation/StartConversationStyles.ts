@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useStartConversationStyles = makeStyles((theme: Theme) => ({
+export const useStartConversationStyles = makeStyles(() => ({
     messagesTitle: {
         paddingTop: 83,
         margin: "0px 30px"

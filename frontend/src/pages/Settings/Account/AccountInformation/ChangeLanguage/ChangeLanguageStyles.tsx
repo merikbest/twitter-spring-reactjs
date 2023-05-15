@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useChangeLanguageStyles = makeStyles((theme: Theme) => ({
+export const useChangeLanguageStyles = makeStyles(() => ({
     selectWrapper: {
         padding: "12px 16px",
         "& .MuiFormControl-root": {

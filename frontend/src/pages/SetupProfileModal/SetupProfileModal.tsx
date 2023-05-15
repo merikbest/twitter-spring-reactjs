@@ -40,7 +40,19 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({ visible, onClose }): Re
         onClose();
     };
 
-    const onSubmit = async () => {
+    const onOpenProfileHeaderModal = (): void => {
+        setVisibleProfileHeaderModal(true);
+    };
+
+    const onOpenProfileDescriptionModal = (): void => {
+        setVisibleProfileDescriptionModal(true);
+    };
+
+    const onOpenProfileUpdatedModal = (): void => {
+        setVisibleProfileUpdatedModal(true);
+    };
+
+    const onSubmit = async (): Promise<void> => {
         let avatarResponse: string | undefined = undefined;
         let wallpaperResponse: string | undefined = undefined;
 
@@ -65,29 +77,29 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({ visible, onClose }): Re
     return (
         <div className={classes.container}>
             <ProfilePictureModal
-                open={visible}
+                isOpen={visible}
                 onClose={handleCloseModal}
                 avatar={avatar}
                 onChangeAvatar={setAvatar}
-                onOpenProfileHeaderModal={setVisibleProfileHeaderModal}
+                onOpenProfileHeaderModal={onOpenProfileHeaderModal}
             />
             <ProfileHeaderModal
-                open={visibleProfileHeaderModal}
+                isOpen={visibleProfileHeaderModal}
                 avatar={avatar}
                 wallpaper={wallpaper}
                 onChangeWallpaper={setWallpaper}
                 onClose={handleCloseModal}
-                onOpenProfileDescriptionModal={setVisibleProfileDescriptionModal}
+                onOpenProfileDescriptionModal={onOpenProfileDescriptionModal}
             />
             <ProfileDescriptionModal
-                open={visibleProfileDescriptionModal}
+                isOpen={visibleProfileDescriptionModal}
                 onClose={handleCloseModal}
                 text={bio}
                 onChangeText={setBio}
-                onOpenProfileUpdatedModal={setVisibleProfileUpdatedModal}
+                onOpenProfileUpdatedModal={onOpenProfileUpdatedModal}
             />
             <ProfileUpdatedModal
-                open={visibleProfileUpdatedModal}
+                isOpen={visibleProfileUpdatedModal}
                 onClose={handleCloseModal}
                 onSubmit={onSubmit}
             />

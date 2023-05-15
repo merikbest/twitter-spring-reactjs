@@ -46,14 +46,8 @@ const ReplyModal: FC<ReplyModalProps> = (
     }
 
     return (
-        <Dialog
-            className={classes.dialogWrapper}
-            style={{ top: "-10%" }}
-            open={visible}
-            onClose={onClose}
-            aria-labelledby="form-dialog-title"
-        >
-            <DialogTitle id="form-dialog-title">
+        <Dialog className={classes.dialogWrapper} open={visible} onClose={onClose}>
+            <DialogTitle>
                 <CloseButton onClose={onClose} />
             </DialogTitle>
             <DialogContent className={classes.container}>

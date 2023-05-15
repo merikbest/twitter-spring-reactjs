@@ -83,9 +83,9 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} className={classes.dialog} aria-labelledby="form-dialog-title">
+        <Dialog open={visible} onClose={onClose} className={classes.dialog}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitle id="form-dialog-title">
+                <DialogTitle>
                     <CloseButton onClose={onClose} />
                     Edit List
                     <Button

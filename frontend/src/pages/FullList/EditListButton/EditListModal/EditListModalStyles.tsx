@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useEditListModalStyles = makeStyles((theme: Theme) => ({
+export const useEditListModalStyles = makeStyles(() => ({
     dialog: {
         "& .MuiDialogTitle-root": {
             marginBottom: 0
@@ -9,7 +9,7 @@ export const useEditListModalStyles = makeStyles((theme: Theme) => ({
     content: {
         height: 569,
         width: 598,
-        padding: "0px 0px",
+        padding: 0,
         overflowX: "hidden"
     },
     button: {

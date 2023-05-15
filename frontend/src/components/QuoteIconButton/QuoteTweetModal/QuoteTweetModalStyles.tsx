@@ -1,13 +1,8 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useQuoteTweetModalStyles = makeStyles((theme: Theme) => ({
+export const useQuoteTweetModalStyles = makeStyles(() => ({
     content: {
-        top: "-20%",
-        "& .MuiDialogTitle-root": {
-            padding: "5px 15px",
-            marginBottom: 0,
-            borderBottom: `1px solid ${theme.palette.divider}`
-        }
+        top: "-20%"
     },
     header: {
         padding: "5px 15px",

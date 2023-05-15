@@ -64,9 +64,9 @@ const ListsModal: FC<ListsModalProps> = ({ userId, visible, onClose }): ReactEle
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} className={classes.dialog}>
+        <Dialog open={visible} onClose={onClose} >
             <form onSubmit={onSubmit}>
-                <DialogTitle>
+                <DialogTitle className={classes.dialog}>
                     <CloseButton onClose={onClose} />
                     Pick a List
                     <Button type="submit" variant="contained" color="primary" size="small">

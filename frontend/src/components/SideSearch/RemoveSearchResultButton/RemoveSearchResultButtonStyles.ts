@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useRemoveSearchResultButtonStyles = makeStyles((theme: Theme) => ({
+export const useRemoveSearchResultButtonStyles = makeStyles(() => ({
     closeIconButton: {
         marginLeft: "auto",
         float: "right"

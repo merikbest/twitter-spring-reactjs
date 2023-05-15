@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const usePollInputStyles = makeStyles((theme: Theme) => ({
+export const usePollInputStyles = makeStyles(() => ({
     container: {
         marginBottom: 11,
         position: "relative"

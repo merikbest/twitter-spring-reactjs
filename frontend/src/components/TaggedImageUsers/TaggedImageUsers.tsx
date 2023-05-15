@@ -61,7 +61,7 @@ const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers
                 {isFullTweet && ProfileIconFilled}
                 {getUsersInImage(taggedImageUsers)}
             </Typography>
-            <Dialog className={classes.dialog} open={visibleModalWindow} onClose={onCloseTaggedImageUsers}>
+            <Dialog open={visibleModalWindow} onClose={onCloseTaggedImageUsers}>
                 <DialogTitle>
                     <CloseButton onClose={onCloseTaggedImageUsers} />
                     In this photo

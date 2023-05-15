@@ -2,11 +2,6 @@ import { makeStyles, Theme } from "@material-ui/core";
 
 export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
     container: {
-        "& .MuiDialogTitle-root": {
-            padding: "5px 15px",
-            margin: 0,
-            borderBottom: `1px solid ${theme.palette.divider}`
-        },
         "& .MuiDialogContent-root": {
             width: 597,
             height: 597,

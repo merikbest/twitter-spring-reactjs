@@ -161,5 +161,10 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
         "& .MuiPaper-elevation24": {
             boxShadow: "none"
         }
+    },
+    dialogContent: {
+        height: 550,
+        width: 598,
+        padding: 0
     }
 }));

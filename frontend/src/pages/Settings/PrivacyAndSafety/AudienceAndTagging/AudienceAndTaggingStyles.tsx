@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useAudienceAndTaggingStyles = makeStyles((theme: Theme) => ({
+export const useAudienceAndTaggingStyles = makeStyles(() => ({
     photoTaggingLink: {
         "& svg": {
             marginTop: 8

@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useCreateAccountModalStyles = makeStyles((theme: Theme) => ({
+export const useCreateAccountModalStyles = makeStyles(() => ({
     container: {
         width: 550,
         height: 600,

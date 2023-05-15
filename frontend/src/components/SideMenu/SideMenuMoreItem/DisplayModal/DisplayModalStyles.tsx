@@ -1,12 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
 export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
-    dialog: {
-        "& .MuiDialogTitle-root": {
-            padding: "5px 15px",
-            marginBottom: 0
-        }
-    },
     content: {
         height: 603,
         width: 598,

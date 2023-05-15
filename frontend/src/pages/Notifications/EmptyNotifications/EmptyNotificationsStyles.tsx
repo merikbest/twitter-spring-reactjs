@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useEmptyNotificationsStyles = makeStyles((theme: Theme) => ({
+export const useEmptyNotificationsStyles = makeStyles(() => ({
     infoWindow: {
         textAlign: "center",
         "& .MuiTypography-h4": {

@@ -1,23 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useProfileHeaderModalStyles = makeStyles((theme) => ({
-    container: {
-        width: 598,
-        height: 600,
-        marginTop: 5,
-        position: "relative"
-    },
-    logoIcon: {
-        margin: "0 auto",
-        width: 30,
-        "& svg": {
-            fontSize: 34,
-            color: theme.palette.primary.main
-        }
-    },
-    title: {
-        margin: "16px 0"
-    },
     wallpaperWrapper: {
         height: 136,
         marginTop: 71,
@@ -51,11 +34,5 @@ export const useProfileHeaderModalStyles = makeStyles((theme) => ({
             height: "125px !important",
             border: "4px solid white"
         }
-    },
-    button: {
-        position: "absolute",
-        bottom: 0,
-        width: 530,
-        marginBottom: 30
     }
 }));

@@ -2,11 +2,6 @@ import { makeStyles, Theme } from "@material-ui/core";
 
 export const useChangePhoneModalStyles = makeStyles((theme: Theme) => ({
     dialog: {
-        "& .MuiDialogTitle-root": {
-            padding: "5px 15px",
-            marginBottom: 0,
-            borderBottom: `1px solid ${theme.palette.divider}`
-        },
         "& .MuiDialogContent-root": {
             paddingTop: 10
         }

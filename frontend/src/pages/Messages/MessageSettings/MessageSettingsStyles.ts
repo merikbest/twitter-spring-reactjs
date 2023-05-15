@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useMessageSettingsStyles = makeStyles((theme: Theme) => ({
+export const useMessageSettingsStyles = makeStyles(() => ({
     chatContainer: {
         minWidth: 600,
         padding: 0,

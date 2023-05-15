@@ -22,8 +22,8 @@ const QuoteTweetModal: FC<QuoteTweetModalProps> = ({ quoteTweet, visible, onClos
     }
 
     return (
-        <Dialog className={classes.content} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogTitle className={classes.header} id="form-dialog-title">
+        <Dialog className={classes.content} open={visible} onClose={onClose}>
+            <DialogTitle className={classes.header}>
                 <CloseButton onClose={onClose} />
             </DialogTitle>
             <DialogContent className={classes.dialogContent}>

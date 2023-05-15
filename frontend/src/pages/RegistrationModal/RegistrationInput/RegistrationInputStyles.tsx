@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useRegistrationInputStyles = makeStyles((theme: Theme) => ({
+export const useRegistrationInputStyles = makeStyles(() => ({
     container: {
         marginBottom: 20
     },

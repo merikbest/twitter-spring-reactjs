@@ -79,7 +79,7 @@ const UsersListModal: FC<UsersListModalProps> = (
     }
 
     return (
-        <Dialog className={classes.dialog} open={visible} onClose={onCloseUsersListModal}>
+        <Dialog open={visible} onClose={onCloseUsersListModal}>
             <DialogTitle>
                 <CloseButton onClose={onCloseUsersListModal} />
                 {title}

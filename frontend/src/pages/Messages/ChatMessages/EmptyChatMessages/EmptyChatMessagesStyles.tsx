@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useEmptyChatMessagesStyles = makeStyles((theme: Theme) => ({
+export const useEmptyChatMessagesStyles = makeStyles(() => ({
     chatInfoWrapper: {
         width: 320,
         margin: "0px auto",

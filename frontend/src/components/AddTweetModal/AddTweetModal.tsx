@@ -28,8 +28,8 @@ const AddTweetModal: FC<AddTweetModalProps> = ({ title, visible, onClose }): Rea
     }
 
     return (
-        <Dialog className={classes.content} open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
-            <DialogTitle className={classes.header} id="form-dialog-title">
+        <Dialog className={classes.content} open={visible} onClose={onClose}>
+            <DialogTitle>
                 <CloseButton onClose={onClose} />
                 {title}
             </DialogTitle>

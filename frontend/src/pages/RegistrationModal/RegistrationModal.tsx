@@ -100,12 +100,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
     };
 
     return (
-        <Dialog
-            transitionDuration={0}
-            open={open}
-            onClose={onClose}
-            aria-labelledby="form-dialog-title"
-        >
+        <Dialog transitionDuration={0} open={open} onClose={onClose}>
             <DialogContent style={{ paddingTop: 0, paddingBottom: 0 }} className={classes.container}>
                 <div className={classes.logoIcon}>
                     <TwitterIcon />

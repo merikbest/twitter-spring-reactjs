@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useImageListStyles = makeStyles((theme: Theme) => ({
+export const useImageListStyles = makeStyles(() => ({
     container: {
         display: "flex",
         alignItems: "center",

@@ -59,7 +59,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} onClick={handleClick} className={classes.dialog}>
+        <Dialog open={visible} onClose={onClose} onClick={handleClick}>
             <DialogTitle>
                 <CloseButton onClose={onClose} />
                 {title}

@@ -1,23 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useProfilePictureModalStyles = makeStyles((theme) => ({
-    container: {
-        width: 598,
-        height: 600,
-        marginTop: 5,
-        position: "relative"
-    },
-    logoIcon: {
-        margin: "0 auto",
-        width: 30,
-        "& svg": {
-            fontSize: 34,
-            color: theme.palette.primary.main
-        }
-    },
-    title: {
-        margin: "16px 0"
-    },
+export const useProfilePictureModalStyles = makeStyles(() => ({
     avatarWrapper: {
         position: "relative",
         margin: "62px auto",
@@ -38,11 +21,5 @@ export const useProfilePictureModalStyles = makeStyles((theme) => ({
             width: "184px !important",
             height: "184px !important"
         }
-    },
-    button: {
-        position: "absolute",
-        bottom: 0,
-        width: 530,
-        marginBottom: 30
     }
 }));

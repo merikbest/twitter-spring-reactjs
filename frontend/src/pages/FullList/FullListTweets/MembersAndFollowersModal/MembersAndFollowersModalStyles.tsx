@@ -1,17 +1,10 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useMembersAndFollowersModalStyles = makeStyles((theme: Theme) => ({
-    dialog: {
-        "& .MuiDialogTitle-root": {
-            padding: "5px 15px",
-            marginBottom: 0,
-            borderBottom: `1px solid ${theme.palette.divider}`
-        }
-    },
+export const useMembersAndFollowersModalStyles = makeStyles(() => ({
     content: {
         height: 577,
         width: 598,
-        padding: "0px 0px",
+        padding: 0,
         overflowX: "hidden"
     }
 }));

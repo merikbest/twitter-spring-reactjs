@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const usePinnedListsItemStyles = makeStyles((theme: Theme) => ({
+export const usePinnedListsItemStyles = makeStyles(() => ({
     pinnedListWrapper: {
         display: "inline-block",
         width: 99,

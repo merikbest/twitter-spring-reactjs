@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useChangeYourPasswordStyles = makeStyles((theme: Theme) => ({
+export const useChangeYourPasswordStyles = makeStyles(() => ({
     buttonWrapper: {
         float: "right"
     }

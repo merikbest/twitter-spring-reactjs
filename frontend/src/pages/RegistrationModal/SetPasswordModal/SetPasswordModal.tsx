@@ -54,7 +54,6 @@ const SetPasswordModal: FC<SetPasswordProps> = ({ email, open, onClose }): React
             transitionDuration={0}
             open={open}
             onClose={onClose}
-            aria-labelledby="form-dialog-title"
             hideBackdrop
         >
             <DialogContent style={{ paddingTop: 0, paddingBottom: 0 }} className={classes.container}>

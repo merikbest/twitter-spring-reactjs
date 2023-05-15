@@ -2,11 +2,7 @@ import { makeStyles, Theme } from "@material-ui/core";
 
 export const useReplyModalStyles = makeStyles((theme: Theme) => ({
     dialogWrapper: {
-        "& .MuiDialogTitle-root": {
-            padding: "5px 15px",
-            marginBottom: 0,
-            borderBottom: `1px solid ${theme.palette.divider}`
-        }
+        top: "-10%"
     },
     container: {
         width: 598,

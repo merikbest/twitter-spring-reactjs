@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useLanguagesStyles = makeStyles((theme: Theme) => ({
+export const useLanguagesStyles = makeStyles(() => ({
     accessibilityWrapper: {
         "& svg": {
             marginTop: 10

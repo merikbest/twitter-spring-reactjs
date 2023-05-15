@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const usePrivacyAndSafetyStyles = makeStyles((theme: Theme) => ({
+export const usePrivacyAndSafetyStyles = makeStyles(() => ({
     listWrapper: {
         paddingBottom: 64
     }

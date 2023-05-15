@@ -16,7 +16,7 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
     content: {
         height: 577,
         width: 598,
-        padding: "0px 0px",
+        padding: 0,
         overflowX: "hidden"
     },
     tabs: {

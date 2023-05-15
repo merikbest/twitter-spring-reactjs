@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useChangeCountryStyles = makeStyles((theme: Theme) => ({
+export const useChangeCountryStyles = makeStyles(() => ({
     selectWrapper: {
         "& .MuiFormControl-root": {
             width: "100%"
