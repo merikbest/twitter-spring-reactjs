@@ -24,7 +24,7 @@ import TopicBlock from "../TopicBlock/TopicBlock";
 import Spinner from "../../../components/Spinner/Spinner";
 
 const Suggested = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useSuggestedStyles();
     const topicClasses = useTopicsStyles();
     const dispatch = useDispatch();

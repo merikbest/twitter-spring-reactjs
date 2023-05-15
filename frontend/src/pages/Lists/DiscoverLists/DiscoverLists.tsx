@@ -11,7 +11,7 @@ import { useGlobalStyles } from "../../../util/globalClasses";
 import { selectIsListsLoading, selectListsItems } from "../../../store/ducks/lists/selectors";
 
 const DiscoverLists = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useDiscoverListsStyles();
     const lists = useSelector(selectListsItems);
     const isListsLoading = useSelector(selectIsListsLoading);

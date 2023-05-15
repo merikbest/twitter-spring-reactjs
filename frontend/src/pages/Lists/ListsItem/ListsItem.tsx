@@ -22,7 +22,7 @@ interface ListsItemProps {
 }
 
 const ListsItem: FC<ListsItemProps> = memo(({ list, listIndex, isMyList }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useListsItemStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);

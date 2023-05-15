@@ -34,7 +34,7 @@ const SetPasswordFormSchema = yup.object().shape({
 });
 
 const SetPasswordModal: FC<SetPasswordProps> = ({ email, open, onClose }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useSetPasswordModalStyles();
     const dispatch = useDispatch();
     const history = useHistory();

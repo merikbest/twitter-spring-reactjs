@@ -1,6 +1,10 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
-export const useGlobalStyles = makeStyles((theme: Theme) => ({
+interface UseGlobalStylesProps {
+    dialogContentHeight?: number;
+}
+
+export const useGlobalStyles = makeStyles<Theme, UseGlobalStylesProps>((theme) => ({
     pageContainer: {
         borderRadius: 0,
         minHeight: "100vh",
@@ -163,8 +167,9 @@ export const useGlobalStyles = makeStyles((theme: Theme) => ({
         }
     },
     dialogContent: {
-        height: 550,
+        height: props => props.dialogContentHeight ?? 550,
         width: 598,
-        padding: 0
+        padding: 0,
+        overflowX: "hidden"
     }
 }));

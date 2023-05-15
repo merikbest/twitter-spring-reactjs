@@ -8,7 +8,7 @@ import { selectUserProfileId, selectUserProfileIsSubscriber } from "../../../sto
 import { processSubscribe } from "../../../store/ducks/userProfile/actionCreators";
 
 const NotificationButton = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const userProfileId = useSelector(selectUserProfileId);
     const isSubscriber = useSelector(selectUserProfileIsSubscriber);

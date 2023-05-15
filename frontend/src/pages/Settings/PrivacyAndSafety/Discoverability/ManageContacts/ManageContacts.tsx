@@ -7,7 +7,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../../constants/url-constants";
 
 const ManageContacts: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useManageContactsStyles();
 
     return (

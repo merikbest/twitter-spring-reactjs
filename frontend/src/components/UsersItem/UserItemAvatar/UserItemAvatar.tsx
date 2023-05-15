@@ -9,7 +9,7 @@ interface UserItemAvatarProps {
 }
 
 const UserItemAvatar: FC<UserItemAvatarProps> = memo(({ avatar }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <ListItemAvatar>

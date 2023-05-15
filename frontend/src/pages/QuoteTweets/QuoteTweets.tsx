@@ -13,7 +13,7 @@ import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/Infini
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const QuoteTweets: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const params = useParams<{ tweetId: string }>();
     const tweets = useSelector(selectTweetsItems);

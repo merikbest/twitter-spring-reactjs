@@ -10,7 +10,7 @@ interface LinkWrapperProps {
 }
 
 const LinkWrapper: FC<LinkWrapperProps> = ({ children, path, visiblePopperWindow }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     if (visiblePopperWindow) {
         return <span>{children}</span>;

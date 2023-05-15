@@ -10,7 +10,7 @@ interface RecommendedLanguageProps {
 }
 
 const RecommendedLanguage: FC<RecommendedLanguageProps> = ({ title }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useRecommendedLanguageStyles();
 
     return (

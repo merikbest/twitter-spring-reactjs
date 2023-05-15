@@ -10,7 +10,7 @@ interface PageHeaderWrapperProps {
 }
 
 const PageHeaderWrapper: FC<PageHeaderWrapperProps> = ({ children, backButton }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <Paper className={globalClasses.pageHeader} variant="outlined">

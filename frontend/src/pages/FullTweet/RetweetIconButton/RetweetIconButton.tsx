@@ -14,7 +14,7 @@ const RetweetIconButton = memo((): ReactElement => {
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
     const isTweetRetweeted = useSelector(selectIsTweetRetweeted);
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useRetweetIconButtonStyles({ isTweetRetweeted: isTweetRetweeted! });
 
     const handleRetweet = (): void => {

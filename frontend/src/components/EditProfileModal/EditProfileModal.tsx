@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import { Avatar, Button } from "@material-ui/core";
@@ -17,8 +16,9 @@ import { uploadImage } from "../../util/upload-image-helper";
 import UploadProfileImage from "./UploadProfileImage";
 import { useEditProfileModalStyles } from "./EditProfileModalStyles";
 import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
-import CloseButton from "../CloseButton/CloseButton";
 import { updatedUserData } from "../../store/ducks/user/actionCreators";
+import { useGlobalStyles } from "../../util/globalClasses";
+import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
 
 interface EditProfileModalProps {
     visible?: boolean;
@@ -37,6 +37,7 @@ export const EditProfileFormSchema = yup.object().shape({
 });
 
 const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): ReactElement | null => {
+    const globalClasses = useGlobalStyles({});
     const classes = useEditProfileModalStyles();
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
@@ -73,19 +74,12 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
     return (
         <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitle>
-                    <CloseButton onClose={onClose} />
-                    Edit Profile
-                    <Button
-                        className={classes.button}
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                    >
+                <DialogTitleComponent title={"Edit Profile"} onClose={onClose}>
+                    <Button type="submit" variant="contained" color="primary">
                         Save
                     </Button>
-                </DialogTitle>
-                <DialogContent className={classes.content}>
+                </DialogTitleComponent>
+                <DialogContent className={globalClasses.dialogContent}>
                     <div>
                         <div className={classes.wallpaperWrapper}>
                             <img

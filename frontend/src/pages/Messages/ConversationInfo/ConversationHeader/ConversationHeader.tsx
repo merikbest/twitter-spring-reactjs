@@ -7,7 +7,7 @@ import { useGlobalStyles } from "../../../../util/globalClasses";
 import { useConversationInfoStyles } from "../ConversationInfoStyles";
 
 const ConversationHeader = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useConversationInfoStyles();
 
     return (

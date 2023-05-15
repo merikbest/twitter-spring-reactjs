@@ -1,8 +1,8 @@
 import React, { FC, FormEvent, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Dialog, Divider, List, ListItem } from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
+import classnames from "classnames";
 
 import { useMessagesModalStyles } from "./MessagesModalStyles";
 import {
@@ -13,11 +13,12 @@ import {
 import { selectUsersPagesCount, selectUsersSearch } from "../../../store/ducks/usersSearch/selectors";
 import MessagesModalUser from "./MessagesModalUser/MessagesModalUser";
 import { createChat } from "../../../store/ducks/chats/actionCreators";
-import CloseButton from "../../../components/CloseButton/CloseButton";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import { UserResponse } from "../../../types/user";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 import ModalInput from "../../../components/ModalInput/ModalInput";
+import DialogTitleComponent from "../../../components/DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../../util/globalClasses";
 
 interface MessagesModalProps {
     visible?: boolean;
@@ -25,6 +26,7 @@ interface MessagesModalProps {
 }
 
 const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactElement | null => {
+    const globalClasses = useGlobalStyles({});
     const classes = useMessagesModalStyles();
     const dispatch = useDispatch();
     const users = useSelector(selectUsersSearch);
@@ -78,12 +80,9 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
 
     return (
         <Dialog open={visible} onClose={onClose}>
-            <DialogTitle className={classes.header}>
-                <CloseButton onClose={onClose} />
-                New message
+            <DialogTitleComponent title={"New message"} onClose={onClose} borderBottom>
                 <Button
                     onClick={handleClickAddUserToChat}
-                    className={classes.button}
                     type="submit"
                     variant="contained"
                     color="primary"
@@ -92,8 +91,8 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
                 >
                     Next
                 </Button>
-            </DialogTitle>
-            <DialogContent id="scrollableDiv" className={classes.content}>
+            </DialogTitleComponent>
+            <DialogContent id="scrollableDiv" className={classnames(globalClasses.dialogContent, classes.content)}>
                 <InfiniteScrollWrapper
                     dataLength={users.length}
                     pagesCount={usersPagesCount}

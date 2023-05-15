@@ -11,7 +11,7 @@ interface TweetAvatarProps {
 }
 
 const TweetAvatar: FC<TweetAvatarProps> = memo(({ src, userId }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <Link to={`${PROFILE}/${userId}`}>

@@ -12,7 +12,7 @@ import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreat
 
 const TweetErrorPage = (): ReactElement => {
     const classes = useTweetErrorPageStyles();
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const errorMessage = useSelector(selectErrorMessage);
 

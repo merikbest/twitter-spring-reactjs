@@ -24,7 +24,7 @@ const ChangeYourPasswordFormSchema = yup.object().shape({
 });
 
 const ChangeYourPassword = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useChangeYourPasswordStyles();
     const dispatch = useDispatch();
     const { control, handleSubmit, setError, formState: { errors }, reset } = useForm<ChangeYourPasswordFormProps>({

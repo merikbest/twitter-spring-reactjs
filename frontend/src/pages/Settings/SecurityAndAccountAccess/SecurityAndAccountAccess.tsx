@@ -8,7 +8,7 @@ import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
 import { SETTINGS_SECURITY, SETTINGS_SECURITY_APPS_AND_SESSIONS } from "../../../constants/path-constants";
 
 const SecurityAndAccountAccess: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

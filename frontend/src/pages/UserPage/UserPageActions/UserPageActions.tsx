@@ -22,7 +22,7 @@ import ViewUserTopicsButton from "./ViewUserTopicsButton/ViewUserTopicsButton";
 import { useClickAway } from "../../../hook/useClickAway";
 
 const UserPageActions = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useUserPageActionsStyles();
     const username = useSelector(selectUserProfileUsername);
     const isUserBlocked = useSelector(selectUserProfileIsUserBlocked);

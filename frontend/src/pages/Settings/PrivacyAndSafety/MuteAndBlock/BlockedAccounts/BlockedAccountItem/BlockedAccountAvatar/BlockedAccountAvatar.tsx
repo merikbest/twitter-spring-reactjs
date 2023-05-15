@@ -11,7 +11,7 @@ interface BlockedAccountAvatarProps {
 }
 
 const BlockedAccountAvatar: FC<BlockedAccountAvatarProps> = memo(({avatar}): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useBlockedAccountItemStyles();
     const avatarSrc = avatar ?? DEFAULT_PROFILE_IMG;
 

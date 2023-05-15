@@ -13,7 +13,7 @@ interface CustomizeModalProps {
 }
 
 const CustomizeModal: FC<CustomizeModalProps> = ({ open, onClose, onOpenCreateAccount }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useCustomizeModalStyles();
 
     return (

@@ -12,7 +12,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { LoadingStatus } from "../../../../../types/common";
 
 const ChangeGender: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useChangeGenderStyles();
     const dispatch = useDispatch();
     const gender = useSelector(selectUserProfileGender);

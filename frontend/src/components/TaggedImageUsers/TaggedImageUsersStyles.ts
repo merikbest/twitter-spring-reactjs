@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useTaggedImageUsersStyles = makeStyles((theme) => ({
+export const useTaggedImageUsersStyles = makeStyles(() => ({
     taggedImageUsers: {
         display: "flex",
         alignItems: "center",
@@ -12,10 +12,5 @@ export const useTaggedImageUsersStyles = makeStyles((theme) => ({
             verticalAlign: "bottom",
             height: "1.25em"
         }
-    },
-    content: {
-        height: 550,
-        width: 598,
-        padding: 0
     }
 }));

@@ -25,7 +25,7 @@ interface ChatMessagesProps {
 }
 
 const ChatMessages: FC<ChatMessagesProps> = ({ participantId, chatId }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useChatMessagesStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);

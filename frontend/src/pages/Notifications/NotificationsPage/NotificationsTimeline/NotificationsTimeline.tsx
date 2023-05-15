@@ -12,7 +12,7 @@ import InfiniteScrollWrapper from "../../../../components/InfiniteScrollWrapper/
 import PageHeaderWrapper from "../../../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const NotificationsTimeline: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const tweets = useSelector(selectTweetsItems);
     const pagesCount = useSelector(selectPagesCount);

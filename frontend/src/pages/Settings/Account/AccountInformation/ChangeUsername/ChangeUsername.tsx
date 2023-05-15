@@ -11,7 +11,7 @@ import { useGlobalStyles } from "../../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 
 const ChangeUsername: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useChangeUsernameStyles();
     const dispatch = useDispatch();
     const myProfileUsername = useSelector(selectUserProfileUsername);

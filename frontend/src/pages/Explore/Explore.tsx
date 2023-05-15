@@ -32,7 +32,7 @@ import UsersList from "./UsersList/UsersList";
 import TweetsList from "./TweetsList/TweetsList";
 
 const Explore: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useExploreStyles();
     const dispatch = useDispatch();
     const isTweetsLoaded = useSelector(selectIsTweetsLoaded);

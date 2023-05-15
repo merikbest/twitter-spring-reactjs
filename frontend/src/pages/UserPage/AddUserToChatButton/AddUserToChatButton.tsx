@@ -10,7 +10,7 @@ import { useGlobalStyles } from "../../../util/globalClasses";
 import { selectUserProfileId } from "../../../store/ducks/userProfile/selectors";
 
 const AddUserToChatButton = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const history = useHistory();
     const userProfileId = useSelector(selectUserProfileId);

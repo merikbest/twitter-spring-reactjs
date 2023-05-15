@@ -3,13 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { List, Typography } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useTaggedImageUsersStyles } from "./TaggedImageUsersStyles";
 import { getUsersInImage } from "../../util/text-formatter";
 import { TaggedUserResponse } from "../../types/user";
 import { useModalWindow } from "../../hook/useModalWindow";
-import CloseButton from "../CloseButton/CloseButton";
 import { fetchTaggedImageUsers, resetTaggedImageUsers } from "../../store/ducks/tweet/actionCreators";
 import {
     selectIsTaggedImageUsersLoading,
@@ -20,6 +18,8 @@ import InfiniteScrollWrapper from "../InfiniteScrollWrapper/InfiniteScrollWrappe
 import Spinner from "../Spinner/Spinner";
 import UsersItem, { UserItemSize } from "../UsersItem/UsersItem";
 import { ProfileIconFilled } from "../../icons";
+import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../util/globalClasses";
 
 interface TaggedImageUsersProps {
     tweetId: number;
@@ -28,6 +28,7 @@ interface TaggedImageUsersProps {
 }
 
 const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers, isFullTweet }): ReactElement => {
+    const globalClasses = useGlobalStyles({});
     const classes = useTaggedImageUsersStyles();
     const dispatch = useDispatch();
     const users = useSelector(selectTaggedImageUsers);
@@ -62,11 +63,8 @@ const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers
                 {getUsersInImage(taggedImageUsers)}
             </Typography>
             <Dialog open={visibleModalWindow} onClose={onCloseTaggedImageUsers}>
-                <DialogTitle>
-                    <CloseButton onClose={onCloseTaggedImageUsers} />
-                    In this photo
-                </DialogTitle>
-                <DialogContent id="scrollableDiv" className={classes.content}>
+                <DialogTitleComponent title={"In this photo"} onClose={onCloseTaggedImageUsers} />
+                <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                     <InfiniteScrollWrapper dataLength={users.length} pagesCount={usersPagesCount} loadItems={loadUsers}>
                         {isUsersLoading && !users.length ? (
                             <Spinner paddingTop={250} />

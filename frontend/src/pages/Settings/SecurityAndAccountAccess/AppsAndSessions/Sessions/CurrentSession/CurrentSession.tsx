@@ -8,7 +8,7 @@ import { useGlobalStyles } from "../../../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../../../hoc/withDocumentTitle";
 
 const CurrentSession: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useCurrentSessionStyles();
     const location = useLocation<{ OSName: string; browserName: string; countryName: string; }>();
 

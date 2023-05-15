@@ -6,7 +6,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { ACCESS_TO_THIRD_PARTY_APPS } from "../../../../../constants/url-constants";
 
 const ConnectedApps: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

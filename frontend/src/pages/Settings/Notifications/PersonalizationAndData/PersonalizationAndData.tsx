@@ -13,7 +13,7 @@ import {
 } from "../../../../constants/url-constants";
 
 const PersonalizationAndData = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = usePersonalizationAndDataStyles();
     const [checked1, setChecked1] = useState<boolean>(false);
     const [checked2, setChecked2] = useState<boolean>(true);

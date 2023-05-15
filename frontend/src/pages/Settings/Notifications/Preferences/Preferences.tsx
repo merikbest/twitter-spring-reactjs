@@ -12,7 +12,7 @@ import {
 import { NOTIFICATIONS_ON_MOBILE_DEVICES } from "../../../../constants/url-constants";
 
 const Preferences: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

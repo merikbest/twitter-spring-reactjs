@@ -18,7 +18,7 @@ import { HoverItemDetail, useHoverItem } from "../../../hook/useHoverItem";
 import { fetchUserDetail } from "../../../store/ducks/userDetail/actionCreators";
 
 const TweetHeader = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useFullTweetStyles();
     const tweetUserId = useSelector(selectTweetUserId);
     const tweetUserAvatar = useSelector(selectTweetUserAvatar);

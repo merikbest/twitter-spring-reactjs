@@ -8,7 +8,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { PUBLIC_AND_PROTECTED_TWEETS } from "../../../../../constants/url-constants";
 
 const Autoplay: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useAutoplayStyles();
     const [selectedValue, setSelectedValue] = useState<string>("Never");
 

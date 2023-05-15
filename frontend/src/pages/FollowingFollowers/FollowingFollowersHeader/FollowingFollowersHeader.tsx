@@ -14,7 +14,7 @@ import {
 } from "../../../store/ducks/userProfile/selectors";
 
 const FollowingFollowersHeader = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useFollowingFollowersStyles();
     const userProfileId = useSelector(selectUserProfileId);
     const username = useSelector(selectUserProfileUsername);

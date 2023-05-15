@@ -17,7 +17,7 @@ export interface DisplayProps {
 }
 
 const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useDisplayStyles();
     const dispatch = useDispatch();
     const [selectedBackgroundColor, setSelectedBackgroundColor] = React.useState<BackgroundTheme>(BackgroundTheme.DEFAULT);

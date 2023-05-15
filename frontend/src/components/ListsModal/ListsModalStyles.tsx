@@ -1,17 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
 export const useListsModalStyles = makeStyles<Theme>((theme) => ({
-    dialog: {
-        "& .MuiButton-root": {
-            marginLeft: "auto"
-        }
-    },
-    content: {
-        height: 600,
-        width: 598,
-        padding: 0,
-        overflowX: "hidden"
-    },
     createList: {
         width: "100%",
         padding: "12px 16px",

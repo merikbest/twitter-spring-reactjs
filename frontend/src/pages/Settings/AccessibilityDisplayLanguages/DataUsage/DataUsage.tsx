@@ -9,7 +9,7 @@ import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY } from "../../../../constants/path-constants";
 
 const DataUsage: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useDataUsageStyles();
 
     return (

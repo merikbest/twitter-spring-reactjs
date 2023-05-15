@@ -1,21 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useAddDescriptionModalStyles = makeStyles((theme) => ({
-    header: {
-        margin: 0,
-        border: 0
-    },
-    button: {
-        marginLeft: "auto"
-    },
-    content: {
-        height: 666,
-        width: 598,
-        padding: 0,
-        "& .MuiListItem-root.Mui-selected": {
-            backgroundColor: theme.palette.secondary.main
-        }
-    },
+export const useAddDescriptionModalStyles = makeStyles(() => ({
     contentImage: {
         display: "flex",
         justifyContent: "center",

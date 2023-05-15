@@ -12,7 +12,7 @@ import {
 } from "../../../../constants/url-constants";
 
 const Discoverability: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

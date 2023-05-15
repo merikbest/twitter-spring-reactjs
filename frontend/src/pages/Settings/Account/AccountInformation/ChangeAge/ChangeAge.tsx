@@ -6,7 +6,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { BIRTHDAY_VISIBILITY_SETTINGS } from "../../../../../constants/url-constants";
 
 const ChangeAge: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <div>

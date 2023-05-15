@@ -13,7 +13,7 @@ import {
 } from "../../../store/ducks/lists/selectors";
 
 const PinnedLists = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = usePinnedListsStyles();
     const isPinnedListsLoading = useSelector(selectIsPinnedListsLoading);
     const isPinnedListsLoaded = useSelector(selectIsPinnedListsLoaded);

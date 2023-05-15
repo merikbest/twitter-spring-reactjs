@@ -18,7 +18,7 @@ import EmptyPageDescription from "../../../components/EmptyPageDescription/Empty
 import PageHeaderTitle from "../../../components/PageHeaderTitle/PageHeaderTitle";
 
 const ListsMemberships: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const history = useHistory();
     const params = useParams<{ id: string }>();

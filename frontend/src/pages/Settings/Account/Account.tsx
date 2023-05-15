@@ -13,7 +13,7 @@ import {
 } from "../../../constants/path-constants";
 
 const Account: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

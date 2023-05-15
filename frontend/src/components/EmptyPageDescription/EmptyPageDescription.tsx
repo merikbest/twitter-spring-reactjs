@@ -9,7 +9,7 @@ interface DescriptionProps {
 }
 
 const EmptyPageDescription: FC<DescriptionProps> = ({ title, subtitle }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <div className={globalClasses.infoText}>

@@ -5,11 +5,5 @@ export const useFollowerRequestsModalStyles = makeStyles(() => ({
         "& .MuiDialogTitle-root": {
             borderBottom: "none"
         }
-    },
-    content: {
-        height: 550,
-        width: 598,
-        padding: 0,
-        overflowX: "hidden"
     }
 }));

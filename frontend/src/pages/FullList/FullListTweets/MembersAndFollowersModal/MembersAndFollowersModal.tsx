@@ -1,11 +1,9 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
+import { Dialog, DialogContent } from "@material-ui/core";
 
-import { useMembersAndFollowersModalStyles } from "./MembersAndFollowersModalStyles";
 import ManageMembersItem
     from "../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
-import CloseButton from "../../../../components/CloseButton/CloseButton";
 import {
     fetchListFollowers,
     fetchListMembers,
@@ -14,6 +12,8 @@ import {
 import { selectIsListMembersLoading, selectListMembersItems } from "../../../../store/ducks/listMembers/selectors";
 import Spinner from "../../../../components/Spinner/Spinner";
 import EmptyPageDescription from "../../../../components/EmptyPageDescription/EmptyPageDescription";
+import DialogTitleComponent from "../../../../components/DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../../../util/globalClasses";
 
 interface MembersAndFollowersModalProps {
     listId: number;
@@ -32,7 +32,7 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
         onClose
     }
 ): ReactElement | null => {
-    const classes = useMembersAndFollowersModalStyles();
+    const globalClasses = useGlobalStyles({ dialogContentHeight: 577 });
     const dispatch = useDispatch();
     const users = useSelector(selectListMembersItems);
     const isLoading = useSelector(selectIsListMembersLoading);
@@ -60,11 +60,8 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
 
     return (
         <Dialog open={visible} onClose={onClose} onClick={handleClick}>
-            <DialogTitle>
-                <CloseButton onClose={onClose} />
-                {title}
-            </DialogTitle>
-            <DialogContent className={classes.content}>
+            <DialogTitleComponent title={title} onClose={onClose} />
+            <DialogContent className={globalClasses.dialogContent}>
                 {isLoading ? (
                     <Spinner />
                 ) : (

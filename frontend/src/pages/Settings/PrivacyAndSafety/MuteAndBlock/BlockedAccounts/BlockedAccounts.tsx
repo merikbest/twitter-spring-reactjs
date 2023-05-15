@@ -25,7 +25,7 @@ import {
 import InfiniteScrollWrapper from "../../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const BlockedAccounts: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const blockedUsers = useSelector(selectBlockedUsersItems);
     const isBlockedUsersLoading = useSelector(selectIsBlockedAndMutedUsersLoading);

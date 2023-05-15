@@ -6,7 +6,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { ADVANCED_TWITTER_MUTE_OPTIONS } from "../../../../../constants/url-constants";
 
 const MutedWords: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

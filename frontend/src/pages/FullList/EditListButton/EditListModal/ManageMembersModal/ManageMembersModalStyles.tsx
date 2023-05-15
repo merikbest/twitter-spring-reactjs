@@ -13,12 +13,6 @@ export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
     container: {
         padding: "0px 12px"
     },
-    content: {
-        height: 577,
-        width: 598,
-        padding: 0,
-        overflowX: "hidden"
-    },
     tabs: {
         borderBottom: `1px solid ${theme.palette.divider}`,
         "& .MuiTabs-indicator": {

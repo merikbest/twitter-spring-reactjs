@@ -10,7 +10,7 @@ import { SETTINGS_PRIVACY_AND_SAFETY_OFF_TWITTER_ACTIVITY } from "../../../../..
 import { ACROSS_YOUR_DEVICES } from "../../../../../constants/url-constants";
 
 const LoggedDevices: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useLoggedDevicesStyles();
 
     return (

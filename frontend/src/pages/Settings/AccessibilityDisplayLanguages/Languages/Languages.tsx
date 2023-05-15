@@ -12,7 +12,7 @@ import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { SETTINGS_INFO_LANGUAGES } from "../../../../constants/path-constants";
 
 const Languages: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useLanguagesStyles();
     const myProfileLanguage = useSelector(selectUserProfileLanguage);
 

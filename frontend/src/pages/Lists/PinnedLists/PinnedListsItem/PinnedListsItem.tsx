@@ -16,7 +16,7 @@ interface PinnedListsItemProps {
 }
 
 const PinnedListsItem: FC<PinnedListsItemProps> = memo(({ pinnedList }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = usePinnedListsItemStyles();
     const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchListDetail);
 

@@ -15,7 +15,7 @@ import { PUBLIC_AND_PROTECTED_TWEETS } from "../../../../constants/url-constants
 import { LoadingStatus } from "../../../../types/common";
 
 const AudienceAndTagging: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useAudienceAndTaggingStyles();
     const dispatch = useDispatch();
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);

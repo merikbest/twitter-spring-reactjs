@@ -47,7 +47,7 @@ interface TweetComponentActionsProps {
 }
 
 const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({ tweetId, isFullTweet }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useTweetComponentMoreStyles({ isFullTweet: isFullTweet });
     const dispatch = useDispatch();
     const params = useParams<{ userId: string }>();

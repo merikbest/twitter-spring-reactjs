@@ -13,7 +13,7 @@ import { HOW_TO_CHANGE_COUNTRY_SETTINGS } from "../../../../../constants/url-con
 import { LoadingStatus } from "../../../../../types/common";
 
 const ChangeCountry: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useChangeCountryStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);

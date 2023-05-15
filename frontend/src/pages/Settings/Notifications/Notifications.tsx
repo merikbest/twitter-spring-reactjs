@@ -8,7 +8,7 @@ import { withDocumentTitle } from "../../../hoc/withDocumentTitle";
 import { SETTINGS_NOTIFICATION_FILTERS, SETTINGS_NOTIFICATION_PREFERENCES } from "../../../constants/path-constants";
 
 const Notifications: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

@@ -14,7 +14,7 @@ import { PROFILE } from "../../constants/path-constants";
 import { selectUserProfile, selectUsersIsSuccessLoaded } from "../../store/ducks/userProfile/selectors";
 
 const UserTopics = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const history = useHistory();
     const params = useParams<{ userId: string }>();

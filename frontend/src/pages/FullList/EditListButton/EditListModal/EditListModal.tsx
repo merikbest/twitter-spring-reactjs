@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography } from "@material-ui/core";
+import { Button, Checkbox, Dialog, DialogContent, Typography } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -14,8 +14,9 @@ import ManageMembersModal from "./ManageMembersModal/ManageMembersModal";
 import DeleteListModal from "./DeleteListModal/DeleteListModal";
 import { editList } from "../../../../store/ducks/list/actionCreators";
 import { uploadImage } from "../../../../util/upload-image-helper";
-import CloseButton from "../../../../components/CloseButton/CloseButton";
 import { selectListItem } from "../../../../store/ducks/list/selectors";
+import DialogTitleComponent from "../../../../components/DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../../../util/globalClasses";
 
 interface EditListModalProps {
     visible?: boolean;
@@ -35,6 +36,7 @@ export const EditListModalFormSchema = yup.object().shape({
 });
 
 const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactElement | null => {
+    const globalClasses = useGlobalStyles({ dialogContentHeight: 569 });
     const classes = useEditListModalStyles();
     const dispatch = useDispatch();
     const list = useSelector(selectListItem);
@@ -83,22 +85,14 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} className={classes.dialog}>
+        <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitle>
-                    <CloseButton onClose={onClose} />
-                    Edit List
-                    <Button
-                        className={classes.button}
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                    >
+                <DialogTitleComponent title={"Edit List"} onClose={onClose}>
+                    <Button type="submit" variant="contained" color="primary" size="small">
                         Done
                     </Button>
-                </DialogTitle>
-                <DialogContent className={classes.content}>
+                </DialogTitleComponent>
+                <DialogContent className={globalClasses.dialogContent}>
                     <div>
                         <div className={classes.wallpaperWrapper}>
                             <img
@@ -141,7 +135,7 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
                                 />
                             )}
                         />
-                        <div className={classes.footer}>
+                        <div className={globalClasses.itemInfoWrapper}>
                             <div className={classes.footerWrapper}>
                                 <Typography variant={"body1"} component={"div"}>
                                     Make private

@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button, Checkbox, Dialog, DialogContent, DialogTitle, Typography } from "@material-ui/core";
+import { Button, Checkbox, Dialog, DialogContent, Typography } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -12,7 +12,8 @@ import { uploadImage } from "../../../../util/upload-image-helper";
 import CreateListsModalInput from "./CreateListsModalInput/CreateListsModalInput";
 import { createList } from "../../../../store/ducks/lists/actionCreators";
 import { wallpapers } from "../../../../util/wallpapers";
-import CloseButton from "../../../../components/CloseButton/CloseButton";
+import DialogTitleComponent from "../../../../components/DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../../../util/globalClasses";
 
 interface CreateListsModalProps {
     visible?: boolean;
@@ -31,6 +32,7 @@ const CreateListsModalFormSchema = yup.object().shape({
 });
 
 const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): ReactElement | null => {
+    const globalClasses = useGlobalStyles({ dialogContentHeight: 650 });
     const classes = useCreateListsModalStyles();
     const dispatch = useDispatch();
     const [wallpaper, setWallpaper] = useState<ImageObj>();
@@ -62,11 +64,8 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
     return (
         <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitle>
-                    <CloseButton onClose={onClose} />
-                    Create a new List
+                <DialogTitleComponent title={"Create a new List"} onClose={onClose}>
                     <Button
-                        className={classes.button}
                         disabled={!watch("name")}
                         type="submit"
                         variant="contained"
@@ -75,8 +74,8 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                     >
                         Next
                     </Button>
-                </DialogTitle>
-                <DialogContent className={classes.content}>
+                </DialogTitleComponent>
+                <DialogContent className={globalClasses.dialogContent}>
                     <div>
                         <div className={classes.wallpaperWrapper}>
                             <img className={classes.wallpaperImg} key={wallpaper?.src} src={wallpaper?.src} />
@@ -114,7 +113,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                                 />
                             )}
                         />
-                        <div className={classes.footer}>
+                        <div className={globalClasses.itemInfoWrapper}>
                             <div className={classes.footerWrapper}>
                                 <Typography variant={"body1"} component={"div"}>
                                     Make private

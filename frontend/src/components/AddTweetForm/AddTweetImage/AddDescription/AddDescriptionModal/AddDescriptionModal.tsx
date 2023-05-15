@@ -1,11 +1,11 @@
 import React, { FC, ReactElement } from "react";
 import { Controller, useForm } from "react-hook-form";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { Button, Dialog, DialogContent, FormControl, FormGroup } from "@material-ui/core";
 
-import CloseButton from "../../../../CloseButton/CloseButton";
 import { useAddDescriptionModalStyles } from "./AddDescriptionModalStyles";
 import TweetInput from "../../../../TweetInput/TweetInput";
+import DialogTitleComponent from "../../../../DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
 
 interface AddDescriptionModalProps {
     visible?: boolean;
@@ -26,6 +26,7 @@ const AddDescriptionModal: FC<AddDescriptionModalProps> = (
         handleChangeDescription
     }
 ): ReactElement | null => {
+    const globalClasses = useGlobalStyles({ dialogContentHeight: 666 });
     const classes = useAddDescriptionModalStyles();
     const { control, handleSubmit } = useForm<AddDescriptionFormProps>();
 
@@ -41,20 +42,12 @@ const AddDescriptionModal: FC<AddDescriptionModalProps> = (
     return (
         <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitle className={classes.header}>
-                    <CloseButton onClose={onClose} />
-                    Edit image description
-                    <Button
-                        className={classes.button}
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        size="small"
-                    >
+                <DialogTitleComponent title={"Edit image description"} onClose={onClose} borderBottom>
+                    <Button type="submit" variant="contained" color="primary" size="small">
                         Save
                     </Button>
-                </DialogTitle>
-                <DialogContent id="scrollableDiv" className={classes.content}>
+                </DialogTitleComponent>
+                <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                     <div className={classes.contentImage}>
                         <img src={imageSrc} alt={imageSrc} />
                     </div>

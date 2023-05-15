@@ -6,7 +6,7 @@ import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { DATA_THROUGH_PARTNERSHIPS } from "../../../../constants/url-constants";
 
 const DataSharing: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

@@ -13,7 +13,7 @@ import EmptyPageDescription from "../../components/EmptyPageDescription/EmptyPag
 import BookmarksHeader from "./BookmarksHeader/BookmarksHeader";
 
 const Bookmarks: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);

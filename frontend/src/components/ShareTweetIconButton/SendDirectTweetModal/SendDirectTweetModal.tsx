@@ -1,8 +1,8 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dialog, List } from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import { Dialog, Divider, List } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
+import classnames from "classnames";
 
 import { useSendDirectTweetModalStyles } from "./SendDirectTweetModalStyles";
 import { selectUsersPagesCount, selectUsersSearch } from "../../../store/ducks/usersSearch/selectors";
@@ -14,7 +14,6 @@ import {
     setUsersSearch
 } from "../../../store/ducks/usersSearch/actionCreators";
 import DirectUserItem from "./DirectUserItem/DirectUserItem";
-import CloseButton from "../../CloseButton/CloseButton";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import { UserResponse } from "../../../types/user";
 import InfiniteScrollWrapper from "../../InfiniteScrollWrapper/InfiniteScrollWrapper";
@@ -24,6 +23,8 @@ import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreat
 import UserChip from "../../UserChip/UserChip";
 import ModalInput from "../../ModalInput/ModalInput";
 import { useSelectUsers } from "../../../hook/useSelectUsers";
+import DialogTitleComponent from "../../DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../../util/globalClasses";
 
 interface SendDirectTweetModalProps {
     tweetId: number;
@@ -38,6 +39,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         onClose
     }
 ): ReactElement | null => {
+    const globalClasses = useGlobalStyles({});
     const classes = useSendDirectTweetModalStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);
@@ -93,18 +95,15 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     }
 
     return (
-        <Dialog open={visible}>
-            <DialogTitle className={classes.header}>
-                <CloseButton onClose={onClose} />
-                Send Tweet
-            </DialogTitle>
-            <DialogContent id="scrollableDiv" className={classes.content}>
+        <Dialog open={visible} onClose={onClose}>
+            <DialogTitleComponent title={"Send Tweet"} onClose={onClose} borderBottom />
+            <DialogContent id="scrollableDiv" className={classnames(globalClasses.dialogContent, classes.content)}>
                 <ModalInput placeholder={"Search people"} searchText={searchText} onSearch={onSearch} />
                 {selectedUsers && (selectedUsers.map((selectedUser) => (
                         <UserChip key={selectedUser.id} selectedUser={selectedUser} onDeleteUser={handleDelete} />
                     ))
                 )}
-                <div className={classes.divider} />
+                <Divider style={{ marginTop: 8 }} />
                 <InfiniteScrollWrapper
                     dataLength={users.length}
                     pagesCount={usersPagesCount}

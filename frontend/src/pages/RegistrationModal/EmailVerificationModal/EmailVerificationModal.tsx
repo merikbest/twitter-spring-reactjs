@@ -15,7 +15,7 @@ interface CustomizeModalProps {
 }
 
 const EmailVerificationModal: FC<CustomizeModalProps> = ({ email, open, onClose, onOpenSetPassword }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useEmailVerificationModalStyles();
     const [verificationCode, setVerificationCode] = useState<string>("");
     const [error, setError] = useState<string>("");

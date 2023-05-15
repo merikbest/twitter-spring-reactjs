@@ -1,6 +1,6 @@
 import React, { FC, FormEvent, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Dialog, DialogContent, DialogTitle, List, ListItem, Typography } from "@material-ui/core";
+import { Button, Dialog, DialogContent, List, ListItem, Typography } from "@material-ui/core";
 
 import { useListsModalStyles } from "./ListsModalStyles";
 import {
@@ -9,10 +9,11 @@ import {
     selectSimpleListsItems
 } from "../../store/ducks/lists/selectors";
 import { fetchSimpleLists, processUserToLists, resetListsState } from "../../store/ducks/lists/actionCreators";
-import CloseButton from "../CloseButton/CloseButton";
 import { SimpleListResponse } from "../../types/lists";
 import Spinner from "../Spinner/Spinner";
 import ListsModalItem from "./ListsModalItem/ListsModalItem";
+import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../util/globalClasses";
 
 interface ListsModalProps {
     userId: number;
@@ -21,6 +22,7 @@ interface ListsModalProps {
 }
 
 const ListsModal: FC<ListsModalProps> = ({ userId, visible, onClose }): ReactElement | null => {
+    const globalClasses = useGlobalStyles({ dialogContentHeight: 600 });
     const classes = useListsModalStyles();
     const dispatch = useDispatch();
     const simpleLists = useSelector(selectSimpleListsItems);
@@ -66,14 +68,12 @@ const ListsModal: FC<ListsModalProps> = ({ userId, visible, onClose }): ReactEle
     return (
         <Dialog open={visible} onClose={onClose} >
             <form onSubmit={onSubmit}>
-                <DialogTitle className={classes.dialog}>
-                    <CloseButton onClose={onClose} />
-                    Pick a List
+                <DialogTitleComponent title={"Pick a List"} onClose={onClose}>
                     <Button type="submit" variant="contained" color="primary" size="small">
                         Save
                     </Button>
-                </DialogTitle>
-                <DialogContent className={classes.content}>
+                </DialogTitleComponent>
+                <DialogContent className={globalClasses.dialogContent}>
                     <Typography variant={"body1"} component={"div"} className={classes.createList}>
                         Create a new List
                     </Typography>

@@ -12,7 +12,7 @@ import {
 import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../constants/url-constants";
 
 const Location: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

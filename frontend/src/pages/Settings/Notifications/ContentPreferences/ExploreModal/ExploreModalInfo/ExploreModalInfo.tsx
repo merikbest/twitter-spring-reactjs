@@ -18,7 +18,7 @@ const ExploreModalInfo: FC<ExploreModalInfoProps> = (
         subtitle
     }
 ): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

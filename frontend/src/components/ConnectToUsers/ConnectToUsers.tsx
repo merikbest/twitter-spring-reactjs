@@ -15,7 +15,7 @@ interface ConnectToUsersProps {
 }
 
 const ConnectToUsers: FC<ConnectToUsersProps> = ({ title, isUsersLoading, users }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useConnectToUsersStyles();
 
     return (

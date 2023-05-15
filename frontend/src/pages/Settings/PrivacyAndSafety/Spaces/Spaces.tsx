@@ -7,7 +7,7 @@ import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { USING_TWITTER_SPACES } from "../../../../constants/url-constants";
 
 const Spaces: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useSpacesStyles();
 
     return (

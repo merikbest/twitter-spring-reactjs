@@ -1,10 +1,7 @@
 import React, { FC, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Dialog, DialogContent, List } from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import { Button, Dialog, DialogContent, Divider, List } from "@material-ui/core";
 
-import { useTagPeopleModalStyles } from "./TagPeopleModalStyles";
-import CloseButton from "../../../../CloseButton/CloseButton";
 import {
     fetchUsersSearchByUsername,
     resetUsersState,
@@ -16,6 +13,8 @@ import TagPeopleItem from "./TagPeopleItem/TagPeopleItem";
 import UserChip from "../../../../UserChip/UserChip";
 import ModalInput from "../../../../ModalInput/ModalInput";
 import { UserResponse } from "../../../../../types/user";
+import DialogTitleComponent from "../../../../DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
 
 interface TagPeopleModalProps {
     visible?: boolean;
@@ -34,7 +33,7 @@ const TagPeopleModal: FC<TagPeopleModalProps> = (
         handleListItemClick
     }
 ): ReactElement | null => {
-    const classes = useTagPeopleModalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const users = useSelector(selectUsersSearch);
     const usersPagesCount = useSelector(selectUsersPagesCount);
@@ -61,11 +60,8 @@ const TagPeopleModal: FC<TagPeopleModalProps> = (
 
     return (
         <Dialog open={visible} onClose={onClose}>
-            <DialogTitle className={classes.header}>
-                <CloseButton onClose={onClose} />
-                Tag people
+            <DialogTitleComponent title={"Tag people"} onClose={onClose} borderBottom>
                 <Button
-                    className={classes.button}
                     disabled={selectedUsers.length === 0}
                     onClick={onClose}
                     type="submit"
@@ -75,14 +71,14 @@ const TagPeopleModal: FC<TagPeopleModalProps> = (
                 >
                     Done
                 </Button>
-            </DialogTitle>
-            <DialogContent id="scrollableDiv" className={classes.content}>
+            </DialogTitleComponent>
+            <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                 <ModalInput placeholder={"Search people"} searchText={searchText} onSearch={onSearch} />
                 {selectedUsers && (selectedUsers.map((selectedUser) => (
                         <UserChip key={selectedUser.id} selectedUser={selectedUser} onDeleteUser={handleDelete} />
                     ))
                 )}
-                <div className={classes.divider} />
+                <Divider style={{ marginTop: 8 }} />
                 <InfiniteScrollWrapper
                     dataLength={users.length}
                     pagesCount={usersPagesCount}

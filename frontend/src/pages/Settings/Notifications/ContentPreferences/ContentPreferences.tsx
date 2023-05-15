@@ -16,7 +16,7 @@ import {
 } from "../../../../constants/path-constants";
 
 const ContentPreferences = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useContentPreferencesStyles();
     const [visibleExploreModal, setVisibleExploreModal] = useState<boolean>(false);
     const [visibleRecommendationsModal, setVisibleRecommendationsModal] = useState<boolean>(false);

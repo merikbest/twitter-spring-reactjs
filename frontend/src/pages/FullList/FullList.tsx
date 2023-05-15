@@ -26,7 +26,7 @@ import FullListWallpaper from "./FullListWallpaper/FullListWallpaper";
 import FullListDescription from "./FullListDescription/FullListDescription";
 
 const FullList: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useFullListStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);

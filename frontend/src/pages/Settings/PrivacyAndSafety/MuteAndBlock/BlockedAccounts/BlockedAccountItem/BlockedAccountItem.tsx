@@ -15,7 +15,7 @@ interface BlockedAccountItemProps {
 }
 
 const BlockedAccountItem: FC<BlockedAccountItemProps> = memo(({blockedUser}): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useBlockedAccountItemStyles();
 
     return (

@@ -31,7 +31,7 @@ import DisplayModal from "./DisplayModal/DisplayModal";
 import { resetFollowerRequestsState } from "../../../store/ducks/followerRequests/actionCreators";
 
 const SideMenuMoreItem: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useSideMenuStyles();
     const dispatch = useDispatch();
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);

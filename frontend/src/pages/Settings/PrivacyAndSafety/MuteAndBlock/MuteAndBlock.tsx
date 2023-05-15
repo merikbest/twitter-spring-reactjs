@@ -15,7 +15,7 @@ import {
 } from "../../../../constants/path-constants";
 
 const MuteAndBlock: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
 
     useEffect(() => {

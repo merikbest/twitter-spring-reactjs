@@ -1,11 +1,10 @@
 import React, { FC, ReactElement } from "react";
 import { Dialog, DialogContent, Link as MuiLink } from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useGlobalStyles } from "../../../../../util/globalClasses";
-import CloseButton from "../../../../../components/CloseButton/CloseButton";
 import { TWITTER_SEARCH } from "../../../../../constants/url-constants";
 import ExploreModalInfo from "./ExploreModalInfo/ExploreModalInfo";
+import DialogTitleComponent from "../../../../../components/DialogTitleComponent/DialogTitleComponent";
 
 export interface ExploreModalProps {
     visible?: boolean;
@@ -14,7 +13,7 @@ export interface ExploreModalProps {
 }
 
 const ExploreModal: FC<ExploreModalProps> = ({ visible, onClose, isSearchModal }): ReactElement | null => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     if (!visible) {
         return null;
@@ -22,10 +21,7 @@ const ExploreModal: FC<ExploreModalProps> = ({ visible, onClose, isSearchModal }
 
     return (
         <Dialog open={visible} onClose={onClose}>
-            <DialogTitle>
-                <CloseButton onClose={onClose} />
-                {isSearchModal ? "Search settings" : "Explore settings"}
-            </DialogTitle>
+            <DialogTitleComponent title={isSearchModal ? "Search settings" : "Explore settings"} onClose={onClose} />
             <DialogContent className={globalClasses.dialogContent}>
                 <ExploreModalInfo
                     isSearchModal={isSearchModal}

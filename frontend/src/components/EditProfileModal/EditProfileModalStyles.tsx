@@ -1,16 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useEditProfileModalStyles = makeStyles(() => ({
-    content: {
-        height: 550,
-        width: 598,
-        padding: 0,
-        overflowX: "hidden"
-    },
-    button: {
-        marginLeft: "auto",
-        height: 30
-    },
     wallpaperWrapper: {
         height: 200,
         backgroundColor: "#B2B2B2",

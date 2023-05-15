@@ -14,7 +14,7 @@ interface MuteAccountAvatarProps {
 }
 
 const MuteAccountAvatar: FC<MuteAccountAvatarProps> = memo(({ userId, avatar }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useMutedAccountItemStyles();
     const avatarSrc = avatar ?? DEFAULT_PROFILE_IMG;
 

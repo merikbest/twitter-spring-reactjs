@@ -32,7 +32,7 @@ interface ConversationInfoProps {
 }
 
 const ConversationInfo: FC<ConversationInfoProps> = ({ participantId, chatId }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useConversationInfoStyles();
     const dispatch = useDispatch();
     const chatParticipant = useSelector(selectUserProfile);

@@ -8,7 +8,7 @@ import DirectMessages from "../../Settings/PrivacyAndSafety/DirectMessages/Direc
 import { useGlobalStyles } from "../../../util/globalClasses";
 
 const MessageSettings = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useMessageSettingsStyles();
 
     return (

@@ -17,7 +17,7 @@ interface UserSearchResultProps {
 }
 
 const UserSearchResult: FC<UserSearchResultProps> = ({ user, recentSearch }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useUserSearchResultStyles();
     const history = useHistory();
 

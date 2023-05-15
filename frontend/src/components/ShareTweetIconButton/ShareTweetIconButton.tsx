@@ -29,7 +29,7 @@ interface ShareTweetProps {
 }
 
 const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useShareTweetModalStyles({ isFullTweet });
     const dispatch = useDispatch();
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);

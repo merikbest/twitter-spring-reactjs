@@ -11,7 +11,7 @@ import { SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_AUTOPLAY } from "../../../
 
 const Accessibility: FC = (): ReactElement => {
     const classes = useAccessibilityStyles();
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

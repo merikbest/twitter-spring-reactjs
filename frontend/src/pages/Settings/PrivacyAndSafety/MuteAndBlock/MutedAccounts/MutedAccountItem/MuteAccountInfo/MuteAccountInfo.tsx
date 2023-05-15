@@ -21,7 +21,7 @@ const MuteAccountInfo: FC<MuteAccountInfoProps> = memo((
         about
     }
 ): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useMutedAccountItemStyles();
 
     return (

@@ -10,7 +10,7 @@ import { useGlobalStyles } from "../../util/globalClasses";
 import SuggestedListsDescription from "./SuggestedListsDescription/SuggestedListsDescription";
 
 const SuggestedLists: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const lists = useSelector(selectListsItems);
     const isLoading = useSelector(selectIsLoading);

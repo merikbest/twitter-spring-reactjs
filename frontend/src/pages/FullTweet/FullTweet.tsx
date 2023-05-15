@@ -53,7 +53,7 @@ import { TOPIC_TWEET, TOPIC_TWEET_VOTE } from "../../constants/ws-constants";
 let stompClient: CompatClient | null = null;
 
 const FullTweet = (): ReactElement | null => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useFullTweetStyles();
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();

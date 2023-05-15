@@ -12,7 +12,7 @@ import { SETTINGS_SECURITY_SESSIONS_CURRENT } from "../../../../../constants/pat
 import { ACCESS_TO_THIRD_PARTY_APPS, FIND_USER_LOCATION } from "../../../../../constants/url-constants";
 
 const Sessions: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useSessionsStyles();
     const [OSName, setOSName] = useState<string | undefined>("Unknown");
     const [browserName, setBrowserName] = useState<string>("Unknown");

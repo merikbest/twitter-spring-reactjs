@@ -9,7 +9,7 @@ interface SnoozeNotificationsProps {
 }
 
 const SnoozeNotifications: FC<SnoozeNotificationsProps> = memo(({ fullName }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useConversationInfoStyles();
 
     return (

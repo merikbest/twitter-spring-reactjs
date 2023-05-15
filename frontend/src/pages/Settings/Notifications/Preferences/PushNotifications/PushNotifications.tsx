@@ -5,7 +5,7 @@ import { useGlobalStyles } from "../../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 
 const PushNotifications: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

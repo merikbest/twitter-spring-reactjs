@@ -7,7 +7,7 @@ import { useGlobalStyles } from "../../../util/globalClasses";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 
 const UserNotFound: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useUserNotFoundStyles();
 
     return (

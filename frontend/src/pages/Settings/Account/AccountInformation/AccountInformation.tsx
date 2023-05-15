@@ -31,7 +31,7 @@ import {
 } from "../../../../constants/path-constants";
 
 const AccountInformation: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const username = useSelector(selectUserProfileUsername);
     const countryCode = useSelector(selectUserProfileCountryCode);

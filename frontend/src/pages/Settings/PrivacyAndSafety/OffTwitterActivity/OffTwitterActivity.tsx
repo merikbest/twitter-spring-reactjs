@@ -6,7 +6,7 @@ import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { ACROSS_YOUR_DEVICES, TAILORED_SUGGESTIONS } from "../../../../constants/url-constants";
 
 const OffTwitterActivity: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

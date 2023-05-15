@@ -9,7 +9,7 @@ import { SETTINGS_SECURITY_LOGIN_VERIFICATION } from "../../../../constants/path
 import { ACCOUNT_SECURITY_TIPS, TWO_FACTOR_AUTHENTICATION } from "../../../../constants/url-constants";
 
 const Security: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

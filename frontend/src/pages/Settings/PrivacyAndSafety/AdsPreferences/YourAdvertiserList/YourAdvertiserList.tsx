@@ -6,7 +6,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { PRIVACY_CONTROLS_FOR_TAILORED_ADS } from "../../../../../constants/url-constants";
 
 const YourAdvertiserList: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

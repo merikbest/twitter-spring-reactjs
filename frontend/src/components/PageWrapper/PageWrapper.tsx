@@ -12,7 +12,7 @@ interface PageWrapperProps {
 }
 
 const PageWrapper: FC<PageWrapperProps> = ({ title, children }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = usePageWrapperStyles();
 
     return (

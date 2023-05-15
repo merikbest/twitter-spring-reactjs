@@ -1,12 +1,9 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import { List } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
-
-import CloseButton from "../CloseButton/CloseButton";
-import { useUsersListModalStyles } from "./UsersListModalStyles";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
     fetchLikedUsers,
     fetchRetweetedUsers,
@@ -23,6 +20,8 @@ import {
 import UsersItem, { UserItemSize } from "../UsersItem/UsersItem";
 import Spinner from "../Spinner/Spinner";
 import InfiniteScrollWrapper from "../InfiniteScrollWrapper/InfiniteScrollWrapper";
+import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
+import { useGlobalStyles } from "../../util/globalClasses";
 
 interface UsersListModalProps {
     tweetId: number;
@@ -45,7 +44,7 @@ const UsersListModal: FC<UsersListModalProps> = (
         onClose
     }
 ): ReactElement | null => {
-    const classes = useUsersListModalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const isLiked = usersListModalAction === UsersListModalAction.LIKED;
     const isUsersLoading = useSelector(isLiked ? selectIsLikedUsersLoading : selectIsRetweetedUsersLoading);
@@ -80,11 +79,8 @@ const UsersListModal: FC<UsersListModalProps> = (
 
     return (
         <Dialog open={visible} onClose={onCloseUsersListModal}>
-            <DialogTitle>
-                <CloseButton onClose={onCloseUsersListModal} />
-                {title}
-            </DialogTitle>
-            <DialogContent id="scrollableDiv" className={classes.content}>
+            <DialogTitleComponent title={title} onClose={onCloseUsersListModal} />
+            <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                 <InfiniteScrollWrapper dataLength={users.length} pagesCount={usersPagesCount} loadItems={loadUsers}>
                     {isUsersLoading && !users.length ? (
                         <Spinner paddingTop={250} />

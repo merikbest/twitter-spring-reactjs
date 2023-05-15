@@ -28,7 +28,7 @@ import EmptyFollowersDescription from "./EmptyFollowersDescription/EmptyFollower
 import UsersItem, { UserItemSize } from "../../components/UsersItem/UsersItem";
 
 const FollowingFollowers: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useFollowingFollowersStyles();
     const dispatch = useDispatch();
     const history = useHistory();

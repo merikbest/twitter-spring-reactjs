@@ -6,7 +6,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { TWO_FACTOR_AUTHENTICATION } from "../../../../../constants/url-constants";
 
 const TwoFactorAuthentication: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

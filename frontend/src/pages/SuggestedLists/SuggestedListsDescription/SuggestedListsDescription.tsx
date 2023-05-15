@@ -6,7 +6,7 @@ import { useGlobalStyles } from "../../../util/globalClasses";
 import { useSuggestedListsStyles } from "../SuggestedListsStyles";
 
 const SuggestedListsDescription = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useSuggestedListsStyles();
 
     return (

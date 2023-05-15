@@ -11,7 +11,7 @@ import MessagesModal from "../MessagesModal/MessagesModal";
 import { useModalWindow } from "../../../hook/useModalWindow";
 
 const MessagesHeader = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useMessagesHeaderStyles();
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 

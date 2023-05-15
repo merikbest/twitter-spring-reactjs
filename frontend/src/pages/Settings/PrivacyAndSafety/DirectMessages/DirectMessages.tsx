@@ -14,7 +14,7 @@ import {
 import { LoadingStatus } from "../../../../types/common";
 
 const DirectMessages: FC = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);
     const isMutedDirectMessages = useSelector(selectUserDataIsMutedDirectMessages);

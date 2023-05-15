@@ -6,7 +6,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE } from "../../../../../constants/url-constants";
 
 const MutedNotifications: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

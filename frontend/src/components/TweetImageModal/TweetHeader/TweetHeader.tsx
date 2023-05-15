@@ -20,7 +20,7 @@ import { useTweetHeaderStyles } from "./TweetHeaderStyles";
 import { fetchUserDetail } from "../../../store/ducks/userDetail/actionCreators";
 
 const TweetHeader = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useTweetHeaderStyles();
     const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
     const tweetUserId = useSelector(selectTweetUserId);

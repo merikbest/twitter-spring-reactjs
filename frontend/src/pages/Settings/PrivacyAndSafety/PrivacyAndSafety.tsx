@@ -37,7 +37,7 @@ import {
 import { FORMS_PRIVACY, PRIVACY_TWITTER, TWITTER_PRIVACY } from "../../../constants/url-constants";
 
 const PrivacyAndSafety: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = usePrivacyAndSafetyStyles();
 
     return (

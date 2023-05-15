@@ -9,7 +9,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { FIND_USER_LOCATION } from "../../../../../constants/url-constants";
 
 const Places: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useLocationStyles();
     const [countryName, setCountryName] = useState<string>("Unknown");
 

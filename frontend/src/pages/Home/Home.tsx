@@ -26,7 +26,7 @@ import { SEARCH } from "../../constants/path-constants";
 import { LoadingStatus } from "../../types/common";
 
 const Home: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useHomeStyles();
     const dispatch = useDispatch();
     const location = useLocation<{ background: Location }>();

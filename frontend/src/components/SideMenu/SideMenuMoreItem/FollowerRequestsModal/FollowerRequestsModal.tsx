@@ -1,10 +1,8 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent } from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { useFollowerRequestsModalStyles } from "./FollowerRequestsModalSyles";
-import CloseButton from "../../../CloseButton/CloseButton";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import {
     fetchFollowerRequests,
@@ -19,6 +17,7 @@ import Spinner from "../../../Spinner/Spinner";
 import FollowerRequestsItem from "./FollowerRequestsItem/FollowerRequestsItem";
 import EmptyPageDescription from "../../../EmptyPageDescription/EmptyPageDescription";
 import InfiniteScrollWrapper from "../../../InfiniteScrollWrapper/InfiniteScrollWrapper";
+import DialogTitleComponent from "../../../DialogTitleComponent/DialogTitleComponent";
 
 interface FollowerRequestsModalProps {
     visible?: boolean;
@@ -26,7 +25,7 @@ interface FollowerRequestsModalProps {
 }
 
 const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({ visible, onClose }): ReactElement | null => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useFollowerRequestsModalStyles();
     const dispatch = useDispatch();
     const isFollowerRequestsLoading = useSelector(selectIsFollowerRequestsLoading);
@@ -52,11 +51,8 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({ visible, onClos
 
     return (
         <Dialog open={visible} onClose={onClose} className={classes.dialog}>
-            <DialogTitle>
-                <CloseButton onClose={onClose} />
-                Follower requests
-            </DialogTitle>
-            <DialogContent id="scrollableDiv" className={classes.content}>
+            <DialogTitleComponent title={"Follower requests"} onClose={onClose} />
+            <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                 <InfiniteScrollWrapper
                     dataLength={followerRequests.length}
                     pagesCount={followerRequestsPagesCount}

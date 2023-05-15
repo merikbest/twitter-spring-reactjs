@@ -129,7 +129,7 @@ export interface LocationState {
 }
 
 const Settings: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const location = useLocation<LocationState>();
     const classes = useSettingsStyles({ location });
     const [selectedIndex, setSelectedIndex] = React.useState(1);

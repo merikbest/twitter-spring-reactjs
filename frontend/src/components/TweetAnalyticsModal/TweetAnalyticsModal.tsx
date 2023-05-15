@@ -1,11 +1,10 @@
 import React, { FC, ReactElement } from "react";
 import { Button, Dialog, Typography } from "@material-ui/core";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 
 import { useTweetAnalyticsModalStyles } from "./TweetAnalyticsModalStyles";
 import { textFormatter } from "../../util/text-formatter";
-import CloseButton from "../CloseButton/CloseButton";
+import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
 
 interface TweetAnalyticsModalStyles {
     fullName: string;
@@ -32,10 +31,7 @@ const TweetAnalyticsModal: FC<TweetAnalyticsModalStyles> = (
 
     return (
         <Dialog open={visible} onClose={onClose} className={classes.container}>
-            <DialogTitle>
-                <CloseButton onClose={onClose} />
-                Tweet Analytics
-            </DialogTitle>
+            <DialogTitleComponent title={"Tweet Analytics"} onClose={onClose} />
             <DialogContent>
                 <div className={classes.tweetInfoContainer}>
                     <div className={classes.tweetInfoWrapper}>

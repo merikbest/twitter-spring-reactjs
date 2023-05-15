@@ -22,7 +22,7 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
         handleTopTweets
     }
 ): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useTopTweetActionsStyles();
     const { open, onClickOpen, onClickClose } = useClickAway();
 

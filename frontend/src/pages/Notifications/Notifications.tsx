@@ -16,7 +16,7 @@ import MentionsPage from "./MentionsPage/MentionsPage";
 import { selectUserDataMentionsCount } from "../../store/ducks/user/selectors";
 
 const Notifications: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useNotificationsStyles();
     const history = useHistory();
     const userMentionsCount = useSelector(selectUserDataMentionsCount);

@@ -16,7 +16,7 @@ import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { PROFILE, SETTINGS_INFO } from "../../../../constants/path-constants";
 
 const DeactivateAccount: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useDeactivateAccountStyles();
     const myProfileId = useSelector(selectUserDataId);
     const myProfileAvatar = useSelector(selectUserProfileAvatar);

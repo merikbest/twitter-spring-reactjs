@@ -15,7 +15,7 @@ import {
 } from "../../../../constants/path-constants";
 
 const AppsAndSessions: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useAppsAndSessionsStyles();
 
     return (

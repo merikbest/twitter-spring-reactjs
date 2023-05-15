@@ -26,7 +26,7 @@ import {
 } from "../../../constants/url-constants";
 
 const AdditionalResources: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useAdditionalResourcesStyles();
 
     return (

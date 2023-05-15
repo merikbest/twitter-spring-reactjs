@@ -1,6 +1,5 @@
 import React, { FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import { Avatar, Link as MuiLink, Typography } from "@material-ui/core";
@@ -12,10 +11,10 @@ import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import { textFormatter } from "../../util/text-formatter";
 import { Image } from "../../types/common";
-import CloseButton from "../CloseButton/CloseButton";
 import { useGlobalStyles } from "../../util/globalClasses";
 import { UserTweetResponse } from "../../types/tweet";
 import { PROFILE } from "../../constants/path-constants";
+import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
 
 interface ReplyModalProps {
     user: UserTweetResponse;
@@ -38,7 +37,7 @@ const ReplyModal: FC<ReplyModalProps> = (
         onClose
     }
 ): ReactElement | null => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useReplyModalStyles();
 
     if (!visible) {
@@ -47,9 +46,7 @@ const ReplyModal: FC<ReplyModalProps> = (
 
     return (
         <Dialog className={classes.dialogWrapper} open={visible} onClose={onClose}>
-            <DialogTitle>
-                <CloseButton onClose={onClose} />
-            </DialogTitle>
+            <DialogTitleComponent onClose={onClose} />
             <DialogContent className={classes.container}>
                 <div className={classes.modalWrapper}>
                     <div className={classes.verticalLine} />

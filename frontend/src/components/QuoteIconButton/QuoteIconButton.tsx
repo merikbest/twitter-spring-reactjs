@@ -34,7 +34,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
         retweetsCount
     }
 ): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useQuoteIconButtonStyles({ isTweetRetweetedByMe: isTweetRetweeted });
     const dispatch = useDispatch();
     const params = useParams<{ userId: string }>();

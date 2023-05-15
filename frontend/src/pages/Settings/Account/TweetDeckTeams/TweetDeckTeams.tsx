@@ -8,7 +8,7 @@ import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { TWEETDECK_TEAMS } from "../../../../constants/url-constants";
 
 const TweetDeckTeams: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useTweetDeckTeamsStyles();
     const [selectedValue, setSelectedValue] = useState<string>("Anyone");
 

@@ -24,7 +24,7 @@ import { resetChatState } from "../../store/ducks/chat/actionCreators";
 import { resetUserProfileState } from "../../store/ducks/userProfile/actionCreators";
 
 const Messages: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useMessagesStyles();
     const dispatch = useDispatch();
     const location = useLocation<{ removeParticipant: boolean | undefined; }>();

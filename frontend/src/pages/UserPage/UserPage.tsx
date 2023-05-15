@@ -63,7 +63,7 @@ import { TOPIC_USER_ADD_TWEET, TOPIC_USER_UPDATE_TWEET, TOPIC_USER_VOTE_TWEET } 
 let stompClient: CompatClient | null = null;
 
 const UserPage = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useUserPageStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);

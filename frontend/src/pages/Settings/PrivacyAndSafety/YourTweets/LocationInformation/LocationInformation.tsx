@@ -7,7 +7,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { TWEET_LOCATION_SETTINGS } from "../../../../../constants/url-constants";
 
 const LocationInformation: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useLocationInformationStyles();
 
     return (

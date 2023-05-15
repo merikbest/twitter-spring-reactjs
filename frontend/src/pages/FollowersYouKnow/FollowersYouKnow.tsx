@@ -17,7 +17,7 @@ import PageHeaderTitle from "../../components/PageHeaderTitle/PageHeaderTitle";
 import { FollowerUserApi } from "../../services/api/user-service/followerUserApi";
 
 const FollowersYouKnow: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
     const history = useHistory();

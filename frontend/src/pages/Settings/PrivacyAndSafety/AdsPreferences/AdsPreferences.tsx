@@ -9,7 +9,7 @@ import { SETTINGS_PRIVACY_AND_SAFETY_AUDIENCES } from "../../../../constants/pat
 import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../constants/url-constants";
 
 const AdsPreferences: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

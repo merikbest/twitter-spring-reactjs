@@ -7,7 +7,7 @@ import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { TWEET_ACTIVITY } from "../../../../../constants/url-constants";
 
 const EmailNotifications: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const [selectedValue, setSelectedValue] = useState<string>("Periodically");
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {

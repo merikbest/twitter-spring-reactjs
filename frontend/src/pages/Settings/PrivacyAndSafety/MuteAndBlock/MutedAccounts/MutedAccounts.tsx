@@ -20,7 +20,7 @@ import { TWITTER_MUTE } from "../../../../../constants/url-constants";
 import InfiniteScrollWrapper from "../../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 
 const MutedAccounts: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const mutedUsers = useSelector(selectMutedUsersItems);
     const isMutedUsersLoading = useSelector(selectIsBlockedAndMutedUsersLoading);

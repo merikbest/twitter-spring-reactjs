@@ -8,7 +8,7 @@ import { useGlobalStyles } from "../../../util/globalClasses";
 import { selectUserDataId, selectUserProfileAvatar } from "../../../store/ducks/user/selectors";
 
 const ProfileAvatar = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const myProfileId = useSelector(selectUserDataId);
     const avatar = useSelector(selectUserProfileAvatar);
 

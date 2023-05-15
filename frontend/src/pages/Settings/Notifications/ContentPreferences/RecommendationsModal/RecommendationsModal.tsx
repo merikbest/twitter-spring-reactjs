@@ -13,7 +13,7 @@ export interface RecommendationsModalProps {
 }
 
 const RecommendationsModal: FC<RecommendationsModalProps> = ({ visible, onClose }): ReactElement | null => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useRecommendationsModalStyles();
 
     if (!visible) {

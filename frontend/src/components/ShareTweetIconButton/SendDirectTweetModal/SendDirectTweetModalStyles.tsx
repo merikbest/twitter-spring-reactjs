@@ -1,21 +1,7 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
 export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
-    header: {
-        margin: 0,
-        border: 0,
-        "& svg": {
-            fontSize: 26
-        }
-    },
-    button: {
-        marginLeft: "auto",
-        height: 30
-    },
     content: {
-        height: 550,
-        width: 598,
-        padding: 0,
         "& .MuiChip-root": {
             marginLeft: 8,
             color: theme.palette.text.primary,
@@ -29,11 +15,6 @@ export const useSendDirectTweetModalStyles = makeStyles((theme: Theme) => ({
                 color: theme.palette.primary.main
             }
         }
-    },
-    divider: {
-        marginTop: 8,
-        height: 1,
-        backgroundColor: theme.palette.divider
     },
     footer: {
         position: "absolute",

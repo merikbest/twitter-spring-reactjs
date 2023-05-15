@@ -9,7 +9,7 @@ import { SETTINGS_PRIVACY_AND_SAFETY_ADVANCED_FILTERS } from "../../../../consta
 import { UNDERSTANDING_THE_NOTIFICATIONS_TIMELINE } from "../../../../constants/url-constants";
 
 const Filters: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

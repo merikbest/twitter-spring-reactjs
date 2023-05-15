@@ -163,12 +163,7 @@ const ScheduleModal: FC<ScheduleModalProps> = (
     }
 
     return (
-        <Dialog
-            transitionDuration={0}
-            open={visible}
-            onClose={onClose}
-            className={classes.dialog}
-        >
+        <Dialog transitionDuration={0} open={visible} onClose={onClose} className={classes.dialog}>
             <ScheduleTitle
                 onClose={onClose}
                 selectedScheduleDate={selectedScheduleDate}

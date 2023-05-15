@@ -1,5 +1,4 @@
 import React, { FC, ReactElement, useEffect } from "react";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import { useSelector } from "react-redux";
@@ -7,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useAddTweetModalStyles } from "./AddTweetModalStyles";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
 import { selectIsTweetsLoaded } from "../../store/ducks/tweets/selectors";
-import CloseButton from "../CloseButton/CloseButton";
+import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
 
 interface AddTweetModalProps {
     title?: string;
@@ -29,16 +28,9 @@ const AddTweetModal: FC<AddTweetModalProps> = ({ title, visible, onClose }): Rea
 
     return (
         <Dialog className={classes.content} open={visible} onClose={onClose}>
-            <DialogTitle>
-                <CloseButton onClose={onClose} />
-                {title}
-            </DialogTitle>
+            <DialogTitleComponent title={title} onClose={onClose}/>
             <DialogContent className={classes.dialogContent}>
-                <AddTweetForm
-                    maxRows={6}
-                    minRows={6}
-                    title={"What's happening?"}
-                    buttonName={"Tweet"} />
+                <AddTweetForm maxRows={6} minRows={6} title={"What's happening?"} buttonName={"Tweet"} />
             </DialogContent>
         </Dialog>
     );

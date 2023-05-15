@@ -24,8 +24,10 @@ import Spinner from "../../../../../components/Spinner/Spinner";
 import { ManageMembersInput } from "./ManageMembersInput/ManageMembersInput";
 import EmptyPageDescription from "../../../../../components/EmptyPageDescription/EmptyPageDescription";
 import { useModalWindow } from "../../../../../hook/useModalWindow";
+import { useGlobalStyles } from "../../../../../util/globalClasses";
 
 const ManageMembersModal = (): ReactElement => {
+    const globalClasses = useGlobalStyles({ dialogContentHeight: 577 });
     const classes = useManageMembersModalStyles();
     const dispatch = useDispatch();
     const list = useSelector(selectListItem);
@@ -91,7 +93,7 @@ const ManageMembersModal = (): ReactElement => {
                     </IconButton>
                     Manage members
                 </DialogTitle>
-                <DialogContent className={classes.content}>
+                <DialogContent className={globalClasses.dialogContent}>
                     <div className={classes.tabs}>
                         <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
                             <Tab className={classes.tab} label={`Members (${list?.membersSize})`} />

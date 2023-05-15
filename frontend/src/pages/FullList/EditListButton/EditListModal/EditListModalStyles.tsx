@@ -1,20 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useEditListModalStyles = makeStyles(() => ({
-    dialog: {
-        "& .MuiDialogTitle-root": {
-            marginBottom: 0
-        }
-    },
-    content: {
-        height: 569,
-        width: 598,
-        padding: 0,
-        overflowX: "hidden"
-    },
-    button: {
-        marginLeft: "auto"
-    },
     wallpaperWrapper: {
         width: 598,
         height: 200,
@@ -34,9 +20,6 @@ export const useEditListModalStyles = makeStyles(() => ({
         position: "absolute",
         top: "42%",
         left: "46%"
-    },
-    footer: {
-        padding: "12px 16px"
     },
     footerWrapper: {
         display: "flex",

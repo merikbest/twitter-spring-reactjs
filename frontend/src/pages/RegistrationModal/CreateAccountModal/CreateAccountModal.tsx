@@ -24,7 +24,7 @@ const CreateAccountModal: FC<CustomizeModalProps> = (
         onOpenEmailVerification
     }
 ): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const classes = useCreateAccountModalStyles();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 

@@ -16,7 +16,7 @@ import Spinner from "../../../../components/Spinner/Spinner";
 import NotificationInfoHeader from "./NotificationInfoHeader/NotificationInfoHeader";
 
 const NotificationInfo: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
     const notificationUser = useSelector(selectNotificationInfoUser);

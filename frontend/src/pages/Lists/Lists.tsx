@@ -10,7 +10,7 @@ import DiscoverLists from "./DiscoverLists/DiscoverLists";
 import UserLists from "./UserLists/UserLists";
 
 const Lists = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
 
     useEffect(() => {

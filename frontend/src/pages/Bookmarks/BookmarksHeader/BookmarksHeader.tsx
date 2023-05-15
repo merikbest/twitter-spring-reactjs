@@ -7,7 +7,7 @@ import { selectUserProfileUsername } from "../../../store/ducks/user/selectors";
 import { useGlobalStyles } from "../../../util/globalClasses";
 
 const BookmarksHeader = memo((): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
     const username = useSelector(selectUserProfileUsername);
 
     return (

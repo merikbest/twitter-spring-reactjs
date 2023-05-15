@@ -8,7 +8,7 @@ import { SETTINGS_SECURITY_CONNECTED_APPS } from "../../../../../constants/path-
 import { ACCESSING_YOUR_TWITTER_DATA } from "../../../../../constants/url-constants";
 
 const AccountAccessHistory: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>

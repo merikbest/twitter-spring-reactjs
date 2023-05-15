@@ -9,7 +9,7 @@ import { SETTINGS_PRIVACY_AND_SAFETY_LOCATION } from "../../../../constants/path
 import { MEDIA_POLICY } from "../../../../constants/url-constants";
 
 const YourTweets: FC = (): ReactElement => {
-    const globalClasses = useGlobalStyles();
+    const globalClasses = useGlobalStyles({});
 
     return (
         <>
