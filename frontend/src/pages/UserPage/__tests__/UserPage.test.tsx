@@ -14,10 +14,10 @@ import { mockTweets, mockUser, mockUserProfile } from "../../../util/test-utils/
 import Spinner from "../../../components/Spinner/Spinner";
 import UserNotFound from "../UserNotFound/UserNotFound";
 import { MESSAGES, PROFILE, PROFILE_HEADER_PHOTO, PROFILE_PHOTO, USER } from "../../../constants/path-constants";
-import SetupProfileModal from "../../SetupProfileModal/SetupProfileModal";
+import SetupProfileModal from "../EditProfileButton/SetupProfileModal/SetupProfileModal";
 import { UserTweetsActionType } from "../../../store/ducks/userTweets/contracts/actionTypes";
-import ProfilePictureModal from "../../SetupProfileModal/ProfilePictureModal/ProfilePictureModal";
-import EditProfileModal from "../../../components/EditProfileModal/EditProfileModal";
+import ProfilePictureModal from "../EditProfileButton/SetupProfileModal/ProfilePictureModal/ProfilePictureModal";
+import EditProfileModal from "../EditProfileButton/EditProfileModal/EditProfileModal";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import { UserActionsType } from "../../../store/ducks/user/contracts/actionTypes";
 import HoverAction from "../../../components/HoverAction/HoverAction";

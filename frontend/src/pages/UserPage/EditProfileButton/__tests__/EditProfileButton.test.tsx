@@ -5,10 +5,10 @@ import routeData from "react-router";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../types/common";
 import EditProfileButton from "../EditProfileButton";
-import SetupProfileModal from "../../../SetupProfileModal/SetupProfileModal";
-import ProfilePictureModal from "../../../SetupProfileModal/ProfilePictureModal/ProfilePictureModal";
+import SetupProfileModal from "../SetupProfileModal/SetupProfileModal";
+import ProfilePictureModal from "../SetupProfileModal/ProfilePictureModal/ProfilePictureModal";
 import { mockUser } from "../../../../util/test-utils/mock-test-data";
-import EditProfileModal from "../../../../components/EditProfileModal/EditProfileModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 import { PROFILE } from "../../../../constants/path-constants";
 

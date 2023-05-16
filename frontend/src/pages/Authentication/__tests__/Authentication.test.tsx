@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@material-ui/core";
 import { mountWithStore } from "../../../util/test-utils/test-helper";
 import Authentication from "../Authentication";
-import RegistrationModal from "../../RegistrationModal/RegistrationModal";
+import RegistrationModal from "../RegistrationModal/RegistrationModal";
 import { ACCOUNT_LOGIN } from "../../../constants/path-constants";
 
 const mockHistoryPush = jest.fn();

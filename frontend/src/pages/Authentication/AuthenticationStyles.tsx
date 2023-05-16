@@ -86,7 +86,7 @@ export const useAuthenticationStyles = makeStyles((theme) => ({
     loginFormControl: {
         marginBottom: theme.spacing(2)
     },
-    signinButton: {
+    button: {
         marginBottom: 20
     }
 }));

@@ -1,13 +1,13 @@
-import React, {ReactElement, useCallback, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Paper from "@material-ui/core/Paper";
-import {CompatClient, Stomp} from "@stomp/stompjs";
+import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import classnames from "classnames";
 
-import {useUserPageStyles} from "./UserPageStyles";
-import {selectUserDataId, selectUserIsLoaded} from "../../store/ducks/user/selectors";
+import { useUserPageStyles } from "./UserPageStyles";
+import { selectUserDataId, selectUserIsLoaded } from "../../store/ducks/user/selectors";
 import {
     fetchUserTweets,
     resetUserTweets,
@@ -35,10 +35,10 @@ import {
     resetImagesState,
     resetUserProfileState
 } from "../../store/ducks/userProfile/actionCreators";
-import {WS_URL} from "../../constants/endpoint-constants";
+import { WS_URL } from "../../constants/endpoint-constants";
 import Spinner from "../../components/Spinner/Spinner";
 import UserNotFound from "./UserNotFound/UserNotFound";
-import {useGlobalStyles} from "../../util/globalClasses";
+import { useGlobalStyles } from "../../util/globalClasses";
 import UserPageHeader from "./UserPageHeader/UserPageHeader";
 import UserWallpaper from "./UserWallpaper/UserWallpaper";
 import UserAvatar from "./UserAvatar/UserAvatar";
@@ -116,7 +116,7 @@ const UserPage = (): ReactElement => {
     useEffect(() => {
         if (isUserProfileSuccessLoaded) {
             document.title = `${fullName} (@${username}) / Twitter`;
-            dispatch(fetchUserTweets({userId: params.userId, page: 0}));
+            dispatch(fetchUserTweets({ userId: params.userId, page: 0 }));
         }
 
         return () => {
@@ -132,42 +132,42 @@ const UserPage = (): ReactElement => {
     return (
         <>
             {isUserProfileNotLoaded ? (
-                <UserNotFound/>
+                <UserNotFound />
             ) : (
                 <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
-                    <UserPageHeader activeTab={activeTab}/>
+                    <UserPageHeader activeTab={activeTab} />
                     <div className={globalClasses.contentWrapper}>
-                        <UserWallpaper/>
+                        <UserWallpaper />
                         <div className={classes.info}>
-                            <UserAvatar/>
+                            <UserAvatar />
                             {(isMyProfileLoaded && isUserProfileSuccessLoaded) && (
                                 isMyProfileBlocked ? null : (
                                     (userProfileId === myProfileId) ? (
-                                        <EditProfileButton/>
+                                        <EditProfileButton />
                                     ) : (
                                         <div className={classes.buttonWrapper}>
-                                            <UserPageActions/>
+                                            <UserPageActions />
                                             {(
                                                 (!isPrivateProfile || isFollower) &&
                                                 !isMutedDirectMessages &&
                                                 !isUserBlocked
                                             ) && (
-                                                <AddUserToChatButton/>
+                                                <AddUserToChatButton />
                                             )}
                                             {isUserBlocked ? (
-                                                <BlockUserButton/>
+                                                <BlockUserButton />
                                             ) : (
                                                 isFollower ? (
                                                     <>
-                                                        <NotificationButton/>
-                                                        <UnfollowUserButton/>
+                                                        <NotificationButton />
+                                                        <UnfollowUserButton />
                                                     </>
                                                 ) : (
                                                     userProfileId && (
                                                         isWaitingForApprove ? (
-                                                            <CancelUserButton/>
+                                                            <CancelUserButton />
                                                         ) : (
-                                                            <FollowUserButton/>
+                                                            <FollowUserButton />
                                                         )
                                                     )
                                                 )
@@ -176,25 +176,25 @@ const UserPage = (): ReactElement => {
                                     )
                                 )
                             )}
-                            <UserInfo/>
+                            <UserInfo />
                             <div className={classes.infoList}>
-                                <UserDetails/>
-                                <UserInteractionCount/>
+                                <UserDetails />
+                                <UserInteractionCount />
                             </div>
-                            <UserUnmuteMessage/>
-                            <UserFollowerGroup/>
+                            <UserUnmuteMessage />
+                            <UserFollowerGroup />
                         </div>
                         {isUserProfileLoading ? (
-                            <Spinner/>
+                            <Spinner />
                         ) : (
                             (isUserProfileSuccessLoaded) && (
                                 isMyProfileBlocked ? (
-                                    <UserBlockedMessage/>
+                                    <UserBlockedMessage />
                                 ) : (
                                     isPrivateProfile && !isFollower && userProfileId !== myProfileId ? (
-                                        <UserPrivateProfileMessage/>
+                                        <UserPrivateProfileMessage />
                                     ) : (
-                                        <UserTweets activeTab={activeTab} handleChangeTab={handleChangeTab}/>
+                                        <UserTweets activeTab={activeTab} handleChangeTab={handleChangeTab} />
                                     )
                                 )
                             )

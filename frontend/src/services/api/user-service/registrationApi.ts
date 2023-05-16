@@ -8,7 +8,7 @@ import {
     API_AUTH_REGISTRATION_CODE,
     API_AUTH_REGISTRATION_CONFIRM
 } from "../../../constants/endpoint-constants";
-import { EndRegistrationRequest } from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { EndRegistrationRequest } from "../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 
 export const RegistrationApi = {
     async registration(postData: RegistrationRequest): Promise<AxiosResponse<string>> {

@@ -47,7 +47,7 @@ import {
     UpdateUsernameActionInterface,
     UserActionsType
 } from "./contracts/actionTypes";
-import { EndRegistrationRequest } from "../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { EndRegistrationRequest } from "../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../types/chat";
 import { LoginRequest } from "../../../types/auth";
 

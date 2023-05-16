@@ -4,8 +4,8 @@ import { Button } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 
 import { selectUserProfileCustomized } from "../../../store/ducks/user/selectors";
-import EditProfileModal from "../../../components/EditProfileModal/EditProfileModal";
-import SetupProfileModal from "../../SetupProfileModal/SetupProfileModal";
+import EditProfileModal from "./EditProfileModal/EditProfileModal";
+import SetupProfileModal from "./SetupProfileModal/SetupProfileModal";
 import { selectUsersIsSuccessLoaded } from "../../../store/ducks/userProfile/selectors";
 import { useUserPageStyles } from "../UserPageStyles";
 

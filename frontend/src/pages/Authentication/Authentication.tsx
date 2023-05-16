@@ -5,11 +5,11 @@ import { Button, List, ListItem, Typography } from "@material-ui/core";
 
 import { useAuthenticationStyles } from "./AuthenticationStyles";
 import { CommunityIcon, ReplyIcon, SearchIcon } from "../../icons";
-import RegistrationModal from "../RegistrationModal/RegistrationModal";
-import CustomizeModal from "../RegistrationModal/CustomizeModal/CustomizeModal";
-import CreateAccountModal from "../RegistrationModal/CreateAccountModal/CreateAccountModal";
-import EmailVerificationModal from "../RegistrationModal/EmailVerificationModal/EmailVerificationModal";
-import SetPasswordModal from "../RegistrationModal/SetPasswordModal/SetPasswordModal";
+import RegistrationModal from "./RegistrationModal/RegistrationModal";
+import CustomizeModal from "./CustomizeModal/CustomizeModal";
+import CreateAccountModal from "./CreateAccountModal/CreateAccountModal";
+import EmailVerificationModal from "./EmailVerificationModal/EmailVerificationModal";
+import SetPasswordModal from "./SetPasswordModal/SetPasswordModal";
 import { ACCOUNT_LOGIN } from "../../constants/path-constants";
 import { RegistrationRequest } from "../../types/auth";
 
@@ -31,6 +31,22 @@ const Authentication: FC = (): ReactElement => {
 
     const handleClickOpenSignUp = (): void => {
         setVisibleRegistrationModal(true);
+    };
+
+    const onOpenCustomizeModal = (): void => {
+        setVisibleCustomizeModal(true);
+    };
+
+    const onOpenCreteAccountModal = (): void => {
+        setVisibleCreteAccountModal(true);
+    };
+
+    const onOpenEmailVerificationModal = (): void => {
+        setVisibleEmailVerificationModal(true);
+    };
+
+    const onOpenSetPasswordModal = (): void => {
+        setVisibleSetPasswordModal(true);
     };
 
     const handleCloseModal = (): void => {
@@ -81,7 +97,7 @@ const Authentication: FC = (): ReactElement => {
                     </Typography>
                     <br />
                     <Button
-                        className={classes.signinButton}
+                        className={classes.button}
                         onClick={handleClickOpenSignUp}
                         variant="contained"
                         color="primary"
@@ -91,7 +107,7 @@ const Authentication: FC = (): ReactElement => {
                         Sign up
                     </Button>
                     <Button
-                        className={classes.signinButton}
+                        className={classes.button}
                         onClick={handleClickOpenSignIn}
                         variant="outlined"
                         color="primary"
@@ -101,31 +117,31 @@ const Authentication: FC = (): ReactElement => {
                         Log in
                     </Button>
                     <RegistrationModal
-                        open={visibleRegistrationModal}
+                        isOpen={visibleRegistrationModal}
                         onClose={handleCloseModal}
-                        onOpenCustomize={setVisibleCustomizeModal}
+                        onOpenCustomize={onOpenCustomizeModal}
                         onChangeRegistrationInfo={onChangeRegistrationInfo}
                     />
                     <CustomizeModal
-                        open={visibleCustomizeModal}
+                        isOpen={visibleCustomizeModal}
                         onClose={handleCloseModal}
-                        onOpenCreateAccount={setVisibleCreteAccountModal}
+                        onOpenCreateAccount={onOpenCreteAccountModal}
                     />
                     <CreateAccountModal
-                        open={visibleCreteAccountModal}
+                        isOpen={visibleCreteAccountModal}
                         onClose={handleCloseModal}
                         registrationInfo={registrationInfo}
-                        onOpenEmailVerification={setVisibleEmailVerificationModal}
+                        onOpenEmailVerification={onOpenEmailVerificationModal}
                     />
                     <EmailVerificationModal
                         email={registrationInfo.email}
-                        open={visibleEmailVerificationModal}
+                        isOpen={visibleEmailVerificationModal}
                         onClose={handleCloseModal}
-                        onOpenSetPassword={setVisibleSetPasswordModal}
+                        onOpenSetPassword={onOpenSetPasswordModal}
                     />
                     <SetPasswordModal
                         email={registrationInfo.email}
-                        open={visibleSetPasswordModal}
+                        isOpen={visibleSetPasswordModal}
                         onClose={handleCloseModal}
                     />
                 </div>

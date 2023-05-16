@@ -1,7 +1,7 @@
 import { Action } from "redux";
 
 import { ChangePhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./state";
-import { EndRegistrationRequest } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
 import { LoginRequest } from "../../../../types/auth";

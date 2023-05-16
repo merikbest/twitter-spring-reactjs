@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { useEditListModalStyles } from "./EditListModalStyles";
-import UploadProfileImage from "../../../../components/EditProfileModal/UploadProfileImage";
+import UploadProfileImage from "../../../../components/UploadProfileImage/UploadProfileImage";
 import CreateListsModalInput
     from "../../../Lists/ListsHeader/CreateListsModal/CreateListsModalInput/CreateListsModalInput";
 import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";

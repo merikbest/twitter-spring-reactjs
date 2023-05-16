@@ -48,7 +48,7 @@ import {
 import { UserActionsType } from "../contracts/actionTypes";
 import { SettingsRequest, UserRequest } from "../contracts/state";
 import { AuthUserResponse } from "../../../../types/user";
-import { EndRegistrationRequest } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
 import { LoginRequest } from "../../../../types/auth";

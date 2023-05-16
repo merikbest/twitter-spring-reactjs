@@ -68,7 +68,7 @@ import { UserApi } from "../../../../services/api/user-service/userApi";
 import { AuthUserResponse, UserProfileResponse } from "../../../../types/user";
 import { SettingsRequest, UserRequest } from "../contracts/state";
 import { AuthenticationResponse, LoginRequest } from "../../../../types/auth";
-import { EndRegistrationRequest } from "../../../../pages/RegistrationModal/SetPasswordModal/SetPasswordModal";
+import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 import { NotificationUserResponse } from "../../../../types/notification";
 import { setBlockedToTweetsState, setFollowToTweetsState, setMutedToTweetsState } from "../../tweets/actionCreators";
 import {
