@@ -27,18 +27,5 @@ export const useTopTweetsActionsModalStyles = makeStyles((theme: Theme) => ({
                 backgroundColor: theme.palette.secondary.main
             }
         }
-    },
-    listItemWrapper: {
-        display: "flex",
-        justifyContent: "flex-start"
-    },
-    textIcon: {
-        paddingTop: 20,
-        "& svg": {
-            verticalAlign: "bottom",
-            marginRight: 15,
-            fill: theme.palette.text.secondary,
-            height: "1.30em"
-        }
     }
 }));

@@ -1,10 +1,11 @@
 import React, { ReactElement } from "react";
-import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
+import { ClickAwayListener, List } from "@material-ui/core";
 
 import { useTopTweetsActionsModalStyles } from "./TopTweetsActionsModalStyles";
 import { EditIcon, NotShowIcon, SeeLatestIcon } from "../../../icons";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import { useClickAway } from "../../../hook/useClickAway";
+import TopTweetsItem from "./TopTweetsItem/TopTweetsItem";
 
 const TopTweetsActionsModal = (): ReactElement => {
     const classes = useTopTweetsActionsModalStyles();
@@ -18,37 +19,16 @@ const TopTweetsActionsModal = (): ReactElement => {
                     {open && (
                         <div className={classes.dropdown}>
                             <List>
-                                <ListItem>
-                                    <div className={classes.listItemWrapper}>
-                                        <span className={classes.textIcon}>
-                                            {SeeLatestIcon}
-                                        </span>
-                                        <div>
-                                            <Typography variant={"body1"} component={"div"}>
-                                                See top Tweets
-                                            </Typography>
-                                            <Typography variant={"subtitle2"} component={"div"}>
-                                                You’re seeing top Tweets first. Latest Tweets will show up as they
-                                                happen.
-                                            </Typography>
-                                        </div>
-                                    </div>
-                                </ListItem>
-                                <ListItem>
-                                    <div className={classes.listItemWrapper}>
-                                        <span className={classes.textIcon}>
-                                            {NotShowIcon}
-                                        </span>
-                                        <div>
-                                            <Typography variant={"body1"} component={"div"}>
-                                                Don’t show these Tweets in Home
-                                            </Typography>
-                                            <Typography variant={"subtitle2"} component={"div"}>
-                                                Top Tweets from this List will no longer show up in your Home timeline.
-                                            </Typography>
-                                        </div>
-                                    </div>
-                                </ListItem>
+                                <TopTweetsItem
+                                    icon={SeeLatestIcon}
+                                    title={"See top Tweets"}
+                                    subtitle={"You’re seeing top Tweets first. Latest Tweets will show up as they happen."}
+                                />
+                                <TopTweetsItem
+                                    icon={NotShowIcon}
+                                    title={"Don’t show these Tweets in Home"}
+                                    subtitle={"Top Tweets from this List will no longer show up in your Home timeline."}
+                                />
                             </List>
                         </div>
                     )}

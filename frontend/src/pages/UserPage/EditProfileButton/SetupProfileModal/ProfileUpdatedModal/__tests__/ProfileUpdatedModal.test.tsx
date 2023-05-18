@@ -11,7 +11,7 @@ describe("ProfileUpdatedModal", () => {
     it("should render empty ProfileUpdatedModal", () => {
         const wrapper = mountWithStore(
             <ProfileUpdatedModal
-                open={false}
+                isOpen={false}
                 onClose={jest.fn()}
                 onSubmit={jest.fn()}
             />, mockRootState);
@@ -23,7 +23,7 @@ describe("ProfileUpdatedModal", () => {
         const mockOnSubmit = jest.fn();
         const wrapper = mountWithStore(
             <ProfileUpdatedModal
-                open={true}
+                isOpen={true}
                 onClose={jest.fn()}
                 onSubmit={mockOnSubmit}
             />, mockRootState);

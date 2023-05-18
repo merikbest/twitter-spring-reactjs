@@ -12,7 +12,7 @@ describe("ProfileDescriptionModal", () => {
     it("should render empty ProfileDescriptionModal", () => {
         const wrapper = mountWithStore(
             <ProfileDescriptionModal
-                open={false}
+                isOpen={false}
                 onClose={jest.fn()}
                 text={""}
                 onChangeText={jest.fn()}
@@ -25,7 +25,7 @@ describe("ProfileDescriptionModal", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(
             <ProfileDescriptionModal
-                open={true}
+                isOpen={true}
                 onClose={jest.fn()}
                 text={""}
                 onChangeText={jest.fn()}
@@ -44,7 +44,7 @@ describe("ProfileDescriptionModal", () => {
         const mockText = "Test description";
         const wrapper = mountWithStore(
             <ProfileDescriptionModal
-                open={true}
+                isOpen={true}
                 onClose={jest.fn()}
                 text={mockText}
                 onChangeText={mockOnChangeText}

@@ -17,7 +17,7 @@ describe("ProfileHeaderModal", () => {
     it("should render empty ProfileDescriptionModal", () => {
         const wrapper = mountWithStore(
             <ProfileHeaderModal
-                open={false}
+                isOpen={false}
                 onClose={jest.fn()}
                 avatar={mockImage}
                 wallpaper={mockImage}
@@ -32,7 +32,7 @@ describe("ProfileHeaderModal", () => {
         const mockUser = mockRootState.user.data;
         const wrapper = mountWithStore(
             <ProfileHeaderModal
-                open={true}
+                isOpen={true}
                 onClose={jest.fn()}
                 avatar={undefined}
                 wallpaper={undefined}
@@ -54,7 +54,7 @@ describe("ProfileHeaderModal", () => {
         const mockOnOpenProfileDescriptionModal = jest.fn();
         const wrapper = mountWithStore(
             <ProfileHeaderModal
-                open={true}
+                isOpen={true}
                 onClose={jest.fn()}
                 avatar={mockImage}
                 wallpaper={mockImage}
