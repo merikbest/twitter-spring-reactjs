@@ -50,7 +50,7 @@ public interface ListsRepository extends JpaRepository<Lists, Long> {
             "   WHERE listFollower.followerId = :userId) " +
             "OR list.id = :listId AND list.isPrivate = false " +
             "OR list.id = :listId AND list.listOwnerId = :userId")
-    Optional<BaseListProjection> getListById(@Param("listId") Long listId, @Param("userId") Long userId);
+    <T> Optional<T> getListById(@Param("listId") Long listId, @Param("userId") Long userId, Class<T> type);
 
     @Query("SELECT list FROM Lists list WHERE list.listOwnerId = :ownerId AND list.isPrivate = false")
     List<ListProjection> getUserTweetListsById(@Param("ownerId") Long ownerId);

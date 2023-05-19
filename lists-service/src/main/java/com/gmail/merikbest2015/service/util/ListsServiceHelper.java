@@ -25,12 +25,12 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 @RequiredArgsConstructor
 public class ListsServiceHelper {
 
-    public final ListsRepository listsRepository;
-    public final ListsFollowersRepository listsFollowersRepository;
-    public final ListsMembersRepository listsMembersRepository;
-    public final PinnedListsRepository pinnedListsRepository;
-    public final NotificationClient notificationClient;
-    public final UserClient userClient;
+    private final ListsRepository listsRepository;
+    private final ListsFollowersRepository listsFollowersRepository;
+    private final ListsMembersRepository listsMembersRepository;
+    private final PinnedListsRepository pinnedListsRepository;
+    private final NotificationClient notificationClient;
+    private final UserClient userClient;
 
     public List<ListMemberResponse> getListMemberResponses(Long listId) {
         List<Long> membersIds = listsMembersRepository.getMembersIds(listId);

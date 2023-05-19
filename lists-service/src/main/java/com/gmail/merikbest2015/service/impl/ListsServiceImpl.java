@@ -69,7 +69,7 @@ public class ListsServiceImpl implements ListsService {
     @Override
     public BaseListProjection getListById(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        BaseListProjection list = listsRepository.getListById(listId, authUserId)
+        BaseListProjection list = listsRepository.getListById(listId, authUserId, BaseListProjection.class)
                 .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
         if (!authUserId.equals(list.getListOwnerId())) {
             listsServiceHelper.checkIsPrivateUserProfile(list.getListOwnerId());
@@ -122,7 +122,7 @@ public class ListsServiceImpl implements ListsService {
         list.setDescription(listInfo.getDescription());
         list.setWallpaper(listInfo.getWallpaper());
         list.setPrivate(listInfo.isPrivate());
-        return listsRepository.getListById(list.getId(), authUserId).get();
+        return listsRepository.getListById(list.getId(), authUserId, BaseListProjection.class).get();
     }
 
     @Override
