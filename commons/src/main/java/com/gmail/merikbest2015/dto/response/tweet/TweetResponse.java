@@ -30,6 +30,7 @@ public class TweetResponse {
     private String imageDescription;
     private List<TaggedUserResponse> taggedImageUsers;
     private QuoteTweetResponse quoteTweet;
+    private TweetListResponse tweetList;
     private PollResponse poll;
     private Long retweetsCount;
     private Long likedTweetsCount;

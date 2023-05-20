@@ -25,6 +25,7 @@ create table tweets
     deleted            boolean default false,
     link_cover_size    varchar(255),
     author_id          int8 not null,
+    list_id            int8,
     poll_id            int8,
     primary key (id)
 );

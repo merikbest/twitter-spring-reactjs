@@ -5,5 +5,5 @@ public interface CommonUserProjection {
     String getFullName();
     String getUsername();
     String getAvatar();
-    boolean getIsPrivateProfile();
+    boolean isPrivateProfile();
 }

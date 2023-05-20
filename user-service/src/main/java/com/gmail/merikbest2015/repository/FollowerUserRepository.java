@@ -68,7 +68,7 @@ public interface FollowerUserRepository extends JpaRepository<User, Long> {
     void removeFollowerRequest(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
     @Query(value = "SELECT users.id as id, users.full_name as fullName, users.username as username, users.about as about, " +
-            "users.private_profile as isPrivateProfile, users.avatar as avatar " +
+            "users.private_profile as privateProfile, users.avatar as avatar " +
             "FROM users " +
             "WHERE users.id IN ( " +
             "   SELECT user_subscriptions.subscriber_id FROM users " +

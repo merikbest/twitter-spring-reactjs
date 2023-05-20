@@ -69,6 +69,9 @@ public class Tweet {
     @Column(name = "author_id", nullable = false)
     private Long authorId;
 
+    @Column(name = "list_id")
+    private Long listId;
+
     @OneToMany
     private List<TweetImage> images = new ArrayList<>();
 

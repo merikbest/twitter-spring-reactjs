@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
+import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface TweetListProjection {

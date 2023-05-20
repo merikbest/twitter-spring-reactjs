@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.repository.projection;
 
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
@@ -24,6 +25,7 @@ public interface TweetProjection {
     String getLinkCover();
     LinkCoverSize getLinkCoverSize();
     Long getAuthorId();
+    Long getListId();
     List<TweetImageProjection> getImages();
     String getImageDescription();
     QuoteTweetProjection getQuoteTweet();
@@ -32,6 +34,9 @@ public interface TweetProjection {
 
     @Value("#{@tweetProjectionHelper.getTweetAuthor(target.authorId)}")
     TweetAuthorResponse getUser();
+
+    @Value("#{target.listId == null ? null : @tweetProjectionHelper.getTweetList(target.listId)}")
+    TweetListResponse getTweetList();
 
     @Value("#{target.images.size() != 0 ? @tweetProjectionHelper.getTaggedImageUsers(target.id) : T(java.util.Collections).emptyList()}")
     List<TaggedUserResponse> getTaggedImageUsers();

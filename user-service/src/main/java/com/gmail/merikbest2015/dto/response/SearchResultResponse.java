@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.dto.response;
 
-import com.gmail.merikbest2015.dto.response.lists.CommonUserResponse;
+import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
 import lombok.Data;
 
 import java.util.List;

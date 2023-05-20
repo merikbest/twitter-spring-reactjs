@@ -159,7 +159,7 @@ public class PathConstants {
     public static final String USER_CONSIST = "/user/consist";
     public static final String PINED = "/pined";
     public static final String LIST_ID = "/{listId}";
-    public static final String VALIDATE_LIST_ID = "/validate/{listId}";
+    public static final String TWEET_LIST_ID = "/tweet/{listId}";
     public static final String FOLLOW_LIST_ID = "/follow/{listId}";
     public static final String PIN_LIST_ID = "/pin/{listId}";
     public static final String ADD_USER_USER_ID = "/add/user/{userId}";

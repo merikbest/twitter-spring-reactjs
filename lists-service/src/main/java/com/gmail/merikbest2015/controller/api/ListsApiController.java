@@ -23,7 +23,7 @@ public class ListsApiController {
         return listsClientService.getNotificationList(listId);
     }
 
-    @GetMapping(VALIDATE_LIST_ID)
+    @GetMapping(TWEET_LIST_ID)
     public TweetListResponse getTweetList(@PathVariable("listId") Long listId) {
         return listsClientService.getTweetList(listId);
     }
