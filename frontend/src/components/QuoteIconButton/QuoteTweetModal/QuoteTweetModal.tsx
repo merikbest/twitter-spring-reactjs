@@ -1,12 +1,11 @@
 import React, { FC, ReactElement } from "react";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 
 import { useQuoteTweetModalStyles } from "./QuoteTweetModalStyles";
 import AddTweetForm from "../../AddTweetForm/AddTweetForm";
-import CloseButton from "../../CloseButton/CloseButton";
 import { QuoteTweetResponse } from "../../../types/tweet";
+import DialogTitleComponent from "../../DialogTitleComponent/DialogTitleComponent";
 
 interface QuoteTweetModalProps {
     quoteTweet: QuoteTweetResponse;
@@ -23,9 +22,7 @@ const QuoteTweetModal: FC<QuoteTweetModalProps> = ({ quoteTweet, visible, onClos
 
     return (
         <Dialog className={classes.content} open={visible} onClose={onClose}>
-            <DialogTitle className={classes.header}>
-                <CloseButton onClose={onClose} />
-            </DialogTitle>
+            <DialogTitleComponent onClose={onClose} />
             <DialogContent className={classes.dialogContent}>
                 <AddTweetForm
                     quoteTweet={quoteTweet}

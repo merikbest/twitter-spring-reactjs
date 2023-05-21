@@ -10,7 +10,7 @@ interface ListsItemAvatarProps {
 
 const ListsItemAvatar: FC<ListsItemAvatarProps> = memo(({ listWallpaper, listAltWallpaper }): ReactElement => {
     const classes = useListsItemStyles();
-    const wallpaper = listWallpaper ? listWallpaper : listAltWallpaper;
+    const wallpaper = listWallpaper ?? listAltWallpaper;
 
     return <Avatar variant="square" className={classes.listAvatar} src={wallpaper} />;
 });

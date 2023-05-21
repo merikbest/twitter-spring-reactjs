@@ -49,6 +49,7 @@ import TweetQuote from "./TweetQuote/TweetQuote";
 import TweetErrorPage from "./TweetErrorPage/TweetErrorPage";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import { TOPIC_TWEET, TOPIC_TWEET_VOTE } from "../../constants/ws-constants";
+import TweetList from "./TweetList/TweetList";
 
 let stompClient: CompatClient | null = null;
 
@@ -117,6 +118,7 @@ const FullTweet = (): ReactElement | null => {
                             <TweetImage />
                             <TweetPoll />
                             <TweetQuote />
+                            <TweetList />
                         </Typography>
                         <TweetDateTime />
                         <TweetInteractionCount />

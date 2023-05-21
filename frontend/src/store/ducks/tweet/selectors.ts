@@ -31,6 +31,7 @@ export const selectTweetImageDescription = (state: RootState) => selectTweetStat
 export const selectTweetTaggedImageUsers = (state: RootState) => selectTweetState(state).tweet?.taggedImageUsers;
 export const selectTweetPoll = (state: RootState) => selectTweetState(state).tweet?.poll;
 export const selectTweetQuote = (state: RootState) => selectTweetState(state).tweet?.quoteTweet;
+export const selectTweetList = (state: RootState) => selectTweetState(state).tweet?.tweetList;
 
 // user
 export const selectTweetUser = (state: RootState) => selectTweetState(state).tweet?.user;

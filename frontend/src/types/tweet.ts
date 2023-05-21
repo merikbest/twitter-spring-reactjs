@@ -1,5 +1,6 @@
 import { Image, LinkCoverSize, ReplyType } from "./common";
 import { TaggedUserResponse } from "./user";
+import { TweetListResponse } from "./lists";
 
 export interface TweetResponse {
     id: number;
@@ -20,6 +21,7 @@ export interface TweetResponse {
     imageDescription: string;
     taggedImageUsers: TaggedUserResponse[];
     quoteTweet: QuoteTweetResponse;
+    tweetList: TweetListResponse;
     poll: PollResponse;
     retweetsCount: number;
     likedTweetsCount: number;

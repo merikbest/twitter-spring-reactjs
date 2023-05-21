@@ -24,6 +24,7 @@ import TweetImage from "./TweetImage/TweetImage";
 import TweetReplyConversation from "./TweetReplyConversation/TweetReplyConversation";
 import TweetActions from "./TweetActions/TweetActions";
 import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
+import TweetListComponent from "../TweetListComponent/TweetListComponent";
 
 export interface TweetComponentProps {
     tweet?: TweetResponse;
@@ -86,6 +87,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                             linkCover={tweet?.linkCover}
                             linkCoverSize={tweet?.linkCoverSize}
                         />
+                        {tweet?.tweetList && <TweetListComponent tweetList={tweet.tweetList} />}
                     </div>
                     <div className={classes.footer}>
                         <ReplyIconButton

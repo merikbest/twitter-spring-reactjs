@@ -1,10 +1,10 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
-export const useTweetListStyles = makeStyles((theme: Theme) => ({
+export const useTweetListComponentStyles = makeStyles((theme: Theme) => ({
     container: {
-        width: 506,
-        height: 250,
-        border: `1px solid ${theme.palette.info.light}`,
+        width: "100%",
+        height: "auto",
+        border: `1px solid ${theme.palette.divider}`,
         marginTop: 12,
         borderRadius: 20,
         "&:hover": {
