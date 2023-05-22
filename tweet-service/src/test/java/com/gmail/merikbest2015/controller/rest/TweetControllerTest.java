@@ -761,6 +761,48 @@ public class TweetControllerTest {
     }
 
     @Test
+    @DisplayName("[200] POST /ui/v1/tweets - Create tweet with list id")
+    public void createTweetWithListId() throws Exception {
+        TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setText("test tweet with list id");
+        tweetRequest.setListId(4L);
+        tweetRequest.setReplyType(ReplyType.EVERYONE);
+
+        mockMvc.perform(post(UI_V1_TWEETS)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+                        .content(mapper.writeValueAsString(tweetRequest))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.text").value("test tweet with list id"))
+                .andExpect(jsonPath("$.dateTime").isNotEmpty())
+                .andExpect(jsonPath("$.scheduledDate").isEmpty())
+                .andExpect(jsonPath("$.addressedUsername").isEmpty())
+                .andExpect(jsonPath("$.addressedId").isEmpty())
+                .andExpect(jsonPath("$.addressedTweetId").isEmpty())
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
+                .andExpect(jsonPath("$.link").isEmpty())
+                .andExpect(jsonPath("$.linkTitle").isEmpty())
+                .andExpect(jsonPath("$.linkDescription").isEmpty())
+                .andExpect(jsonPath("$.linkCover").isEmpty())
+                .andExpect(jsonPath("$.linkCoverSize").isEmpty())
+                .andExpect(jsonPath("$.quoteTweet").isEmpty())
+                .andExpect(jsonPath("$.user.id").value(2L))
+                .andExpect(jsonPath("$.tweetList.id").value(4L))
+                .andExpect(jsonPath("$.tweetList.name").value("test list name"))
+                .andExpect(jsonPath("$.poll").isEmpty())
+                .andExpect(jsonPath("$.images").isEmpty())
+                .andExpect(jsonPath("$.retweetsCount").value(0L))
+                .andExpect(jsonPath("$.likedTweetsCount").value(0L))
+                .andExpect(jsonPath("$.repliesCount").value(0L))
+                .andExpect(jsonPath("$.isTweetLiked").value(false))
+                .andExpect(jsonPath("$.isTweetRetweeted").value(false))
+                .andExpect(jsonPath("$.isUserFollowByOtherUser").value(false))
+                .andExpect(jsonPath("$.isTweetDeleted").value(false))
+                .andExpect(jsonPath("$.isTweetBookmarked").value(false));
+    }
+
+    @Test
     @DisplayName("[200] DELETE /ui/v1/tweets/40 - Delete Tweet")
     public void deleteTweet() throws Exception {
         mockMvc.perform(delete(UI_V1_TWEETS + TWEET_ID, 40)

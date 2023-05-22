@@ -36,4 +36,19 @@ public class ListsApiControllerTest {
                 .andExpect(jsonPath("$.id").value(4))
                 .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME));
     }
+
+    @Test
+    @DisplayName("[200] GET /api/v1/lists/tweet/4 - Get tweet list by id")
+    public void getTweetList() throws Exception {
+        mockMvc.perform(get(API_V1_LISTS + TWEET_LIST_ID, 4)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(4))
+                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
+                .andExpect(jsonPath("$.wallpaper").isEmpty())
+                .andExpect(jsonPath("$.listOwner.id").value(TestConstants.LIST_USER_ID))
+                .andExpect(jsonPath("$.membersSize").value(1L))
+                .andExpect(jsonPath("$.isPrivate").value(false));
+    }
 }
