@@ -14,7 +14,7 @@ const TweetQuote = (): ReactElement => {
                 quoteTweet.isDeleted ? (
                     <TweetDeleted />
                 ) : (
-                    <Quote quoteTweet={quoteTweet!} isTweetQuoted isFullTweet />
+                    <Quote quoteTweet={quoteTweet} />
                 ))
             }
         </>

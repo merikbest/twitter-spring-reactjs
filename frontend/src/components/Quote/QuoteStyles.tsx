@@ -1,11 +1,6 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
-interface QuoteStylesProps {
-    isTweetQuoted?: boolean,
-    isFullTweet?: boolean,
-}
-
-export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
+export const useQuoteStyles = makeStyles<Theme>((theme) => ({
     quoteTweetLink: {
         textDecoration: "none",
         color: theme.palette.text.primary,
@@ -17,8 +12,8 @@ export const useQuoteStyles = makeStyles<Theme, QuoteStylesProps>((theme) => ({
         marginTop: 5,
         padding: 12,
         minHeight: 68,
-        width: props => props.isFullTweet ? 560 : 504,
-        marginLeft: props => props.isTweetQuoted ? 0 : 58,
+        width: "100%",
+        marginLeft: 0,
         fontSize: 14,
         borderRadius: 16,
         border: `1px solid ${theme.palette.divider}`,

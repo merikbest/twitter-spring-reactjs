@@ -2,10 +2,12 @@ import React, { ReactElement } from "react";
 import { ClickAwayListener, List } from "@material-ui/core";
 
 import { useShareActionsModalStyles } from "./ShareActionsModalStyles";
-import { LinkIcon, MessagesIcon, ShareIcon, TweetThisIcon } from "../../../icons";
+import { MessagesIcon, ShareIcon } from "../../../icons";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import { useClickAway } from "../../../hook/useClickAway";
 import ShareActionsItem from "./ShareActionsItem/ShareActionsItem";
+import TweetListAction from "./TweetListAction/TweetListAction";
+import CopyListLinkAction from "./CopyListLinkAction/CopyListLinkAction";
 
 const ShareActionsModal = (): ReactElement => {
     const classes = useShareActionsModalStyles();
@@ -18,9 +20,9 @@ const ShareActionsModal = (): ReactElement => {
                 {open && (
                     <div className={classes.dropdown}>
                         <List>
-                            <ShareActionsItem title={"Tweet this"} icon={TweetThisIcon} />
+                            <TweetListAction />
                             <ShareActionsItem title={"Send via Direct Message"} icon={MessagesIcon} />
-                            <ShareActionsItem title={"Copy link to List"} icon={LinkIcon} />
+                            <CopyListLinkAction onClickClose={onClickClose} />
                             <ShareActionsItem title={"Share List"} icon={ShareIcon} />
                         </List>
                     </div>

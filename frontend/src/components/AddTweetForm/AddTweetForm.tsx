@@ -33,10 +33,13 @@ import { useParams } from "react-router-dom";
 import { TweetApi } from "../../services/api/tweet-service/tweetApi";
 import { useSelectUsers } from "../../hook/useSelectUsers";
 import { useInputText } from "../../hook/useInputText";
+import { BaseListResponse } from "../../types/lists";
+import TweetListComponent from "../TweetListComponent/TweetListComponent";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
     quoteTweet?: QuoteTweetResponse;
+    tweetList?: BaseListResponse;
     maxRows?: number;
     minRows?: number;
     tweetId?: number;
@@ -58,6 +61,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     {
         unsentTweet,
         quoteTweet,
+        tweetList,
         maxRows,
         minRows,
         tweetId,
@@ -208,17 +212,20 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                     />
                 </div>
             </div>
-            <AddTweetImage
-                images={images}
-                removeImage={removeImage}
-                imageDescription={imageDescription}
-                handleChangeDescription={handleChangeDescription}
-                selectedUsers={selectedUsers}
-                handleDelete={handleDelete}
-                handleListItemClick={handleListItemClick}
-            />
-            {quoteTweet && <Quote quoteTweet={quoteTweet} />}
-            <Poll pollData={pollData} onChangePoll={onChangePoll} visiblePoll={visiblePoll} onClose={onClosePoll} />
+            <div className={classes.formItems}>
+                <AddTweetImage
+                    images={images}
+                    removeImage={removeImage}
+                    imageDescription={imageDescription}
+                    handleChangeDescription={handleChangeDescription}
+                    selectedUsers={selectedUsers}
+                    handleDelete={handleDelete}
+                    handleListItemClick={handleListItemClick}
+                />
+                {quoteTweet && <Quote quoteTweet={quoteTweet} />}
+                {tweetList && <TweetListComponent tweetList={tweetList} />}
+                <Poll pollData={pollData} onChangePoll={onChangePoll} visiblePoll={visiblePoll} onClose={onClosePoll} />
+            </div>
             <Reply replyType={replyType} setReplyType={setReplyType} isUnsentTweet={!!unsentTweet} />
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>

@@ -4,7 +4,6 @@ export const useAddTweetImageStyles = makeStyles((theme) => ({
     image: {
         position: "relative",
         "& img": {
-            marginLeft: 58,
             objectFit: "cover",
             marginTop: 10,
             width: 504,
@@ -16,7 +15,6 @@ export const useAddTweetImageStyles = makeStyles((theme) => ({
     imageSmall: {
         position: "relative",
         "& img": {
-            marginLeft: 58,
             objectFit: "cover",
             marginTop: 10,
             width: 260,
@@ -29,7 +27,7 @@ export const useAddTweetImageStyles = makeStyles((theme) => ({
         "& .MuiIconButton-root": {
             padding: 6,
             top: 15,
-            left: 65,
+            left: 5,
             position: "absolute",
             backgroundColor: theme.palette.common.black,
             opacity: 0.75,
@@ -43,8 +41,5 @@ export const useAddTweetImageStyles = makeStyles((theme) => ({
                 backgroundColor: "rgba(39, 44, 48, 0.75) !important"
             }
         }
-    },
-    imageActionContainer: {
-        marginLeft: 58
     }
 }));

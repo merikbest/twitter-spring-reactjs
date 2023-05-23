@@ -76,8 +76,6 @@ describe("FullTweet", () => {
         expect(wrapper.find(VoteComponent).prop("tweetId")).toBe(mockFullTweet.id);
         expect(wrapper.find(VoteComponent).prop("poll")).toBe(mockFullTweet.poll);
         expect(wrapper.find(Quote).prop("quoteTweet")).toBe(mockFullTweet.quoteTweet);
-        expect(wrapper.find(Quote).prop("isTweetQuoted")).toBe(true);
-        expect(wrapper.find(Quote).prop("isFullTweet")).toBe(true);
         expect(wrapper.find(SmallLinkPreview).prop("link")).toBe(mockFullTweet.link);
         expect(wrapper.find(SmallLinkPreview).prop("isFullTweet")).toBe(true);
         expect(wrapper.text().includes(`${mockFullTweet.retweetsCount}`)).toBe(true);

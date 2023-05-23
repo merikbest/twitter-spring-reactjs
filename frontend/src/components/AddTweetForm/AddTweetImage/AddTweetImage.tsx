@@ -41,7 +41,7 @@ const AddTweetImage: FC<AddTweetImageProps> = memo((
     return (
         <div className={(location.pathname.includes(MODAL)) ? classes.imageSmall : classes.image}>
             <img src={images[0].src} alt={images[0].src} />
-            <div className={classes.imageActionContainer}>
+            <div>
                 <TagPeople
                     selectedUsers={selectedUsers}
                     handleDelete={handleDelete}

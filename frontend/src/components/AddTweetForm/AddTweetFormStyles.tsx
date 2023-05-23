@@ -27,6 +27,9 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         caretColor: localStorage.getItem(BACKGROUND) === "DEFAULT" ? "#000" : "#fff",
         color: localStorage.getItem(BACKGROUND) === "DEFAULT" ? "#000" : "#fff"
     },
+    formItems: {
+        marginLeft: 58
+    },
     footer: {
         display: "flex",
         justifyContent: "space-between",

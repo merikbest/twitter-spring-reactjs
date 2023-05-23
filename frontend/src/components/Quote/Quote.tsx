@@ -12,12 +12,10 @@ import { HOME_TWEET } from "../../constants/path-constants";
 
 interface QuoteProps {
     quoteTweet: QuoteTweetResponse;
-    isTweetQuoted?: boolean;
-    isFullTweet?: boolean;
 }
 
-const Quote: FC<QuoteProps> = memo(({ quoteTweet, isTweetQuoted, isFullTweet }): ReactElement => {
-    const classes = useQuoteStyles({ isTweetQuoted, isFullTweet });
+const Quote: FC<QuoteProps> = memo(({ quoteTweet }): ReactElement => {
+    const classes = useQuoteStyles();
 
     return (
         <Link to={`${HOME_TWEET}/${quoteTweet.id}`} className={classes.quoteTweetLink}>

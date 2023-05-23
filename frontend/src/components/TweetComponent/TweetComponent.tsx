@@ -77,7 +77,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                             tweet?.quoteTweet.isDeleted ? (
                                 <TweetDeleted />
                             ) : (
-                                <Quote quoteTweet={tweet?.quoteTweet} isTweetQuoted />
+                                <Quote quoteTweet={tweet?.quoteTweet} />
                             ))
                         }
                         <TweetMedia

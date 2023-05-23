@@ -13,8 +13,6 @@ describe("TweetQuote", () => {
     it("should render Quote", () => {
         const wrapper = mountWithStore(<TweetQuote />, mockRootState);
         expect(wrapper.find(Quote).prop("quoteTweet")).toBe(mockFullTweet.quoteTweet);
-        expect(wrapper.find(Quote).prop("isTweetQuoted")).toBe(true);
-        expect(wrapper.find(Quote).prop("isFullTweet")).toBe(true);
     });
 
     it("should render TweetDeleted", () => {

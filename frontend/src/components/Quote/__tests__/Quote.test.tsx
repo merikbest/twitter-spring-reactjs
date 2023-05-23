@@ -13,26 +13,7 @@ describe("Quote", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
 
     it("should render correctly Quoted and FullTweet", () => {
-        const wrapper = mountWithStore(
-            <Quote
-                quoteTweet={mockQuoteTweet}
-                isTweetQuoted
-                isFullTweet
-            />, mockRootState);
-
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockQuoteTweet.user.avatar);
-        expect(wrapper.text().includes(mockQuoteTweet.user.fullName)).toBe(true);
-        expect(wrapper.text().includes(`@${mockQuoteTweet.user.username}`)).toBe(true);
-        expect(wrapper.text().includes("#JavaScript")).toBe(true);
-    });
-
-    it("should render correctly not Quoted and not FullTweet", () => {
-        const wrapper = mountWithStore(
-            <Quote
-                quoteTweet={mockQuoteTweet}
-                isTweetQuoted={false}
-                isFullTweet={false}
-            />, mockRootState);
+        const wrapper = mountWithStore(<Quote quoteTweet={mockQuoteTweet} />, mockRootState);
 
         expect(wrapper.find(Avatar).prop("src")).toBe(mockQuoteTweet.user.avatar);
         expect(wrapper.text().includes(mockQuoteTweet.user.fullName)).toBe(true);
@@ -43,12 +24,7 @@ describe("Quote", () => {
     it("should click link and go to Tweet page", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        const wrapper = mountWithStore(
-            <Quote
-                quoteTweet={mockQuoteTweet}
-                isTweetQuoted
-                isFullTweet
-            />, mockRootState, history);
+        const wrapper = mountWithStore(<Quote quoteTweet={mockQuoteTweet} />, mockRootState, history);
 
         wrapper.find(Link).simulate("click", { button: 0 });
 

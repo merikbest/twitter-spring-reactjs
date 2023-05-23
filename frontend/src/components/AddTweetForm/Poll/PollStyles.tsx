@@ -4,7 +4,6 @@ export const usePollStyles = makeStyles((theme: Theme) => ({
     container: {
         maxWidth: 507,
         minHeight: 300,
-        marginLeft: 55,
         border: `1px solid ${theme.palette.grey[100]}`,
         borderRadius: 16
     },
