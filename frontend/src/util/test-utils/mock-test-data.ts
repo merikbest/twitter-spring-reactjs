@@ -788,6 +788,8 @@ export const mockFullTweet = {
             "src": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a2692fac-4b70-4828-845c-2fe439473f82_Cl5DjoUWYAAslnd.jfif"
         }
     ],
+    "imageDescription": "test description",
+    "taggedImageUsers": [],
     "quoteTweet": {
         "id": 13,
         "dateTime": "2021-10-15T21:57:21",
@@ -809,6 +811,21 @@ export const mockFullTweet = {
             "isUserBlocked": false,
             "isUserMuted": false
         }
+    },
+    "tweetList": {
+        "id": 1,
+        "name": "Random List",
+        "altWallpaper": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small",
+        "wallpaper": null,
+        "listOwner": {
+            "id": 1,
+            "fullName": "Random",
+            "username": "Random",
+            "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/ae83099c-885b-499a-bb6f-5e34e1b69e7d_4ec7201fd370bd9870cdb326f0511f38.jpg",
+            "isPrivateProfile": false
+        },
+        "membersSize": 2,
+        "isPrivate": false,
     },
     "poll": {
         "id": 100,

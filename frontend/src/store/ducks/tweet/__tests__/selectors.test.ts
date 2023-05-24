@@ -24,11 +24,14 @@ import {
     selectTweetData,
     selectTweetDateTime,
     selectTweetId,
+    selectTweetImageDescription,
     selectTweetImages,
     selectTweetLink,
+    selectTweetList,
     selectTweetPoll,
     selectTweetQuote,
     selectTweetReplyType,
+    selectTweetTaggedImageUsers,
     selectTweetText,
     selectTweetUser,
     selectTweetUserAvatar,
@@ -158,6 +161,18 @@ describe("tweet selectors:", () => {
         });
     });
 
+    describe("selectTweetImageDescription", () => {
+        it("should return string", () => {
+            expect(selectTweetImageDescription(mockState)).toBe(mockFullTweet.imageDescription);
+        });
+    });
+
+    describe("selectTweetTaggedImageUsers", () => {
+        it("should return string", () => {
+            expect(selectTweetTaggedImageUsers(mockState)).toBe(mockFullTweet.taggedImageUsers);
+        });
+    });
+
     describe("selectTweetPoll", () => {
         it("should return TweetPoll", () => {
             expect(selectTweetPoll(mockState)).toBe(mockFullTweet.poll);
@@ -167,6 +182,12 @@ describe("tweet selectors:", () => {
     describe("selectTweetQuote", () => {
         it("should return TweetQuote", () => {
             expect(selectTweetQuote(mockState)).toBe(mockFullTweet.quoteTweet);
+        });
+    });
+
+    describe("selectTweetList", () => {
+        it("should return TweetListResponse", () => {
+            expect(selectTweetList(mockState)).toBe(mockFullTweet.tweetList);
         });
     });
 
