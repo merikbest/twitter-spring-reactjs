@@ -11,8 +11,8 @@ const TweetsList = (): ReactElement => {
 
     return (
         <>
-            <>{tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)}</>
-            <>{isTweetsLoading && <Spinner />}</>
+            {tweets.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)}
+            {isTweetsLoading && <Spinner />}
         </>
     );
 };

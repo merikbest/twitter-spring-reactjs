@@ -35,6 +35,7 @@ import { useSelectUsers } from "../../hook/useSelectUsers";
 import { useInputText } from "../../hook/useInputText";
 import { BaseListResponse } from "../../types/lists";
 import TweetListComponent from "../TweetListComponent/TweetListComponent";
+import GifIconButton from "./GifIconButton/GifIconButton";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -230,7 +231,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
                     <UploadImages onChangeImages={setImages} />
-                    <ActionIconButton actionText={"GIF"} icon={GifIcon} size={"medium"} />
+                    <GifIconButton />
                     {(buttonName !== "Reply") && (
                         <div className={classes.quoteImage}>
                             <ActionIconButton

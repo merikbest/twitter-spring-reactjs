@@ -1,9 +1,10 @@
 import React, { FC, memo, ReactElement } from "react";
-import { List, ListItem, Typography } from "@material-ui/core";
+import { List, Typography } from "@material-ui/core";
 
 import { useChangeReplyWindowStyles } from "./ChangeReplyWindowStyles";
-import { CheckIcon, EveryoneReplyOutlinedIcon, FollowReplyOutlinedIcon, MentionReplyOutlinedIcon } from "../../icons";
+import { EveryoneReplyOutlinedIcon, FollowReplyOutlinedIcon, MentionReplyOutlinedIcon } from "../../icons";
 import { ReplyType } from "../../types/common";
+import ChangeReplyWindowComponent from "./ChangeReplyWindowComponent/ChangeReplyWindowComponent";
 
 interface ChangeReplyWindowProps {
     replyType: ReplyType;
@@ -24,65 +25,29 @@ const ChangeReplyWindow: FC<ChangeReplyWindowProps> = memo(({ replyType, onChang
                     Anyone mentioned can always reply.
                 </Typography>
             </div>
-            <List component="nav" aria-label="main mailbox folders">
-                <ListItem
-                    className={classes.listItem}
-                    onClick={() => onChangeTweetReplyType(ReplyType.EVERYONE)}
-                    button
-                >
-                    <div className={classes.iconCircle}>
-                        <span className={classes.icon}>
-                            {EveryoneReplyOutlinedIcon}
-                        </span>
-                    </div>
-                    <Typography variant={"body1"} component={"span"}>
-                        Everyone
-                    </Typography>
-                    {(replyType === ReplyType.EVERYONE) && (
-                        <span className={classes.checkIcon}>
-                            {CheckIcon}
-                        </span>
-                    )}
-                </ListItem>
-                <ListItem
-                    className={classes.listItem}
-                    onClick={() => onChangeTweetReplyType(ReplyType.FOLLOW)}
-                    button
-                >
-                    <div className={classes.iconCircle}>
-                        <span className={classes.icon}>
-                            {FollowReplyOutlinedIcon}
-                        </span>
-                    </div>
-                    <Typography variant={"body1"} component={"span"}>
-                        People you follow
-                    </Typography>
-                    {(replyType === ReplyType.FOLLOW) && (
-                        <span className={classes.checkIcon}>
-                            {CheckIcon}
-                        </span>
-                    )}
-                </ListItem>
-                <ListItem
+            <List component="nav">
+                <ChangeReplyWindowComponent
+                    replyType={replyType}
+                    replyTypeIcon={EveryoneReplyOutlinedIcon}
+                    replyTypeTitle={"Everyone"}
+                    currentReplyType={ReplyType.EVERYONE}
+                    onChangeTweetReplyType={onChangeTweetReplyType}
+                />
+                <ChangeReplyWindowComponent
+                    replyType={replyType}
+                    replyTypeIcon={FollowReplyOutlinedIcon}
+                    replyTypeTitle={"People you follow"}
+                    currentReplyType={ReplyType.FOLLOW}
+                    onChangeTweetReplyType={onChangeTweetReplyType}
+                />
+                <ChangeReplyWindowComponent
                     id={"lastItem"}
-                    className={classes.listItem}
-                    onClick={() => onChangeTweetReplyType(ReplyType.MENTION)}
-                    button
-                >
-                    <div className={classes.iconCircle}>
-                        <span className={classes.icon}>
-                            {MentionReplyOutlinedIcon}
-                        </span>
-                    </div>
-                    <Typography variant={"body1"} component={"span"}>
-                        Only people you mention
-                    </Typography>
-                    {(replyType === ReplyType.MENTION) && (
-                        <span className={classes.checkIcon}>
-                            {CheckIcon}
-                        </span>
-                    )}
-                </ListItem>
+                    replyType={replyType}
+                    replyTypeIcon={MentionReplyOutlinedIcon}
+                    replyTypeTitle={"Only people you mention"}
+                    currentReplyType={ReplyType.MENTION}
+                    onChangeTweetReplyType={onChangeTweetReplyType}
+                />
             </List>
         </div>
     );
