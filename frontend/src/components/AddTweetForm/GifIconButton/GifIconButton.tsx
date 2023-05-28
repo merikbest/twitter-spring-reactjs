@@ -20,7 +20,7 @@ const GifIconButton: FC<GifIconButtonProps> = ({}): ReactElement => {
                 onClick={onOpenModalWindow}
                 size={"medium"}
             />
-            {/*<GifModalWindow visible={visibleModalWindow} onClose={onCloseModalWindow} />*/}
+            <GifModalWindow visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );
 };

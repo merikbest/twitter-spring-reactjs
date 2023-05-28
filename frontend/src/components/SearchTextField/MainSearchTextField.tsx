@@ -1,15 +1,19 @@
-import { Theme, withStyles } from "@material-ui/core";
+import { makeStyles, TextFieldProps, Theme } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 
-export const MainSearchTextField = withStyles((theme: Theme) => ({
+interface MainSearchTextFieldProps {
+    marginTop?: number;
+    width?: number;
+}
+
+const useMainSearchTextFieldStyles = makeStyles<Theme, MainSearchTextFieldProps>((theme) => ({
     root: {
         "& .MuiOutlinedInput-root": {
             borderRadius: 30,
-            backgroundColor: theme.palette.grey[200],
             padding: 19,
-            width: 450,
             height: 20,
-            marginTop: 6,
+            width: props => props.width ?? 450,
+            marginTop: props => props.marginTop ?? 6,
             "&.Mui-focused": {
                 backgroundColor: theme.palette.background.paper,
                 "& fieldset": { borderWidth: 1, borderColor: theme.palette.primary.main },
@@ -35,4 +39,13 @@ export const MainSearchTextField = withStyles((theme: Theme) => ({
             padding: "12px 14px 14px 5px"
         }
     }
-}))(TextField);
+}));
+
+export const MainSearchTextField = (props: TextFieldProps & MainSearchTextFieldProps) => {
+    const classes = useMainSearchTextFieldStyles(props);
+
+    return (
+        <TextField className={classes.root} {...props} />
+    );
+};
+
