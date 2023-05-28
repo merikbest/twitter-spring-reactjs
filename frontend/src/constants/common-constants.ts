@@ -8,3 +8,5 @@ export const TOKEN = "token";
 export const SEARCH_TERMS = "searchTerms";
 export const BACKGROUND = "background";
 export const COLOR = "color";
+
+export const GIPHY_API_KEY = "GZtggGLShFAsldhNlgteCQgfD27nRb5A";

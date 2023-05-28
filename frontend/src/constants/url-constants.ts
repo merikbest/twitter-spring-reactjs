@@ -1,7 +1,10 @@
+import { GIPHY_API_KEY } from "./common-constants";
+
 export const CLIENT_URL = "http://localhost:3000";
 export const DEFAULT_PROFILE_IMG = "https://abs.twimg.com/sticky/default_profile_images/default_profile_reasonably_small.png";
 
 export const FIND_USER_LOCATION = "https://ipapi.co/json/";
+export const GIPHY_API_URL = `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&limit=100&q=`;
 
 export const HELP_TWITTER = "https://help.twitter.com";
 export const ACROSS_YOUR_DEVICES = HELP_TWITTER + "/about-personalization-across-your-devices";

@@ -7,6 +7,9 @@ export const useGifModalWindowStyles = makeStyles(() => ({
         },
         "& .MuiTypography-root": {
             color: "rgb(255, 255, 255)"
+        },
+        "&:hover": {
+            cursor: "pointer"
         }
     }
 }));
