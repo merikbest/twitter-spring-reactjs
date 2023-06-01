@@ -12,22 +12,15 @@ import GifTopics from "./GifTopics/GifTopics";
 import GifList from "./GifList/GifList";
 import { GIPHY_API_URL } from "../../../../constants/url-constants";
 import Spinner from "../../../Spinner/Spinner";
+import { GiphyDataProps } from "../../../../types/tweet";
 
 interface GifModalWindowProps {
+    onClickSetGif: (gif: GiphyDataProps) => void;
     visible: boolean;
     onClose: () => void;
 }
 
-export interface GiphyDataProps {
-    id: string;
-    title: string;
-    images: {
-        downsized: { url: string }
-        downsized_still: { url: string }
-    };
-}
-
-const GifModalWindow: FC<GifModalWindowProps> = ({ visible, onClose }): ReactElement | null => {
+const GifModalWindow: FC<GifModalWindowProps> = ({ onClickSetGif, visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
     const [gifs, setGifs] = useState<GiphyDataProps[]>([]);
     const [isGifsLoading, setIsGifsLoading] = useState(false);
@@ -65,6 +58,13 @@ const GifModalWindow: FC<GifModalWindowProps> = ({ visible, onClose }): ReactEle
         onClose();
     };
 
+    const onClickGif = (gif: GiphyDataProps): void => {
+        setText("");
+        setGifs([]);
+        onClickSetGif(gif);
+        onClose();
+    };
+
     if (!visible) {
         return null;
     }
@@ -96,7 +96,7 @@ const GifModalWindow: FC<GifModalWindowProps> = ({ visible, onClose }): ReactEle
                     (!isGifsLoading && text === "") ? (
                         <GifTopics onClickGifTopic={onClickGifTopic} />
                     ) : (
-                        <GifList gifs={gifs} />
+                        <GifList gifs={gifs} onClickGif={onClickGif} />
                     )
                 )}
             </DialogContent>

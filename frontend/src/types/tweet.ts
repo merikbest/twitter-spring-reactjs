@@ -100,6 +100,15 @@ export interface TweetImageResponse {
     src: string;
 }
 
+export interface GiphyDataProps {
+    id: string;
+    title: string;
+    images: {
+        downsized: { url: string }
+        downsized_still: { url: string }
+    };
+}
+
 interface TweetsActionsPayload {
     userId: number;
     tweetId: number;
