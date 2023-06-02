@@ -59,12 +59,12 @@ public class Tweet {
     @Column(name = "link_cover")
     private String linkCover;
 
-    @Column(name = "deleted", columnDefinition = "boolean default false")
-    private boolean deleted = false;
-
     @Column(name = "link_cover_size")
     @Enumerated(EnumType.STRING)
     private LinkCoverSize linkCoverSize;
+
+    @Column(name = "deleted", columnDefinition = "boolean default false")
+    private boolean deleted = false;
 
     @Column(name = "author_id", nullable = false)
     private Long authorId;
@@ -72,11 +72,11 @@ public class Tweet {
     @Column(name = "list_id")
     private Long listId;
 
-    @OneToMany
-    private List<TweetImage> images = new ArrayList<>();
-
     @Column(name = "image_description")
     private String imageDescription;
+
+    @OneToMany
+    private List<TweetImage> images = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "tagged_image_users", joinColumns = @JoinColumn(name = "tweet_id"))
@@ -92,6 +92,10 @@ public class Tweet {
     @OneToOne
     @JoinColumn(name = "poll_id")
     private Poll poll;
+
+    @OneToOne
+    @JoinColumn(name = "gif_image_id")
+    private GifImage gifImage;
 
     @ManyToMany
     @JoinTable(name = "replies",

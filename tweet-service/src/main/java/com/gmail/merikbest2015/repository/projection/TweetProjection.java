@@ -23,6 +23,7 @@ public interface TweetProjection {
     String getLinkTitle();
     String getLinkDescription();
     String getLinkCover();
+    GifImageProjection getGifImage();
     LinkCoverSize getLinkCoverSize();
     Long getAuthorId();
     Long getListId();
@@ -111,5 +112,12 @@ public interface TweetProjection {
 
         @Value("#{@pollChoiceVotedRepository.getVotedUserIds(target.id)}")
         List<VotedUserProjection> getVotedUser();
+    }
+
+    interface GifImageProjection {
+        Long getId();
+        String getUrl();
+        Long getWidth();
+        Long getHeight();
     }
 }

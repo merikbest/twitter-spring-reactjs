@@ -17,6 +17,7 @@ public class TweetRequest {
     private Long listId;
     private ReplyType replyType;
     private LinkCoverSize linkCoverSize;
+    private String gifUrl;
     private List<TweetImageResponse> images;
     private String imageDescription;
     private List<Long> taggedImageUsers;

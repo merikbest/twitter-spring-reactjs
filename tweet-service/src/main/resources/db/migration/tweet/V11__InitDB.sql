@@ -6,12 +6,13 @@ create sequence poll_choice_voted_seq start 100 increment 1;
 create sequence retweets_seq start 100 increment 1;
 create sequence liked_tweets_seq start 100 increment 1;
 create sequence bookmarks_seq start 100 increment 1;
+create sequence gif_image_seq start 100 increment 1;
 
 create table tweets
 (
-    id                 int8 not null,
+    id                 int8         not null,
     text               varchar(255) not null,
-    date_time          timestamp default current_timestamp,
+    date_time          timestamp    default current_timestamp,
     scheduled_date     timestamp,
     addressed_username varchar(255),
     addressed_id       int8,
@@ -22,11 +23,12 @@ create table tweets
     link_description   varchar(255),
     link_cover         varchar(255),
     image_description  varchar(255),
-    deleted            boolean default false,
+    deleted            boolean      default false,
     link_cover_size    varchar(255),
-    author_id          int8 not null,
+    author_id          int8         not null,
     list_id            int8,
     poll_id            int8,
+    gif_image_id       int8,
     primary key (id)
 );
 create table tweets_images
@@ -69,7 +71,7 @@ create table polls_poll_choices
 );
 create table poll_choices
 (
-    id     int8 not null,
+    id     int8         not null,
     choice varchar(255) not null,
     primary key (id)
 );
@@ -78,6 +80,14 @@ create table poll_choice_voted
     id             int8 not null,
     poll_choice_id int8 not null,
     voted_user_id  int8 not null,
+    primary key (id)
+);
+create table gif_image
+(
+    id     int8 not null,
+    height int8,
+    url    varchar(255),
+    width  int8,
     primary key (id)
 );
 create table liked_tweets
@@ -134,6 +144,8 @@ alter table tweet_quote
     add constraint FKftie7ivytjuvpm6118d05upa7 foreign key (quote_tweet_id) references tweets;
 alter table tweet_quote
     add constraint FKlkw1iu7ifknitq1q75f09vpo5 foreign key (tweet_id) references tweets;
+alter table tweets
+    add constraint FKbmnrbbycds8wc5grmybbtuoid foreign key (gif_image_id) references gif_image;
 alter table tweets
     add constraint FKeiad9ainy3nwc9wlojt1s6eqv foreign key (poll_id) references polls;
 alter table tweets_images
