@@ -25,6 +25,7 @@ import TweetReplyConversation from "./TweetReplyConversation/TweetReplyConversat
 import TweetActions from "./TweetActions/TweetActions";
 import { DEFAULT_PROFILE_IMG } from "../../constants/url-constants";
 import TweetListComponent from "../TweetListComponent/TweetListComponent";
+import GifImage from "../GifImage/GifImage";
 
 export interface TweetComponentProps {
     tweet?: TweetResponse;
@@ -69,6 +70,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                                 taggedImageUsers={tweet?.taggedImageUsers}
                             />
                         )}
+                        {tweet?.gifImage && <GifImage gifImage={tweet?.gifImage} />}
                         {tweet?.poll && <VoteComponent tweetId={tweet?.id} poll={tweet?.poll} />}
                         {(tweet?.user.isFollower && tweet?.replyType === ReplyType.FOLLOW) && (
                             <TweetReplyConversation />

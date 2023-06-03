@@ -93,7 +93,7 @@ public class Tweet {
     @JoinColumn(name = "poll_id")
     private Poll poll;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "gif_image_id")
     private GifImage gifImage;
 

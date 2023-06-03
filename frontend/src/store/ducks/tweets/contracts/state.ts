@@ -1,4 +1,4 @@
-import { TweetResponse } from "../../../../types/tweet";
+import { GifImageResponse, TweetResponse } from "../../../../types/tweet";
 import { Image, LoadingStatus, ReplyType } from "../../../../types/common";
 
 export interface TweetsState {
@@ -18,6 +18,8 @@ export interface TweetRequest {
     pollDateTime?: number;
     scheduledDate?: Date;
     choices?: string[];
+    listId?: number;
+    gifImage?: GifImageResponse;
 }
 
 export interface AddQuoteTweetRequest {

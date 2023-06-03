@@ -36,7 +36,7 @@ import { useInputText } from "../../hook/useInputText";
 import { BaseListResponse } from "../../types/lists";
 import TweetListComponent from "../TweetListComponent/TweetListComponent";
 import GifIconButton from "./GifIconButton/GifIconButton";
-import GifImage from "./GifImage/GifImage";
+import GifImage from "../GifImage/GifImage";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -152,7 +152,15 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             result.push(data);
         }
         const taggedImageUsers = selectedUsers.map((user) => user.id);
-        return { text: textConverter(), images: result, imageDescription, taggedImageUsers, replyType };
+        return {
+            text: textConverter(),
+            listId: tweetList?.id,
+            gifImage: gif?.images.downsized,
+            images: result,
+            imageDescription,
+            taggedImageUsers,
+            replyType
+        };
     };
 
     const tweetPostProcessing = (snackBarText?: string): void => {
@@ -164,6 +172,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         setVisiblePoll(false);
         setPollData(pollInitialState);
         setSelectedScheduleDate(null);
+        setGif(null);
         if (onCloseModal) onCloseModal();
     };
 
@@ -233,7 +242,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                     handleDelete={handleDelete}
                     handleListItemClick={handleListItemClick}
                 />
-                {gif && <GifImage gif={gif} onClickRemoveGif={onClickRemoveGif} />}
+                {gif && <GifImage gifImage={gif.images.downsized} onClickRemoveGif={onClickRemoveGif} />}
                 {quoteTweet && <Quote quoteTweet={quoteTweet} />}
                 {tweetList && <TweetListComponent tweetList={tweetList} />}
                 <Poll pollData={pollData} onChangePoll={onChangePoll} visiblePoll={visiblePoll} onClose={onClosePoll} />
@@ -293,7 +302,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                             visiblePoll ? (
                                 !pollData.choice1 || !pollData.choice2 || !text || text.length >= MAX_LENGTH
                             ) : (
-                                !text || text.length >= MAX_LENGTH
+                                !gif && (!text || text.length >= MAX_LENGTH)
                             )}
                         color="primary"
                         variant="contained"

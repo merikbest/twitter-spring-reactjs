@@ -17,11 +17,19 @@ public class TweetRequest {
     private Long listId;
     private ReplyType replyType;
     private LinkCoverSize linkCoverSize;
-    private String gifUrl;
+    private GifImageRequest gifImage;
     private List<TweetImageResponse> images;
     private String imageDescription;
     private List<Long> taggedImageUsers;
     private Long pollDateTime;
     private List<String> choices;
     private LocalDateTime scheduledDate;
+
+    @Data
+    static class GifImageRequest {
+        private Long id;
+        private String url;
+        private Long width;
+        private Long height;
+    }
 }
