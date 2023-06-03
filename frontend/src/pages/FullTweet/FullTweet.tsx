@@ -25,6 +25,7 @@ import {
     setVoteData,
     updateTweetData
 } from "../../store/ducks/tweet/actionCreators";
+import { TOPIC_TWEET, TOPIC_TWEET_VOTE } from "../../constants/ws-constants";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import { useFullTweetStyles } from "./FullTweetStyles";
 import { WS_URL } from "../../constants/endpoint-constants";
@@ -48,8 +49,8 @@ import TweetPoll from "./TweetPoll/TweetPoll";
 import TweetQuote from "./TweetQuote/TweetQuote";
 import TweetErrorPage from "./TweetErrorPage/TweetErrorPage";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
-import { TOPIC_TWEET, TOPIC_TWEET_VOTE } from "../../constants/ws-constants";
 import TweetList from "./TweetList/TweetList";
+import TweetGif from "./TweetGif/TweetGif";
 
 let stompClient: CompatClient | null = null;
 
@@ -116,6 +117,7 @@ const FullTweet = (): ReactElement | null => {
                             {textFormatter(tweetText!)}
                             <TweetMedia />
                             <TweetImage />
+                            <TweetGif />
                             <TweetPoll />
                             <TweetQuote />
                             <TweetList />
