@@ -1,13 +1,8 @@
-import { makeStyles, Theme } from "@material-ui/core";
-import { QuoteTweetResponse } from "../../types/tweet";
+import { makeStyles } from "@material-ui/core";
 import { BACKGROUND } from "../../constants/common-constants";
+import { BackgroundTheme } from "../../types/common";
 
-interface AddTweetFormStyles {
-    quoteTweet?: QuoteTweetResponse;
-    isScheduled?: boolean;
-}
-
-export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((theme) => ({
+export const useAddTweetFormStyles = makeStyles(() => ({
     content: {
         display: "flex",
         width: "100%"
@@ -24,8 +19,8 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         fontFamily: "inherit",
         resize: "none",
         backgroundColor: "transparent",
-        caretColor: localStorage.getItem(BACKGROUND) === "DEFAULT" ? "#000" : "#fff",
-        color: localStorage.getItem(BACKGROUND) === "DEFAULT" ? "#000" : "#fff"
+        caretColor: localStorage.getItem(BACKGROUND) === BackgroundTheme.DEFAULT ? "#000" : "#fff",
+        color: localStorage.getItem(BACKGROUND) === BackgroundTheme.DEFAULT ? "#000" : "#fff"
     },
     formItems: {
         marginLeft: 58
@@ -45,13 +40,6 @@ export const useAddTweetFormStyles = makeStyles<Theme, AddTweetFormStyles>((them
         maxWidth: 450,
         marginTop: 10,
         paddingLeft: 70
-    },
-    quoteImage: {
-        "& .MuiIconButton-root": {
-            "& svg": {
-                color: props => props.quoteTweet || props.isScheduled ? theme.palette.primary.light : theme.palette.primary.main
-            }
-        }
     },
     footerAddForm: {
         display: "flex",

@@ -6,6 +6,7 @@ import ScheduleModal from "../ScheduleModal/ScheduleModal";
 import UnsentTweetsModal from "../UnsentTweetsModal/UnsentTweetsModal";
 
 interface ScheduleIconButtonProps {
+    buttonName: string;
     disabled: boolean;
     selectedScheduleDate: Date | null;
     handleScheduleDate: (date: Date) => void;
@@ -14,6 +15,7 @@ interface ScheduleIconButtonProps {
 
 const ScheduleIconButton: FC<ScheduleIconButtonProps> = memo((
     {
+        buttonName,
         disabled,
         selectedScheduleDate,
         handleScheduleDate,
@@ -43,25 +45,29 @@ const ScheduleIconButton: FC<ScheduleIconButtonProps> = memo((
 
     return (
         <>
-            <ActionIconButton
-                actionText={"Schedule"}
-                icon={ScheduleIcon}
-                onClick={onOpenScheduleModal}
-                size={"medium"}
-                disabled={disabled}
-            />
-            <ScheduleModal
-                visible={visibleScheduleModal}
-                selectedScheduleDate={selectedScheduleDate}
-                onClose={onCloseScheduleModal}
-                handleScheduleDate={handleScheduleDate}
-                clearScheduleDate={clearScheduleDate}
-                onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
-            />
-            <UnsentTweetsModal
-                visible={visibleUnsentTweetsModal}
-                onClose={onCloseUnsentTweetsModal}
-            />
+            {(buttonName !== "Reply") && (
+                <>
+                    <ActionIconButton
+                        actionText={"Schedule"}
+                        icon={ScheduleIcon}
+                        onClick={onOpenScheduleModal}
+                        size={"medium"}
+                        disabled={disabled}
+                    />
+                    <ScheduleModal
+                        visible={visibleScheduleModal}
+                        selectedScheduleDate={selectedScheduleDate}
+                        onClose={onCloseScheduleModal}
+                        handleScheduleDate={handleScheduleDate}
+                        clearScheduleDate={clearScheduleDate}
+                        onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
+                    />
+                    <UnsentTweetsModal
+                        visible={visibleUnsentTweetsModal}
+                        onClose={onCloseUnsentTweetsModal}
+                    />
+                </>
+            )}
         </>
     );
 });

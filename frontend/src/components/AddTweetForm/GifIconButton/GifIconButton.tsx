@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, memo, ReactElement } from "react";
 
 import { GifIcon } from "../../../icons";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
@@ -10,7 +10,7 @@ interface GifIconButtonProps {
     onClickSetGif: (gif: GiphyDataProps) => void;
 }
 
-const GifIconButton: FC<GifIconButtonProps> = ({ onClickSetGif }): ReactElement => {
+const GifIconButton: FC<GifIconButtonProps> = memo(({ onClickSetGif }): ReactElement => {
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
@@ -24,6 +24,6 @@ const GifIconButton: FC<GifIconButtonProps> = ({ onClickSetGif }): ReactElement 
             <GifModalWindow onClickSetGif={onClickSetGif} visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );
-};
+});
 
 export default GifIconButton;
