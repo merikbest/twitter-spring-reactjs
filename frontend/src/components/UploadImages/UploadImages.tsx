@@ -1,14 +1,12 @@
 import React, { FC, memo, ReactElement, useCallback, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 
-import { ImageObj } from "../AddTweetForm/AddTweetForm";
 import { MediaIcon } from "../../icons";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
+import { setImages } from "../../store/ducks/addTweetForm/actionCreators";
 
-interface UploadImageProps {
-    onChangeImages: (callback: (prev: ImageObj[]) => ImageObj[]) => void;
-}
-
-const UploadImages: FC<UploadImageProps> = memo(({ onChangeImages }): ReactElement => {
+const UploadImages: FC = memo((): ReactElement => {
+    const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleClickImage = () => {
@@ -23,12 +21,7 @@ const UploadImages: FC<UploadImageProps> = memo(({ onChangeImages }): ReactEleme
             const file = target.files?.[0];
             if (file) {
                 const fileObj = new Blob([file]);
-                onChangeImages((prev) => [
-                    {
-                        src: URL.createObjectURL(fileObj),
-                        file
-                    }
-                ]);
+                dispatch(setImages([{ src: URL.createObjectURL(fileObj), file }]));
             }
         }
     }, []);

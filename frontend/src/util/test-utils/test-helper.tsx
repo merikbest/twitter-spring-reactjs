@@ -21,8 +21,9 @@ import {
     mockUserDetailResponse,
     mockUsers
 } from "./mock-test-data";
-import { LoadingStatus, PageableResponse } from "../../types/common";
+import { LoadingStatus, PageableResponse, ReplyType } from "../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../constants/common-constants";
+import { pollInitialState } from "../../store/ducks/addTweetForm/reducer";
 
 (global as any).TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder;
@@ -306,6 +307,15 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             searchResult: undefined,
             recentSearchResult: undefined,
             searchLoadingState: loadingStatus
+        },
+        addTweetForm: {
+            pollData: pollInitialState,
+            visiblePoll: false,
+            gif: null,
+            scheduledDate: null,
+            replyType: ReplyType.EVERYONE,
+            imageDescription: "",
+            images: []
         }
     } as RootState;
 };

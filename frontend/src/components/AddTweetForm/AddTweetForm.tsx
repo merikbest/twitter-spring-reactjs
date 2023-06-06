@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC, ReactElement, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import "emoji-mart/css/emoji-mart.css";
@@ -14,12 +14,12 @@ import {
 import UploadImages from "../UploadImages/UploadImages";
 import { fetchReplyTweet } from "../../store/ducks/tweet/actionCreators";
 import { useAddTweetFormStyles } from "./AddTweetFormStyles";
-import Poll, { PollInitialState, pollInitialState } from "./Poll/Poll";
+import Poll from "./Poll/Poll";
 import Reply from "./Reply/Reply";
 import Quote from "../Quote/Quote";
 import { formatScheduleDate } from "../../util/format-date-helper";
-import { GiphyDataProps, QuoteTweetResponse, TweetResponse } from "../../types/tweet";
-import { Image, ReplyType } from "../../types/common";
+import { QuoteTweetResponse, TweetResponse } from "../../types/tweet";
+import { Image } from "../../types/common";
 import { setOpenSnackBar } from "../../store/ducks/actionSnackbar/actionCreators";
 import EmojiIconButton from "./EmojiIconButton/EmojiIconButton";
 import ScheduleIconButton from "./ScheduleIconButton/ScheduleIconButton";
@@ -37,6 +37,24 @@ import GifImage from "../GifImage/GifImage";
 import PullIconButton from "./PullIconButton/PullIconButton";
 import TextCountProgress from "./TextCountProgress/TextCountProgress";
 import { MAX_TEXT_LENGTH } from "../../constants/common-constants";
+import {
+    selectGif,
+    selectImageDescription,
+    selectImages,
+    selectPollData,
+    selectReplyType,
+    selectScheduledDate,
+    selectVisiblePoll
+} from "../../store/ducks/addTweetForm/selector";
+import {
+    clearImageDescription,
+    clearScheduleDate,
+    removeGif,
+    removeImages,
+    setClosePoll,
+    setImages,
+    setScheduleDate
+} from "../../store/ducks/addTweetForm/actionCreators";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -75,26 +93,26 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     const classes = useAddTweetFormStyles();
     const dispatch = useDispatch();
     const params = useParams<{ userId: string }>();
-    const [images, setImages] = useState<ImageObj[]>([]);
-    const [gif, setGif] = useState<GiphyDataProps | null>(null);
-    const [replyType, setReplyType] = useState<ReplyType>(ReplyType.EVERYONE);
-    const [selectedScheduleDate, setSelectedScheduleDate] = useState<Date | null>(null);
-    const [visiblePoll, setVisiblePoll] = useState<boolean>(false);
-    const [pollData, setPollData] = useState<PollInitialState>(pollInitialState);
-    const [imageDescription, setImageDescription] = useState<string>("");
+    const visiblePoll = useSelector(selectVisiblePoll);
+    const pollData = useSelector(selectPollData);
+    const gif = useSelector(selectGif);
+    const scheduledDate = useSelector(selectScheduledDate);
+    const replyType = useSelector(selectReplyType);
+    const imageDescription = useSelector(selectImageDescription);
+    const images = useSelector(selectImages);
     const { text, setText, handleChangeText, addEmoji, textConverter } = useInputText();
     const { selectedUsers, handleDelete, handleListItemClick, resetSelectedUsers } = useSelectUsers();
 
     useEffect(() => {
         if (unsentTweet) {
             setText(unsentTweet.text);
-            setSelectedScheduleDate(new Date(unsentTweet.scheduledDate!));
+            dispatch(setScheduleDate(new Date(unsentTweet.scheduledDate!)));
             if (unsentTweet.images?.length !== 0) {
                 const newImages = [...images];
                 const newImage = { ...images[0] };
                 newImage.src = unsentTweet.images![0].src;
                 newImages[0] = newImage;
-                setImages(newImages);
+                dispatch(setImages(newImages));
             }
         }
     }, [unsentTweet]);
@@ -107,17 +125,17 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             const pollDateTime = (day * 1440) + (hour * 60) + minute;
             const choices = [choice1, choice2, choice3, choice4].filter(item => item);
             dispatch(addPoll({ ...tweet, pollDateTime, choices }));
-        } else if (selectedScheduleDate !== null && unsentTweet === undefined) {
-            dispatch(addScheduledTweet({ ...tweet, scheduledDate: selectedScheduleDate }));
+        } else if (scheduledDate !== null && unsentTweet === undefined) {
+            dispatch(addScheduledTweet({ ...tweet, scheduledDate }));
         } else if (unsentTweet) {
             dispatch(updateScheduledTweet({ ...tweet, id: unsentTweet?.id }));
             if (onCloseModal) onCloseModal();
         } else {
             dispatch(addTweet(tweet));
         }
-        tweetPostProcessing(selectedScheduleDate
-            ? `Your Tweet will be sent on ${formatScheduleDate(selectedScheduleDate)}`
-            : "Your tweet was sent.");
+        tweetPostProcessing(scheduledDate
+            ? `Your Tweet will be sent on ${formatScheduleDate(scheduledDate)}`
+            : "Your Tweet was sent.");
     };
 
     const handleClickQuoteTweet = async (): Promise<void> => {
@@ -162,62 +180,27 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     const tweetPostProcessing = (snackBarText?: string): void => {
         dispatch(setOpenSnackBar(snackBarText ?? "Your tweet was sent."));
         setText("");
-        setImages([]);
-        setImageDescription("");
+        dispatch(removeImages());
+        dispatch(clearImageDescription());
         resetSelectedUsers();
-        setVisiblePoll(false);
-        setPollData(pollInitialState);
-        setSelectedScheduleDate(null);
-        setGif(null);
+        dispatch(setClosePoll());
+        dispatch(clearScheduleDate());
+        dispatch(removeGif());
         if (onCloseModal) onCloseModal();
     };
 
     const removeImage = useCallback((): void => {
-        setImages((prev) => prev.filter((obj) => obj.src !== images[0].src));
-        setImageDescription("");
+        dispatch(removeImages());
+        dispatch(clearImageDescription());
         resetSelectedUsers();
     }, [images]);
-
-    const handleChangeDescription = useCallback((description: string): void => {
-        setImageDescription(description);
-    }, [imageDescription]);
-
-    const onOpenPoll = useCallback((): void => {
-        setVisiblePoll(true);
-    }, []);
-
-    const onClosePoll = useCallback((): void => {
-        setPollData(pollInitialState);
-        setVisiblePoll(false);
-    }, []);
-
-    const onChangePoll = useCallback((pollState: PollInitialState): void => {
-        setPollData(prevState => ({ ...prevState, ...pollState }));
-    }, [pollData]);
-
-    const handleScheduleDate = useCallback((date: Date): void => {
-        setSelectedScheduleDate(date);
-        onClosePoll();
-    }, []);
-
-    const clearScheduleDate = useCallback((): void => {
-        setSelectedScheduleDate(null);
-    }, []);
-
-    const onClickSetGif = useCallback((gif: GiphyDataProps): void => {
-        setGif(gif);
-    }, []);
-
-    const onClickRemoveGif = useCallback((): void => {
-        setGif(null);
-    }, []);
 
     return (
         <>
             <div className={classes.content}>
                 <ProfileAvatar />
                 <div className={classes.textareaWrapper}>
-                    <ScheduleDateInfo selectedScheduleDate={selectedScheduleDate} />
+                    <ScheduleDateInfo />
                     <TextareaAutosize
                         onChange={handleChangeText}
                         className={classes.contentTextarea}
@@ -230,37 +213,24 @@ const AddTweetForm: FC<AddTweetFormProps> = (
             </div>
             <div className={classes.formItems}>
                 <AddTweetImage
-                    images={images}
                     removeImage={removeImage}
-                    imageDescription={imageDescription}
-                    handleChangeDescription={handleChangeDescription}
                     selectedUsers={selectedUsers}
                     handleDelete={handleDelete}
                     handleListItemClick={handleListItemClick}
                 />
-                {gif && <GifImage gifImage={gif.images.downsized} onClickRemoveGif={onClickRemoveGif} />}
+                {gif && <GifImage gifImage={gif.images.downsized} removeButton />}
                 {quoteTweet && <Quote quoteTweet={quoteTweet} />}
                 {tweetList && <TweetListComponent tweetList={tweetList} />}
-                <Poll pollData={pollData} onChangePoll={onChangePoll} visiblePoll={visiblePoll} onClose={onClosePoll} />
+                <Poll />
             </div>
-            <Reply replyType={replyType} setReplyType={setReplyType} isUnsentTweet={!!unsentTweet} />
+            <Reply isUnsentTweet={!!unsentTweet} />
             <div className={classes.footer}>
                 <div className={classes.footerWrapper}>
-                    <UploadImages onChangeImages={setImages} />
-                    <GifIconButton onClickSetGif={onClickSetGif} />
-                    <PullIconButton
-                        buttonName={buttonName}
-                        onOpenPoll={onOpenPoll}
-                        disabled={!!quoteTweet || selectedScheduleDate !== null}
-                    />
+                    <UploadImages />
+                    <GifIconButton />
+                    <PullIconButton buttonName={buttonName} disabled={!!quoteTweet || scheduledDate !== null} />
                     <EmojiIconButton addEmoji={addEmoji} />
-                    <ScheduleIconButton
-                        buttonName={buttonName}
-                        disabled={!!quoteTweet}
-                        selectedScheduleDate={selectedScheduleDate}
-                        handleScheduleDate={handleScheduleDate}
-                        clearScheduleDate={clearScheduleDate}
-                    />
+                    <ScheduleIconButton buttonName={buttonName} disabled={!!quoteTweet} />
                 </div>
                 <div className={classes.footerAddForm}>
                     <TextCountProgress text={text} />

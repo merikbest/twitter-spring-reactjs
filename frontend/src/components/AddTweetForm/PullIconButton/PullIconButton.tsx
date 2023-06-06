@@ -1,17 +1,23 @@
 import React, { FC, memo, ReactElement } from "react";
+import { useDispatch } from "react-redux";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { usePullIconButtonStyles } from "./PullIconButtonStyles";
 import { PullIcon } from "../../../icons";
+import { setOpenPoll } from "../../../store/ducks/addTweetForm/actionCreators";
 
 interface PullIconButtonProps {
     buttonName: string;
-    onOpenPoll: () => void;
     disabled: boolean;
 }
 
-const PullIconButton: FC<PullIconButtonProps> = memo(({ buttonName, onOpenPoll, disabled }): ReactElement => {
+const PullIconButton: FC<PullIconButtonProps> = memo(({ buttonName, disabled }): ReactElement => {
     const classes = usePullIconButtonStyles({ disabled });
+    const dispatch = useDispatch();
+
+    const onClickOpenPoll = (): void => {
+        dispatch(setOpenPoll());
+    };
 
     return (
         <>
@@ -20,7 +26,7 @@ const PullIconButton: FC<PullIconButtonProps> = memo(({ buttonName, onOpenPoll, 
                     <ActionIconButton
                         actionText={"Poll"}
                         icon={PullIcon}
-                        onClick={onOpenPoll}
+                        onClick={onClickOpenPoll}
                         disabled={disabled}
                         size={"medium"}
                     />

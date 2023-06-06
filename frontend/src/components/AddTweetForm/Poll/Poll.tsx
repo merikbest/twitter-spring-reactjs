@@ -6,45 +6,24 @@ import PollInput from "./PollInput/PollInput";
 import PollSelect from "./PollSelect/PollSelect";
 import PollFooter from "./PollFooter/PollFooter";
 import AddPollInputButton from "./AddPollInputButton/AddPollInputButton";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPollData, selectVisiblePoll } from "../../../store/ducks/addTweetForm/selector";
+import { setClosePoll, setPollValue } from "../../../store/ducks/addTweetForm/actionCreators";
+import { PollInitialState } from "../../../store/ducks/addTweetForm/constants/state";
 
-export interface PollInitialState {
-    choice1: string;
-    choice2: string;
-    choice3: string;
-    choice4: string;
-    day: number;
-    hour: number;
-    minute: number;
-}
-
-export const pollInitialState: PollInitialState = {
-    choice1: "",
-    choice2: "",
-    choice3: "",
-    choice4: "",
-    day: 1,
-    hour: 0,
-    minute: 0
-};
-
-interface PollProps {
-    pollData: PollInitialState;
-    onChangePoll: (pollState: PollInitialState) => void;
-    visiblePoll: boolean;
-    onClose: () => void;
-}
-
-const Poll: FC<PollProps> = memo(({ pollData, onChangePoll, visiblePoll, onClose }): ReactElement | null => {
+const Poll: FC = memo((): ReactElement | null => {
     const classes = usePollStyles();
+    const dispatch = useDispatch();
+    const visiblePoll = useSelector(selectVisiblePoll);
+    const { choice1, choice2, choice3, choice4, day, hour, minute } = useSelector(selectPollData);
     const [pollInputSize, setPollInputSize] = useState<number>(0);
-    const { choice1, choice2, choice3, choice4, day, hour, minute } = pollData;
 
     const addPollInput = useCallback((): void => {
         setPollInputSize((prev) => prev + 1);
     }, []);
 
     const changeChoice = useCallback((data: { [key: string]: any }): void => {
-        onChangePoll({ ...data } as PollInitialState);
+        dispatch(setPollValue({ ...data }  as PollInitialState));
     }, []);
 
     const showOptions = useCallback((value: number): ReactNode[] => {
@@ -59,7 +38,7 @@ const Poll: FC<PollProps> = memo(({ pollData, onChangePoll, visiblePoll, onClose
 
     const onClosePoll = useCallback((): void => {
         setPollInputSize(0);
-        onClose();
+        dispatch(setClosePoll());
     }, []);
 
     if (!visiblePoll) {
@@ -93,7 +72,7 @@ const Poll: FC<PollProps> = memo(({ pollData, onChangePoll, visiblePoll, onClose
                         )}
                         {(pollInputSize === 2) && (
                             <PollInput
-                                id={"choice3"}
+                                id={"choice4"}
                                 label={"Choice 4 (optional)"}
                                 value={choice4}
                                 onChange={changeChoice}

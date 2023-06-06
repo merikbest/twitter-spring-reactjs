@@ -27,6 +27,7 @@ import { TweetAdditionalInfoState } from "./ducks/tweetAdditionalInfo/contracts/
 import { ChatState } from "./ducks/chat/contracts/state";
 import { TopicsState } from "./ducks/topics/contracts/state";
 import { SearchState } from "./ducks/search/contracts/state";
+import { AddTweetFormState } from "./ducks/addTweetForm/constants/state";
 
 export interface RootState {
     tweets: TweetsState;
@@ -53,6 +54,7 @@ export interface RootState {
     tweetAdditionalInfo: TweetAdditionalInfoState;
     chat: ChatState;
     search: SearchState;
+    addTweetForm: AddTweetFormState;
 }
 
 const composeEnhancers = (typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

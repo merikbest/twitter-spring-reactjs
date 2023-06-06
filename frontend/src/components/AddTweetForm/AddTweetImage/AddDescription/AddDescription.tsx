@@ -1,23 +1,18 @@
 import React, { FC, ReactElement } from "react";
+import { useSelector } from "react-redux";
 
 import ImageAction from "../ImageAction/ImageAction";
 import { ListsIcon } from "../../../../icons";
 import { useModalWindow } from "../../../../hook/useModalWindow";
 import AddDescriptionModal from "./AddDescriptionModal/AddDescriptionModal";
+import { selectImageDescription } from "../../../../store/ducks/addTweetForm/selector";
 
 interface AddDescriptionProps {
     imageSrc: string;
-    imageDescription: string;
-    handleChangeDescription: (description: string) => void;
 }
 
-const AddDescription: FC<AddDescriptionProps> = (
-    {
-        imageSrc,
-        imageDescription,
-        handleChangeDescription
-    }
-): ReactElement => {
+const AddDescription: FC<AddDescriptionProps> = ({ imageSrc }): ReactElement => {
+    const imageDescription = useSelector(selectImageDescription);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
@@ -27,12 +22,7 @@ const AddDescription: FC<AddDescriptionProps> = (
                 icon={ListsIcon}
                 onClick={onOpenModalWindow}
             />
-            <AddDescriptionModal
-                visible={visibleModalWindow}
-                onClose={onCloseModalWindow}
-                imageSrc={imageSrc}
-                handleChangeDescription={handleChangeDescription}
-            />
+            <AddDescriptionModal visible={visibleModalWindow} onClose={onCloseModalWindow} imageSrc={imageSrc} />
         </>
     );
 };

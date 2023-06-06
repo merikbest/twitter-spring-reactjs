@@ -8,20 +8,9 @@ import UnsentTweetsModal from "../UnsentTweetsModal/UnsentTweetsModal";
 interface ScheduleIconButtonProps {
     buttonName: string;
     disabled: boolean;
-    selectedScheduleDate: Date | null;
-    handleScheduleDate: (date: Date) => void;
-    clearScheduleDate: () => void;
 }
 
-const ScheduleIconButton: FC<ScheduleIconButtonProps> = memo((
-    {
-        buttonName,
-        disabled,
-        selectedScheduleDate,
-        handleScheduleDate,
-        clearScheduleDate
-    }
-): ReactElement => {
+const ScheduleIconButton: FC<ScheduleIconButtonProps> = memo(({ buttonName, disabled, }): ReactElement => {
     const [visibleScheduleModal, setVisibleScheduleModal] = useState<boolean>(false);
     const [visibleUnsentTweetsModal, setVisibleUnsentTweetsModal] = useState<boolean>(false);
 
@@ -56,10 +45,7 @@ const ScheduleIconButton: FC<ScheduleIconButtonProps> = memo((
                     />
                     <ScheduleModal
                         visible={visibleScheduleModal}
-                        selectedScheduleDate={selectedScheduleDate}
                         onClose={onCloseScheduleModal}
-                        handleScheduleDate={handleScheduleDate}
-                        clearScheduleDate={clearScheduleDate}
                         onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
                     />
                     <UnsentTweetsModal

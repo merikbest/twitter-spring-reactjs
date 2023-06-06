@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState } from "react";
 import { addDays, getDate, getDaysInMonth, getMonth, getYear, isBefore } from "date-fns";
 import { Dialog, DialogContent, FormControl, InputLabel, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
 import { useScheduleModalStyles } from "./ScheduleModalStyles";
 import { ScheduleIcon } from "../../../icons";
@@ -9,27 +10,17 @@ import { formatScheduleDate } from "../../../util/format-date-helper";
 import ScheduleTitle from "./ScheduleTitle/ScheduleTitle";
 import ScheduleTimeZone from "./ScheduleTimeZone/ScheduleTimeZone";
 import ScheduleFooter from "./ScheduleFooter/ScheduleFooter";
+import { clearScheduleDate, setClosePoll, setScheduleDate } from "../../../store/ducks/addTweetForm/actionCreators";
 
 interface ScheduleModalProps {
     visible?: boolean;
-    selectedScheduleDate: Date | null;
     onClose: () => void;
-    handleScheduleDate: (date: Date) => void;
-    clearScheduleDate: () => void;
     onOpenUnsentTweetsModal: () => void;
 }
 
-const ScheduleModal: FC<ScheduleModalProps> = (
-    {
-        visible,
-        onClose,
-        handleScheduleDate,
-        selectedScheduleDate,
-        clearScheduleDate,
-        onOpenUnsentTweetsModal
-    }
-): ReactElement | null => {
+const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentTweetsModal }): ReactElement | null => {
     const classes = useScheduleModalStyles();
+    const dispatch = useDispatch();
     const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<string>("");
     const [year, setYear] = useState<string>("");
@@ -149,12 +140,13 @@ const ScheduleModal: FC<ScheduleModalProps> = (
     };
 
     const onSubmitScheduleDate = (): void => {
-        handleScheduleDate(selectedDate);
+        dispatch(setScheduleDate(selectedDate));
+        dispatch(setClosePoll());
         onClose();
     };
 
     const onSubmitClearScheduleDate = (): void => {
-        clearScheduleDate();
+        dispatch(clearScheduleDate());
         onClose();
     };
 
@@ -166,7 +158,6 @@ const ScheduleModal: FC<ScheduleModalProps> = (
         <Dialog transitionDuration={0} open={visible} onClose={onClose} className={classes.dialog}>
             <ScheduleTitle
                 onClose={onClose}
-                selectedScheduleDate={selectedScheduleDate}
                 isValidSelectedDate={isValidSelectedDate}
                 onSubmitScheduleDate={onSubmitScheduleDate}
                 onSubmitClearScheduleDate={onSubmitClearScheduleDate}

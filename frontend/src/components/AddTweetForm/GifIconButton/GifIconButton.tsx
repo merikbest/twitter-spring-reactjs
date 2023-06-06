@@ -4,13 +4,8 @@ import { GifIcon } from "../../../icons";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { useModalWindow } from "../../../hook/useModalWindow";
 import GifModalWindow from "./GifModalWindow/GifModalWindow";
-import { GiphyDataProps } from "../../../types/tweet";
 
-interface GifIconButtonProps {
-    onClickSetGif: (gif: GiphyDataProps) => void;
-}
-
-const GifIconButton: FC<GifIconButtonProps> = memo(({ onClickSetGif }): ReactElement => {
+const GifIconButton: FC = memo((): ReactElement => {
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     return (
@@ -21,7 +16,7 @@ const GifIconButton: FC<GifIconButtonProps> = memo(({ onClickSetGif }): ReactEle
                 onClick={onOpenModalWindow}
                 size={"medium"}
             />
-            <GifModalWindow onClickSetGif={onClickSetGif} visible={visibleModalWindow} onClose={onCloseModalWindow} />
+            <GifModalWindow visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );
 });

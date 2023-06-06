@@ -1,12 +1,13 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Button, DialogTitle } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 import CloseButton from "../../../CloseButton/CloseButton";
 import { useScheduleModalStyles } from "../ScheduleModalStyles";
+import { selectScheduledDate } from "../../../../store/ducks/addTweetForm/selector";
 
 interface ScheduleModalTitleProps {
     onClose: () => void;
-    selectedScheduleDate: Date | null;
     isValidSelectedDate: boolean;
     onSubmitScheduleDate: () => void;
     onSubmitClearScheduleDate: () => void;
@@ -15,20 +16,20 @@ interface ScheduleModalTitleProps {
 const ScheduleTitle: FC<ScheduleModalTitleProps> = memo((
     {
         onClose,
-        selectedScheduleDate,
         isValidSelectedDate,
         onSubmitScheduleDate,
         onSubmitClearScheduleDate
     }
 ): ReactElement => {
     const classes = useScheduleModalStyles();
+    const scheduledDate = useSelector(selectScheduledDate);
 
     return (
         <DialogTitle>
             <CloseButton onClose={onClose} />
             Schedule
             <div className={classes.buttonWrapper}>
-                {selectedScheduleDate && (
+                {scheduledDate && (
                     <Button
                         onClick={onSubmitClearScheduleDate}
                         type="submit"
@@ -48,7 +49,7 @@ const ScheduleTitle: FC<ScheduleModalTitleProps> = memo((
                     size="small"
                     disabled={isValidSelectedDate}
                 >
-                    {selectedScheduleDate ? "Update" : "Confirm"}
+                    {scheduledDate ? "Update" : "Confirm"}
                 </Button>
             </div>
         </DialogTitle>

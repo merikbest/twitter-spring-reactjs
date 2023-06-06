@@ -1,25 +1,28 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Divider, Popover } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useReplyStyles } from "./ReplyStyles";
 import { EveryoneReplyIcon, FollowReplyIcon, MentionReplyIcon } from "../../../icons";
 import ChangeReplyWindow from "../../ChangeReplyWindow/ChangeReplyWindow";
 import { ReplyType } from "../../../types/common";
 import { usePopup } from "../../../hook/usePopup";
+import { selectReplyType } from "../../../store/ducks/addTweetForm/selector";
+import { setReplyType } from "../../../store/ducks/addTweetForm/actionCreators";
 
 interface ReplyProps {
-    replyType: ReplyType;
-    setReplyType: (value: ReplyType | ((prevVar: ReplyType) => ReplyType)) => void;
     isUnsentTweet: boolean;
 }
 
-const Reply: FC<ReplyProps> = memo(({ replyType, setReplyType, isUnsentTweet }): ReactElement => {
+const Reply: FC<ReplyProps> = memo(({ isUnsentTweet }): ReactElement => {
     const classes = useReplyStyles();
+    const dispatch = useDispatch();
+    const replyType = useSelector(selectReplyType);
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
     const handleListItemClick = (reply: ReplyType): void => {
-        setReplyType(reply);
+        dispatch(setReplyType(reply));
         handleClosePopup();
     };
 

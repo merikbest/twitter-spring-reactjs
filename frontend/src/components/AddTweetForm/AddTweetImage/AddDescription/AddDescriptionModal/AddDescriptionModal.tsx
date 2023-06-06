@@ -1,4 +1,5 @@
 import React, { FC, ReactElement } from "react";
+import { useDispatch } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Dialog, DialogContent, FormControl, FormGroup } from "@material-ui/core";
 
@@ -6,32 +7,26 @@ import { useAddDescriptionModalStyles } from "./AddDescriptionModalStyles";
 import TweetInput from "../../../../TweetInput/TweetInput";
 import DialogTitleComponent from "../../../../DialogTitleComponent/DialogTitleComponent";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { setImageDescription } from "../../../../../store/ducks/addTweetForm/actionCreators";
 
 interface AddDescriptionModalProps {
     visible?: boolean;
     onClose: () => void;
     imageSrc: string;
-    handleChangeDescription: (description: string) => void;
 }
 
 export interface AddDescriptionFormProps {
     description: string;
 }
 
-const AddDescriptionModal: FC<AddDescriptionModalProps> = (
-    {
-        visible,
-        onClose,
-        imageSrc,
-        handleChangeDescription
-    }
-): ReactElement | null => {
+const AddDescriptionModal: FC<AddDescriptionModalProps> = ({ visible, onClose, imageSrc }): ReactElement | null => {
     const globalClasses = useGlobalStyles({ dialogContentHeight: 666 });
     const classes = useAddDescriptionModalStyles();
+    const dispatch = useDispatch();
     const { control, handleSubmit } = useForm<AddDescriptionFormProps>();
 
     const onSubmit = (data: AddDescriptionFormProps): void => {
-        handleChangeDescription(data.description);
+        dispatch(setImageDescription(data.description));
         onClose();
     };
 

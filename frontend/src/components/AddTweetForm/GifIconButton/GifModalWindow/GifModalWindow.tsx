@@ -1,4 +1,5 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Dialog, DialogContent, DialogTitle, InputAdornment } from "@material-ui/core";
 
 import { useGlobalStyles } from "../../../../util/globalClasses";
@@ -13,15 +14,16 @@ import GifList from "./GifList/GifList";
 import { GIPHY_API_URL } from "../../../../constants/url-constants";
 import Spinner from "../../../Spinner/Spinner";
 import { GiphyDataProps } from "../../../../types/tweet";
+import { setGif } from "../../../../store/ducks/addTweetForm/actionCreators";
 
 interface GifModalWindowProps {
-    onClickSetGif: (gif: GiphyDataProps) => void;
     visible: boolean;
     onClose: () => void;
 }
 
-const GifModalWindow: FC<GifModalWindowProps> = ({ onClickSetGif, visible, onClose }): ReactElement | null => {
+const GifModalWindow: FC<GifModalWindowProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
+    const dispatch = useDispatch();
     const [gifs, setGifs] = useState<GiphyDataProps[]>([]);
     const [isGifsLoading, setIsGifsLoading] = useState(false);
     const { text, setText, handleChangeText } = useInputText();
@@ -61,7 +63,7 @@ const GifModalWindow: FC<GifModalWindowProps> = ({ onClickSetGif, visible, onClo
     const onClickGif = (gif: GiphyDataProps): void => {
         setText("");
         setGifs([]);
-        onClickSetGif(gif);
+        dispatch(setGif(gif));
         onClose();
     };
 
