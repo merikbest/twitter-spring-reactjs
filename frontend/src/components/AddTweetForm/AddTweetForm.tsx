@@ -1,7 +1,6 @@
 import React, { FC, ReactElement, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import "emoji-mart/css/emoji-mart.css";
 
@@ -36,6 +35,8 @@ import TweetListComponent from "../TweetListComponent/TweetListComponent";
 import GifIconButton from "./GifIconButton/GifIconButton";
 import GifImage from "../GifImage/GifImage";
 import PullIconButton from "./PullIconButton/PullIconButton";
+import TextCountProgress from "./TextCountProgress/TextCountProgress";
+import { MAX_TEXT_LENGTH } from "../../constants/common-constants";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -55,8 +56,6 @@ export interface ImageObj {
     src: string;
     file: File;
 }
-
-const MAX_LENGTH = 280;
 
 const AddTweetForm: FC<AddTweetFormProps> = (
     {
@@ -85,8 +84,6 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     const [imageDescription, setImageDescription] = useState<string>("");
     const { text, setText, handleChangeText, addEmoji, textConverter } = useInputText();
     const { selectedUsers, handleDelete, handleListItemClick, resetSelectedUsers } = useSelectUsers();
-    const textLimitPercent = Math.round((text.length / MAX_LENGTH) * 100);
-    const textCount = MAX_LENGTH - text.length;
 
     useEffect(() => {
         if (unsentTweet) {
@@ -266,35 +263,15 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                     />
                 </div>
                 <div className={classes.footerAddForm}>
-                    {text && (
-                        <>
-                            <span id={"textCount"}>{textCount}</span>
-                            <div className={classes.footerAddFormCircleProgress}>
-                                <CircularProgress
-                                    variant="determinate"
-                                    size={20}
-                                    thickness={5}
-                                    value={text.length >= MAX_LENGTH ? 100 : textLimitPercent}
-                                    style={text.length >= MAX_LENGTH ? { color: "red" } : undefined}
-                                />
-                                <CircularProgress
-                                    style={{ color: "rgba(0, 0, 0, 0.1)" }}
-                                    variant="determinate"
-                                    size={20}
-                                    thickness={5}
-                                    value={100}
-                                />
-                            </div>
-                        </>
-                    )}
+                    <TextCountProgress text={text} />
                     <Button
                         onClick={(buttonName === "Reply") ? handleClickReplyTweet :
                             (quoteTweet !== undefined ? handleClickQuoteTweet : handleClickAddTweet)}
                         disabled={
                             visiblePoll ? (
-                                !pollData.choice1 || !pollData.choice2 || !text || text.length >= MAX_LENGTH
+                                !pollData.choice1 || !pollData.choice2 || !text || text.length >= MAX_TEXT_LENGTH
                             ) : (
-                                !gif && (!text || text.length >= MAX_LENGTH)
+                                !gif && (!text || text.length >= MAX_TEXT_LENGTH)
                             )}
                         color="primary"
                         variant="contained"

@@ -44,14 +44,5 @@ export const useAddTweetFormStyles = makeStyles(() => ({
     footerAddForm: {
         display: "flex",
         alignItems: "center"
-    },
-    footerAddFormCircleProgress: {
-        position: "relative",
-        width: 20,
-        height: 20,
-        margin: "0 10px",
-        "& .MuiCircularProgress-root": {
-            position: "absolute"
-        }
     }
 }));
