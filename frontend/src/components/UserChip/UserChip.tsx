@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import { Avatar, Chip } from "@material-ui/core";
 
@@ -11,7 +11,7 @@ interface UserChipProps {
     onDeleteUser: (selectedUser: UserResponse) => void;
 }
 
-const UserChip: FC<UserChipProps> = ({ selectedUser, onDeleteUser }): ReactElement => {
+const UserChip: FC<UserChipProps> = memo(({ selectedUser, onDeleteUser }): ReactElement => {
     const classes = useUserChipStyles();
 
     return (
@@ -24,6 +24,6 @@ const UserChip: FC<UserChipProps> = ({ selectedUser, onDeleteUser }): ReactEleme
             onDelete={() => onDeleteUser(selectedUser)}
         />
     );
-};
+});
 
 export default UserChip;

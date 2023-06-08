@@ -13,6 +13,7 @@ import differenceInDays from "date-fns/differenceInDays";
 import differenceInHours from "date-fns/differenceInHours";
 import differenceInMinutes from "date-fns/differenceInMinutes";
 import { PollResponse } from "../types/tweet";
+import { HOUR_MINUTE_AMPM } from "../constants/common-constants";
 
 export const formatDate = (date: Date): string => {
     return format(date, "MMM d");
@@ -23,7 +24,7 @@ export const formatScheduleDate = (date: Date): string => {
 };
 
 export const formatChatMessageDate = (date: Date): string => {
-    const datePattern = format(date, "hh:mm a", { locale: usLang });
+    const datePattern = format(date, HOUR_MINUTE_AMPM, { locale: usLang });
 
     if (isToday(date)) return datePattern;
 

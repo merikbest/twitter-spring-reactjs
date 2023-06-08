@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useEffect } from "react";
+import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
@@ -28,7 +28,6 @@ import ScheduleDateInfo from "./ScheduleDateInfo/ScheduleDateInfo";
 import AddTweetImage from "./AddTweetImage/AddTweetImage";
 import { useParams } from "react-router-dom";
 import { TweetApi } from "../../services/api/tweet-service/tweetApi";
-import { useSelectUsers } from "../../hook/useSelectUsers";
 import { useInputText } from "../../hook/useInputText";
 import { BaseListResponse } from "../../types/lists";
 import TweetListComponent from "../TweetListComponent/TweetListComponent";
@@ -44,17 +43,10 @@ import {
     selectPollData,
     selectReplyType,
     selectScheduledDate,
+    selectSelectedUsers,
     selectVisiblePoll
 } from "../../store/ducks/addTweetForm/selector";
-import {
-    clearImageDescription,
-    clearScheduleDate,
-    removeGif,
-    removeImages,
-    setClosePoll,
-    setImages,
-    setScheduleDate
-} from "../../store/ducks/addTweetForm/actionCreators";
+import { resetAddTweetFormState, setImages, setScheduleDate } from "../../store/ducks/addTweetForm/actionCreators";
 
 export interface AddTweetFormProps {
     unsentTweet?: TweetResponse;
@@ -100,8 +92,8 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     const replyType = useSelector(selectReplyType);
     const imageDescription = useSelector(selectImageDescription);
     const images = useSelector(selectImages);
+    const selectedUsers = useSelector(selectSelectedUsers);
     const { text, setText, handleChangeText, addEmoji, textConverter } = useInputText();
-    const { selectedUsers, handleDelete, handleListItemClick, resetSelectedUsers } = useSelectUsers();
 
     useEffect(() => {
         if (unsentTweet) {
@@ -179,21 +171,10 @@ const AddTweetForm: FC<AddTweetFormProps> = (
 
     const tweetPostProcessing = (snackBarText?: string): void => {
         dispatch(setOpenSnackBar(snackBarText ?? "Your tweet was sent."));
+        dispatch(resetAddTweetFormState());
         setText("");
-        dispatch(removeImages());
-        dispatch(clearImageDescription());
-        resetSelectedUsers();
-        dispatch(setClosePoll());
-        dispatch(clearScheduleDate());
-        dispatch(removeGif());
         if (onCloseModal) onCloseModal();
     };
-
-    const removeImage = useCallback((): void => {
-        dispatch(removeImages());
-        dispatch(clearImageDescription());
-        resetSelectedUsers();
-    }, [images]);
 
     return (
         <>
@@ -212,12 +193,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                 </div>
             </div>
             <div className={classes.formItems}>
-                <AddTweetImage
-                    removeImage={removeImage}
-                    selectedUsers={selectedUsers}
-                    handleDelete={handleDelete}
-                    handleListItemClick={handleListItemClick}
-                />
+                <AddTweetImage />
                 {gif && <GifImage gifImage={gif.images.downsized} removeButton />}
                 {quoteTweet && <Quote quoteTweet={quoteTweet} />}
                 {tweetList && <TweetListComponent tweetList={tweetList} />}

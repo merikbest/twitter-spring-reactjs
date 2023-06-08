@@ -1,9 +1,10 @@
 import {
     AddTweetFormTypes,
-    ClearImageDescriptionActionInterface,
-    RemoveImagesActionInterface,
     ClearScheduleDateActionInterface,
     RemoveGifActionInterface,
+    RemoveImagesActionInterface,
+    RemoveSelectedUserActionInterface,
+    ResetAddTweetFormStateActionInterface,
     SetClosePollActionInterface,
     SetGifActionInterface,
     SetImageDescriptionActionInterface,
@@ -11,12 +12,14 @@ import {
     SetOpenPollActionInterface,
     SetPollValueActionInterface,
     SetReplyTypeActionInterface,
-    SetScheduleDateActionInterface
+    SetScheduleDateActionInterface,
+    SetSelectedUserActionInterface
 } from "./constants/actionTypes";
 import { PollInitialState } from "./constants/state";
 import { GiphyDataProps } from "../../../types/tweet";
 import { ReplyType } from "../../../types/common";
 import { ImageObj } from "../../../components/AddTweetForm/AddTweetForm";
+import { UserResponse } from "../../../types/user";
 
 export const setOpenPoll = (): SetOpenPollActionInterface => ({
     type: AddTweetFormTypes.SET_OPEN_POLL
@@ -59,10 +62,6 @@ export const setImageDescription = (payload: string): SetImageDescriptionActionI
     payload
 });
 
-export const clearImageDescription = (): ClearImageDescriptionActionInterface => ({
-    type: AddTweetFormTypes.CLEAR_IMAGE_DESCRIPTION
-});
-
 export const setImages = (payload: ImageObj[]): SetImagesActionInterface => ({
     type: AddTweetFormTypes.SET_IMAGES,
     payload
@@ -70,4 +69,17 @@ export const setImages = (payload: ImageObj[]): SetImagesActionInterface => ({
 
 export const removeImages = (): RemoveImagesActionInterface => ({
     type: AddTweetFormTypes.REMOVE_IMAGES
+});
+
+export const setSelectedUser = (payload: UserResponse): SetSelectedUserActionInterface => ({
+    type: AddTweetFormTypes.SET_SELECTED_USER,
+    payload
+});
+
+export const removeSelectedUser = (payload: UserResponse): RemoveSelectedUserActionInterface => ({
+    type: AddTweetFormTypes.REMOVE_SELECTED_USER,
+    payload
+});
+export const resetAddTweetFormState = (): ResetAddTweetFormStateActionInterface => ({
+    type: AddTweetFormTypes.RESET_ADD_TWEET_FORM_STATE
 });

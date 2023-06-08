@@ -9,3 +9,4 @@ export const selectScheduledDate = (state: RootState) => selectAddTweetFormState
 export const selectReplyType = (state: RootState) => selectAddTweetFormState(state).replyType;
 export const selectImages = (state: RootState) => selectAddTweetFormState(state).images;
 export const selectImageDescription = (state: RootState) => selectAddTweetFormState(state).imageDescription;
+export const selectSelectedUsers = (state: RootState) => selectAddTweetFormState(state).selectedUsers;

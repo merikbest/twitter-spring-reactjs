@@ -1,20 +1,26 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch } from "react-redux";
 import { Avatar, ListItem, Typography } from "@material-ui/core";
 
 import { useTagPeopleItemStyles } from "./TagPeopleItemStyles";
 import { UserResponse } from "../../../../../../types/user";
 import { DEFAULT_PROFILE_IMG } from "../../../../../../constants/url-constants";
 import LockIcon from "../../../../../LockIcon/LockIcon";
+import { setSelectedUser } from "../../../../../../store/ducks/addTweetForm/actionCreators";
 
 interface TagPeopleItemProps {
     user: UserResponse;
-    handleListItemClick: (user: UserResponse) => void;
 }
 
-const TagPeopleItem: FC<TagPeopleItemProps> = ({ user, handleListItemClick }): ReactElement => {
+const TagPeopleItem: FC<TagPeopleItemProps> = memo(({ user }): ReactElement => {
+    const dispatch = useDispatch();
     const isUserCanTagged = user?.isPrivateProfile && !user.isFollower;
     const classes = useTagPeopleItemStyles({ isUserCanTagged });
     const userAvatar = user?.avatar ?? DEFAULT_PROFILE_IMG;
+
+    const handleListItemClick = (user: UserResponse): void => {
+        dispatch(setSelectedUser(user));
+    };
 
     return (
         <ListItem onClick={isUserCanTagged ? undefined : () => handleListItemClick(user)}>
@@ -39,6 +45,6 @@ const TagPeopleItem: FC<TagPeopleItemProps> = ({ user, handleListItemClick }): R
             </div>
         </ListItem>
     );
-};
+});
 
 export default TagPeopleItem;

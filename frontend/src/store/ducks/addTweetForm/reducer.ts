@@ -21,7 +21,8 @@ export const initialAddTweetFormState: AddTweetFormState = {
     scheduledDate: null,
     replyType: ReplyType.EVERYONE,
     imageDescription: "",
-    images: []
+    images: [],
+    selectedUsers: []
 };
 
 export const addTweetFormReducer = produce((draft: Draft<AddTweetFormState>, action: AddTweetFormActions) => {
@@ -63,10 +64,6 @@ export const addTweetFormReducer = produce((draft: Draft<AddTweetFormState>, act
             draft.imageDescription = action.payload;
             break;
 
-        case AddTweetFormTypes.CLEAR_IMAGE_DESCRIPTION:
-            draft.imageDescription = "";
-            break;
-
         case AddTweetFormTypes.SET_IMAGES:
             draft.images = action.payload;
             break;
@@ -74,6 +71,34 @@ export const addTweetFormReducer = produce((draft: Draft<AddTweetFormState>, act
         case AddTweetFormTypes.REMOVE_IMAGES:
             draft.images = [];
             draft.imageDescription = "";
+            draft.selectedUsers = [];
+            break;
+
+        case AddTweetFormTypes.SET_SELECTED_USER:
+            const newSelectedUsers = [...draft.selectedUsers];
+            const selectedUserIndex = draft.selectedUsers.findIndex(user => user.id === action.payload.id);
+
+            if (selectedUserIndex === -1) {
+                newSelectedUsers.push(action.payload);
+            } else {
+                newSelectedUsers.splice(selectedUserIndex, 1);
+            }
+            draft.selectedUsers = newSelectedUsers;
+            break;
+
+        case AddTweetFormTypes.REMOVE_SELECTED_USER:
+            draft.selectedUsers = draft.selectedUsers.filter((user) => user.id !== action.payload.id);
+            break;
+
+        case AddTweetFormTypes.RESET_ADD_TWEET_FORM_STATE:
+            draft.visiblePoll = false;
+            draft.pollData = pollInitialState;
+            draft.gif = null;
+            draft.scheduledDate = null;
+            draft.replyType = ReplyType.EVERYONE;
+            draft.imageDescription = "";
+            draft.images = [];
+            draft.selectedUsers = [];
             break;
 
         default:

@@ -1,8 +1,9 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 
 import { useProfileDescriptionInputStyles } from "./ProfileDescriptionInputStyles";
 import InputLabel from "@material-ui/core/InputLabel";
 import { ProfileDescriptionInputField } from "./ProfileDescriptionInputField";
+import { useFocus } from "../../../../../../hook/useFocus";
 
 interface ProfileDescriptionInputProps {
     onChange: (...event: any[]) => void;
@@ -26,10 +27,7 @@ const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = (
     }
 ): ReactElement => {
     const classes = useProfileDescriptionInputStyles();
-    const [focused, setFocused] = useState<boolean>(true);
-
-    const onFocus = () => setFocused(true);
-    const onBlur = () => setFocused(false);
+    const { focused, onFocus, onBlur } = useFocus();
 
     return (
         <div>

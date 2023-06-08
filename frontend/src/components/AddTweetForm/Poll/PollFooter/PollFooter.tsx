@@ -1,14 +1,17 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Paper, Typography } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
 import { usePollStyles } from "../PollStyles";
+import { setClosePoll } from "../../../../store/ducks/addTweetForm/actionCreators";
 
-interface PollFooterProps {
-    onClosePoll: () => void;
-}
-
-const PollFooter: FC<PollFooterProps> = memo(({ onClosePoll }): ReactElement => {
+const PollFooter: FC = memo((): ReactElement => {
+    const dispatch = useDispatch();
     const classes = usePollStyles();
+
+    const onClosePoll = (): void => {
+        dispatch(setClosePoll());
+    };
 
     return (
         <Paper id={"removePoll"} onClick={onClosePoll} className={classes.footer} variant="outlined">

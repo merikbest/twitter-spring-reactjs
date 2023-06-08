@@ -7,11 +7,7 @@ import { useModalWindow } from "../../../../hook/useModalWindow";
 import AddDescriptionModal from "./AddDescriptionModal/AddDescriptionModal";
 import { selectImageDescription } from "../../../../store/ducks/addTweetForm/selector";
 
-interface AddDescriptionProps {
-    imageSrc: string;
-}
-
-const AddDescription: FC<AddDescriptionProps> = ({ imageSrc }): ReactElement => {
+const AddDescription: FC = (): ReactElement => {
     const imageDescription = useSelector(selectImageDescription);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
@@ -22,7 +18,7 @@ const AddDescription: FC<AddDescriptionProps> = ({ imageSrc }): ReactElement => 
                 icon={ListsIcon}
                 onClick={onOpenModalWindow}
             />
-            <AddDescriptionModal visible={visibleModalWindow} onClose={onCloseModalWindow} imageSrc={imageSrc} />
+            <AddDescriptionModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );
 };

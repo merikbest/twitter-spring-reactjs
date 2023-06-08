@@ -1,8 +1,9 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 
 import { useCreateListsModalInputStyles } from "./CreateListsModalInputStyles";
 import { ListModalInputField } from "./ListsModalInputField";
+import { useFocus } from "../../../../../hook/useFocus";
 
 interface CreateListsModalInputProps {
     onChange: (...event: any[]) => void;
@@ -26,10 +27,7 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = (
     }
 ): ReactElement => {
     const classes = useCreateListsModalInputStyles();
-    const [focused, setFocused] = useState<boolean>(false);
-
-    const onFocus = () => setFocused(true);
-    const onBlur = () => setFocused(false);
+    const { focused, onFocus, onBlur } = useFocus();
 
     return (
         <div className={classes.container}>

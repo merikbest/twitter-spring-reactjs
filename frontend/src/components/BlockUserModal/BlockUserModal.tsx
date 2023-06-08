@@ -23,10 +23,6 @@ const BlockUserModal: FC<BlockUserModalProps> = (
 ): ReactElement | null => {
     const classes = useBlockUserModalStyles();
 
-    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-        event.preventDefault();
-    };
-
     if (!visible) {
         return null;
     }
@@ -35,7 +31,7 @@ const BlockUserModal: FC<BlockUserModalProps> = (
         <Dialog
             className={classes.dialog}
             open={visible}
-            onClick={handleClick}
+            onClick={(event) => event.preventDefault()}
             onClose={onClose}
         >
             <DialogContent>

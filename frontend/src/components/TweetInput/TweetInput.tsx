@@ -1,8 +1,9 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 
 import { TweetInputField } from "./TweetInputField";
 import { useTweetInputStyles } from "./TweetInputStyles";
+import { useFocus } from "../../hook/useFocus";
 
 interface TweeterInputProps {
     onChange: (...event: any[]) => void;
@@ -30,10 +31,7 @@ const TweetInput: FC<TweeterInputProps> = (
     }
 ): ReactElement => {
     const classes = useTweetInputStyles();
-    const [focused, setFocused] = useState<boolean>(false);
-
-    const onFocus = () => setFocused(true);
-    const onBlur = () => setFocused(false);
+    const { focused, onFocus, onBlur } = useFocus();
 
     return (
         <div className={classes.container}>

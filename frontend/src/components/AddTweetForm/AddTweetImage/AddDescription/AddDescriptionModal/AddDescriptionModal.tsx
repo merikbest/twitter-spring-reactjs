@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Dialog, DialogContent, FormControl, FormGroup } from "@material-ui/core";
 
@@ -8,21 +8,22 @@ import TweetInput from "../../../../TweetInput/TweetInput";
 import DialogTitleComponent from "../../../../DialogTitleComponent/DialogTitleComponent";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
 import { setImageDescription } from "../../../../../store/ducks/addTweetForm/actionCreators";
+import { selectImages } from "../../../../../store/ducks/addTweetForm/selector";
 
 interface AddDescriptionModalProps {
     visible?: boolean;
     onClose: () => void;
-    imageSrc: string;
 }
 
 export interface AddDescriptionFormProps {
     description: string;
 }
 
-const AddDescriptionModal: FC<AddDescriptionModalProps> = ({ visible, onClose, imageSrc }): ReactElement | null => {
+const AddDescriptionModal: FC<AddDescriptionModalProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles({ dialogContentHeight: 666 });
     const classes = useAddDescriptionModalStyles();
     const dispatch = useDispatch();
+    const images = useSelector(selectImages);
     const { control, handleSubmit } = useForm<AddDescriptionFormProps>();
 
     const onSubmit = (data: AddDescriptionFormProps): void => {
@@ -44,7 +45,7 @@ const AddDescriptionModal: FC<AddDescriptionModalProps> = ({ visible, onClose, i
                 </DialogTitleComponent>
                 <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                     <div className={classes.contentImage}>
-                        <img src={imageSrc} alt={imageSrc} />
+                        <img src={images[0].src} alt={images[0].src} />
                     </div>
                     <FormControl className={classes.inputWrapper} variant="outlined">
                         <FormGroup aria-label="position">

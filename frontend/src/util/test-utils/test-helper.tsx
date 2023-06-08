@@ -315,7 +315,8 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             scheduledDate: null,
             replyType: ReplyType.EVERYONE,
             imageDescription: "",
-            images: []
+            images: [],
+            selectedUsers: []
         }
     } as RootState;
 };

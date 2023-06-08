@@ -1,22 +1,27 @@
-import React, { FC, memo, ReactElement, useState } from "react";
+import React, { FC, memo, ReactElement } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
+import { useDispatch } from "react-redux";
 
 import { usePollInputStyles } from "./PollInputField";
 import { PollInputField } from "./PollInputStyles";
+import { setPollValue } from "../../../../store/ducks/addTweetForm/actionCreators";
+import { PollInitialState } from "../../../../store/ducks/addTweetForm/constants/state";
+import { useFocus } from "../../../../hook/useFocus";
 
 interface PollInputProps {
     id: "choice1" | "choice2" | "choice3" | "choice4";
-    onChange: (value: { [key: string]: any }) => void;
     value: string;
     label: string;
 }
 
-const PollInput: FC<PollInputProps> = memo(({ id, onChange, value, label }): ReactElement => {
+const PollInput: FC<PollInputProps> = memo(({ id, value, label }): ReactElement => {
+    const dispatch = useDispatch();
     const classes = usePollInputStyles();
-    const [focused, setFocused] = useState<boolean>(false);
+    const { focused, onFocus, onBlur } = useFocus();
 
-    const onFocus = () => setFocused(true);
-    const onBlur = () => setFocused(false);
+    const changeChoice = (data: { [key: string]: any }): void => {
+        dispatch(setPollValue({ ...data }  as PollInitialState));
+    };
 
     return (
         <div className={classes.container}>
@@ -31,7 +36,7 @@ const PollInput: FC<PollInputProps> = memo(({ id, onChange, value, label }): Rea
                 id={id}
                 label={label}
                 variant="filled"
-                onChange={(event) => onChange({ [id]: event.target.value as string })}
+                onChange={(event) => changeChoice({ [id]: event.target.value as string })}
                 value={value}
                 onFocus={onFocus}
                 onBlur={onBlur}

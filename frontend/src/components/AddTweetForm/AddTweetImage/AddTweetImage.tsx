@@ -8,25 +8,10 @@ import { CloseIcon } from "../../../icons";
 import { useAddTweetImageStyles } from "./AddTweetImageStyles";
 import TagPeople from "./TagPeople/TagPeople";
 import AddDescription from "./AddDescription/AddDescription";
-import { UserResponse } from "../../../types/user";
-import { removeImages } from "../../../store/ducks/addTweetForm/actionCreators";
 import { selectImages } from "../../../store/ducks/addTweetForm/selector";
+import { removeImages } from "../../../store/ducks/addTweetForm/actionCreators";
 
-interface AddTweetImageProps {
-    removeImage: () => void;
-    selectedUsers: UserResponse[];
-    handleDelete: (selectedUser: UserResponse) => void;
-    handleListItemClick: (user: UserResponse) => void;
-}
-
-const AddTweetImage: FC<AddTweetImageProps> = memo((
-    {
-        removeImage,
-        selectedUsers,
-        handleDelete,
-        handleListItemClick
-    }
-): ReactElement | null => {
+const AddTweetImage: FC = memo((): ReactElement | null => {
     const classes = useAddTweetImageStyles();
     const dispatch = useDispatch();
     const location = useLocation();
@@ -44,18 +29,14 @@ const AddTweetImage: FC<AddTweetImageProps> = memo((
         <div className={(location.pathname.includes(MODAL)) ? classes.imageSmall : classes.image}>
             <img src={images[0].src} alt={images[0].src} />
             <div>
-                <TagPeople
-                    selectedUsers={selectedUsers}
-                    handleDelete={handleDelete}
-                    handleListItemClick={handleListItemClick}
-                />
-                <AddDescription imageSrc={images[0].src} />
+                <TagPeople />
+                <AddDescription />
             </div>
             <div className={classes.imageRemove}>
                 <ActionIconButton
                     actionText={"Remove"}
                     icon={CloseIcon}
-                    onClick={removeImage}
+                    onClick={onClickRemoveImage}
                     size={"medium"}
                 />
             </div>

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Dialog, DialogContent, Divider, List } from "@material-ui/core";
 
@@ -15,28 +15,20 @@ import ModalInput from "../../../../ModalInput/ModalInput";
 import { UserResponse } from "../../../../../types/user";
 import DialogTitleComponent from "../../../../DialogTitleComponent/DialogTitleComponent";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
+import { selectSelectedUsers } from "../../../../../store/ducks/addTweetForm/selector";
+import { removeSelectedUser } from "../../../../../store/ducks/addTweetForm/actionCreators";
 
 interface TagPeopleModalProps {
     visible?: boolean;
     onClose: () => void;
-    selectedUsers: UserResponse[];
-    handleDelete: (selectedUser: UserResponse) => void
-    handleListItemClick: (user: UserResponse) => void,
 }
 
-const TagPeopleModal: FC<TagPeopleModalProps> = (
-    {
-        visible,
-        onClose,
-        selectedUsers,
-        handleDelete,
-        handleListItemClick
-    }
-): ReactElement | null => {
+const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const users = useSelector(selectUsersSearch);
     const usersPagesCount = useSelector(selectUsersPagesCount);
+    const selectedUsers = useSelector(selectSelectedUsers);
     const [searchText, setSearchText] = useState<string>("");
 
     const onSearch = (text: string): void => {
@@ -53,6 +45,10 @@ const TagPeopleModal: FC<TagPeopleModalProps> = (
     const loadParticipants = (page: number): void => {
         dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(searchText), pageNumber: page }));
     };
+
+    const onClickDeleteUser = useCallback((selectedUser: UserResponse): void => {
+        dispatch(removeSelectedUser(selectedUser));
+    }, []);
 
     if (!visible) {
         return null;
@@ -75,7 +71,7 @@ const TagPeopleModal: FC<TagPeopleModalProps> = (
             <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                 <ModalInput placeholder={"Search people"} searchText={searchText} onSearch={onSearch} />
                 {selectedUsers && (selectedUsers.map((selectedUser) => (
-                        <UserChip key={selectedUser.id} selectedUser={selectedUser} onDeleteUser={handleDelete} />
+                        <UserChip key={selectedUser.id} selectedUser={selectedUser} onDeleteUser={onClickDeleteUser} />
                     ))
                 )}
                 <Divider style={{ marginTop: 8 }} />
@@ -85,9 +81,7 @@ const TagPeopleModal: FC<TagPeopleModalProps> = (
                     loadItems={loadParticipants}
                 >
                     <List component="nav">
-                        {users.map((user) => (
-                            <TagPeopleItem key={user.id} user={user} handleListItemClick={handleListItemClick} />
-                        ))}
+                        {users.map((user) => <TagPeopleItem key={user.id} user={user} />)}
                     </List>
                 </InfiniteScrollWrapper>
             </DialogContent>

@@ -4,6 +4,7 @@ import { PollInitialState } from "./state";
 import { GiphyDataProps } from "../../../../types/tweet";
 import { ReplyType } from "../../../../types/common";
 import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";
+import { UserResponse } from "../../../../types/user";
 
 export enum AddTweetFormTypes {
     SET_OPEN_POLL = "addTweetForm/SET_OPEN_POLL",
@@ -15,9 +16,11 @@ export enum AddTweetFormTypes {
     CLEAR_SCHEDULE_DATE = "addTweetForm/CLEAR_SCHEDULE_DATE",
     SET_REPLY_TYPE = "addTweetForm/SET_REPLY_TYPE",
     SET_IMAGE_DESCRIPTION = "addTweetForm/SET_IMAGE_DESCRIPTION",
-    CLEAR_IMAGE_DESCRIPTION = "addTweetForm/CLEAR_IMAGE_DESCRIPTION",
     SET_IMAGES = "addTweetForm/SET_IMAGES",
     REMOVE_IMAGES = "addTweetForm/REMOVE_IMAGES",
+    SET_SELECTED_USER = "addTweetForm/SET_SELECTED_USER",
+    REMOVE_SELECTED_USER = "addTweetForm/REMOVE_SELECTED_USER",
+    RESET_ADD_TWEET_FORM_STATE = "addTweetForm/RESET_ADD_TWEET_FORM_STATE",
 }
 
 export interface SetOpenPollActionInterface extends Action<AddTweetFormTypes> {
@@ -61,10 +64,6 @@ export interface SetImageDescriptionActionInterface extends Action<AddTweetFormT
     payload: string;
 }
 
-export interface ClearImageDescriptionActionInterface extends Action<AddTweetFormTypes> {
-    type: AddTweetFormTypes.CLEAR_IMAGE_DESCRIPTION;
-}
-
 export interface SetImagesActionInterface extends Action<AddTweetFormTypes> {
     type: AddTweetFormTypes.SET_IMAGES;
     payload: ImageObj[];
@@ -72,6 +71,20 @@ export interface SetImagesActionInterface extends Action<AddTweetFormTypes> {
 
 export interface RemoveImagesActionInterface extends Action<AddTweetFormTypes> {
     type: AddTweetFormTypes.REMOVE_IMAGES;
+}
+
+export interface SetSelectedUserActionInterface extends Action<AddTweetFormTypes> {
+    type: AddTweetFormTypes.SET_SELECTED_USER;
+    payload: UserResponse;
+}
+
+export interface RemoveSelectedUserActionInterface extends Action<AddTweetFormTypes> {
+    type: AddTweetFormTypes.REMOVE_SELECTED_USER;
+    payload: UserResponse;
+}
+
+export interface ResetAddTweetFormStateActionInterface extends Action<AddTweetFormTypes> {
+    type: AddTweetFormTypes.RESET_ADD_TWEET_FORM_STATE;
 }
 
 export type AddTweetFormActions =
@@ -84,6 +97,8 @@ export type AddTweetFormActions =
     ClearScheduleDateActionInterface |
     SetReplyTypeActionInterface |
     SetImageDescriptionActionInterface |
-    ClearImageDescriptionActionInterface |
     SetImagesActionInterface |
-    RemoveImagesActionInterface
+    RemoveImagesActionInterface |
+    SetSelectedUserActionInterface |
+    RemoveSelectedUserActionInterface |
+    ResetAddTweetFormStateActionInterface

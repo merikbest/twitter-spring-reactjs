@@ -5,6 +5,7 @@ import format from "date-fns/format";
 import usLang from "date-fns/locale/en-US/index";
 
 import { selectTweetDateTime } from "../../../store/ducks/tweet/selectors";
+import { HOUR_MINUTE_AMPM, MONTH_DAY_YEAR } from "../../../constants/common-constants";
 
 const TweetDate = memo((): ReactElement => {
     const dateTime = useSelector(selectTweetDateTime);
@@ -12,10 +13,10 @@ const TweetDate = memo((): ReactElement => {
     return (
         <Typography style={{ marginBottom: 16 }}>
             <Typography variant={"subtitle1"} component={"span"}>
-                {format(new Date(dateTime!), "hh:mm a", { locale: usLang })} ·
+                {format(new Date(dateTime!), HOUR_MINUTE_AMPM, { locale: usLang })} ·
             </Typography>
             <Typography variant={"subtitle1"} component={"span"}>
-                {format(new Date(dateTime!), " MMM dd, yyyy")} · Twitter Web App
+                {format(new Date(dateTime!), MONTH_DAY_YEAR)} · Twitter Web App
             </Typography>
         </Typography>
     );

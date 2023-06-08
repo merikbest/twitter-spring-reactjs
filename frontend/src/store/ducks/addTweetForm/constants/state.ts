@@ -1,6 +1,7 @@
 import { GiphyDataProps } from "../../../../types/tweet";
 import { ReplyType } from "../../../../types/common";
 import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";
+import { UserResponse } from "../../../../types/user";
 
 export interface PollInitialState {
     choice1: string;
@@ -20,4 +21,5 @@ export interface AddTweetFormState {
     replyType: ReplyType;
     imageDescription: string;
     images: ImageObj[];
+    selectedUsers: UserResponse[];
 }
