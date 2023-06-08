@@ -80,6 +80,7 @@ export const removeSelectedUser = (payload: UserResponse): RemoveSelectedUserAct
     type: AddTweetFormTypes.REMOVE_SELECTED_USER,
     payload
 });
+
 export const resetAddTweetFormState = (): ResetAddTweetFormStateActionInterface => ({
     type: AddTweetFormTypes.RESET_ADD_TWEET_FORM_STATE
 });
