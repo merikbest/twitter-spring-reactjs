@@ -1,5 +1,5 @@
 import { GiphyDataProps } from "../../../../types/tweet";
-import { ReplyType } from "../../../../types/common";
+import { LoadingStatus, ReplyType } from "../../../../types/common";
 import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";
 import { UserResponse } from "../../../../types/user";
 
@@ -22,4 +22,7 @@ export interface AddTweetFormState {
     imageDescription: string;
     images: ImageObj[];
     selectedUsers: UserResponse[];
+    // gif modal
+    gifs: GiphyDataProps[];
+    loadingState: LoadingStatus;
 }

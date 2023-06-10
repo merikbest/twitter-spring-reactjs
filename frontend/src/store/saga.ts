@@ -23,6 +23,7 @@ import { tweetAdditionalInfoSaga } from "./ducks/tweetAdditionalInfo/saga";
 import { chatSaga } from "./ducks/chat/sagas";
 import { topicsSaga } from "./ducks/topics/sagas";
 import { searchSaga } from "./ducks/search/sagas";
+import { addTweetFormSaga } from "./ducks/addTweetForm/sagas";
 
 export default function* rootSaga() {
     yield all([
@@ -48,6 +49,7 @@ export default function* rootSaga() {
         unsentTweetsSaga(),
         tweetAdditionalInfoSaga(),
         chatSaga(),
-        searchSaga()
+        searchSaga(),
+        addTweetFormSaga()
     ]);
 }

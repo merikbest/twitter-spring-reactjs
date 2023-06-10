@@ -1,14 +1,18 @@
 import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     clearScheduleDate,
+    fetchGifs,
     removeGif,
     removeImages,
     removeSelectedUser,
     resetAddTweetFormState,
+    resetGifs,
     setClosePoll,
     setGif,
+    setGifs,
     setImageDescription,
     setImages,
+    setLoadingGifsState,
     setOpenPoll,
     setPollValue,
     setReplyType,
@@ -18,7 +22,7 @@ import {
 import { AddTweetFormTypes } from "../constants/actionTypes";
 import { pollInitialState } from "../reducer";
 import { GiphyDataProps } from "../../../../types/tweet";
-import { ReplyType } from "../../../../types/common";
+import { LoadingStatus, ReplyType } from "../../../../types/common";
 import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";
 import { UserResponse } from "../../../../types/user";
 
@@ -86,5 +90,24 @@ describe("addTweetForm actions", () => {
 
     testAction(resetAddTweetFormState, resetAddTweetFormState(), {
         type: AddTweetFormTypes.RESET_ADD_TWEET_FORM_STATE
+    });
+
+    testAction(setGifs, setGifs([{ id: "1" }] as GiphyDataProps[]), {
+        type: AddTweetFormTypes.SET_GIFS,
+        payload: [{ id: "1" }] as GiphyDataProps[]
+    });
+
+    testAction(fetchGifs, fetchGifs("test"), {
+        type: AddTweetFormTypes.FETCH_GIFS,
+        payload: "test"
+    });
+
+    testAction(resetGifs, resetGifs(), {
+        type: AddTweetFormTypes.RESET_GIFS
+    });
+
+    testAction(setLoadingGifsState, setLoadingGifsState(LoadingStatus.LOADED), {
+        type: AddTweetFormTypes.SET_LOADING_STATE,
+        payload: LoadingStatus.LOADED
     });
 });

@@ -2,7 +2,7 @@ import produce, { Draft } from "immer";
 
 import { AddTweetFormActions, AddTweetFormTypes } from "./constants/actionTypes";
 import { AddTweetFormState, PollInitialState } from "./constants/state";
-import { ReplyType } from "../../../types/common";
+import { LoadingStatus, ReplyType } from "../../../types/common";
 
 export const pollInitialState: PollInitialState = {
     choice1: "",
@@ -22,7 +22,10 @@ export const initialAddTweetFormState: AddTweetFormState = {
     replyType: ReplyType.EVERYONE,
     imageDescription: "",
     images: [],
-    selectedUsers: []
+    selectedUsers: [],
+    // gif modal
+    gifs: [],
+    loadingState: LoadingStatus.LOADED
 };
 
 export const addTweetFormReducer = produce((draft: Draft<AddTweetFormState>, action: AddTweetFormActions) => {
@@ -99,6 +102,21 @@ export const addTweetFormReducer = produce((draft: Draft<AddTweetFormState>, act
             draft.imageDescription = "";
             draft.images = [];
             draft.selectedUsers = [];
+            draft.gifs = [];
+            draft.loadingState = LoadingStatus.LOADING;
+            break;
+
+        case AddTweetFormTypes.SET_GIFS:
+            draft.gifs = action.payload;
+            break;
+
+        case AddTweetFormTypes.RESET_GIFS:
+            draft.gifs = [];
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case AddTweetFormTypes.SET_LOADING_STATE:
+            draft.loadingState = action.payload;
             break;
 
         default:

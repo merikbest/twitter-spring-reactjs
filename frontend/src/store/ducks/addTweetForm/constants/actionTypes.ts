@@ -2,7 +2,7 @@ import { Action } from "redux";
 
 import { PollInitialState } from "./state";
 import { GiphyDataProps } from "../../../../types/tweet";
-import { ReplyType } from "../../../../types/common";
+import { LoadingStatus, ReplyType } from "../../../../types/common";
 import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";
 import { UserResponse } from "../../../../types/user";
 
@@ -21,6 +21,11 @@ export enum AddTweetFormTypes {
     SET_SELECTED_USER = "addTweetForm/SET_SELECTED_USER",
     REMOVE_SELECTED_USER = "addTweetForm/REMOVE_SELECTED_USER",
     RESET_ADD_TWEET_FORM_STATE = "addTweetForm/RESET_ADD_TWEET_FORM_STATE",
+    // gif modal
+    SET_GIFS = "addTweetForm/SET_GIFS",
+    FETCH_GIFS = "addTweetForm/FETCH_GIFS",
+    RESET_GIFS = "addTweetForm/RESET_GIFS",
+    SET_LOADING_STATE = "addTweetForm/SET_LOADING_STATE",
 }
 
 export interface SetOpenPollActionInterface extends Action<AddTweetFormTypes> {
@@ -87,6 +92,26 @@ export interface ResetAddTweetFormStateActionInterface extends Action<AddTweetFo
     type: AddTweetFormTypes.RESET_ADD_TWEET_FORM_STATE;
 }
 
+// gif modal
+export interface SetGifsActionInterface extends Action<AddTweetFormTypes> {
+    type: AddTweetFormTypes.SET_GIFS;
+    payload: GiphyDataProps[];
+}
+
+export interface FetchGifsActionInterface extends Action<AddTweetFormTypes> {
+    type: AddTweetFormTypes.FETCH_GIFS;
+    payload: string;
+}
+
+export interface ResetGifsActionInterface extends Action<AddTweetFormTypes> {
+    type: AddTweetFormTypes.RESET_GIFS;
+}
+
+export interface SetLoadingGifsStateActionInterface extends Action<AddTweetFormTypes> {
+    type: AddTweetFormTypes.SET_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
 export type AddTweetFormActions =
     SetOpenPollActionInterface |
     SetClosePollActionInterface |
@@ -101,4 +126,7 @@ export type AddTweetFormActions =
     RemoveImagesActionInterface |
     SetSelectedUserActionInterface |
     RemoveSelectedUserActionInterface |
-    ResetAddTweetFormStateActionInterface
+    ResetAddTweetFormStateActionInterface |
+    SetGifsActionInterface |
+    ResetGifsActionInterface |
+    SetLoadingGifsStateActionInterface

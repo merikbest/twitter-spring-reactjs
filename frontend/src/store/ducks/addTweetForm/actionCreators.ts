@@ -1,14 +1,18 @@
 import {
     AddTweetFormTypes,
     ClearScheduleDateActionInterface,
+    FetchGifsActionInterface,
     RemoveGifActionInterface,
     RemoveImagesActionInterface,
     RemoveSelectedUserActionInterface,
     ResetAddTweetFormStateActionInterface,
+    ResetGifsActionInterface,
     SetClosePollActionInterface,
     SetGifActionInterface,
+    SetGifsActionInterface,
     SetImageDescriptionActionInterface,
     SetImagesActionInterface,
+    SetLoadingGifsStateActionInterface,
     SetOpenPollActionInterface,
     SetPollValueActionInterface,
     SetReplyTypeActionInterface,
@@ -17,7 +21,7 @@ import {
 } from "./constants/actionTypes";
 import { PollInitialState } from "./constants/state";
 import { GiphyDataProps } from "../../../types/tweet";
-import { ReplyType } from "../../../types/common";
+import { LoadingStatus, ReplyType } from "../../../types/common";
 import { ImageObj } from "../../../components/AddTweetForm/AddTweetForm";
 import { UserResponse } from "../../../types/user";
 
@@ -83,4 +87,24 @@ export const removeSelectedUser = (payload: UserResponse): RemoveSelectedUserAct
 
 export const resetAddTweetFormState = (): ResetAddTweetFormStateActionInterface => ({
     type: AddTweetFormTypes.RESET_ADD_TWEET_FORM_STATE
+});
+
+// gif modal
+export const setGifs = (payload: GiphyDataProps[]): SetGifsActionInterface => ({
+    type: AddTweetFormTypes.SET_GIFS,
+    payload
+});
+
+export const fetchGifs = (payload: string): FetchGifsActionInterface => ({
+    type: AddTweetFormTypes.FETCH_GIFS,
+    payload
+});
+
+export const resetGifs = (): ResetGifsActionInterface => ({
+    type: AddTweetFormTypes.RESET_GIFS
+});
+
+export const setLoadingGifsState = (payload: LoadingStatus): SetLoadingGifsStateActionInterface => ({
+    type: AddTweetFormTypes.SET_LOADING_STATE,
+    payload
 });

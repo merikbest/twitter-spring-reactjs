@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent, DialogTitle, InputAdornment } from "@material-ui/core";
 
 import { useGlobalStyles } from "../../../../util/globalClasses";
@@ -8,13 +8,19 @@ import { MainSearchTextField } from "../../../SearchTextField/MainSearchTextFiel
 import CloseButton from "../../../CloseButton/CloseButton";
 import { useInputText } from "../../../../hook/useInputText";
 import { useDebounce } from "../../../../hook/useDebounce";
-import { axios } from "../../../../core/axios";
 import GifTopics from "./GifTopics/GifTopics";
 import GifList from "./GifList/GifList";
-import { GIPHY_API_URL } from "../../../../constants/url-constants";
 import Spinner from "../../../Spinner/Spinner";
 import { GiphyDataProps } from "../../../../types/tweet";
-import { setGif } from "../../../../store/ducks/addTweetForm/actionCreators";
+import {
+    fetchGifs,
+    resetGifs,
+    setGif,
+    setGifs,
+    setLoadingGifsState
+} from "../../../../store/ducks/addTweetForm/actionCreators";
+import { selectIsGifsLoaded, selectIsGifsLoading } from "../../../../store/ducks/addTweetForm/selector";
+import { LoadingStatus } from "../../../../types/common";
 
 interface GifModalWindowProps {
     visible: boolean;
@@ -24,47 +30,32 @@ interface GifModalWindowProps {
 const GifModalWindow: FC<GifModalWindowProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
-    const [gifs, setGifs] = useState<GiphyDataProps[]>([]);
-    const [isGifsLoading, setIsGifsLoading] = useState(false);
+    const isGifsLoading = useSelector(selectIsGifsLoading);
+    const isGifsLoaded = useSelector(selectIsGifsLoaded);
     const { text, setText, handleChangeText } = useInputText();
     const textToSearch = useDebounce(text, 300);
 
     useEffect(() => {
         if (textToSearch) {
-            searchGif(text);
+            dispatch(fetchGifs(text));
         }
     }, [textToSearch]);
 
-    const searchGif = async (text: string): Promise<void> => {
-        setGifs([]);
-        setIsGifsLoading(true);
-        await axios.get(GIPHY_API_URL + text)
-            .then((response) => {
-                setIsGifsLoading(false);
-                setGifs(response.data.data);
-            })
-            .catch((error) => {
-                setIsGifsLoading(false);
-                console.log(error);
-            });
-    };
-
     const onClickGifTopic = (topic: string): void => {
         setText(topic);
-        setGifs([]);
-        setIsGifsLoading(true);
+        dispatch(setGifs([]));
+        dispatch(setLoadingGifsState(LoadingStatus.LOADING));
     };
 
     const onCloseModalWindow = (): void => {
-        setGifs([]);
+        setText("");
+        dispatch(resetGifs());
         onClose();
     };
 
     const onClickGif = (gif: GiphyDataProps): void => {
-        setText("");
-        setGifs([]);
         dispatch(setGif(gif));
-        onClose();
+        onCloseModalWindow();
     };
 
     if (!visible) {
@@ -95,10 +86,10 @@ const GifModalWindow: FC<GifModalWindowProps> = ({ visible, onClose }): ReactEle
                 {(isGifsLoading && text !== "") ? (
                     <Spinner />
                 ) : (
-                    (!isGifsLoading && text === "") ? (
+                    (isGifsLoaded && text === "") ? (
                         <GifTopics onClickGifTopic={onClickGifTopic} />
                     ) : (
-                        <GifList gifs={gifs} onClickGif={onClickGif} />
+                        <GifList onClickGif={onClickGif} />
                     )
                 )}
             </DialogContent>

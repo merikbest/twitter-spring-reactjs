@@ -316,7 +316,9 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             replyType: ReplyType.EVERYONE,
             imageDescription: "",
             images: [],
-            selectedUsers: []
+            selectedUsers: [],
+            gifs: [],
+            loadingState: loadingStatus
         }
     } as RootState;
 };
