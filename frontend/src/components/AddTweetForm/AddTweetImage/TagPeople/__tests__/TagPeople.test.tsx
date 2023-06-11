@@ -7,49 +7,37 @@ import ImageAction from "../../ImageAction/ImageAction";
 import { UserResponse } from "../../../../../types/user";
 
 describe("TagPeople", () => {
-    const mockRootState = createMockRootState(LoadingStatus.LOADED);
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(
-            <TagPeople
-                selectedUsers={[]}
-                handleDelete={jest.fn()}
-                handleListItemClick={jest.fn()}
-            />, mockRootState);
-        expect(wrapper.find(ImageAction).prop("subtitle")).toBe("Tag people");
+        createTagPeopleComponent("Tag people", []);
     });
 
     it("should render one user", () => {
-        const wrapper = mountWithStore(
-            <TagPeople
-                selectedUsers={[{id: 1, fullName: "test name 1"}] as UserResponse[]}
-                handleDelete={jest.fn()}
-                handleListItemClick={jest.fn()}
-            />, mockRootState);
-        expect(wrapper.find(ImageAction).prop("subtitle")).toBe("test name 1");
+        const selectedUsers = [{ id: 1, fullName: "test name 1" }] as UserResponse[];
+        createTagPeopleComponent("test name 1", selectedUsers);
     });
 
     it("should render two users", () => {
-        const wrapper = mountWithStore(
-            <TagPeople
-                selectedUsers={[{id: 1, fullName: "test name 1"}, {id: 2, fullName: "test name 2"}] as UserResponse[]}
-                handleDelete={jest.fn()}
-                handleListItemClick={jest.fn()}
-            />, mockRootState);
-        expect(wrapper.find(ImageAction).prop("subtitle")).toBe("test name 1 and test name 2");
+        const selectedUsers = [{ id: 1, fullName: "test name 1" }, { id: 2, fullName: "test name 2" }] as UserResponse[];
+        createTagPeopleComponent("test name 1 and test name 2", selectedUsers);
     });
 
     it("should render three users", () => {
-        const wrapper = mountWithStore(
-            <TagPeople
-                selectedUsers={[
-                    {id: 1, fullName: "test name 1"},
-                    {id: 2, fullName: "test name 2"},
-                    {id: 3, fullName: "test name 3"}
-                ] as UserResponse[]}
-                handleDelete={jest.fn()}
-                handleListItemClick={jest.fn()}
-            />, mockRootState);
-        expect(wrapper.find(ImageAction).prop("subtitle")).toBe("test name 1 and 2 others");
+        const selectedUsers = [
+            { id: 1, fullName: "test name 1" },
+            { id: 2, fullName: "test name 2" },
+            { id: 3, fullName: "test name 3" }
+        ] as UserResponse[];
+        createTagPeopleComponent("test name 1 and 2 others", selectedUsers);
     });
+
+    const createTagPeopleComponent = (subtitle: string, selectedUsers: UserResponse[]): void => {
+        const mockStore = createMockRootState(LoadingStatus.LOADED);
+        const mockRootState = {
+            ...mockStore,
+            addTweetForm: { ...mockStore.addTweetForm, selectedUsers: selectedUsers }
+        };
+        const wrapper = mountWithStore(<TagPeople />, mockRootState);
+        expect(wrapper.find(ImageAction).prop("subtitle")).toBe(subtitle);
+    };
 });

@@ -16,12 +16,12 @@ describe("AddDescription", () => {
     });
 
     const testAddDescriptionComponent = (imageDescription = ""): void => {
-        const wrapper = mountWithStore(
-            <AddDescription
-                imageSrc={"test"}
-                imageDescription={imageDescription}
-                handleChangeDescription={jest.fn()}
-            />, createMockRootState(LoadingStatus.LOADED));
+        const mockStore = createMockRootState(LoadingStatus.SUCCESS);
+        const mockListStore = {
+            ...mockStore,
+            addTweetForm: { ...mockStore.addTweetForm, imageDescription: imageDescription }
+        };
+        const wrapper = mountWithStore(<AddDescription />, mockListStore);
         expect(wrapper.find(ImageAction).prop("subtitle")).toBe(
             imageDescription === ""
                 ? "Add description"

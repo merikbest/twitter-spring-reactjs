@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Dialog } from "@material-ui/core";
+import { Button, Chip, Dialog } from "@material-ui/core";
 import InfiniteScroll from "react-infinite-scroll-component";
+import CloseIcon from "@material-ui/icons/Close";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../../../types/common";
@@ -11,9 +12,9 @@ import { mockUsers } from "../../../../../../util/test-utils/mock-test-data";
 import { ModalInputWrapper } from "../../../../../ModalInput/ModalInputWrapper";
 import { UsersSearchActionsType } from "../../../../../../store/ducks/usersSearch/contracts/actionTypes";
 import { UserResponse } from "../../../../../../types/user";
+import { AddTweetFormTypes } from "../../../../../../store/ducks/addTweetForm/constants/actionTypes";
 
 describe("TagPeopleModal", () => {
-    const mockRootState = createMockRootState(LoadingStatus.LOADED);
     const mockText = "mock_text";
     let mockDispatchFn: jest.Mock;
 
@@ -33,6 +34,16 @@ describe("TagPeopleModal", () => {
         expect(wrapper.find(UserChip).length).toEqual(2);
     });
 
+    it("should on click delete user", () => {
+        const wrapper = createTagPeopleModalWrapper(mockUsers);
+        expect(wrapper.find(UserChip).length).toEqual(2);
+        wrapper.find(Chip).at(0).find(CloseIcon).simulate("click");
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: mockUsers[0],
+            type: AddTweetFormTypes.REMOVE_SELECTED_USER
+        });
+    });
+
     it("should search users by text and clear input", () => {
         const wrapper = createTagPeopleModalWrapper();
         wrapper.find(ModalInputWrapper).find("input").at(0).simulate("change", { target: { value: mockText } });
@@ -49,8 +60,9 @@ describe("TagPeopleModal", () => {
     });
 
     it("should scroll list of Users", () => {
-        const mockState = { ...mockRootState, usersSearch: { ...mockRootState.usersSearch, pagesCount: 10 } };
-        const wrapper = createTagPeopleModalWrapper([], mockState);
+        const mockStore = createMockRootState(LoadingStatus.LOADED);
+        const mockRootState = { ...mockStore, usersSearch: { ...mockStore.usersSearch, pagesCount: 10 } };
+        const wrapper = mountWithStore(<TagPeopleModal visible={true} onClose={jest.fn()} />, mockRootState);
         wrapper.find(ModalInputWrapper).find("input").at(0).simulate("change", { target: { value: mockText } });
         wrapper.find(InfiniteScroll).prop("next")();
         expect(mockDispatchFn).nthCalledWith(3, {
@@ -60,18 +72,16 @@ describe("TagPeopleModal", () => {
     });
 
     it("should render empty TagPeopleModal", () => {
-        const wrapper = createTagPeopleModalWrapper([], mockRootState, false);
+        const wrapper = mountWithStore(<TagPeopleModal visible={false} onClose={jest.fn()} />, createMockRootState(LoadingStatus.LOADED));
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
     });
 
-    const createTagPeopleModalWrapper = (selectedUsers: UserResponse[] = [], mockState = mockRootState, visible = true) => {
-        return mountWithStore(
-            <TagPeopleModal
-                visible={visible}
-                onClose={jest.fn()}
-                selectedUsers={selectedUsers}
-                handleDelete={jest.fn()}
-                handleListItemClick={jest.fn()}
-            />, mockState);
+    const createTagPeopleModalWrapper = (selectedUsers: UserResponse[] = [], visible = true) => {
+        const mockStore = createMockRootState(LoadingStatus.LOADED);
+        const mockRootState = {
+            ...mockStore,
+            addTweetForm: { ...mockStore.addTweetForm, selectedUsers: selectedUsers }
+        };
+        return mountWithStore(<TagPeopleModal visible={visible} onClose={jest.fn()} />, mockRootState);
     };
 });
