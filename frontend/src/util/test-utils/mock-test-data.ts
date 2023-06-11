@@ -825,7 +825,7 @@ export const mockFullTweet = {
             "isPrivateProfile": false
         },
         "membersSize": 2,
-        "isPrivate": false,
+        "isPrivate": false
     },
     "poll": {
         "id": 100,
@@ -1202,3 +1202,43 @@ export const mockTopics = [
         "isTopicNotInterested": true
     }
 ] as unknown as TopicResponse[];
+
+// GiphyData
+export const mockGiphyData = [
+    {
+        "id": "1",
+        "title": "Cat",
+        "images": {
+            "downsized": {
+                "id": 1,
+                "url": "test_giphy_url_1",
+                "width": 400,
+                "height": 400
+            },
+            "downsized_still": {
+                "id": 2,
+                "url": "test_giphy_url_2",
+                "width": 400,
+                "height": 400
+            }
+        }
+    },
+    {
+        "id": "2",
+        "title": "Dog",
+        "images": {
+            "downsized": {
+                "id": 2,
+                "url": "test_giphy_url_2",
+                "width": 400,
+                "height": 400
+            },
+            "downsized_still": {
+                "id": 2,
+                "url": "test_giphy_url_2",
+                "width": 400,
+                "height": 400
+            }
+        }
+    }
+];
