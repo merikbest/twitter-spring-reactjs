@@ -103,7 +103,7 @@ export const addTweetFormReducer = produce((draft: Draft<AddTweetFormState>, act
             draft.images = [];
             draft.selectedUsers = [];
             draft.gifs = [];
-            draft.loadingState = LoadingStatus.LOADING;
+            draft.loadingState = LoadingStatus.LOADED;
             break;
 
         case AddTweetFormTypes.SET_GIFS:
