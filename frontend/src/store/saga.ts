@@ -24,6 +24,7 @@ import { chatSaga } from "./ducks/chat/sagas";
 import { topicsSaga } from "./ducks/topics/sagas";
 import { searchSaga } from "./ducks/search/sagas";
 import { addTweetFormSaga } from "./ducks/addTweetForm/sagas";
+import { authenticationSaga } from "./ducks/authentication/sagas";
 
 export default function* rootSaga() {
     yield all([
@@ -50,6 +51,7 @@ export default function* rootSaga() {
         tweetAdditionalInfoSaga(),
         chatSaga(),
         searchSaga(),
-        addTweetFormSaga()
+        addTweetFormSaga(),
+        authenticationSaga()
     ]);
 }

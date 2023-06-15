@@ -1,0 +1,41 @@
+import {
+    AuthenticationTypes,
+    FetchRegistrationActionInterface,
+    SetCloseModalActionInterface,
+    SetLoadingAuthStateActionInterface,
+    SetOpenModalActionInterface,
+    SetRegistrationInfoActionInterface,
+    SetRegistrationStepActionInterface
+} from "./constants/actionTypes";
+import { RegistrationRequest, RegistrationStep } from "../../../types/auth";
+import { LoadingStatus } from "../../../types/common";
+import { RegistrationPayload } from "./constants/state";
+
+export const setRegistrationInfo = (payload: RegistrationRequest): SetRegistrationInfoActionInterface => ({
+    type: AuthenticationTypes.SET_REGISTRATION_INFO,
+    payload
+});
+
+export const setRegistrationStep = (payload: RegistrationStep): SetRegistrationStepActionInterface => ({
+    type: AuthenticationTypes.SET_REGISTRATION_STEP,
+    payload
+});
+
+export const fetchRegistration = (payload: RegistrationPayload): FetchRegistrationActionInterface => ({
+    type: AuthenticationTypes.FETCH_REGISTRATION,
+    payload
+});
+
+export const setOpenModal = (payload: boolean): SetOpenModalActionInterface => ({
+    type: AuthenticationTypes.SET_OPEN_MODAL,
+    payload
+});
+
+export const setCloseModal = (): SetCloseModalActionInterface => ({
+    type: AuthenticationTypes.SET_CLOSE_MODAL
+});
+
+export const setLoadingAuthState = (payload: LoadingStatus): SetLoadingAuthStateActionInterface => ({
+    type: AuthenticationTypes.SET_LOADING_STATE,
+    payload
+});

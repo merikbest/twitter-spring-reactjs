@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
 import { configure, mount } from "enzyme";
@@ -29,7 +30,6 @@ import { pollInitialState } from "../../store/ducks/addTweetForm/reducer";
 (global as any).TextDecoder = TextDecoder;
 configure({ adapter: new Adapter() });
 
-// @ts-ignore
 export const testAction = (action, payload, expectedPayload) => {
     describe(`${action.name}`, () => {
         Object.keys(expectedPayload).forEach((key) => {
@@ -48,7 +48,6 @@ export const testAction = (action, payload, expectedPayload) => {
     });
 };
 
-// @ts-ignore
 export const testActionDispatch = (actionType, actualState, expectedState) => {
     describe(`${actionType} action is dispatched`, () => {
         it("should return the expected state", () => {
@@ -57,7 +56,6 @@ export const testActionDispatch = (actionType, actualState, expectedState) => {
     });
 };
 
-// @ts-ignore
 export const testLoadingStatus = (worker, loadingAction, loadingStatus) => {
     it(`should yield put ${loadingAction.name} with ${loadingStatus}`, () => {
         let actualYield;
@@ -73,7 +71,6 @@ export const testLoadingStatus = (worker, loadingAction, loadingStatus) => {
     });
 };
 
-// @ts-ignore
 export const testCall = (worker, apiCall, payload?, data = {}) => {
     it(`should call ${apiCall.name}`, () => {
         const actualYield = worker.next(data).value;
@@ -89,7 +86,6 @@ export const testCall = (worker, apiCall, payload?, data = {}) => {
     });
 };
 
-// @ts-ignore
 export const testSetResponse = (worker, mockData = {}, action, payload: {}, responseType) => {
     it(`should yield put ${action.name} with ${responseType} type`, () => {
         const actualYield = worker.next(mockData).value;
@@ -99,12 +95,10 @@ export const testSetResponse = (worker, mockData = {}, action, payload: {}, resp
     });
 };
 
-// @ts-ignore
 export const testWatchSaga = (watchSaga, requests, effect = takeLatest) => {
     describe(`watch ${watchSaga.name}:`, () => {
         const watcher = watchSaga();
 
-        // @ts-ignore
         requests.forEach((request) => {
             it(`should listen to ${request.actionType} and yield ${request.workSaga.name}`, () => {
                 const actualYield = watcher.next().value;
@@ -116,7 +110,6 @@ export const testWatchSaga = (watchSaga, requests, effect = takeLatest) => {
     });
 };
 
-// @ts-ignore
 export const mountWithStore = (component, mockState?, mockHistory?) => {
     const mockStore = configureStore([]);
     const store = mockStore(mockState);
