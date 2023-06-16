@@ -1,47 +1,32 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Link as MuiLink, Typography } from "@material-ui/core";
 
 import { useCreateAccountModalStyles } from "./CreateAccountModalStyles";
 import { RegistrationInputField } from "../RegistrationInput/RegistrationInputField";
 import Spinner from "../../../components/Spinner/Spinner";
 import { TWITTER_COOKIES, TWITTER_PRIVACY, TWITTER_TOS_NEW } from "../../../constants/url-constants";
-import { RegistrationRequest } from "../../../types/auth";
-import { RegistrationApi } from "../../../services/api/user-service/registrationApi";
 import DialogWrapper from "../DialogWrapper/DialogWrapper";
+import {
+    selectIsLoading,
+    selectRegistrationInfo,
+    selectRegistrationStep3
+} from "../../../store/ducks/authentication/selector";
+import { fetchSendRegistrationCode } from "../../../store/ducks/authentication/actionCreators";
 
-interface CustomizeModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    registrationInfo: RegistrationRequest;
-    onOpenEmailVerification: () => void;
-}
-
-const CreateAccountModal: FC<CustomizeModalProps> = (
-    {
-        isOpen,
-        onClose,
-        registrationInfo,
-        onOpenEmailVerification
-    }
-): ReactElement => {
+const CreateAccountModal: FC = (): ReactElement => {
     const classes = useCreateAccountModalStyles();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const dispatch = useDispatch();
+    const registrationInfo = useSelector(selectRegistrationInfo);
+    const registrationStep3 = useSelector(selectRegistrationStep3);
+    const isLoading = useSelector(selectIsLoading);
 
     const onSubmit = (): void => {
-        setIsLoading(true);
-        RegistrationApi.sendRegistrationCode(registrationInfo)
-            .then(() => {
-                setIsLoading(false);
-                onOpenEmailVerification();
-            })
-            .catch((error) => {
-                console.log(error.reponse);
-                setIsLoading(false);
-            });
+        dispatch(fetchSendRegistrationCode(registrationInfo));
     };
 
     return (
-        <DialogWrapper isOpen={isOpen} onClose={onClose} logo={false} hideBackdrop modalShadow>
+        <DialogWrapper isOpen={registrationStep3} logo={false}>
             <Typography component={"div"} className={classes.title}>
                 Step 3 of 5
             </Typography>

@@ -1,21 +1,25 @@
 import React, { FC, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as MuiLink, Radio, Typography } from "@material-ui/core";
 
 import { useCustomizeModalStyles } from "./CustomizeModalStyles";
 import { NEW_ACCOUNT_SETTINGS } from "../../../constants/url-constants";
 import DialogWrapper from "../DialogWrapper/DialogWrapper";
+import { selectRegistrationStep2 } from "../../../store/ducks/authentication/selector";
+import { setRegistrationStep } from "../../../store/ducks/authentication/actionCreators";
+import { RegistrationStep } from "../../../types/auth";
 
-interface CustomizeModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onOpenCreateAccount: () => void;
-}
-
-const CustomizeModal: FC<CustomizeModalProps> = ({ isOpen, onClose, onOpenCreateAccount }): ReactElement => {
+const CustomizeModal: FC = (): ReactElement => {
     const classes = useCustomizeModalStyles();
+    const dispatch = useDispatch();
+    const registrationStep2 = useSelector(selectRegistrationStep2);
+
+    const onOpenCreateAccount = (): void => {
+        dispatch(setRegistrationStep(RegistrationStep.STEP_3));
+    };
 
     return (
-        <DialogWrapper isOpen={isOpen} onClose={onClose} onClick={onOpenCreateAccount} hideBackdrop modalShadow>
+        <DialogWrapper isOpen={registrationStep2} onClick={onOpenCreateAccount}>
             <Typography variant={"h3"} component={"div"} className={classes.title}>
                 Customize your experience
             </Typography>

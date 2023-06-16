@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { History, LocationState } from "history";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,12 +11,7 @@ import { useSetPasswordModalStyles } from "./SetPasswordModalStyles";
 import { RegistrationInputField } from "../RegistrationInput/RegistrationInputField";
 import { fetchSignUp } from "../../../store/ducks/user/actionCreators";
 import DialogWrapper from "../DialogWrapper/DialogWrapper";
-
-interface SetPasswordProps {
-    email: string;
-    isOpen: boolean;
-    onClose: () => void;
-}
+import { selectRegistrationInfo, selectRegistrationStep5 } from "../../../store/ducks/authentication/selector";
 
 interface PasswordFormProps {
     password: string;
@@ -32,28 +27,31 @@ const SetPasswordFormSchema = yup.object().shape({
     password: yup.string().min(8, "Your password needs to be at least 8 characters. Please enter a longer one.").required()
 });
 
-const SetPasswordModal: FC<SetPasswordProps> = ({ email, isOpen, onClose }): ReactElement => {
+const SetPasswordModal: FC = (): ReactElement => {
     const classes = useSetPasswordModalStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const registrationInfo = useSelector(selectRegistrationInfo);
+    const registrationStep5 = useSelector(selectRegistrationStep5);
     const { control, handleSubmit, watch, formState: { errors } } = useForm<PasswordFormProps>({
         resolver: yupResolver(SetPasswordFormSchema),
         mode: "onChange"
     });
 
     const onSubmit = (data: PasswordFormProps): void => {
-        const registrationData: EndRegistrationRequest = { email: email, password: data.password, history: history };
+        const registrationData: EndRegistrationRequest = {
+            email: registrationInfo.email,
+            password: data.password,
+            history
+        };
         dispatch(fetchSignUp(registrationData));
     };
 
     return (
         <DialogWrapper
-            isOpen={isOpen}
-            onClose={onClose}
+            isOpen={registrationStep5}
             onClick={handleSubmit(onSubmit)}
             disabledButton={!watch("password")}
-            hideBackdrop
-            modalShadow
         >
             <Typography variant={"h3"} component={"div"} className={classes.title}>
                 You'll need a password

@@ -1,13 +1,16 @@
 import React, { FC, ReactElement, ReactNode } from "react";
 import { Button, Dialog, DialogContent } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useDialogWrapperStyles } from "./DialogWrapperStyles";
 import { useGlobalStyles } from "../../../util/globalClasses";
+import { selectIsLoading } from "../../../store/ducks/authentication/selector";
+import { setCloseModal } from "../../../store/ducks/authentication/actionCreators";
 
 interface DialogWrapperProps {
     isOpen: boolean;
-    onClose: () => void;
+    onClose?: () => void;
     onClick?: any;
     disabledButton?: boolean;
     logo?: boolean;
@@ -19,7 +22,6 @@ interface DialogWrapperProps {
 const DialogWrapper: FC<DialogWrapperProps> = (
     {
         isOpen,
-        onClose,
         onClick,
         disabledButton,
         logo = true,
@@ -30,6 +32,12 @@ const DialogWrapper: FC<DialogWrapperProps> = (
 ): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useDialogWrapperStyles();
+    const dispatch = useDispatch();
+    const isLoading = useSelector(selectIsLoading);
+
+    const onClose = (): void => {
+        dispatch(setCloseModal());
+    };
 
     return (
         <Dialog
@@ -50,7 +58,7 @@ const DialogWrapper: FC<DialogWrapperProps> = (
                     <Button
                         className={classes.button}
                         onClick={onClick}
-                        disabled={disabledButton}
+                        disabled={disabledButton || isLoading}
                         variant="contained"
                         color="primary"
                         size="small"

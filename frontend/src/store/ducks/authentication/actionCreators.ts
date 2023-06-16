@@ -1,6 +1,8 @@
 import {
     AuthenticationTypes,
+    FetchCheckRegistrationCodeActionInterface,
     FetchRegistrationActionInterface,
+    FetchSendRegistrationCodeActionInterface,
     SetCloseModalActionInterface,
     SetLoadingAuthStateActionInterface,
     SetOpenModalActionInterface,
@@ -23,6 +25,16 @@ export const setRegistrationStep = (payload: RegistrationStep): SetRegistrationS
 
 export const fetchRegistration = (payload: RegistrationPayload): FetchRegistrationActionInterface => ({
     type: AuthenticationTypes.FETCH_REGISTRATION,
+    payload
+});
+
+export const fetchSendRegistrationCode = (payload: RegistrationRequest): FetchSendRegistrationCodeActionInterface => ({
+    type: AuthenticationTypes.FETCH_SEND_REGISTRATION_CODE,
+    payload
+});
+
+export const fetchCheckRegistrationCode = (payload: string): FetchCheckRegistrationCodeActionInterface => ({
+    type: AuthenticationTypes.FETCH_CHECK_REGISTRATION_CODE,
     payload
 });
 

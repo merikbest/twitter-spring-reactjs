@@ -1,4 +1,5 @@
-import React, { ChangeEvent, FC, ReactElement, ReactNode, useState } from "react";
+import React, { FC, ReactElement, ReactNode, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { FormControl, InputLabel, Link as MuiLink, Typography } from "@material-ui/core";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,18 +8,11 @@ import * as yup from "yup";
 import { useRegistrationModalStyles } from "./RegistrationModalStyles";
 import RegistrationInput from "../RegistrationInput/RegistrationInput";
 import { FilledSelect } from "../../../components/FilledSelect/FilledSelect";
-import { RegistrationRequest } from "../../../types/auth";
-import { RegistrationApi } from "../../../services/api/user-service/registrationApi";
 import DialogWrapper from "../DialogWrapper/DialogWrapper";
+import { fetchRegistration } from "../../../store/ducks/authentication/actionCreators";
+import { selectRegistrationStep1 } from "../../../store/ducks/authentication/selector";
 
-interface RegistrationModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onOpenCustomize: () => void;
-    onChangeRegistrationInfo: (data: RegistrationRequest) => void;
-}
-
-interface RegistrationFormProps {
+export interface RegistrationFormProps {
     username: string;
     email: string;
 }
@@ -28,15 +22,10 @@ const RegistrationFormSchema = yup.object().shape({
     email: yup.string().email("Invalid mail").required("Please enter a valid email address.")
 });
 
-const RegistrationModal: FC<RegistrationModalProps> = (
-    {
-        isOpen,
-        onClose,
-        onOpenCustomize,
-        onChangeRegistrationInfo
-    }
-): ReactElement => {
+const RegistrationModal: FC = (): ReactElement => {
     const classes = useRegistrationModalStyles();
+    const dispatch = useDispatch();
+    const registrationStep1 = useSelector(selectRegistrationStep1);
     const [month, setMonth] = useState<string>("");
     const [day, setDay] = useState<number>(0);
     const [year, setYear] = useState<number>(0);
@@ -48,40 +37,14 @@ const RegistrationModal: FC<RegistrationModalProps> = (
         let birthday = "";
 
         if (month !== "" && day !== 0 && year !== 0) {
-            birthday = month + " " + day + ", " + year;
+            birthday = `${month} ${day}, ${year}`;
         }
-        const registrationData: RegistrationRequest = {
-            username: data.username,
-            email: data.email,
-            birthday: birthday
-        };
-        RegistrationApi.registration(registrationData)
-            .then(() => {
-                onChangeRegistrationInfo(registrationData);
-                onOpenCustomize();
-            })
-            .catch((error) => {
-                const errors = error.response.data;
-
-                if (errors.username) {
-                    setError("username", { type: "server", message: errors.username });
-                }
-                if (errors.email) {
-                    setError("email", { type: "server", message: errors.email });
-                }
-            });
+        const registrationData = { username: data.username, email: data.email, birthday };
+        dispatch(fetchRegistration({ registrationData, setError }));
     };
 
-    const changeMonth = (event: ChangeEvent<{ value: unknown }>): void => {
-        setMonth(event.target.value as string);
-    };
-
-    const changeDay = (event: ChangeEvent<{ value: unknown }>): void => {
-        setDay(event.target.value as number);
-    };
-
-    const changeYear = (event: ChangeEvent<{ value: unknown }>): void => {
-        setYear(event.target.value as number);
+    const onChangeSelect = <T,>(setDate: (value: T | ((prevVar: T) => T)) => void, value: T): void => {
+        setDate(value);
     };
 
     const showDays = (): ReactNode[] => {
@@ -103,7 +66,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
     };
 
     return (
-        <DialogWrapper isOpen={isOpen} onClose={onClose} onClick={handleSubmit(onSubmit)}>
+        <DialogWrapper isOpen={registrationStep1} onClick={handleSubmit(onSubmit)}>
             <Typography variant={"h3"} component={"div"} className={classes.title}>
                 Create your account
             </Typography>
@@ -164,7 +127,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                             id="select-month"
                             native
                             value={month}
-                            onChange={changeMonth}
+                            onChange={(event) => onChangeSelect(setMonth, event.target.value as string)}
                             label="Month"
                         >
                             <option aria-label="None" />
@@ -193,7 +156,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                             id="select-day"
                             native
                             value={day}
-                            onChange={changeDay}
+                            onChange={(event) => onChangeSelect(setDay, event.target.value as number)}
                             label="Day"
                         >
                             <option aria-label="None" />
@@ -211,7 +174,7 @@ const RegistrationModal: FC<RegistrationModalProps> = (
                             id="select-year"
                             native
                             value={year}
-                            onChange={changeYear}
+                            onChange={(event) => onChangeSelect(setYear, event.target.value as number)}
                             label="Year"
                         >
                             <option aria-label="None" />
