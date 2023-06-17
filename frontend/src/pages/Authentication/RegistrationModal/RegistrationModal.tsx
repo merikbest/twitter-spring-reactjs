@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, ReactNode, useState } from "react";
+import React, { FC, ReactElement, ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { FormControl, InputLabel, Link as MuiLink, Typography } from "@material-ui/core";
@@ -9,12 +9,15 @@ import { useRegistrationModalStyles } from "./RegistrationModalStyles";
 import RegistrationInput from "../RegistrationInput/RegistrationInput";
 import { FilledSelect } from "../../../components/FilledSelect/FilledSelect";
 import DialogWrapper from "../DialogWrapper/DialogWrapper";
-import { fetchRegistration } from "../../../store/ducks/authentication/actionCreators";
 import { selectRegistrationStep1 } from "../../../store/ducks/authentication/selector";
+import { fetchRegistration } from "../../../store/ducks/authentication/actionCreators";
 
 export interface RegistrationFormProps {
     username: string;
     email: string;
+    month: string;
+    day: number;
+    year: number;
 }
 
 const RegistrationFormSchema = yup.object().shape({
@@ -26,25 +29,18 @@ const RegistrationModal: FC = (): ReactElement => {
     const classes = useRegistrationModalStyles();
     const dispatch = useDispatch();
     const registrationStep1 = useSelector(selectRegistrationStep1);
-    const [month, setMonth] = useState<string>("");
-    const [day, setDay] = useState<number>(0);
-    const [year, setYear] = useState<number>(0);
     const { control, handleSubmit, setError, formState: { errors } } = useForm<RegistrationFormProps>({
         resolver: yupResolver(RegistrationFormSchema)
     });
 
     const onSubmit = (data: RegistrationFormProps): void => {
+        const { month, day, year } = data;
         let birthday = "";
 
         if (month !== "" && day !== 0 && year !== 0) {
             birthday = `${month} ${day}, ${year}`;
         }
-        const registrationData = { username: data.username, email: data.email, birthday };
-        dispatch(fetchRegistration({ registrationData, setError }));
-    };
-
-    const onChangeSelect = <T,>(setDate: (value: T | ((prevVar: T) => T)) => void, value: T): void => {
-        setDate(value);
+        dispatch(fetchRegistration({ registrationData: { ...data, birthday }, setError }));
     };
 
     const showDays = (): ReactNode[] => {
@@ -117,69 +113,99 @@ const RegistrationModal: FC = (): ReactElement => {
                 </Typography>
                 <div className={classes.formControl}>
                     <FormControl variant="filled">
-                        <InputLabel htmlFor="select-month">
-                            Month
-                        </InputLabel>
-                        <FilledSelect
-                            variant="filled"
-                            style={{ width: 240, marginRight: 12 }}
-                            labelId="select-month"
-                            id="select-month"
-                            native
-                            value={month}
-                            onChange={(event) => onChangeSelect(setMonth, event.target.value as string)}
-                            label="Month"
-                        >
-                            <option aria-label="None" />
-                            <option value={"Jan"}>January</option>
-                            <option value={"Feb"}>February</option>
-                            <option value={"Mar"}>March</option>
-                            <option value={"Apr"}>April</option>
-                            <option value={"May"}>May</option>
-                            <option value={"Jun"}>June</option>
-                            <option value={"Jul"}>July</option>
-                            <option value={"Aug"}>August</option>
-                            <option value={"Sep"}>September</option>
-                            <option value={"Oct"}>October</option>
-                            <option value={"Nov"}>November</option>
-                            <option value={"Dec"}>December</option>
-                        </FilledSelect>
+                        <Controller
+                            name="month"
+                            control={control}
+                            defaultValue=""
+                            render={({ field: { onChange, value } }) => (
+                                <>
+                                    <InputLabel htmlFor="select-month">
+                                        Month
+                                    </InputLabel>
+                                    <FilledSelect
+                                        name="month"
+                                        variant="filled"
+                                        style={{ width: 240, marginRight: 12 }}
+                                        labelId="select-month"
+                                        id="select-month"
+                                        native
+                                        value={value}
+                                        onChange={onChange}
+                                        label="Month"
+                                    >
+                                        <option aria-label="None" />
+                                        <option value={"Jan"}>January</option>
+                                        <option value={"Feb"}>February</option>
+                                        <option value={"Mar"}>March</option>
+                                        <option value={"Apr"}>April</option>
+                                        <option value={"May"}>May</option>
+                                        <option value={"Jun"}>June</option>
+                                        <option value={"Jul"}>July</option>
+                                        <option value={"Aug"}>August</option>
+                                        <option value={"Sep"}>September</option>
+                                        <option value={"Oct"}>October</option>
+                                        <option value={"Nov"}>November</option>
+                                        <option value={"Dec"}>December</option>
+                                    </FilledSelect>
+                                </>
+                            )}
+                        />
                     </FormControl>
                     <FormControl variant="filled">
-                        <InputLabel htmlFor="select-day">
-                            Day
-                        </InputLabel>
-                        <FilledSelect
-                            variant="filled"
-                            style={{ width: 100, marginRight: 12 }}
-                            labelId="select-day"
-                            id="select-day"
-                            native
-                            value={day}
-                            onChange={(event) => onChangeSelect(setDay, event.target.value as number)}
-                            label="Day"
-                        >
-                            <option aria-label="None" />
-                            {showDays()}
-                        </FilledSelect>
+                        <Controller
+                            name="day"
+                            control={control}
+                            defaultValue={0}
+                            render={({ field: { onChange, value } }) => (
+                                <>
+                                    <InputLabel htmlFor="select-day">
+                                        Day
+                                    </InputLabel>
+                                    <FilledSelect
+                                        name="day"
+                                        variant="filled"
+                                        style={{ width: 100, marginRight: 12 }}
+                                        labelId="select-day"
+                                        id="select-day"
+                                        native
+                                        value={value}
+                                        onChange={onChange}
+                                        label="Day"
+                                    >
+                                        <option aria-label="None" />
+                                        {showDays()}
+                                    </FilledSelect>
+                                </>
+                            )}
+                        />
                     </FormControl>
                     <FormControl variant="filled">
-                        <InputLabel htmlFor="select-year">
-                            Year
-                        </InputLabel>
-                        <FilledSelect
-                            variant="filled"
-                            style={{ width: 125 }}
-                            labelId="select-year"
-                            id="select-year"
-                            native
-                            value={year}
-                            onChange={(event) => onChangeSelect(setYear, event.target.value as number)}
-                            label="Year"
-                        >
-                            <option aria-label="None" />
-                            {showYears()}
-                        </FilledSelect>
+                        <Controller
+                            name="year"
+                            control={control}
+                            defaultValue={0}
+                            render={({ field: { onChange, value } }) => (
+                                <>
+                                    <InputLabel htmlFor="select-year">
+                                        Year
+                                    </InputLabel>
+                                    <FilledSelect
+                                        name="year"
+                                        variant="filled"
+                                        style={{ width: 125 }}
+                                        labelId="select-year"
+                                        id="select-year"
+                                        native
+                                        value={value}
+                                        onChange={onChange}
+                                        label="Year"
+                                    >
+                                        <option aria-label="None" />
+                                        {showYears()}
+                                    </FilledSelect>
+                                </>
+                            )}
+                        />
                     </FormControl>
                 </div>
             </div>

@@ -4,7 +4,6 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useDialogWrapperStyles } from "./DialogWrapperStyles";
-import { useGlobalStyles } from "../../../util/globalClasses";
 import { selectIsLoading } from "../../../store/ducks/authentication/selector";
 import { setCloseModal } from "../../../store/ducks/authentication/actionCreators";
 
@@ -14,8 +13,6 @@ interface DialogWrapperProps {
     onClick?: any;
     disabledButton?: boolean;
     logo?: boolean;
-    hideBackdrop?: boolean;
-    modalShadow?: boolean;
     children?: ReactNode;
 }
 
@@ -25,12 +22,9 @@ const DialogWrapper: FC<DialogWrapperProps> = (
         onClick,
         disabledButton,
         logo = true,
-        hideBackdrop,
-        modalShadow,
         children
     }
 ): ReactElement => {
-    const globalClasses = useGlobalStyles({});
     const classes = useDialogWrapperStyles();
     const dispatch = useDispatch();
     const isLoading = useSelector(selectIsLoading);
@@ -40,13 +34,7 @@ const DialogWrapper: FC<DialogWrapperProps> = (
     };
 
     return (
-        <Dialog
-            className={modalShadow ? globalClasses.modalShadow : undefined}
-            transitionDuration={0}
-            open={isOpen}
-            onClose={onClose}
-            hideBackdrop={hideBackdrop}
-        >
+        <Dialog transitionDuration={0} open={isOpen} onClose={onClose}>
             <DialogContent className={classes.dialogContent}>
                 {logo && (
                     <div className={classes.logoIcon}>

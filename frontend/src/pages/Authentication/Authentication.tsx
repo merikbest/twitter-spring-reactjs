@@ -24,7 +24,7 @@ const Authentication: FC = (): ReactElement => {
     };
 
     const handleClickOpenSignUp = (): void => {
-        dispatch(setOpenModal(true));
+        dispatch(setOpenModal());
     };
 
     return (

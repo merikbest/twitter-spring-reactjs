@@ -37,6 +37,7 @@ const EditProfileButton = memo((): ReactElement => {
 
     const onCloseSetupProfile = (): void => {
         setVisibleSetupProfile(false);
+        location.state.isRegistered = false;
     };
 
     return (

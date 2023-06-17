@@ -14,6 +14,7 @@ export const initialRegistrationInfo: RegistrationRequest = {
 export const initialAuthenticationState: AuthenticationState = {
     registrationInfo: initialRegistrationInfo,
     registrationStep: null,
+    errorMessage: null,
     loadingState: LoadingStatus.LOADED
 };
 
@@ -28,6 +29,10 @@ export const authenticationReducer = produce((draft: Draft<AuthenticationState>,
             draft.registrationStep = action.payload;
             break;
 
+        case AuthenticationTypes.SET_ERROR_MESSAGE:
+            draft.errorMessage = action.payload;
+            break;
+
         case AuthenticationTypes.SET_OPEN_MODAL:
             draft.registrationStep = RegistrationStep.STEP_1;
             break;
@@ -35,6 +40,7 @@ export const authenticationReducer = produce((draft: Draft<AuthenticationState>,
         case AuthenticationTypes.SET_CLOSE_MODAL:
             draft.registrationInfo = initialRegistrationInfo;
             draft.registrationStep = null;
+            draft.errorMessage = null;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 

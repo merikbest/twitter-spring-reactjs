@@ -7,6 +7,7 @@ import { RegistrationPayload } from "./state";
 export enum AuthenticationTypes {
     SET_REGISTRATION_INFO = "authentication/SET_REGISTRATION_INFO",
     SET_REGISTRATION_STEP = "authentication/SET_REGISTRATION_STEP",
+    SET_ERROR_MESSAGE = "authentication/SET_ERROR_MESSAGE",
     FETCH_REGISTRATION = "authentication/FETCH_REGISTRATION",
     FETCH_SEND_REGISTRATION_CODE = "authentication/FETCH_SEND_REGISTRATION_CODE",
     FETCH_CHECK_REGISTRATION_CODE = "authentication/FETCH_CHECK_REGISTRATION_CODE",
@@ -23,6 +24,11 @@ export interface SetRegistrationInfoActionInterface extends Action<Authenticatio
 export interface SetRegistrationStepActionInterface extends Action<AuthenticationTypes> {
     type: AuthenticationTypes.SET_REGISTRATION_STEP;
     payload: RegistrationStep;
+}
+
+export interface SetErrorMessageActionInterface extends Action<AuthenticationTypes> {
+    type: AuthenticationTypes.SET_ERROR_MESSAGE;
+    payload: string | null;
 }
 
 export interface FetchRegistrationActionInterface extends Action<AuthenticationTypes> {
@@ -42,7 +48,6 @@ export interface FetchCheckRegistrationCodeActionInterface extends Action<Authen
 
 export interface SetOpenModalActionInterface extends Action<AuthenticationTypes> {
     type: AuthenticationTypes.SET_OPEN_MODAL;
-    payload: boolean;
 }
 
 export interface SetCloseModalActionInterface extends Action<AuthenticationTypes> {
@@ -57,6 +62,7 @@ export interface SetLoadingAuthStateActionInterface extends Action<Authenticatio
 export type AuthenticationActions =
     SetRegistrationInfoActionInterface |
     SetRegistrationStepActionInterface |
+    SetErrorMessageActionInterface |
     SetOpenModalActionInterface |
     SetCloseModalActionInterface |
     SetLoadingAuthStateActionInterface

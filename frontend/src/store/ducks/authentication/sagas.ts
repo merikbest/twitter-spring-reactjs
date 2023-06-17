@@ -7,7 +7,7 @@ import {
     FetchSendRegistrationCodeActionInterface
 } from "./constants/actionTypes";
 import { RegistrationApi } from "../../../services/api/user-service/registrationApi";
-import { setLoadingAuthState, setRegistrationInfo, setRegistrationStep } from "./actionCreators";
+import { setErrorMessage, setLoadingAuthState, setRegistrationInfo, setRegistrationStep } from "./actionCreators";
 import { LoadingStatus } from "../../../types/common";
 import { RegistrationStep } from "../../../types/auth";
 
@@ -47,12 +47,13 @@ export function* fetchSendRegistrationCodeRequest({ payload }: FetchSendRegistra
 
 export function* fetchCheckRegistrationCodeRequest({ payload }: FetchCheckRegistrationCodeActionInterface) {
     try {
+        yield put(setErrorMessage(null));
         yield put(setLoadingAuthState(LoadingStatus.LOADING));
         yield call(RegistrationApi.checkRegistrationCode, payload);
         yield put(setRegistrationStep(RegistrationStep.STEP_5));
         yield put(setLoadingAuthState(LoadingStatus.LOADED));
     } catch (error) {
-        // add error message to state
+        yield put(setErrorMessage(error.response.data));
         yield put(setLoadingAuthState(LoadingStatus.ERROR));
     }
 }

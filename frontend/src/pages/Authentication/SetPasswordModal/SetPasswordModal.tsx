@@ -39,12 +39,7 @@ const SetPasswordModal: FC = (): ReactElement => {
     });
 
     const onSubmit = (data: PasswordFormProps): void => {
-        const registrationData: EndRegistrationRequest = {
-            email: registrationInfo.email,
-            password: data.password,
-            history
-        };
-        dispatch(fetchSignUp(registrationData));
+        dispatch(fetchSignUp({ email: registrationInfo.email, password: data.password, history }));
     };
 
     return (

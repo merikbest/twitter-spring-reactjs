@@ -4,6 +4,7 @@ import {
     FetchRegistrationActionInterface,
     FetchSendRegistrationCodeActionInterface,
     SetCloseModalActionInterface,
+    SetErrorMessageActionInterface,
     SetLoadingAuthStateActionInterface,
     SetOpenModalActionInterface,
     SetRegistrationInfoActionInterface,
@@ -23,6 +24,11 @@ export const setRegistrationStep = (payload: RegistrationStep): SetRegistrationS
     payload
 });
 
+export const setErrorMessage = (payload: string | null): SetErrorMessageActionInterface => ({
+    type: AuthenticationTypes.SET_ERROR_MESSAGE,
+    payload
+});
+
 export const fetchRegistration = (payload: RegistrationPayload): FetchRegistrationActionInterface => ({
     type: AuthenticationTypes.FETCH_REGISTRATION,
     payload
@@ -38,9 +44,8 @@ export const fetchCheckRegistrationCode = (payload: string): FetchCheckRegistrat
     payload
 });
 
-export const setOpenModal = (payload: boolean): SetOpenModalActionInterface => ({
-    type: AuthenticationTypes.SET_OPEN_MODAL,
-    payload
+export const setOpenModal = (): SetOpenModalActionInterface => ({
+    type: AuthenticationTypes.SET_OPEN_MODAL
 });
 
 export const setCloseModal = (): SetCloseModalActionInterface => ({

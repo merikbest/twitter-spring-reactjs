@@ -7,6 +7,7 @@ import { RegistrationFormProps } from "../../../../pages/Authentication/Registra
 export interface AuthenticationState {
     registrationInfo: RegistrationRequest;
     registrationStep: RegistrationStep | null;
+    errorMessage: string | null;
     loadingState: LoadingStatus;
 }
 

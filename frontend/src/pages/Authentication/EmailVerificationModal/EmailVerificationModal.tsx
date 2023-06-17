@@ -1,11 +1,15 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { ChangeEvent, FC, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as MuiLink, Typography } from "@material-ui/core";
 
 import { useEmailVerificationModalStyles } from "./EmailVerificationModalStyles";
 import { RegistrationInputField } from "../RegistrationInput/RegistrationInputField";
 import DialogWrapper from "../DialogWrapper/DialogWrapper";
-import { selectRegistrationInfo, selectRegistrationStep4 } from "../../../store/ducks/authentication/selector";
+import {
+    selectErrorMessage,
+    selectRegistrationInfo,
+    selectRegistrationStep4
+} from "../../../store/ducks/authentication/selector";
 import { fetchCheckRegistrationCode } from "../../../store/ducks/authentication/actionCreators";
 
 const EmailVerificationModal: FC = (): ReactElement => {
@@ -13,11 +17,15 @@ const EmailVerificationModal: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const registrationInfo = useSelector(selectRegistrationInfo);
     const registrationStep4 = useSelector(selectRegistrationStep4);
+    const errorMessage = useSelector(selectErrorMessage);
     const [verificationCode, setVerificationCode] = useState<string>("");
-    const [error, setError] = useState<string>("");
 
     const checkEmailVerificationCode = (): void => {
         dispatch(fetchCheckRegistrationCode(verificationCode));
+    };
+
+    const onChangeVerificationCode = (event: ChangeEvent<HTMLInputElement>): void => {
+        setVerificationCode(event.target.value);
     };
 
     return (
@@ -36,10 +44,10 @@ const EmailVerificationModal: FC = (): ReactElement => {
                 <RegistrationInputField
                     label="Verification code"
                     variant="filled"
-                    helperText={error}
-                    error={error !== ""}
+                    helperText={errorMessage}
+                    error={errorMessage !== null}
                     value={verificationCode}
-                    onChange={(event) => setVerificationCode(event.target.value)}
+                    onChange={onChangeVerificationCode}
                     fullWidth
                 />
             </div>
