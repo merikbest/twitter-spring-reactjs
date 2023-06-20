@@ -25,6 +25,7 @@ import {
 import { LoadingStatus, PageableResponse, ReplyType } from "../../types/common";
 import { PAGE_TOTAL_COUNT } from "../../constants/common-constants";
 import { pollInitialState } from "../../store/ducks/addTweetForm/reducer";
+import { initialRegistrationInfo } from "../../store/ducks/authentication/reducer";
 
 (global as any).TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder;
@@ -312,6 +313,12 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             selectedUsers: [],
             gifs: [],
             loadingState: loadingStatus
+        },
+        authentication: {
+            registrationInfo: initialRegistrationInfo,
+            registrationStep: null,
+            errorMessage: null,
+            loadingState: LoadingStatus.LOADED
         }
     } as RootState;
 };

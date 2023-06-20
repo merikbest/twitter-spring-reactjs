@@ -19,6 +19,7 @@ export function* fetchRegistrationRequest({ payload }: FetchRegistrationActionIn
         yield put(setRegistrationStep(RegistrationStep.STEP_2));
         yield put(setLoadingAuthState(LoadingStatus.LOADED));
     } catch (error) {
+        yield put(setLoadingAuthState(LoadingStatus.ERROR));
         const errors = error.response.data;
 
         if (error.response.status === 403) {
@@ -30,7 +31,6 @@ export function* fetchRegistrationRequest({ payload }: FetchRegistrationActionIn
         if (errors.email) {
             payload.setError("email", { type: "server", message: errors.email });
         }
-        yield put(setLoadingAuthState(LoadingStatus.ERROR));
     }
 }
 
@@ -53,8 +53,8 @@ export function* fetchCheckRegistrationCodeRequest({ payload }: FetchCheckRegist
         yield put(setRegistrationStep(RegistrationStep.STEP_5));
         yield put(setLoadingAuthState(LoadingStatus.LOADED));
     } catch (error) {
-        yield put(setErrorMessage(error.response.data));
         yield put(setLoadingAuthState(LoadingStatus.ERROR));
+        yield put(setErrorMessage(error.response.data));
     }
 }
 
