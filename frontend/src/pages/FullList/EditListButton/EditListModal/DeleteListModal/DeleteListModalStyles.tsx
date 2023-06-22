@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useDeleteListModalStyles = makeStyles((theme: Theme) => ({
+export const useDeleteListModalStyles = makeStyles((theme) => ({
     deleteList: {
         padding: "12px 16px",
         color: theme.palette.error.main,

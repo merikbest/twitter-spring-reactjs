@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useBlockButtonStyles = makeStyles((theme: Theme) => ({
+export const useBlockButtonStyles = makeStyles((theme) => ({
     containedButton: {
         width: 105,
         "&:hover": {

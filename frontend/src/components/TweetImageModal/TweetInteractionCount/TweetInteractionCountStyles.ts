@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useTweetInteractionCountStyles = makeStyles((theme) => ({
+export const useTweetInteractionCountStyles = makeStyles(() => ({
     content: {
         display: "flex",
         alignItems: "center",

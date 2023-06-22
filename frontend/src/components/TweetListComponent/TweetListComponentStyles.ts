@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useTweetListComponentStyles = makeStyles((theme: Theme) => ({
+export const useTweetListComponentStyles = makeStyles((theme) => ({
     container: {
         width: "100%",
         height: "auto",

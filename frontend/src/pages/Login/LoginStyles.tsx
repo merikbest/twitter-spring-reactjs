@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useLoginStyles = makeStyles((theme: Theme) => ({
+export const useLoginStyles = makeStyles((theme) => ({
     container: {
         width: 334,
         margin: "0 auto",

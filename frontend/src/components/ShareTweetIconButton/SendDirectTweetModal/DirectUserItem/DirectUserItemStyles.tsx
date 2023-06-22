@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useDirectUserItemStyles = makeStyles((theme: Theme) => ({
+export const useDirectUserItemStyles = makeStyles((theme) => ({
     container: {
         width: "100%",
         display: "flex",

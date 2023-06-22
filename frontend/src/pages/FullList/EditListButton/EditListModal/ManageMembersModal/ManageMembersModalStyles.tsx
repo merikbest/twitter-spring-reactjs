@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useManageMembersModalStyles = makeStyles((theme: Theme) => ({
+export const useManageMembersModalStyles = makeStyles((theme) => ({
     dialog: {
         "& .MuiDialogTitle-root": {
             marginBottom: 0,

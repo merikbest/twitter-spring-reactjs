@@ -1,6 +1,6 @@
-import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps, Theme } from "@material-ui/core";
+import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps } from "@material-ui/core";
 
-export const useLoginTextFieldStyles = makeStyles((theme: Theme) =>
+export const useLoginTextFieldStyles = makeStyles((theme) =>
     createStyles({
         root: {
             width: 334,

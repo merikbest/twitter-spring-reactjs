@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useConversationInfoStyles = makeStyles((theme: Theme) => ({
+export const useConversationInfoStyles = makeStyles((theme) => ({
     container: {
         minWidth: 600,
         padding: 0,

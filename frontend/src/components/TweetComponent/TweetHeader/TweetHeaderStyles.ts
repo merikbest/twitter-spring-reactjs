@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useTweetHeaderStyles = makeStyles((theme) => ({
+export const useTweetHeaderStyles = makeStyles(() => ({
     lockIcon: {
         "& svg": {
             marginLeft: 3,

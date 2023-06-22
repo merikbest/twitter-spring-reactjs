@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useTweetAnalyticsModalStyles = makeStyles<Theme>((theme) => ({
+export const useTweetAnalyticsModalStyles = makeStyles((theme) => ({
     container: {
         "& .MuiDialogContent-root": {
             width: 597,

@@ -4,7 +4,7 @@ interface ProfileImagesStylesProps {
     dataSize: number;
 }
 
-export const useProfileImagesStyles = makeStyles<Theme, ProfileImagesStylesProps>((theme) => ({
+export const useProfileImagesStyles = makeStyles<Theme, ProfileImagesStylesProps>(() => ({
     container: {
         paddingTop: 23,
         paddingLeft: 12

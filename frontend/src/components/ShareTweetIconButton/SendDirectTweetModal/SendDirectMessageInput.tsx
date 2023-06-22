@@ -1,7 +1,7 @@
-import { Theme, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 
-export const SendDirectMessageInput = withStyles((theme: Theme) => ({
+export const SendDirectMessageInput = withStyles((theme) => ({
     root: {
         "& .MuiOutlinedInput-root": {
             marginTop: 2,

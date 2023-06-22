@@ -1,7 +1,7 @@
-import { Theme, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 
-export const PeopleSearchInput = withStyles((theme: Theme) => ({
+export const PeopleSearchInput = withStyles((theme) => ({
     root: {
         paddingTop: 60,
         "& .MuiOutlinedInput-root": {

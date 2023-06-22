@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useChangeEmailModalStyles = makeStyles((theme: Theme) => ({
+export const useChangeEmailModalStyles = makeStyles((theme) => ({
     dialog: {
         "& .MuiDialogContent-root": {
             paddingTop: 10

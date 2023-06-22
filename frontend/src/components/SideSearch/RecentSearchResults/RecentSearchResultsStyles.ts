@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useRecentSearchResultsStyles = makeStyles((theme: Theme) => ({
+export const useRecentSearchResultsStyles = makeStyles((theme) => ({
     header: {
         padding: 12,
         display: "inline-block"

@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useReplyStyles = makeStyles((theme: Theme) => ({
+export const useReplyStyles = makeStyles((theme) => ({
     reply: {
         position: "relative",
         marginTop: 5,

@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useRecommendationsModalStyles = makeStyles((theme: Theme) => ({
+export const useRecommendationsModalStyles = makeStyles((theme) => ({
     logoIcon: {
         margin: "0 auto",
         width: 30,

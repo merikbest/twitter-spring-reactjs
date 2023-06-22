@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useFollowTopicButtonStyles = makeStyles((theme: Theme) => ({
+export const useFollowTopicButtonStyles = makeStyles((theme) => ({
     outlinedButton: {
         float: "right",
         width: 79,

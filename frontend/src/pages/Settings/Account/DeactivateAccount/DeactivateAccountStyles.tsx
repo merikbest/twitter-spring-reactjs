@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useDeactivateAccountStyles = makeStyles((theme: Theme) => ({
+export const useDeactivateAccountStyles = makeStyles((theme) => ({
     userInfoWrapper: {
         display: "flex",
         padding: "12px 16px",

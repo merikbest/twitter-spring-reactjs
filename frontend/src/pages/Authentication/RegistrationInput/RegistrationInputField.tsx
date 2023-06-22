@@ -1,6 +1,6 @@
-import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps, Theme } from "@material-ui/core";
+import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps } from "@material-ui/core";
 
-const useStylesRegistration = makeStyles((theme: Theme) =>
+const useStylesRegistration = makeStyles((theme) =>
     createStyles({
         root: {
             border: "1px solid #C4C4C4",

@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useShareActionsItemStyles = makeStyles((theme: Theme) => ({
+export const useShareActionsItemStyles = makeStyles((theme) => ({
     listItem: {
         height: 52,
         "&:hover": {

@@ -1,7 +1,7 @@
-import { Theme, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 
-export const ForgotPasswordTextField = withStyles((theme: Theme) => ({
+export const ForgotPasswordTextField = withStyles((theme) => ({
     root: {
         "& .MuiOutlinedInput-root": {
             width: 330,

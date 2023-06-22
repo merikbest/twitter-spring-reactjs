@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useSideMenuStyles = makeStyles((theme: Theme) => ({
+export const useSideMenuStyles = makeStyles((theme) => ({
     container: {
         position: "fixed",
         top: 0,

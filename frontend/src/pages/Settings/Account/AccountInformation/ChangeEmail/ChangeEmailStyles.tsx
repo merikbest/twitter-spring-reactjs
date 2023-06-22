@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useChangeEmailStyles = makeStyles((theme: Theme) => ({
+export const useChangeEmailStyles = makeStyles((theme) => ({
     textFieldWrapper: {
         padding: "12px 16px",
         "& .MuiFormLabel-root.Mui-disabled": {

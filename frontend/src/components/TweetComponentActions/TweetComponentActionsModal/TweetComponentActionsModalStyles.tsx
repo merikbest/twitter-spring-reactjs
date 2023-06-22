@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useTweetComponentActionsModalStyles = makeStyles((theme: Theme) => ({
+export const useTweetComponentActionsModalStyles = makeStyles((theme) => ({
     modalWrapper: {
         width: 280,
         height: (props: { modalTitle: string }) => props.modalTitle === "Delete" ? 190 : 150,

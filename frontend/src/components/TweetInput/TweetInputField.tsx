@@ -1,7 +1,7 @@
-import { Theme, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 
-export const TweetInputField = withStyles((theme: Theme) => ({
+export const TweetInputField = withStyles((theme) => ({
     root: {
         "& .MuiOutlinedInput-input": {
             paddingTop: 26,

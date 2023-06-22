@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useTopicItemStyles = makeStyles((theme: Theme) => ({
+export const useTopicItemStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
         alignItems: "center",

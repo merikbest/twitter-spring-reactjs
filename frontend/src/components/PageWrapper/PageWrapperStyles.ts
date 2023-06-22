@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const usePageWrapperStyles = makeStyles((theme) => ({
+export const usePageWrapperStyles = makeStyles(() => ({
     header: {
         justifyContent: "space-between",
         "& .MuiTypography-h5": {

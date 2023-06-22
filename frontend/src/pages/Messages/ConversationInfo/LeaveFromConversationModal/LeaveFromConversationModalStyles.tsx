@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useLeaveFromConversationModalStyles = makeStyles((theme: Theme) => ({
+export const useLeaveFromConversationModalStyles = makeStyles((theme) => ({
     modalWrapper: {
         width: 280,
         minHeight: 176,

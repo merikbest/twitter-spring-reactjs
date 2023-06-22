@@ -1,6 +1,6 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
-export const useTweetComponentMoreStyles = makeStyles((theme: Theme) => createStyles({
+export const useTweetComponentMoreStyles = makeStyles((theme) => createStyles({
     root: {
         position: "relative",
         "& .MuiIconButton-root": {

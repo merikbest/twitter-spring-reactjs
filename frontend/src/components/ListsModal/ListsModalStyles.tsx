@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useListsModalStyles = makeStyles<Theme>((theme) => ({
+export const useListsModalStyles = makeStyles((theme) => ({
     createList: {
         width: "100%",
         padding: "12px 16px",

@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useManageContactsStyles = makeStyles((theme: Theme) => ({
+export const useManageContactsStyles = makeStyles((theme) => ({
     removeContacts: {
         textAlign: "center",
         padding: 16,

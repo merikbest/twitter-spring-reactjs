@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useManageMembersItemStyles = makeStyles((theme: Theme) => ({
+export const useManageMembersItemStyles = makeStyles((theme) => ({
     container: {
         borderTop: 0,
         borderLeft: 0,

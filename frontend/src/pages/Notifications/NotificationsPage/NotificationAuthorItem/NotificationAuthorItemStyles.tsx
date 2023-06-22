@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useNotificationAuthorItemStyles = makeStyles((theme: Theme) => ({
+export const useNotificationAuthorItemStyles = makeStyles((theme) => ({
     notificationAvatarWrapper: {
         display: "inline-block"
     },

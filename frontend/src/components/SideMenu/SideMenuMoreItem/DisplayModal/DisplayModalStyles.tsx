@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useDisplayModalStyles = makeStyles((theme: Theme) => ({
+export const useDisplayModalStyles = makeStyles((theme) => ({
     content: {
         height: 603,
         width: 598,

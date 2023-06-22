@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useTweetInputStyles = makeStyles((theme) => ({
+export const useTweetInputStyles = makeStyles(() => ({
     container: {
         marginLeft: 15,
         marginBottom: 25

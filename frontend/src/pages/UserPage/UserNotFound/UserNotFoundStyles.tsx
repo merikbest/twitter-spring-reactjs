@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useUserNotFoundStyles = makeStyles((theme: Theme) => ({
+export const useUserNotFoundStyles = makeStyles((theme) => ({
     container: {
         "& .MuiTab-root": {
             textTransform: "none !important",

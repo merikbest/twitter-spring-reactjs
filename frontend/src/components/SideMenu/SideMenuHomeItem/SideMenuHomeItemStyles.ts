@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useSideMenuHomeItemStyles = makeStyles((theme: Theme) => ({
+export const useSideMenuHomeItemStyles = makeStyles((theme) => ({
     homeNotification: {
         position: "absolute",
         marginLeft: 20,

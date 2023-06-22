@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useFindEmailStyles = makeStyles((theme: Theme) => ({
+export const useFindEmailStyles = makeStyles((theme) => ({
     warning: {
         fontSize: 28,
         fontWeight: 700,

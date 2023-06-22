@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useEditListButtonStyles = makeStyles((theme: Theme) => ({
+export const useEditListButtonStyles = makeStyles((theme) => ({
     listOutlinedButton: {
         "&:hover": {
             backgroundColor: theme.palette.secondary.light

@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const usePollStyles = makeStyles((theme: Theme) => ({
+export const usePollStyles = makeStyles((theme) => ({
     container: {
         maxWidth: 507,
         minHeight: 300,

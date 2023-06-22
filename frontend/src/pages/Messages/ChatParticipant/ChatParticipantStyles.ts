@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useChatParticipantStyles = makeStyles((theme: Theme) => ({
+export const useChatParticipantStyles = makeStyles((theme) => ({
     listItem: {
         padding: 0,
         backgroundColor: theme.palette.background.paper,

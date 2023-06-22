@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useDialogWrapperStyles = makeStyles((theme: Theme) => ({
+export const useDialogWrapperStyles = makeStyles((theme) => ({
     dialogContent: {
         width: 550,
         minHeight: 600,

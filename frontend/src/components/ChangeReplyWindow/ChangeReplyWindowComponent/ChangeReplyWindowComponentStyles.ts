@@ -1,6 +1,6 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
-export const useChangeReplyWindowComponentStyles = makeStyles((theme: Theme) => createStyles({
+export const useChangeReplyWindowComponentStyles = makeStyles((theme) => createStyles({
     listItem: {
         height: 60,
         padding: 0,

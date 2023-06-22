@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useListsHeaderStyles = makeStyles((theme: Theme) => ({
+export const useListsHeaderStyles = makeStyles((theme) => ({
     iconGroup: {
         marginLeft: "auto",
         marginRight: 10

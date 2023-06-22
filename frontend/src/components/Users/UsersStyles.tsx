@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useUsersStyles = makeStyles((theme: Theme) => ({
+export const useUsersStyles = makeStyles((theme) => ({
     container: {
         backgroundColor: theme.palette.secondary.main,
         borderRadius: 16,

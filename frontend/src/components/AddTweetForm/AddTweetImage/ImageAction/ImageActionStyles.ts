@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useImageActionStyles = makeStyles((theme) => ({
+export const useImageActionStyles = makeStyles(() => ({
     imageAction: {
         marginRight: 48,
         display: "inline-flex",

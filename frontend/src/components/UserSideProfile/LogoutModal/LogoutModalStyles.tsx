@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useLogoutModalStyles = makeStyles((theme: Theme) => ({
+export const useLogoutModalStyles = makeStyles((theme) => ({
     modalWrapper: {
         width: 280,
         height: 212,

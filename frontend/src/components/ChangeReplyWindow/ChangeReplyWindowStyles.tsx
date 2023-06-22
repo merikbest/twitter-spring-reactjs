@@ -1,6 +1,6 @@
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
-export const useChangeReplyWindowStyles = makeStyles((theme: Theme) => createStyles({
+export const useChangeReplyWindowStyles = makeStyles((theme) => createStyles({
     dropdown: {
         width: 320,
         zIndex: 2,

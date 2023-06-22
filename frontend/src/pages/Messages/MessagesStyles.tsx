@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useMessagesStyles = makeStyles((theme: Theme) => ({
+export const useMessagesStyles = makeStyles((theme) => ({
     grid: {
         padding: "12px 0px 0px 0px !important"
     },

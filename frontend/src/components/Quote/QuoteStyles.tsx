@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useQuoteStyles = makeStyles<Theme>((theme) => ({
+export const useQuoteStyles = makeStyles((theme) => ({
     quoteTweetLink: {
         textDecoration: "none",
         color: theme.palette.text.primary,

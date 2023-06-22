@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useLocationStyles = makeStyles((theme: Theme) => ({
+export const useLocationStyles = makeStyles((theme) => ({
     deleteUser: {
         textAlign: "center",
         padding: 16,

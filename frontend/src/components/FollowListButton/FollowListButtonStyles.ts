@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useFollowListButtonStyles = makeStyles((theme: Theme) => ({
+export const useFollowListButtonStyles = makeStyles((theme) => ({
     listPrimaryButton: {
         width: 105,
         "&:hover": {

@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useChatHeaderStyles = makeStyles((theme: Theme) => ({
+export const useChatHeaderStyles = makeStyles((theme) => ({
     chatHeader: {
         width: 598
     },

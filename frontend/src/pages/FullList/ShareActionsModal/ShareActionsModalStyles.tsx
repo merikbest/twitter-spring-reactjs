@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useShareActionsModalStyles = makeStyles((theme: Theme) => ({
+export const useShareActionsModalStyles = makeStyles((theme) => ({
     root: {
         display: "inline-block"
     },

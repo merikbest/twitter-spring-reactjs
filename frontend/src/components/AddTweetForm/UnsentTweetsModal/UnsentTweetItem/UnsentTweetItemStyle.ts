@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useUnsentTweetItemStyles = makeStyles((theme: Theme) => ({
+export const useUnsentTweetItemStyles = makeStyles((theme) => ({
     tweetContainer: {
         padding: "12px 16px",
         borderBottom: `1px solid ${theme.palette.divider}`,

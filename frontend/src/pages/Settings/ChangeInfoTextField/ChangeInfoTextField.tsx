@@ -1,7 +1,7 @@
 import React from "react";
-import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps, Theme } from "@material-ui/core";
+import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps } from "@material-ui/core";
 
-export const useChangeInfoTextFieldStyles = makeStyles((theme: Theme) =>
+export const useChangeInfoTextFieldStyles = makeStyles((theme) =>
     createStyles({
         root: {
             width: "100%",

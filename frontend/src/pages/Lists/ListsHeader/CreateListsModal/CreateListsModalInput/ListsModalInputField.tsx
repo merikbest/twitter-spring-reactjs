@@ -1,6 +1,6 @@
-import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps, Theme } from "@material-ui/core";
+import { createStyles, makeStyles, OutlinedInputProps, TextField, TextFieldProps } from "@material-ui/core";
 
-const useStylesListModalInputField = makeStyles((theme: Theme) =>
+const useStylesListModalInputField = makeStyles((theme) =>
     createStyles({
         root: {
             border: `1px solid ${theme.palette.grey[100]}`,

@@ -41,6 +41,7 @@ const RegistrationInput: FC<RegistrationInputProps> = (
                 )}
             </div>
             <RegistrationInputField
+                name={name}
                 label={label}
                 variant="filled"
                 onChange={onChange}

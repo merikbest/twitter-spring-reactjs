@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useTopicsStyles = makeStyles((theme: Theme) => ({
+export const useTopicsStyles = makeStyles((theme) => ({
     tabs: {
         paddingTop: 53,
         borderBottom: `1px solid ${theme.palette.divider}`,

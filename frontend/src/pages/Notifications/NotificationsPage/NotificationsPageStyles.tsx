@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useNotificationsPageStyles = makeStyles((theme: Theme) => ({
+export const useNotificationsPageStyles = makeStyles((theme) => ({
     notificationWrapper: {
         display: "flex",
         cursor: "pointer",

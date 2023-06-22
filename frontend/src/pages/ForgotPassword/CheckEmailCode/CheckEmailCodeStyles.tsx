@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useCheckEmailCodeStyles = makeStyles((theme: Theme) => ({
+export const useCheckEmailCodeStyles = makeStyles((theme) => ({
     text: {
         margin: "14px 0px"
     },

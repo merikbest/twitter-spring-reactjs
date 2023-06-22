@@ -1,7 +1,7 @@
-import { Theme, withStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField/TextField";
 
-export const ManageMembersInput = withStyles((theme: Theme) => ({
+export const ManageMembersInput = withStyles((theme) => ({
     root: {
         "& .MuiOutlinedInput-root": {
             borderRadius: 30,

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const usePopperFooterStyles = makeStyles((theme) => ({
+export const usePopperFooterStyles = makeStyles(() => ({
     userInfo: {
         marginTop: 12,
         marginBottom: 12,

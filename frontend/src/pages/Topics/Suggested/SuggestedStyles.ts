@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useSuggestedStyles = makeStyles((theme: Theme) => ({
+export const useSuggestedStyles = makeStyles((theme) => ({
     suggestedButton: {
         display: "inline-block",
         padding: 2,

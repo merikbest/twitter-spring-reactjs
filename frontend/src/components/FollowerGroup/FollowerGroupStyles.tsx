@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useFollowerGroupStyles = makeStyles((theme: Theme) => ({
+export const useFollowerGroupStyles = makeStyles((theme) => ({
     followedTextInfoWrapper: {
         marginTop: 12,
         "& .MuiAvatarGroup-root": {

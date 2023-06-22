@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
-export const useDiscoverListsStyles = makeStyles((theme: Theme) => ({
+export const useDiscoverListsStyles = makeStyles((theme) => ({
     newLists: {
         maxHeight: 345,
         borderTop: 0,

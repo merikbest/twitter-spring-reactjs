@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useProfileHeaderModalStyles = makeStyles((theme) => ({
+export const useProfileHeaderModalStyles = makeStyles(() => ({
     wallpaperWrapper: {
         height: 136,
         marginTop: 71,
