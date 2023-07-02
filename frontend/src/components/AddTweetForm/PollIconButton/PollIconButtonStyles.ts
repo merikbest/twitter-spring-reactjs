@@ -1,10 +1,10 @@
 import { makeStyles, Theme } from "@material-ui/core";
 
-interface UsePullIconButtonProps {
+interface UsePollIconButtonProps {
     disabled?: boolean;
 }
 
-export const usePullIconButtonStyles = makeStyles<Theme, UsePullIconButtonProps>((theme) => ({
+export const usePollIconButtonStyles = makeStyles<Theme, UsePollIconButtonProps>((theme) => ({
     quoteImage: {
         "& .MuiIconButton-root": {
             "& svg": {

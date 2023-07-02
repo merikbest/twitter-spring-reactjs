@@ -141,9 +141,8 @@ describe("user actions", () => {
         payload: { userId: 1, tweetId: 1 }
     });
 
-    testAction(startUseTwitter, startUseTwitter(1), {
-        type: UserActionsType.START_USE_TWITTER,
-        payload: 1
+    testAction(startUseTwitter, startUseTwitter(), {
+        type: UserActionsType.START_USE_TWITTER
     });
 
     testAction(fetchReadMessages, fetchReadMessages(1), {

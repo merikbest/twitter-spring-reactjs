@@ -194,7 +194,6 @@ export interface UpdateBackgroundColorActionInterface extends Action<UserActions
 
 export interface StartUseTwitterActionInterface extends Action<UserActionsType> {
     type: UserActionsType.START_USE_TWITTER;
-    payload: number;
 }
 
 export interface FetchReadMessagesActionInterface extends Action<UserActionsType> {

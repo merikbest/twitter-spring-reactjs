@@ -158,10 +158,10 @@ export function* processFollowUserRequest({ payload }: FollowUserActionInterface
     }
 }
 
-export function* startUseTwitterRequest({ payload }: StartUseTwitterActionInterface) {
+export function* startUseTwitterRequest() {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const response: AxiosResponse<boolean> = yield call(UserApi.startUseTwitter, payload);
+        const response: AxiosResponse<boolean> = yield call(UserApi.startUseTwitter);
         yield put(setProfileStarted(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));

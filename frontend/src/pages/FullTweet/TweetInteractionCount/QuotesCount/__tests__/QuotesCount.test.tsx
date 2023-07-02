@@ -13,7 +13,7 @@ describe("QuotesCount", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<QuotesCount />, createMockRootState(LoadingStatus.SUCCESS), history);
-        wrapper.find("a").simulate("click");
+        wrapper.find("span").at(0).simulate("click");
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${QUOTES}/9`);
     });

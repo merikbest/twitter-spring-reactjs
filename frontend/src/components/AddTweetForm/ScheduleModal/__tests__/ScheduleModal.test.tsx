@@ -1,27 +1,26 @@
 import React from "react";
 import { Button, Dialog } from "@material-ui/core";
 
-import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { FilledSelect } from "../../../FilledSelect/FilledSelect";
 import ScheduleModal from "../ScheduleModal";
 import { LoadingStatus } from "../../../../types/common";
+import { AddTweetFormTypes } from "../../../../store/ducks/addTweetForm/constants/actionTypes";
 
 describe("ScheduleModal", () => {
-    const mockRootState = createMockRootState(LoadingStatus.LOADED);
+    const mockState = createMockRootState(LoadingStatus.LOADED);
+    let mockDispatchFn: jest.Mock;
+
+    beforeEach(() => mockDispatchFn = mockDispatch());
 
     it("should render correctly and click submit", () => {
         const mockOnClose = jest.fn();
-        const mockHandleScheduleDate = jest.fn();
         const wrapper = mountWithStore(
             <ScheduleModal
-                visible={true}
-                selectedScheduleDate={null}
+                visible
                 onClose={mockOnClose}
-                handleScheduleDate={mockHandleScheduleDate}
-                clearScheduleDate={jest.fn()}
                 onOpenUnsentTweetsModal={jest.fn()}
-            />, mockRootState);
-
+            />, mockState);
         expect(wrapper.text().includes("Schedule")).toBe(true);
         expect(wrapper.text().includes("Date")).toBe(true);
         expect(wrapper.text().includes("Month")).toBe(true);
@@ -29,45 +28,38 @@ describe("ScheduleModal", () => {
         expect(wrapper.text().includes("Time")).toBe(true);
         expect(wrapper.text().includes("Hour")).toBe(true);
         expect(wrapper.text().includes("Minute")).toBe(true);
-
         wrapper.find(Button).at(0).simulate("click");
-
         expect(wrapper.find(Button).at(0).text().includes("Confirm")).toBe(true);
         expect(mockOnClose).toHaveBeenCalled();
-        expect(mockHandleScheduleDate).toHaveBeenCalled();
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: new Date("2023-07-04T00:00:00.000Z"),
+            type: AddTweetFormTypes.SET_SCHEDULE_DATE
+        });
+        expect(mockDispatchFn).nthCalledWith(2, { type: AddTweetFormTypes.SET_CLOSE_POLL });
     });
 
     it("should click Clear Schedule Date", () => {
+        const mockRootState = { ...mockState, addTweetForm: { ...mockState.addTweetForm, scheduledDate: new Date() } };
         const mockOnClose = jest.fn();
-        const mockClearScheduleDate = jest.fn();
         const wrapper = mountWithStore(
             <ScheduleModal
-                visible={true}
-                selectedScheduleDate={new Date("2222-06-14T00:00:00.000Z")}
+                visible
                 onClose={mockOnClose}
-                handleScheduleDate={jest.fn()}
-                clearScheduleDate={mockClearScheduleDate}
                 onOpenUnsentTweetsModal={jest.fn()}
             />, mockRootState);
-
         wrapper.find(Button).at(0).simulate("click");
-
         expect(wrapper.find(Button).at(0).text().includes("Clear")).toBe(true);
         expect(mockOnClose).toHaveBeenCalled();
-        expect(mockClearScheduleDate).toHaveBeenCalled();
+        expect(mockDispatchFn).nthCalledWith(1, { type: AddTweetFormTypes.CLEAR_SCHEDULE_DATE });
     });
 
     it("should render empty Schedule Modal", () => {
         const wrapper = mountWithStore(
             <ScheduleModal
                 visible={false}
-                selectedScheduleDate={null}
                 onClose={jest.fn()}
-                handleScheduleDate={jest.fn()}
-                clearScheduleDate={jest.fn()}
                 onOpenUnsentTweetsModal={jest.fn()}
-            />, mockRootState);
-
+            />, mockState);
         expect(wrapper.find(ScheduleModal).prop("visible")).toBe(false);
         expect(wrapper.find(Dialog).exists()).toBeFalsy();
     });
@@ -95,14 +87,10 @@ describe("ScheduleModal", () => {
     const testSelect = (selectId: number, selectName: string, selectValue: string): void => {
         const wrapper = mountWithStore(
             <ScheduleModal
-                visible={true}
-                selectedScheduleDate={null}
+                visible
                 onClose={jest.fn()}
-                handleScheduleDate={jest.fn()}
-                clearScheduleDate={jest.fn()}
                 onOpenUnsentTweetsModal={jest.fn()}
-            />, mockRootState);
-
+            />, mockState);
         wrapper.find(FilledSelect).find(selectName).at(selectId).find("select").simulate("change", { target: { value: selectValue } });
         expect(wrapper.find(FilledSelect).find(selectName).at(selectId).prop("value")).toBe(selectValue);
     };

@@ -1,34 +1,29 @@
 import React from "react";
 import { Button, ListItem, Popover } from "@material-ui/core";
 
-import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import ChangeReplyWindow from "../../../ChangeReplyWindow/ChangeReplyWindow";
-import Reply from "../Reply";
 import { LoadingStatus, ReplyType } from "../../../../types/common";
+import { AddTweetFormTypes } from "../../../../store/ducks/addTweetForm/constants/actionTypes";
+import Reply from "../Reply";
 
 describe("Reply", () => {
-    const mockRootState = createMockRootState(LoadingStatus.LOADED);
+    const mockState = createMockRootState(LoadingStatus.LOADED);
+    let mockDispatchFn: jest.Mock;
+
+    beforeEach(() => mockDispatchFn = mockDispatch());
 
     it("should click change reply type", () => {
-        const mockSetReplyType = jest.fn();
-        const wrapper = mountWithStore(
-            <Reply
-                replyType={ReplyType.EVERYONE}
-                setReplyType={mockSetReplyType}
-                isUnsentTweet={false}
-            />, mockRootState);
-
+        const wrapper = mountWithStore(<Reply isUnsentTweet={false} />, mockState);
         expect(wrapper.find(Popover).prop("open")).toBe(false);
-
         wrapper.find(Button).simulate("click");
-
         expect(wrapper.find(Popover).prop("open")).toBe(true);
-
         wrapper.find(ChangeReplyWindow).find(ListItem).at(1).simulate("click");
-
         expect(wrapper.find(ChangeReplyWindow).find(ListItem).at(1).text()).toEqual("People you follow");
-        expect(mockSetReplyType).toHaveBeenCalled();
-        expect(mockSetReplyType).toHaveBeenCalledWith(ReplyType.FOLLOW);
+        expect(mockDispatchFn).nthCalledWith(1, {
+            payload: ReplyType.FOLLOW,
+            type: AddTweetFormTypes.SET_REPLY_TYPE
+        });
         // @ts-ignore
         wrapper.find(Popover).prop("onClose")(jest.fn());
     });
@@ -46,13 +41,8 @@ describe("Reply", () => {
     });
 
     const testReply = (replyType: ReplyType, replyIconId: string, buttonText: string): void => {
-        const wrapper = mountWithStore(
-            <Reply
-                replyType={replyType}
-                setReplyType={jest.fn()}
-                isUnsentTweet={false}
-            />, mockRootState);
-
+        const mockRootState = { ...mockState, addTweetForm: { ...mockState.addTweetForm, replyType: replyType } };
+        const wrapper = mountWithStore(<Reply isUnsentTweet={false} />, mockRootState);
         expect(wrapper.find(replyIconId).exists()).toBeTruthy();
         expect(wrapper.find(Button).text()).toEqual(buttonText);
     };

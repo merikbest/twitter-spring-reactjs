@@ -49,8 +49,8 @@ export const UserApi = {
     async getSearchResults(request: SearchTermsRequest): Promise<AxiosResponse<CommonUserResponse[]>> {
         return await axios.post<CommonUserResponse[]>(API_USER_SEARCH_RESULTS, request);
     },
-    async startUseTwitter(userId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(API_USER_START(userId));
+    async startUseTwitter(): Promise<AxiosResponse<boolean>> {
+        return await axios.get<boolean>(API_USER_START);
     },
     async updateUserProfile(request: UserRequest): Promise<AxiosResponse<AuthUserResponse>> {
         return await axios.put<AuthUserResponse>(API_USER, request);

@@ -9,14 +9,14 @@ describe("ScheduleTitle", () => {
     const mockStore = createMockRootState(LoadingStatus.SUCCESS);
 
     it("should render Update button", () => {
+        const mockRootState = { ...mockStore, addTweetForm: { ...mockStore.addTweetForm, scheduledDate: new Date() } };
         const wrapper = mountWithStore(
             <ScheduleTitle
                 onClose={jest.fn()}
-                selectedScheduleDate={new Date()}
                 isValidSelectedDate
                 onSubmitScheduleDate={jest.fn()}
                 onSubmitClearScheduleDate={jest.fn()}
-            />, mockStore);
+            />, mockRootState);
         expect(wrapper.find(Button).at(0).text().includes("Clear")).toBe(true);
         expect(wrapper.find(Button).at(1).text().includes("Update")).toBe(true);
     });
@@ -25,7 +25,6 @@ describe("ScheduleTitle", () => {
         const wrapper = mountWithStore(
             <ScheduleTitle
                 onClose={jest.fn()}
-                selectedScheduleDate={null}
                 isValidSelectedDate={false}
                 onSubmitScheduleDate={jest.fn()}
                 onSubmitClearScheduleDate={jest.fn()}

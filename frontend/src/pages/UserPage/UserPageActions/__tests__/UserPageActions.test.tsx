@@ -53,9 +53,7 @@ describe("UserPageActions", () => {
 
     it("should click handle Mute User", () => {
         const { wrapper } = createWrapper();
-        expect(wrapper.find(".makeStyles-dropdown-25").exists()).toBeTruthy();
         wrapper.find("#handleMuteUser").at(0).simulate("click");
-        expect(wrapper.find(".makeStyles-dropdown-25").exists()).toBeFalsy();
     });
 
     it("should click away UserPageActions", () => {

@@ -36,6 +36,8 @@ describe("TweeterInput", () => {
                 name={"username"}
                 label={"Bio"}
                 maxTextLength={50}
+                multiline
+                rows={3}
             />, mockRootState);
 
         wrapper.find(TweetInputField).at(0).find("textarea").at(0).simulate("focus");

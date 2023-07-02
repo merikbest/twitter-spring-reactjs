@@ -68,9 +68,9 @@ describe("TweetImageModal", () => {
         expect(wrapper.find("#content").at(0).exists()).toBeFalsy();
         expect(wrapper.find("#tweetFooter").at(0).find("#retweetOutlinedIcon").at(0).exists()).toBeTruthy();
         expect(wrapper.find("#tweetFooter").at(0).find("#likeOutlinedIcon").at(0).exists()).toBeTruthy();
-        expect(wrapper.find("#imageFooter").at(0).find("#repliesCount").at(0).exists()).toBeFalsy();
-        expect(wrapper.find("#imageFooter").at(0).find("#retweetsCount").at(0).exists()).toBeFalsy();
-        expect(wrapper.find("#imageFooter").at(0).find("#likedTweetsCount").at(0).exists()).toBeFalsy();
+        expect(wrapper.find("#imageFooter").at(0).find("#repliesCount").at(0).exists()).toBeTruthy();
+        expect(wrapper.find("#imageFooter").at(0).find("#retweetsCount").at(0).exists()).toBeTruthy();
+        expect(wrapper.find("#imageFooter").at(0).find("#likedTweetsCount").at(0).exists()).toBeTruthy();
     });
 
     it("should click onCloseImageModalWindow", () => {

@@ -26,7 +26,7 @@ describe("EditProfileButton", () => {
         expect(wrapper.find(SetupProfileModal).prop("visible")).toBe(false);
         wrapper.find(Button).simulate("click");
         expect(wrapper.find(SetupProfileModal).prop("visible")).toBe(true);
-        wrapper.find(SetupProfileModal).find(ProfilePictureModal).find(".MuiBackdrop-root").simulate("click");
+        wrapper.find(SetupProfileModal).find(ProfilePictureModal).find(".MuiBackdrop-root").at(0).simulate("click");
         expect(wrapper.find(SetupProfileModal).prop("visible")).toBe(false);
     });
 

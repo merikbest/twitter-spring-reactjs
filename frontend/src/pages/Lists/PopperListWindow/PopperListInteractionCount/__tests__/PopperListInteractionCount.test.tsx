@@ -24,7 +24,7 @@ describe("PopperListInteractionCount", () => {
     const testModal = (itemId: string, title: string): void => {
         const wrapper = mountWithStore(<PopperListInteractionCount />, mockListDetail);
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(false);
-        wrapper.find(itemId).simulate("click");
+        wrapper.find(itemId).at(0).simulate("click");
         expect(wrapper.find(MembersAndFollowersModal).prop("title")).toBe(title);
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);
         wrapper.find(MembersAndFollowersModal).find(CloseButton).find(IconButton).simulate("click");

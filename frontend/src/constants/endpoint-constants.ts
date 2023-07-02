@@ -103,7 +103,7 @@ export const API_NOTIFICATION_USER = `${API_ENDPOINT}/notification/user`;
 export const API_NOTIFICATION_MENTIONS = `${API_ENDPOINT}/notification/mentions`;
 export const API_NOTIFICATION_SUBSCRIBES = `${API_ENDPOINT}/notification/subscribes`;
 export const API_NOTIFICATION_TIMELINE = `${API_ENDPOINT}/notification/timeline`;
-export const API_USER_START = (userId: number) => `${API_ENDPOINT}/user/${userId}/start`;
+export const API_USER_START = `${API_ENDPOINT}/user/start`;
 export const API_USER_PIN_TWEET = `${API_ENDPOINT}/user/pin/tweet`;
 export const API_USER_BLOCKED = `${API_ENDPOINT}/user/blocked`;
 export const API_USER_MUTED = `${API_ENDPOINT}/user/muted`;

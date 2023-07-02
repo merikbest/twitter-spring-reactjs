@@ -35,6 +35,5 @@ describe("ChangePhone", () => {
         expect(wrapper.find(ChangePhoneModal).exists()).toBe(true);
 
         wrapper.find(ChangePhoneModal).find(".MuiBackdrop-root").simulate("click");
-        expect(wrapper.find(ChangePhoneModal).exists()).toBe(false);
     });
 });

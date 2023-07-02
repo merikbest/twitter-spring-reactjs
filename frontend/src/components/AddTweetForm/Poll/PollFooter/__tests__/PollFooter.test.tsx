@@ -1,18 +1,18 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
 
-import { createMockRootState, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../../types/common";
+import { AddTweetFormTypes } from "../../../../../store/ducks/addTweetForm/constants/actionTypes";
 import PollFooter from "../PollFooter";
 
 describe("PollFooter", () => {
-    const mockStore = createMockRootState(LoadingStatus.SUCCESS);
 
     it("should render correctly", () => {
-        const mockOnClosePoll = jest.fn();
-        const wrapper = mountWithStore(<PollFooter onClosePoll={mockOnClosePoll} />, mockStore);
+        const mockDispatchFn = mockDispatch();
+        const wrapper = mountWithStore(<PollFooter />, createMockRootState(LoadingStatus.SUCCESS));
         wrapper.find(Paper).simulate("click");
-        expect(mockOnClosePoll).toHaveBeenCalled();
+        expect(mockDispatchFn).nthCalledWith(1, { type: AddTweetFormTypes.SET_CLOSE_POLL });
         expect(wrapper.text().includes("Remove poll")).toBe(true);
     });
 });

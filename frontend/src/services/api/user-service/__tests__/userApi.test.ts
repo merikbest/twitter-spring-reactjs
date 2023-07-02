@@ -82,7 +82,7 @@ describe("UserApi", () => {
 
     describe("should fetch UserApi.startUseTwitter", () => {
         it("[200] should start use twitter Success", () => {
-            testApiCall(mockAdapter, "onGet", API_USER_START(1), 200, true, UserApi.startUseTwitter, 1);
+            testApiCall(mockAdapter, "onGet", API_USER_START, 200, true, UserApi.startUseTwitter);
         });
     });
 

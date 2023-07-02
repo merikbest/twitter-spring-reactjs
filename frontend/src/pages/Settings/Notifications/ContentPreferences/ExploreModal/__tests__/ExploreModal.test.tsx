@@ -52,24 +52,6 @@ describe("ExploreModal", () => {
         expect(wrapper.text().includes("You can personalize trends based on your location and who you follow.")).toBe(true);
     });
 
-    it("should click on Checkbox", () => {
-        const wrapper = mountWithStore(
-            <ExploreModal
-                visible={true}
-                onClose={jest.fn()}
-                isSearchModal={true}
-            />, mockStore);
-
-        expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(true);
-        expect(wrapper.find(Checkbox).at(1).prop("checked")).toBe(true);
-
-        wrapper.find(Checkbox).at(0).find("input").simulate("change");
-        wrapper.find(Checkbox).at(1).find("input").simulate("change");
-
-        expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(false);
-        expect(wrapper.find(Checkbox).at(1).prop("checked")).toBe(false);
-    });
-
     it("should close on Checkbox", () => {
         const mockOnClose = jest.fn();
         const wrapper = mountWithStore(

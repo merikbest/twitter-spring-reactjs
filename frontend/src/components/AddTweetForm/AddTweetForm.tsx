@@ -33,7 +33,7 @@ import { BaseListResponse } from "../../types/lists";
 import TweetListComponent from "../TweetListComponent/TweetListComponent";
 import GifIconButton from "./GifIconButton/GifIconButton";
 import GifImage from "../GifImage/GifImage";
-import PullIconButton from "./PullIconButton/PullIconButton";
+import PollIconButton from "./PollIconButton/PollIconButton";
 import TextCountProgress from "./TextCountProgress/TextCountProgress";
 import { MAX_TEXT_LENGTH } from "../../constants/common-constants";
 import {
@@ -204,7 +204,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                 <div className={classes.footerWrapper}>
                     <UploadImages />
                     <GifIconButton />
-                    <PullIconButton buttonName={buttonName} disabled={!!quoteTweet || scheduledDate !== null} />
+                    <PollIconButton buttonName={buttonName} disabled={!!quoteTweet || scheduledDate !== null} />
                     <EmojiIconButton addEmoji={addEmoji} />
                     <ScheduleIconButton buttonName={buttonName} disabled={!!quoteTweet} />
                 </div>

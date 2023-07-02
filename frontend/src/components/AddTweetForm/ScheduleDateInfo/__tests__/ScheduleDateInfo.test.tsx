@@ -7,9 +7,10 @@ import { formatScheduleDate } from "../../../../util/format-date-helper";
 
 describe("ScheduleDateInfo", () => {
     const mockStore = createMockRootState(LoadingStatus.SUCCESS);
+    const mockRootState = { ...mockStore, addTweetForm: { ...mockStore.addTweetForm, scheduledDate: new Date() } };
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<ScheduleDateInfo selectedScheduleDate={new Date()} />, mockStore);
+        const wrapper = mountWithStore(<ScheduleDateInfo />, mockRootState);
         expect(wrapper.text()).toEqual(`Will send on ${formatScheduleDate(new Date())}`);
     });
 });

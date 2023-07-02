@@ -138,9 +138,8 @@ export const processUserToMuteList = (payload: UserActionRequest): ProcessUserTo
     payload
 });
 
-export const startUseTwitter = (payload: number): StartUseTwitterActionInterface => ({
+export const startUseTwitter = (): StartUseTwitterActionInterface => ({
     type: UserActionsType.START_USE_TWITTER,
-    payload
 });
 
 export const fetchReadMessages = (payload: number): FetchReadMessagesActionInterface => ({

@@ -844,7 +844,8 @@ export const mockFullTweet = {
     "isTweetRetweeted": true,
     "isUserFollowByOtherUser": false,
     "isTweetDeleted": false,
-    "isTweetBookmarked": false
+    "isTweetBookmarked": false,
+    "gifImage": null
 } as unknown as TweetResponse;
 
 export const mockUserTweetAdditionalInfo = {

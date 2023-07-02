@@ -15,13 +15,7 @@ describe("ScheduleIconButton", () => {
     const mockStore = createMockRootState(LoadingStatus.SUCCESS);
 
     it("should open ScheduleModal", () => {
-        const wrapper = mountWithStore(
-            <ScheduleIconButton
-                disabled={false}
-                selectedScheduleDate={new Date()}
-                handleScheduleDate={jest.fn()}
-                clearScheduleDate={jest.fn()}
-            />, mockStore);
+        const wrapper = mountWithStore(<ScheduleIconButton buttonName={"Add"} disabled={false} />, mockStore);
         expect(wrapper.find(ScheduleModal).prop("visible")).toBe(false);
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         expect(wrapper.find(ScheduleModal).prop("visible")).toBe(true);
@@ -30,13 +24,7 @@ describe("ScheduleIconButton", () => {
     });
 
     it("should open UnsentTweetsModal", () => {
-        const wrapper = mountWithStore(
-            <ScheduleIconButton
-                disabled={false}
-                selectedScheduleDate={new Date()}
-                handleScheduleDate={jest.fn()}
-                clearScheduleDate={jest.fn()}
-            />, mockStore);
+        const wrapper = mountWithStore(<ScheduleIconButton buttonName={"Add"} disabled={false} />, mockStore);
         expect(wrapper.find(UnsentTweetsModal).prop("visible")).toBe(false);
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         wrapper.find(ScheduleModal).find(ScheduleFooter).find(Button).simulate("click");

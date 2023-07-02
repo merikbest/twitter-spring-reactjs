@@ -11,7 +11,7 @@ describe("RetweetsCount", () => {
     it("should open/close UsersListModal", () => {
         const wrapper = mountWithStore(<RetweetsCount />, createMockRootState(LoadingStatus.SUCCESS));
         expect(wrapper.find(UsersListModal).prop("visible")).toBe(false);
-        wrapper.find("a").simulate("click");
+        wrapper.find("span").at(0).simulate("click");
         expect(wrapper.find(UsersListModal).prop("visible")).toBe(true);
         wrapper.find(UsersListModal).find(CloseButton).find(IconButton).simulate("click");
         expect(wrapper.find(UsersListModal).prop("visible")).toBe(false);

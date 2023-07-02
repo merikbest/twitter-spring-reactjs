@@ -24,6 +24,6 @@ describe("Welcome", () => {
     it("should click start use Twitter", () => {
         const wrapper = mountWithStore(<Welcome />, mockRootState);
         wrapper.find(Button).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, { payload: 2, type: UserActionsType.START_USE_TWITTER });
+        expect(mockDispatchFn).nthCalledWith(1, { type: UserActionsType.START_USE_TWITTER });
     });
 });
