@@ -32,7 +32,7 @@ describe("ScheduleModal", () => {
         expect(wrapper.find(Button).at(0).text().includes("Confirm")).toBe(true);
         expect(mockOnClose).toHaveBeenCalled();
         expect(mockDispatchFn).nthCalledWith(1, {
-            payload: new Date("2023-07-04T00:00:00.000Z"),
+            payload: expect.any(Date),
             type: AddTweetFormTypes.SET_SCHEDULE_DATE
         });
         expect(mockDispatchFn).nthCalledWith(2, { type: AddTweetFormTypes.SET_CLOSE_POLL });

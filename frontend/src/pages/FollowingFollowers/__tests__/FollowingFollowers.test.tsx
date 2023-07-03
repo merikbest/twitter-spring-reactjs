@@ -50,7 +50,7 @@ describe("FollowingFollowers", () => {
     });
 
     it("should render list of Following users by myProfile", () => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, processFollow: mockFollow });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, follow: mockFollow });
         const wrapper = mountWithStore(<FollowingFollowers />, mockStore);
 
         expect(global.window.document.title).toBe(documentTitleText("followed", mockMyProfile?.fullName, mockMyProfile?.username));
@@ -71,7 +71,7 @@ describe("FollowingFollowers", () => {
     });
 
     it("should render list of Followers users by myProfile", () => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, processFollow: "followers" });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, follow: "followers" });
         const wrapper = mountWithStore(<FollowingFollowers />, mockStore);
 
         expect(global.window.document.title).toBe(documentTitleText("following", mockMyProfile?.fullName, mockMyProfile?.username));
@@ -92,7 +92,7 @@ describe("FollowingFollowers", () => {
     });
 
     it("should render empty list of Following users by myProfile", () => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, processFollow: mockFollow });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, follow: mockFollow });
         const wrapper = mountWithStore(<FollowingFollowers />, mockEmptyMyProfileFollowList);
 
         expect(global.window.document.title).toBe(documentTitleText("followed", mockMyProfile?.fullName, mockMyProfile?.username));
@@ -116,7 +116,7 @@ describe("FollowingFollowers", () => {
     });
 
     it("should render empty list of Followers users by myProfile", () => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, processFollow: "followers" });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, follow: "followers" });
         const wrapper = mountWithStore(<FollowingFollowers />, mockEmptyMyProfileFollowList);
 
         expect(global.window.document.title).toBe(documentTitleText("following", mockMyProfile?.fullName, mockMyProfile?.username));
@@ -141,7 +141,7 @@ describe("FollowingFollowers", () => {
     it("should render list of Following users by myProfile on Tab click", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, processFollow: mockFollow });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, follow: mockFollow });
         const wrapper = mountWithStore(<FollowingFollowers />, mockStore, history);
         const tab = wrapper.find(Tab).at(0);
         tab.simulate("click");
@@ -176,7 +176,7 @@ describe("FollowingFollowers", () => {
     it("should render list of Followers users by myProfile on Tab click", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, processFollow: mockFollow });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockMyProfileId, follow: mockFollow });
         const wrapper = mountWithStore(<FollowingFollowers />, mockStore, history);
         const tab = wrapper.find(Tab).at(1);
         tab.simulate("click");
@@ -209,7 +209,7 @@ describe("FollowingFollowers", () => {
     });
 
     it("should render empty list of Following users by userProfile", () => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockUserProfileId, processFollow: mockFollow });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockUserProfileId, follow: mockFollow });
         const wrapper = mountWithStore(<FollowingFollowers />, mockEmptyUserFollowList);
 
         expect(global.window.document.title).toBe(documentTitleText("followed", mockUserProfile?.fullName, mockUserProfile?.username));
@@ -232,7 +232,7 @@ describe("FollowingFollowers", () => {
     });
 
     it("should render empty list of Followers users by userProfile", () => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockUserProfileId, processFollow: "followers" });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockUserProfileId, follow: "followers" });
         const wrapper = mountWithStore(<FollowingFollowers />, mockEmptyUserFollowList);
 
         expect(global.window.document.title).toBe(documentTitleText("following", mockUserProfile?.fullName, mockUserProfile?.username));
@@ -252,6 +252,14 @@ describe("FollowingFollowers", () => {
             payload: { userId: mockUserProfileId, page: 0 },
             type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
+    });
+
+    it("should reset FollowingFollowers page", () => {
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: mockUserProfileId, follow: "followers" });
+        const wrapper = mountWithStore(<FollowingFollowers />, createMockRootState());
+        wrapper.unmount();
+        expect(mockDispatchFn).nthCalledWith(2, { type: UsersSearchActionsType.RESET_USERS_STATE });
+        expect(mockDispatchFn).nthCalledWith(3, { type: UserProfileActionsType.RESET_USER_PROFILE_STATE });
     });
 
     const documentTitleText = (follow: string, fullName: string, username: string): string => {

@@ -29,13 +29,16 @@ describe("tweetReducer:", () => {
 
         testActionDispatch(
             TweetActionType.SET_VOTE_DATA,
-            tweetReducer(initialTweetState, {
+            tweetReducer({
+                ...initialTweetState,
+                tweet: { id: 1, poll: { id: 1, pollChoices: [{ id: 1, choice: "test" }] } } as TweetResponse
+            }, {
                 type: TweetActionType.SET_VOTE_DATA,
-                payload: { id: 1, poll: { id: 1, pollChoices: [ { id: 1, choice: "test" } ] } } as TweetResponse
+                payload: { id: 1, poll: { id: 1, pollChoices: [{ id: 1, choice: "test" }] } } as TweetResponse
             }),
             {
                 ...initialTweetState,
-                tweet: { id: 1, poll: { id: 1, pollChoices: [ { id: 1, choice: "test" } ] } } as TweetResponse,
+                tweet: { id: 1, poll: { id: 1, pollChoices: [{ id: 1, choice: "test" }] } } as TweetResponse
             }
         );
 
