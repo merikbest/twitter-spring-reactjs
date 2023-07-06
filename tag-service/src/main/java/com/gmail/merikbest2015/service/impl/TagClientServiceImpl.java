@@ -47,8 +47,7 @@ public class TagClientServiceImpl implements TagClientService {
                     tweetTag = new TweetTag(tag.get().getId(), tweetId);
                     tagRepository.updateTagQuantity(tag.get().getId(), true);
                 } else {
-                    Tag newTag = new Tag(hashtag);
-                    tagRepository.save(newTag);
+                    Tag newTag = tagRepository.save(new Tag(hashtag));
                     tweetTag = new TweetTag(newTag.getId(), tweetId);
                 }
                 tweetTagRepository.save(tweetTag);
