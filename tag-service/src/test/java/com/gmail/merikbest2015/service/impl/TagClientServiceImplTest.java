@@ -1,8 +1,9 @@
-package com.gmail.merikbest2015.service;
+package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.model.Tag;
 import com.gmail.merikbest2015.repository.TagRepository;
 import com.gmail.merikbest2015.repository.TweetTagRepository;
+import com.gmail.merikbest2015.service.TagClientService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

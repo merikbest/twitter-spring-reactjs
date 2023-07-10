@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.service;
+package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.model.Tag;
 import com.gmail.merikbest2015.repository.TagRepository;
 import com.gmail.merikbest2015.repository.TweetTagRepository;
+import com.gmail.merikbest2015.service.TagService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
