@@ -95,10 +95,7 @@ public class ListsServiceImpl implements ListsService {
         if (authUserId.equals(userId)) {
             return listsRepository.getUserTweetListsById(userId);
         }
-        boolean isUserBlocked = userClient.isUserBlocked(authUserId, userId);
-        boolean isPrivateUserProfile = userClient.isUserHavePrivateProfile(userId);
-
-        if (isUserBlocked || isPrivateUserProfile) {
+        if (userClient.isUserBlocked(authUserId, userId) || userClient.isUserHavePrivateProfile(userId)) {
             return new ArrayList<>();
         }
         return listsRepository.getUserTweetListsById(userId);
@@ -152,8 +149,8 @@ public class ListsServiceImpl implements ListsService {
             listsFollowersRepository.delete(follower);
             pinnedListsRepository.removePinnedList(listId, authUserId);
         } else {
-            ListsFollowers bewFollower = new ListsFollowers(listId, authUserId);
-            listsFollowersRepository.save(bewFollower);
+            ListsFollowers newFollower = new ListsFollowers(listId, authUserId);
+            listsFollowersRepository.save(newFollower);
         }
         return listsRepository.getListById(listId, ListUserProjection.class);
     }
