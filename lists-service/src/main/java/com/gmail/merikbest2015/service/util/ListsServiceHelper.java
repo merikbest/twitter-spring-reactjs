@@ -43,34 +43,26 @@ public class ListsServiceHelper {
     }
 
     public void checkUserIsBlocked(Long userId, Long supposedBlockedUserId) {
-        boolean isPresent = userClient.isUserBlocked(userId, supposedBlockedUserId);
-
-        if (isPresent) {
+        if (userClient.isUserBlocked(userId, supposedBlockedUserId)) {
             throw new ApiRequestException(String.format(USER_ID_BLOCKED, supposedBlockedUserId), HttpStatus.BAD_REQUEST);
         }
     }
 
     public void checkIsPrivateUserProfile(Long userId) {
-        boolean isPrivateUserProfile = userClient.isUserHavePrivateProfile(userId);
-
-        if (isPrivateUserProfile) {
+        if (userClient.isUserHavePrivateProfile(userId)) {
             throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
     public void checkIsListPrivate(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        boolean isPublic = listsRepository.isListPrivate(listId, authUserId);
-
-        if (isPublic && !isMyProfileFollowList(listId)) {
+        if (listsRepository.isListPrivate(listId, authUserId) && !isMyProfileFollowList(listId)) {
             throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
     public void checkIsListExist(Long listId, Long listOwnerId) {
-        boolean isListExist = listsRepository.isListExist(listId, listOwnerId);
-
-        if (!isListExist) {
+        if (!listsRepository.isListExist(listId, listOwnerId)) {
             throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }

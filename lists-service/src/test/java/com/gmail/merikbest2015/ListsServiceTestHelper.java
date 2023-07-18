@@ -1,11 +1,9 @@
 package com.gmail.merikbest2015;
 
+import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
 import com.gmail.merikbest2015.model.Lists;
-import com.gmail.merikbest2015.repository.projection.BaseListProjection;
-import com.gmail.merikbest2015.repository.projection.ListProjection;
-import com.gmail.merikbest2015.repository.projection.ListUserProjection;
-import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
@@ -97,6 +95,26 @@ public class ListsServiceTestHelper {
         return Arrays.asList(pinnedList1, pinnedList2);
     }
 
+    public static List<SimpleListProjection> createMockSimpleListProjectionList() {
+        SimpleListProjection pinnedList1 = factory.createProjection(
+                SimpleListProjection.class,
+                Map.of(
+                        "id", 1L,
+                        "name", TestConstants.LIST_NAME,
+                        "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
+                        "wallpaper", "",
+                        "isPrivate", false));
+        SimpleListProjection pinnedList2 = factory.createProjection(
+                SimpleListProjection.class,
+                Map.of(
+                        "id", 2L,
+                        "name", TestConstants.LIST_NAME_2,
+                        "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
+                        "wallpaper", "",
+                        "isPrivate", false));
+        return Arrays.asList(pinnedList1, pinnedList2);
+    }
+
     public static BaseListProjection createMockBaseListProjection(Long listOwnerId) {
         Map<String, Object> baseListMap = new HashMap<>();
         baseListMap.put("id", 1L);
@@ -124,4 +142,13 @@ public class ListsServiceTestHelper {
         return lists;
     }
 
+    public static UserToListsRequest mockUserToListsRequest() {
+        UserToListsRequest listsRequest = new UserToListsRequest();
+        listsRequest.setUserId(1L);
+        listsRequest.setLists(List.of(
+                new UserToListsRequest.ListsRequest(1L, true),
+                new UserToListsRequest.ListsRequest(2L, false)
+        ));
+        return listsRequest;
+    }
 }
