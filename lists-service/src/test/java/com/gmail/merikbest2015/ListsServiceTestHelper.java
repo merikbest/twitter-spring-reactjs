@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015;
 
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.repository.projection.*;
@@ -96,7 +97,7 @@ public class ListsServiceTestHelper {
     }
 
     public static List<SimpleListProjection> createMockSimpleListProjectionList() {
-        SimpleListProjection pinnedList1 = factory.createProjection(
+        SimpleListProjection simpleList1 = factory.createProjection(
                 SimpleListProjection.class,
                 Map.of(
                         "id", 1L,
@@ -104,7 +105,7 @@ public class ListsServiceTestHelper {
                         "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
                         "wallpaper", "",
                         "isPrivate", false));
-        SimpleListProjection pinnedList2 = factory.createProjection(
+        SimpleListProjection simpleList2 = factory.createProjection(
                 SimpleListProjection.class,
                 Map.of(
                         "id", 2L,
@@ -112,7 +113,27 @@ public class ListsServiceTestHelper {
                         "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
                         "wallpaper", "",
                         "isPrivate", false));
-        return Arrays.asList(pinnedList1, pinnedList2);
+        return Arrays.asList(simpleList1, simpleList2);
+    }
+
+    public static List<ListMemberResponse> createMockListMemberResponseList() {
+        ListMemberResponse listMember1 = new ListMemberResponse();
+        listMember1.setId(1L);
+        listMember1.setFullName("test name 1");
+        listMember1.setUsername("test username 1");
+        listMember1.setAbout("");
+        listMember1.setAvatar("");
+        listMember1.setMemberInList(false);
+        listMember1.setPrivateProfile(false);
+        ListMemberResponse listMember2 = new ListMemberResponse();
+        listMember1.setId(2L);
+        listMember1.setFullName("test name 2");
+        listMember1.setUsername("test username 2");
+        listMember1.setAbout("");
+        listMember1.setAvatar("");
+        listMember1.setMemberInList(false);
+        listMember1.setPrivateProfile(false);
+        return Arrays.asList(listMember1, listMember2);
     }
 
     public static BaseListProjection createMockBaseListProjection(Long listOwnerId) {

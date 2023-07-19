@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.ListsServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
@@ -39,8 +40,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.util.TestConstants.LIST_USER_ID;
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
+import static com.gmail.merikbest2015.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -303,5 +303,102 @@ public class ListsServiceImplTest {
         ApiRequestException exception = assertThrows(ApiRequestException.class, () -> listsService.editTweetList(lists));
         assertEquals(INCORRECT_LIST_NAME_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void deleteList() {
+        Lists list = ListsServiceTestHelper.createMockLists();
+        when(listsRepository.findById(1L)).thenReturn(Optional.of(list));
+        assertEquals(String.format("List id:%s deleted.", 1L), listsService.deleteList(1L));
+        verify(listsRepository, times(1)).findById(1L);
+        verify(pinnedListsRepository, times(1)).deletePinnedList(1L);
+        verify(listsRepository, times(1)).delete(list);
+    }
+
+    @Test
+    public void deleteList_shouldListNotFound() {
+        when(listsRepository.findById(1L)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> listsService.deleteList(1L));
+        assertEquals(LIST_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void deleteList_shouldValidateListOwnerAndReturnException() {
+        Lists lists = new Lists();
+        lists.setId(1L);
+        lists.setListOwnerId(3L);
+        lists.setName("test");
+        when(listsRepository.findById(1L)).thenReturn(Optional.of(lists));
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> listsService.deleteList(1L));
+        assertEquals(LIST_OWNER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void followList_followSuccess() {
+        ListUserProjection listUser = ListsServiceTestHelper.createMockListUserProjectionList().get(0);
+        when(listsRepository.findByIdAndIsPrivateFalse(1L)).thenReturn(true);
+        when(listsFollowersRepository.getListFollower(1L, USER_ID)).thenReturn(null);
+        when(listsRepository.getListById(1L, ListUserProjection.class)).thenReturn(listUser);
+        assertEquals(listUser, listsService.followList(1L));
+        verify(listsRepository, times(1)).findByIdAndIsPrivateFalse(1L);
+        verify(listsFollowersRepository, times(1)).getListFollower(1L, USER_ID);
+        verify(listsFollowersRepository, times(1)).save(new ListsFollowers(1L, USER_ID));
+        verify(listsRepository, times(1)).getListById(1L, ListUserProjection.class);
+    }
+
+    @Test
+    public void followList_unfollowSuccess() {
+        ListsFollowers listsFollowers = new ListsFollowers();
+        listsFollowers.setId(1L);
+        listsFollowers.setListId(1L);
+        listsFollowers.setFollowerId(1L);
+        ListUserProjection listUser = ListsServiceTestHelper.createMockListUserProjectionList().get(0);
+        when(listsRepository.findByIdAndIsPrivateFalse(1L)).thenReturn(true);
+        when(listsFollowersRepository.getListFollower(1L, USER_ID)).thenReturn(listsFollowers);
+        when(listsRepository.getListById(1L, ListUserProjection.class)).thenReturn(listUser);
+        assertEquals(listUser, listsService.followList(1L));
+        verify(listsRepository, times(1)).findByIdAndIsPrivateFalse(1L);
+        verify(listsFollowersRepository, times(1)).getListFollower(1L, USER_ID);
+        verify(listsFollowersRepository, times(1)).delete(listsFollowers);
+        verify(pinnedListsRepository, times(1)).removePinnedList(1L, USER_ID);
+        verify(listsRepository, times(1)).getListById(1L, ListUserProjection.class);
+    }
+
+    @Test
+    public void followList_shoutReturnListNotFoundException() {
+        when(listsRepository.findByIdAndIsPrivateFalse(1L)).thenReturn(false);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> listsService.followList(1L));
+        assertEquals(LIST_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void pinList_pinSuccess() {
+        testPinList(false);
+    }
+
+    @Test
+    public void pinList_unpinSuccess() {
+        testPinList(true);
+    }
+
+    public void testPinList(boolean isPinned) {
+        PinnedListProjection pinnedList = ListsServiceTestHelper.createMockPinnedListProjectionList().get(0);
+        Lists list = ListsServiceTestHelper.createMockLists();
+        PinnedLists pinnedLists = new PinnedLists(list, USER_ID);
+        when(listsRepository.getListWhereUserConsist(1L, USER_ID)).thenReturn(Optional.of(list));
+        when(pinnedListsRepository.getPinnedByUserIdAndListId(1L, USER_ID)).thenReturn(isPinned ? pinnedLists : null);
+        when(listsRepository.getListById(1L, PinnedListProjection.class)).thenReturn(pinnedList);
+        assertEquals(pinnedList, listsService.pinList(1L));
+        verify(listsRepository, times(1)).getListWhereUserConsist(1L, USER_ID);
+        verify(pinnedListsRepository, times(1)).getPinnedByUserIdAndListId(1L, USER_ID);
+        verify(pinnedListsRepository, isPinned ? times(1) : never()).delete(pinnedLists);
+        verify(pinnedListsRepository, isPinned ? never() : times(1)).save(pinnedLists);
+        verify(listsRepository, times(1)).getListById(1L, PinnedListProjection.class);
     }
 }
