@@ -172,4 +172,19 @@ public class ListsServiceTestHelper {
         ));
         return listsRequest;
     }
+
+    public static TweetListProjection mockTweetListProjection() {
+        return factory.createProjection(
+                TweetListProjection.class,
+                Map.of(
+                        "id", 1L,
+                        "name", TestConstants.LIST_NAME,
+                        "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
+                        "wallpaper", "",
+                        "listOwnerId", TestConstants.LIST_USER_ID,
+                        "listOwner", new CommonUserResponse(),
+                        "isPrivate", false,
+                        "membersSize", 1L
+                ));
+    }
 }
