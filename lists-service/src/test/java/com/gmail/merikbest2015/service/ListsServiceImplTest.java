@@ -659,6 +659,83 @@ public class ListsServiceImplTest {
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
+    @Test
+    public void getListMembers_shouldGetAuthsUserFollowersList() {
+        List<Long> membersIds = List.of(1L, 2L, 3L);
+        when(listsRepository.isListExist(1L, USER_ID)).thenReturn(true);
+        when(listsMembersRepository.getMembersIds(1L)).thenReturn(membersIds);
+        when(userClient.getListParticipantsByIds(new IdsRequest(membersIds)))
+                .thenReturn(ListsServiceTestHelper.createMockListMemberResponseList());
+        assertNotNull(listsService.getListMembers(1L, USER_ID));
+        verify(listsRepository, times(1)).isListExist(1L, USER_ID);
+        verify(listsMembersRepository, times(1)).getMembersIds(1L);
+        verify(userClient, times(1)).getListParticipantsByIds(new IdsRequest(membersIds));
+    }
+
+    @Test
+    public void getListMembers_shouldGetAuthsUserAndReturnListNotFound() {
+        when(listsRepository.isListExist(1L, USER_ID)).thenReturn(false);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> listsService.getListMembers(1L, USER_ID));
+        assertEquals(LIST_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getListMembers_shouldGetUserFollowersList() {
+        List<Long> followersIds = List.of(1L, 2L, 3L);
+        List<ListMemberResponse> ListMemberResponseList = ListsServiceTestHelper.createMockListMemberResponseList();
+        when(userClient.isUserBlocked(3L, USER_ID)).thenReturn(false);
+        when(listsRepository.isListExist(1L, 3L)).thenReturn(true);
+        when(listsRepository.isListPrivate(1L, USER_ID)).thenReturn(false);
+        when(listsMembersRepository.getMembersIds(1L)).thenReturn(followersIds);
+        when(userClient.getListParticipantsByIds(new IdsRequest(followersIds))).thenReturn(ListMemberResponseList);
+        assertEquals(ListMemberResponseList, listsService.getListMembers(1L, 3L));
+        verify(userClient, times(1)).isUserBlocked(3L, USER_ID);
+        verify(listsRepository, times(1)).isListExist(1L, 3L);
+        verify(listsRepository, times(1)).isListPrivate(1L, USER_ID);
+        verify(listsMembersRepository, times(1)).getMembersIds(1L);
+        verify(userClient, times(1)).getListParticipantsByIds(new IdsRequest(followersIds));
+    }
+
+    @Test
+    public void getListMembers_shouldGetUserAndReturnUserBlocked() {
+        when(userClient.isUserBlocked(3L, USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> listsService.getListMembers(1L, 3L));
+        assertEquals(String.format(USER_ID_BLOCKED, USER_ID), exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void getListMembers_shouldGetUserAndReturnListNotFound() {
+        when(userClient.isUserBlocked(3L, USER_ID)).thenReturn(false);
+        when(listsRepository.isListExist(1L, 3L)).thenReturn(false);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> listsService.getListMembers(1L, 3L));
+        assertEquals(LIST_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getListMembers_shouldGetUserAndReturnListPrivate() {
+        when(userClient.isUserBlocked(3L, USER_ID)).thenReturn(false);
+        when(listsRepository.isListExist(1L, 3L)).thenReturn(true);
+        when(listsRepository.isListPrivate(1L, USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> listsService.getListMembers(1L, 3L));
+        assertEquals(LIST_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void searchListMembersByUsername() {
+        List<ListMemberResponse> listMemberResponseList = ListsServiceTestHelper.createMockListMemberResponseList();
+        when(userClient.searchListMembersByUsername(USERNAME)).thenReturn(listMemberResponseList);
+        assertEquals(listMemberResponseList, listsService.searchListMembersByUsername(1L, USERNAME));
+        verify(userClient, times(1)).searchListMembersByUsername(USERNAME);
+    }
+
     public void testPinList(boolean isPinned) {
         PinnedListProjection pinnedList = ListsServiceTestHelper.createMockPinnedListProjectionList().get(0);
         Lists list = ListsServiceTestHelper.createMockLists();
