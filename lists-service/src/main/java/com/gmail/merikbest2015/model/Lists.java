@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,7 +38,7 @@ public class Lists {
     private String wallpaper;
 
     @OneToMany(mappedBy = "list")
-    private List<PinnedLists> pinnedLists;
+    private List<PinnedLists> pinnedLists = new ArrayList<>();
 
     @Column(name = "list_owner_id", nullable = false)
     private Long listOwnerId;
