@@ -48,6 +48,7 @@ public class ListsServiceImpl implements ListsService {
     private final TweetClient tweetClient;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ListProjection> getAllTweetLists() {
         List<Long> listOwnerIds = listsRepository.getListOwnerIds();
         List<Long> validListUserIds = userClient.getValidUserIds(new IdsRequest(listOwnerIds));
@@ -55,18 +56,21 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ListUserProjection> getUserTweetLists() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return listsRepository.getUserTweetLists(authUserId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PinnedListProjection> getUserPinnedLists() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return listsRepository.getUserPinnedLists(authUserId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BaseListProjection getListById(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         BaseListProjection list = listsRepository.getListById(listId, authUserId, BaseListProjection.class)
@@ -89,6 +93,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ListProjection> getUserTweetListsById(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
@@ -102,6 +107,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ListProjection> getTweetListsWhichUserIn() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return listsRepository.getTweetListsByIds(authUserId);
@@ -172,6 +178,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Map<String, Object>> getListsToAddUser(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         List<Map<String, Object>> lists = new ArrayList<>();
@@ -231,6 +238,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HeaderResponse<TweetResponse> getTweetsByListId(Long listId, Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         if (!listsRepository.isListNotPrivate(listId, authUserId)) {
@@ -241,6 +249,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BaseListProjection getListDetails(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return listsRepository.getListDetails(listId, authUserId)
@@ -248,6 +257,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ListMemberResponse> getListFollowers(Long listId, Long listOwnerId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
@@ -263,6 +273,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ListMemberResponse> getListMembers(Long listId, Long listOwnerId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
@@ -280,6 +291,7 @@ public class ListsServiceImpl implements ListsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ListMemberResponse> searchListMembersByUsername(Long listId, String username) {
         return userClient.searchListMembersByUsername(username).stream()
                 .peek(member -> member.setMemberInList(listsServiceHelper.isListIncludeUser(listId, member.getId())))

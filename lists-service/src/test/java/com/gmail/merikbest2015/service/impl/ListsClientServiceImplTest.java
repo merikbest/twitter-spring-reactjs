@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.service;
+package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ListsServiceTestHelper;
 import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.repository.projection.NotificationListProjection;
 import com.gmail.merikbest2015.repository.projection.TweetListProjection;
+import com.gmail.merikbest2015.service.ListsClientService;
 import com.gmail.merikbest2015.util.TestConstants;
 import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;

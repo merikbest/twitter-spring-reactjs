@@ -1,11 +1,15 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.ListsServiceTestHelper;
+import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
+import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.BaseListResponse;
 import com.gmail.merikbest2015.dto.response.ListResponse;
 import com.gmail.merikbest2015.dto.response.ListUserResponse;
 import com.gmail.merikbest2015.dto.response.PinnedListResponse;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.repository.projection.BaseListProjection;
@@ -19,12 +23,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -136,6 +144,89 @@ public class ListsMapperTest {
         when(listsService.deleteList(1L)).thenReturn(mockMessageResponse);
         assertEquals(mockMessageResponse, listsMapper.deleteList(1L));
         verify(listsService, times(1)).deleteList(1L);
+    }
+
+    @Test
+    public void followList() {
+        ListUserProjection mockListUserProjection = ListsServiceTestHelper.createMockListUserProjectionList().get(0);
+        ListUserResponse listUserResponse = getMockListUserResponses().get(0);
+        when(listsService.followList(1L)).thenReturn(mockListUserProjection);
+        when(basicMapper.convertToResponse(mockListUserProjection, ListUserResponse.class)).thenReturn(listUserResponse);
+        assertEquals(listUserResponse, listsMapper.followList(1L));
+        verify(listsService, times(1)).followList(1L);
+        verify(basicMapper, times(1)).convertToResponse(mockListUserProjection, ListUserResponse.class);
+    }
+
+    @Test
+    public void pinList() {
+        PinnedListProjection pinnedListProjection = ListsServiceTestHelper.createMockPinnedListProjectionList().get(0);
+        PinnedListResponse pinnedListResponse = getMockPinnedListResponses().get(0);
+        when(listsService.pinList(1L)).thenReturn(pinnedListProjection);
+        when(basicMapper.convertToResponse(pinnedListProjection, PinnedListResponse.class)).thenReturn(pinnedListResponse);
+        assertEquals(pinnedListResponse, listsMapper.pinList(1L));
+        verify(listsService, times(1)).pinList(1L);
+        verify(basicMapper, times(1)).convertToResponse(pinnedListProjection, PinnedListResponse.class);
+    }
+
+    @Test
+    public void addUserToLists() {
+        String mockMessageResponse = "User added to lists success.";
+        UserToListsRequest listsRequest = ListsServiceTestHelper.mockUserToListsRequest();
+        when(listsService.addUserToLists(listsRequest)).thenReturn(mockMessageResponse);
+        assertEquals(mockMessageResponse, listsMapper.addUserToLists(listsRequest));
+        verify(listsService, times(1)).addUserToLists(listsRequest);
+    }
+
+    @Test
+    public void addUserToList() {
+        when(listsService.addUserToList(1L, 1L)).thenReturn(true);
+        assertTrue(listsMapper.addUserToList(1L, 1L));
+        verify(listsService, times(1)).addUserToList(1L, 1L);
+    }
+
+    @Test
+    public void getTweetsByListId() {
+        HeaderResponse<TweetResponse> headerResponse = new HeaderResponse<>(
+                List.of(new TweetResponse(), new TweetResponse()), new HttpHeaders());
+        Pageable pageable = PageRequest.of(0, 20);
+        when(listsService.getTweetsByListId(1L, pageable)).thenReturn(headerResponse);
+        assertEquals(headerResponse, listsMapper.getTweetsByListId(1L, pageable));
+        verify(listsService, times(1)).getTweetsByListId(1L, pageable);
+    }
+
+    @Test
+    public void getListDetails() {
+        BaseListProjection mockBaseListProjection = ListsServiceTestHelper.createMockBaseListProjection(1L);
+        BaseListResponse baseListResponse = getMockBaseListResponse();
+        when(listsService.getListDetails(1L)).thenReturn(mockBaseListProjection);
+        when(basicMapper.convertToResponse(mockBaseListProjection, BaseListResponse.class)).thenReturn(baseListResponse);
+        assertEquals(baseListResponse, listsMapper.getListDetails(1L));
+        verify(listsService, times(1)).getListDetails(1L);
+        verify(basicMapper, times(1)).convertToResponse(mockBaseListProjection, BaseListResponse.class);
+    }
+
+    @Test
+    public void getListFollowers() {
+        List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
+        when(listsService.getListFollowers(1L, 1L)).thenReturn(mockListMemberResponses);
+        assertEquals(mockListMemberResponses, listsMapper.getListFollowers(1L, 1L));
+        verify(listsService, times(1)).getListFollowers(1L, 1L);
+    }
+
+    @Test
+    public void getListMembers() {
+        List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
+        when(listsService.getListMembers(1L, 1L)).thenReturn(mockListMemberResponses);
+        assertEquals(mockListMemberResponses, listsMapper.getListMembers(1L, 1L));
+        verify(listsService, times(1)).getListMembers(1L, 1L);
+    }
+
+    @Test
+    public void searchListMembersByUsername() {
+        List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
+        when(listsService.searchListMembersByUsername(1L, "test_search")).thenReturn(mockListMemberResponses);
+        assertEquals(mockListMemberResponses, listsMapper.searchListMembersByUsername(1L, "test_search"));
+        verify(listsService, times(1)).searchListMembersByUsername(1L, "test_search");
     }
 
     private List<ListResponse> getMockListsResponses() {

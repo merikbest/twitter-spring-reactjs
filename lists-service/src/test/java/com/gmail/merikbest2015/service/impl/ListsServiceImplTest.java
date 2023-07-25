@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.service;
+package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ListsServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
@@ -21,6 +21,7 @@ import com.gmail.merikbest2015.repository.PinnedListsRepository;
 import com.gmail.merikbest2015.repository.projection.BaseListProjection;
 import com.gmail.merikbest2015.repository.projection.ListUserProjection;
 import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
+import com.gmail.merikbest2015.service.ListsService;
 import com.gmail.merikbest2015.service.util.ListsServiceHelper;
 import com.gmail.merikbest2015.util.TestConstants;
 import com.gmail.merikbest2015.util.TestUtil;
