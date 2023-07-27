@@ -57,6 +57,7 @@ public class TestConstants {
     public static final String YOUTUBE_LINK_TITLE = "Bones - RestInPeace";
     public static final String YOUTUBE_LINK_COVER = "https://i.ytimg.com/vi/ewZZNeYDiLo/mqdefault.jpg";
 
+    public static final Long LIST_ID = 1L;
     public static final Long LIST_USER_ID = 2L;
     public static final String LIST_ALT_WALLPAPER = "https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small";
     public static final String LIST_NAME = "test list name 1";
@@ -64,4 +65,7 @@ public class TestConstants {
     public static final String LIST_DESCRIPTION = "test list description";
     public static final String LIST_PINNED_DATE = "2021-10-03T20:42:53";
 
+    public static final Long CHAT_ID = 1L;
+    public static final Long CHAT_MESSAGE_AUTHOR_ID = 2L;
+    public static final String CHAT_MESSAGE_TEXT = "chat message text";
 }

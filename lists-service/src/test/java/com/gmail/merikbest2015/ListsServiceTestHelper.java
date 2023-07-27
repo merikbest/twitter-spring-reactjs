@@ -138,7 +138,7 @@ public class ListsServiceTestHelper {
 
     public static BaseListProjection createMockBaseListProjection(Long listOwnerId) {
         Map<String, Object> baseListMap = new HashMap<>();
-        baseListMap.put("id", 1L);
+        baseListMap.put("id", TestConstants.LIST_ID);
         baseListMap.put("name", TestConstants.LIST_NAME);
         baseListMap.put("description", TestConstants.LIST_DESCRIPTION);
         baseListMap.put("altWallpaper", TestConstants.LIST_ALT_WALLPAPER);
@@ -154,7 +154,7 @@ public class ListsServiceTestHelper {
 
     public static Lists createMockLists() {
         Lists lists = new Lists();
-        lists.setId(1L);
+        lists.setId(TestConstants.LIST_ID);
         lists.setName(TestConstants.LIST_NAME);
         lists.setDescription(TestConstants.LIST_DESCRIPTION);
         lists.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
@@ -173,15 +173,15 @@ public class ListsServiceTestHelper {
         return listsRequest;
     }
 
-    public static TweetListProjection mockTweetListProjection() {
+    public static TweetListProjection mockTweetListProjection(Long userId) {
         return factory.createProjection(
                 TweetListProjection.class,
                 Map.of(
-                        "id", 1L,
+                        "id", TestConstants.LIST_ID,
                         "name", TestConstants.LIST_NAME,
                         "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
                         "wallpaper", "",
-                        "listOwnerId", TestConstants.LIST_USER_ID,
+                        "listOwnerId", userId,
                         "listOwner", new CommonUserResponse(),
                         "isPrivate", false,
                         "membersSize", 1L

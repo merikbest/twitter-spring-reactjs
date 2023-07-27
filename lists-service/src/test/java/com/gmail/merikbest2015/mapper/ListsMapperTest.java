@@ -107,10 +107,10 @@ public class ListsMapperTest {
     public void getListById() {
         BaseListProjection mockBaseListProjection = ListsServiceTestHelper.createMockBaseListProjection(1L);
         BaseListResponse mockBaseListResponse = getMockBaseListResponse();
-        when(listsService.getListById(1L)).thenReturn(mockBaseListProjection);
+        when(listsService.getListById(TestConstants.LIST_ID)).thenReturn(mockBaseListProjection);
         when(basicMapper.convertToResponse(mockBaseListProjection, BaseListResponse.class)).thenReturn(mockBaseListResponse);
-        assertEquals(mockBaseListResponse, listsMapper.getListById(1L));
-        verify(listsService, times(1)).getListById(1L);
+        assertEquals(mockBaseListResponse, listsMapper.getListById(TestConstants.LIST_ID));
+        verify(listsService, times(1)).getListById(TestConstants.LIST_ID);
         verify(basicMapper, times(1)).convertToResponse(mockBaseListProjection, BaseListResponse.class);
     }
 
@@ -141,19 +141,19 @@ public class ListsMapperTest {
     @Test
     public void deleteList() {
         String mockMessageResponse = "List id:1 deleted.";
-        when(listsService.deleteList(1L)).thenReturn(mockMessageResponse);
-        assertEquals(mockMessageResponse, listsMapper.deleteList(1L));
-        verify(listsService, times(1)).deleteList(1L);
+        when(listsService.deleteList(TestConstants.LIST_ID)).thenReturn(mockMessageResponse);
+        assertEquals(mockMessageResponse, listsMapper.deleteList(TestConstants.LIST_ID));
+        verify(listsService, times(1)).deleteList(TestConstants.LIST_ID);
     }
 
     @Test
     public void followList() {
         ListUserProjection mockListUserProjection = ListsServiceTestHelper.createMockListUserProjectionList().get(0);
         ListUserResponse listUserResponse = getMockListUserResponses().get(0);
-        when(listsService.followList(1L)).thenReturn(mockListUserProjection);
+        when(listsService.followList(TestConstants.LIST_ID)).thenReturn(mockListUserProjection);
         when(basicMapper.convertToResponse(mockListUserProjection, ListUserResponse.class)).thenReturn(listUserResponse);
-        assertEquals(listUserResponse, listsMapper.followList(1L));
-        verify(listsService, times(1)).followList(1L);
+        assertEquals(listUserResponse, listsMapper.followList(TestConstants.LIST_ID));
+        verify(listsService, times(1)).followList(TestConstants.LIST_ID);
         verify(basicMapper, times(1)).convertToResponse(mockListUserProjection, ListUserResponse.class);
     }
 
@@ -161,10 +161,10 @@ public class ListsMapperTest {
     public void pinList() {
         PinnedListProjection pinnedListProjection = ListsServiceTestHelper.createMockPinnedListProjectionList().get(0);
         PinnedListResponse pinnedListResponse = getMockPinnedListResponses().get(0);
-        when(listsService.pinList(1L)).thenReturn(pinnedListProjection);
+        when(listsService.pinList(TestConstants.LIST_ID)).thenReturn(pinnedListProjection);
         when(basicMapper.convertToResponse(pinnedListProjection, PinnedListResponse.class)).thenReturn(pinnedListResponse);
-        assertEquals(pinnedListResponse, listsMapper.pinList(1L));
-        verify(listsService, times(1)).pinList(1L);
+        assertEquals(pinnedListResponse, listsMapper.pinList(TestConstants.LIST_ID));
+        verify(listsService, times(1)).pinList(TestConstants.LIST_ID);
         verify(basicMapper, times(1)).convertToResponse(pinnedListProjection, PinnedListResponse.class);
     }
 
@@ -179,9 +179,9 @@ public class ListsMapperTest {
 
     @Test
     public void addUserToList() {
-        when(listsService.addUserToList(1L, 1L)).thenReturn(true);
-        assertTrue(listsMapper.addUserToList(1L, 1L));
-        verify(listsService, times(1)).addUserToList(1L, 1L);
+        when(listsService.addUserToList(1L, TestConstants.LIST_ID)).thenReturn(true);
+        assertTrue(listsMapper.addUserToList(1L, TestConstants.LIST_ID));
+        verify(listsService, times(1)).addUserToList(1L, TestConstants.LIST_ID);
     }
 
     @Test
@@ -189,44 +189,44 @@ public class ListsMapperTest {
         HeaderResponse<TweetResponse> headerResponse = new HeaderResponse<>(
                 List.of(new TweetResponse(), new TweetResponse()), new HttpHeaders());
         Pageable pageable = PageRequest.of(0, 20);
-        when(listsService.getTweetsByListId(1L, pageable)).thenReturn(headerResponse);
-        assertEquals(headerResponse, listsMapper.getTweetsByListId(1L, pageable));
-        verify(listsService, times(1)).getTweetsByListId(1L, pageable);
+        when(listsService.getTweetsByListId(TestConstants.LIST_ID, pageable)).thenReturn(headerResponse);
+        assertEquals(headerResponse, listsMapper.getTweetsByListId(TestConstants.LIST_ID, pageable));
+        verify(listsService, times(1)).getTweetsByListId(TestConstants.LIST_ID, pageable);
     }
 
     @Test
     public void getListDetails() {
         BaseListProjection mockBaseListProjection = ListsServiceTestHelper.createMockBaseListProjection(1L);
         BaseListResponse baseListResponse = getMockBaseListResponse();
-        when(listsService.getListDetails(1L)).thenReturn(mockBaseListProjection);
+        when(listsService.getListDetails(TestConstants.LIST_ID)).thenReturn(mockBaseListProjection);
         when(basicMapper.convertToResponse(mockBaseListProjection, BaseListResponse.class)).thenReturn(baseListResponse);
-        assertEquals(baseListResponse, listsMapper.getListDetails(1L));
-        verify(listsService, times(1)).getListDetails(1L);
+        assertEquals(baseListResponse, listsMapper.getListDetails(TestConstants.LIST_ID));
+        verify(listsService, times(1)).getListDetails(TestConstants.LIST_ID);
         verify(basicMapper, times(1)).convertToResponse(mockBaseListProjection, BaseListResponse.class);
     }
 
     @Test
     public void getListFollowers() {
         List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
-        when(listsService.getListFollowers(1L, 1L)).thenReturn(mockListMemberResponses);
-        assertEquals(mockListMemberResponses, listsMapper.getListFollowers(1L, 1L));
-        verify(listsService, times(1)).getListFollowers(1L, 1L);
+        when(listsService.getListFollowers(TestConstants.LIST_ID, 1L)).thenReturn(mockListMemberResponses);
+        assertEquals(mockListMemberResponses, listsMapper.getListFollowers(TestConstants.LIST_ID, 1L));
+        verify(listsService, times(1)).getListFollowers(TestConstants.LIST_ID, 1L);
     }
 
     @Test
     public void getListMembers() {
         List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
-        when(listsService.getListMembers(1L, 1L)).thenReturn(mockListMemberResponses);
-        assertEquals(mockListMemberResponses, listsMapper.getListMembers(1L, 1L));
-        verify(listsService, times(1)).getListMembers(1L, 1L);
+        when(listsService.getListMembers(TestConstants.LIST_ID, 1L)).thenReturn(mockListMemberResponses);
+        assertEquals(mockListMemberResponses, listsMapper.getListMembers(TestConstants.LIST_ID, 1L));
+        verify(listsService, times(1)).getListMembers(TestConstants.LIST_ID, 1L);
     }
 
     @Test
     public void searchListMembersByUsername() {
         List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
-        when(listsService.searchListMembersByUsername(1L, "test_search")).thenReturn(mockListMemberResponses);
-        assertEquals(mockListMemberResponses, listsMapper.searchListMembersByUsername(1L, "test_search"));
-        verify(listsService, times(1)).searchListMembersByUsername(1L, "test_search");
+        when(listsService.searchListMembersByUsername(TestConstants.LIST_ID, "test_search")).thenReturn(mockListMemberResponses);
+        assertEquals(mockListMemberResponses, listsMapper.searchListMembersByUsername(TestConstants.LIST_ID, "test_search"));
+        verify(listsService, times(1)).searchListMembersByUsername(TestConstants.LIST_ID, "test_search");
     }
 
     private List<ListResponse> getMockListsResponses() {
@@ -291,7 +291,7 @@ public class ListsMapperTest {
 
     private BaseListResponse getMockBaseListResponse() {
         BaseListResponse listResponse = new BaseListResponse();
-        listResponse.setId(1L);
+        listResponse.setId(TestConstants.LIST_ID);
         listResponse.setName(TestConstants.LIST_NAME);
         listResponse.setDescription(TestConstants.LIST_DESCRIPTION);
         listResponse.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
@@ -306,7 +306,7 @@ public class ListsMapperTest {
 
     private ListsRequest getMockListsRequest() {
         ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setId(1L);
+        listsRequest.setId(TestConstants.LIST_ID);
         listsRequest.setName(TestConstants.LIST_NAME);
         listsRequest.setDescription(TestConstants.LIST_DESCRIPTION);
         listsRequest.setIsPrivate(false);
