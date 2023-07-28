@@ -38,6 +38,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final TweetClient tweetClient;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ChatMessageProjection> getChatMessages(Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         chatRepository.getChatById(chatId, authUserId, ChatProjection.class)
