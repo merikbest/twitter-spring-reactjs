@@ -24,7 +24,6 @@ export function* fetchChatMessagesRequest({ payload }: FetchChatMessagesActionIn
 
 export function* addChatMessageRequest({ payload }: AddChatMessageActionInterface) {
     try {
-        yield put(setChatMessagesLoadingState(LoadingStatus.LOADING));
         yield call(ChatMessageApi.addMessage, payload);
     } catch (error) {
         yield put(setChatMessagesLoadingState(LoadingStatus.ERROR));

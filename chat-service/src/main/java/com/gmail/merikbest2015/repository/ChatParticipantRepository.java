@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ChatParticipantRepository extends JpaRepository<ChatParticipant, Long> {
 
-    @Query("SELECT chatParticipant.id FROM ChatParticipant chatParticipant WHERE chatParticipant.chat.id = :chatId")
+    @Query("SELECT chatParticipant.userId FROM ChatParticipant chatParticipant WHERE chatParticipant.chat.id = :chatId")
     List<Long> getChatParticipantIds(@Param("chatId") Long chatId);
 
     @Modifying

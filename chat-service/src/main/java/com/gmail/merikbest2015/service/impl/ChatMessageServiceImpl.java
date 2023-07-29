@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 
@@ -70,10 +72,8 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         chatParticipantRepository.updateParticipantWhoLeftChat(chatParticipantId, chatId);
         chat.getMessages().add(chatMessage);
         ChatMessageProjection message = chatMessageRepository.getChatMessageById(chatMessage.getId()).get();
-        Map<Long, ChatMessageProjection> chatParticipants = new HashMap<>();
-        chatParticipantRepository.getChatParticipantIds(chatId)
-                .forEach(userId -> chatParticipants.put(userId, message));
-        return chatParticipants;
+        return chatParticipantRepository.getChatParticipantIds(chatId).stream()
+                .collect(Collectors.toMap(Function.identity(), (userId) -> message));
     }
 
     @Override

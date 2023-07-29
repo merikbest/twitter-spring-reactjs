@@ -2,6 +2,9 @@ package com.gmail.merikbest2015;
 
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
+import com.gmail.merikbest2015.model.Chat;
+import com.gmail.merikbest2015.model.ChatMessage;
+import com.gmail.merikbest2015.model.ChatParticipant;
 import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import com.gmail.merikbest2015.repository.projection.ChatProjection;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -9,13 +12,42 @@ import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChatServiceTestHelper {
 
     private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
+
+    public static Chat createMockChat() {
+        Chat chat = new Chat();
+        chat.setId(TestConstants.CHAT_ID);
+        chat.setCreationDate(LocalDateTime.now());
+
+        ChatParticipant chatParticipant1 = new ChatParticipant();
+        chatParticipant1.setId(1L);
+        chatParticipant1.setLeftChat(false);
+        chatParticipant1.setUserId(TestConstants.USER_ID);
+        chatParticipant1.setChat(chat);
+
+        ChatParticipant chatParticipant2 = new ChatParticipant();
+        chatParticipant2.setId(2L);
+        chatParticipant2.setLeftChat(false);
+        chatParticipant2.setUserId(1L);
+        chatParticipant2.setChat(chat);
+
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setId(1L);
+        chatMessage.setText("test text");
+        chatMessage.setDate(LocalDateTime.now());
+        chatMessage.setUnread(false);
+        chatMessage.setTweetId(1L);
+        chatMessage.setAuthorId(TestConstants.USER_ID);
+        chatMessage.setChat(chat);
+
+        chat.setParticipants(new ArrayList<>(Arrays.asList(chatParticipant1, chatParticipant2)));
+        chat.setMessages(new ArrayList<>(List.of(chatMessage)));
+        return chat;
+    }
 
     public static ChatProjection createMockChatProjection() {
         ChatProjection.ChatParticipantProjection chatParticipant1 = factory.createProjection(

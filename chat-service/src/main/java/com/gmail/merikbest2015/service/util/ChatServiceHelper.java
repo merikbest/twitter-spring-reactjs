@@ -27,10 +27,7 @@ public class ChatServiceHelper {
     }
 
     public void isParticipantBlocked(Long authUserId, Long userId) {
-        Boolean isUserBlockedByMyProfile = userClient.isUserBlockedByMyProfile(authUserId);
-        Boolean isMyProfileBlockedByUser = userClient.isMyProfileBlockedByUser(userId);
-
-        if (isUserBlockedByMyProfile || isMyProfileBlockedByUser) {
+        if (userClient.isUserBlockedByMyProfile(authUserId) || userClient.isMyProfileBlockedByUser(userId)) {
             throw new ApiRequestException(CHAT_PARTICIPANT_BLOCKED, HttpStatus.BAD_REQUEST);
         }
     }

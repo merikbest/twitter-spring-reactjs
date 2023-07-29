@@ -4,6 +4,8 @@ import com.gmail.merikbest2015.ChatServiceTestHelper;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.feign.UserClient;
+import com.gmail.merikbest2015.model.Chat;
+import com.gmail.merikbest2015.model.ChatMessage;
 import com.gmail.merikbest2015.repository.ChatMessageRepository;
 import com.gmail.merikbest2015.repository.ChatParticipantRepository;
 import com.gmail.merikbest2015.repository.ChatRepository;
@@ -21,7 +23,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_NOT_FOUND;
@@ -36,6 +41,9 @@ public class ChatMessageServiceImplTest {
     @Autowired
     private ChatMessageServiceImpl chatMessageService;
 
+    @Autowired
+    private ChatServiceHelper chatServiceHelper;
+
     @MockBean
     private ChatRepository chatRepository;
 
@@ -44,9 +52,6 @@ public class ChatMessageServiceImplTest {
 
     @MockBean
     private ChatMessageRepository chatMessageRepository;
-
-    @MockBean
-    private ChatServiceHelper chatServiceHelper;
 
     @MockBean
     private UserClient userClient;
@@ -101,8 +106,33 @@ public class ChatMessageServiceImplTest {
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
-
-
-
-
+    @Test
+    public void addMessage() {
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setId(2L);
+        chatMessage.setText("test text");
+        chatMessage.setDate(LocalDateTime.now());
+        chatMessage.setUnread(false);
+        ChatMessageProjection chatMessageProjection = ChatServiceTestHelper.createMockChatMessageProjectionList().get(0);
+        Map<Long, ChatMessageProjection> chatParticipants = Map.of(
+                TestConstants.USER_ID, chatMessageProjection,
+                1L, chatMessageProjection);
+        when(chatRepository.getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class))
+                .thenReturn(Optional.of(ChatServiceTestHelper.createMockChat()));
+        when(chatParticipantRepository.getChatParticipantId(TestConstants.USER_ID, TestConstants.CHAT_ID))
+                .thenReturn(1L);
+        when(userClient.isUserBlockedByMyProfile(TestConstants.USER_ID)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(false);
+        when(chatMessageRepository.getChatMessageById(chatMessage.getId())).thenReturn(Optional.of(chatMessageProjection));
+        when(chatParticipantRepository.getChatParticipantIds(TestConstants.CHAT_ID))
+                .thenReturn(Arrays.asList(TestConstants.USER_ID, 1L));
+        assertEquals(chatParticipants, chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
+        verify(chatRepository, times(1)).getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class);
+        verify(chatParticipantRepository, times(1)).getChatParticipantId(TestConstants.USER_ID, TestConstants.CHAT_ID);
+        verify(userClient, times(1)).isUserBlockedByMyProfile(TestConstants.USER_ID);
+        verify(userClient, times(1)).isMyProfileBlockedByUser(1L);
+        verify(chatMessageRepository, times(1)).getChatMessageById(chatMessage.getId());
+        verify(chatParticipantRepository, times(1)).updateParticipantWhoLeftChat(1L, TestConstants.CHAT_ID);
+        verify(chatParticipantRepository, times(1)).getChatParticipantIds(TestConstants.CHAT_ID);
+    }
 }
