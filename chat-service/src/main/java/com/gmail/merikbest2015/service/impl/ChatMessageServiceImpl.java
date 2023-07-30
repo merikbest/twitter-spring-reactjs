@@ -61,6 +61,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     @Transactional
     public Map<Long, ChatMessageProjection> addMessage(ChatMessage chatMessage, Long chatId) {
+        chatServiceHelper.checkChatMessageLength(chatMessage.getText());
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Chat chat = chatRepository.getChatById(chatId, authUserId, Chat.class)
                 .orElseThrow(() -> new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));

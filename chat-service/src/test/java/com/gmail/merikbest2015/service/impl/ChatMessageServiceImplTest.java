@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_NOT_FOUND;
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -59,8 +59,15 @@ public class ChatMessageServiceImplTest {
     @MockBean
     private TweetClient tweetClient;
 
+    private ChatMessage chatMessage;
+
     @Before
     public void setUp() {
+        chatMessage = new ChatMessage();
+        chatMessage.setId(2L);
+        chatMessage.setText("test text");
+        chatMessage.setDate(LocalDateTime.now());
+        chatMessage.setUnread(false);
         TestUtil.mockAuthenticatedUserId();
     }
 
@@ -108,11 +115,6 @@ public class ChatMessageServiceImplTest {
 
     @Test
     public void addMessage() {
-        ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setId(2L);
-        chatMessage.setText("test text");
-        chatMessage.setDate(LocalDateTime.now());
-        chatMessage.setUnread(false);
         ChatMessageProjection chatMessageProjection = ChatServiceTestHelper.createMockChatMessageProjectionList().get(0);
         Map<Long, ChatMessageProjection> chatParticipants = Map.of(
                 TestConstants.USER_ID, chatMessageProjection,
@@ -131,8 +133,55 @@ public class ChatMessageServiceImplTest {
         verify(chatParticipantRepository, times(1)).getChatParticipantId(TestConstants.USER_ID, TestConstants.CHAT_ID);
         verify(userClient, times(1)).isUserBlockedByMyProfile(TestConstants.USER_ID);
         verify(userClient, times(1)).isMyProfileBlockedByUser(1L);
+        verify(chatMessageRepository, times(1)).save(chatMessage);
         verify(chatMessageRepository, times(1)).getChatMessageById(chatMessage.getId());
         verify(chatParticipantRepository, times(1)).updateParticipantWhoLeftChat(1L, TestConstants.CHAT_ID);
         verify(chatParticipantRepository, times(1)).getChatParticipantIds(TestConstants.CHAT_ID);
+    }
+
+    @Test
+    public void addMessage_shouldReturnIncorrectChatMessageLength() {
+        chatMessage.setText("");
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
+        assertEquals(INCORRECT_CHAT_MESSAGE_LENGTH, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void addMessage_shouldChatNotFound() {
+        when(chatRepository.getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class))
+                .thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
+        assertEquals(CHAT_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void addMessage_shouldUserBlockedByMyProfile() {
+        when(chatRepository.getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class))
+                .thenReturn(Optional.of(ChatServiceTestHelper.createMockChat()));
+        when(chatParticipantRepository.getChatParticipantId(TestConstants.USER_ID, TestConstants.CHAT_ID))
+                .thenReturn(1L);
+        when(userClient.isUserBlockedByMyProfile(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
+        assertEquals(CHAT_PARTICIPANT_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void addMessage_shouldMyProfileBlockedByUser() {
+        when(chatRepository.getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class))
+                .thenReturn(Optional.of(ChatServiceTestHelper.createMockChat()));
+        when(chatParticipantRepository.getChatParticipantId(TestConstants.USER_ID, TestConstants.CHAT_ID))
+                .thenReturn(1L);
+        when(userClient.isUserBlockedByMyProfile(TestConstants.USER_ID)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
+        assertEquals(CHAT_PARTICIPANT_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 }

@@ -47,6 +47,7 @@ public class ErrorMessage {
     public static final String CHAT_NOT_FOUND = "Chat not found";
     public static final String CHAT_PARTICIPANT_NOT_FOUND = "Participant not found";
     public static final String CHAT_PARTICIPANT_BLOCKED = "Participant is blocked";
+    public static final String INCORRECT_CHAT_MESSAGE_LENGTH = "Incorrect chat message length";
 
     public static final String LIST_NOT_FOUND = "List not found";
     public static final String INCORRECT_LIST_NAME_LENGTH = "Incorrect list name length";

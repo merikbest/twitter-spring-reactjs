@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_PARTICIPANT_BLOCKED;
+import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_CHAT_MESSAGE_LENGTH;
 
 @Component
 @RequiredArgsConstructor
@@ -29,6 +30,12 @@ public class ChatServiceHelper {
     public void isParticipantBlocked(Long authUserId, Long userId) {
         if (userClient.isUserBlockedByMyProfile(authUserId) || userClient.isMyProfileBlockedByUser(userId)) {
             throw new ApiRequestException(CHAT_PARTICIPANT_BLOCKED, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public void checkChatMessageLength(String text) {
+        if (text.length() == 0) {
+            throw new ApiRequestException(INCORRECT_CHAT_MESSAGE_LENGTH, HttpStatus.BAD_REQUEST);
         }
     }
 }
