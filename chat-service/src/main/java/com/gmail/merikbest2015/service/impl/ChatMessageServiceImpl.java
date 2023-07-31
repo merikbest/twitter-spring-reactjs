@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatMessage;
@@ -26,7 +25,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +36,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatServiceHelper chatServiceHelper;
     private final UserClient userClient;
-    private final TweetClient tweetClient;
 
     @Override
     @Transactional(readOnly = true)
@@ -80,9 +78,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Override
     @Transactional
     public Map<Long, ChatMessageProjection> addMessageWithTweet(String text, Long tweetId, List<Long> usersIds) {
-        if (!tweetClient.isTweetExists(tweetId)) {
-            throw new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
-        }
+        chatServiceHelper.isTweetExists(tweetId);
         List<Long> validUserIds = userClient.validateChatUsersIds(new IdsRequest(usersIds));
         Map<Long, ChatMessageProjection> chatParticipants = new HashMap<>();
         Long authUserId = AuthUtil.getAuthenticatedUserId();
@@ -99,6 +95,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 newChat.setParticipants(List.of(authorParticipant, userParticipant));
                 chatMessage.setChat(newChat);
                 chatMessageRepository.save(chatMessage);
+                newChat.getMessages().add(chatMessage);
             } else if (!isUserBlockedByMyProfile) {
                 chatMessage.setChat(chat);
                 chatMessageRepository.save(chatMessage);

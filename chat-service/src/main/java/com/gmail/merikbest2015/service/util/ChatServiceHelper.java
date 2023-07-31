@@ -9,8 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_PARTICIPANT_BLOCKED;
-import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_CHAT_MESSAGE_LENGTH;
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 
 @Component
 @RequiredArgsConstructor
@@ -36,6 +35,12 @@ public class ChatServiceHelper {
     public void checkChatMessageLength(String text) {
         if (text.length() == 0) {
             throw new ApiRequestException(INCORRECT_CHAT_MESSAGE_LENGTH, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public void isTweetExists(Long tweetId) {
+        if (!tweetClient.isTweetExists(tweetId)) {
+            throw new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 }

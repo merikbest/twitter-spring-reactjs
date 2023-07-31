@@ -44,6 +44,7 @@ public class TestConstants {
     public static final String USERNAME2 = "John_Doe";
     public static final String ABOUT2 = "Hello2";
 
+    public static final Long TWEET_ID = 11L;
     public static final String TWEET_TEXT = "#JetBrains https://www.jetbrains.com/ ";
     public static final String TWEET_DATETIME = "2021-10-03T20:34:15";
     public static final String TWEET_SCHEDULED_DATETIME = "3021-10-03T20:33:36";
