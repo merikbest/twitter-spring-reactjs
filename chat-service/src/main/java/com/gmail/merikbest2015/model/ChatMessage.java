@@ -42,7 +42,7 @@ public class ChatMessage {
     @Column(name = "author_id", nullable = false)
     private Long authorId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id", nullable = false)
     private Chat chat;
 }

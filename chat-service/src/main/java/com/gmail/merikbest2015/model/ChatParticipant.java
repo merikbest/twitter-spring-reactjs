@@ -30,8 +30,8 @@ public class ChatParticipant {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @ManyToOne
     @NonNull
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id", nullable = false)
     private Chat chat;
 }

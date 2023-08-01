@@ -18,20 +18,20 @@ public class ChatServiceTestHelper {
 
     private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 
-    public static Chat createMockChat() {
+    public static Chat createMockChat(boolean isLeftChat) {
         Chat chat = new Chat();
         chat.setId(TestConstants.CHAT_ID);
         chat.setCreationDate(LocalDateTime.now());
 
         ChatParticipant chatParticipant1 = new ChatParticipant();
         chatParticipant1.setId(1L);
-        chatParticipant1.setLeftChat(false);
+        chatParticipant1.setLeftChat(isLeftChat);
         chatParticipant1.setUserId(TestConstants.USER_ID);
         chatParticipant1.setChat(chat);
 
         ChatParticipant chatParticipant2 = new ChatParticipant();
         chatParticipant2.setId(2L);
-        chatParticipant2.setLeftChat(false);
+        chatParticipant2.setLeftChat(isLeftChat);
         chatParticipant2.setUserId(1L);
         chatParticipant2.setChat(chat);
 

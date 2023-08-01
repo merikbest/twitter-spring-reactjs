@@ -33,11 +33,11 @@ public class ChatParticipantServiceImpl implements ChatParticipantService {
     private final UserClient userClient;
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponse getParticipant(Long participantId, Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        boolean isChatExists = chatRepository.isChatExists(chatId, authUserId);
 
-        if (!isChatExists) {
+        if (!chatRepository.isChatExists(chatId, authUserId)) {
             throw new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         Long userId = chatParticipantRepository.getParticipantUserId(participantId, chatId)
@@ -50,13 +50,11 @@ public class ChatParticipantServiceImpl implements ChatParticipantService {
     public String leaveFromConversation(Long participantId, Long chatId) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
-        int isChatParticipantUpdated = chatParticipantRepository.leaveFromConversation(participantId, chatId);
-
-        if (isChatParticipantUpdated != 1) {
+        if (chatParticipantRepository.leaveFromConversation(participantId, chatId) != 1) {
             throw new ApiRequestException(CHAT_PARTICIPANT_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
-
-        boolean isParticipantsLeftFromChat = chat.getParticipants().stream().allMatch(ChatParticipant::isLeftChat);
+        boolean isParticipantsLeftFromChat = chat.getParticipants().stream()
+                .allMatch(ChatParticipant::isLeftChat);
 
         if (isParticipantsLeftFromChat) {
             chatMessageRepository.deleteAll(chat.getMessages());
@@ -68,6 +66,7 @@ public class ChatParticipantServiceImpl implements ChatParticipantService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HeaderResponse<UserChatResponse> searchUsersByUsername(String username, Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         HeaderResponse<UserChatResponse> users = userClient.searchUsersByUsername(username, pageable);

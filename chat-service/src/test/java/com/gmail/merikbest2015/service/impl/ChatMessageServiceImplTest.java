@@ -58,7 +58,7 @@ public class ChatMessageServiceImplTest {
     private TweetClient tweetClient;
 
     private ChatMessage chatMessage;
-    private final Chat mockChat = ChatServiceTestHelper.createMockChat();
+    private final Chat mockChat = ChatServiceTestHelper.createMockChat(false);
     private final ChatMessageProjection chatMessageProjection = ChatServiceTestHelper.createMockChatMessageProjectionList().get(0);
     private final Map<Long, ChatMessageProjection> chatParticipants = Map.of(
             TestConstants.USER_ID, chatMessageProjection,
