@@ -43,4 +43,10 @@ public class ChatServiceHelper {
             throw new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
+
+    public void isUserExists(Long userId) {
+        if (!userClient.isUserExists(userId)) {
+            throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+    }
 }

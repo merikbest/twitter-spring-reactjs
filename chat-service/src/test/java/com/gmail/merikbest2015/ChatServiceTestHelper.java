@@ -49,6 +49,15 @@ public class ChatServiceTestHelper {
         return chat;
     }
 
+    public static ChatParticipant createMockChatParticipant(Long chatParticipantId, Long userId, Chat newChat) {
+        ChatParticipant chatParticipant = new ChatParticipant();
+        chatParticipant.setId(chatParticipantId);
+        chatParticipant.setLeftChat(false);
+        chatParticipant.setUserId(userId);
+        chatParticipant.setChat(newChat);
+        return chatParticipant;
+    }
+
     public static ChatProjection createMockChatProjection() {
         ChatProjection.ChatParticipantProjection chatParticipant1 = factory.createProjection(
                 ChatProjection.ChatParticipantProjection.class,

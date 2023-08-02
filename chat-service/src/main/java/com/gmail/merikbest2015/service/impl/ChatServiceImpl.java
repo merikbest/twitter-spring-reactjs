@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatParticipant;
 import com.gmail.merikbest2015.repository.ChatParticipantRepository;
@@ -19,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_NOT_FOUND;
-import static com.gmail.merikbest2015.constants.ErrorMessage.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -28,9 +26,9 @@ public class ChatServiceImpl implements ChatService {
     private final ChatRepository chatRepository;
     private final ChatParticipantRepository chatParticipantRepository;
     private final ChatServiceHelper chatServiceHelper;
-    private final UserClient userClient;
 
     @Override
+    @Transactional(readOnly = true)
     public ChatProjection getChatById(Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return chatRepository.getChatById(chatId, authUserId, ChatProjection.class)
@@ -38,6 +36,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ChatProjection> getUserChats() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return chatRepository.getChatsByUserId(authUserId);
@@ -47,11 +46,7 @@ public class ChatServiceImpl implements ChatService {
     @Transactional
     public ChatProjection createChat(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        Boolean isUserExists = userClient.isUserExists(userId);
-
-        if (!isUserExists) {
-            throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
-        }
+        chatServiceHelper.isUserExists(userId);
         chatServiceHelper.isParticipantBlocked(authUserId, userId);
         Chat chat = chatRepository.getChatByParticipants(authUserId, userId);
 
