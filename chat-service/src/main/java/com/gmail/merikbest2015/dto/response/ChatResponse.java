@@ -14,7 +14,7 @@ public class ChatResponse {
     private List<ParticipantResponse> participants;
 
     @Data
-    static class ParticipantResponse {
+    public static class ParticipantResponse {
         private Long id;
         private ChatUserParticipantResponse user;
 
