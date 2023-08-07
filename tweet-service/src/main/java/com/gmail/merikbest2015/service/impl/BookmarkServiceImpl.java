@@ -20,6 +20,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     private final TweetValidationHelper tweetValidationHelper;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<BookmarkProjection> getUserBookmarks(Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return bookmarkRepository.getUserBookmarks(authUserId, pageable);
@@ -43,6 +44,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Boolean getIsTweetBookmarked(Long tweetId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return bookmarkRepository.isUserBookmarkedTweet(authUserId, tweetId);

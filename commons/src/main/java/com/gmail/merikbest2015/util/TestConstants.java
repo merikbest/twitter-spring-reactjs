@@ -69,4 +69,9 @@ public class TestConstants {
     public static final Long CHAT_ID = 1L;
     public static final Long CHAT_MESSAGE_AUTHOR_ID = 2L;
     public static final String CHAT_MESSAGE_TEXT = "chat message text";
+
+    public static final Long POLL_ID = 1L;
+    public static final Long POLL_CHOICE_ID = 1L;
+    public static final String POLL_CHOICE_1 = "test choice 1";
+    public static final String POLL_CHOICE_2 = "test choice 2";
 }
