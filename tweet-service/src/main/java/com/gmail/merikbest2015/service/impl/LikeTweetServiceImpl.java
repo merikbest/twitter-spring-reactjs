@@ -32,12 +32,14 @@ public class LikeTweetServiceImpl implements LikeTweetService {
     private final UserClient userClient;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<LikeTweetProjection> getUserLikedTweets(Long userId, Pageable pageable) {
         tweetValidationHelper.validateUserProfile(userId);
         return likeTweetRepository.getUserLikedTweets(userId, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HeaderResponse<UserResponse> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
         tweetValidationHelper.checkValidTweet(tweetId);
         List<Long> likedUserIds = likeTweetRepository.getLikedUserIds(tweetId);
