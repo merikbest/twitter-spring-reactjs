@@ -117,6 +117,132 @@ public class LikeTweetServiceImplTest {
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
+    @Test
+    public void getLikedUsersByTweetId() {
+        List<Long> usersIds = List.of(1L, 2L, 3L);
+        HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
+                List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(likeTweetRepository.getLikedUserIds(TestConstants.TWEET_ID)).thenReturn(usersIds);
+        when(userClient.getUsersByIds(new IdsRequest(usersIds), pageable)).thenReturn(headerResponse);
+        assertEquals(headerResponse, likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(likeTweetRepository, times(1)).getLikedUserIds(TestConstants.TWEET_ID);
+        verify(userClient, times(1)).getUsersByIds(new IdsRequest(usersIds), pageable);
+    }
+
+    @Test
+    public void getLikedUsersByTweetId_ShouldTweetNotFound() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getLikedUsersByTweetId_ShouldTweetDeleted() {
+        tweet.setDeleted(true);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void getLikedUsersByTweetId_ShouldUserNotFound() {
+        tweet.setAuthorId(1L);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getLikedUsersByTweetId_ShouldUserProfileBlocked() {
+        tweet.setAuthorId(1L);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void likeTweet_ShouldUnlikeTweet() {
+        NotificationRequest request = createMockNotificationRequest(false);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(likeTweetRepository.getLikedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(new LikeTweet());
+        when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
+        assertEquals(new NotificationResponse(), likeTweetService.likeTweet(TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(likeTweetRepository, times(1)).getLikedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID);
+        verify(likeTweetRepository, times(1)).delete(new LikeTweet());
+        verify(userClient, times(1)).updateLikeCount(false);
+        verify(notificationClient, times(1)).sendTweetNotification(request);
+    }
+
+    @Test
+    public void likeTweet_ShouldLikeTweet() {
+        NotificationRequest request = createMockNotificationRequest(true);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(likeTweetRepository.getLikedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(null);
+        when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
+        assertEquals(new NotificationResponse(), likeTweetService.likeTweet(TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(likeTweetRepository, times(1)).getLikedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID);
+        verify(likeTweetRepository, times(1)).save(new LikeTweet(TestConstants.USER_ID, TestConstants.TWEET_ID));
+        verify(userClient, times(1)).updateLikeCount(true);
+        verify(notificationClient, times(1)).sendTweetNotification(request);
+    }
+
+    @Test
+    public void likeTweet_ShouldTweetNotFound() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> likeTweetService.likeTweet(TestConstants.TWEET_ID));
+        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void likeTweet_ShouldTweetDeleted() {
+        tweet.setDeleted(true);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> likeTweetService.likeTweet(TestConstants.TWEET_ID));
+        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void likeTweet_ShouldUserNotFound() {
+        tweet.setAuthorId(1L);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> likeTweetService.likeTweet(TestConstants.TWEET_ID));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void likeTweet_ShouldUserProfileBlocked() {
+        tweet.setAuthorId(1L);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> likeTweetService.likeTweet(TestConstants.TWEET_ID));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
     private static List<LikeTweetProjection> createMockLikeTweetProjectionList() {
         LikeTweetProjection likeTweetProjection1 = factory.createProjection(
                 LikeTweetProjection.class,
