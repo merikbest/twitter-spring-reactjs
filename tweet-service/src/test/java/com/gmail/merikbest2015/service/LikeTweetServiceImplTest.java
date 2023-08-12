@@ -15,6 +15,7 @@ import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.LikeTweetRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
+import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.impl.LikeTweetServiceImpl;
 import com.gmail.merikbest2015.util.TestConstants;
 import com.gmail.merikbest2015.util.TestUtil;
@@ -250,7 +251,7 @@ public class LikeTweetServiceImplTest {
                         "id", 1L,
                         "likeTweetDate", LocalDateTime.now(),
                         "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection()
+                        "tweet", TweetServiceTestHelper.createTweetProjection(TweetProjection.class)
                 ));
         LikeTweetProjection likeTweetProjection2 = factory.createProjection(
                 LikeTweetProjection.class,
@@ -258,7 +259,7 @@ public class LikeTweetServiceImplTest {
                         "id", 2L,
                         "likeTweetDate", LocalDateTime.now(),
                         "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection()
+                        "tweet", TweetServiceTestHelper.createTweetProjection(TweetProjection.class)
                 ));
         return Arrays.asList(likeTweetProjection1, likeTweetProjection2);
     }
