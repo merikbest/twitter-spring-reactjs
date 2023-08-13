@@ -180,11 +180,11 @@ public class TweetServiceHelper {
         }
     }
 
-    public NotificationResponse sendNotification(NotificationType notificationType, boolean isTweetLiked, Long notifiedUserId,
-                                                 Long userId, Long tweetId) {
+    public NotificationResponse sendNotification(NotificationType notificationType, boolean notificationCondition,
+                                                 Long notifiedUserId, Long userId, Long tweetId) {
         NotificationRequest request = NotificationRequest.builder()
                 .notificationType(notificationType)
-                .notificationCondition(isTweetLiked)
+                .notificationCondition(notificationCondition)
                 .notifiedUserId(notifiedUserId)
                 .userId(userId)
                 .tweetId(tweetId)

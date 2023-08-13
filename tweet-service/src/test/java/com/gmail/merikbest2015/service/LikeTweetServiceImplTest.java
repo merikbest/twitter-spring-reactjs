@@ -176,7 +176,7 @@ public class LikeTweetServiceImplTest {
 
     @Test
     public void likeTweet_ShouldUnlikeTweet() {
-        NotificationRequest request = createMockNotificationRequest(false);
+        NotificationRequest request = TweetServiceTestHelper.createMockNotificationRequest(NotificationType.LIKE, false);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(likeTweetRepository.getLikedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(new LikeTweet());
         when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
@@ -190,7 +190,7 @@ public class LikeTweetServiceImplTest {
 
     @Test
     public void likeTweet_ShouldLikeTweet() {
-        NotificationRequest request = createMockNotificationRequest(true);
+        NotificationRequest request = TweetServiceTestHelper.createMockNotificationRequest(NotificationType.LIKE, true);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(likeTweetRepository.getLikedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(null);
         when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
@@ -262,15 +262,5 @@ public class LikeTweetServiceImplTest {
                         "tweet", TweetServiceTestHelper.createTweetProjection(TweetProjection.class)
                 ));
         return Arrays.asList(likeTweetProjection1, likeTweetProjection2);
-    }
-
-    private static NotificationRequest createMockNotificationRequest(boolean isTweetLiked) {
-        return NotificationRequest.builder()
-                .notificationType(NotificationType.LIKE)
-                .notificationCondition(isTweetLiked)
-                .notifiedUserId(TestConstants.USER_ID)
-                .userId(TestConstants.USER_ID)
-                .tweetId(TestConstants.TWEET_ID)
-                .build();
     }
 }

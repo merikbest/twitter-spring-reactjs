@@ -1,8 +1,10 @@
 package com.gmail.merikbest2015;
 
+import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
+import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.GifImage;
 import com.gmail.merikbest2015.model.Poll;
@@ -60,5 +62,15 @@ public class TweetServiceTestHelper {
             tweetMap.put("retweetsUserIds", List.of(1L, 2L));
         }
         return factory.createProjection(type, tweetMap);
+    }
+
+    public static NotificationRequest createMockNotificationRequest(NotificationType notificationType, boolean notificationCondition) {
+        return NotificationRequest.builder()
+                .notificationType(notificationType)
+                .notificationCondition(notificationCondition)
+                .notifiedUserId(TestConstants.USER_ID)
+                .userId(TestConstants.USER_ID)
+                .tweetId(TestConstants.TWEET_ID)
+                .build();
     }
 }

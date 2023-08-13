@@ -1,8 +1,15 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
+import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.UserClient;
+import com.gmail.merikbest2015.model.Retweet;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
@@ -22,6 +29,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,6 +37,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,10 +65,14 @@ public class RetweetServiceImplTest {
 
     private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
     private static final PageRequest pageable = PageRequest.of(0, 20);
+    private static Tweet tweet;
 
     @Before
     public void setUp() {
         TestUtil.mockAuthenticatedUserId();
+        tweet = new Tweet();
+        tweet.setDeleted(false);
+        tweet.setAuthorId(TestConstants.USER_ID);
     }
 
     @Test
@@ -116,6 +129,62 @@ public class RetweetServiceImplTest {
         when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> retweetService.getUserRetweetsAndReplies(1L, pageable));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void getRetweetedUsersByTweetId() {
+        List<Long> retweetedUserIds = List.of(1L, 2L, 3L);
+        HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
+                List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(retweetRepository.getRetweetedUserIds(TestConstants.TWEET_ID)).thenReturn(retweetedUserIds);
+        when(userClient.getUsersByIds(new IdsRequest(retweetedUserIds), pageable)).thenReturn(headerResponse);
+        assertEquals(headerResponse, retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(retweetRepository, times(1)).getRetweetedUserIds(TestConstants.TWEET_ID);
+        verify(userClient, times(1)).getUsersByIds(new IdsRequest(retweetedUserIds), pageable);
+    }
+
+    @Test
+    public void getRetweetedUsersByTweetId_ShouldTweetNotFound() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getRetweetedUsersByTweetId_ShouldTweetDeleted() {
+        tweet.setDeleted(true);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void getRetweetedUsersByTweetId_ShouldUserNotFound() {
+        tweet.setAuthorId(1L);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getRetweetedUsersByTweetId_ShouldUserProfileBlocked() {
+        tweet.setAuthorId(1L);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
