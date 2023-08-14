@@ -189,6 +189,80 @@ public class RetweetServiceImplTest {
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
+    @Test
+    public void retweet_ShouldUnRetweet() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(retweetRepository.isTweetRetweeted(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(new Retweet());
+        when(tweetServiceHelper
+                .sendNotification(NotificationType.RETWEET, false, TestConstants.USER_ID, TestConstants.USER_ID, TestConstants.TWEET_ID))
+                .thenReturn(new NotificationResponse());
+        assertEquals(new NotificationResponse(), retweetService.retweet(TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(retweetRepository, times(1)).isTweetRetweeted(TestConstants.USER_ID, TestConstants.TWEET_ID);
+        verify(retweetRepository, times(1)).delete(new Retweet());
+        verify(userClient, times(1)).updateTweetCount(false);
+        verify(tweetServiceHelper, times(1))
+                .sendNotification(NotificationType.RETWEET, false, TestConstants.USER_ID, TestConstants.USER_ID, TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void retweet_ShouldRetweet() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(retweetRepository.isTweetRetweeted(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(null);
+        when(tweetServiceHelper
+                .sendNotification(NotificationType.RETWEET, true, TestConstants.USER_ID, TestConstants.USER_ID, TestConstants.TWEET_ID))
+                .thenReturn(new NotificationResponse());
+        assertEquals(new NotificationResponse(), retweetService.retweet(TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(retweetRepository, times(1)).isTweetRetweeted(TestConstants.USER_ID, TestConstants.TWEET_ID);
+        verify(retweetRepository, times(1)).save(new Retweet(TestConstants.USER_ID, TestConstants.TWEET_ID));
+        verify(userClient, times(1)).updateTweetCount(true);
+        verify(tweetServiceHelper, times(1))
+                .sendNotification(NotificationType.RETWEET, true, TestConstants.USER_ID, TestConstants.USER_ID, TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void retweet_ShouldTweetNotFound() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> retweetService.retweet(TestConstants.TWEET_ID));
+        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void retweet_ShouldTweetDeleted() {
+        tweet.setDeleted(true);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> retweetService.retweet(TestConstants.TWEET_ID));
+        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void retweet_ShouldUserNotFound() {
+        tweet.setAuthorId(1L);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> retweetService.retweet(TestConstants.TWEET_ID));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void retweet_ShouldUserProfileBlocked() {
+        tweet.setAuthorId(1L);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> retweetService.retweet(TestConstants.TWEET_ID));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
     private static List<RetweetProjection> createMockRetweetProjectionList() {
         RetweetProjection retweetProjection1 = factory.createProjection(
                 RetweetProjection.class,
