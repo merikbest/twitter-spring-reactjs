@@ -29,6 +29,7 @@ public class ScheduledTweetServiceImpl implements ScheduledTweetService {
     private final TweetValidationHelper tweetValidationHelper;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetProjection> getScheduledTweets(Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return tweetRepository.getScheduledTweets(authUserId, pageable);
