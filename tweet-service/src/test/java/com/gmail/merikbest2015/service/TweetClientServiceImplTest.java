@@ -79,4 +79,47 @@ public class TweetClientServiceImplTest {
         assertEquals(pageableTweetProjections, tweetClientService.getTweetsByIds(idsRequest, pageable));
         verify(tweetRepository, times(1)).getTweetsByIds(ids, pageable);
     }
+
+    @Test
+    public void getNotificationTweet() {
+        NotificationTweetProjection notificationTweetProjection = factory.createProjection(
+                NotificationTweetProjection.class,
+                Map.of("id", 1L,
+                        "text", "test text",
+                        "authorId", TestConstants.USER_ID));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, NotificationTweetProjection.class))
+                .thenReturn(Optional.of(notificationTweetProjection));
+        assertEquals(notificationTweetProjection, tweetClientService.getNotificationTweet(TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, NotificationTweetProjection.class);
+    }
+
+    @Test
+    public void isTweetExists() {
+        when(tweetRepository.isTweetExists(TestConstants.TWEET_ID)).thenReturn(true);
+        assertTrue(tweetClientService.isTweetExists(TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).isTweetExists(TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void getTweetCountByText() {
+        when(tweetRepository.getTweetCountByText("test text")).thenReturn(123L);
+        assertEquals(123L, tweetClientService.getTweetCountByText("test text"));
+        verify(tweetRepository, times(1)).getTweetCountByText("test text");
+    }
+
+    @Test
+    public void getChatTweet() {
+        ChatTweetProjection chatTweetProjection = factory.createProjection(
+                ChatTweetProjection.class,
+                Map.of("id", 1L,
+                        "text", "test text",
+                        "dateTime", LocalDateTime.now(),
+                        "user", new ChatTweetUserResponse(),
+                        "authorId", TestConstants.USER_ID,
+                        "deleted", false));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, ChatTweetProjection.class))
+                .thenReturn(Optional.of(chatTweetProjection));
+        assertEquals(chatTweetProjection, tweetClientService.getChatTweet(TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, ChatTweetProjection.class);
+    }
 }
