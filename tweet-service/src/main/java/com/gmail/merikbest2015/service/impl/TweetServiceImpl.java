@@ -46,12 +46,14 @@ public class TweetServiceImpl implements TweetService {
     private final ImageClient imageClient;
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetProjection> getTweets(Pageable pageable) {
         List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
         return tweetRepository.getTweetsByAuthorIds(validUserIds, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TweetProjection getTweetById(Long tweetId) {
         TweetProjection tweet = tweetRepository.getTweetById(tweetId, TweetProjection.class)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
@@ -60,6 +62,7 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable) {
         tweetValidationHelper.validateUserProfile(userId);
         List<TweetUserProjection> tweets = tweetRepository.getTweetsByUserId(userId);
@@ -79,18 +82,21 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetProjection> getUserMediaTweets(Long userId, Pageable pageable) {
         tweetValidationHelper.validateUserProfile(userId);
         return tweetRepository.getUserMediaTweets(userId, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProfileTweetImageProjection> getUserTweetImages(Long userId) {
         tweetValidationHelper.validateUserProfile(userId);
         return tweetRepository.getUserTweetImages(userId, PageRequest.of(0, 6));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
         TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetById(tweetId, TweetAdditionalInfoProjection.class)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
@@ -99,12 +105,14 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TweetProjection> getRepliesByTweetId(Long tweetId) {
         tweetValidationHelper.checkValidTweet(tweetId);
         return tweetRepository.getRepliesByTweetId(tweetId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
         tweetValidationHelper.checkValidTweet(tweetId);
         List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
@@ -112,30 +120,35 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetProjection> getMediaTweets(Pageable pageable) {
         List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
         return tweetRepository.getMediaTweets(validUserIds, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetProjection> getTweetsWithVideo(Pageable pageable) {
         List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
         return tweetRepository.getTweetsWithVideo(validUserIds, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetProjection> getFollowersTweets(Pageable pageable) {
         List<Long> userFollowersIds = userClient.getUserFollowersIds();
         return tweetRepository.getFollowersTweets(userFollowersIds, pageable);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TweetImage uploadTweetImage(MultipartFile file) {
         String imageSrc = imageClient.uploadImage(file);
         return tweetImageRepository.save(new TweetImage(imageSrc));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public HeaderResponse<UserResponse> getTaggedImageUsers(Long tweetId, Pageable pageable) {
         tweetValidationHelper.checkValidTweet(tweetId);
         List<Long> taggedImageUserIds = tweetRepository.getTaggedImageUserIds(tweetId);
@@ -161,6 +174,7 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TweetProjection> searchTweets(String text, Pageable pageable) {
         List<Long> userIds = tweetRepository.getUserIdsByTweetText(text);
         List<Long> validUserIds = userClient.getValidTweetUserIds(new IdsRequest(userIds), text);
