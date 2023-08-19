@@ -41,9 +41,7 @@ public class TweetValidationHelper {
     }
 
     public void validateUserProfile(Long userId) {
-        boolean isUserExist = userClient.isUserExists(userId);
-
-        if (!isUserExist) {
+        if (!userClient.isUserExists(userId)) {
             throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
         }
         checkIsValidUserProfile(userId);

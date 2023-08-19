@@ -106,7 +106,7 @@ public class PollServiceImplTest {
     public void voteInPoll() {
         Poll poll = new Poll();
         poll.setDateTime(LocalDateTime.now().plusMinutes(Integer.MAX_VALUE));
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(TweetProjection.class);
+        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         when(tweetRepository.getTweetByPollIdAndTweetId(TestConstants.TWEET_ID, TestConstants.POLL_ID)).thenReturn(Optional.of(tweet));
         when(pollRepository.getPollByPollChoiceId(TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID)).thenReturn(Optional.of(poll));
         when(pollChoiceVotedRepository.ifUserVoted(TestConstants.USER_ID, TestConstants.POLL_CHOICE_ID)).thenReturn(false);

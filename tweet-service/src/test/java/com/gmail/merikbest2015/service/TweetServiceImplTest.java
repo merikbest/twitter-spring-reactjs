@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
+import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.ImageClient;
@@ -9,7 +10,9 @@ import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetImageRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
+import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.service.impl.TweetServiceImpl;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -24,15 +27,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -66,8 +72,8 @@ public class TweetServiceImplTest {
     private static final PageRequest pageable = PageRequest.of(0, 20);
     private static final List<Long> ids = List.of(1L, 2L, 3L);
     private static final List<TweetProjection> tweetProjections = Arrays.asList(
-            TweetServiceTestHelper.createTweetProjection(TweetProjection.class),
-            TweetServiceTestHelper.createTweetProjection(TweetProjection.class));
+            TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class),
+            TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class));
     private static final Page<TweetProjection> pageableTweetProjections = new PageImpl<>(tweetProjections, pageable, 20);
 
     @Before
@@ -86,7 +92,7 @@ public class TweetServiceImplTest {
 
     @Test
     public void getTweetById() {
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(TweetProjection.class);
+        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         assertEquals(tweetProjection, tweetService.getTweetById(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, TweetProjection.class);
@@ -99,5 +105,47 @@ public class TweetServiceImplTest {
                 () -> tweetService.getTweetById(TestConstants.TWEET_ID));
         assertEquals(TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getTweetById_ShouldTweetDeleted() {
+        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(true, TweetProjection.class);
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
+        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getTweetById(TestConstants.TWEET_ID));
+        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void getTweetById_ShouldUserNotFound() {
+        mockAuthenticatedUserId();
+        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getTweetById(TestConstants.TWEET_ID));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getTweetById_ShouldUserProfileBlocked() {
+        mockAuthenticatedUserId();
+        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getTweetById(TestConstants.TWEET_ID));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    private void mockAuthenticatedUserId() {
+        MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+        mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockRequest));
     }
 }

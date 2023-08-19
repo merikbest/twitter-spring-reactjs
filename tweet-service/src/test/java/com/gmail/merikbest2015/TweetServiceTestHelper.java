@@ -9,22 +9,20 @@ import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.GifImage;
 import com.gmail.merikbest2015.model.Poll;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TweetServiceTestHelper {
 
     private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 
-    public static <T> T createTweetProjection(Class<T> type) {
+    public static <T> T createTweetProjection(boolean isDeleted, Class<T> type) {
         Map<String, Object> tweetMap = new HashMap<>();
         tweetMap.put("id", TestConstants.TWEET_ID);
         tweetMap.put("text", TestConstants.TWEET_TEXT);
@@ -46,7 +44,7 @@ public class TweetServiceTestHelper {
         tweetMap.put("imageDescription", "");
         tweetMap.put("quoteTweet", new Tweet());
         tweetMap.put("poll", new Poll());
-        tweetMap.put("deleted", false);
+        tweetMap.put("deleted", isDeleted);
         tweetMap.put("user", new TweetAuthorResponse());
         tweetMap.put("tweetList", new TweetListResponse());
         tweetMap.put("taggedImageUsers", new ArrayList<>());
@@ -62,6 +60,32 @@ public class TweetServiceTestHelper {
             tweetMap.put("retweetsUserIds", List.of(1L, 2L));
         }
         return factory.createProjection(type, tweetMap);
+    }
+
+    public static List<TweetUserProjection> createMockTweetUserProjectionList() {
+        return Arrays.asList(
+                TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class),
+                TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class));
+    }
+
+    public static List<RetweetProjection> createMockRetweetProjectionList() {
+        RetweetProjection retweetProjection1 = factory.createProjection(
+                RetweetProjection.class,
+                Map.of(
+                        "id", 1L,
+                        "retweetDate", LocalDateTime.now(),
+                        "tweetId", TestConstants.TWEET_ID,
+                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class)
+                ));
+        RetweetProjection retweetProjection2 = factory.createProjection(
+                RetweetProjection.class,
+                Map.of(
+                        "id", 2L,
+                        "retweetDate", LocalDateTime.now(),
+                        "tweetId", TestConstants.TWEET_ID,
+                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class)
+                ));
+        return Arrays.asList(retweetProjection1, retweetProjection2);
     }
 
     public static NotificationRequest createMockNotificationRequest(NotificationType notificationType, boolean notificationCondition) {

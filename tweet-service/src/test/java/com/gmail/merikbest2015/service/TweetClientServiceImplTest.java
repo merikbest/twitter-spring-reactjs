@@ -47,8 +47,8 @@ public class TweetClientServiceImplTest {
     private static final List<Long> ids = List.of(1L, 2L, 3L);
     private static final IdsRequest idsRequest = new IdsRequest(ids);
     private static final List<TweetProjection> tweetProjections = Arrays.asList(
-            TweetServiceTestHelper.createTweetProjection(TweetProjection.class),
-            TweetServiceTestHelper.createTweetProjection(TweetProjection.class));
+            TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class),
+            TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class));
     private static final Page<TweetProjection> pageableTweetProjections = new PageImpl<>(tweetProjections, pageable, 20);
 
     @Test
@@ -67,7 +67,7 @@ public class TweetClientServiceImplTest {
 
     @Test
     public void getTweetById() {
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(TweetProjection.class);
+        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         assertEquals(tweetProjection, tweetClientService.getTweetById(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, TweetProjection.class);

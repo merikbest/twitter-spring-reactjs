@@ -251,7 +251,7 @@ public class LikeTweetServiceImplTest {
                         "id", 1L,
                         "likeTweetDate", LocalDateTime.now(),
                         "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(TweetProjection.class)
+                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
                 ));
         LikeTweetProjection likeTweetProjection2 = factory.createProjection(
                 LikeTweetProjection.class,
@@ -259,7 +259,7 @@ public class LikeTweetServiceImplTest {
                         "id", 2L,
                         "likeTweetDate", LocalDateTime.now(),
                         "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(TweetProjection.class)
+                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
                 ));
         return Arrays.asList(likeTweetProjection1, likeTweetProjection2);
     }

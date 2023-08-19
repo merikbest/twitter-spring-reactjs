@@ -48,7 +48,7 @@ public class ScheduledTweetServiceImplTest {
     @MockBean
     private TweetServiceHelper tweetServiceHelper;
 
-    private final static TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(TweetProjection.class);
+    private final static TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
     private static Tweet tweet;
 
     @Before

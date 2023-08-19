@@ -146,7 +146,7 @@ public class BookmarkServiceImplTest {
                         "id", 1L,
                         "bookmarkDate", LocalDateTime.now(),
                         "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(TweetProjection.class)
+                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
                 ));
         BookmarkProjection bookmarkProjection2 = factory.createProjection(
                 BookmarkProjection.class,
@@ -154,7 +154,7 @@ public class BookmarkServiceImplTest {
                         "id", 2L,
                         "bookmarkDate", LocalDateTime.now(),
                         "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(TweetProjection.class)
+                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
                 ));
         return Arrays.asList(bookmarkProjection1, bookmarkProjection2);
     }

@@ -77,12 +77,9 @@ public class RetweetServiceImplTest {
 
     @Test
     public void getUserRetweetsAndReplies() {
-        Page<TweetUserProjection> pageableTweetUserProjections =
-                new PageImpl<>(createMockTweetUserProjectionList(), pageable, 20);
-        List<TweetUserProjection> tweetUserProjections = Arrays.asList(
-                TweetServiceTestHelper.createTweetProjection(TweetUserProjection.class),
-                TweetServiceTestHelper.createTweetProjection(TweetUserProjection.class));
-        List<RetweetProjection> retweetProjections = createMockRetweetProjectionList();
+        List<TweetUserProjection> tweetUserProjections = TweetServiceTestHelper.createMockTweetUserProjectionList();
+        List<RetweetProjection> retweetProjections = TweetServiceTestHelper.createMockRetweetProjectionList();
+        Page<TweetUserProjection> pageableTweetUserProjections = new PageImpl<>(tweetUserProjections, pageable, 20);
         int totalPages = tweetUserProjections.size() + retweetProjections.size();
         when(userClient.isUserExists(1L)).thenReturn(true);
         when(userClient.isUserHavePrivateProfile(1L)).thenReturn(false);
@@ -261,31 +258,5 @@ public class RetweetServiceImplTest {
                 () -> retweetService.retweet(TestConstants.TWEET_ID));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-    }
-
-    private static List<RetweetProjection> createMockRetweetProjectionList() {
-        RetweetProjection retweetProjection1 = factory.createProjection(
-                RetweetProjection.class,
-                Map.of(
-                        "id", 1L,
-                        "retweetDate", LocalDateTime.now(),
-                        "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(TweetUserProjection.class)
-                ));
-        RetweetProjection retweetProjection2 = factory.createProjection(
-                RetweetProjection.class,
-                Map.of(
-                        "id", 2L,
-                        "retweetDate", LocalDateTime.now(),
-                        "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(TweetUserProjection.class)
-                ));
-        return Arrays.asList(retweetProjection1, retweetProjection2);
-    }
-
-    private static List<TweetUserProjection> createMockTweetUserProjectionList() {
-        return Arrays.asList(
-                TweetServiceTestHelper.createTweetProjection(TweetUserProjection.class),
-                TweetServiceTestHelper.createTweetProjection(TweetUserProjection.class));
     }
 }
