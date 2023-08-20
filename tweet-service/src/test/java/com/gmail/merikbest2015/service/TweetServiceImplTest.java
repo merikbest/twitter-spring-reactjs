@@ -143,6 +143,87 @@ public class TweetServiceImplTest {
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
+    @Test
+    public void getUserTweets() {
+        List<TweetUserProjection> tweetUserProjections = TweetServiceTestHelper.createMockTweetUserProjectionList();
+        List<RetweetProjection> retweetProjections = TweetServiceTestHelper.createMockRetweetProjectionList();
+        Page<TweetUserProjection> pageableTweetUserProjections = new PageImpl<>(tweetUserProjections, pageable, 20);
+        int totalPages = tweetUserProjections.size() + retweetProjections.size();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(tweetRepository.getTweetsByUserId(TestConstants.USER_ID)).thenReturn(tweetUserProjections);
+        when(retweetRepository.getRetweetsByUserId(TestConstants.USER_ID)).thenReturn(retweetProjections);
+        when(tweetServiceHelper.combineTweetsArrays(tweetUserProjections, retweetProjections))
+                .thenReturn(tweetUserProjections);
+        when(userClient.getUserPinnedTweetId(TestConstants.USER_ID)).thenReturn(null);
+        when(tweetServiceHelper.getPageableTweetProjectionList(pageable, tweetUserProjections, totalPages))
+                .thenReturn(pageableTweetUserProjections);
+        assertEquals(pageableTweetUserProjections, tweetService.getUserTweets(TestConstants.USER_ID, pageable));
+        verify(userClient, times(1)).isUserExists(TestConstants.USER_ID);
+        verify(tweetRepository, times(1)).getTweetsByUserId(TestConstants.USER_ID);
+        verify(retweetRepository, times(1)).getRetweetsByUserId(TestConstants.USER_ID);
+        verify(tweetServiceHelper, times(1)).combineTweetsArrays(tweetUserProjections, retweetProjections);
+        verify(userClient, times(1)).getUserPinnedTweetId(TestConstants.USER_ID);
+        verify(tweetServiceHelper, times(1)).getPageableTweetProjectionList(pageable, tweetUserProjections, totalPages);
+    }
+
+    @Test
+    public void getUserTweets_ShouldRemovePinnedTweet() {
+        TweetUserProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class);
+        List<TweetUserProjection> tweetUserProjections = new ArrayList<>(TweetServiceTestHelper.createMockTweetUserProjectionList());
+        List<RetweetProjection> retweetProjections = TweetServiceTestHelper.createMockRetweetProjectionList();
+        Page<TweetUserProjection> pageableTweetUserProjections = new PageImpl<>(tweetUserProjections, pageable, 20);
+        int totalPages = tweetUserProjections.size() + retweetProjections.size();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(tweetRepository.getTweetsByUserId(TestConstants.USER_ID)).thenReturn(tweetUserProjections);
+        when(retweetRepository.getRetweetsByUserId(TestConstants.USER_ID)).thenReturn(retweetProjections);
+        when(tweetServiceHelper.combineTweetsArrays(tweetUserProjections, retweetProjections))
+                .thenReturn(tweetUserProjections);
+        when(userClient.getUserPinnedTweetId(TestConstants.USER_ID)).thenReturn(TestConstants.TWEET_ID);
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetUserProjection.class)).thenReturn(Optional.of(tweetProjection));
+        when(tweetServiceHelper.getPageableTweetProjectionList(pageable, tweetUserProjections, totalPages))
+                .thenReturn(pageableTweetUserProjections);
+        assertEquals(pageableTweetUserProjections, tweetService.getUserTweets(TestConstants.USER_ID, pageable));
+        verify(userClient, times(1)).isUserExists(TestConstants.USER_ID);
+        verify(tweetRepository, times(1)).getTweetsByUserId(TestConstants.USER_ID);
+        verify(retweetRepository, times(1)).getRetweetsByUserId(TestConstants.USER_ID);
+        verify(tweetServiceHelper, times(1)).combineTweetsArrays(tweetUserProjections, retweetProjections);
+        verify(userClient, times(1)).getUserPinnedTweetId(TestConstants.USER_ID);
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, TweetUserProjection.class);
+        verify(tweetServiceHelper, times(1)).getPageableTweetProjectionList(pageable, tweetUserProjections, totalPages);
+    }
+
+    @Test
+    public void getUserTweets_ShouldUserIdNotFound() {
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(false);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
+        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getUserTweets_ShouldUserNotFound() {
+        mockAuthenticatedUserId();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getUserTweets_ShouldUserProfileBlocked() {
+        mockAuthenticatedUserId();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
     private void mockAuthenticatedUserId() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
         mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
