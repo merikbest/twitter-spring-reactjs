@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.GifImage;
 import com.gmail.merikbest2015.model.Poll;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -86,6 +87,24 @@ public class TweetServiceTestHelper {
                         "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class)
                 ));
         return Arrays.asList(retweetProjection1, retweetProjection2);
+    }
+
+    public static List<ProfileTweetImageProjection> createMockProfileTweetImageProjections() {
+        ProfileTweetImageProjection profileTweetImageProjection1 = factory.createProjection(
+                ProfileTweetImageProjection.class,
+                Map.of(
+                        "tweetId", 1L,
+                        "imageId", 1L,
+                        "src", "test src"
+                ));
+        ProfileTweetImageProjection profileTweetImageProjection2 = factory.createProjection(
+                ProfileTweetImageProjection.class,
+                Map.of(
+                        "tweetId", 2L,
+                        "imageId", 2L,
+                        "src", "test src"
+                ));
+        return Arrays.asList(profileTweetImageProjection1, profileTweetImageProjection2);
     }
 
     public static NotificationRequest createMockNotificationRequest(NotificationType notificationType, boolean notificationCondition) {

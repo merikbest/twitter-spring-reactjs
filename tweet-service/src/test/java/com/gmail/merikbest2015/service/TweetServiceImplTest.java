@@ -10,6 +10,7 @@ import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetImageRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
+import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
@@ -222,6 +223,58 @@ public class TweetServiceImplTest {
                 () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void getUserMediaTweets() {
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(tweetRepository.getUserMediaTweets(TestConstants.USER_ID, pageable)).thenReturn(pageableTweetProjections);
+        assertEquals(pageableTweetProjections, tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
+        verify(userClient, times(1)).isUserExists(TestConstants.USER_ID);
+        verify(tweetRepository, times(1)).getUserMediaTweets(TestConstants.USER_ID, pageable);
+    }
+
+    @Test
+    public void getUserMediaTweets_ShouldUserIdNotFound() {
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(false);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
+        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getUserMediaTweets_ShouldUserNotFound() {
+        mockAuthenticatedUserId();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getUserMediaTweets_ShouldUserProfileBlocked() {
+        mockAuthenticatedUserId();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void getUserTweetImages() {
+        List<ProfileTweetImageProjection> mockProfileTweetImageProjections = TweetServiceTestHelper.createMockProfileTweetImageProjections();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(tweetRepository.getUserTweetImages(TestConstants.USER_ID, PageRequest.of(0, 6)))
+                .thenReturn(mockProfileTweetImageProjections);
+        assertEquals(mockProfileTweetImageProjections, tweetService.getUserTweetImages(TestConstants.USER_ID));
+        verify(userClient, times(1)).isUserExists(TestConstants.USER_ID);
+        verify(tweetRepository, times(1)).getUserTweetImages(TestConstants.USER_ID, PageRequest.of(0, 6));
     }
 
     private void mockAuthenticatedUserId() {
