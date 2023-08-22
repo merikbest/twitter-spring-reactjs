@@ -277,6 +277,38 @@ public class TweetServiceImplTest {
         verify(tweetRepository, times(1)).getUserTweetImages(TestConstants.USER_ID, PageRequest.of(0, 6));
     }
 
+    @Test
+    public void getUserTweetImages_ShouldUserIdNotFound() {
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(false);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
+        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getUserTweetImages_ShouldUserNotFound() {
+        mockAuthenticatedUserId();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getUserTweetImages_ShouldUserProfileBlocked() {
+        mockAuthenticatedUserId();
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
     private void mockAuthenticatedUserId() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
         mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
