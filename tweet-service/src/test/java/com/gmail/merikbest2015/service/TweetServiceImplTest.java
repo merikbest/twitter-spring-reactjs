@@ -418,6 +418,39 @@ public class TweetServiceImplTest {
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
+    @Test
+    public void getQuotesByTweetId() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(new Tweet()));
+        when(tweetRepository.getTweetAuthorIds()).thenReturn(ids);
+        when(userClient.getValidUserIds(new IdsRequest(ids))).thenReturn(ids);
+        assertEquals(pageableTweetProjections, tweetService.getQuotesByTweetId(pageable, TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(tweetRepository, times(1)).getTweetAuthorIds();
+        verify(userClient, times(1)).getValidUserIds(new IdsRequest(ids));
+    }
+
+    @Test
+    public void getQuotesByTweetId_ShouldTweetNotFound() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getQuotesByTweetId(pageable, TestConstants.TWEET_ID));
+        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getQuotesByTweetId_ShouldTweetDeleted() {
+        Tweet tweet = new Tweet();
+        tweet.setDeleted(true);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getQuotesByTweetId(pageable, TestConstants.TWEET_ID));
+        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+
+
     private void mockAuthenticatedUserId() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
         mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
