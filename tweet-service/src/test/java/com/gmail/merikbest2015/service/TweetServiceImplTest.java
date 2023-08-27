@@ -2,7 +2,9 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.constants.PathConstants;
+import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.ImageClient;
 import com.gmail.merikbest2015.feign.TagClient;
@@ -25,6 +27,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -502,6 +505,28 @@ public class TweetServiceImplTest {
         verify(tweetRepository, times(1)).getTweetAuthorIds();
         verify(userClient, times(1)).getValidUserIds(new IdsRequest(ids));
         verify(tweetRepository, times(1)).getTweetsWithVideo(ids, pageable);
+    }
+
+    @Test
+    public void getFollowersTweets() {
+        when(userClient.getUserFollowersIds()).thenReturn(ids);
+        when(tweetRepository.getFollowersTweets(ids, pageable)).thenReturn(pageableTweetProjections);
+        assertEquals(pageableTweetProjections, tweetService.getTweetsWithVideo(pageable));
+        verify(userClient, times(1)).getUserFollowersIds();
+        verify(tweetRepository, times(1)).getFollowersTweets(ids, pageable);
+    }
+
+    @Test
+    public void getTaggedImageUsers() {
+        HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
+                List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(new Tweet()));
+        when(tweetRepository.getTaggedImageUserIds(TestConstants.TWEET_ID)).thenReturn(ids);
+        when(userClient.getUsersByIds(new IdsRequest(ids), pageable)).thenReturn(headerResponse);
+        assertEquals(pageableTweetProjections, tweetService.getTweetsWithVideo(pageable));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(tweetRepository, times(1)).getTaggedImageUserIds(TestConstants.TWEET_ID);
+        verify(userClient, times(1)).getUsersByIds(new IdsRequest(ids), pageable);
     }
 
     private void mockAuthenticatedUserId() {
