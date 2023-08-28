@@ -511,22 +511,73 @@ public class TweetServiceImplTest {
     public void getFollowersTweets() {
         when(userClient.getUserFollowersIds()).thenReturn(ids);
         when(tweetRepository.getFollowersTweets(ids, pageable)).thenReturn(pageableTweetProjections);
-        assertEquals(pageableTweetProjections, tweetService.getTweetsWithVideo(pageable));
+        assertEquals(pageableTweetProjections, tweetService.getFollowersTweets(pageable));
         verify(userClient, times(1)).getUserFollowersIds();
         verify(tweetRepository, times(1)).getFollowersTweets(ids, pageable);
     }
 
     @Test
     public void getTaggedImageUsers() {
+        Tweet tweet = new Tweet();
+        tweet.setAuthorId(TestConstants.USER_ID);
         HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
                 List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(new Tweet()));
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(tweetRepository.getTaggedImageUserIds(TestConstants.TWEET_ID)).thenReturn(ids);
         when(userClient.getUsersByIds(new IdsRequest(ids), pageable)).thenReturn(headerResponse);
-        assertEquals(pageableTweetProjections, tweetService.getTweetsWithVideo(pageable));
+        assertEquals(headerResponse, tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
         verify(tweetRepository, times(1)).getTaggedImageUserIds(TestConstants.TWEET_ID);
         verify(userClient, times(1)).getUsersByIds(new IdsRequest(ids), pageable);
+    }
+
+    @Test
+    public void getTaggedImageUsers_ShouldTweetNotFound() {
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
+        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getTaggedImageUsers_ShouldTweetDeleted() {
+        Tweet tweet = new Tweet();
+        tweet.setDeleted(true);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
+        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void getTaggedImageUsers_ShouldUserNotFound() {
+        mockAuthenticatedUserId();
+        Tweet tweet = new Tweet();
+        tweet.setDeleted(false);
+        tweet.setAuthorId(TestConstants.USER_ID);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getTaggedImageUsers_ShouldUserProfileBlocked() {
+        mockAuthenticatedUserId();
+        Tweet tweet = new Tweet();
+        tweet.setDeleted(false);
+        tweet.setAuthorId(TestConstants.USER_ID);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userClient.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
+        when(userClient.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
     private void mockAuthenticatedUserId() {
