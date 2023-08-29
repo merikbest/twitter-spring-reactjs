@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.ImageClient;
@@ -578,6 +579,17 @@ public class TweetServiceImplTest {
                 () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void createNewTweet() {
+        Tweet tweet = new Tweet();
+        tweet.setText("test tweet");
+        TweetResponse tweetResponse = new TweetResponse();
+        tweetResponse.setText("test tweet");
+        when(tweetServiceHelper.createTweet(tweet)).thenReturn(tweetResponse);
+        assertEquals(tweetResponse, tweetService.createNewTweet(tweet));
+        verify(tweetServiceHelper, times(1)).createTweet(tweet);
     }
 
     private void mockAuthenticatedUserId() {
