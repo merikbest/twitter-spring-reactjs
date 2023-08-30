@@ -592,6 +592,24 @@ public class TweetServiceImplTest {
         verify(tweetServiceHelper, times(1)).createTweet(tweet);
     }
 
+    @Test
+    public void deleteTweet() {
+        when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.of(new Tweet()));
+        assertEquals("Your Tweet was deleted", tweetService.deleteTweet(TestConstants.TWEET_ID));
+        verify(tweetRepository, times(1)).getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID);
+        verify(userClient, times(1)).updatePinnedTweetId(TestConstants.TWEET_ID);
+        verify(tagClient, times(1)).deleteTagsByTweetId(TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void deleteTweet_ShouldTweetNotFound() {
+        when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetService.deleteTweet(TestConstants.TWEET_ID));
+        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
     private void mockAuthenticatedUserId() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
         mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
