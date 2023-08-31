@@ -610,6 +610,18 @@ public class TweetServiceImplTest {
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
+    @Test
+    public void searchTweets() {
+        String testText = "test text";
+        when(tweetRepository.getUserIdsByTweetText(testText)).thenReturn(ids);
+        when(userClient.getValidTweetUserIds(new IdsRequest(ids), testText)).thenReturn(ids);
+        when(tweetRepository.searchTweets(testText, ids, pageable)).thenReturn(pageableTweetProjections);
+        assertEquals(pageableTweetProjections, tweetService.searchTweets(testText, pageable));
+        verify(tweetRepository, times(1)).getUserIdsByTweetText(testText);
+        verify(userClient, times(1)).getValidTweetUserIds(new IdsRequest(ids), testText);
+        verify(tweetRepository, times(1)).searchTweets(testText, ids, pageable);
+    }
+
     private void mockAuthenticatedUserId() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
         mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
