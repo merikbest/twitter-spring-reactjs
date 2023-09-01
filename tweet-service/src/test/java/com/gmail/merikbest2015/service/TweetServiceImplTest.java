@@ -622,6 +622,19 @@ public class TweetServiceImplTest {
         verify(tweetRepository, times(1)).searchTweets(testText, ids, pageable);
     }
 
+    @Test
+    public void replyTweet() {
+        Tweet tweet = new Tweet();
+        TweetResponse tweetResponse = new TweetResponse();
+        tweetResponse.setId(TestConstants.TWEET_ID);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetServiceHelper.createTweet(tweet)).thenReturn(tweetResponse);
+        assertEquals(tweetResponse, tweetService.replyTweet(TestConstants.TWEET_ID, tweet));
+        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(tweetServiceHelper, times(1)).createTweet(tweet);
+        verify(tweetRepository, times(1)).addReply(TestConstants.TWEET_ID, TestConstants.TWEET_ID);
+    }
+
     private void mockAuthenticatedUserId() {
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
         mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
