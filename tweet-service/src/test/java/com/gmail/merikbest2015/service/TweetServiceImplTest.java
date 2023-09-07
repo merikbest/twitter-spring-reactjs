@@ -367,7 +367,9 @@ public class TweetServiceImplTest {
 
     @Test
     public void getRepliesByTweetId() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(new Tweet()));
+        Tweet tweet = new Tweet();
+        tweet.setAuthorId(TestConstants.USER_ID);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(tweetRepository.getRepliesByTweetId(TestConstants.TWEET_ID)).thenReturn(tweetProjections);
         assertEquals(tweetProjections, tweetService.getRepliesByTweetId(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
@@ -626,6 +628,7 @@ public class TweetServiceImplTest {
     @Test
     public void replyTweet() {
         Tweet tweet = new Tweet();
+        tweet.setAuthorId(TestConstants.USER_ID);
         TweetResponse tweetResponse = new TweetResponse();
         tweetResponse.setId(TestConstants.TWEET_ID);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
@@ -752,6 +755,7 @@ public class TweetServiceImplTest {
     public void changeTweetReplyType() {
         TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         Tweet tweet = new Tweet();
+        tweet.setId(TestConstants.TWEET_ID);
         tweet.setAuthorId(TestConstants.USER_ID);
         when(tweetRepository.getTweetByAuthorIdAndTweetId(TestConstants.TWEET_ID, TestConstants.USER_ID))
                 .thenReturn(Optional.of(tweet));
