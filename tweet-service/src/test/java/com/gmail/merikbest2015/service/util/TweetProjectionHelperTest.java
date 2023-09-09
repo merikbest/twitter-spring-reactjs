@@ -12,6 +12,8 @@ import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.util.TestUtil;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -50,6 +53,11 @@ public class TweetProjectionHelperTest {
     @MockBean
     private ListsClient listsClient;
 
+    @Before
+    public void setUp() {
+        TestUtil.mockAuthenticatedUserId();
+    }
+
     @Test
     public void getTweetProjection() {
         TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
@@ -75,5 +83,26 @@ public class TweetProjectionHelperTest {
         assertEquals(taggedUserResponses, tweetProjectionHelper.getTaggedImageUsers(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).getTaggedImageUserIds(TestConstants.TWEET_ID);
         verify(userClient, times(1)).getTaggedImageUsers(new IdsRequest(ids));
+    }
+
+    @Test
+    public void isUserLikedTweet() {
+        when(likeTweetRepository.isUserLikedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(true);
+        assertTrue(tweetProjectionHelper.isUserLikedTweet(TestConstants.TWEET_ID));
+        verify(likeTweetRepository, times(1)).isUserLikedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void isUserRetweetedTweet() {
+        when(retweetRepository.isUserRetweetedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(true);
+        assertTrue(tweetProjectionHelper.isUserRetweetedTweet(TestConstants.TWEET_ID));
+        verify(retweetRepository, times(1)).isUserRetweetedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void isUserBookmarkedTweet() {
+        when(bookmarkRepository.isUserBookmarkedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(true);
+        assertTrue(tweetProjectionHelper.isUserBookmarkedTweet(TestConstants.TWEET_ID));
+        verify(bookmarkRepository, times(1)).isUserBookmarkedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID);
     }
 }
