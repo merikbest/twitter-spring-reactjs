@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.feign.ListsClient;
 import com.gmail.merikbest2015.feign.UserClient;
@@ -104,5 +105,20 @@ public class TweetProjectionHelperTest {
         when(bookmarkRepository.isUserBookmarkedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(true);
         assertTrue(tweetProjectionHelper.isUserBookmarkedTweet(TestConstants.TWEET_ID));
         verify(bookmarkRepository, times(1)).isUserBookmarkedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void isUserFollowByOtherUser() {
+        when(userClient.isUserFollowByOtherUser(TestConstants.USER_ID)).thenReturn(true);
+        assertTrue(tweetProjectionHelper.isUserFollowByOtherUser(TestConstants.USER_ID));
+        verify(userClient, times(1)).isUserFollowByOtherUser(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void getTweetAuthor() {
+        TweetAuthorResponse tweetAuthorResponse = new TweetAuthorResponse();
+        when(userClient.getTweetAuthor(TestConstants.USER_ID)).thenReturn(tweetAuthorResponse);
+        assertEquals(tweetAuthorResponse, tweetProjectionHelper.getTweetAuthor(TestConstants.USER_ID));
+        verify(userClient, times(1)).getTweetAuthor(TestConstants.USER_ID);
     }
 }
