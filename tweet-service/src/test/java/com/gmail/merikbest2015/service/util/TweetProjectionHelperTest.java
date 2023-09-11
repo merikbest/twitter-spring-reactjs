@@ -2,7 +2,10 @@ package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.feign.ListsClient;
 import com.gmail.merikbest2015.feign.UserClient;
@@ -25,8 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -120,5 +122,38 @@ public class TweetProjectionHelperTest {
         when(userClient.getTweetAuthor(TestConstants.USER_ID)).thenReturn(tweetAuthorResponse);
         assertEquals(tweetAuthorResponse, tweetProjectionHelper.getTweetAuthor(TestConstants.USER_ID));
         verify(userClient, times(1)).getTweetAuthor(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void getTweetList() {
+        TweetListResponse tweetListResponse = new TweetListResponse();
+        tweetListResponse.setId(TestConstants.TWEET_ID);
+        when(listsClient.getTweetList(TestConstants.LIST_ID)).thenReturn(tweetListResponse);
+        assertEquals(tweetListResponse, tweetProjectionHelper.getTweetList(TestConstants.LIST_ID));
+        verify(listsClient, times(1)).getTweetList(TestConstants.LIST_ID);
+    }
+
+    @Test
+    public void getTweetList_ShouldReturnNull() {
+        TweetListResponse tweetListResponse = new TweetListResponse();
+        when(listsClient.getTweetList(TestConstants.LIST_ID)).thenReturn(tweetListResponse);
+        assertNull(tweetProjectionHelper.getTweetList(TestConstants.LIST_ID));
+        verify(listsClient, times(1)).getTweetList(TestConstants.LIST_ID);
+    }
+
+    @Test
+    public void getTweetAdditionalInfoUser() {
+        TweetAdditionalInfoUserResponse response = new TweetAdditionalInfoUserResponse();
+        when(userClient.getTweetAdditionalInfoUser(TestConstants.USER_ID)).thenReturn(response);
+        assertEquals(response, tweetProjectionHelper.getTweetAdditionalInfoUser(TestConstants.USER_ID));
+        verify(userClient, times(1)).getTweetAdditionalInfoUser(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void getChatTweetUser() {
+        ChatTweetUserResponse response = new ChatTweetUserResponse();
+        when(userClient.getChatTweetUser(TestConstants.USER_ID)).thenReturn(response);
+        assertEquals(response, tweetProjectionHelper.getChatTweetUser(TestConstants.USER_ID));
+        verify(userClient, times(1)).getChatTweetUser(TestConstants.USER_ID);
     }
 }
