@@ -3,10 +3,7 @@ package com.gmail.merikbest2015.service.util;
 import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.NotificationClient;
-import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.UserClient;
-import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -42,16 +39,7 @@ public class TweetValidationHelperTest {
     private TweetRepository tweetRepository;
 
     @MockBean
-    private NotificationClient notificationClient;
-
-    @MockBean
     private UserClient userClient;
-
-    @MockBean
-    private TagClient tagClient;
-
-    @MockBean
-    private BasicMapper basicMapper;
 
     @Before
     public void setUp() {
@@ -123,6 +111,23 @@ public class TweetValidationHelperTest {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetValidationHelper.checkValidTweet(TestConstants.TWEET_ID));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void validateUserProfile_ShouldUserNotFound() {
+        when(userClient.isUserExists(TestConstants.USER_ID)).thenReturn(false);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetValidationHelper.validateUserProfile(TestConstants.USER_ID));
+        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void checkTweetTextLength() {
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> tweetValidationHelper.checkTweetTextLength(""));
+        assertEquals(INCORRECT_TWEET_TEXT_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
