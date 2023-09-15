@@ -92,7 +92,7 @@ public class TweetServiceHelper {
             if (matcher.find()) {
                 tweet.setLinkCover(url);
             } else if (!url.contains("youtu")) {
-                Document doc = Jsoup.connect(url).get(); // TODO add error handler
+                Document doc = Jsoup.connect(url).get();
                 Elements title = doc.select("meta[name$=title],meta[property$=title]");
                 Elements description = doc.select("meta[name$=description],meta[property$=description]");
                 Elements cover = doc.select("meta[name$=image],meta[property$=image]");
