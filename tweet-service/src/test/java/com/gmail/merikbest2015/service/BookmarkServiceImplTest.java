@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Bookmark;
@@ -8,7 +7,6 @@ import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.BookmarkRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.BookmarkProjection;
-import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.impl.BookmarkServiceImpl;
 import com.gmail.merikbest2015.util.TestConstants;
 import com.gmail.merikbest2015.util.TestUtil;
@@ -26,12 +24,9 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+import static com.gmail.merikbest2015.TweetServiceTestHelper.createMockBookmarkProjectionList;
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -137,25 +132,5 @@ public class BookmarkServiceImplTest {
         when(bookmarkRepository.isUserBookmarkedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(true);
         assertTrue(bookmarkService.getIsTweetBookmarked(TestConstants.TWEET_ID));
         verify(bookmarkRepository, times(1)).isUserBookmarkedTweet(TestConstants.USER_ID, TestConstants.TWEET_ID);
-    }
-
-    private static List<BookmarkProjection> createMockBookmarkProjectionList() {
-        BookmarkProjection bookmarkProjection1 = factory.createProjection(
-                BookmarkProjection.class,
-                Map.of(
-                        "id", 1L,
-                        "bookmarkDate", LocalDateTime.now(),
-                        "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
-                ));
-        BookmarkProjection bookmarkProjection2 = factory.createProjection(
-                BookmarkProjection.class,
-                Map.of(
-                        "id", 2L,
-                        "bookmarkDate", LocalDateTime.now(),
-                        "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
-                ));
-        return Arrays.asList(bookmarkProjection1, bookmarkProjection2);
     }
 }

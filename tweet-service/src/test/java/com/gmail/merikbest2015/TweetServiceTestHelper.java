@@ -9,9 +9,7 @@ import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.GifImage;
 import com.gmail.merikbest2015.model.Poll;
 import com.gmail.merikbest2015.model.Tweet;
-import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
-import com.gmail.merikbest2015.repository.projection.RetweetProjection;
-import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
@@ -115,5 +113,25 @@ public class TweetServiceTestHelper {
                 .userId(TestConstants.USER_ID)
                 .tweetId(TestConstants.TWEET_ID)
                 .build();
+    }
+
+    public static List<BookmarkProjection> createMockBookmarkProjectionList() {
+        BookmarkProjection bookmarkProjection1 = factory.createProjection(
+                BookmarkProjection.class,
+                Map.of(
+                        "id", 1L,
+                        "bookmarkDate", LocalDateTime.now(),
+                        "tweetId", TestConstants.TWEET_ID,
+                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
+                ));
+        BookmarkProjection bookmarkProjection2 = factory.createProjection(
+                BookmarkProjection.class,
+                Map.of(
+                        "id", 2L,
+                        "bookmarkDate", LocalDateTime.now(),
+                        "tweetId", TestConstants.TWEET_ID,
+                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
+                ));
+        return Arrays.asList(bookmarkProjection1, bookmarkProjection2);
     }
 }
