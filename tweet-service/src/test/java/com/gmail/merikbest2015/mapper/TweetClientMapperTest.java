@@ -3,7 +3,12 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
+import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -15,13 +20,18 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -36,6 +46,8 @@ public class TweetClientMapperTest {
 
     @MockBean
     private TweetClientService tweetClientService;
+
+    private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 
     private static final PageRequest pageable = PageRequest.of(0, 20);
     private static final List<TweetProjection> tweetProjections = Arrays.asList(
@@ -72,5 +84,51 @@ public class TweetClientMapperTest {
         assertEquals(new TweetResponse(), tweetClientMapper.getTweetById(TestConstants.TWEET_ID));
         verify(tweetClientService, times(1)).getTweetById(TestConstants.TWEET_ID);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
+    }
+
+    @Test
+    public void getNotificationTweet() {
+        NotificationTweetProjection notificationTweetProjection = factory.createProjection(
+                NotificationTweetProjection.class,
+                Map.of("id", 1L,
+                        "text", "test text",
+                        "authorId", TestConstants.USER_ID));
+        when(tweetClientService.getNotificationTweet(TestConstants.TWEET_ID)).thenReturn(notificationTweetProjection);
+        when(basicMapper.convertToResponse(notificationTweetProjection, NotificationTweetResponse.class))
+                .thenReturn(new NotificationTweetResponse());
+        assertEquals(new NotificationTweetResponse(), tweetClientMapper.getNotificationTweet(TestConstants.TWEET_ID));
+        verify(tweetClientService, times(1)).getNotificationTweet(TestConstants.TWEET_ID);
+        verify(basicMapper, times(1)).convertToResponse(notificationTweetProjection, NotificationTweetResponse.class);
+    }
+
+    @Test
+    public void isTweetExists() {
+        when(tweetClientService.isTweetExists(TestConstants.TWEET_ID)).thenReturn(true);
+        assertTrue(tweetClientMapper.isTweetExists(TestConstants.TWEET_ID));
+        verify(tweetClientService, times(1)).isTweetExists(TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void getTweetCountByText() {
+        when(tweetClientService.getTweetCountByText(TestConstants.TWEET_TEXT)).thenReturn(1L);
+        assertEquals(1L, tweetClientMapper.getTweetCountByText(TestConstants.TWEET_TEXT));
+        verify(tweetClientService, times(1)).getTweetCountByText(TestConstants.TWEET_TEXT);
+    }
+
+    @Test
+    public void getChatTweet() {
+        ChatTweetProjection chatTweetProjection = factory.createProjection(
+                ChatTweetProjection.class,
+                Map.of("id", 1L,
+                        "text", "test text",
+                        "dateTime", LocalDateTime.now(),
+                        "user", new ChatTweetUserResponse(),
+                        "authorId", TestConstants.USER_ID,
+                        "deleted", false));
+        when(tweetClientService.getChatTweet(TestConstants.TWEET_ID)).thenReturn(chatTweetProjection);
+        when(basicMapper.convertToResponse(chatTweetProjection, ChatTweetResponse.class)).thenReturn(new ChatTweetResponse());
+        assertEquals(new ChatTweetResponse(), tweetClientMapper.getChatTweet(TestConstants.TWEET_ID));
+        verify(tweetClientService, times(1)).getChatTweet(TestConstants.TWEET_ID);
+        verify(basicMapper, times(1)).convertToResponse(chatTweetProjection, ChatTweetResponse.class);
     }
 }
