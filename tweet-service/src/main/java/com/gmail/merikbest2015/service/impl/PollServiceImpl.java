@@ -12,6 +12,7 @@ import com.gmail.merikbest2015.repository.PollRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.PollService;
+import com.gmail.merikbest2015.service.TweetService;
 import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import com.gmail.merikbest2015.util.AuthUtil;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
@@ -33,7 +34,7 @@ public class PollServiceImpl implements PollService {
     private final PollRepository pollRepository;
     private final PollChoiceRepository pollChoiceRepository;
     private final PollChoiceVotedRepository pollChoiceVotedRepository;
-    private final TweetServiceImpl tweetService;
+    private final TweetService tweetService;
     private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
     private final TweetRepository tweetRepository;

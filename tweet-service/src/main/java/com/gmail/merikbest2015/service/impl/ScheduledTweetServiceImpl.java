@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.ScheduledTweetService;
+import com.gmail.merikbest2015.service.TweetService;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import com.gmail.merikbest2015.util.AuthUtil;
@@ -24,7 +25,7 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
 public class ScheduledTweetServiceImpl implements ScheduledTweetService {
 
     private final TweetRepository tweetRepository;
-    private final TweetServiceImpl tweetService;
+    private final TweetService tweetService;
     private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
 

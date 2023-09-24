@@ -2,8 +2,12 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.response.ProfileTweetImageResponse;
+import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
+import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.service.TweetService;
@@ -73,8 +77,48 @@ public class TweetMapperTest {
                 List.of(new TweetUserResponse(), new TweetUserResponse()), new HttpHeaders());
         when(tweetService.getUserTweets(TestConstants.USER_ID, pageable)).thenReturn(pageableTweetUserProjections);
         when(basicMapper.getHeaderResponse(pageableTweetUserProjections, TweetUserResponse.class)).thenReturn(headerResponse);
-        assertEquals(headerResponse, tweetMapper.getUserTweets(TestConstants.TWEET_ID, pageable));
+        assertEquals(headerResponse, tweetMapper.getUserTweets(TestConstants.USER_ID, pageable));
         verify(tweetService, times(1)).getUserTweets(TestConstants.USER_ID, pageable);
         verify(basicMapper, times(1)).getHeaderResponse(pageableTweetUserProjections, TweetUserResponse.class);
+    }
+
+    @Test
+    public void getUserMediaTweets() {
+        when(tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable)).thenReturn(pageableTweetProjections);
+        when(basicMapper.getHeaderResponse(pageableTweetProjections, TweetResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tweetMapper.getUserMediaTweets(TestConstants.USER_ID, pageable));
+        verify(tweetService, times(1)).getUserMediaTweets(TestConstants.USER_ID, pageable);
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
+    }
+
+    @Test
+    public void getUserTweetImages() {
+        List<ProfileTweetImageResponse> responses = List.of(new ProfileTweetImageResponse(), new ProfileTweetImageResponse());
+        List<ProfileTweetImageProjection> mockProfileTweetImage = TweetServiceTestHelper.createMockProfileTweetImageProjections();
+        when(tweetService.getUserTweetImages(TestConstants.USER_ID)).thenReturn(mockProfileTweetImage);
+        when(basicMapper.convertToResponseList(mockProfileTweetImage, ProfileTweetImageResponse.class)).thenReturn(responses);
+        assertEquals(responses, tweetMapper.getUserTweetImages(TestConstants.USER_ID));
+        verify(tweetService, times(1)).getUserTweetImages(TestConstants.USER_ID);
+        verify(basicMapper, times(1)).convertToResponseList(mockProfileTweetImage, ProfileTweetImageResponse.class);
+    }
+
+    @Test
+    public void getTweetAdditionalInfoById() {
+        TweetAdditionalInfoProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetAdditionalInfoProjection.class);
+        when(tweetService.getTweetAdditionalInfoById(TestConstants.TWEET_ID)).thenReturn(tweetProjection);
+        when(basicMapper.convertToResponse(tweetProjection, TweetAdditionalInfoResponse.class)).thenReturn(new TweetAdditionalInfoResponse());
+        assertEquals(new TweetAdditionalInfoResponse(), tweetMapper.getTweetAdditionalInfoById(TestConstants.TWEET_ID));
+        verify(tweetService, times(1)).getTweetAdditionalInfoById(TestConstants.TWEET_ID);
+        verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetAdditionalInfoResponse.class);
+    }
+
+    @Test
+    public void getRepliesByTweetId() {
+        List<TweetResponse> tweetResponses = List.of(new TweetResponse(), new TweetResponse());
+        when(tweetService.getRepliesByTweetId(TestConstants.TWEET_ID)).thenReturn(tweetProjections);
+        when(basicMapper.convertToResponseList(tweetProjections, TweetResponse.class)).thenReturn(tweetResponses);
+        assertEquals(tweetResponses, tweetMapper.getRepliesByTweetId(TestConstants.TWEET_ID));
+        verify(tweetService, times(1)).getRepliesByTweetId(TestConstants.TWEET_ID);
+        verify(basicMapper, times(1)).convertToResponseList(tweetProjections, TweetResponse.class);
     }
 }
