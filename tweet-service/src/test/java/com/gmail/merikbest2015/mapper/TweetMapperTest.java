@@ -121,4 +121,40 @@ public class TweetMapperTest {
         verify(tweetService, times(1)).getRepliesByTweetId(TestConstants.TWEET_ID);
         verify(basicMapper, times(1)).convertToResponseList(tweetProjections, TweetResponse.class);
     }
+
+    @Test
+    public void getQuotesByTweetId() {
+        when(tweetService.getQuotesByTweetId(pageable, TestConstants.TWEET_ID)).thenReturn(pageableTweetProjections);
+        when(basicMapper.getHeaderResponse(pageableTweetProjections, TweetResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tweetMapper.getQuotesByTweetId(pageable, TestConstants.TWEET_ID));
+        verify(tweetService, times(1)).getQuotesByTweetId(pageable, TestConstants.TWEET_ID);
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
+    }
+
+    @Test
+    public void getMediaTweets() {
+        when(tweetService.getMediaTweets(pageable)).thenReturn(pageableTweetProjections);
+        when(basicMapper.getHeaderResponse(pageableTweetProjections, TweetResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tweetMapper.getMediaTweets(pageable));
+        verify(tweetService, times(1)).getMediaTweets(pageable);
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
+    }
+
+    @Test
+    public void getTweetsWithVideo() {
+        when(tweetService.getTweetsWithVideo(pageable)).thenReturn(pageableTweetProjections);
+        when(basicMapper.getHeaderResponse(pageableTweetProjections, TweetResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tweetMapper.getTweetsWithVideo(pageable));
+        verify(tweetService, times(1)).getTweetsWithVideo(pageable);
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
+    }
+
+    @Test
+    public void getFollowersTweets() {
+        when(tweetService.getFollowersTweets(pageable)).thenReturn(pageableTweetProjections);
+        when(basicMapper.getHeaderResponse(pageableTweetProjections, TweetResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tweetMapper.getFollowersTweets(pageable));
+        verify(tweetService, times(1)).getFollowersTweets(pageable);
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
+    }
 }
