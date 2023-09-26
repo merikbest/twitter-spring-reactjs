@@ -2,10 +2,13 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.ProfileTweetImageResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -156,5 +159,31 @@ public class TweetMapperTest {
         assertEquals(headerResponse, tweetMapper.getFollowersTweets(pageable));
         verify(tweetService, times(1)).getFollowersTweets(pageable);
         verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
+    }
+
+    @Test
+    public void getTaggedImageUsers() {
+        HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
+                List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
+        when(tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tweetMapper.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
+        verify(tweetService, times(1)).getTaggedImageUsers(TestConstants.TWEET_ID, pageable);
+    }
+
+    @Test
+    public void createTweet() {
+        TweetRequest tweetRequest = new TweetRequest();
+        when(basicMapper.convertToResponse(tweetRequest, Tweet.class)).thenReturn(new Tweet());
+        when(tweetService.createNewTweet(new Tweet())).thenReturn(new TweetResponse());
+        assertEquals(new TweetResponse(), tweetMapper.createTweet(tweetRequest));
+        verify(basicMapper, times(1)).convertToResponse(tweetRequest, Tweet.class);
+        verify(tweetService, times(1)).createNewTweet(new Tweet());
+    }
+
+    @Test
+    public void deleteTweet() {
+        when(tweetService.deleteTweet(TestConstants.TWEET_ID)).thenReturn("Your Tweet was deleted");
+        assertEquals("Your Tweet was deleted", tweetMapper.deleteTweet(TestConstants.TWEET_ID));
+        verify(tweetService, times(1)).deleteTweet(TestConstants.TWEET_ID);
     }
 }
