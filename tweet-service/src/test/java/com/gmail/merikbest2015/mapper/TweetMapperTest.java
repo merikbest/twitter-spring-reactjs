@@ -3,11 +3,14 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
+import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.ProfileTweetImageResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
 import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
@@ -185,5 +188,49 @@ public class TweetMapperTest {
         when(tweetService.deleteTweet(TestConstants.TWEET_ID)).thenReturn("Your Tweet was deleted");
         assertEquals("Your Tweet was deleted", tweetMapper.deleteTweet(TestConstants.TWEET_ID));
         verify(tweetService, times(1)).deleteTweet(TestConstants.TWEET_ID);
+    }
+
+    @Test
+    public void searchTweets() {
+        when(tweetService.searchTweets("test", pageable)).thenReturn(pageableTweetProjections);
+        when(basicMapper.getHeaderResponse(pageableTweetProjections, TweetResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tweetMapper.searchTweets("test", pageable));
+        verify(tweetService, times(1)).searchTweets("test", pageable);
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
+    }
+
+    @Test
+    public void replyTweet() {
+        TweetRequest tweetRequest = new TweetRequest();
+        TweetResponse tweetResponse = new TweetResponse();
+        NotificationReplyResponse notificationReplyResponse =
+                new NotificationReplyResponse(TestConstants.TWEET_ID, NotificationType.REPLY, tweetResponse);
+        when(basicMapper.convertToResponse(tweetRequest, Tweet.class)).thenReturn(new Tweet());
+        when(tweetService.replyTweet(TestConstants.TWEET_ID, new Tweet())).thenReturn(tweetResponse);
+        assertEquals(notificationReplyResponse, tweetMapper.replyTweet(TestConstants.TWEET_ID, tweetRequest));
+        verify(basicMapper, times(1)).convertToResponse(tweetRequest, Tweet.class);
+        verify(tweetService, times(1)).replyTweet(TestConstants.TWEET_ID, new Tweet());
+    }
+
+    @Test
+    public void quoteTweet() {
+        TweetRequest tweetRequest = new TweetRequest();
+        TweetResponse tweetResponse = new TweetResponse();
+        when(basicMapper.convertToResponse(tweetRequest, Tweet.class)).thenReturn(new Tweet());
+        when(tweetService.quoteTweet(TestConstants.TWEET_ID, new Tweet())).thenReturn(tweetResponse);
+        assertEquals(tweetResponse, tweetMapper.quoteTweet(TestConstants.TWEET_ID, tweetRequest));
+        verify(basicMapper, times(1)).convertToResponse(tweetRequest, Tweet.class);
+        verify(tweetService, times(1)).quoteTweet(TestConstants.TWEET_ID, new Tweet());
+    }
+
+    @Test
+    public void changeTweetReplyType() {
+        TweetResponse tweetResponse = new TweetResponse();
+        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
+        when(tweetService.changeTweetReplyType(TestConstants.TWEET_ID, ReplyType.FOLLOW)).thenReturn(tweetProjection);
+        when(basicMapper.convertToResponse(tweetProjection, TweetResponse.class)).thenReturn(tweetResponse);
+        assertEquals(tweetResponse, tweetMapper.changeTweetReplyType(TestConstants.TWEET_ID, ReplyType.FOLLOW));
+        verify(tweetService, times(1)).changeTweetReplyType(TestConstants.TWEET_ID, ReplyType.FOLLOW);
+        verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
     }
 }
