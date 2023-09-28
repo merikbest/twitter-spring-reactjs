@@ -8,19 +8,15 @@ import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.impl.ScheduledTweetServiceImpl;
 import com.gmail.merikbest2015.service.impl.TweetServiceImpl;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
+import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,9 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class ScheduledTweetServiceImplTest {
+public class ScheduledTweetServiceImplTest extends AbstractAuthTest {
 
     @Autowired
     private ScheduledTweetServiceImpl scheduledTweetService;
@@ -53,14 +47,13 @@ public class ScheduledTweetServiceImplTest {
 
     @Before
     public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
+        super.setUp();
         tweet = new Tweet();
         tweet.setText("test text");
     }
 
     @Test
     public void getScheduledTweets() {
-        PageRequest pageable = PageRequest.of(0, 20);
         List<TweetProjection> tweetProjections = Arrays.asList(tweetProjection, tweetProjection);
         Page<TweetProjection> pageableTweetProjections = new PageImpl<>(tweetProjections, pageable, 20);
         when(tweetRepository.getScheduledTweets(TestConstants.USER_ID, pageable)).thenReturn(pageableTweetProjections);

@@ -8,21 +8,15 @@ import com.gmail.merikbest2015.repository.BookmarkRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.service.impl.BookmarkServiceImpl;
+import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
@@ -31,9 +25,7 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class BookmarkServiceImplTest {
+public class BookmarkServiceImplTest extends AbstractAuthTest {
 
     @Autowired
     private BookmarkServiceImpl bookmarkService;
@@ -47,13 +39,11 @@ public class BookmarkServiceImplTest {
     @MockBean
     private UserClient userClient;
 
-    private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-    private static final PageRequest pageable = PageRequest.of(0, 20);
     private static Tweet tweet;
 
     @Before
     public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
+        super.setUp();
         tweet = new Tweet();
         tweet.setDeleted(false);
         tweet.setAuthorId(TestConstants.USER_ID);

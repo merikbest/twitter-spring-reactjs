@@ -4,7 +4,6 @@ import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
-import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
@@ -20,15 +19,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -46,8 +41,6 @@ public class TweetClientMapperTest {
 
     @MockBean
     private TweetClientService tweetClientService;
-
-    private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
 
     private static final PageRequest pageable = PageRequest.of(0, 20);
     private static final List<TweetProjection> tweetProjections = Arrays.asList(
@@ -88,11 +81,7 @@ public class TweetClientMapperTest {
 
     @Test
     public void getNotificationTweet() {
-        NotificationTweetProjection notificationTweetProjection = factory.createProjection(
-                NotificationTweetProjection.class,
-                Map.of("id", 1L,
-                        "text", "test text",
-                        "authorId", TestConstants.USER_ID));
+        NotificationTweetProjection notificationTweetProjection = TweetServiceTestHelper.createNotificationTweetProjection();
         when(tweetClientService.getNotificationTweet(TestConstants.TWEET_ID)).thenReturn(notificationTweetProjection);
         when(basicMapper.convertToResponse(notificationTweetProjection, NotificationTweetResponse.class))
                 .thenReturn(new NotificationTweetResponse());
@@ -117,14 +106,7 @@ public class TweetClientMapperTest {
 
     @Test
     public void getChatTweet() {
-        ChatTweetProjection chatTweetProjection = factory.createProjection(
-                ChatTweetProjection.class,
-                Map.of("id", 1L,
-                        "text", "test text",
-                        "dateTime", LocalDateTime.now(),
-                        "user", new ChatTweetUserResponse(),
-                        "authorId", TestConstants.USER_ID,
-                        "deleted", false));
+        ChatTweetProjection chatTweetProjection = TweetServiceTestHelper.createChatTweetProjection();
         when(tweetClientService.getChatTweet(TestConstants.TWEET_ID)).thenReturn(chatTweetProjection);
         when(basicMapper.convertToResponse(chatTweetProjection, ChatTweetResponse.class)).thenReturn(new ChatTweetResponse());
         assertEquals(new ChatTweetResponse(), tweetClientMapper.getChatTweet(TestConstants.TWEET_ID));

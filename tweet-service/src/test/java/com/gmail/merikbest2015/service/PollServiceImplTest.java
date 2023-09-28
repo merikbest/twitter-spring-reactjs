@@ -16,16 +16,13 @@ import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.impl.PollServiceImpl;
 import com.gmail.merikbest2015.service.impl.TweetServiceImpl;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
+import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -37,9 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class PollServiceImplTest {
+public class PollServiceImplTest extends AbstractAuthTest {
 
     @Autowired
     private PollServiceImpl pollService;
@@ -69,7 +64,7 @@ public class PollServiceImplTest {
 
     @Before
     public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
+        super.setUp();
         tweet = new Tweet();
         tweet.setAuthorId(TestConstants.USER_ID);
     }

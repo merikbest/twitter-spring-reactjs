@@ -1,26 +1,19 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.constants.PathConstants;
+import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
+import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
@@ -28,9 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class TweetValidationHelperTest {
+public class TweetValidationHelperTest extends AbstractAuthTest {
 
     @Autowired
     private TweetValidationHelper tweetValidationHelper;
@@ -43,17 +34,16 @@ public class TweetValidationHelperTest {
 
     @Before
     public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
+        super.setUp();
     }
 
     @Test
     public void getValidUserIds() {
-        List<Long> tweetAuthorIds = List.of(1L, 2L, 3L);
-        when(tweetRepository.getTweetAuthorIds()).thenReturn(tweetAuthorIds);
-        when(userClient.getValidUserIds(new IdsRequest(tweetAuthorIds))).thenReturn(tweetAuthorIds);
-        assertEquals(tweetAuthorIds, tweetValidationHelper.getValidUserIds());
+        when(tweetRepository.getTweetAuthorIds()).thenReturn(ids);
+        when(userClient.getValidUserIds(new IdsRequest(ids))).thenReturn(ids);
+        assertEquals(ids, tweetValidationHelper.getValidUserIds());
         verify(tweetRepository, times(1)).getTweetAuthorIds();
-        verify(userClient, times(1)).getValidUserIds(new IdsRequest(tweetAuthorIds));
+        verify(userClient, times(1)).getValidUserIds(new IdsRequest(ids));
     }
 
     @Test
@@ -87,7 +77,7 @@ public class TweetValidationHelperTest {
 
     @Test
     public void checkValidTweet_ShouldUserNotFound() {
-        mockAuthenticatedUserId();
+        TweetServiceTestHelper.mockAuthenticatedUserId();
         Tweet tweet = new Tweet();
         tweet.setDeleted(false);
         tweet.setAuthorId(TestConstants.USER_ID);
@@ -101,7 +91,7 @@ public class TweetValidationHelperTest {
 
     @Test
     public void checkValidTweet_ShouldUserProfileBlocked() {
-        mockAuthenticatedUserId();
+        TweetServiceTestHelper.mockAuthenticatedUserId();
         Tweet tweet = new Tweet();
         tweet.setDeleted(false);
         tweet.setAuthorId(TestConstants.USER_ID);
@@ -129,11 +119,5 @@ public class TweetValidationHelperTest {
                 () -> tweetValidationHelper.checkTweetTextLength(""));
         assertEquals(INCORRECT_TWEET_TEXT_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
-    }
-
-    private void mockAuthenticatedUserId() {
-        MockHttpServletRequest mockRequest = new MockHttpServletRequest();
-        mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockRequest));
     }
 }

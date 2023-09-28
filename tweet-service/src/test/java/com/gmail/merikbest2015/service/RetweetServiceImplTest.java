@@ -16,22 +16,16 @@ import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.service.impl.RetweetServiceImpl;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
+import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,9 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class RetweetServiceImplTest {
+public class RetweetServiceImplTest extends AbstractAuthTest {
 
     @Autowired
     private RetweetServiceImpl retweetService;
@@ -60,13 +52,11 @@ public class RetweetServiceImplTest {
     @MockBean
     private UserClient userClient;
 
-    private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-    private static final PageRequest pageable = PageRequest.of(0, 20);
     private static Tweet tweet;
 
     @Before
     public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
+        super.setUp();
         tweet = new Tweet();
         tweet.setDeleted(false);
         tweet.setAuthorId(TestConstants.USER_ID);

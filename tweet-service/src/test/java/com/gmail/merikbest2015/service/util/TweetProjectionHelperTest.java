@@ -15,15 +15,12 @@ import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
+import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +28,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class TweetProjectionHelperTest {
+public class TweetProjectionHelperTest extends AbstractAuthTest {
 
     @Autowired
     private TweetProjectionHelper tweetProjectionHelper;
@@ -58,7 +53,7 @@ public class TweetProjectionHelperTest {
 
     @Before
     public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
+        super.setUp();
     }
 
     @Test
@@ -79,7 +74,6 @@ public class TweetProjectionHelperTest {
 
     @Test
     public void getTaggedImageUsers() {
-        List<Long> ids = List.of(1L, 2L, 3L);
         List<TaggedUserResponse> taggedUserResponses = List.of(new TaggedUserResponse(), new TaggedUserResponse());
         when(tweetRepository.getTaggedImageUserIds(TestConstants.TWEET_ID)).thenReturn(ids);
         when(userClient.getTaggedImageUsers(new IdsRequest(ids))).thenReturn(taggedUserResponses);

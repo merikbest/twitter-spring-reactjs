@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015;
 
+import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
@@ -13,6 +15,9 @@ import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -133,5 +138,30 @@ public class TweetServiceTestHelper {
                         "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
                 ));
         return Arrays.asList(bookmarkProjection1, bookmarkProjection2);
+    }
+
+    public static NotificationTweetProjection createNotificationTweetProjection() {
+        return factory.createProjection(
+                NotificationTweetProjection.class,
+                Map.of("id", 1L,
+                        "text", "test text",
+                        "authorId", TestConstants.USER_ID));
+    }
+
+    public static ChatTweetProjection createChatTweetProjection() {
+        return factory.createProjection(
+                ChatTweetProjection.class,
+                Map.of("id", 1L,
+                        "text", "test text",
+                        "dateTime", LocalDateTime.now(),
+                        "user", new ChatTweetUserResponse(),
+                        "authorId", TestConstants.USER_ID,
+                        "deleted", false));
+    }
+
+    public static void mockAuthenticatedUserId() {
+        MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+        mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, 1L);
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockRequest));
     }
 }

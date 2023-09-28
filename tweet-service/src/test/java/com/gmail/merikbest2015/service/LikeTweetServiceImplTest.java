@@ -17,22 +17,18 @@ import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.impl.LikeTweetServiceImpl;
+import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -45,9 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class LikeTweetServiceImplTest {
+public class LikeTweetServiceImplTest extends AbstractAuthTest {
 
     @Autowired
     private LikeTweetServiceImpl likeTweetService;
@@ -65,12 +59,11 @@ public class LikeTweetServiceImplTest {
     private UserClient userClient;
 
     private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-    private static final PageRequest pageable = PageRequest.of(0, 20);
     private static Tweet tweet;
 
     @Before
     public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
+        super.setUp();
         tweet = new Tweet();
         tweet.setDeleted(false);
         tweet.setAuthorId(TestConstants.USER_ID);
@@ -120,16 +113,15 @@ public class LikeTweetServiceImplTest {
 
     @Test
     public void getLikedUsersByTweetId() {
-        List<Long> usersIds = List.of(1L, 2L, 3L);
         HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
                 List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(likeTweetRepository.getLikedUserIds(TestConstants.TWEET_ID)).thenReturn(usersIds);
-        when(userClient.getUsersByIds(new IdsRequest(usersIds), pageable)).thenReturn(headerResponse);
+        when(likeTweetRepository.getLikedUserIds(TestConstants.TWEET_ID)).thenReturn(ids);
+        when(userClient.getUsersByIds(new IdsRequest(ids), pageable)).thenReturn(headerResponse);
         assertEquals(headerResponse, likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
         verify(likeTweetRepository, times(1)).getLikedUserIds(TestConstants.TWEET_ID);
-        verify(userClient, times(1)).getUsersByIds(new IdsRequest(usersIds), pageable);
+        verify(userClient, times(1)).getUsersByIds(new IdsRequest(ids), pageable);
     }
 
     @Test
