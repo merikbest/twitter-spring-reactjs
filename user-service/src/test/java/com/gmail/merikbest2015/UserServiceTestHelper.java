@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015;
 
-import com.gmail.merikbest2015.repository.projection.BlockedUserProjection;
-import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
-import com.gmail.merikbest2015.repository.projection.UserProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,6 +10,7 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserServiceTestHelper {
@@ -103,5 +102,60 @@ public class UserServiceTestHelper {
                     put("isFollower", false);
                 }});
         return new PageImpl<>(Arrays.asList(userProjection1, userProjection2), pageable, 20);
+    }
+
+    public static Page<FollowerUserProjection> createFollowerUserProjections() {
+        FollowerUserProjection followerUserProjection1 = factory.createProjection(
+                FollowerUserProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("about", TestConstants.ABOUT);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                }});
+        FollowerUserProjection followerUserProjection2 = factory.createProjection(
+                FollowerUserProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("about", TestConstants.ABOUT);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                }});
+        return new PageImpl<>(Arrays.asList(followerUserProjection1, followerUserProjection2), pageable, 20);
+    }
+
+    public static List<BaseUserProjection> createBaseUserProjections() {
+        BaseUserProjection baseUserProjection1 = factory.createProjection(
+                BaseUserProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("about", TestConstants.ABOUT);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                    put("privateProfile", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                    put("isWaitingForApprove", false);
+                    put("isFollower", false);
+                }});
+        BaseUserProjection baseUserProjection2 = factory.createProjection(
+                BaseUserProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("about", TestConstants.ABOUT);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                    put("privateProfile", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                    put("isWaitingForApprove", false);
+                    put("isFollower", false);
+                }});
+
+        return Arrays.asList(baseUserProjection1, baseUserProjection2);
     }
 }
