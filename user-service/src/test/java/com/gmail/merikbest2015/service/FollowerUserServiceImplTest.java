@@ -82,6 +82,28 @@ public class FollowerUserServiceImplTest extends AbstractAuthTest {
         testThrowUserHavePrivateProfile(() -> followerUserService.getFollowers(1L, pageable));
     }
 
+    @Test
+    public void getFollowing_ShouldReturnUserProjections() {
+        when(followerUserRepository.getFollowingById(TestConstants.USER_ID, pageable)).thenReturn(userProjections);
+        testReturnUserProjections(() -> followerUserService.getFollowing(TestConstants.USER_ID, pageable));
+        verify(followerUserRepository, times(1)).getFollowingById(TestConstants.USER_ID, pageable);
+    }
+
+    @Test
+    public void getFollowing_ShouldThrowUserNotFound() {
+        testThrowUserNotFound(() -> followerUserService.getFollowing(1L, pageable));
+    }
+
+    @Test
+    public void getFollowing_ShouldThrowUserProfileBLocked() {
+        testThrowUserProfileBlocked(() -> followerUserService.getFollowing(1L, pageable));
+    }
+
+    @Test
+    public void getFollowing_ShouldThrowUserHavePrivateProfile() {
+        testThrowUserHavePrivateProfile(() -> followerUserService.getFollowing(1L, pageable));
+    }
+
     @SneakyThrows
     private void testReturnUserProjections(Executable executable) {
         when(userRepository.isUserExist(TestConstants.USER_ID)).thenReturn(true);
