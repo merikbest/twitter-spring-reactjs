@@ -104,6 +104,76 @@ public class FollowerUserServiceImplTest extends AbstractAuthTest {
         testThrowUserHavePrivateProfile(() -> followerUserService.getFollowing(1L, pageable));
     }
 
+    @Test
+    public void getFollowerRequests_ShouldReturnFollowerUserProjections() {
+        Page<FollowerUserProjection> followerUserProjections = UserServiceTestHelper.createFollowerUserProjections();
+        when(followerUserRepository.getFollowerRequests(TestConstants.USER_ID, pageable)).thenReturn(followerUserProjections);
+        assertEquals(followerUserProjections, followerUserService.getFollowerRequests(pageable));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(followerUserRepository, times(1)).getFollowerRequests(TestConstants.USER_ID, pageable);
+    }
+
+    @Test
+    public void processFollow_ShouldFollow() {
+        NotificationRequest request = NotificationRequest.builder()
+                .notificationType(NotificationType.FOLLOW)
+                .userId(TestConstants.USER_ID)
+                .userToFollowId(1L)
+                .notifiedUserId(1L)
+                .build();
+        when(userRepository.isUserExist(1L)).thenReturn(true);
+        when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
+        when(followerUserRepository.isFollower(TestConstants.USER_ID, 1L)).thenReturn(false);
+        when(userRepository.getUserPrivateProfile(1L)).thenReturn(false);
+        assertTrue(followerUserService.processFollow(1L));
+        verify(authenticationService, times(2)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).isUserExist(1L);
+        verify(blockUserRepository, times(1)).isUserBlocked(1L, TestConstants.USER_ID);
+        verify(followerUserRepository, times(1)).isFollower(TestConstants.USER_ID, 1L);
+        verify(userRepository, times(1)).getUserPrivateProfile(1L);
+        verify(followerUserRepository, times(1)).follow(TestConstants.USER_ID, 1L);
+        verify(notificationClient, times(1)).sendNotification(request);
+    }
+
+    @Test
+    public void processFollow_ShouldFollowPrivateProfile() {
+        when(userRepository.isUserExist(1L)).thenReturn(true);
+        when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
+        when(followerUserRepository.isFollower(TestConstants.USER_ID, 1L)).thenReturn(false);
+        when(userRepository.getUserPrivateProfile(1L)).thenReturn(true);
+        assertFalse(followerUserService.processFollow(1L));
+        verify(authenticationService, times(2)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).isUserExist(1L);
+        verify(blockUserRepository, times(1)).isUserBlocked(1L, TestConstants.USER_ID);
+        verify(followerUserRepository, times(1)).isFollower(TestConstants.USER_ID, 1L);
+        verify(userRepository, times(1)).getUserPrivateProfile(1L);
+        verify(followerUserRepository, times(1)).addFollowerRequest(TestConstants.USER_ID, 1L);
+    }
+
+    @Test
+    public void processFollow_ShouldUnfollow() {
+        when(userRepository.isUserExist(1L)).thenReturn(true);
+        when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
+        when(followerUserRepository.isFollower(TestConstants.USER_ID, 1L)).thenReturn(true);
+        assertFalse(followerUserService.processFollow(1L));
+        verify(authenticationService, times(2)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).isUserExist(1L);
+        verify(blockUserRepository, times(1)).isUserBlocked(1L, TestConstants.USER_ID);
+        verify(followerUserRepository, times(1)).isFollower(TestConstants.USER_ID, 1L);
+        verify(followerUserRepository, times(1)).unfollow(TestConstants.USER_ID, 1L);
+        verify(userRepository, times(1)).unsubscribe(TestConstants.USER_ID, 1L);
+    }
+
+    @Test
+    public void processFollow_ShouldThrowUserNotFound() {
+        testThrowUserNotFound(() -> followerUserService.processFollow(1L));
+    }
+
+    @Test
+    public void processFollow_ShouldThrowUserProfileBLocked() {
+        testThrowUserProfileBlocked(() -> followerUserService.processFollow(1L));
+    }
+
     @SneakyThrows
     private void testReturnUserProjections(Executable executable) {
         when(userRepository.isUserExist(TestConstants.USER_ID)).thenReturn(true);
