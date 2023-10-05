@@ -174,6 +174,32 @@ public class FollowerUserServiceImplTest extends AbstractAuthTest {
         testThrowUserProfileBlocked(() -> followerUserService.processFollow(1L));
     }
 
+    @Test
+    public void overallFollowers_ShouldReturnBaseUserProjections() {
+        List<BaseUserProjection> baseUserProjections = UserServiceTestHelper.createBaseUserProjections();
+        when(userRepository.isUserExist(1L)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(true);
+        when(followerUserRepository.getSameFollowers(1L, TestConstants.USER_ID, BaseUserProjection.class)).thenReturn(baseUserProjections);
+        assertEquals(baseUserProjections, followerUserService.overallFollowers(1L));
+        verify(authenticationService, times(4)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).isUserExist(1L);
+    }
+
+    @Test
+    public void overallFollowers_ShouldThrowUserNotFound() {
+        testThrowUserNotFound(() -> followerUserService.overallFollowers(1L));
+    }
+
+    @Test
+    public void overallFollowers_ShouldThrowUserProfileBlocked() {
+        testThrowUserProfileBlocked(() -> followerUserService.overallFollowers(1L));
+    }
+
+    @Test
+    public void overallFollowers_ShouldThrowUserHavePrivateProfile() {
+        testThrowUserHavePrivateProfile(() -> followerUserService.overallFollowers(1L));
+    }
+
     @SneakyThrows
     private void testReturnUserProjections(Executable executable) {
         when(userRepository.isUserExist(TestConstants.USER_ID)).thenReturn(true);
