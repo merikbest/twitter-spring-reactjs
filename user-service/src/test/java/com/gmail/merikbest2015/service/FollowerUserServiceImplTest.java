@@ -200,6 +200,23 @@ public class FollowerUserServiceImplTest extends AbstractAuthTest {
         testThrowUserHavePrivateProfile(() -> followerUserService.overallFollowers(1L));
     }
 
+    @Test
+    public void acceptFollowRequest() {
+        when(userRepository.isUserExist(1L)).thenReturn(true);
+        assertEquals(String.format("User (id:%s) accepted.", 1L), followerUserService.acceptFollowRequest(1L));
+        verify(userRepository, times(1)).isUserExist(1L);
+        verify(followerUserRepository, times(1)).removeFollowerRequest(1L, TestConstants.USER_ID);
+        verify(followerUserRepository, times(1)).follow(1L, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void declineFollowRequest() {
+        when(userRepository.isUserExist(1L)).thenReturn(true);
+        assertEquals(String.format("User (id:%s) declined.", 1L), followerUserService.declineFollowRequest(1L));
+        verify(userRepository, times(1)).isUserExist(1L);
+        verify(followerUserRepository, times(1)).removeFollowerRequest(1L, TestConstants.USER_ID);
+    }
+
     @SneakyThrows
     private void testReturnUserProjections(Executable executable) {
         when(userRepository.isUserExist(TestConstants.USER_ID)).thenReturn(true);
