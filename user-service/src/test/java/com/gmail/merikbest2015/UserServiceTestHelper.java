@@ -158,4 +158,36 @@ public class UserServiceTestHelper {
 
         return Arrays.asList(baseUserProjection1, baseUserProjection2);
     }
+
+    public static UserProfileProjection createUserProfileProjection() {
+        return factory.createProjection(
+                UserProfileProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("location", TestConstants.LOCATION);
+                    put("about", TestConstants.ABOUT);
+                    put("website", TestConstants.WEBSITE);
+                    put("country", TestConstants.COUNTRY);
+                    put("birthday", TestConstants.BIRTHDAY);
+                    put("registrationDate", TestConstants.REGISTRATION_DATE);
+                    put("tweetCount", TestConstants.TWEET_COUNT);
+                    put("mediaTweetCount", TestConstants.MEDIA_TWEET_COUNT);
+                    put("likeCount", TestConstants.LIKE_TWEET_COUNT);
+                    put("isMutedDirectMessages", false);
+                    put("isPrivateProfile", false);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                    put("wallpaper", TestConstants.WALLPAPER_SRC);
+                    put("pinnedTweetId", TestConstants.PINNED_TWEET_ID);
+                    put("followersSize", 11L);
+                    put("followingSize", 11L);
+                    put("isUserMuted", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                    put("isWaitingForApprove", false);
+                    put("isFollower", false);
+                    put("isSubscriber", false);
+                }});
+    }
 }
