@@ -7,7 +7,6 @@ import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
 import com.gmail.merikbest2015.repository.FollowerUserRepository;
-import com.gmail.merikbest2015.repository.MuteUserRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.BaseUserProjection;
 import com.gmail.merikbest2015.repository.projection.FollowerUserProjection;
@@ -42,9 +41,6 @@ public class FollowerUserServiceImplTest extends AbstractAuthTest {
 
     @MockBean
     private BlockUserRepository blockUserRepository;
-
-    @MockBean
-    private MuteUserRepository muteUserRepository;
 
     @MockBean
     private FollowerUserRepository followerUserRepository;
@@ -206,7 +202,7 @@ public class FollowerUserServiceImplTest extends AbstractAuthTest {
     @Test
     public void processFollowRequestToPrivateProfile_ShouldAddFollowerRequest() {
         when(userRepository.isUserExist(1L)).thenReturn(true);
-        when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
+        when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
         when(followerUserRepository.isFollowerRequest(1L, TestConstants.USER_ID)).thenReturn(false);
         when(userRepository.getUserById(1L, UserProfileProjection.class)).thenReturn(Optional.of(userProfileProjection));
         assertEquals(userProfileProjection, followerUserService.processFollowRequestToPrivateProfile(1L));
@@ -219,7 +215,7 @@ public class FollowerUserServiceImplTest extends AbstractAuthTest {
     @Test
     public void processFollowRequestToPrivateProfile_ShouldRemoveFollowerRequest() {
         when(userRepository.isUserExist(1L)).thenReturn(true);
-        when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
+        when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
         when(followerUserRepository.isFollowerRequest(1L, TestConstants.USER_ID)).thenReturn(true);
         when(userRepository.getUserById(1L, UserProfileProjection.class)).thenReturn(Optional.of(userProfileProjection));
         assertEquals(userProfileProjection, followerUserService.processFollowRequestToPrivateProfile(1L));
@@ -227,6 +223,16 @@ public class FollowerUserServiceImplTest extends AbstractAuthTest {
         verify(blockUserRepository, times(1)).isUserBlocked(1L, TestConstants.USER_ID);
         verify(followerUserRepository, times(1)).removeFollowerRequest(TestConstants.USER_ID, 1L);
         verify(followerUserRepository, times(1)).isFollowerRequest(1L, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void processFollowRequestToPrivateProfile_ShouldThrowUserNotFound() {
+        testThrowUserNotFound(() -> followerUserService.processFollowRequestToPrivateProfile(1L));
+    }
+
+    @Test
+    public void processFollowRequestToPrivateProfile_ShouldThrowUserProfileBlocke() {
+        testThrowUserProfileBlocked(() -> followerUserService.processFollowRequestToPrivateProfile(1L));
     }
 
     @Test
