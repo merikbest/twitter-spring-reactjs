@@ -190,4 +190,23 @@ public class UserServiceTestHelper {
                     put("isSubscriber", false);
                 }});
     }
+
+    public static UserChatProjection createUserChatProjection() {
+        return factory.createProjection(
+                UserChatProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("about", TestConstants.ABOUT);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                    put("privateProfile", false);
+                    put("mutedDirectMessages", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                    put("isWaitingForApprove", false);
+                    put("isFollower", false);
+                    put("isUserChatParticipant", false);
+                }});
+    }
 }
