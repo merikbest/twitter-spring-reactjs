@@ -11,6 +11,7 @@ import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.impl.UserClientServiceImpl;
+import com.gmail.merikbest2015.service.util.UserServiceHelper;
 import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Before;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpHeaders;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class UserClientServiceImplTest extends AbstractAuthTest {
@@ -45,6 +47,9 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
 
     @MockBean
     private AuthenticationService authenticationService;
+
+    @MockBean
+    private UserServiceHelper userServiceHelper;
 
     @Before
     public void setUp() {
@@ -70,5 +75,26 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
         assertEquals(headerResponse, userClientService.searchUsersByUsername("test", pageable));
         verify(userRepository, times(1)).searchUsersByUsername("test", pageable, UserChatProjection.class);
         verify(basicMapper, times(1)).getHeaderResponse(userChatProjections, UserChatResponse.class);
+    }
+
+    @Test
+    public void getSubscribersByUserId() {
+        when(userRepository.getSubscribersByUserId(TestConstants.USER_ID)).thenReturn(ids);
+        assertEquals(ids, userClientService.getSubscribersByUserId(TestConstants.USER_ID));
+        verify(userRepository, times(1)).getSubscribersByUserId(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void isUserFollowByOtherUser() {
+        when(userServiceHelper.isUserFollowByOtherUser(TestConstants.USER_ID)).thenReturn(true);
+        assertTrue(userClientService.isUserFollowByOtherUser(TestConstants.USER_ID));
+        verify(userServiceHelper, times(1)).isUserFollowByOtherUser(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void isUserHavePrivateProfile() {
+        when(userServiceHelper.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        assertTrue(userClientService.isUserHavePrivateProfile(TestConstants.USER_ID));
+        verify(userServiceHelper, times(1)).isUserHavePrivateProfile(TestConstants.USER_ID);
     }
 }
