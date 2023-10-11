@@ -97,4 +97,31 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
         assertTrue(userClientService.isUserHavePrivateProfile(TestConstants.USER_ID));
         verify(userServiceHelper, times(1)).isUserHavePrivateProfile(TestConstants.USER_ID);
     }
+
+    @Test
+    public void isUserBlocked() {
+        when(blockUserRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
+        assertTrue(userClientService.isUserBlocked(TestConstants.USER_ID, 1L));
+        verify(blockUserRepository, times(1)).isUserBlocked(TestConstants.USER_ID, 1L);
+    }
+
+    @Test
+    public void isUserBlockedByMyProfile() {
+        when(userServiceHelper.isUserBlockedByMyProfile(TestConstants.USER_ID)).thenReturn(true);
+        assertTrue(userClientService.isUserBlockedByMyProfile(TestConstants.USER_ID));
+        verify(userServiceHelper, times(1)).isUserBlockedByMyProfile(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void isMyProfileBlockedByUser() {
+        when(userServiceHelper.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        assertTrue(userClientService.isMyProfileBlockedByUser(TestConstants.USER_ID));
+        verify(userServiceHelper, times(1)).isMyProfileBlockedByUser(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void increaseNotificationsCount() {
+        userClientService.increaseNotificationsCount(TestConstants.USER_ID);
+        verify(userRepository, times(1)).increaseNotificationsCount(TestConstants.USER_ID);
+    }
 }
