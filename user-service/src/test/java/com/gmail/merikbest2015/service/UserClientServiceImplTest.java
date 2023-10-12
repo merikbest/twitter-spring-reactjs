@@ -53,6 +53,7 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
 
     @Before
     public void setUp() {
+        super.setUp();
         when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
     }
 
@@ -123,5 +124,29 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
     public void increaseNotificationsCount() {
         userClientService.increaseNotificationsCount(TestConstants.USER_ID);
         verify(userRepository, times(1)).increaseNotificationsCount(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void increaseMentionsCount() {
+        userClientService.increaseMentionsCount(TestConstants.USER_ID);
+        verify(userRepository, times(1)).increaseMentionsCount(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updateLikeCount() {
+        userClientService.updateLikeCount(true);
+        verify(userRepository, times(1)).updateLikeCount(true, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updateTweetCount() {
+        userClientService.updateTweetCount(true);
+        verify(userRepository, times(1)).updateTweetCount(true, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updateMediaTweetCount() {
+        userClientService.updateMediaTweetCount(true);
+        verify(userRepository, times(1)).updateMediaTweetCount(true, TestConstants.USER_ID);
     }
 }
