@@ -209,4 +209,42 @@ public class UserServiceTestHelper {
                     put("isUserChatParticipant", false);
                 }});
     }
+
+    public static CommonUserProjection createCommonUserProjection() {
+        return factory.createProjection(
+                CommonUserProjection.class,
+                Map.of(
+                        "id", 1L,
+                        "fullName", TestConstants.FULL_NAME,
+                        "username", TestConstants.USERNAME,
+                        "avatar", TestConstants.AVATAR_SRC_1,
+                        "privateProfile", false
+                ));
+    }
+
+    public static List<ListMemberProjection> createListMemberProjections() {
+        ListMemberProjection listMemberProjection1 = factory.createProjection(
+                ListMemberProjection.class,
+                Map.of(
+                        "id", 1L,
+                        "fullName", TestConstants.FULL_NAME,
+                        "username", TestConstants.USERNAME,
+                        "about", TestConstants.ABOUT,
+                        "avatar", TestConstants.AVATAR_SRC_1,
+                        "privateProfile", false,
+                        "isUserMuted", true
+                ));
+        ListMemberProjection listMemberProjection2 = factory.createProjection(
+                ListMemberProjection.class,
+                Map.of(
+                        "id", 2L,
+                        "fullName", TestConstants.FULL_NAME,
+                        "username", TestConstants.USERNAME,
+                        "about", TestConstants.ABOUT,
+                        "avatar", TestConstants.AVATAR_SRC_1,
+                        "privateProfile", false,
+                        "isUserMuted", true
+                ));
+        return Arrays.asList(listMemberProjection1, listMemberProjection2);
+    }
 }

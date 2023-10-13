@@ -3,11 +3,16 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
 import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
+import com.gmail.merikbest2015.repository.projection.CommonUserProjection;
+import com.gmail.merikbest2015.repository.projection.ListMemberProjection;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.impl.UserClientServiceImpl;
@@ -23,6 +28,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpHeaders;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -148,5 +154,38 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
     public void updateMediaTweetCount() {
         userClientService.updateMediaTweetCount(true);
         verify(userRepository, times(1)).updateMediaTweetCount(true, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void getListOwnerById() {
+        CommonUserResponse commonUserResponse = new CommonUserResponse();
+        CommonUserProjection commonUserProjection = UserServiceTestHelper.createCommonUserProjection();
+        when(userRepository.getUserById(TestConstants.USER_ID, CommonUserProjection.class)).thenReturn(Optional.of(commonUserProjection));
+        when(basicMapper.convertToResponse(commonUserProjection, CommonUserResponse.class)).thenReturn(commonUserResponse);
+        assertEquals(commonUserResponse, userClientService.getListOwnerById(TestConstants.USER_ID));
+        verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, CommonUserProjection.class);
+        verify(basicMapper, times(1)).convertToResponse(commonUserProjection, CommonUserResponse.class);
+    }
+
+    @Test
+    public void getListParticipantsByIds() {
+        List<ListMemberResponse> listMemberResponses = List.of(new ListMemberResponse(), new ListMemberResponse());
+        List<ListMemberProjection> listMemberProjections = UserServiceTestHelper.createListMemberProjections();
+        when(userRepository.getUsersByIds(ids, ListMemberProjection.class)).thenReturn(listMemberProjections);
+        when(basicMapper.convertToResponseList(listMemberProjections, ListMemberResponse.class)).thenReturn(listMemberResponses);
+        assertEquals(listMemberResponses, userClientService.getListParticipantsByIds(new IdsRequest(ids)));
+        verify(userRepository, times(1)).getUsersByIds(ids, ListMemberProjection.class);
+        verify(basicMapper, times(1)).convertToResponseList(listMemberProjections, ListMemberResponse.class);
+    }
+
+    @Test
+    public void searchListMembersByUsername() {
+        List<ListMemberResponse> listMemberResponses = List.of(new ListMemberResponse(), new ListMemberResponse());
+        List<ListMemberProjection> listMemberProjections = UserServiceTestHelper.createListMemberProjections();
+        when(userRepository.searchListMembersByUsername("test")).thenReturn(listMemberProjections);
+        when(basicMapper.convertToResponseList(listMemberProjections, ListMemberResponse.class)).thenReturn(listMemberResponses);
+        assertEquals(listMemberResponses, userClientService.searchListMembersByUsername("test"));
+        verify(userRepository, times(1)).searchListMembersByUsername("test");
+        verify(basicMapper, times(1)).convertToResponseList(listMemberProjections, ListMemberResponse.class);
     }
 }
