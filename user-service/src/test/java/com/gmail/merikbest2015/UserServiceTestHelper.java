@@ -222,6 +222,48 @@ public class UserServiceTestHelper {
                 ));
     }
 
+    public static NotificationUserProjection createNotificationUserProjection() {
+        return factory.createProjection(
+                NotificationUserProjection.class,
+                Map.of(
+                        "id", 1L,
+                        "fullName", TestConstants.FULL_NAME,
+                        "username", TestConstants.USERNAME
+                ));
+    }
+
+    public static TweetAuthorProjection createTweetAuthorProjection() {
+        return factory.createProjection(
+                TweetAuthorProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("email", TestConstants.USER_EMAIL);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                    put("privateProfile", false);
+                    put("mutedDirectMessages", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                    put("isWaitingForApprove", false);
+                    put("isFollower", false);
+                }});
+    }
+
+    public static TweetAdditionalInfoUserProjection createTweetAdditionalInfoUserProjection() {
+        return factory.createProjection(
+                TweetAdditionalInfoUserProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("mutedDirectMessages", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                    put("isFollower", false);
+                }});
+    }
+
     public static List<ListMemberProjection> createListMemberProjections() {
         ListMemberProjection listMemberProjection1 = factory.createProjection(
                 ListMemberProjection.class,

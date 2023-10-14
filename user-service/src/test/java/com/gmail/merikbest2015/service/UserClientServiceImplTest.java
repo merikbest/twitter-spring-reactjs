@@ -5,16 +5,16 @@ import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
 import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.repository.projection.CommonUserProjection;
-import com.gmail.merikbest2015.repository.projection.ListMemberProjection;
-import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
-import com.gmail.merikbest2015.repository.projection.UserChatProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.impl.UserClientServiceImpl;
 import com.gmail.merikbest2015.service.util.UserServiceHelper;
 import com.gmail.merikbest2015.util.AbstractAuthTest;
@@ -187,5 +187,40 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
         assertEquals(listMemberResponses, userClientService.searchListMembersByUsername("test"));
         verify(userRepository, times(1)).searchListMembersByUsername("test");
         verify(basicMapper, times(1)).convertToResponseList(listMemberProjections, ListMemberResponse.class);
+    }
+
+    @Test
+    public void getNotificationUser() {
+        NotificationUserResponse listMemberResponse = new NotificationUserResponse();
+        NotificationUserProjection userProjection = UserServiceTestHelper.createNotificationUserProjection();
+        when(userRepository.getUserById(TestConstants.USER_ID, NotificationUserProjection.class)).thenReturn(Optional.of(userProjection));
+        when(basicMapper.convertToResponse(userProjection, NotificationUserResponse.class)).thenReturn(listMemberResponse);
+        assertEquals(listMemberResponse, userClientService.getNotificationUser(TestConstants.USER_ID));
+        verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, NotificationUserProjection.class);
+        verify(basicMapper, times(1)).convertToResponse(listMemberResponse, NotificationUserResponse.class);
+    }
+
+    @Test
+    public void getTweetAuthor() {
+        TweetAuthorResponse tweetAuthorResponse = new TweetAuthorResponse();
+        TweetAuthorProjection tweetAuthorProjection = UserServiceTestHelper.createTweetAuthorProjection();
+        when(userRepository.getUserById(TestConstants.USER_ID, TweetAuthorProjection.class)).thenReturn(Optional.of(tweetAuthorProjection));
+        when(basicMapper.convertToResponse(tweetAuthorProjection, TweetAuthorResponse.class)).thenReturn(tweetAuthorResponse);
+        assertEquals(tweetAuthorResponse, userClientService.getTweetAuthor(TestConstants.USER_ID));
+        verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, TweetAuthorProjection.class);
+        verify(basicMapper, times(1)).convertToResponse(tweetAuthorResponse, TweetAuthorResponse.class);
+    }
+
+    @Test
+    public void getTweetAdditionalInfoUser() {
+        TweetAdditionalInfoUserResponse infoUserResponse = new TweetAdditionalInfoUserResponse();
+        TweetAdditionalInfoUserProjection tweetAdditionalInfoUserProjection = UserServiceTestHelper.createTweetAdditionalInfoUserProjection();
+        when(userRepository.getUserById(TestConstants.USER_ID, TweetAdditionalInfoUserProjection.class))
+                .thenReturn(Optional.of(tweetAdditionalInfoUserProjection));
+        when(basicMapper.convertToResponse(tweetAdditionalInfoUserProjection, TweetAdditionalInfoUserResponse.class))
+                .thenReturn(infoUserResponse);
+        assertEquals(infoUserResponse, userClientService.getTweetAdditionalInfoUser(TestConstants.USER_ID));
+        verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, TweetAdditionalInfoUserProjection.class);
+        verify(basicMapper, times(1)).convertToResponse(tweetAdditionalInfoUserProjection, TweetAdditionalInfoUserResponse.class);
     }
 }
