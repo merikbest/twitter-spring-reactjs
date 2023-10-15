@@ -9,7 +9,9 @@ import com.gmail.merikbest2015.dto.response.notification.NotificationUserRespons
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
+import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserChatResponse;
+import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
 import com.gmail.merikbest2015.repository.FollowerUserRepository;
@@ -222,5 +224,43 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
         assertEquals(infoUserResponse, userClientService.getTweetAdditionalInfoUser(TestConstants.USER_ID));
         verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, TweetAdditionalInfoUserProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetAdditionalInfoUserProjection, TweetAdditionalInfoUserResponse.class);
+    }
+
+    @Test
+    public void getUsersByIds() {
+        HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
+                List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
+        Page<UserProjection> userProjections = UserServiceTestHelper.createUserProjections();
+        when(userRepository.getUsersByIds(ids, pageable)).thenReturn(userProjections);
+        when(basicMapper.getHeaderResponse(userProjections, UserResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, userClientService.getUsersByIds(new IdsRequest(ids), pageable));
+        verify(userRepository, times(1)).getUsersByIds(ids, pageable);
+        verify(basicMapper, times(1)).getHeaderResponse(userProjections, UserResponse.class);
+    }
+
+    @Test
+    public void getTaggedImageUsers() {
+        List<TaggedUserProjection> taggedUserProjections = UserServiceTestHelper.createTaggedUserProjectionList();
+        List<TaggedUserResponse> taggedUserResponses = List.of(new TaggedUserResponse(), new TaggedUserResponse());
+        when(userRepository.getTaggedImageUsers(ids)).thenReturn(taggedUserProjections);
+        when(basicMapper.convertToResponseList(taggedUserProjections, TaggedUserResponse.class)).thenReturn(taggedUserResponses);
+        assertEquals(taggedUserResponses, userClientService.getTaggedImageUsers(new IdsRequest(ids)));
+        verify(userRepository, times(1)).getTaggedImageUsers(ids);
+        verify(basicMapper, times(1)).convertToResponseList(taggedUserProjections, TaggedUserResponse.class);
+    }
+
+    @Test
+    public void updatePinnedTweetId() {
+        when(userRepository.getPinnedTweetId(TestConstants.USER_ID)).thenReturn(TestConstants.TWEET_ID);
+        userClientService.updatePinnedTweetId(TestConstants.TWEET_ID);
+        verify(userRepository, times(1)).getPinnedTweetId(TestConstants.USER_ID);
+        verify(userRepository, times(1)).updatePinnedTweetId(null, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void getUserPinnedTweetId() {
+        when(userRepository.getPinnedTweetId(TestConstants.USER_ID)).thenReturn(TestConstants.TWEET_ID);
+        assertEquals(TestConstants.TWEET_ID, userClientService.getUserPinnedTweetId(TestConstants.USER_ID));
+        verify(userRepository, times(1)).getPinnedTweetId(TestConstants.USER_ID);
     }
 }

@@ -232,6 +232,22 @@ public class UserServiceTestHelper {
                 ));
     }
 
+    public static List<TaggedUserProjection> createTaggedUserProjectionList() {
+        TaggedUserProjection taggedUserResponse1 = factory.createProjection(
+                TaggedUserProjection.class,
+                Map.of(
+                        "id", 1L,
+                        "fullName", TestConstants.FULL_NAME
+                ));
+        TaggedUserProjection taggedUserResponse2 = factory.createProjection(
+                TaggedUserProjection.class,
+                Map.of(
+                        "id", 2L,
+                        "fullName", TestConstants.FULL_NAME
+                ));
+        return Arrays.asList(taggedUserResponse1, taggedUserResponse2);
+    }
+
     public static TweetAuthorProjection createTweetAuthorProjection() {
         return factory.createProjection(
                 TweetAuthorProjection.class,
