@@ -280,6 +280,20 @@ public class UserServiceTestHelper {
                 }});
     }
 
+    public static ChatUserParticipantProjection createChatUserParticipantProjection() {
+        return factory.createProjection(
+                ChatUserParticipantProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                    put("isMutedDirectMessages", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                }});
+    }
+
     public static List<ListMemberProjection> createListMemberProjections() {
         ListMemberProjection listMemberProjection1 = factory.createProjection(
                 ListMemberProjection.class,

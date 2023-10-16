@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.service;
 
-
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
@@ -29,6 +29,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpHeaders;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,7 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
 
     @Test
     public void getUserFollowersIds_ShouldReturnUserIds() {
+        List<Long> ids = new ArrayList<>(List.of(1L, 2L, 3L));
         when(followerUserRepository.getUserFollowersIds(TestConstants.USER_ID)).thenReturn(ids);
         assertEquals(4, userClientService.getUserFollowersIds().size());
         verify(authenticationService, times(1)).getAuthenticatedUserId();
@@ -199,7 +201,7 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
         when(basicMapper.convertToResponse(userProjection, NotificationUserResponse.class)).thenReturn(listMemberResponse);
         assertEquals(listMemberResponse, userClientService.getNotificationUser(TestConstants.USER_ID));
         verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, NotificationUserProjection.class);
-        verify(basicMapper, times(1)).convertToResponse(listMemberResponse, NotificationUserResponse.class);
+        verify(basicMapper, times(1)).convertToResponse(userProjection, NotificationUserResponse.class);
     }
 
     @Test
@@ -210,7 +212,7 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
         when(basicMapper.convertToResponse(tweetAuthorProjection, TweetAuthorResponse.class)).thenReturn(tweetAuthorResponse);
         assertEquals(tweetAuthorResponse, userClientService.getTweetAuthor(TestConstants.USER_ID));
         verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, TweetAuthorProjection.class);
-        verify(basicMapper, times(1)).convertToResponse(tweetAuthorResponse, TweetAuthorResponse.class);
+        verify(basicMapper, times(1)).convertToResponse(tweetAuthorProjection, TweetAuthorResponse.class);
     }
 
     @Test
@@ -262,5 +264,44 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
         when(userRepository.getPinnedTweetId(TestConstants.USER_ID)).thenReturn(TestConstants.TWEET_ID);
         assertEquals(TestConstants.TWEET_ID, userClientService.getUserPinnedTweetId(TestConstants.USER_ID));
         verify(userRepository, times(1)).getPinnedTweetId(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void getValidTweetUserIds() {
+        when(userRepository.getValidUserIdsByIds(ids, TestConstants.USER_ID)).thenReturn(ids);
+        when(userRepository.getValidUserIdsByName("test", ids)).thenReturn(ids);
+        assertEquals(ids, userClientService.getValidTweetUserIds(new IdsRequest(ids), "test"));
+        verify(userRepository, times(1)).getValidUserIdsByIds(ids, TestConstants.USER_ID);
+        verify(userRepository, times(1)).getValidUserIdsByName("test", ids);
+    }
+
+    @Test
+    public void getValidUserIds() {
+        List<Long> ids = new ArrayList<>(List.of(1L, 2L, 3L));
+        when(userRepository.getUserIdsWhoBlockedMyProfile(ids, TestConstants.USER_ID)).thenReturn(ids);
+        when(userRepository.getValidUserIdsByIds(ids, TestConstants.USER_ID)).thenReturn(new ArrayList<>());
+        assertEquals(0, userClientService.getValidUserIds(new IdsRequest(ids)).size());
+        verify(userRepository, times(1)).getUserIdsWhoBlockedMyProfile(ids, TestConstants.USER_ID);
+        verify(userRepository, times(1)).getValidUserIdsByIds(ids, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void getChatParticipant() {
+        ChatUserParticipantProjection chatUserParticipantProjection = UserServiceTestHelper.createChatUserParticipantProjection();
+        ChatUserParticipantResponse chatUserParticipantResponse = new ChatUserParticipantResponse();
+        when(userRepository.getUserById(TestConstants.USER_ID, ChatUserParticipantProjection.class))
+                .thenReturn(Optional.of(chatUserParticipantProjection));
+        when(basicMapper.convertToResponse(chatUserParticipantProjection, ChatUserParticipantResponse.class))
+                .thenReturn(chatUserParticipantResponse);
+        assertEquals(chatUserParticipantResponse, userClientService.getChatParticipant(TestConstants.USER_ID));
+        verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, ChatUserParticipantProjection.class);
+        verify(basicMapper, times(1)).convertToResponse(chatUserParticipantProjection, ChatUserParticipantResponse.class);
+    }
+
+    @Test
+    public void isUserExists() {
+        when(userRepository.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        assertTrue(userClientService.isUserExists(TestConstants.USER_ID));
+        verify(userRepository, times(1)).isUserExists(TestConstants.USER_ID);
     }
 }
