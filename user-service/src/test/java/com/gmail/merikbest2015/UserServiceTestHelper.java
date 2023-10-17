@@ -70,6 +70,35 @@ public class UserServiceTestHelper {
         return new PageImpl<>(Arrays.asList(mutedUserProjection1, mutedUserProjection2), pageable, 20);
     }
 
+    public static UserProjection createUserProjection() {
+        return factory.createProjection(
+                UserProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("about", TestConstants.ABOUT);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                    put("privateProfile", false);
+                    put("mutedDirectMessages", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                    put("isWaitingForApprove", false);
+                    put("isFollower", false);
+                }});
+    }
+
+    public static ChatTweetUserProjection createChatTweetUserProjection() {
+        return factory.createProjection(
+                ChatTweetUserProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                }});
+    }
+
     public static Page<UserProjection> createUserProjections() {
         UserProjection userProjection1 = factory.createProjection(
                 UserProjection.class,
@@ -103,6 +132,8 @@ public class UserServiceTestHelper {
                 }});
         return new PageImpl<>(Arrays.asList(userProjection1, userProjection2), pageable, 20);
     }
+
+
 
     public static Page<FollowerUserProjection> createFollowerUserProjections() {
         FollowerUserProjection followerUserProjection1 = factory.createProjection(
