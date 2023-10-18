@@ -342,4 +342,35 @@ public class UserClientServiceImplTest extends AbstractAuthTest {
         assertEquals(0, userClientService.getValidUserIds(new IdsRequest(ids)).size());
         verify(userRepository, times(1)).getUserIdsWhoBlockedMyProfile(ids, TestConstants.USER_ID);
     }
+
+    @Test
+    public void getUsersWhichUserSubscribed() {
+        NotificationUserProjection userProjection = UserServiceTestHelper.createNotificationUserProjection();
+        List<NotificationUserProjection> notificationUserProjections = List.of(userProjection);
+        List<NotificationUserResponse> notificationUserResponses = List.of(new NotificationUserResponse());
+        when(userRepository.getUsersWhichUserSubscribed(TestConstants.USER_ID)).thenReturn(notificationUserProjections);
+        when(basicMapper.convertToResponseList(notificationUserProjections, NotificationUserResponse.class)).thenReturn(notificationUserResponses);
+        assertEquals(notificationUserResponses, userClientService.getUsersWhichUserSubscribed());
+        verify(userRepository, times(1)).getUsersWhichUserSubscribed(TestConstants.USER_ID);
+        verify(basicMapper, times(1)).convertToResponseList(notificationUserProjections, NotificationUserResponse.class);
+    }
+
+    @Test
+    public void getUserIdsWhichUserSubscribed() {
+        when(userRepository.getUserIdsWhichUserSubscribed(TestConstants.USER_ID)).thenReturn(ids);
+        assertEquals(ids, userClientService.getUserIdsWhichUserSubscribed());
+        verify(userRepository, times(1)).getUserIdsWhichUserSubscribed(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void resetNotificationCount() {
+        userClientService.resetNotificationCount();
+        verify(userRepository, times(1)).resetNotificationCount(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void resetMentionCount() {
+        userClientService.resetMentionCount();
+        verify(userRepository, times(1)).resetMentionCount(TestConstants.USER_ID);
+    }
 }
