@@ -350,4 +350,19 @@ public class UserServiceTestHelper {
                 ));
         return Arrays.asList(listMemberProjection1, listMemberProjection2);
     }
+
+    public static AuthUserProjection createAuthUserProjection() {
+        return factory.createProjection(
+                AuthUserProjection.class,
+                new HashMap<>() {{
+                    put("id", 1L);
+                    put("email", TestConstants.USER_EMAIL);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("location", TestConstants.LOCATION);
+                    put("about", TestConstants.ABOUT);
+                    put("website", TestConstants.WEBSITE);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                }});
+    }
 }
