@@ -17,8 +17,7 @@ import org.springframework.http.HttpStatus;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.EMAIL_HAS_ALREADY_BEEN_TAKEN;
-import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_USERNAME_LENGTH;
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -79,5 +78,31 @@ public class UserSettingsServiceImplTest extends AbstractAuthTest {
                 () -> userSettingsService.updateEmail(TestConstants.USER_EMAIL));
         assertEquals(EMAIL_HAS_ALREADY_BEEN_TAKEN, exception.getMessage());
         assertEquals(HttpStatus.FORBIDDEN, exception.getStatus());
+    }
+
+    @Test
+    public void updatePhone_ShouldReturnUpdatedPhone() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertEquals(Map.of("countryCode", TestConstants.COUNTRY_CODE, "phone", TestConstants.PHONE),
+                userSettingsService.updatePhone(TestConstants.COUNTRY_CODE, TestConstants.PHONE));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userSettingsRepository, times(1))
+                .updatePhone(TestConstants.COUNTRY_CODE, TestConstants.PHONE, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updatePhone_ShouldThrowInvalidPhoneNumberException() {
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> userSettingsService.updatePhone(TestConstants.COUNTRY_CODE, 1L));
+        assertEquals(INVALID_PHONE_NUMBER, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void updateCountry_ShouldReturnUpdatedCountry() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertEquals(TestConstants.COUNTRY, userSettingsService.updateCountry(TestConstants.COUNTRY));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userSettingsRepository, times(1)).updateCountry(TestConstants.COUNTRY, TestConstants.USER_ID);
     }
 }
