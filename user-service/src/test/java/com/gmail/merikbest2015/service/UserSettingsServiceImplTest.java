@@ -105,4 +105,28 @@ public class UserSettingsServiceImplTest extends AbstractAuthTest {
         verify(authenticationService, times(1)).getAuthenticatedUserId();
         verify(userSettingsRepository, times(1)).updateCountry(TestConstants.COUNTRY, TestConstants.USER_ID);
     }
+
+    @Test
+    public void updateGender_ShouldReturnUpdatedGender() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertEquals(TestConstants.GENDER, userSettingsService.updateGender(TestConstants.GENDER));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userSettingsRepository, times(1)).updateGender(TestConstants.GENDER, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updateGender_ShouldThrowInvalidGenderLengthException() {
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> userSettingsService.updateGender(""));
+        assertEquals(INVALID_GENDER_LENGTH, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void updateLanguage_ShouldReturnUpdatedLanguage() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertEquals(TestConstants.LANGUAGE, userSettingsService.updateLanguage(TestConstants.LANGUAGE));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userSettingsRepository, times(1)).updateLanguage(TestConstants.LANGUAGE, TestConstants.USER_ID);
+    }
 }
