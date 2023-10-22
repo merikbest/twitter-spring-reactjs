@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
+import com.gmail.merikbest2015.enums.BackgroundColorType;
+import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.UserSettingsRepository;
@@ -18,8 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UserSettingsServiceImplTest extends AbstractAuthTest {
@@ -128,5 +129,37 @@ public class UserSettingsServiceImplTest extends AbstractAuthTest {
         assertEquals(TestConstants.LANGUAGE, userSettingsService.updateLanguage(TestConstants.LANGUAGE));
         verify(authenticationService, times(1)).getAuthenticatedUserId();
         verify(userSettingsRepository, times(1)).updateLanguage(TestConstants.LANGUAGE, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updateDirectMessageRequests_ShouldReturnUpdatedDirectMessage() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertTrue(userSettingsService.updateDirectMessageRequests(true));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userSettingsRepository, times(1)).updateDirectMessageRequests(true, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updatePrivateProfile_ShouldReturnUpdatedPrivateProfile() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertTrue(userSettingsService.updatePrivateProfile(true));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userSettingsRepository, times(1)).updatePrivateProfile(true, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updateColorScheme_ShouldReturnUpdatedColorScheme() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertEquals(ColorSchemeType.BLUE, userSettingsService.updateColorScheme(ColorSchemeType.BLUE));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userSettingsRepository, times(1)).updateColorScheme(ColorSchemeType.BLUE, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updateBackgroundColor_ShouldReturnUpdatedBackgroundColor() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertEquals(BackgroundColorType.DIM, userSettingsService.updateBackgroundColor(BackgroundColorType.DIM));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userSettingsRepository, times(1)).updateBackgroundColor(BackgroundColorType.DIM, TestConstants.USER_ID);
     }
 }
