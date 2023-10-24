@@ -1,10 +1,12 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
+import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.repository.UserRepository;
+import com.gmail.merikbest2015.repository.projection.CommonUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserProfileProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.impl.UserServiceImpl;
@@ -17,6 +19,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_USERNAME_LENGTH;
@@ -69,5 +73,45 @@ public class UserServiceImplTest extends AbstractAuthTest {
         assertEquals(userProjections, userService.getUsers(pageable));
         verify(authenticationService, times(1)).getAuthenticatedUserId();
         verify(userRepository, times(1)).findByActiveTrueAndIdNot(TestConstants.USER_ID, pageable);
+    }
+
+    @Test
+    public void getRelevantUsers_ShouldReturnUserProjectionList() {
+        List<UserProjection> userProjections = UserServiceTestHelper.createUserProjections().getContent();
+        when(userRepository.findTop5ByActiveTrue()).thenReturn(userProjections);
+        assertEquals(userProjections, userService.getRelevantUsers());
+        verify(userRepository, times(1)).findTop5ByActiveTrue();
+    }
+
+    @Test
+    public void searchUsersByUsername_ShouldReturnUserProjectionList() {
+        Page<UserProjection> userProjections = UserServiceTestHelper.createUserProjections();
+        when(userRepository.searchUsersByUsername("test", pageable, UserProjection.class)).thenReturn(userProjections);
+        assertEquals(userProjections, userService.searchUsersByUsername("test", pageable, UserProjection.class));
+        verify(userRepository, times(1)).searchUsersByUsername("test", pageable, UserProjection.class);
+    }
+
+    @Test
+    public void searchByText_ShouldReturnCommonUserProjectionListMap() {
+        List<String> tags = List.of("#test1", "#test1");
+        List<CommonUserProjection> commonUserProjectionList = List.of(UserServiceTestHelper.createCommonUserProjection());
+        Map<String, Object> map = Map.of("tweetCount", TestConstants.TWEET_COUNT, "tags", tags, "users", commonUserProjectionList);
+        when(tweetClient.getTweetCountByText("test")).thenReturn(TestConstants.TWEET_COUNT);
+        when(tagClient.getTagsByText("test")).thenReturn(tags);
+        when(userRepository.searchUserByText("test")).thenReturn(commonUserProjectionList);
+        assertEquals(map, userService.searchByText("test"));
+        verify(tweetClient, times(1)).getTweetCountByText("test");
+        verify(tagClient, times(1)).getTagsByText("test");
+        verify(userRepository, times(1)).searchUserByText("test");
+    }
+
+    @Test
+    public void getSearchResults_ShouldReturnCommonUserProjectionList() {
+        SearchTermsRequest request = new SearchTermsRequest();
+        request.setUsers(List.of(1L));
+        List<CommonUserProjection> commonUserProjectionList = List.of(UserServiceTestHelper.createCommonUserProjection());
+        when(userRepository.getUsersByIds(request.getUsers(), CommonUserProjection.class)).thenReturn(commonUserProjectionList);
+        assertEquals(commonUserProjectionList, userService.getSearchResults(request));
+        verify(userRepository, times(1)).getUsersByIds(request.getUsers(), CommonUserProjection.class);
     }
 }
