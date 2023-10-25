@@ -5,7 +5,9 @@ import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.TweetClient;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
+import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.CommonUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserProfileProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
@@ -24,8 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_USERNAME_LENGTH;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UserServiceImplTest extends AbstractAuthTest {
@@ -113,5 +114,43 @@ public class UserServiceImplTest extends AbstractAuthTest {
         when(userRepository.getUsersByIds(request.getUsers(), CommonUserProjection.class)).thenReturn(commonUserProjectionList);
         assertEquals(commonUserProjectionList, userService.getSearchResults(request));
         verify(userRepository, times(1)).getUsersByIds(request.getUsers(), CommonUserProjection.class);
+    }
+
+    @Test
+    public void startUseTwitter_ShouldReturnTrue() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        assertTrue(userService.startUseTwitter());
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).updateProfileStarted(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void updateUserProfile_ShouldReturnAuthUserProjection() {
+        User user = new User();
+        user.setId(TestConstants.USER_ID);
+        User userInfo = new User();
+        userInfo.setFullName(TestConstants.FULL_NAME);
+        userInfo.setAvatar(TestConstants.AVATAR_SRC_1);
+        userInfo.setWallpaper(TestConstants.WALLPAPER_SRC);
+        userInfo.setAbout(TestConstants.ABOUT);
+        userInfo.setLocation(TestConstants.LOCATION);
+        userInfo.setWebsite(TestConstants.WEBSITE);
+        userInfo.setProfileCustomized(true);
+        AuthUserProjection authUserProjection = UserServiceTestHelper.createAuthUserProjection();
+        when(authenticationService.getAuthenticatedUser()).thenReturn(user);
+        when(userRepository.getUserById(TestConstants.USER_ID, AuthUserProjection.class)).thenReturn(Optional.of(authUserProjection));
+        assertEquals(authUserProjection, userService.updateUserProfile(userInfo));
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, AuthUserProjection.class);
+    }
+
+    @Test
+    public void updateUserProfile_ShouldThrowIncorrectUsernameLengthException() {
+        User userInfo = new User();
+        userInfo.setFullName("");
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> userService.updateUserProfile(userInfo));
+        assertEquals(INCORRECT_USERNAME_LENGTH, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 }
