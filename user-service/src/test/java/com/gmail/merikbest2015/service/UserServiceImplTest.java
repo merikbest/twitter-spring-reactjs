@@ -7,10 +7,7 @@ import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
-import com.gmail.merikbest2015.repository.projection.CommonUserProjection;
-import com.gmail.merikbest2015.repository.projection.UserProfileProjection;
-import com.gmail.merikbest2015.repository.projection.UserProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.impl.UserServiceImpl;
 import com.gmail.merikbest2015.service.util.UserServiceHelper;
 import com.gmail.merikbest2015.util.AbstractAuthTest;
@@ -25,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_USERNAME_LENGTH;
+import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -152,5 +149,78 @@ public class UserServiceImplTest extends AbstractAuthTest {
                 () -> userService.updateUserProfile(userInfo));
         assertEquals(INCORRECT_USERNAME_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+    }
+
+    @Test
+    public void processSubscribeToNotifications_ShouldSubscribeToNotifications() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        when(userRepository.isUserSubscribed(1L, TestConstants.USER_ID)).thenReturn(false);
+        assertTrue(userService.processSubscribeToNotifications(1L));
+        verify(userServiceHelper, times(1)).checkIsUserExistOrMyProfileBlocked(1L);
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).isUserSubscribed(1L, TestConstants.USER_ID);
+        verify(userRepository, times(1)).subscribe(TestConstants.USER_ID, 1L);
+    }
+
+    @Test
+    public void processSubscribeToNotifications_ShouldUnsubscribeFromNotifications() {
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        when(userRepository.isUserSubscribed(1L, TestConstants.USER_ID)).thenReturn(true);
+        assertFalse(userService.processSubscribeToNotifications(1L));
+        verify(userServiceHelper, times(1)).checkIsUserExistOrMyProfileBlocked(1L);
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).isUserSubscribed(1L, TestConstants.USER_ID);
+        verify(userRepository, times(1)).unsubscribe(TestConstants.USER_ID, 1L);
+    }
+
+    @Test
+    public void processPinTweet_ShouldPinTweet() {
+        when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(false);
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        when(userRepository.getPinnedTweetId(TestConstants.USER_ID)).thenReturn(TestConstants.PINNED_TWEET_ID);
+        assertEquals(TestConstants.TWEET_ID, userService.processPinTweet(TestConstants.TWEET_ID));
+        verify(tweetClient, times(1)).isTweetExists(TestConstants.TWEET_ID);
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).getPinnedTweetId(TestConstants.PINNED_TWEET_ID);
+        verify(userRepository, times(1)).updatePinnedTweetId(TestConstants.TWEET_ID, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void processPinTweet_ShouldUnpinTweet() {
+        when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(false);
+        when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
+        when(userRepository.getPinnedTweetId(TestConstants.USER_ID)).thenReturn(TestConstants.TWEET_ID);
+        assertEquals(0L, userService.processPinTweet(TestConstants.TWEET_ID));
+        verify(tweetClient, times(1)).isTweetExists(TestConstants.TWEET_ID);
+        verify(authenticationService, times(1)).getAuthenticatedUserId();
+        verify(userRepository, times(1)).getPinnedTweetId(TestConstants.TWEET_ID);
+        verify(userRepository, times(1)).updatePinnedTweetId(TestConstants.TWEET_ID, TestConstants.USER_ID);
+    }
+
+    @Test
+    public void processPinTweet_ShouldThrowTweetNotFoundException() {
+        when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> userService.processPinTweet(TestConstants.TWEET_ID));
+        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void getUserDetails_ShouldReturnUserDetailProjection() {
+        UserDetailProjection userDetailProjection = UserServiceTestHelper.createUserDetailProjection();
+        when(userRepository.getUserById(TestConstants.USER_ID, UserDetailProjection.class)).thenReturn(Optional.of(userDetailProjection));
+        assertEquals(userDetailProjection, userService.getUserDetails(TestConstants.USER_ID));
+        verify(userServiceHelper, times(1)).checkIsUserExistOrMyProfileBlocked(TestConstants.USER_ID);
+        verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, UserDetailProjection.class);
+    }
+
+    @Test
+    public void getUserDetails_ShouldThrowUserNotFoundException() {
+        when(userRepository.getUserById(TestConstants.USER_ID, UserDetailProjection.class)).thenReturn(Optional.empty());
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> userService.getUserDetails(TestConstants.TWEET_ID));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }
