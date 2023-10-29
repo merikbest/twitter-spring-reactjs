@@ -384,8 +384,20 @@ public class UserServiceTestHelper {
                 UserPrincipalProjection.class,
                 new HashMap<>() {{
                     put("id", TestConstants.USER_ID);
-                    put("email", TestConstants.FULL_NAME);
+                    put("email", TestConstants.USER_EMAIL);
                     put("activationCode", TestConstants.ACTIVATION_CODE);
                 }});
+    }
+
+    public static UserCommonProjection createUserCommonProjection() {
+        return factory.createProjection(
+                UserCommonProjection.class,
+                Map.of(
+                        "id", TestConstants.USER_ID,
+                        "email", TestConstants.USER_EMAIL,
+                        "fullName", TestConstants.FULL_NAME,
+                        "activationCode", TestConstants.ACTIVATION_CODE,
+                        "passwordResetCode", TestConstants.PASSWORD_RESET_CODE
+                ));
     }
 }
