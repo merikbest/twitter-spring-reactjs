@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
+import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
 import com.gmail.merikbest2015.security.JwtProvider;
 import com.gmail.merikbest2015.service.util.UserServiceHelper;
@@ -151,5 +152,30 @@ public class RegistrationServiceImplTest extends AbstractAuthTest {
                 () -> registrationService.checkRegistrationCode(TestConstants.ACTIVATION_CODE));
         assertEquals(ACTIVATION_CODE_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void endRegistration_ShouldReturnSuccessMessage() {
+        AuthUserProjection authUserProjection = UserServiceTestHelper.createAuthUserProjection();
+        Map<String, Object> userMap = Map.of("user", authUserProjection, "token", TestConstants.AUTH_TOKEN);
+        when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, AuthUserProjection.class))
+                .thenReturn(Optional.of(authUserProjection));
+        when(passwordEncoder.encode(TestConstants.PASSWORD)).thenReturn(TestConstants.PASSWORD);
+        when(jwtProvider.createToken(TestConstants.USER_EMAIL, "USER"))
+                .thenReturn(TestConstants.AUTH_TOKEN);
+        assertEquals(userMap, registrationService.endRegistration(TestConstants.USER_EMAIL, TestConstants.PASSWORD,
+                bindingResult));
+        verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, AuthUserProjection.class);
+        verify(userRepository, times(1)).updatePassword(TestConstants.PASSWORD, authUserProjection.getId());
+        verify(userRepository, times(1)).updateActiveUserProfile(authUserProjection.getId());
+        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, "USER");
+    }
+
+    @Test
+    public void endRegistration_ShouldThrowPasswordLengthException() {
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> registrationService.endRegistration(TestConstants.USER_EMAIL, "", bindingResult));
+        assertEquals(PASSWORD_LENGTH_ERROR, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 }
