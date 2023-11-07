@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.repository.projection.BlockedUserProjection;
+import com.gmail.merikbest2015.repository.projection.BaseUserProjection;
+import com.gmail.merikbest2015.repository.projection.UserProfileProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.FollowerUserService;
 import com.gmail.merikbest2015.util.AbstractAuthTest;
@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -45,5 +47,37 @@ public class FollowerUserMapperTest extends AbstractAuthTest {
         when(followerUserService.processFollow(TestConstants.USER_ID)).thenReturn(true);
         assertTrue(followerUserMapper.processFollow(TestConstants.USER_ID));
         verify(followerUserService, times(1)).processFollow(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void overallFollowers() {
+        List<BaseUserProjection> baseUserProjections = UserServiceTestHelper.createBaseUserProjections();
+        when(followerUserService.overallFollowers(TestConstants.USER_ID)).thenReturn(baseUserProjections);
+        followerUserMapper.overallFollowers(TestConstants.USER_ID);
+        verify(followerUserService, times(1)).overallFollowers(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void processFollowRequestToPrivateProfile() {
+        UserProfileProjection userProfileProjection = UserServiceTestHelper.createUserProfileProjection();
+        when(followerUserService.processFollowRequestToPrivateProfile(TestConstants.USER_ID)).thenReturn(userProfileProjection);
+        followerUserMapper.processFollowRequestToPrivateProfile(TestConstants.USER_ID);
+        verify(followerUserService, times(1)).processFollowRequestToPrivateProfile(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void acceptFollowRequest() {
+        String message = String.format("User (id:%s) accepted.", TestConstants.USER_ID);
+        when(followerUserService.acceptFollowRequest(TestConstants.USER_ID)).thenReturn(message);
+        assertEquals(message, followerUserMapper.acceptFollowRequest(TestConstants.USER_ID));
+        verify(followerUserService, times(1)).acceptFollowRequest(TestConstants.USER_ID);
+    }
+
+    @Test
+    public void declineFollowRequest() {
+        String message = String.format("User (id:%s) declined.", TestConstants.USER_ID);
+        when(followerUserService.declineFollowRequest(TestConstants.USER_ID)).thenReturn(message);
+        assertEquals(message, followerUserMapper.declineFollowRequest(TestConstants.USER_ID));
+        verify(followerUserService, times(1)).declineFollowRequest(TestConstants.USER_ID);
     }
 }
