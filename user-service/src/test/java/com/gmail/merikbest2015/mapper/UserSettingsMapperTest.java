@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class UserSettingsMapperTest extends AbstractAuthTest {
@@ -56,6 +57,32 @@ public class UserSettingsMapperTest extends AbstractAuthTest {
         when(userSettingsService.updateCountry(TestConstants.COUNTRY)).thenReturn(TestConstants.COUNTRY);
         assertEquals(TestConstants.COUNTRY, userSettingsMapper.updateCountry(request));
         verify(userSettingsService, times(1)).updateCountry(TestConstants.COUNTRY);
+    }
 
+    @Test
+    public void updateGender() {
+        SettingsRequest request = new SettingsRequest();
+        request.setGender(TestConstants.GENDER);
+        when(userSettingsService.updateGender(TestConstants.GENDER)).thenReturn(TestConstants.GENDER);
+        assertEquals(TestConstants.GENDER, userSettingsMapper.updateGender(request));
+        verify(userSettingsService, times(1)).updateGender(TestConstants.GENDER);
+    }
+
+    @Test
+    public void updateLanguage() {
+        SettingsRequest request = new SettingsRequest();
+        request.setLanguage(TestConstants.LANGUAGE);
+        when(userSettingsService.updateLanguage(TestConstants.LANGUAGE)).thenReturn(TestConstants.LANGUAGE);
+        assertEquals(TestConstants.LANGUAGE, userSettingsMapper.updateLanguage(request));
+        verify(userSettingsService, times(1)).updateLanguage(TestConstants.LANGUAGE);
+    }
+
+    @Test
+    public void updateDirectMessageRequests() {
+        SettingsRequest request = new SettingsRequest();
+        request.setMutedDirectMessages(true);
+        when(userSettingsService.updateDirectMessageRequests(true)).thenReturn(true);
+        assertTrue(userSettingsMapper.updateDirectMessageRequests(request));
+        verify(userSettingsService, times(1)).updateDirectMessageRequests(true);
     }
 }
