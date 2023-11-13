@@ -2,6 +2,8 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.dto.response.UserPhoneResponse;
+import com.gmail.merikbest2015.enums.BackgroundColorType;
+import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.service.UserSettingsService;
 import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -84,5 +86,32 @@ public class UserSettingsMapperTest extends AbstractAuthTest {
         when(userSettingsService.updateDirectMessageRequests(true)).thenReturn(true);
         assertTrue(userSettingsMapper.updateDirectMessageRequests(request));
         verify(userSettingsService, times(1)).updateDirectMessageRequests(true);
+    }
+
+    @Test
+    public void updatePrivateProfile() {
+        SettingsRequest request = new SettingsRequest();
+        request.setPrivateProfile(true);
+        when(userSettingsService.updatePrivateProfile(true)).thenReturn(true);
+        assertTrue(userSettingsMapper.updatePrivateProfile(request));
+        verify(userSettingsService, times(1)).updatePrivateProfile(true);
+    }
+
+    @Test
+    public void updateColorScheme() {
+        SettingsRequest request = new SettingsRequest();
+        request.setColorScheme(ColorSchemeType.BLUE);
+        when(userSettingsService.updateColorScheme(ColorSchemeType.BLUE)).thenReturn(ColorSchemeType.BLUE);
+        assertEquals(ColorSchemeType.BLUE, userSettingsMapper.updateColorScheme(request));
+        verify(userSettingsService, times(1)).updateColorScheme(ColorSchemeType.BLUE);
+    }
+
+    @Test
+    public void updateBackgroundColor() {
+        SettingsRequest request = new SettingsRequest();
+        request.setBackgroundColor(BackgroundColorType.DIM);
+        when(userSettingsService.updateBackgroundColor(BackgroundColorType.DIM)).thenReturn(BackgroundColorType.DIM);
+        assertEquals(BackgroundColorType.DIM, userSettingsMapper.updateBackgroundColor(request));
+        verify(userSettingsService, times(1)).updateBackgroundColor(BackgroundColorType.DIM);
     }
 }
