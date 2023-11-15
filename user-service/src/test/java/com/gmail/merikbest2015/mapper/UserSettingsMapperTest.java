@@ -24,9 +24,6 @@ public class UserSettingsMapperTest extends AbstractAuthTest {
     private UserSettingsMapper userSettingsMapper;
 
     @MockBean
-    private AuthenticationMapper authenticationMapper;
-
-    @MockBean
     private UserSettingsService userSettingsService;
 
     @Test
