@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
+import com.gmail.merikbest2015.dto.request.CurrentPasswordResetRequest;
 import com.gmail.merikbest2015.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -89,6 +90,27 @@ public class AuthenticationMapperTest extends AbstractAuthTest {
         authenticationMapper.passwordReset(request, bindingResult);
         verify(authenticationService, times(1)).passwordReset(
                 TestConstants.USER_EMAIL,
+                TestConstants.PASSWORD,
+                TestConstants.PASSWORD,
+                bindingResult
+        );
+    }
+
+    @Test
+    public void currentPasswordReset() {
+        CurrentPasswordResetRequest request = new CurrentPasswordResetRequest();
+        request.setCurrentPassword(TestConstants.PASSWORD);
+        request.setPassword(TestConstants.PASSWORD);
+        request.setPassword2(TestConstants.PASSWORD);
+        when(authenticationService.currentPasswordReset(
+                TestConstants.PASSWORD,
+                TestConstants.PASSWORD,
+                TestConstants.PASSWORD,
+                bindingResult
+        )).thenReturn("Your password has been successfully updated.");
+        authenticationMapper.currentPasswordReset(request, bindingResult);
+        verify(authenticationService, times(1)).currentPasswordReset(
+                TestConstants.PASSWORD,
                 TestConstants.PASSWORD,
                 TestConstants.PASSWORD,
                 bindingResult
