@@ -13,6 +13,7 @@ import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.TopicProjection;
 import com.gmail.merikbest2015.service.TopicService;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class TopicServiceImpl implements TopicService {
     private final TopicRepository topicRepository;
     private final TopicFollowersRepository topicFollowersRepository;
     private final TopicNotInterestedRepository topicNotInterestedRepository;
+    private final UserService userService;
     private final UserClient userClient;
 
     @Override
@@ -108,7 +110,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     private void validateUserProfile(Long userId) {
-        if (!userClient.isUserExists(userId)) {
+        if (!userService.isUserExists(userId)) {
             throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
         }
         Long authUserId = AuthUtil.getAuthenticatedUserId();

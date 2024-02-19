@@ -27,3 +27,17 @@ INSERT INTO topics (id, topic_category, topic_name) VALUES (1026, 'ONLY_ON_TWITT
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1027, 'GAMING', 'Game development');
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1028, 'GAMING', 'Among Us');
 
+-- users
+INSERT INTO users(id, full_name, username, private_profile) VALUES (1, 'Random', 'Random', true);
+INSERT INTO users(id, full_name, username, private_profile) VALUES (2, 'MrCat', 'Cat', true);
+INSERT INTO users(id, full_name, username, private_profile) VALUES (3, 'Kitty', 'Kitty', true);
+INSERT INTO users(id, full_name, username, private_profile) VALUES (4, 'JavaCat', 'JavaCat', false);
+INSERT INTO users(id, full_name, username, private_profile) VALUES (5, 'КотБегемот', 'Кот Бегемот', false);
+
+-- user_subscriptions
+INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (1, 2);
+INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (1, 3);
+INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (1, 4);
+INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (1, 5);
+INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (2, 1);
+INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (5, 1);

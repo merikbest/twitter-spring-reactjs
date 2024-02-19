@@ -3,6 +3,8 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.producer.UserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.UserSettingsRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -26,6 +28,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     private final UserRepository userRepository;
     private final UserSettingsRepository userSettingsRepository;
     private final JwtProvider jwtProvider;
+    private final UserProducer userProducer;
 
     @Override
     @Transactional
@@ -33,8 +36,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         if (username.length() == 0 || username.length() > 50) {
             throw new ApiRequestException(INCORRECT_USERNAME_LENGTH, HttpStatus.BAD_REQUEST);
         }
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        userSettingsRepository.updateUsername(username, authUserId);
+        User user = authenticationService.getAuthenticatedUser();
+        userSettingsRepository.updateUsername(username, user.getId());
+        userProducer.sendUserEvent(user);
         return username;
     }
 
@@ -102,8 +106,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Override
     @Transactional
     public boolean updatePrivateProfile(boolean privateProfile) {
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        userSettingsRepository.updatePrivateProfile(privateProfile, authUserId);
+        User user = authenticationService.getAuthenticatedUser();
+        userSettingsRepository.updatePrivateProfile(privateProfile, user.getId());
+        userProducer.sendUserEvent(user);
         return privateProfile;
     }
 

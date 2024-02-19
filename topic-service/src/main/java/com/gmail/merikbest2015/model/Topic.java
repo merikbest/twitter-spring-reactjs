@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,4 +28,16 @@ public class Topic {
     @Column(name = "topic_category")
     @Enumerated(EnumType.STRING)
     private TopicCategory topicCategory;
+
+    @ManyToMany
+    @JoinTable(name = "topic_followers",
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> topicFollowers;
+
+    @ManyToMany
+    @JoinTable(name = "topic_not_interested",
+            joinColumns = @JoinColumn(name = "topic_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> topicNotInterested;
 }
