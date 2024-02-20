@@ -37,7 +37,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
             throw new ApiRequestException(INCORRECT_USERNAME_LENGTH, HttpStatus.BAD_REQUEST);
         }
         User user = authenticationService.getAuthenticatedUser();
-        userSettingsRepository.updateUsername(username, user.getId());
+        user.setUsername(username);
         userProducer.sendUserEvent(user);
         return username;
     }
@@ -107,7 +107,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Transactional
     public boolean updatePrivateProfile(boolean privateProfile) {
         User user = authenticationService.getAuthenticatedUser();
-        userSettingsRepository.updatePrivateProfile(privateProfile, user.getId());
+        user.setPrivateProfile(privateProfile);
         userProducer.sendUserEvent(user);
         return privateProfile;
     }

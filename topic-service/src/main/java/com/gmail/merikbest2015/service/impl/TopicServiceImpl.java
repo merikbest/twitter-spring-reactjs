@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.enums.TopicCategory;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.TopicFollowers;
 import com.gmail.merikbest2015.model.TopicNotInterested;
 import com.gmail.merikbest2015.repository.TopicFollowersRepository;
@@ -32,7 +31,6 @@ public class TopicServiceImpl implements TopicService {
     private final TopicFollowersRepository topicFollowersRepository;
     private final TopicNotInterestedRepository topicNotInterestedRepository;
     private final UserService userService;
-    private final UserClient userClient;
 
     @Override
     public List<TopicProjection> getTopicsByIds(List<Long> topicsIds) {
@@ -116,10 +114,10 @@ public class TopicServiceImpl implements TopicService {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
         if (!userId.equals(authUserId)) {
-            if (userClient.isMyProfileBlockedByUser(userId)) {
+            if (userService.isMyProfileBlockedByUser(userId)) {
                 throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
             }
-            if (userClient.isUserHavePrivateProfile(userId)) {
+            if (userService.isUserHavePrivateProfile(userId)) {
                 throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
         }

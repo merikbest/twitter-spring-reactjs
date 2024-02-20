@@ -6,5 +6,9 @@ public interface UserService {
 
     boolean isUserExists(Long userId);
 
+    boolean isMyProfileBlockedByUser(Long userId);
+
+    boolean isUserHavePrivateProfile(Long userId);
+
     void handleUser(UserEvent userEvent);
 }
