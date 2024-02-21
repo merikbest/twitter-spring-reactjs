@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.configuration;
 
-import com.gmail.merikbest2015.event.UserEvent;
+import com.gmail.merikbest2015.event.BlockUserEvent;
+import com.gmail.merikbest2015.event.UpdateUserEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,12 @@ public class KafkaProducerConfiguration {
     }
 
     @Bean
-    public KafkaTemplate<String, UserEvent> kafkaTemplate() {
+    public KafkaTemplate<String, UpdateUserEvent> kafkaUpdateUserTemplate() {
+        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
+    }
+
+    @Bean
+    public KafkaTemplate<String, BlockUserEvent> kafkaBlockUserTemplate() {
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
     }
 }

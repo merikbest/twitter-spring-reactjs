@@ -1,7 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.producer.BlockUserProducer;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
-import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.projection.BlockedUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.BlockUserService;
@@ -18,8 +19,8 @@ public class BlockUserServiceImpl implements BlockUserService {
 
     private final AuthenticationService authenticationService;
     private final BlockUserRepository blockUserRepository;
-    private final FollowerUserRepository followerUserRepository;
     private final UserServiceHelper userServiceHelper;
+    private final BlockUserProducer blockUserProducer;
 
     @Override
     public Page<BlockedUserProjection> getBlockList(Pageable pageable) {
@@ -30,18 +31,20 @@ public class BlockUserServiceImpl implements BlockUserService {
     @Override
     @Transactional
     public Boolean processBlockList(Long userId) {
-        userServiceHelper.checkIsUserExist(userId);
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        boolean isUserBlocked = blockUserRepository.isUserBlocked(authUserId, userId);
+        User user = userServiceHelper.getUserById(userId);
+        User authUser = authenticationService.getAuthenticatedUser();
+        boolean hasUserBlocked;
 
-        if (isUserBlocked) {
-            blockUserRepository.unblockUser(authUserId, userId);
-            return false;
+        if (blockUserRepository.isUserBlocked(authUser, user)) {
+            authUser.getUserBlockedList().remove(user);
+            hasUserBlocked = false;
         } else {
-            blockUserRepository.blockUser(authUserId, userId);
-            followerUserRepository.unfollow(authUserId, userId);
-            followerUserRepository.unfollow(userId, authUserId);
-            return true;
+            authUser.getUserBlockedList().add(user);
+            authUser.getFollowers().remove(user);
+            authUser.getFollowing().remove(user);
+            hasUserBlocked = true;
         }
+        blockUserProducer.sendBlockUserEvent(user, hasUserBlocked);
+        return hasUserBlocked;
     }
 }

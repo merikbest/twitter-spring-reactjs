@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.producer.UserProducer;
+import com.gmail.merikbest2015.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.UserSettingsRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -28,7 +28,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     private final UserRepository userRepository;
     private final UserSettingsRepository userSettingsRepository;
     private final JwtProvider jwtProvider;
-    private final UserProducer userProducer;
+    private final UpdateUserProducer updateUserProducer;
 
     @Override
     @Transactional
@@ -38,7 +38,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         }
         User user = authenticationService.getAuthenticatedUser();
         user.setUsername(username);
-        userProducer.sendUserEvent(user);
+        updateUserProducer.sendUpdateUserEvent(user);
         return username;
     }
 
@@ -108,7 +108,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     public boolean updatePrivateProfile(boolean privateProfile) {
         User user = authenticationService.getAuthenticatedUser();
         user.setPrivateProfile(privateProfile);
-        userProducer.sendUserEvent(user);
+        updateUserProducer.sendUpdateUserEvent(user);
         return privateProfile;
     }
 

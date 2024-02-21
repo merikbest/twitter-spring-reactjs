@@ -1,25 +1,25 @@
 package com.gmail.merikbest2015.producer;
 
-import com.gmail.merikbest2015.event.UserEvent;
+import com.gmail.merikbest2015.event.UpdateUserEvent;
 import com.gmail.merikbest2015.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaConstants.UPDATE_USER_TOPIC;
+import static com.gmail.merikbest2015.constants.KafkaTopicConstants.UPDATE_USER_TOPIC;
 
 @Component
 @RequiredArgsConstructor
-public class UserProducer {
+public class UpdateUserProducer {
 
-    private final KafkaTemplate<String, UserEvent> kafkaTemplate;
+    private final KafkaTemplate<String, UpdateUserEvent> kafkaTemplate;
 
-    public void sendUserEvent(User user) {
-        kafkaTemplate.send(UPDATE_USER_TOPIC, toUserEvent(user));
+    public void sendUpdateUserEvent(User user) {
+        kafkaTemplate.send(UPDATE_USER_TOPIC, toUpdateUserEvent(user));
     }
 
-    private static UserEvent toUserEvent(User user) {
-        return UserEvent.builder()
+    private static UpdateUserEvent toUpdateUserEvent(User user) {
+        return UpdateUserEvent.builder()
                 .id(user.getId())
                 .fullName(user.getFullName())
                 .username(user.getUsername())
