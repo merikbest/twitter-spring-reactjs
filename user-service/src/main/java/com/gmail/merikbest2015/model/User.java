@@ -9,8 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -130,35 +130,35 @@ public class User {
     @JoinTable(name = "user_muted",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "muted_user_id"))
-    private List<User> userMutedList;
+    private Set<User> userMutedList = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_blocked",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "blocked_user_id"))
-    private List<User> userBlockedList;
+    private Set<User> userBlockedList = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
-    private List<User> followers;
+    private Set<User> followers = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "subscriber_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> following;
+    private Set<User> following = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_follower_requests",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id"))
-    private List<User> followerRequests;
+    private Set<User> followerRequests = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "subscribers",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "subscriber_id"))
-    private List<User> subscribers = new ArrayList<>();
+    private Set<User> subscribers = new HashSet<>();
 }

@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.configuration;
 
 import com.gmail.merikbest2015.event.BlockUserEvent;
+import com.gmail.merikbest2015.event.FollowUserEvent;
 import com.gmail.merikbest2015.event.UpdateUserEvent;
-import com.gmail.merikbest2015.event.UserEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.support.DefaultKafkaHeaderMapper;
 import org.springframework.kafka.support.converter.RecordMessageConverter;
 import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.kafka.support.mapping.DefaultJackson2JavaTypeMapper;
@@ -59,16 +60,29 @@ public class KafkaConsumerConfiguration {
     }
 
     @Bean
+    public ConsumerFactory<String, FollowUserEvent> followUserConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(
+                consumerConfigs(),
+                new StringDeserializer(),
+                new JsonDeserializer<>(FollowUserEvent.class)
+        );
+    }
+
+    @Bean
     public RecordMessageConverter typeConverter() {
         StringJsonMessageConverter converter = new StringJsonMessageConverter();
         DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
+        DefaultKafkaHeaderMapper headerMapper = new DefaultKafkaHeaderMapper();
         typeMapper.setTypePrecedence(Jackson2JavaTypeMapper.TypePrecedence.TYPE_ID);
         typeMapper.addTrustedPackages("*");
         Map<String, Class<?>> mappings = new HashMap<>();
-        mappings.put("user", UpdateUserEvent.class);
+        mappings.put("updateUser", UpdateUserEvent.class);
         mappings.put("blockUser", BlockUserEvent.class);
+        mappings.put("followUser", FollowUserEvent.class);
         typeMapper.setIdClassMapping(mappings);
+        headerMapper.setEncodeStrings(true);
         converter.setTypeMapper(typeMapper);
+        converter.setHeaderMapper(headerMapper);
         return converter;
     }
 }

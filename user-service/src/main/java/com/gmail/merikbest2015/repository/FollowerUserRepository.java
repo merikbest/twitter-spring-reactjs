@@ -41,6 +41,14 @@ public interface FollowerUserRepository extends JpaRepository<User, Long> {
             "AND follower.id = :userId")
     boolean isUserFollowByOtherUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
+    @Query("""
+            SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user
+            LEFT JOIN user.followers follower
+            WHERE follower = :user
+            AND user = :authUser
+            """)
+    boolean isFollower(@Param("authUser") User authUser, @Param("user") User user);
+
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
             "LEFT JOIN user.followers follower " +
             "WHERE follower.id = :userId " +

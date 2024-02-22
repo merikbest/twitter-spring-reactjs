@@ -64,11 +64,16 @@ public class UserServiceHelper {
         }
     }
 
+    public void checkIsUserBlocked(User user, User authUser) {
+        if (blockUserRepository.isUserBlocked(user, authUser)) {
+            throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     public void checkIsUserBlocked(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        boolean userBlocked = blockUserRepository.isUserBlocked(userId, authUserId);
 
-        if (userBlocked) {
+        if (blockUserRepository.isUserBlocked(userId, authUserId)) {
             throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
         }
     }

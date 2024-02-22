@@ -46,3 +46,12 @@ create table user_subscriptions
     subscriber_id int8 not null,
     user_id       int8 not null
 );
+
+alter table user_blocked
+    add constraint user_blocked_blocked_user_id foreign key (blocked_user_id) references users;
+alter table user_blocked
+    add constraint user_blocked_user_id foreign key (user_id) references users;
+alter table user_subscriptions
+    add constraint user_subscriptions_user_id foreign key (user_id) references users;
+alter table user_subscriptions
+    add constraint user_subscriptions_subscriber_id foreign key (subscriber_id) references users;

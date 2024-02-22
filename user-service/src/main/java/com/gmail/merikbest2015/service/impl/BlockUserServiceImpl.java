@@ -44,7 +44,7 @@ public class BlockUserServiceImpl implements BlockUserService {
             authUser.getFollowing().remove(user);
             hasUserBlocked = true;
         }
-        blockUserProducer.sendBlockUserEvent(user, hasUserBlocked);
+        blockUserProducer.sendBlockUserEvent(user, authUser.getId(), hasUserBlocked);
         return hasUserBlocked;
     }
 }
