@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void handleBlockUser(BlockUserEvent blockUserEvent, String authId) {
         User user = userRepository.findById(blockUserEvent.getId())
-                .orElse(createUser(blockUserEvent));
+                .orElseGet(() -> createUser(blockUserEvent));
         User authUser = userRepository.findById(parseLong(authId)).get();
 
         if (blockUserEvent.isUserBlocked()) {
@@ -57,14 +57,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void handleFollowUser(FollowUserEvent followUserEvent, String authId) {
         User user = userRepository.findById(followUserEvent.getId())
-                .orElse(createUser(followUserEvent));
+                .orElseGet(() -> createUser(followUserEvent));
         User authUser = userRepository.findById(parseLong(authId)).get();
 
-//        if (followUserEvent.isUserFollow()) {
-//            authUser.getFollowers().add(user);
-//        } else {
-//            authUser.getFollowers().remove(user);
-//        }
+        if (followUserEvent.isUserFollow()) {
+            authUser.getFollowers().add(user);
+        } else {
+            authUser.getFollowers().remove(user);
+        }
     }
 
     @Override
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
                     user.setPrivateProfile(updateUserEvent.isPrivateProfile());
                     return user;
                 })
-                .orElse(createUser(updateUserEvent));
+                .orElseGet(() -> createUser(updateUserEvent));
     }
 
     private User createUser(UserEvent userEvent) {
