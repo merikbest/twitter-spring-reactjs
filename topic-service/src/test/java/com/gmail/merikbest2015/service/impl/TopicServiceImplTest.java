@@ -1,19 +1,17 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.TopicTestHelper;
 import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.enums.TopicCategory;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.UserClient;
-import com.gmail.merikbest2015.model.TopicFollowers;
-import com.gmail.merikbest2015.model.TopicNotInterested;
-import com.gmail.merikbest2015.repository.TopicFollowersRepository;
-import com.gmail.merikbest2015.repository.TopicNotInterestedRepository;
+import com.gmail.merikbest2015.model.Topic;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.TopicRepository;
+import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.TopicProjection;
 import com.gmail.merikbest2015.service.TopicService;
-import com.gmail.merikbest2015.TopicTestHelper;
 import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,11 +22,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
+import static com.gmail.merikbest2015.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -43,13 +40,7 @@ public class TopicServiceImplTest {
     private TopicRepository topicRepository;
 
     @MockBean
-    private TopicFollowersRepository topicFollowersRepository;
-
-    @MockBean
-    private TopicNotInterestedRepository topicNotInterestedRepository;
-
-    @MockBean
-    private UserClient userClient;
+    private UserRepository userRepository;
 
     @Before
     public void setUp() {
@@ -88,33 +79,33 @@ public class TopicServiceImplTest {
 
     @Test
     public void getFollowedTopicsByUserId() {
-        when(userClient.isUserExists(USER_ID)).thenReturn(true);
+        when(userRepository.isUserExists(USER_ID)).thenReturn(true);
         when(topicRepository.getTopicsByTopicFollowerId(USER_ID, TopicProjection.class))
                 .thenReturn(TopicTestHelper.getMockTopicProjectionList());
         List<TopicProjection> topics = topicService.getFollowedTopicsByUserId(USER_ID);
         assertEquals(2, topics.size());
         verify(topicRepository, times(1)).getTopicsByTopicFollowerId(USER_ID, TopicProjection.class);
-        verify(userClient, times(1)).isUserExists(USER_ID);
+        verify(userRepository, times(1)).isUserExists(USER_ID);
     }
 
     @Test
     public void getFollowedTopicsByUserId_shouldUserIdNotFound() {
-        when(userClient.isUserExists(USER_ID)).thenReturn(false);
+        when(userRepository.isUserExists(USER_ID)).thenReturn(false);
         validateProfileTest(USER_ID, String.format(USER_ID_NOT_FOUND, USER_ID), HttpStatus.NOT_FOUND);
     }
 
     @Test
     public void getFollowedTopicsByUserId_shouldUserProfileBlocked() {
-        when(userClient.isUserExists(1L)).thenReturn(true);
-        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        when(userRepository.isUserExists(1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(1L, USER_ID)).thenReturn(true);
         validateProfileTest(1L, USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
     }
 
     @Test
     public void getFollowedTopicsByUserId_shouldUserHavePrivateProfile() {
-        when(userClient.isUserExists(1L)).thenReturn(true);
-        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(false);
-        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
+        when(userRepository.isUserExists(1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(1L, USER_ID)).thenReturn(false);
+        when(userRepository.isUserHavePrivateProfile(1L, USER_ID)).thenReturn(false);
         validateProfileTest(1L, USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
@@ -128,24 +119,27 @@ public class TopicServiceImplTest {
     }
 
     @Test
-    public void processNotInterestedTopic_deleteTopic() {
-        when(topicRepository.isTopicExist(3L)).thenReturn(true);
-        when(topicNotInterestedRepository.getNotInterestedByUserIdAndTopicId(USER_ID, 3L)).thenReturn(new TopicNotInterested());
-        assertFalse(topicService.processNotInterestedTopic(3L));
-        verify(topicRepository, times(1)).isTopicExist(3L);
-        verify(topicNotInterestedRepository, times(1)).getNotInterestedByUserIdAndTopicId(USER_ID, 3L);
-        verify(topicNotInterestedRepository, times(1)).delete(new TopicNotInterested());
+    public void processNotInterestedTopic_removeTopic() {
+        User authUser = TopicTestHelper.mockAuthUser();
+        Topic topic = mockTopic();
+        topic.setTopicNotInterested(new HashSet<>(Set.of(authUser)));
+        when(topicRepository.findById(TOPIC_ID)).thenReturn(Optional.of(topic));
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
+        assertFalse(topicService.processNotInterestedTopic(TOPIC_ID));
+        verify(topicRepository, times(1)).findById(TOPIC_ID);
+        verify(userRepository, times(1)).findById(USER_ID);
     }
 
     @Test
-    public void processNotInterestedTopic_saveTopic() {
-        when(topicRepository.isTopicExist(3L)).thenReturn(true);
-        when(topicNotInterestedRepository.getNotInterestedByUserIdAndTopicId(USER_ID, 3L)).thenReturn(null);
-        assertTrue(topicService.processNotInterestedTopic(3L));
-        verify(topicRepository, times(1)).isTopicExist(3L);
-        verify(topicNotInterestedRepository, times(1)).getNotInterestedByUserIdAndTopicId(USER_ID, 3L);
-        verify(topicFollowersRepository, times(1)).removeFollowedTopic(USER_ID, 3L);
-        verify(topicNotInterestedRepository, times(1)).save(new TopicNotInterested(USER_ID, 3L));
+    public void processNotInterestedTopic_addTopic() {
+        User authUser = TopicTestHelper.mockAuthUser();
+        Topic topic = mockTopic();
+        topic.setTopicNotInterested(new HashSet<>());
+        when(topicRepository.findById(TOPIC_ID)).thenReturn(Optional.of(topic));
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
+        assertTrue(topicService.processNotInterestedTopic(TOPIC_ID));
+        verify(topicRepository, times(1)).findById(TOPIC_ID);
+        verify(userRepository, times(1)).findById(USER_ID);
     }
 
     @Test
@@ -160,24 +154,27 @@ public class TopicServiceImplTest {
     }
 
     @Test
-    public void processFollowTopic_deleteTopic() {
-        when(topicRepository.isTopicExist(3L)).thenReturn(true);
-        when(topicFollowersRepository.getFollowerByUserIdAndTopicId(USER_ID, 3L)).thenReturn(new TopicFollowers());
-        assertFalse(topicService.processFollowTopic(3L));
-        verify(topicRepository, times(1)).isTopicExist(3L);
-        verify(topicFollowersRepository, times(1)).getFollowerByUserIdAndTopicId(USER_ID, 3L);
-        verify(topicFollowersRepository, times(1)).delete(new TopicFollowers());
+    public void processFollowTopic_unfollowTopic() {
+        User authUser = TopicTestHelper.mockAuthUser();
+        Topic topic = mockTopic();
+        topic.setTopicFollowers(new HashSet<>(Set.of(authUser)));
+        when(topicRepository.findById(TOPIC_ID)).thenReturn(Optional.of(topic));
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
+        assertFalse(topicService.processFollowTopic(TOPIC_ID));
+        verify(topicRepository, times(1)).findById(TOPIC_ID);
+        verify(userRepository, times(1)).findById(USER_ID);
     }
 
     @Test
-    public void processFollowTopic_saveTopic() {
-        when(topicRepository.isTopicExist(3L)).thenReturn(true);
-        when(topicFollowersRepository.getFollowerByUserIdAndTopicId(USER_ID, 3L)).thenReturn(null);
-        assertTrue(topicService.processFollowTopic(3L));
-        verify(topicRepository, times(1)).isTopicExist(3L);
-        verify(topicFollowersRepository, times(1)).getFollowerByUserIdAndTopicId(USER_ID, 3L);
-        verify(topicNotInterestedRepository, times(1)).removeNotInterestedTopic(USER_ID, 3L);
-        verify(topicFollowersRepository, times(1)).save(new TopicFollowers(USER_ID, 3L));
+    public void processFollowTopic_followTopic() {
+        User authUser = TopicTestHelper.mockAuthUser();
+        Topic topic = mockTopic();
+        topic.setTopicFollowers(new HashSet<>());
+        when(topicRepository.findById(TOPIC_ID)).thenReturn(Optional.of(topic));
+        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
+        assertTrue(topicService.processFollowTopic(TOPIC_ID));
+        verify(topicRepository, times(1)).findById(TOPIC_ID);
+        verify(userRepository, times(1)).findById(USER_ID);
     }
 
     @Test
@@ -198,5 +195,13 @@ public class TopicServiceImplTest {
             assertEquals(testMessage, exception.getMessage());
             assertEquals(status, exception.getStatus());
         }
+    }
+
+    private Topic mockTopic() {
+        Topic topic = new Topic();
+        topic.setId(TOPIC_ID);
+        topic.setTopicName(TOPIC_NAME);
+        topic.setTopicCategory(TopicCategory.GAMING);
+        return topic;
     }
 }

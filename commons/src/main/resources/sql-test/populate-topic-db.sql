@@ -1,3 +1,23 @@
+-- users
+INSERT INTO "topic-test".public.users(id, full_name, username, private_profile) VALUES (1, 'John_Doe', 'John_Doe', false);
+INSERT INTO "topic-test".public.users(id, full_name, username, private_profile) VALUES (2, 'MrCat', 'MrCat', false);
+INSERT INTO "topic-test".public.users(id, full_name, username, private_profile) VALUES (3, 'MrCat', 'MrCat', true);
+INSERT INTO "topic-test".public.users(id, full_name, username, private_profile) VALUES (4, 'MrCat', 'MrCat', true);
+INSERT INTO "topic-test".public.users(id, full_name, username, private_profile) VALUES (5, 'MrCat', 'MrCat', true);
+INSERT INTO "topic-test".public.users(id, full_name, username, private_profile) VALUES (6, 'MrCat', 'MrCat', false);
+INSERT INTO "topic-test".public.users(id, full_name, username, private_profile) VALUES (7, 'MrCat', 'MrCat', false);
+
+-- user_subscriptions
+INSERT INTO "topic-test".public.user_subscriptions (subscriber_id, user_id) VALUES (1, 2);
+INSERT INTO "topic-test".public.user_subscriptions (subscriber_id, user_id) VALUES (2, 1);
+INSERT INTO "topic-test".public.user_subscriptions (subscriber_id, user_id) VALUES (4, 2);
+INSERT INTO "topic-test".public.user_subscriptions (subscriber_id, user_id) VALUES (4, 1);
+
+-- user_blocked
+INSERT INTO "topic-test".public.user_blocked (user_id, blocked_user_id) VALUES (2, 4);
+INSERT INTO "topic-test".public.user_blocked (user_id, blocked_user_id) VALUES (5, 2);
+INSERT INTO "topic-test".public.user_blocked (user_id, blocked_user_id) VALUES (6, 2);
+
 -- topics
 INSERT INTO "topic-test".public.topics (id, topic_category, topic_name) VALUES (1001, null, 'Elon Musk');
 INSERT INTO "topic-test".public.topics (id, topic_category, topic_name) VALUES (1002, null, 'Technology');
@@ -28,11 +48,11 @@ INSERT INTO "topic-test".public.topics (id, topic_category, topic_name) VALUES (
 INSERT INTO "topic-test".public.topics (id, topic_category, topic_name) VALUES (1028, 'GAMING', 'Among Us');
 
 -- topic_followers
-INSERT INTO "topic-test".public.topic_followers (id, topic_id, user_id) VALUES (1, 1008, 2);
-INSERT INTO "topic-test".public.topic_followers (id, topic_id, user_id) VALUES (2, 1017, 2);
-INSERT INTO "topic-test".public.topic_followers (id, topic_id, user_id) VALUES (3, 1013, 2);
-INSERT INTO "topic-test".public.topic_followers (id, topic_id, user_id) VALUES (4, 1012, 2);
+INSERT INTO "topic-test".public.topic_followers (topic_id, user_id) VALUES (1008, 2);
+INSERT INTO "topic-test".public.topic_followers (topic_id, user_id) VALUES (1017, 2);
+INSERT INTO "topic-test".public.topic_followers (topic_id, user_id) VALUES (1013, 2);
+INSERT INTO "topic-test".public.topic_followers (topic_id, user_id) VALUES (1012, 2);
 
 -- topic_not_interested
-INSERT INTO "topic-test".public.topic_not_interested (id, topic_id, user_id) VALUES (1, 1018, 2);
-INSERT INTO "topic-test".public.topic_not_interested (id, topic_id, user_id) VALUES (2, 1019, 2);
+INSERT INTO "topic-test".public.topic_not_interested (topic_id, user_id) VALUES (1018, 2);
+INSERT INTO "topic-test".public.topic_not_interested (topic_id, user_id) VALUES (1019, 2);

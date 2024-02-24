@@ -74,4 +74,7 @@ public class TestConstants {
     public static final Long POLL_CHOICE_ID = 1L;
     public static final String POLL_CHOICE_1 = "test choice 1";
     public static final String POLL_CHOICE_2 = "test choice 2";
+
+    public static final Long TOPIC_ID = 1L;
+    public static final String TOPIC_NAME = "Minecraft";
 }

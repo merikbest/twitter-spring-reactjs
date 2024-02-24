@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.repository.TopicFollowersRepository;
-import com.gmail.merikbest2015.repository.TopicNotInterestedRepository;
+import com.gmail.merikbest2015.repository.TopicRepository;
 import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,10 +22,7 @@ public class TopicProjectionHelperTest {
     private TopicProjectionHelper topicProjectionHelper;
 
     @MockBean
-    private TopicFollowersRepository topicFollowersRepository;
-
-    @MockBean
-    private TopicNotInterestedRepository topicNotInterestedRepository;
+    private TopicRepository topicRepository;
 
     @Before
     public void setUp() {
@@ -35,15 +31,15 @@ public class TopicProjectionHelperTest {
 
     @Test
     public void isTopicFollowed() {
-        when(topicFollowersRepository.isTopicFollowed(USER_ID, 3L)).thenReturn(true);
+        when(topicRepository.isTopicFollowed(USER_ID, 3L)).thenReturn(true);
         assertTrue(topicProjectionHelper.isTopicFollowed(3L));
-        verify(topicFollowersRepository, times(1)).isTopicFollowed(USER_ID, 3L);
+        verify(topicRepository, times(1)).isTopicFollowed(USER_ID, 3L);
     }
 
     @Test
     public void isTopicNotInterested() {
-        when(topicNotInterestedRepository.isTopicNotInterested(USER_ID, 3L)).thenReturn(true);
+        when(topicRepository.isTopicNotInterested(USER_ID, 3L)).thenReturn(true);
         assertTrue(topicProjectionHelper.isTopicNotInterested(3L));
-        verify(topicNotInterestedRepository, times(1)).isTopicNotInterested(USER_ID, 3L);
+        verify(topicRepository, times(1)).isTopicNotInterested(USER_ID, 3L);
     }
 }
