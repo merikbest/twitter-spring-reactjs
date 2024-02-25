@@ -10,17 +10,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(
-        name = "lists_members",
-        indexes = {
-                @Index(name = "lists_members_list_id_idx", columnList = "list_id"),
-                @Index(name = "lists_members_member_id_idx", columnList = "member_id")
-        })
+@Table(name = "lists_members_demo")
 public class ListsMembers {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lists_members_seq")
-    @SequenceGenerator(name = "lists_members_seq", sequenceName = "lists_members_seq", initialValue = 100, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull

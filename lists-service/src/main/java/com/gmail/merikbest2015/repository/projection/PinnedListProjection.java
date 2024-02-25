@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public interface PinnedListProjection {
     Long getId();
-    String getName();
+    String getListName();
     String getAltWallpaper();
     String getWallpaper();
     boolean getIsPrivate();

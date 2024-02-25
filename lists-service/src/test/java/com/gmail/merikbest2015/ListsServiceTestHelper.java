@@ -155,7 +155,7 @@ public class ListsServiceTestHelper {
     public static Lists createMockLists() {
         Lists lists = new Lists();
         lists.setId(TestConstants.LIST_ID);
-        lists.setName(TestConstants.LIST_NAME);
+        lists.setListName(TestConstants.LIST_NAME);
         lists.setDescription(TestConstants.LIST_DESCRIPTION);
         lists.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         lists.setWallpaper("");

@@ -8,6 +8,7 @@ import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.UserClient;
+import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.repository.ListsFollowersRepository;
 import com.gmail.merikbest2015.repository.ListsMembersRepository;
 import com.gmail.merikbest2015.repository.ListsRepository;
@@ -94,7 +95,7 @@ public class ListsServiceHelper {
 
     public boolean isMyProfileFollowList(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return listsFollowersRepository.isListFollowed(authUserId, listId);
+        return listsRepository.isListFollowed(listId, authUserId);
     }
 
     public CommonUserResponse getListOwnerById(Long userId) {
@@ -103,6 +104,6 @@ public class ListsServiceHelper {
 
     public boolean isListPinned(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return pinnedListsRepository.isListPinned(listId, authUserId);
+        return listsRepository.isListPinned(listId, authUserId);
     }
 }

@@ -177,7 +177,7 @@ public class ListsServiceImplTest {
     public void createTweetList_shouldEmptyListNameAndReturnException() {
         Lists lists = new Lists();
         lists.setId(1L);
-        lists.setName("");
+        lists.setListName("");
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> listsService.createTweetList(lists));
         assertEquals(INCORRECT_LIST_NAME_LENGTH, exception.getMessage());
@@ -188,7 +188,7 @@ public class ListsServiceImplTest {
     public void createTweetList_shouldLargeListNameAndReturnException() {
         Lists lists = new Lists();
         lists.setId(1L);
-        lists.setName("**************************");
+        lists.setListName("**************************");
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> listsService.createTweetList(lists));
         assertEquals(INCORRECT_LIST_NAME_LENGTH, exception.getMessage());
@@ -200,7 +200,7 @@ public class ListsServiceImplTest {
         Lists lists = new Lists();
         lists.setId(1L);
         lists.setListOwnerId(3L);
-        lists.setName("test");
+        lists.setListName("test");
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> listsService.createTweetList(lists));
         assertEquals(LIST_OWNER_NOT_FOUND, exception.getMessage());
@@ -261,7 +261,7 @@ public class ListsServiceImplTest {
         Lists lists = new Lists();
         lists.setId(1L);
         lists.setListOwnerId(TestConstants.LIST_USER_ID);
-        lists.setName(TestConstants.LIST_NAME);
+        lists.setListName(TestConstants.LIST_NAME);
         lists.setDescription(TestConstants.LIST_DESCRIPTION);
         lists.setWallpaper("");
         lists.setPrivate(false);
@@ -289,7 +289,7 @@ public class ListsServiceImplTest {
     public void editTweetList_shouldEmptyListNameAndReturnException() {
         Lists lists = new Lists();
         lists.setId(1L);
-        lists.setName("");
+        lists.setListName("");
         when(listsRepository.findById(TestConstants.LIST_ID)).thenReturn(Optional.of(ListsServiceTestHelper.createMockLists()));
         ApiRequestException exception = assertThrows(ApiRequestException.class, () -> listsService.editTweetList(lists));
         assertEquals(INCORRECT_LIST_NAME_LENGTH, exception.getMessage());
@@ -300,7 +300,7 @@ public class ListsServiceImplTest {
     public void editTweetList_shouldLargeListNameAndReturnException() {
         Lists lists = new Lists();
         lists.setId(1L);
-        lists.setName("**************************");
+        lists.setListName("**************************");
         when(listsRepository.findById(TestConstants.LIST_ID)).thenReturn(Optional.of(ListsServiceTestHelper.createMockLists()));
         ApiRequestException exception = assertThrows(ApiRequestException.class, () -> listsService.editTweetList(lists));
         assertEquals(INCORRECT_LIST_NAME_LENGTH, exception.getMessage());
@@ -331,7 +331,7 @@ public class ListsServiceImplTest {
         Lists lists = new Lists();
         lists.setId(1L);
         lists.setListOwnerId(3L);
-        lists.setName("test");
+        lists.setListName("test");
         when(listsRepository.findById(TestConstants.LIST_ID)).thenReturn(Optional.of(lists));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> listsService.deleteList(TestConstants.LIST_ID));

@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class ListUserResponse {
     private Long id;
-    private String name;
+    private String listName;
     private String description;
     private String altWallpaper;
     private String wallpaper;

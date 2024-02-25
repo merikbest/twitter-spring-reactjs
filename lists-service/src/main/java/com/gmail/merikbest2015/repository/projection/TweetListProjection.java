@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public interface TweetListProjection {
     Long getId();
-    String getName();
+    String getListName();
     String getAltWallpaper();
     String getWallpaper();
     Long getListOwnerId();

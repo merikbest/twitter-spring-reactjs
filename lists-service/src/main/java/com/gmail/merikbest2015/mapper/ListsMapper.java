@@ -55,12 +55,12 @@ public class ListsMapper {
     }
 
     public ListUserResponse createTweetList(ListsRequest listsRequest) {
-        ListUserProjection list = listsService.createTweetList(basicMapper.convertToResponse(listsRequest, Lists.class));
+        ListUserProjection list = listsService.createTweetList(listsRequest);
         return basicMapper.convertToResponse(list, ListUserResponse.class);
     }
 
     public BaseListResponse editTweetList(ListsRequest listsRequest) {
-        BaseListProjection list = listsService.editTweetList(basicMapper.convertToResponse(listsRequest, Lists.class));
+        BaseListProjection list = listsService.editTweetList(listsRequest);
         return basicMapper.convertToResponse(list, BaseListResponse.class);
     }
 

@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
@@ -9,18 +10,18 @@ import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Lists;
-import com.gmail.merikbest2015.model.ListsFollowers;
 import com.gmail.merikbest2015.model.ListsMembers;
-import com.gmail.merikbest2015.model.PinnedLists;
+import com.gmail.merikbest2015.model.PinnedList;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.ListsFollowersRepository;
 import com.gmail.merikbest2015.repository.ListsMembersRepository;
 import com.gmail.merikbest2015.repository.ListsRepository;
-import com.gmail.merikbest2015.repository.PinnedListsRepository;
 import com.gmail.merikbest2015.repository.projection.BaseListProjection;
 import com.gmail.merikbest2015.repository.projection.ListProjection;
 import com.gmail.merikbest2015.repository.projection.ListUserProjection;
 import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
 import com.gmail.merikbest2015.service.ListsService;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.service.util.ListsServiceHelper;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.LIST_NOT_FOUND;
 
@@ -42,17 +44,16 @@ public class ListsServiceImpl implements ListsService {
     private final ListsRepository listsRepository;
     private final ListsFollowersRepository listsFollowersRepository;
     private final ListsMembersRepository listsMembersRepository;
-    private final PinnedListsRepository pinnedListsRepository;
     private final ListsServiceHelper listsServiceHelper;
+    private final UserService userService;
     private final UserClient userClient;
     private final TweetClient tweetClient;
 
     @Override
     @Transactional(readOnly = true)
     public List<ListProjection> getAllTweetLists() {
-        List<Long> listOwnerIds = listsRepository.getListOwnerIds();
-        List<Long> validListUserIds = userClient.getValidUserIds(new IdsRequest(listOwnerIds));
-        return listsRepository.getAllTweetLists(validListUserIds);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return listsRepository.getAllTweetLists(authUserId);
     }
 
     @Override
@@ -75,19 +76,24 @@ public class ListsServiceImpl implements ListsService {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         BaseListProjection list = listsRepository.getListById(listId, authUserId, BaseListProjection.class)
                 .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
-        if (!authUserId.equals(list.getListOwnerId())) {
-            listsServiceHelper.checkIsPrivateUserProfile(list.getListOwnerId());
+        if (!authUserId.equals(list.getListOwner().getId())) {
+            userService.checkIsPrivateUserProfile(list.getListOwner().getId(), authUserId);
         }
-        listsServiceHelper.checkUserIsBlocked(list.getListOwnerId(), authUserId);
+        userService.checkUserIsBlocked(list.getListOwner().getId(), authUserId);
         return list;
     }
 
     @Override
     @Transactional
-    public ListUserProjection createTweetList(Lists list) { // TODO pass listOwner (User) from front-end
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        listsServiceHelper.validateListNameLength(list.getName());
-        listsServiceHelper.validateListOwner(list.getListOwnerId(), authUserId);
+    public ListUserProjection createTweetList(ListsRequest listsRequest) {
+        listsServiceHelper.validateListNameLength(listsRequest.getListName());
+        User authUser = userService.getAuthUser();
+        Lists list = new Lists();
+        list.setListName(listsRequest.getListName());
+        list.setDescription(listsRequest.getDescription());
+        list.setWallpaper(listsRequest.getWallpaper());
+        list.setPrivate(listsRequest.getIsPrivate());
+        list.setListOwner(authUser);
         listsRepository.save(list);
         return listsRepository.getListById(list.getId(), ListUserProjection.class);
     }
@@ -100,7 +106,7 @@ public class ListsServiceImpl implements ListsService {
         if (authUserId.equals(userId)) {
             return listsRepository.getUserTweetListsById(userId);
         }
-        if (userClient.isUserBlocked(authUserId, userId) || userClient.isUserHavePrivateProfile(userId)) {
+        if (userService.isUserBlocked(authUserId, userId) || userService.isUserHavePrivateProfile(userId, authUserId)) {
             return new ArrayList<>();
         }
         return listsRepository.getUserTweetListsById(userId);
@@ -110,32 +116,29 @@ public class ListsServiceImpl implements ListsService {
     @Transactional(readOnly = true)
     public List<ListProjection> getTweetListsWhichUserIn() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return listsRepository.getTweetListsByIds(authUserId);
+        return listsRepository.getTweetListsWhichUserIn(authUserId);
     }
 
     @Override
     @Transactional
-    public BaseListProjection editTweetList(Lists listInfo) {
-        Lists list = listsRepository.findById(listInfo.getId())
-                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
+    public BaseListProjection editTweetList(ListsRequest listsRequest) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        listsServiceHelper.validateListNameLength(listInfo.getName());
-        listsServiceHelper.validateListOwner(listInfo.getListOwnerId(), authUserId);
-        list.setName(listInfo.getName());
-        list.setDescription(listInfo.getDescription());
-        list.setWallpaper(listInfo.getWallpaper());
-        list.setPrivate(listInfo.isPrivate());
+        Lists list = listsRepository.getListByIdAndUserId(listsRequest.getId(), authUserId)
+                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
+        listsServiceHelper.validateListNameLength(listsRequest.getListName());
+        list.setListName(listsRequest.getListName());
+        list.setDescription(listsRequest.getDescription());
+        list.setWallpaper(listsRequest.getWallpaper());
+        list.setPrivate(listsRequest.getIsPrivate());
         return listsRepository.getListById(list.getId(), authUserId, BaseListProjection.class).get();
     }
 
     @Override
     @Transactional
     public String deleteList(Long listId) {
-        Lists list = listsRepository.findById(listId)
-                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        listsServiceHelper.validateListOwner(list.getListOwnerId(), authUserId);
-        pinnedListsRepository.deletePinnedList(listId);
+        Lists list = listsRepository.getListByIdAndUserId(listId, authUserId)
+                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
         listsRepository.delete(list);
         return String.format("List id:%s deleted.", listId);
     }
@@ -143,18 +146,15 @@ public class ListsServiceImpl implements ListsService {
     @Override
     @Transactional
     public ListUserProjection followList(Long listId) {
-        if (!listsRepository.findByIdAndIsPrivateFalse(listId)) {
-            throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
-        }
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        ListsFollowers follower = listsFollowersRepository.getListFollower(listId, authUserId);
+        Lists list = listsRepository.getListByIdAndIsPrivateFalse(listId)
+                .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
+        User authUser = userService.getAuthUser();
 
-        if (follower != null) {
-            listsFollowersRepository.delete(follower);
-            pinnedListsRepository.removePinnedList(listId, authUserId);
+        if (list.getListsFollowers().contains(authUser)) {
+            list.getListsFollowers().remove(authUser);
+            list.getPinnedLists().removeIf(pl -> pl.getPinnedUser().equals(authUser) && pl.getLists().equals(list));
         } else {
-            ListsFollowers newFollower = new ListsFollowers(listId, authUserId);
-            listsFollowersRepository.save(newFollower);
+            list.getListsFollowers().add(authUser);
         }
         return listsRepository.getListById(listId, ListUserProjection.class);
     }
@@ -162,19 +162,19 @@ public class ListsServiceImpl implements ListsService {
     @Override
     @Transactional
     public PinnedListProjection pinList(Long listId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        Lists list = listsRepository.getListWhereUserConsist(listId, authUserId)
+        User authUser = userService.getAuthUser();
+        Lists list = listsRepository.getListWhereUserConsist(listId, authUser.getId())
                 .orElseThrow(() -> new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
-        PinnedLists pinnedLists = pinnedListsRepository.getPinnedByUserIdAndListId(listId, authUserId);
+        Optional<PinnedList> pinnedList = list.getPinnedLists().stream()
+                .filter(pl -> pl.getPinnedUser().equals(authUser) && pl.getLists().equals(list))
+                .findFirst();
 
-        if (pinnedLists != null) {
-            pinnedListsRepository.delete(pinnedLists);
+        if (pinnedList.isPresent()) {
+            list.getPinnedLists().remove(pinnedList.get());
         } else {
-            PinnedLists newPinnedLists = new PinnedLists(list, authUserId);
-            pinnedListsRepository.save(newPinnedLists);
+            list.getPinnedLists().add(new PinnedList(list, authUser));
         }
         return listsRepository.getListById(listId, PinnedListProjection.class);
-        // TODO or return true/false if lists pinned
     }
 
     @Override
@@ -194,9 +194,9 @@ public class ListsServiceImpl implements ListsService {
     @Transactional
     public String addUserToLists(UserToListsRequest listsRequest) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        listsServiceHelper.checkUserIsBlocked(authUserId, listsRequest.getUserId());
-        listsServiceHelper.checkUserIsBlocked(listsRequest.getUserId(), authUserId);
-        listsServiceHelper.checkIsPrivateUserProfile(listsRequest.getUserId());
+        userService.checkUserIsBlocked(authUserId, listsRequest.getUserId());
+        userService.checkUserIsBlocked(listsRequest.getUserId(), authUserId);
+        userService.checkIsPrivateUserProfile(listsRequest.getUserId(), authUserId);
         listsRequest.getLists().forEach(list -> {
             listsServiceHelper.checkIsListExist(list.getListId(), authUserId);
             ListsMembers member = listsMembersRepository.getListMember(list.getListId(), listsRequest.getUserId());

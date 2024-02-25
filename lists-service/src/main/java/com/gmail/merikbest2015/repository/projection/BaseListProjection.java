@@ -1,19 +1,16 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
+import com.gmail.merikbest2015.model.User;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface BaseListProjection {
     Long getId();
-    String getName();
+    String getListName();
     String getDescription();
     String getAltWallpaper();
     String getWallpaper();
-    Long getListOwnerId();
+    User getListOwner();
     boolean getIsPrivate();
-
-    @Value("#{@listsServiceHelper.getListOwnerById(target.listOwnerId)}")
-    CommonUserResponse getListOwner();
 
     @Value("#{@listsMembersRepository.getMembersSize(target.id)}")
     Long getMembersSize();

@@ -6,15 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "lists", indexes = @Index(name = "lists_list_owner_id_idx", columnList = "list_owner_id"))
+@Table(name = "lists")
 public class Lists {
 
     @Id
@@ -22,8 +22,8 @@ public class Lists {
     @SequenceGenerator(name = "lists_seq", sequenceName = "lists_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "list_name", nullable = false)
+    private String listName;
 
     @Column(name = "description")
     private String description;
@@ -37,9 +37,22 @@ public class Lists {
     @Column(name = "wallpaper")
     private String wallpaper;
 
-    @OneToMany(mappedBy = "list")
-    private List<PinnedLists> pinnedLists = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "list_owner_id", nullable = false)
+    private User listOwner;
 
-    @Column(name = "list_owner_id", nullable = false)
-    private Long listOwnerId;
+    @ManyToMany
+    @JoinTable(name = "lists_followers",
+            joinColumns = @JoinColumn(name = "list_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    private Set<User> listsFollowers = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "lists_members",
+            joinColumns = @JoinColumn(name = "list_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_id"))
+    private Set<User> listsMembers = new HashSet<>();
+
+    @OneToMany(mappedBy = "lists", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<PinnedList> pinnedLists = new HashSet<>();
 }

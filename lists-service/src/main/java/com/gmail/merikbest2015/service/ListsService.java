@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
-import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
 import org.springframework.data.domain.Pageable;
@@ -22,13 +22,13 @@ public interface ListsService {
 
     BaseListProjection getListById(Long listId);
 
-    ListUserProjection createTweetList(Lists lists);
+    ListUserProjection createTweetList(ListsRequest listsRequest);
 
     List<ListProjection> getUserTweetListsById(Long userId);
 
     List<ListProjection> getTweetListsWhichUserIn();
 
-    BaseListProjection editTweetList(Lists lists);
+    BaseListProjection editTweetList(ListsRequest listsRequest);
 
     String deleteList(Long listId);
 
