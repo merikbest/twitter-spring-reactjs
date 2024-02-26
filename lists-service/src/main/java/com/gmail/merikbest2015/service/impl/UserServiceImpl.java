@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.gmail.merikbest2015.constants.ErrorMessage.USER_ID_BLOCKED;
 import static com.gmail.merikbest2015.constants.ErrorMessage.USER_NOT_FOUND;
 
@@ -26,13 +28,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserBlocked(Long userId, Long supposedBlockedUserId) {
-        return userRepository.isUserBlocked(userId, supposedBlockedUserId);
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 
     @Override
-    public boolean isUserHavePrivateProfile(Long userId, Long authUserId) {
-        return userRepository.isUserHavePrivateProfile(userId, authUserId);
+    public List<User> searchListMembersByUsername(String username) {
+        return userRepository.searchListMembersByUsername(username);
     }
 
     @Override
@@ -47,5 +50,15 @@ public class UserServiceImpl implements UserService {
         if (isUserHavePrivateProfile(userId, authUserId)) {
             throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Override
+    public boolean isUserBlocked(Long userId, Long supposedBlockedUserId) {
+        return userRepository.isUserBlocked(userId, supposedBlockedUserId);
+    }
+
+    @Override
+    public boolean isUserHavePrivateProfile(Long userId, Long authUserId) {
+        return userRepository.isUserHavePrivateProfile(userId, authUserId);
     }
 }

@@ -3,8 +3,8 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
 import org.springframework.data.domain.Pageable;
@@ -46,9 +46,9 @@ public interface ListsService {
 
     BaseListProjection getListDetails(Long listId);
 
-    List<ListMemberResponse> getListFollowers(Long listId, Long listOwnerId);
+    List<User> getListFollowers(Long listId, Long listOwnerId);
 
-    List<ListMemberResponse> getListMembers(Long listId, Long listOwnerId);
+    List<Map<String, Object>> getListMembers(Long listId, Long listOwnerId);
 
-    List<ListMemberResponse> searchListMembersByUsername(Long listId, String username);
+    List<Map<String, Object>> searchListMembersByUsername(Long listId, String username);
 }
