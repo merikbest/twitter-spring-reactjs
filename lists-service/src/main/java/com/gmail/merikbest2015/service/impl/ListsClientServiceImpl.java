@@ -2,12 +2,12 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.repository.projection.NotificationListProjection;
 import com.gmail.merikbest2015.repository.projection.TweetListProjection;
 import com.gmail.merikbest2015.service.ListsClientService;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ import java.util.Optional;
 public class ListsClientServiceImpl implements ListsClientService {
 
     private final ListsRepository listsRepository;
-    private final UserClient userClient;
+    private final UserService userService;
     private final BasicMapper basicMapper;
 
     @Override
@@ -35,10 +35,10 @@ public class ListsClientServiceImpl implements ListsClientService {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Optional<TweetListProjection> list = listsRepository.getListById(listId, authUserId, TweetListProjection.class);
 
-        if (list.isEmpty() || userClient.isUserBlocked(list.get().getListOwnerId(), authUserId)) {
+        if (list.isEmpty() || userService.isUserBlocked(list.get().getListOwner().getId(), authUserId)) {
             return new TweetListResponse();
         }
-        if (!authUserId.equals(list.get().getListOwnerId()) && userClient.isUserHavePrivateProfile(list.get().getListOwnerId())) {
+        if (!authUserId.equals(list.get().getListOwner().getId()) && userService.isUserHavePrivateProfile(list.get().getListOwner().getId(), authUserId)) {
             return new TweetListResponse();
         }
         return basicMapper.convertToResponse(list.get(), TweetListResponse.class);

@@ -12,10 +12,10 @@ public interface BaseListProjection {
     User getListOwner();
     boolean getIsPrivate();
 
-    @Value("#{@listsMembersRepository.getMembersSize(target.id)}")
+    @Value("#{@listsRepository.getMembersSize(target.id)}")
     Long getMembersSize();
 
-    @Value("#{@listsFollowersRepository.getFollowersSize(target.id)}")
+    @Value("#{@listsRepository.getFollowersSize(target.id)}")
     Long getFollowersSize();
 
     @Value("#{@listsServiceHelper.isMyProfileFollowList(target.id)}")

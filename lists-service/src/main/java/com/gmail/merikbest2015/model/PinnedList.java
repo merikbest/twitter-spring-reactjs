@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
@@ -34,5 +35,18 @@ public class PinnedList {
         this.listUserId = new ListUserId(lists.getId(), pinnedUser.getId());
         this.lists = lists;
         this.pinnedUser = pinnedUser;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Embeddable
+    public static class ListUserId implements Serializable {
+
+        @Column(name = "list_id", nullable = false)
+        private Long listId;
+
+        @Column(name = "pinned_user_id", nullable = false)
+        private Long pinnedUserId;
     }
 }

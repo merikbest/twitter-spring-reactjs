@@ -83,8 +83,9 @@ public class ListsServiceImpl implements ListsService {
         Lists list = new Lists();
         list.setListName(listsRequest.getListName());
         list.setDescription(listsRequest.getDescription());
-        list.setWallpaper(listsRequest.getWallpaper());
         list.setPrivate(listsRequest.getIsPrivate());
+        list.setAltWallpaper(listsRequest.getAltWallpaper());
+        list.setWallpaper(listsRequest.getWallpaper());
         list.setListOwner(authUser);
         listsRepository.save(list);
         return listsRepository.getListById(list.getId(), ListUserProjection.class);

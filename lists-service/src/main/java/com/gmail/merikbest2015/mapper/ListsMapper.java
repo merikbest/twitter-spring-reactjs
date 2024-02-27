@@ -1,13 +1,15 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
+import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.repository.projection.*;
+import com.gmail.merikbest2015.repository.projection.BaseListProjection;
+import com.gmail.merikbest2015.repository.projection.ListProjection;
+import com.gmail.merikbest2015.repository.projection.ListUserProjection;
 import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
 import com.gmail.merikbest2015.service.ListsService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -110,17 +113,15 @@ public class ListsMapper {
     }
 
     public List<ListMemberResponse> getListMembers(Long listId, Long listOwnerId) {
-        return listsService.getListMembers(listId, listOwnerId).stream()
-                .map(map -> {
-                    ListMemberResponse listMemberResponse = basicMapper.convertToResponse(map.get("user"), ListMemberResponse.class);
-                    listMemberResponse.setMemberInList((Boolean) map.get("isMemberInList"));
-                    return listMemberResponse;
-                })
-                .toList();
+        return mapMembers(listsService.getListMembers(listId, listOwnerId));
     }
 
     public List<ListMemberResponse> searchListMembersByUsername(Long listId, String username) {
-        return listsService.searchListMembersByUsername(listId, username).stream()
+        return mapMembers(listsService.searchListMembersByUsername(listId, username));
+    }
+
+    private List<ListMemberResponse> mapMembers(List<Map<String, Object>> members) {
+        return members.stream()
                 .map(map -> {
                     ListMemberResponse listMemberResponse = basicMapper.convertToResponse(map.get("user"), ListMemberResponse.class);
                     listMemberResponse.setMemberInList((Boolean) map.get("isMemberInList"));

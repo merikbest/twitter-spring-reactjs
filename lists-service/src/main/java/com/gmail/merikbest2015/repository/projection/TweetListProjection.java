@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
+import com.gmail.merikbest2015.model.User;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface TweetListProjection {
@@ -8,12 +8,9 @@ public interface TweetListProjection {
     String getListName();
     String getAltWallpaper();
     String getWallpaper();
-    Long getListOwnerId();
     boolean getIsPrivate();
+    User getListOwner();
 
-    @Value("#{@listsServiceHelper.getListOwnerById(target.listOwnerId)}")
-    CommonUserResponse getListOwner();
-
-    @Value("#{@listsMembersRepository.getMembersSize(target.id)}")
+    @Value("#{@listsRepository.getMembersSize(target.id)}")
     Long getMembersSize();
 }

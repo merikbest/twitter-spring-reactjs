@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class TweetListResponse {
     private Long id;
-    private String name;
+    private String listName;
     private String altWallpaper;
     private String wallpaper;
     private CommonUserResponse listOwner;

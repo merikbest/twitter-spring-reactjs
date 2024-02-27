@@ -59,6 +59,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserHavePrivateProfile(Long userId, Long authUserId) {
-        return userRepository.isUserHavePrivateProfile(userId, authUserId);
+        return !userRepository.isUserHavePrivateProfile(userId, authUserId);
     }
 }

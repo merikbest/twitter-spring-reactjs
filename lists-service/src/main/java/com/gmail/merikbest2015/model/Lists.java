@@ -16,10 +16,11 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id")
 @Table(name = "lists")
 public class Lists {
+    private static final String LISTS_SEQ = "lists_seq";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lists_seq")
-    @SequenceGenerator(name = "lists_seq", sequenceName = "lists_seq", initialValue = 100, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = LISTS_SEQ)
+    @SequenceGenerator(name = LISTS_SEQ, sequenceName = LISTS_SEQ, initialValue = 100, allocationSize = 1)
     private Long id;
 
     @Column(name = "list_name", nullable = false)
