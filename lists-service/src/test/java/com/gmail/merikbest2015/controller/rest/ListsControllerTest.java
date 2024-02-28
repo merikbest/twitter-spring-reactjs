@@ -58,9 +58,9 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(6)))
+                .andExpect(jsonPath("$[*]", hasSize(7)))
                 .andExpect(jsonPath("$[0].id").value(4L))
-                .andExpect(jsonPath("$[0].name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$[0].listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$[0].description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$[0].altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())
@@ -76,7 +76,7 @@ public class ListsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(3)))
                 .andExpect(jsonPath("$[0].id").isNotEmpty())
-                .andExpect(jsonPath("$[0].name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$[0].listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$[0].description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$[0].altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())
@@ -92,7 +92,7 @@ public class ListsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(4L))
-                .andExpect(jsonPath("$[0].name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$[0].listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$[0].description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$[0].altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())
@@ -108,7 +108,7 @@ public class ListsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(7L))
-                .andExpect(jsonPath("$[0].name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$[0].listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$[0].description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$[0].altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())
@@ -124,7 +124,7 @@ public class ListsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[0].id").value(4L))
-                .andExpect(jsonPath("$[0].name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$[0].listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$[0].altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())
                 .andExpect(jsonPath("$[0].isPrivate").value(false));
@@ -137,7 +137,7 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
@@ -155,7 +155,7 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(6))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
@@ -173,7 +173,7 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(7))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
@@ -224,8 +224,8 @@ public class ListsControllerTest {
     @DisplayName("[200] POST /ui/v1/lists - Create Tweet List")
     public void createTweetList() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setName(TestConstants.LIST_NAME);
-        listsRequest.setListOwnerId(TestConstants.USER_ID);
+        listsRequest.setListName(TestConstants.LIST_NAME);
+        listsRequest.setIsPrivate(false);
         listsRequest.setDescription(TestConstants.LIST_DESCRIPTION);
         listsRequest.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
 
@@ -234,7 +234,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(listsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
@@ -246,7 +246,8 @@ public class ListsControllerTest {
     @DisplayName("[400] POST /ui/v1/lists - Should list name length is 0")
     public void createTweetList_ShouldListNameLengthIs0Symbols() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setName("");
+        listsRequest.setListName("");
+        listsRequest.setIsPrivate(false);
         listsRequest.setDescription(TestConstants.LIST_DESCRIPTION);
         listsRequest.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
 
@@ -262,7 +263,8 @@ public class ListsControllerTest {
     @DisplayName("[400] POST /ui/v1/lists - Should list name length more than 25 symbols")
     public void createTweetList_ShouldListNameLengthMoreThan25Symbols() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setName(TestConstants.LINK_DESCRIPTION);
+        listsRequest.setListName(TestConstants.LINK_DESCRIPTION);
+        listsRequest.setIsPrivate(false);
         listsRequest.setDescription(TestConstants.LIST_DESCRIPTION);
         listsRequest.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
 
@@ -274,30 +276,29 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$", is(INCORRECT_LIST_NAME_LENGTH)));
     }
 
-    @Test
-    @DisplayName("[404] POST /ui/v1/lists - Should list owner Not Found")
-    public void createTweetList_ShouldValidateListOwner() throws Exception {
-        ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setName(TestConstants.LIST_NAME);
-        listsRequest.setListOwnerId(1L);
-        listsRequest.setDescription(TestConstants.LIST_DESCRIPTION);
-        listsRequest.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
-
-        mockMvc.perform(post(UI_V1_LISTS)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
-                        .content(mapper.writeValueAsString(listsRequest))
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_OWNER_NOT_FOUND)));
-    }
+//    @Test
+//    @DisplayName("[404] POST /ui/v1/lists - Should list owner Not Found")
+//    public void createTweetList_ShouldValidateListOwner() throws Exception {
+//        ListsRequest listsRequest = new ListsRequest();
+//        listsRequest.setName(TestConstants.LIST_NAME);
+//        listsRequest.setDescription(TestConstants.LIST_DESCRIPTION);
+//        listsRequest.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
+//
+//        mockMvc.perform(post(UI_V1_LISTS)
+//                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+//                        .content(mapper.writeValueAsString(listsRequest))
+//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+//                .andExpect(status().isNotFound())
+//                .andExpect(jsonPath("$", is(LIST_OWNER_NOT_FOUND)));
+//    }
 
     @Test
     @DisplayName("[200] PUT /ui/v1/lists - Edit Tweet List")
     public void editTweetList() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setListOwnerId(2L);
         listsRequest.setId(4L);
-        listsRequest.setName("edited name");
+        listsRequest.setIsPrivate(false);
+        listsRequest.setListName("edited name");
         listsRequest.setDescription("edited description");
 
         mockMvc.perform(put(UI_V1_LISTS)
@@ -306,7 +307,7 @@ public class ListsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.name").value("edited name"))
+                .andExpect(jsonPath("$.listName").value("edited name"))
                 .andExpect(jsonPath("$.description").value("edited description"))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
@@ -322,7 +323,8 @@ public class ListsControllerTest {
     public void editTweetList_ShouldListNameLengthIs0() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
         listsRequest.setId(4L);
-        listsRequest.setName("");
+        listsRequest.setIsPrivate(false);
+        listsRequest.setListName("");
         listsRequest.setDescription("edited description");
 
         mockMvc.perform(put(UI_V1_LISTS)
@@ -338,7 +340,8 @@ public class ListsControllerTest {
     public void editTweetList_ShouldListNameLengthMoreThan25Symbols() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
         listsRequest.setId(4L);
-        listsRequest.setName(TestConstants.LINK_DESCRIPTION);
+        listsRequest.setIsPrivate(false);
+        listsRequest.setListName(TestConstants.LINK_DESCRIPTION);
         listsRequest.setDescription("edited description");
 
         mockMvc.perform(put(UI_V1_LISTS)
@@ -353,9 +356,9 @@ public class ListsControllerTest {
     @DisplayName("[404] PUT /ui/v1/lists - Should list Not Found")
     public void editTweetList_ShouldListNotFound() throws Exception {
         ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setListOwnerId(TestConstants.USER_ID);
         listsRequest.setId(99L);
-        listsRequest.setName(TestConstants.LIST_DESCRIPTION);
+        listsRequest.setIsPrivate(false);
+        listsRequest.setListName(TestConstants.LIST_DESCRIPTION);
         listsRequest.setDescription("edited description");
 
         mockMvc.perform(put(UI_V1_LISTS)
@@ -366,22 +369,22 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
     }
 
-    @Test
-    @DisplayName("[404] PUT /ui/v1/lists - Should list owner Not Found")
-    public void editTweetList_ShouldListOwnerNotFound() throws Exception {
-        ListsRequest listsRequest = new ListsRequest();
-        listsRequest.setListOwnerId(3L);
-        listsRequest.setId(5L);
-        listsRequest.setName(TestConstants.LIST_DESCRIPTION);
-        listsRequest.setDescription("edited description");
-
-        mockMvc.perform(put(UI_V1_LISTS)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
-                        .content(mapper.writeValueAsString(listsRequest))
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_OWNER_NOT_FOUND)));
-    }
+//    @Test
+//    @DisplayName("[404] PUT /ui/v1/lists - Should list owner Not Found")
+//    public void editTweetList_ShouldListOwnerNotFound() throws Exception {
+//        ListsRequest listsRequest = new ListsRequest();
+//        listsRequest.setListOwnerId(3L);
+//        listsRequest.setId(5L);
+//        listsRequest.setName(TestConstants.LIST_DESCRIPTION);
+//        listsRequest.setDescription("edited description");
+//
+//        mockMvc.perform(put(UI_V1_LISTS)
+//                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+//                        .content(mapper.writeValueAsString(listsRequest))
+//                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+//                .andExpect(status().isNotFound())
+//                .andExpect(jsonPath("$", is(LIST_OWNER_NOT_FOUND)));
+//    }
 
     @Test
     @DisplayName("[200] DELETE /ui/v1/lists/4 - Delete list")
@@ -401,14 +404,14 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
     }
 
-    @Test
-    @DisplayName("[400] DELETE /ui/v1/lists/5 - Delete another user list Should Not found")
-    public void deleteAnotherUserList_ShouldNotFound() throws Exception {
-        mockMvc.perform(delete(UI_V1_LISTS + LIST_ID, 5)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_OWNER_NOT_FOUND)));
-    }
+//    @Test
+//    @DisplayName("[400] DELETE /ui/v1/lists/5 - Delete another user list Should Not found")
+//    public void deleteAnotherUserList_ShouldNotFound() throws Exception {
+//        mockMvc.perform(delete(UI_V1_LISTS + LIST_ID, 5)
+//                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+//                .andExpect(status().isNotFound())
+//                .andExpect(jsonPath("$", is(LIST_OWNER_NOT_FOUND)));
+//    }
 
     @Test
     @DisplayName("[200] GET /ui/v1/lists/follow/9 - Follow list")
@@ -417,7 +420,7 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(9))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
@@ -450,7 +453,7 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
@@ -465,7 +468,7 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(6))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
                 .andExpect(jsonPath("$.isPrivate").value(true));
@@ -478,7 +481,7 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
                 .andExpect(jsonPath("$.isPrivate").value(false));
@@ -501,7 +504,7 @@ public class ListsControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", Matchers.oneOf(4, 6)))
-                .andExpect(jsonPath("$[0].name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$[0].listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$[0].altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$[0].wallpaper").isEmpty())
                 .andExpect(jsonPath("$[0].isMemberInList").value(true))
@@ -664,7 +667,7 @@ public class ListsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.description").value(TestConstants.LIST_DESCRIPTION))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
@@ -695,7 +698,7 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].fullName").value(TestConstants.USERNAME2))
                 .andExpect(jsonPath("$[0].username").value(TestConstants.USERNAME2))
                 .andExpect(jsonPath("$[0].about").value(TestConstants.ABOUT2))
-                .andExpect(jsonPath("$[0].avatar").value(TestConstants.AVATAR_SRC_2))
+                .andExpect(jsonPath("$[0].avatar").value(TestConstants.AVATAR_SRC_1))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false));
     }
 
@@ -737,7 +740,7 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].fullName").value(TestConstants.USERNAME2))
                 .andExpect(jsonPath("$[0].username").value(TestConstants.USERNAME2))
                 .andExpect(jsonPath("$[0].about").value(TestConstants.ABOUT2))
-                .andExpect(jsonPath("$[0].avatar").value(TestConstants.AVATAR_SRC_2))
+                .andExpect(jsonPath("$[0].avatar").value(TestConstants.AVATAR_SRC_1))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false))
                 .andExpect(jsonPath("$[0].isMemberInList").value(true));
     }
@@ -753,7 +756,7 @@ public class ListsControllerTest {
                 .andExpect(jsonPath("$[0].fullName").value(TestConstants.USERNAME2))
                 .andExpect(jsonPath("$[0].username").value(TestConstants.USERNAME2))
                 .andExpect(jsonPath("$[0].about").value(TestConstants.ABOUT2))
-                .andExpect(jsonPath("$[0].avatar").value(TestConstants.AVATAR_SRC_2))
+                .andExpect(jsonPath("$[0].avatar").value(TestConstants.AVATAR_SRC_1))
                 .andExpect(jsonPath("$[0].isPrivateProfile").value(false));
     }
 

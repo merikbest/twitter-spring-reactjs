@@ -34,7 +34,7 @@ public class ListsApiControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME));
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class ListsApiControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.name").value(TestConstants.LIST_NAME))
+                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME))
                 .andExpect(jsonPath("$.altWallpaper").value(TestConstants.LIST_ALT_WALLPAPER))
                 .andExpect(jsonPath("$.wallpaper").isEmpty())
                 .andExpect(jsonPath("$.listOwner.id").value(TestConstants.LIST_USER_ID))

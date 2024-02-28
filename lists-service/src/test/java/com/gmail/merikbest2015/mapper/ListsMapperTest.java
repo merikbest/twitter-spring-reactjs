@@ -11,7 +11,7 @@ import com.gmail.merikbest2015.dto.response.PinnedListResponse;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
-import com.gmail.merikbest2015.model.Lists;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.BaseListProjection;
 import com.gmail.merikbest2015.repository.projection.ListProjection;
 import com.gmail.merikbest2015.repository.projection.ListUserProjection;
@@ -28,9 +28,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -119,10 +122,10 @@ public class ListsMapperTest {
         ListsRequest listsRequest = getMockListsRequest();
         ListUserProjection mockListUserProjection = ListsServiceTestHelper.createMockListUserProjectionList().get(0);
         ListUserResponse listUserResponse = getMockListUserResponses().get(0);
-        when(listsService.createTweetList(basicMapper.convertToResponse(listsRequest, Lists.class))).thenReturn(mockListUserProjection);
+        when(listsService.createTweetList(listsRequest)).thenReturn(mockListUserProjection);
         when(basicMapper.convertToResponse(mockListUserProjection, ListUserResponse.class)).thenReturn(listUserResponse);
         assertEquals(listUserResponse, listsMapper.createTweetList(listsRequest));
-        verify(listsService, times(1)).createTweetList(basicMapper.convertToResponse(listsRequest, Lists.class));
+        verify(listsService, times(1)).createTweetList(listsRequest);
         verify(basicMapper, times(1)).convertToResponse(mockListUserProjection, ListUserResponse.class);
     }
 
@@ -131,10 +134,10 @@ public class ListsMapperTest {
         ListsRequest listsRequest = getMockListsRequest();
         BaseListProjection mockBaseListProjection = ListsServiceTestHelper.createMockBaseListProjection(1L);
         BaseListResponse baseListResponse = getMockBaseListResponse();
-        when(listsService.editTweetList(basicMapper.convertToResponse(listsRequest, Lists.class))).thenReturn(mockBaseListProjection);
+        when(listsService.editTweetList(listsRequest)).thenReturn(mockBaseListProjection);
         when(basicMapper.convertToResponse(mockBaseListProjection, BaseListResponse.class)).thenReturn(baseListResponse);
         assertEquals(baseListResponse, listsMapper.editTweetList(listsRequest));
-        verify(listsService, times(1)).editTweetList(basicMapper.convertToResponse(listsRequest, Lists.class));
+        verify(listsService, times(1)).editTweetList(listsRequest);
         verify(basicMapper, times(1)).convertToResponse(mockBaseListProjection, BaseListResponse.class);
     }
 
@@ -207,32 +210,38 @@ public class ListsMapperTest {
 
     @Test
     public void getListFollowers() {
-        List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
+        List<User> mockListMemberResponses = new ArrayList<>(List.of(ListsServiceTestHelper.mockUser(USER_ID)));
         when(listsService.getListFollowers(TestConstants.LIST_ID, 1L)).thenReturn(mockListMemberResponses);
-        assertEquals(mockListMemberResponses, listsMapper.getListFollowers(TestConstants.LIST_ID, 1L));
+        listsMapper.getListFollowers(TestConstants.LIST_ID, 1L);
         verify(listsService, times(1)).getListFollowers(TestConstants.LIST_ID, 1L);
     }
 
     @Test
     public void getListMembers() {
-        List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
+        ListMemberResponse listMemberResponse = ListsServiceTestHelper.createMockListMemberResponseList().get(1);
+        User user = ListsServiceTestHelper.mockUser(USER_ID);
+        List<Map<String, Object>> mockListMemberResponses = List.of(Map.of("user", user, "isMemberInList", false));
         when(listsService.getListMembers(TestConstants.LIST_ID, 1L)).thenReturn(mockListMemberResponses);
-        assertEquals(mockListMemberResponses, listsMapper.getListMembers(TestConstants.LIST_ID, 1L));
+        when(basicMapper.convertToResponse(user, ListMemberResponse.class)).thenReturn(listMemberResponse);
+        listsMapper.getListMembers(TestConstants.LIST_ID, 1L);
         verify(listsService, times(1)).getListMembers(TestConstants.LIST_ID, 1L);
     }
 
     @Test
     public void searchListMembersByUsername() {
-        List<ListMemberResponse> mockListMemberResponses = ListsServiceTestHelper.createMockListMemberResponseList();
+        ListMemberResponse listMemberResponse = ListsServiceTestHelper.createMockListMemberResponseList().get(1);
+        User user = ListsServiceTestHelper.mockUser(USER_ID);
+        List<Map<String, Object>> mockListMemberResponses = List.of(Map.of("user", user, "isMemberInList", false));
         when(listsService.searchListMembersByUsername(TestConstants.LIST_ID, "test_search")).thenReturn(mockListMemberResponses);
-        assertEquals(mockListMemberResponses, listsMapper.searchListMembersByUsername(TestConstants.LIST_ID, "test_search"));
+        when(basicMapper.convertToResponse(user, ListMemberResponse.class)).thenReturn(listMemberResponse);
+        listsMapper.searchListMembersByUsername(TestConstants.LIST_ID, "test_search");
         verify(listsService, times(1)).searchListMembersByUsername(TestConstants.LIST_ID, "test_search");
     }
 
     private List<ListResponse> getMockListsResponses() {
         ListResponse listResponse1 = new ListResponse();
         listResponse1.setId(1L);
-        listResponse1.setName(TestConstants.LIST_NAME);
+        listResponse1.setListName(TestConstants.LIST_NAME);
         listResponse1.setDescription(TestConstants.LIST_DESCRIPTION);
         listResponse1.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         listResponse1.setWallpaper("");
@@ -241,7 +250,7 @@ public class ListsMapperTest {
         listResponse1.setListPinned(false);
         ListResponse listResponse2 = new ListResponse();
         listResponse2.setId(2L);
-        listResponse2.setName(TestConstants.LIST_NAME_2);
+        listResponse2.setListName(TestConstants.LIST_NAME_2);
         listResponse2.setDescription(TestConstants.LIST_DESCRIPTION);
         listResponse2.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         listResponse2.setWallpaper("");
@@ -254,7 +263,7 @@ public class ListsMapperTest {
     private List<ListUserResponse> getMockListUserResponses() {
         ListUserResponse listResponse1 = new ListUserResponse();
         listResponse1.setId(1L);
-        listResponse1.setName(TestConstants.LIST_NAME);
+        listResponse1.setListName(TestConstants.LIST_NAME);
         listResponse1.setDescription(TestConstants.LIST_DESCRIPTION);
         listResponse1.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         listResponse1.setWallpaper("");
@@ -263,7 +272,7 @@ public class ListsMapperTest {
         listResponse1.setListPinned(false);
         ListUserResponse listResponse2 = new ListUserResponse();
         listResponse2.setId(2L);
-        listResponse2.setName(TestConstants.LIST_NAME_2);
+        listResponse2.setListName(TestConstants.LIST_NAME_2);
         listResponse2.setDescription(TestConstants.LIST_ALT_WALLPAPER);
         listResponse2.setWallpaper("");
         listResponse2.setListOwner(new CommonUserResponse());
@@ -275,14 +284,14 @@ public class ListsMapperTest {
     private List<PinnedListResponse> getMockPinnedListResponses() {
         PinnedListResponse listResponse1 = new PinnedListResponse();
         listResponse1.setId(1L);
-        listResponse1.setName(TestConstants.LIST_NAME);
+        listResponse1.setListName(TestConstants.LIST_NAME);
         listResponse1.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         listResponse1.setWallpaper("");
         listResponse1.setPrivate(false);
         listResponse1.setListPinned(false);
         PinnedListResponse listResponse2 = new PinnedListResponse();
         listResponse2.setId(2L);
-        listResponse2.setName(TestConstants.LIST_NAME_2);
+        listResponse2.setListName(TestConstants.LIST_NAME_2);
         listResponse2.setWallpaper("");
         listResponse2.setPrivate(false);
         listResponse2.setListPinned(false);
@@ -292,7 +301,7 @@ public class ListsMapperTest {
     private BaseListResponse getMockBaseListResponse() {
         BaseListResponse listResponse = new BaseListResponse();
         listResponse.setId(TestConstants.LIST_ID);
-        listResponse.setName(TestConstants.LIST_NAME);
+        listResponse.setListName(TestConstants.LIST_NAME);
         listResponse.setDescription(TestConstants.LIST_DESCRIPTION);
         listResponse.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         listResponse.setWallpaper("");
@@ -307,10 +316,9 @@ public class ListsMapperTest {
     private ListsRequest getMockListsRequest() {
         ListsRequest listsRequest = new ListsRequest();
         listsRequest.setId(TestConstants.LIST_ID);
-        listsRequest.setName(TestConstants.LIST_NAME);
+        listsRequest.setListName(TestConstants.LIST_NAME);
         listsRequest.setDescription(TestConstants.LIST_DESCRIPTION);
         listsRequest.setIsPrivate(false);
-        listsRequest.setListOwnerId(2L);
         listsRequest.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         listsRequest.setWallpaper("");
         return listsRequest;

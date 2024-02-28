@@ -4,12 +4,12 @@ import com.gmail.merikbest2015.ListsServiceTestHelper;
 import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.repository.projection.NotificationListProjection;
 import com.gmail.merikbest2015.repository.projection.TweetListProjection;
 import com.gmail.merikbest2015.service.ListsClientService;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.TestConstants;
 import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
@@ -40,7 +40,7 @@ public class ListsClientServiceImplTest {
     private ListsRepository listsRepository;
 
     @MockBean
-    private UserClient userClient;
+    private UserService userService;
 
     @MockBean
     private BasicMapper basicMapper;
@@ -59,7 +59,7 @@ public class ListsClientServiceImplTest {
                 Map.of("id", 1L, "name", TestConstants.LIST_NAME));
         NotificationListResponse listResponse = new NotificationListResponse();
         listResponse.setId(1L);
-        listResponse.setName(TestConstants.LIST_NAME);
+        listResponse.setListName(TestConstants.LIST_NAME);
         when(listsRepository.getListById(TestConstants.LIST_ID, NotificationListProjection.class)).thenReturn(notificationList);
         when(basicMapper.convertToResponse(notificationList, NotificationListResponse.class)).thenReturn(listResponse);
         assertEquals(listResponse, listsClientService.getNotificationList(TestConstants.LIST_ID));
@@ -71,7 +71,7 @@ public class ListsClientServiceImplTest {
     public void getTweetList() {
         TweetListResponse tweetListResponse = new TweetListResponse();
         tweetListResponse.setId(TestConstants.LIST_ID);
-        tweetListResponse.setName(TestConstants.LIST_NAME);
+        tweetListResponse.setListName(TestConstants.LIST_NAME);
         tweetListResponse.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         tweetListResponse.setWallpaper("");
         tweetListResponse.setListOwner(new CommonUserResponse());
@@ -79,12 +79,12 @@ public class ListsClientServiceImplTest {
         tweetListResponse.setMembersSize(1L);
         TweetListProjection tweetListProjection = ListsServiceTestHelper.mockTweetListProjection(TestConstants.LIST_USER_ID);
         when(listsRepository.getListById(TestConstants.LIST_ID, USER_ID, TweetListProjection.class)).thenReturn(Optional.of(tweetListProjection));
-        when(userClient.isUserBlocked(tweetListProjection.getListOwnerId(), USER_ID)).thenReturn(false);
-        when(userClient.isUserHavePrivateProfile(tweetListProjection.getListOwnerId())).thenReturn(false);
+        when(userService.isUserBlocked(tweetListProjection.getListOwner().getId(), USER_ID)).thenReturn(false);
+        when(userService.isUserHavePrivateProfile(tweetListProjection.getListOwner().getId(), USER_ID)).thenReturn(false);
         when(basicMapper.convertToResponse(tweetListProjection, TweetListResponse.class)).thenReturn(tweetListResponse);
         assertEquals(tweetListResponse, listsClientService.getTweetList(TestConstants.LIST_ID));
         verify(listsRepository, times(1)).getListById(TestConstants.LIST_ID, USER_ID, TweetListProjection.class);
-        verify(userClient, times(1)).isUserBlocked(tweetListProjection.getListOwnerId(), USER_ID);
+        verify(userService, times(1)).isUserBlocked(tweetListProjection.getListOwner().getId(), USER_ID);
         verify(basicMapper, times(1)).convertToResponse(tweetListProjection, TweetListResponse.class);
     }
 
@@ -99,21 +99,21 @@ public class ListsClientServiceImplTest {
     public void getTweetList_shouldUserBlockAndReturnEmptyTweetListResponse() {
         when(listsRepository.getListById(TestConstants.LIST_ID, USER_ID, TweetListProjection.class))
                 .thenReturn(Optional.of(ListsServiceTestHelper.mockTweetListProjection(TestConstants.LIST_USER_ID)));
-        when(userClient.isUserBlocked(TestConstants.LIST_USER_ID, USER_ID)).thenReturn(true);
+        when(userService.isUserBlocked(TestConstants.LIST_USER_ID, USER_ID)).thenReturn(true);
         assertEquals(new TweetListResponse(), listsClientService.getTweetList(TestConstants.LIST_ID));
         verify(listsRepository, times(1)).getListById(TestConstants.LIST_ID, USER_ID, TweetListProjection.class);
-        verify(userClient, times(1)).isUserBlocked(TestConstants.LIST_USER_ID, USER_ID);
+        verify(userService, times(1)).isUserBlocked(TestConstants.LIST_USER_ID, USER_ID);
     }
 
     @Test
     public void getTweetList_shouldUserHavePrivateProfileAndReturnEmptyTweetListResponse() {
         when(listsRepository.getListById(TestConstants.LIST_ID, USER_ID, TweetListProjection.class))
                 .thenReturn(Optional.of(ListsServiceTestHelper.mockTweetListProjection(1L)));
-        when(userClient.isUserBlocked(1L, USER_ID)).thenReturn(false);
-        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
+        when(userService.isUserBlocked(1L, USER_ID)).thenReturn(false);
+        when(userService.isUserHavePrivateProfile(1L, USER_ID)).thenReturn(true);
         assertEquals(new TweetListResponse(), listsClientService.getTweetList(TestConstants.LIST_ID));
         verify(listsRepository, times(1)).getListById(TestConstants.LIST_ID, USER_ID, TweetListProjection.class);
-        verify(userClient, times(1)).isUserBlocked(1L, USER_ID);
-        verify(userClient, times(1)).isUserHavePrivateProfile(1L);
+        verify(userService, times(1)).isUserBlocked(1L, USER_ID);
+        verify(userService, times(1)).isUserHavePrivateProfile(1L, USER_ID);
     }
 }
