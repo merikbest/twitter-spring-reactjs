@@ -2,7 +2,6 @@ package com.gmail.merikbest2015;
 
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
-import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
