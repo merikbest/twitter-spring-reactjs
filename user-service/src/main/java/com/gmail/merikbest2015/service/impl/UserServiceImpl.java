@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
     private final UserServiceHelper userServiceHelper;
+    private final UpdateUserProducer updateUserProducer;
     private final TweetClient tweetClient;
     private final TagClient tagClient;
 
@@ -94,6 +96,7 @@ public class UserServiceImpl implements UserService {
         user.setLocation(userInfo.getLocation());
         user.setWebsite(userInfo.getWebsite());
         user.setProfileCustomized(true);
+        updateUserProducer.sendUpdateUserEvent(user);
         return userRepository.getUserById(user.getId(), AuthUserProjection.class).get();
     }
 

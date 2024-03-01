@@ -2,7 +2,7 @@ import { CommonUserResponse } from "./user";
 
 export interface BaseListResponse {
     id: number;
-    name: string;
+    listName: string;
     description: string;
     pinnedDate: string;
     altWallpaper: string;
@@ -16,7 +16,7 @@ export interface BaseListResponse {
 
 export interface TweetListResponse {
     id: number;
-    name: string;
+    listName: string;
     altWallpaper: string;
     wallpaper: string;
     listOwner: CommonUserResponse;
@@ -36,7 +36,7 @@ export interface ListsOwnerMemberResponse {
 
 export interface ListResponse {
     id: number;
-    name: string;
+    listName: string;
     description: string;
     altWallpaper: string;
     wallpaper: string;
@@ -47,7 +47,7 @@ export interface ListResponse {
 
 export interface ListUserResponse {
     id: number;
-    name: string;
+    listName: string;
     description: string;
     altWallpaper: string;
     wallpaper: string;
@@ -58,7 +58,7 @@ export interface ListUserResponse {
 
 export interface PinnedListResponse {
     id: number;
-    name: string;
+    listName: string;
     altWallpaper: string;
     wallpaper: string;
     isPrivate: boolean;
@@ -67,7 +67,7 @@ export interface PinnedListResponse {
 
 export interface SimpleListResponse {
     id: number;
-    name: string;
+    listName: string;
     altWallpaper: string;
     wallpaper: string;
     isMemberInList: boolean;

@@ -21,7 +21,7 @@ interface CreateListsModalProps {
 }
 
 interface CreateListsModalFormProps {
-    name: string;
+    listName: string;
     description: string;
     isPrivate: boolean;
     wallpaper: string;
@@ -66,7 +66,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogTitleComponent title={"Create a new List"} onClose={onClose}>
                     <Button
-                        disabled={!watch("name")}
+                        disabled={!watch("listName")}
                         type="submit"
                         variant="contained"
                         color="primary"
@@ -84,15 +84,15 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                             </div>
                         </div>
                         <Controller
-                            name="name"
+                            name="listName"
                             control={control}
                             defaultValue=""
                             render={({ field: { onChange, value } }) => (
                                 <CreateListsModalInput
                                     label={"Name"}
                                     name={"name"}
-                                    helperText={errors.name?.message}
-                                    error={!!errors.name}
+                                    helperText={errors.listName?.message}
+                                    error={!!errors.listName}
                                     onChange={onChange}
                                     value={value}
                                     maxTextLength={25}

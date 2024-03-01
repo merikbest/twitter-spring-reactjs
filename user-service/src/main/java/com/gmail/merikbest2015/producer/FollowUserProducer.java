@@ -27,7 +27,10 @@ public class FollowUserProducer {
                 .id(user.getId())
                 .fullName(user.getFullName())
                 .username(user.getUsername())
+                .about(user.getAbout())
+                .avatar(user.getAvatar())
                 .privateProfile(user.isPrivateProfile())
+                .active(user.isActive())
                 .userFollow(hasUserFollowed)
                 .build();
     }

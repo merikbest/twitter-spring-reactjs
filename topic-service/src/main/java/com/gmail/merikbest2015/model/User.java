@@ -27,8 +27,11 @@ public class User {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "private_profile", nullable = false)
+    @Column(name = "private_profile", columnDefinition = "boolean default false")
     private boolean privateProfile;
+
+    @Column(name = "active", columnDefinition = "boolean default false")
+    private boolean active;
 
     @ManyToMany
     @JoinTable(name = "user_blocked",

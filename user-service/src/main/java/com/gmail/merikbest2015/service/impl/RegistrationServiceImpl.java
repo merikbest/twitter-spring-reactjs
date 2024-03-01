@@ -5,8 +5,8 @@ import com.gmail.merikbest2015.dto.request.EmailRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
 import com.gmail.merikbest2015.security.JwtProvider;
 import com.gmail.merikbest2015.service.RegistrationService;
@@ -30,6 +30,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private final UserRepository userRepository;
     private final UserServiceHelper userServiceHelper;
+    private final UpdateUserProducer updateUserProducer;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
     private final AmqpProducer amqpProducer;
@@ -47,6 +48,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             user.setFullName(request.getUsername());
             user.setBirthday(request.getBirthday());
             userRepository.save(user);
+            updateUserProducer.sendUpdateUserEvent(user);
             return "User data checked.";
         }
         if (!existingUser.get().isActive()) {
@@ -54,6 +56,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             existingUser.get().setFullName(request.getUsername());
             existingUser.get().setBirthday(request.getBirthday());
             userRepository.save(existingUser.get());
+            updateUserProducer.sendUpdateUserEvent(existingUser.get());
             return "User data checked.";
         }
         throw new ApiRequestException(EMAIL_HAS_ALREADY_BEEN_TAKEN, HttpStatus.FORBIDDEN);
@@ -95,10 +98,11 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (password.length() < 8) {
             throw new ApiRequestException(PASSWORD_LENGTH_ERROR, HttpStatus.BAD_REQUEST);
         }
-        AuthUserProjection user = userRepository.getUserByEmail(email, AuthUserProjection.class)
+        User user = userRepository.getUserByEmail(email, User.class)
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
         userRepository.updateActiveUserProfile(user.getId());
+        updateUserProducer.sendUpdateUserEvent(user);
         String token = jwtProvider.createToken(email, "USER");
         return Map.of("user", user, "token", token);
     }

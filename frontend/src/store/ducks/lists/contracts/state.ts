@@ -14,7 +14,7 @@ export interface ListsState {
 }
 
 export interface ListsRequest {
-    name: string;
+    listName: string;
     description?: string;
     isPrivate: boolean;
     altWallpaper?: string;

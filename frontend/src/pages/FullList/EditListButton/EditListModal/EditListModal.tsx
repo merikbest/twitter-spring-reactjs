@@ -25,14 +25,14 @@ interface EditListModalProps {
 
 export interface EditListModalFormProps {
     id: number;
-    name: string;
+    listName: string;
     description: string;
     isPrivate: boolean;
     wallpaper: string;
 }
 
 export const EditListModalFormSchema = yup.object().shape({
-    name: yup.string().min(1, "Name can’t be blank").required()
+    listName: yup.string().min(1, "Name can’t be blank").required()
 });
 
 const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactElement | null => {
@@ -48,7 +48,7 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
     const { control, handleSubmit, formState: { errors } } = useForm<EditListModalFormProps>({
         defaultValues: {
             id: list?.id,
-            name: list?.name,
+            listName: list?.listName,
             description: list?.description,
             isPrivate: list?.isPrivate,
             wallpaper: list?.wallpaper
@@ -70,7 +70,6 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
         dispatch(editList({
             ...data,
             isPrivate: isListPrivate,
-            listOwner: list?.listOwner!,
             wallpaper: wallpaperResponse
         }));
         onClose();
@@ -106,15 +105,15 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
                             </div>
                         </div>
                         <Controller
-                            name="name"
+                            name="listName"
                             control={control}
                             defaultValue=""
                             render={({ field: { onChange, value } }) => (
                                 <CreateListsModalInput
                                     label={"Name"}
                                     name="name"
-                                    helperText={errors.name?.message}
-                                    error={!!errors.name}
+                                    helperText={errors.listName?.message}
+                                    error={!!errors.listName}
                                     onChange={onChange}
                                     value={value}
                                     maxTextLength={25}
