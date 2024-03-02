@@ -15,7 +15,6 @@ public class ChatResponse {
 
     @Data
     public static class ParticipantResponse {
-        private Long id;
         private ChatUserParticipantResponse user;
 
         @JsonProperty("isLeftChat")

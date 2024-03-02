@@ -16,6 +16,7 @@ public class FollowUserEvent implements UserEvent {
     private String about;
     private String avatar;
     private boolean privateProfile;
+    private boolean mutedDirectMessages;
     private boolean active;
     private boolean userFollow;
 }

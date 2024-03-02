@@ -18,18 +18,8 @@ public class ChatServiceHelper {
     private final UserClient userClient;
     private final TweetClient tweetClient;
 
-    public ChatUserParticipantResponse getChatParticipant(Long userId) {
-        return userClient.getChatParticipant(userId);
-    }
-
     public ChatTweetResponse getChatTweet(Long tweetId) {
         return tweetClient.getChatTweet(tweetId);
-    }
-
-    public void isParticipantBlocked(Long authUserId, Long userId) {
-        if (userClient.isUserBlockedByMyProfile(authUserId) || userClient.isMyProfileBlockedByUser(userId)) {
-            throw new ApiRequestException(CHAT_PARTICIPANT_BLOCKED, HttpStatus.BAD_REQUEST);
-        }
     }
 
     public void checkChatMessageLength(String text) {
@@ -44,6 +34,19 @@ public class ChatServiceHelper {
         }
     }
 
+    // TODO remove
+    public ChatUserParticipantResponse getChatParticipant(Long userId) {
+        return userClient.getChatParticipant(userId);
+    }
+
+    // TODO remove
+    public void isParticipantBlocked(Long authUserId, Long userId) {
+        if (userClient.isUserBlockedByMyProfile(authUserId) || userClient.isMyProfileBlockedByUser(userId)) {
+            throw new ApiRequestException(CHAT_PARTICIPANT_BLOCKED, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // TODO remove
     public void isUserExists(Long userId) {
         if (!userClient.isUserExists(userId)) {
             throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);

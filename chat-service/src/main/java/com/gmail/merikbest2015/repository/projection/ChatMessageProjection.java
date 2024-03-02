@@ -9,11 +9,16 @@ public interface ChatMessageProjection {
     Long getId();
     String getText();
     LocalDateTime getDate();
-    Long getAuthorId();
     Long getTweetId();
+    UserProjection getAuthor();
+    ChatProjection getChat();
+
     @Value("#{target.tweetId == null ? null : @chatServiceHelper.getChatTweet(target.tweetId)}")
     ChatTweetResponse getTweet();
-    ChatProjection getChat();
+
+    interface UserProjection {
+        Long getId();
+    }
 
     interface ChatProjection {
         Long getId();

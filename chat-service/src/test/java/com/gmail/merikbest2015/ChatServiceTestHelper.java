@@ -4,7 +4,6 @@ import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatMessage;
-import com.gmail.merikbest2015.model.ChatParticipant;
 import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import com.gmail.merikbest2015.repository.projection.ChatProjection;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -20,43 +19,43 @@ public class ChatServiceTestHelper {
 
     public static Chat createMockChat(boolean isLeftChat) {
         Chat chat = new Chat();
-        chat.setId(TestConstants.CHAT_ID);
-        chat.setCreationDate(LocalDateTime.now());
-
-        ChatParticipant chatParticipant1 = new ChatParticipant();
-        chatParticipant1.setId(1L);
-        chatParticipant1.setLeftChat(isLeftChat);
-        chatParticipant1.setUserId(TestConstants.USER_ID);
-        chatParticipant1.setChat(chat);
-
-        ChatParticipant chatParticipant2 = new ChatParticipant();
-        chatParticipant2.setId(2L);
-        chatParticipant2.setLeftChat(isLeftChat);
-        chatParticipant2.setUserId(1L);
-        chatParticipant2.setChat(chat);
-
-        ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setId(1L);
-        chatMessage.setText("test text");
-        chatMessage.setDate(LocalDateTime.now());
-        chatMessage.setUnread(false);
-        chatMessage.setTweetId(1L);
-        chatMessage.setAuthorId(TestConstants.USER_ID);
-        chatMessage.setChat(chat);
-
-        chat.setParticipants(new ArrayList<>(Arrays.asList(chatParticipant1, chatParticipant2)));
-        chat.setMessages(new ArrayList<>(List.of(chatMessage)));
+//        chat.setId(TestConstants.CHAT_ID);
+//        chat.setCreationDate(LocalDateTime.now());
+//
+//        ChatParticipants chatParticipant1 = new ChatParticipants();
+//        chatParticipant1.setId(1L);
+//        chatParticipant1.setLeftChat(isLeftChat);
+//        chatParticipant1.setUserId(TestConstants.USER_ID);
+//        chatParticipant1.setChat(chat);
+//
+//        ChatParticipants chatParticipant2 = new ChatParticipants();
+//        chatParticipant2.setId(2L);
+//        chatParticipant2.setLeftChat(isLeftChat);
+//        chatParticipant2.setUserId(1L);
+//        chatParticipant2.setChat(chat);
+//
+//        ChatMessage chatMessage = new ChatMessage();
+//        chatMessage.setId(1L);
+//        chatMessage.setText("test text");
+//        chatMessage.setDate(LocalDateTime.now());
+//        chatMessage.setUnread(false);
+//        chatMessage.setTweetId(1L);
+//        chatMessage.setAuthorId(TestConstants.USER_ID);
+//        chatMessage.setChat(chat);
+//
+//        chat.setParticipants(new ArrayList<>(Arrays.asList(chatParticipant1, chatParticipant2)));
+//        chat.setMessages(new ArrayList<>(List.of(chatMessage)));
         return chat;
     }
 
-    public static ChatParticipant createMockChatParticipant(Long chatParticipantId, Long userId, Chat newChat) {
-        ChatParticipant chatParticipant = new ChatParticipant();
-        chatParticipant.setId(chatParticipantId);
-        chatParticipant.setLeftChat(false);
-        chatParticipant.setUserId(userId);
-        chatParticipant.setChat(newChat);
-        return chatParticipant;
-    }
+//    public static ChatParticipants createMockChatParticipant(Long chatParticipantId, Long userId, Chat newChat) {
+//        ChatParticipants chatParticipant = new ChatParticipants();
+//        chatParticipant.setId(chatParticipantId);
+//        chatParticipant.setLeftChat(false);
+//        chatParticipant.setUserId(userId);
+//        chatParticipant.setChat(newChat);
+//        return chatParticipant;
+//    }
 
     public static ChatProjection createMockChatProjection() {
         ChatProjection.ChatParticipantProjection chatParticipant1 = factory.createProjection(

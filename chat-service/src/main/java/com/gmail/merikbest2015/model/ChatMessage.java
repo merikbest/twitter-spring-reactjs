@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
         name = "chat_messages",
         indexes = {
                 @Index(name = "chat_messages_author_id_idx", columnList = "author_id"),
+                @Index(name = "chat_messages_tweet_id_idx", columnList = "tweet_id"),
                 @Index(name = "chat_messages_chat_id_idx", columnList = "chat_id"),
         })
 public class ChatMessage {
@@ -39,8 +40,9 @@ public class ChatMessage {
     private Long tweetId;
 
     @NonNull
-    @Column(name = "author_id", nullable = false)
-    private Long authorId;
+    @OneToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id", nullable = false)

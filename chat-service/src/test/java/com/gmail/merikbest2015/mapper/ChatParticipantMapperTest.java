@@ -31,7 +31,7 @@ public class ChatParticipantMapperTest {
 
     @Test
     public void getParticipant() {
-        when(chatParticipantService.getParticipant(TestConstants.CHAT_ID, TestConstants.CHAT_ID)).thenReturn(new UserResponse());
+//        when(chatParticipantService.getParticipant(TestConstants.CHAT_ID, TestConstants.CHAT_ID)).thenReturn(new UserResponse());
         assertEquals(new UserResponse(), chatParticipantMapper.getParticipant(TestConstants.CHAT_ID, TestConstants.CHAT_ID));
         verify(chatParticipantService, times(1)).getParticipant(TestConstants.CHAT_ID, TestConstants.CHAT_ID);
     }
@@ -48,7 +48,7 @@ public class ChatParticipantMapperTest {
         PageRequest pageable = PageRequest.of(0, 20);
         HeaderResponse<UserChatResponse> headerResponse = new HeaderResponse<>(
                 List.of(new UserChatResponse(), new UserChatResponse()), new HttpHeaders());
-        when(chatParticipantService.searchUsersByUsername(TestConstants.USERNAME, pageable)).thenReturn(headerResponse);
+//        when(chatParticipantService.searchUsersByUsername(TestConstants.USERNAME, pageable)).thenReturn(headerResponse);
         assertEquals(headerResponse, chatParticipantMapper.searchParticipantsByUsername(TestConstants.USERNAME, pageable));
         verify(chatParticipantService, times(1)).searchUsersByUsername(TestConstants.USERNAME, pageable);
     }

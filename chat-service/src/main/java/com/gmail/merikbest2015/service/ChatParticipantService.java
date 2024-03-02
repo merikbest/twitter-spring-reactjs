@@ -1,15 +1,15 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.response.UserChatResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.repository.projection.UserChatProjection;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ChatParticipantService {
 
-    UserResponse getParticipant(Long participantId, Long chatId);
+    User getParticipant(Long participantId, Long chatId);
 
     String leaveFromConversation(Long participantId, Long chatId);
 
-    HeaderResponse<UserChatResponse> searchUsersByUsername(String username, Pageable pageable);
+    Page<UserChatProjection> searchUsersByUsername(String username, Pageable pageable);
 }

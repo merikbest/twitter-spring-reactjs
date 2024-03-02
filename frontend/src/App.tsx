@@ -162,7 +162,7 @@ const App: FC = (): ReactElement => {
                 stompClient?.subscribe(TOPIC_CHAT(myProfileId), (response) => {
                     dispatch(setChatMessage(JSON.parse(response.body)));
 
-                    if (myProfileId !== JSON.parse(response.body).authorId) {
+                    if (myProfileId !== JSON.parse(response.body).author.id) {
                         dispatch(setUnreadMessage(JSON.parse(response.body)));
                     }
                 });

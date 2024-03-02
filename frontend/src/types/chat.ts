@@ -5,7 +5,6 @@ export interface ChatResponse {
 }
 
 export interface ParticipantResponse {
-    id: number;
     isLeftChat: boolean;
     user: {
         id: number;
@@ -22,7 +21,6 @@ export interface ChatMessageResponse {
     id: number;
     text: string;
     date: string;
-    authorId: number;
     tweet: {
         id: number;
         text: string;
@@ -34,6 +32,9 @@ export interface ChatMessageResponse {
             username: string;
             avatar: string;
         }
+    };
+    author: {
+        id: number;
     };
     chat: {
         id: number;

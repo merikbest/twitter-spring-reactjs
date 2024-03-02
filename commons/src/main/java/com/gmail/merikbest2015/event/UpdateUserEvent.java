@@ -16,5 +16,6 @@ public class UpdateUserEvent implements UserEvent {
     private String about;
     private String avatar;
     private boolean privateProfile;
+    private boolean mutedDirectMessages;
     private boolean active;
 }

@@ -7,5 +7,6 @@ public interface UserEvent {
     String getAbout();
     String getAvatar();
     boolean isPrivateProfile();
+    boolean isMutedDirectMessages();
     boolean isActive();
 }

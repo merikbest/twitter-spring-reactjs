@@ -22,7 +22,7 @@ const ChatParticipant: FC<ChatParticipantProps> = memo((
 ): ReactElement => {
     const classes = useChatParticipantStyles();
     const myProfileId = useSelector(selectUserDataId);
-    const isParticipantSelected = chat.participants.findIndex((participant) => participant.id === participantUserId);
+    const isParticipantSelected = chat.participants.findIndex((participant) => participant.user.id === participantUserId);
     const isMyProfile = myProfileId === chat.participants[1].user.id;
 
     return (

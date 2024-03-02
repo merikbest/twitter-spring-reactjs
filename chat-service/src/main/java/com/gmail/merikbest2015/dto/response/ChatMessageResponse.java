@@ -10,9 +10,14 @@ public class ChatMessageResponse {
     private Long id;
     private String text;
     private LocalDateTime date;
-    private Long authorId;
     private ChatTweetResponse tweet;
+    private AuthorResponse author;
     private ChatResponse chat;
+
+    @Data
+    public static class AuthorResponse {
+        private Long id;
+    }
 
     @Data
     public static class ChatResponse {

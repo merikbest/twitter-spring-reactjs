@@ -3,18 +3,17 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatParticipant;
-import com.gmail.merikbest2015.repository.ChatParticipantRepository;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.ChatRepository;
 import com.gmail.merikbest2015.repository.projection.ChatProjection;
 import com.gmail.merikbest2015.service.ChatService;
-import com.gmail.merikbest2015.service.util.ChatServiceHelper;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_NOT_FOUND;
@@ -24,8 +23,7 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_NOT_FOUND;
 public class ChatServiceImpl implements ChatService {
 
     private final ChatRepository chatRepository;
-    private final ChatParticipantRepository chatParticipantRepository;
-    private final ChatServiceHelper chatServiceHelper;
+    private final UserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -45,19 +43,23 @@ public class ChatServiceImpl implements ChatService {
     @Override
     @Transactional
     public ChatProjection createChat(Long userId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        chatServiceHelper.isUserExists(userId);
-        chatServiceHelper.isParticipantBlocked(authUserId, userId);
-        Chat chat = chatRepository.getChatByParticipants(authUserId, userId);
+        User authUser = userService.getAuthUser();
+        User user = userService.getUserById(userId);
+        userService.isParticipantBlocked(authUser.getId(), user.getId());
+        Chat chat = chatRepository.getChatByParticipants(authUser.getId(), user.getId());
 
         if (chat == null) {
             Chat newChat = new Chat();
+            newChat.getParticipants().add(new ChatParticipant(newChat, authUser));
+            newChat.getParticipants().add(new ChatParticipant(newChat, user));
             chatRepository.save(newChat);
-            ChatParticipant authUserParticipant = chatParticipantRepository.save(new ChatParticipant(authUserId, newChat));
-            ChatParticipant userParticipant = chatParticipantRepository.save(new ChatParticipant(userId, newChat));
-            newChat.setParticipants(Arrays.asList(authUserParticipant, userParticipant));
             return chatRepository.getChatById(newChat.getId());
         }
         return chatRepository.getChatById(chat.getId());
+    }
+
+    public boolean isUserChatParticipant(Long userId) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return chatRepository.getChatByParticipants(authUserId, userId) != null;
     }
 }

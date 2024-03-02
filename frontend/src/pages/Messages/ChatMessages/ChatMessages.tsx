@@ -69,7 +69,7 @@ const ChatMessages: FC<ChatMessagesProps> = ({ participantId, chatId }): ReactEl
                                     <ChatMessage
                                         key={message.id}
                                         message={message}
-                                        isParticipantMessage={message.authorId !== myProfileId}
+                                        isParticipantMessage={message.author.id !== myProfileId}
                                     />
                                 ))}
                                 <div ref={chatEndRef} />

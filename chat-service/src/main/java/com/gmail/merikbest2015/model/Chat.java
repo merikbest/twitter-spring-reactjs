@@ -7,8 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,9 +26,9 @@ public class Chat {
     @Column(name = "creation_date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime creationDate = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "chat")
-    private List<ChatParticipant> participants = new ArrayList<>();
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ChatParticipant> participants = new HashSet<>();
 
-    @OneToMany(mappedBy = "chat")
-    private List<ChatMessage> messages = new ArrayList<>();
+    @OneToMany(mappedBy = "chat", orphanRemoval = true)
+    private Set<ChatMessage> messages = new HashSet<>();
 }

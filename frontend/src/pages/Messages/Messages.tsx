@@ -53,7 +53,9 @@ const Messages: FC = (): ReactElement => {
     }, [location.state?.removeParticipant]);
 
     const handleListItemClick = useCallback((chat: ChatResponse): void => {
-        setParticipantId((chat.participants[0].user.id === myProfileId) ? chat.participants[1].id : chat.participants[0].id);
+        setParticipantId((chat.participants[0].user.id === myProfileId)
+            ? chat.participants[1].user.id
+            : chat.participants[0].user.id);
         setChatId(chat.id);
     }, []);
 
