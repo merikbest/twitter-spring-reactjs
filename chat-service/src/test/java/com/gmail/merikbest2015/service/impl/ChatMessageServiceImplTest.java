@@ -1,10 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ChatServiceTestHelper;
-import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TweetClient;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatMessage;
 import com.gmail.merikbest2015.repository.ChatMessageRepository;
@@ -23,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -49,8 +46,8 @@ public class ChatMessageServiceImplTest {
     @MockBean
     private ChatMessageRepository chatMessageRepository;
 
-    @MockBean
-    private UserClient userClient;
+//    @MockBean
+//    private UserClient userClient;
 
     @MockBean
     private TweetClient tweetClient;

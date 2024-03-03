@@ -20,13 +20,14 @@ spring:
         base-url: http://${ZIPKIN_HOST:localhost}:9411
     rabbitmq:
         addresses: ${RABBITMQ_HOST:localhost}:5672
-
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            group-id: chat
 resilience4j:
     circuitbreaker:
         instances:
             tweet-service:
-                minimum-number-of-calls: 5
-            user-service:
                 minimum-number-of-calls: 5
             websocket-service:
                 minimum-number-of-calls: 5

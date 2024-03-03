@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ChatServiceTestHelper;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.repository.ChatRepository;
 import com.gmail.merikbest2015.repository.projection.ChatProjection;
@@ -37,8 +36,8 @@ public class ChatServiceImplTest {
 //    @MockBean
 //    private ChatParticipantsRepository chatParticipantRepository;
 
-    @MockBean
-    private UserClient userClient;
+//    @MockBean
+//    private UserClient userClient;
 
     @Before
     public void setUp() {
@@ -100,23 +99,23 @@ public class ChatServiceImplTest {
         Chat newChat = new Chat();
         newChat.setId(TestConstants.CHAT_ID);
         ChatProjection mockChatProjection = ChatServiceTestHelper.createMockChatProjection();
-        when(userClient.isUserExists(1L)).thenReturn(true);
-        when(userClient.isUserBlockedByMyProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(false);
+//        when(userClient.isUserExists(1L)).thenReturn(true);
+//        when(userClient.isUserBlockedByMyProfile(TestConstants.USER_ID)).thenReturn(false);
+//        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(false);
         when(chatRepository.getChatByParticipants(TestConstants.USER_ID, 1L))
                 .thenReturn(ChatServiceTestHelper.createMockChat(false));
         when(chatRepository.getChatById(TestConstants.CHAT_ID)).thenReturn(mockChatProjection);
         assertEquals(mockChatProjection, chatService.createChat(1L));
-        verify(userClient, times(1)).isUserExists(1L);
-        verify(userClient, times(1)).isUserBlockedByMyProfile(TestConstants.USER_ID);
-        verify(userClient, times(1)).isMyProfileBlockedByUser(1L);
+//        verify(userClient, times(1)).isUserExists(1L);
+//        verify(userClient, times(1)).isUserBlockedByMyProfile(TestConstants.USER_ID);
+//        verify(userClient, times(1)).isMyProfileBlockedByUser(1L);
         verify(chatRepository, times(1)).getChatByParticipants(TestConstants.USER_ID, 1L);
         verify(chatRepository, times(1)).getChatById(TestConstants.CHAT_ID);
     }
 
     @Test
     public void createChat_ShouldUserNotFound() {
-        when(userClient.isUserExists(1L)).thenReturn(false);
+//        when(userClient.isUserExists(1L)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatService.createChat(1L));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -125,8 +124,8 @@ public class ChatServiceImplTest {
 
     @Test
     public void createChat_ShouldUserBlockedByMyProfile() {
-        when(userClient.isUserExists(1L)).thenReturn(true);
-        when(userClient.isUserBlockedByMyProfile(TestConstants.USER_ID)).thenReturn(true);
+//        when(userClient.isUserExists(1L)).thenReturn(true);
+//        when(userClient.isUserBlockedByMyProfile(TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatService.createChat(1L));
         assertEquals(CHAT_PARTICIPANT_BLOCKED, exception.getMessage());

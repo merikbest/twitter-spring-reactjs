@@ -1,11 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.ChatServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.repository.ChatMessageRepository;
 import com.gmail.merikbest2015.repository.ChatRepository;
@@ -26,7 +23,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_NOT_FOUND;
-import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_PARTICIPANT_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -47,8 +43,8 @@ public class ChatParticipantServiceImplTest {
     @MockBean
     private ChatMessageRepository chatMessageRepository;
 
-    @MockBean
-    private UserClient userClient;
+//    @MockBean
+//    private UserClient userClient;
 
     @Before
     public void setUp() {
@@ -131,10 +127,10 @@ public class ChatParticipantServiceImplTest {
         PageRequest pageable = PageRequest.of(0, 20);
         HeaderResponse<UserChatResponse> headerResponse = new HeaderResponse<>(
                 List.of(new UserChatResponse(), new UserChatResponse()), new HttpHeaders());
-        when(userClient.searchUsersByUsername("test username", pageable)).thenReturn(headerResponse);
+//        when(userClient.searchUsersByUsername("test username", pageable)).thenReturn(headerResponse);
         when(chatRepository.getChatByParticipants(TestConstants.USER_ID, 1L)).thenReturn(new Chat());
         when(chatRepository.getChatByParticipants(TestConstants.USER_ID, 2L)).thenReturn(new Chat());
         assertEquals(headerResponse, chatParticipantService.searchUsersByUsername("test username", pageable));
-        verify(userClient, times(1)).searchUsersByUsername("test username", pageable);
+//        verify(userClient, times(1)).searchUsersByUsername("test username", pageable);
     }
 }

@@ -98,8 +98,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Override
     @Transactional
     public boolean updateDirectMessageRequests(boolean mutedDirectMessages) {
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        userSettingsRepository.updateDirectMessageRequests(mutedDirectMessages, authUserId);
+        User user = authenticationService.getAuthenticatedUser();
+        user.setMutedDirectMessages(mutedDirectMessages);
+        updateUserProducer.sendUpdateUserEvent(user);
         return mutedDirectMessages;
     }
 

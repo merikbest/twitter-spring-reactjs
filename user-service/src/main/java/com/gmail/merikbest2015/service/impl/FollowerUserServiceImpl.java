@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.producer.FollowRequestUserProducer;
 import com.gmail.merikbest2015.producer.FollowUserProducer;
 import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
@@ -32,6 +33,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
     private final NotificationClient notificationClient;
     private final UserServiceHelper userServiceHelper;
     private final FollowUserProducer followUserProducer;
+    private final FollowRequestUserProducer followRequestUserProducer;
 
     @Override
     public Page<UserProjection> getFollowers(Long userId, Pageable pageable) {
@@ -57,11 +59,11 @@ public class FollowerUserServiceImpl implements FollowerUserService {
         User user = userServiceHelper.getUserById(userId);
         User authUser = authenticationService.getAuthenticatedUser();
         userServiceHelper.checkIsUserBlocked(user, authUser);
-        boolean hasUserFollowed = false;
 
         if (followerUserRepository.isFollower(authUser, user)) {
             authUser.getFollowers().remove(user);
             user.getSubscribers().remove(authUser);
+            followUserProducer.sendFollowUserEvent(user, authUser.getId(), false);
         } else {
             if (!user.isPrivateProfile()) {
                 authUser.getFollowers().add(user);
@@ -72,13 +74,14 @@ public class FollowerUserServiceImpl implements FollowerUserService {
                         .notifiedUserId(userId)
                         .build();
                 notificationClient.sendNotification(request);
-                hasUserFollowed = true;
+                followUserProducer.sendFollowUserEvent(user, authUser.getId(), true);
+                return true;
             } else {
                 followerUserRepository.addFollowerRequest(authUser.getId(), userId);
+                followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), true);
             }
         }
-        followUserProducer.sendFollowUserEvent(user, authUser.getId(), hasUserFollowed);
-        return hasUserFollowed;
+        return false;
     }
 
     @Override
@@ -91,34 +94,41 @@ public class FollowerUserServiceImpl implements FollowerUserService {
     @Override
     @Transactional
     public UserProfileProjection processFollowRequestToPrivateProfile(Long userId) {
+        User user = userServiceHelper.getUserById(userId);
         userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        boolean isFollowerRequest = followerUserRepository.isFollowerRequest(userId, authUserId);
+        User authUser = authenticationService.getAuthenticatedUser();
+        boolean hasUserFollowRequest;
 
-        if (isFollowerRequest) {
-            followerUserRepository.removeFollowerRequest(authUserId, userId);
+        if (followerUserRepository.isFollowerRequest(user.getId(), authUser.getId())) {
+            followerUserRepository.removeFollowerRequest(authUser.getId(), user.getId());
+            hasUserFollowRequest = false;
         } else {
-            followerUserRepository.addFollowerRequest(authUserId, userId);
+            followerUserRepository.addFollowerRequest(authUser.getId(), user.getId());
+            hasUserFollowRequest = true;
         }
-        return userRepository.getUserById(userId, UserProfileProjection.class).get();
+        followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), hasUserFollowRequest);
+        return userRepository.getUserById(user.getId(), UserProfileProjection.class).get();
     }
 
     @Override
     @Transactional
     public String acceptFollowRequest(Long userId) {
-        userServiceHelper.checkIsUserExist(userId);
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        followerUserRepository.removeFollowerRequest(userId, authUserId);
-        followerUserRepository.follow(userId, authUserId);
+        User user = userServiceHelper.getUserById(userId);
+        User authUser = authenticationService.getAuthenticatedUser();
+        followerUserRepository.removeFollowerRequest(user.getId(), authUser.getId());
+        followerUserRepository.follow(user.getId(), authUser.getId());
+        followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), false);
+        followUserProducer.sendFollowUserEvent(user, authUser.getId(), true);
         return String.format("User (id:%s) accepted.", userId);
     }
 
     @Override
     @Transactional
     public String declineFollowRequest(Long userId) {
-        userServiceHelper.checkIsUserExist(userId);
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        followerUserRepository.removeFollowerRequest(userId, authUserId);
+        User user = userServiceHelper.getUserById(userId);
+        User authUser = authenticationService.getAuthenticatedUser();
+        followerUserRepository.removeFollowerRequest(user.getId(), authUser.getId());
+        followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), false);
         return String.format("User (id:%s) declined.", userId);
     }
 }

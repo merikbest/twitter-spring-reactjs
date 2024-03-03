@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.configuration;
 
 import com.gmail.merikbest2015.event.BlockUserEvent;
+import com.gmail.merikbest2015.event.FollowRequestUserEvent;
 import com.gmail.merikbest2015.event.FollowUserEvent;
 import com.gmail.merikbest2015.event.UpdateUserEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -44,6 +45,11 @@ public class KafkaProducerConfiguration {
 
     @Bean
     public KafkaTemplate<String, FollowUserEvent> kafkaFollowUserTemplate() {
+        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
+    }
+
+    @Bean
+    public KafkaTemplate<String, FollowRequestUserEvent> kafkaFollowRequestUserTemplate() {
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
     }
 }

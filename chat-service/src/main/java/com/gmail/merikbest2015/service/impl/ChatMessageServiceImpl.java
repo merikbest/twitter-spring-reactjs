@@ -73,7 +73,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         chat.getMessages().add(chatMessage);
         ChatMessageProjection message = chatMessageRepository.getChatMessageById(chatMessage.getId()).get();
         return chat.getParticipants().stream()
-                .collect(Collectors.toMap(chatParticipant1 -> chatParticipant1.getUser().getId(), userId -> message));
+                .collect(Collectors.toMap(cp -> cp.getUser().getId(), userId -> message));
     }
 
     @Override

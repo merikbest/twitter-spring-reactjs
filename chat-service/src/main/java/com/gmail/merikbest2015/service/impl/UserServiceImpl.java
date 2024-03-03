@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.repository.projection.ChatUserParticipantProjection;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;

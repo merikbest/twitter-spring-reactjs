@@ -27,6 +27,7 @@ public class UpdateUserProducer {
                 .avatar(user.getAvatar())
                 .privateProfile(user.isPrivateProfile())
                 .active(user.isActive())
+                .mutedDirectMessages(user.isMutedDirectMessages())
                 .build();
     }
 }

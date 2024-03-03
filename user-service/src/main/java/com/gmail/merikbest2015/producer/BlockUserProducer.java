@@ -27,7 +27,11 @@ public class BlockUserProducer {
                 .id(user.getId())
                 .fullName(user.getFullName())
                 .username(user.getUsername())
+                .about(user.getAbout())
+                .avatar(user.getAvatar())
                 .privateProfile(user.isPrivateProfile())
+                .active(user.isActive())
+                .mutedDirectMessages(user.isMutedDirectMessages())
                 .userBlocked(hasUserBlocked)
                 .build();
     }
