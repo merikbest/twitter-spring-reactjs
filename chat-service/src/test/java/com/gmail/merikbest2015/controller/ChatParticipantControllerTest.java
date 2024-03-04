@@ -33,7 +33,7 @@ public class ChatParticipantControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/chat/participant/4/8 - Get chat participant")
     public void getParticipant() throws Exception {
-        mockMvc.perform(get(UI_V1_CHAT + PARTICIPANT_CHAT_ID, 4, 8)
+        mockMvc.perform(get(UI_V1_CHAT + PARTICIPANT_CHAT_ID, 1, 8)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
@@ -69,7 +69,7 @@ public class ChatParticipantControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/chat/leave/3/8 - Leave from conversation")
     public void leaveFromConversation() throws Exception {
-        mockMvc.perform(get(UI_V1_CHAT + LEAVE_CHAT_ID, 3, 8)
+        mockMvc.perform(get(UI_V1_CHAT + LEAVE_CHAT_ID, 2, 8)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Successfully left the chat")));
@@ -78,7 +78,7 @@ public class ChatParticipantControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/chat/leave/5/10 - Leave from conversation and delete chat")
     public void leaveFromConversationAndDeleteChat() throws Exception {
-        mockMvc.perform(get(UI_V1_CHAT + LEAVE_CHAT_ID, 5, 10)
+        mockMvc.perform(get(UI_V1_CHAT + LEAVE_CHAT_ID, 2, 10)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Chat successfully deleted")));

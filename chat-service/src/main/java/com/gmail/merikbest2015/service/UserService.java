@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,6 +13,8 @@ public interface UserService {
     User getAuthUser();
 
     User getUserById(Long userId);
+
+    UserProjection getUserProjectionById(Long userId);
 
     Page<UserChatProjection> searchUsersByUsername(String username, Pageable pageable);
 

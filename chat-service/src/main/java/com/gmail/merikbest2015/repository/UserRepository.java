@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,9 +10,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    @Query("SELECT user FROM User user WHERE user.id = :userId")
+    Optional<UserProjection> getUserById(@Param("userId") Long userId);
 
     @Query("""
             SELECT user FROM User user

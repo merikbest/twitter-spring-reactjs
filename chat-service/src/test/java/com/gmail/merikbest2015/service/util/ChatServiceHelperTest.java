@@ -25,9 +25,6 @@ public class ChatServiceHelperTest {
     private ChatServiceHelper chatServiceHelper;
 
     @MockBean
-    private UserClient userClient;
-
-    @MockBean
     private TweetClient tweetClient;
 
     @Test

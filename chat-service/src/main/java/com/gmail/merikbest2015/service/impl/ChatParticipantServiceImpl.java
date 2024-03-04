@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.ChatParticipantRepository;
 import com.gmail.merikbest2015.repository.ChatRepository;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.ChatParticipantService;
 import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
@@ -30,13 +31,14 @@ public class ChatParticipantServiceImpl implements ChatParticipantService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getParticipant(Long participantId, Long chatId) {
+    public UserProjection getParticipant(Long participantId, Long chatId) {
         if (!chatRepository.isChatExists(chatId, AuthUtil.getAuthenticatedUserId())) {
             throw new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
-        return chatParticipantRepository.getChatParticipant(participantId, chatId)
+        User user = chatParticipantRepository.getChatParticipant(participantId, chatId)
                 .orElseThrow(() -> new ApiRequestException(CHAT_PARTICIPANT_NOT_FOUND, HttpStatus.NOT_FOUND))
                 .getUser();
+        return userService.getUserProjectionById(user.getId());
     }
 
     @Override

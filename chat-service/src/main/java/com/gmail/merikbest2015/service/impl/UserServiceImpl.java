@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
+                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    public UserProjection getUserProjectionById(Long userId) {
+        return userRepository.getUserById(userId)
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 

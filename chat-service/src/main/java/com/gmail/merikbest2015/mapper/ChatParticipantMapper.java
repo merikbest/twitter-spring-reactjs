@@ -3,8 +3,8 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.ChatParticipantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,7 +19,7 @@ public class ChatParticipantMapper {
     private final ChatParticipantService chatParticipantService;
 
     public UserResponse getParticipant(Long participantId, Long chatId) {
-        User participant = chatParticipantService.getParticipant(participantId, chatId);
+        UserProjection participant = chatParticipantService.getParticipant(participantId, chatId);
         return basicMapper.convertToResponse(participant, UserResponse.class);
     }
 

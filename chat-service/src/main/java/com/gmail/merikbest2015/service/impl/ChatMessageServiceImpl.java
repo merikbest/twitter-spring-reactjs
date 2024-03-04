@@ -91,6 +91,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
                 newChat.getParticipants().add(new ChatParticipant(newChat, authUser));
                 newChat.getParticipants().add(new ChatParticipant(newChat, user));
                 chatRepository.save(newChat);
+                chatMessage.setChat(newChat);
                 chatMessageRepository.save(chatMessage);
                 newChat.getMessages().add(chatMessage);
             } else {

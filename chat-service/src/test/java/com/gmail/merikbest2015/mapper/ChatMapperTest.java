@@ -75,11 +75,9 @@ public class ChatMapperTest {
 
     private ChatResponse getMockChatResponses() {
         ChatResponse.ParticipantResponse participantResponse1 = new ChatResponse.ParticipantResponse();
-//        participantResponse1.setId(1L);
         participantResponse1.setUser(new ChatUserParticipantResponse());
         participantResponse1.setLeftChat(false);
         ChatResponse.ParticipantResponse participantResponse2 = new ChatResponse.ParticipantResponse();
-//        participantResponse2.setId(2L);
         participantResponse2.setUser(new ChatUserParticipantResponse());
         participantResponse2.setLeftChat(false);
         ChatResponse chatResponse = new ChatResponse();
