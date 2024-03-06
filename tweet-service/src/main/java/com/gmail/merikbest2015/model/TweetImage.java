@@ -19,6 +19,6 @@ public class TweetImage {
     private Long id;
 
     @NonNull
-    @Column(name = "src")
+    @Column(name = "src", nullable = false)
     private String src;
 }

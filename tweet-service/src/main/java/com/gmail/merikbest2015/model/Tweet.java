@@ -25,10 +25,10 @@ public class Tweet {
     @SequenceGenerator(name = "tweets_seq", sequenceName = "tweets_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "text", length = 1337, nullable = false)
+    @Column(name = "tweet_text", length = 1337, nullable = false)
     private String text;
 
-    @Column(name = "date_time", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @Column(name = "scheduled_date")
@@ -63,7 +63,7 @@ public class Tweet {
     @Enumerated(EnumType.STRING)
     private LinkCoverSize linkCoverSize;
 
-    @Column(name = "deleted", columnDefinition = "boolean default false")
+    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
     private boolean deleted = false;
 
     @Column(name = "author_id", nullable = false)

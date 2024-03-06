@@ -14,7 +14,7 @@ public class GifImage {
     @SequenceGenerator(name = "gif_image_seq", sequenceName = "gif_image_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "url")
+    @Column(name = "url", nullable = false)
     private String url;
 
     @Column(name = "width")

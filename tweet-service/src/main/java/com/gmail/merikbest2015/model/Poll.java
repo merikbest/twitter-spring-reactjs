@@ -21,7 +21,7 @@ public class Poll {
     private Long id;
 
     @NonNull
-    @Column(name = "date_time")
+    @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 
     @NonNull
