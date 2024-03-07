@@ -15,9 +15,9 @@ describe("Quote", () => {
     it("should render correctly Quoted and FullTweet", () => {
         const wrapper = mountWithStore(<Quote quoteTweet={mockQuoteTweet} />, mockRootState);
 
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockQuoteTweet.user.avatar);
-        expect(wrapper.text().includes(mockQuoteTweet.user.fullName)).toBe(true);
-        expect(wrapper.text().includes(`@${mockQuoteTweet.user.username}`)).toBe(true);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockQuoteTweet.author.avatar);
+        expect(wrapper.text().includes(mockQuoteTweet.author.fullName)).toBe(true);
+        expect(wrapper.text().includes(`@${mockQuoteTweet.author.username}`)).toBe(true);
         expect(wrapper.text().includes("#JavaScript")).toBe(true);
     });
 

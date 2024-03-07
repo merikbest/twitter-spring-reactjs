@@ -45,7 +45,7 @@ const ListsItem: FC<ListsItemProps> = memo(({ list, listIndex, isMyList }): Reac
                 <div className={classes.listInfoContainer}>
                     <ListInfoDescription
                         listId={list?.id}
-                        listName={list?.name}
+                        listName={list?.listName}
                         listDescription={list?.description}
                         listIsPrivate={"isPrivate" in list! && list?.isPrivate}
                         listOwnerFullName={list?.listOwner.fullName}

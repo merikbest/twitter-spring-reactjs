@@ -7,7 +7,7 @@ import TweetAvatar from "../TweetAvatar";
 
 describe("TweetAvatar", () => {
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<TweetAvatar src={mockFullTweet.user.avatar} userId={1} />);
-        expect(wrapper.find(Avatar).prop("src")).toBe(mockFullTweet.user.avatar);
+        const wrapper = mountWithStore(<TweetAvatar src={mockFullTweet.author.avatar} userId={1} />);
+        expect(wrapper.find(Avatar).prop("src")).toBe(mockFullTweet.author.avatar);
     });
 });

@@ -57,7 +57,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection getTweetById(Long tweetId) {
         TweetProjection tweet = tweetRepository.getTweetById(tweetId, TweetProjection.class)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
-        tweetValidationHelper.validateTweet(tweet.isDeleted(), tweet.getAuthorId());
+        tweetValidationHelper.validateTweet(tweet.isDeleted(), tweet.getAuthor().getId());
         return tweet;
     }
 
@@ -208,7 +208,7 @@ public class TweetServiceImpl implements TweetService {
         Tweet tweet = tweetRepository.getTweetByAuthorIdAndTweetId(tweetId, authUserId)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
 
-        if (!tweet.getAuthorId().equals(authUserId)) {
+        if (!tweet.getAuthor().getId().equals(authUserId)) {
             throw new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         tweet.setReplyType(replyType);

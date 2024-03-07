@@ -242,7 +242,7 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{ id: 1, user: { id: 1, isFollower: false } }] as TweetResponse[]
+                    items: [{ id: 1, author: { id: 1, isFollower: false } }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_FOLLOW_TO_TWEETS_STATE,
@@ -251,7 +251,7 @@ describe("tweetsReducer:", () => {
             ),
             {
                 ...initialTweetsState,
-                items: [{ id: 1, user: { id: 1, isFollower: true } }] as TweetResponse[]
+                items: [{ id: 1, author: { id: 1, isFollower: true } }] as TweetResponse[]
             }
         );
 
@@ -260,7 +260,7 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{ id: 1, user: { id: 1, isUserBlocked: false } }] as TweetResponse[]
+                    items: [{ id: 1, author: { id: 1, isUserBlocked: false } }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_BLOCKED_TO_TWEETS_STATE,
@@ -269,7 +269,7 @@ describe("tweetsReducer:", () => {
             ),
             {
                 ...initialTweetsState,
-                items: [{ id: 1, user: { id: 1, isUserBlocked: true } }] as TweetResponse[],
+                items: [{ id: 1, author: { id: 1, isUserBlocked: true } }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );
@@ -279,7 +279,7 @@ describe("tweetsReducer:", () => {
             tweetsReducer(
                 {
                     ...initialTweetsState,
-                    items: [{ id: 1, user: { id: 1, isUserMuted: false } }] as TweetResponse[]
+                    items: [{ id: 1, author: { id: 1, isUserMuted: false } }] as TweetResponse[]
                 },
                 {
                     type: TweetsActionType.SET_MUTED_TO_TWEETS_STATE,
@@ -288,7 +288,7 @@ describe("tweetsReducer:", () => {
             ),
             {
                 ...initialTweetsState,
-                items: [{ id: 1, user: { id: 1, isUserMuted: true } }] as TweetResponse[],
+                items: [{ id: 1, author: { id: 1, isUserMuted: true } }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADED
             }
         );

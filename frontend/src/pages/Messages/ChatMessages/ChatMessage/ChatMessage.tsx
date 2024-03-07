@@ -54,17 +54,17 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
                                         <div className={classes.tweetUserInfoWrapper}>
                                             <Avatar
                                                 className={classes.tweetAvatar}
-                                                src={message.tweet?.user.avatar ?? DEFAULT_PROFILE_IMG}
+                                                src={message.tweet?.author.avatar ?? DEFAULT_PROFILE_IMG}
                                             />
                                             <Typography variant={"h6"} component={"span"}>
-                                                {message.tweet?.user.fullName}
+                                                {message.tweet?.author.fullName}
                                             </Typography>
                                             <Typography
                                                 variant={"subtitle1"}
                                                 component={"span"}
                                                 className={classes.tweetUsername}
                                             >
-                                                @{message.tweet?.user.username}
+                                                @{message.tweet?.author.username}
                                             </Typography>
                                             <Typography
                                                 variant={"subtitle1"}

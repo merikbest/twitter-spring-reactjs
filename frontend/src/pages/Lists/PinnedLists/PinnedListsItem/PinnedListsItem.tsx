@@ -32,7 +32,7 @@ const PinnedListsItem: FC<PinnedListsItemProps> = memo(({ pinnedList }): ReactEl
                         src={pinnedList?.wallpaper ?? pinnedList?.altWallpaper} />
                 <Typography component={"div"} className={classes.pinnedListName}>
                     {pinnedList?.isPrivate && <LockIcon />}
-                    {" "}{pinnedList?.name}
+                    {" "}{pinnedList?.listName}
                 </Typography>
                 <PopperListWindow visible={visiblePopperWindow} />
             </div>

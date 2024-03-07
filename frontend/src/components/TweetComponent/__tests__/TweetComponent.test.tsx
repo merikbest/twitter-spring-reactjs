@@ -74,7 +74,7 @@ describe("TweetComponent", () => {
     });
 
     it("should render private profile icon", () => {
-        const mockTweet = { ...mockFullTweet, user: { ...mockFullTweet.user, isPrivateProfile: true } };
+        const mockTweet = { ...mockFullTweet, user: { ...mockFullTweet.author, isPrivateProfile: true } };
         const { wrapper } = createTweetComponentWrapper(mockRootState, mockTweet);
         expect(wrapper.find("#lockIcon").exists()).toBeTruthy();
     });
@@ -139,7 +139,7 @@ describe("TweetComponent", () => {
         const mockTweet = {
             ...mockFullTweet,
             replyType: ReplyType.FOLLOW,
-            user: { ...mockFullTweet.user, isFollower: true }
+            user: { ...mockFullTweet.author, isFollower: true }
         };
         const { wrapper } = createTweetComponentWrapper(mockRootState, mockTweet);
         expect(wrapper.find("#followReplyIcon").exists()).toBeTruthy();
@@ -239,7 +239,7 @@ describe("TweetComponent", () => {
     });
 
     it("should render analytics IconButton", () => {
-        const mockTweet = { ...mockFullTweet, user: { ...mockFullTweet.user, id: 2 } };
+        const mockTweet = { ...mockFullTweet, user: { ...mockFullTweet.author, id: 2 } };
         const { wrapper } = createTweetComponentWrapper(mockRootState, mockTweet);
         expect(wrapper.find("#analytics").exists()).toBeTruthy();
     });
@@ -253,7 +253,7 @@ describe("TweetComponent", () => {
         const { wrapper, pushSpy } = createTweetComponentWrapper();
         wrapper.find(Link).at(0).simulate("click", { button: 0 });
         expect(pushSpy).toHaveBeenCalled();
-        expect(pushSpy).toHaveBeenCalledWith(`${PROFILE}/${mockFullTweet.user.id}`);
+        expect(pushSpy).toHaveBeenCalledWith(`${PROFILE}/${mockFullTweet.author.id}`);
     });
 
     it("should open and close TweetAnalyticsModal", () => {
@@ -262,7 +262,7 @@ describe("TweetComponent", () => {
                 ...mockRootState, tweetAdditionalInfo:
                     { ...mockRootState.tweetAdditionalInfo, tweetAdditionalInfo: mockMyTweetAdditionalInfo }
             },
-            { ...mockFullTweet, user: { ...mockFullTweet.user, id: 2 } });
+            { ...mockFullTweet, author: { ...mockFullTweet.author, id: 2 } });
         expect(wrapper.find(TweetAnalyticsModal).prop("visible")).toBe(false);
         wrapper.find(TweetComponentActions).find(IconButton).at(0).simulate("click");
         wrapper.find(TweetComponentActions).find("#tweetAnalytics").at(0).simulate("click");
@@ -322,7 +322,7 @@ describe("TweetComponent", () => {
     });
 
     it("should hover and leave analytics IconButton", () => {
-        const mockTweet = { ...mockFullTweet, user: { ...mockFullTweet.user, id: 2 } };
+        const mockTweet = { ...mockFullTweet, user: { ...mockFullTweet.author, id: 2 } };
         testHoverIconButton(5, "Analytics", mockTweet);
     });
 

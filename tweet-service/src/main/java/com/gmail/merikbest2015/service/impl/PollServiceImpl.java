@@ -65,7 +65,7 @@ public class PollServiceImpl implements PollService {
     public TweetProjection voteInPoll(Long tweetId, Long pollId, Long pollChoiceId) {
         Tweet tweet = tweetRepository.getTweetByPollIdAndTweetId(tweetId, pollId)
                 .orElseThrow(() -> new ApiRequestException(POLL_NOT_FOUND, HttpStatus.NOT_FOUND));
-        tweetValidationHelper.checkIsValidUserProfile(tweet.getAuthorId());
+        tweetValidationHelper.checkIsValidUserProfile(tweet.getAuthor().getId());
         Poll poll = pollRepository.getPollByPollChoiceId(pollId, pollChoiceId)
                 .orElseThrow(() -> new ApiRequestException(POLL_CHOICE_NOT_FOUND, HttpStatus.NOT_FOUND));
         if (LocalDateTime.now().isAfter(poll.getDateTime())) {

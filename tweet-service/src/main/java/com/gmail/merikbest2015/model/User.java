@@ -52,6 +52,12 @@ public class User {
     private Set<User> userBlockedList = new HashSet<>();
 
     @ManyToMany
+    @JoinTable(name = "user_muted",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "muted_user_id"))
+    private Set<User> userMutedList = new HashSet<>();
+
+    @ManyToMany
     @JoinTable(name = "user_subscriptions",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "subscriber_id"))

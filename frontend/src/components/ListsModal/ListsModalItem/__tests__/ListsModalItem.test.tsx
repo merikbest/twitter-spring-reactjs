@@ -11,6 +11,6 @@ describe("ListsModalItem", () => {
         const wrapper = mountWithStore(<ListsModalItem
             list={mockSimpleList[0]} />, createMockRootState(LoadingStatus.LOADING));
         expect(wrapper.find(Avatar).prop("src")).toBe(mockSimpleList[0].altWallpaper);
-        expect(wrapper.text().includes(mockSimpleList[0].name)).toBe(true);
+        expect(wrapper.text().includes(mockSimpleList[0].listName)).toBe(true);
     });
 });

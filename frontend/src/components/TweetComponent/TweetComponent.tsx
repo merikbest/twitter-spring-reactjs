@@ -35,21 +35,21 @@ export interface TweetComponentProps {
 
 const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTweetImageModal }): ReactElement => {
     const myProfileId = useSelector(selectUserDataId);
-    const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfileId !== tweet?.user.id);
+    const isUserCanReply = (tweet?.replyType === ReplyType.MENTION) && (myProfileId !== tweet?.author.id);
     const classes = useTweetComponentStyles({ isTweetImageModal });
 
     return (
         <Paper className={classes.container} variant="outlined">
             <TweetActions tweetId={tweet?.id} retweetsUserIds={tweet?.retweetsUserIds} activeTab={activeTab} />
             <div className={classes.tweetWrapper}>
-                <TweetAvatar userId={tweet?.user.id} src={tweet?.user.avatar ?? DEFAULT_PROFILE_IMG} />
+                <TweetAvatar userId={tweet?.author.id} src={tweet?.author.avatar ?? DEFAULT_PROFILE_IMG} />
                 <div className={classes.tweetContainer}>
                     <div className={classes.header}>
                         <TweetHeader
-                            userId={tweet?.user.id}
-                            fullName={tweet?.user.fullName}
-                            username={tweet?.user.username}
-                            isPrivateProfile={tweet?.user.isPrivateProfile}
+                            userId={tweet?.author.id}
+                            fullName={tweet?.author.fullName}
+                            username={tweet?.author.username}
+                            isPrivateProfile={tweet?.author.isPrivateProfile}
                             dateTime={tweet!.dateTime}
                         />
                         <TweetComponentActions tweetId={tweet!.id} />
@@ -72,7 +72,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                         )}
                         {tweet?.gifImage && <GifImage tweetId={tweet?.id} gifImage={tweet?.gifImage} withLink />}
                         {tweet?.poll && <VoteComponent tweetId={tweet?.id} poll={tweet?.poll} />}
-                        {(tweet?.user.isFollower && tweet?.replyType === ReplyType.FOLLOW) && (
+                        {(tweet?.author.isFollower && tweet?.replyType === ReplyType.FOLLOW) && (
                             <TweetReplyConversation />
                         )}
                         {tweet?.quoteTweet && (
@@ -97,7 +97,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                             text={tweet?.text}
                             image={tweet?.images?.[0]}
                             dateTime={tweet?.dateTime}
-                            tweetUser={tweet?.user}
+                            tweetUser={tweet?.author}
                             repliesCount={tweet?.repliesCount}
                             isUserCanReply={isUserCanReply}
                         />
@@ -105,7 +105,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                             tweetId={tweet?.id}
                             dateTime={tweet?.dateTime}
                             text={tweet?.text}
-                            user={tweet?.user}
+                            author={tweet?.author}
                             isTweetRetweeted={tweet?.isTweetRetweeted}
                             retweetsCount={tweet?.retweetsCount}
                         />
@@ -115,10 +115,10 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                             likedTweetsCount={tweet?.likedTweetsCount}
                         />
                         <ShareTweetIconButton tweetId={tweet!.id} />
-                        {(myProfileId === tweet?.user.id) && (
+                        {(myProfileId === tweet?.author.id) && (
                             <AnalyticsIconButton
-                                tweetUserFullName={tweet?.user.fullName}
-                                tweetUserName={tweet?.user.username}
+                                tweetUserFullName={tweet?.author.fullName}
+                                tweetUserName={tweet?.author.username}
                                 tweetText={tweet?.text}
                                 isUserCanReply={isUserCanReply}
                             />

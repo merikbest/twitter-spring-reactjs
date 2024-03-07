@@ -62,21 +62,21 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
 
         case TweetActionType.SET_FOLLOW_TO_TWEET_STATE:
             if (draft.tweet) {
-                draft.tweet.user.isFollower = action.payload;
+                draft.tweet.author.isFollower = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_BLOCKED_TO_TWEET_STATE:
             if (draft.tweet) {
-                draft.tweet.user.isUserBlocked = action.payload;
+                draft.tweet.author.isUserBlocked = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;
 
         case TweetActionType.SET_MUTED_TO_TWEET_STATE:
             if (draft.tweet) {
-                draft.tweet.user.isUserMuted = action.payload;
+                draft.tweet.author.isUserMuted = action.payload;
             }
             draft.loadingState = LoadingStatus.SUCCESS;
             break;

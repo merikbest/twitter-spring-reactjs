@@ -19,7 +19,7 @@ export interface QuoteTweetProps {
     tweetId?: number;
     dateTime?: string;
     text?: string;
-    user?: UserTweetResponse;
+    author?: UserTweetResponse;
     isTweetRetweeted?: boolean;
     retweetsCount?: number;
 }
@@ -29,7 +29,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
         tweetId,
         dateTime,
         text,
-        user,
+        author,
         isTweetRetweeted,
         retweetsCount
     }
@@ -43,7 +43,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const onClickRetweet = (): void => {
-        if (user?.id !== myProfileId) {
+        if (author?.id !== myProfileId) {
             dispatch(retweet({ tweetId: tweetId!, userId: params.userId }));
         }
         onClickClose();
@@ -86,7 +86,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
                     </div>
                 )}
                 <QuoteTweetModal
-                    quoteTweet={{ id: tweetId, dateTime, text, user } as QuoteTweetResponse}
+                    quoteTweet={{ id: tweetId, dateTime, text, author } as QuoteTweetResponse}
                     onClose={onCloseModalWindow}
                     visible={visibleModalWindow}
                 />

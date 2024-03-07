@@ -13,8 +13,8 @@ describe("AnalyticsIconButton", () => {
     it("should click open/close TweetAnalyticsModal", () => {
         const wrapper = mountWithStore(
             <AnalyticsIconButton
-                tweetUserFullName={mockFullTweet.user.fullName}
-                tweetUserName={mockFullTweet.user.username}
+                tweetUserFullName={mockFullTweet.author.fullName}
+                tweetUserName={mockFullTweet.author.username}
                 tweetText={mockFullTweet.text}
                 isUserCanReply={false}
             />, createMockRootState(LoadingStatus.SUCCESS));

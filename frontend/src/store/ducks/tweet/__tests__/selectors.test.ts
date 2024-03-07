@@ -193,19 +193,19 @@ describe("tweet selectors:", () => {
 
     describe("selectTweetUser", () => {
         it("should return TweetUser", () => {
-            expect(selectTweetUser(mockState)).toBe(mockFullTweet.user);
+            expect(selectTweetUser(mockState)).toBe(mockFullTweet.author);
         });
     });
 
     describe("selectTweetUserId", () => {
         it("should return TweetUserId number", () => {
-            expect(selectTweetUserId(mockState)).toBe(mockFullTweet.user.id);
+            expect(selectTweetUserId(mockState)).toBe(mockFullTweet.author.id);
         });
     });
 
     describe("selectTweetUserAvatar", () => {
         it("should return TweetUserAvatar", () => {
-            expect(selectTweetUserAvatar(mockState)).toBe(mockFullTweet.user.avatar);
+            expect(selectTweetUserAvatar(mockState)).toBe(mockFullTweet.author.avatar);
         });
     });
 

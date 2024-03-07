@@ -35,7 +35,7 @@ const TweetListComponent: FC<TweetListComponentProps> = memo(({ tweetList }): Re
                         </Typography>
                     </div>
                     <Typography className={classes.listTitle} variant={"subtitle2"} component={"div"}>
-                        {tweetList.name}
+                        {tweetList.listName}
                     </Typography>
                     <div>
                         <Link to={`${PROFILE}/${1}`}>

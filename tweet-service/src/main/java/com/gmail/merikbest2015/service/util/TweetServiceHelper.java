@@ -11,10 +11,12 @@ import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -49,6 +51,7 @@ public class TweetServiceHelper {
     private final TweetValidationHelper tweetValidationHelper;
     private final NotificationClient notificationClient;
     private final UserClient userClient;
+    private final UserService userService;
     private final TagClient tagClient;
     private final BasicMapper basicMapper;
 
@@ -61,8 +64,8 @@ public class TweetServiceHelper {
     @Transactional
     public TweetResponse createTweet(Tweet tweet) {
         tweetValidationHelper.checkTweetTextLength(tweet.getText());
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        tweet.setAuthorId(authUserId);
+        User authUser = userService.getAuthUser();
+        tweet.setAuthor(authUser);
         boolean isMediaTweetCreated = parseMetadataFromURL(tweet);
         tweetRepository.save(tweet);
 

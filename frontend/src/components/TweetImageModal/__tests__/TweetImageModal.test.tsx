@@ -45,14 +45,14 @@ describe("TweetImageModal", () => {
         expect(mockDispatchFn).nthCalledWith(1, { payload: 2, type: TweetActionType.FETCH_TWEET_DATA });
         expect(mockDispatchFn).nthCalledWith(2, { payload: 2, type: TweetActionType.FETCH_REPLIES });
         expect(wrapper.find("img").at(0).prop("src")).toBe(mockFullTweet.images[0].src);
-        expect(wrapper.find(Avatar).at(0).prop("src")).toBe(mockFullTweet.user.avatar);
-        expect(wrapper.text().includes(mockFullTweet.user.fullName)).toBe(true);
-        expect(wrapper.text().includes(mockFullTweet.user.username)).toBe(true);
+        expect(wrapper.find(Avatar).at(0).prop("src")).toBe(mockFullTweet.author.avatar);
+        expect(wrapper.text().includes(mockFullTweet.author.fullName)).toBe(true);
+        expect(wrapper.text().includes(mockFullTweet.author.username)).toBe(true);
         expect(wrapper.text().includes(`${mockFullTweet.retweetsCount}Retweets`)).toBe(true);
         expect(wrapper.text().includes(`${mockFullTweet.likedTweetsCount}Likes`)).toBe(true);
         expect(wrapper.find("#tweetFooter").at(0).find("#retweetIcon").at(0).exists()).toBeTruthy();
         expect(wrapper.find("#tweetFooter").at(0).find("#likeIcon").at(0).exists()).toBeTruthy();
-        expect(wrapper.text().includes(`Replying to @${mockFullTweet.user.username}`)).toBe(true);
+        expect(wrapper.text().includes(`Replying to @${mockFullTweet.author.username}`)).toBe(true);
         expect(wrapper.find("#imageFooter").at(0).find("#retweetIcon").at(0).exists()).toBeTruthy();
         expect(wrapper.find("#imageFooter").at(0).find("#likeIcon").at(0).exists()).toBeTruthy();
         expect(wrapper.find(TweetComponent).length).toEqual(2);

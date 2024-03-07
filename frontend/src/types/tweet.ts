@@ -17,7 +17,7 @@ export interface TweetResponse {
     linkCover: string;
     linkCoverSize: LinkCoverSize;
     gifImage: GifImageResponse;
-    user: UserTweetResponse;
+    author: UserTweetResponse;
     images: Image[];
     imageDescription: string;
     taggedImageUsers: TaggedUserResponse[];
@@ -76,7 +76,7 @@ export interface QuoteTweetResponse {
     linkCover: string;
     linkCoverSize: string;
     isDeleted: boolean;
-    user: UserTweetResponse;
+    author: UserTweetResponse;
 }
 
 export interface PollResponse {

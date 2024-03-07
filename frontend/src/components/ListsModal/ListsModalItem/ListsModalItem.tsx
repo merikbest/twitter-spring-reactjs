@@ -18,7 +18,7 @@ const ListsModalItem: FC<ListsModalItemProps> = memo(({ list }): ReactElement =>
         <>
             <Avatar variant="square" className={classes.listAvatar} src={wallpaper} />
             <Typography component={"span"}>
-                {list.name}
+                {list.listName}
             </Typography>
             {list?.isPrivate && <LockIcon />}
             {list.isMemberInList && <span id={"check"}>{CheckIcon}</span>}

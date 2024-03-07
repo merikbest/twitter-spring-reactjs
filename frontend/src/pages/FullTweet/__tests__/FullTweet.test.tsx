@@ -64,14 +64,14 @@ describe("FullTweet", () => {
         });
 
         expect(wrapper.find(Spinner).exists()).toBe(true);
-        expect(global.window.document.title).toBe(`${mockFullTweet.user.fullName} on Twitter: "${mockFullTweet.text}"`);
+        expect(global.window.document.title).toBe(`${mockFullTweet.author.fullName} on Twitter: "${mockFullTweet.text}"`);
         expect(mockDispatchFn).nthCalledWith(1, { payload: 9, type: TweetActionType.FETCH_TWEET_DATA });
         expect(mockDispatchFn).nthCalledWith(2, { payload: 9, type: TweetActionType.FETCH_REPLIES });
-        expect(wrapper.find(Avatar).at(0).prop("src")).toEqual(mockFullTweet.user.avatar);
-        expect(wrapper.find(Link).at(0).prop("to")).toBe(`${PROFILE}/${mockFullTweet.user.id}`);
+        expect(wrapper.find(Avatar).at(0).prop("src")).toEqual(mockFullTweet.author.avatar);
+        expect(wrapper.find(Link).at(0).prop("to")).toBe(`${PROFILE}/${mockFullTweet.author.id}`);
         expect(wrapper.find("img").at(1).prop("src")).toBe(mockFullTweet.images[0].src);
-        expect(wrapper.text().includes(mockFullTweet.user.fullName)).toBe(true);
-        expect(wrapper.text().includes(`@${mockFullTweet.user.username}`)).toBe(true);
+        expect(wrapper.text().includes(mockFullTweet.author.fullName)).toBe(true);
+        expect(wrapper.text().includes(`@${mockFullTweet.author.username}`)).toBe(true);
         expect(wrapper.text().includes(mockFullTweet.text)).toBe(true);
         expect(wrapper.find(VoteComponent).prop("tweetId")).toBe(mockFullTweet.id);
         expect(wrapper.find(VoteComponent).prop("poll")).toBe(mockFullTweet.poll);

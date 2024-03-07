@@ -12,15 +12,15 @@ describe("TweetAnalyticsModal", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(
             <TweetAnalyticsModal
-                fullName={mockFullTweet.user.fullName}
-                username={mockFullTweet.user.username}
+                fullName={mockFullTweet.author.fullName}
+                username={mockFullTweet.author.username}
                 text={mockFullTweet.text}
                 visible
                 onClose={jest.fn()}
             />, mockRootState);
         expect(wrapper.text().includes("Tweet Analytics")).toBe(true);
-        expect(wrapper.text().includes(mockFullTweet.user.fullName)).toBe(true);
-        expect(wrapper.text().includes(mockFullTweet.user.username)).toBe(true);
+        expect(wrapper.text().includes(mockFullTweet.author.fullName)).toBe(true);
+        expect(wrapper.text().includes(mockFullTweet.author.username)).toBe(true);
         expect(wrapper.text().includes("Impressions")).toBe(true);
         expect(wrapper.text().includes("Total engagements")).toBe(true);
         expect(wrapper.text().includes("Promote your Tweet")).toBe(true);
@@ -30,8 +30,8 @@ describe("TweetAnalyticsModal", () => {
     it("should render empty TweetAnalyticsModal", () => {
         const wrapper = mountWithStore(
             <TweetAnalyticsModal
-                fullName={mockFullTweet.user.fullName}
-                username={mockFullTweet.user.username}
+                fullName={mockFullTweet.author.fullName}
+                username={mockFullTweet.author.username}
                 text={mockFullTweet.text}
                 visible={false}
                 onClose={jest.fn()}

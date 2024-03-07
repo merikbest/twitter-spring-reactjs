@@ -26,7 +26,7 @@ export interface ChatMessageResponse {
         text: string;
         dateTime: string;
         isDeleted: boolean;
-        user: {
+        author: {
             id: number;
             fullName: string;
             username: string;

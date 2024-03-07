@@ -26,7 +26,7 @@ describe("TweetReplyInfo", () => {
         };
         const wrapper = mountWithStore(<TweetReplyInfo />, mockState);
         expect(wrapper.find("#followReplyIcon").exists()).toBeTruthy();
-        expect(wrapper.text().includes(`People @${mockFullTweet.user.fullName} follows or mentioned can reply`)).toBe(true);
+        expect(wrapper.text().includes(`People @${mockFullTweet.author.fullName} follows or mentioned can reply`)).toBe(true);
     });
 
     it("should render MENTION TweetReplyInfo", () => {
@@ -41,6 +41,6 @@ describe("TweetReplyInfo", () => {
         };
         const wrapper = mountWithStore(<TweetReplyInfo />, mockState);
         expect(wrapper.find("#mentionReplyIcon").exists()).toBeTruthy();
-        expect(wrapper.text().includes(`People @${mockFullTweet.user.fullName} mentioned can reply`)).toBe(true);
+        expect(wrapper.text().includes(`People @${mockFullTweet.author.fullName} mentioned can reply`)).toBe(true);
     });
 });

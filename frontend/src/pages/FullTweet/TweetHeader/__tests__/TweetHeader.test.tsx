@@ -10,8 +10,8 @@ describe("TweetHeader", () => {
     it("should render correctly", () => {
         jest.useFakeTimers();
         const wrapper = mountWithStore(<TweetHeader />, createMockRootState(LoadingStatus.SUCCESS));
-        expect(wrapper.text().includes(mockFullTweet.user.fullName)).toBe(true);
-        expect(wrapper.text().includes(`@${mockFullTweet.user.username}`)).toBe(true);
+        expect(wrapper.text().includes(mockFullTweet.author.fullName)).toBe(true);
+        expect(wrapper.text().includes(`@${mockFullTweet.author.username}`)).toBe(true);
         wrapper.find("#userInfo").at(0).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();

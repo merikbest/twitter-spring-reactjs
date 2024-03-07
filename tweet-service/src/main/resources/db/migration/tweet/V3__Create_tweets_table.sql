@@ -96,16 +96,14 @@ CREATE INDEX retweets_user_id_idx ON retweets (user_id);
 CREATE TABLE tagged_image_users
 (
     tweet_id             INT8 NOT NULL REFERENCES tweets,
-    tagged_image_user_id INT8
+    tagged_image_user_id INT8 NOT NULL REFERENCES users
 );
 
 CREATE TABLE bookmarks
 (
-    id            INT8      NOT NULL,
-    bookmark_date TIMESTAMP NOT NULL DEFAULT current_timestamp,
     tweet_id      INT8      NOT NULL REFERENCES tweets,
     user_id       INT8      NOT NULL REFERENCES users,
-    PRIMARY KEY (id)
+    bookmark_date TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 CREATE INDEX bookmarks_tweet_id_idx ON bookmarks (tweet_id);
 CREATE INDEX bookmarks_user_id_idx ON bookmarks (user_id);

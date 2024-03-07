@@ -22,14 +22,14 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
     <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);
 
-    @Query("SELECT DISTINCT tweet.authorId FROM Tweet tweet " +
+    @Query("SELECT DISTINCT tweet.author.id FROM Tweet tweet " +
             "WHERE tweet.addressedUsername IS NULL " +
             "AND tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false")
     List<Long> getTweetAuthorIds();
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.authorId IN :userIds " +
+            "WHERE tweet.author.id IN :userIds " +
             "AND tweet.addressedUsername IS NULL " +
             "AND tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
@@ -37,7 +37,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Page<TweetProjection> getTweetsByAuthorIds(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.authorId = :userId " +
+            "WHERE tweet.author.id = :userId " +
             "AND tweet.addressedUsername IS NULL " +
             "AND tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
@@ -47,14 +47,14 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet FROM Tweet tweet " +
             "LEFT JOIN tweet.images image " +
             "WHERE tweet.scheduledDate IS NULL AND tweet.deleted = false " +
-            "AND (tweet.authorId = :userId AND image.id IS NOT NULL) " +
+            "AND (tweet.author.id = :userId AND image.id IS NOT NULL) " +
             "OR tweet.scheduledDate IS NULL AND tweet.deleted = false " +
-            "AND (tweet.authorId = :userId AND tweet.text LIKE CONCAT('%','youtu','%')) " +
+            "AND (tweet.author.id = :userId AND tweet.text LIKE CONCAT('%','youtu','%')) " +
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> getUserMediaTweets(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.authorId = :userId " +
+            "WHERE tweet.author.id = :userId " +
             "AND tweet.addressedUsername IS NOT NULL " +
             "AND tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
@@ -69,7 +69,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "LEFT JOIN tweet.quoteTweet quoteTweet " +
-            "WHERE tweet.authorId IN :userIds " +
+            "WHERE tweet.author.id IN :userIds " +
             "AND quoteTweet.id = :tweetId " +
             "AND quoteTweet.deleted = false")
     Page<TweetProjection> getQuotesByTweetId(@Param("userIds") List<Long> userIds,
@@ -77,7 +77,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
                                              Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.authorId IN :userIds " +
+            "WHERE tweet.author.id IN :userIds " +
             "AND tweet.scheduledDate IS NULL " +
             "AND tweet.images.size <> 0 " +
             "AND tweet.deleted = false " +
@@ -85,39 +85,39 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Page<TweetProjection> getMediaTweets(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.authorId IN :userIds " +
+            "WHERE tweet.author.id IN :userIds " +
             "AND tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
             "AND tweet.text LIKE CONCAT('%','youtu','%')")
     Page<TweetProjection> getTweetsWithVideo(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.authorId IN :userIds " +
+            "WHERE tweet.author.id IN :userIds " +
             "AND tweet.addressedUsername IS NULL " +
             "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> getFollowersTweets(@Param("userIds") List<Long> userIds, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.authorId = :userId " +
+            "WHERE tweet.author.id = :userId " +
             "AND tweet.scheduledDate IS NOT NULL " +
             "AND tweet.deleted = false " +
             "ORDER BY tweet.scheduledDate DESC")
     Page<TweetProjection> getScheduledTweets(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.authorId = :userId " +
+            "WHERE tweet.author.id = :userId " +
             "AND tweet.id = :tweetId")
     Optional<Tweet> getTweetByUserId(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
             "WHERE tweet.scheduledDate IS NULL " +
             "AND tweet.deleted = false " +
-            "AND (tweet.text LIKE CONCAT('%',:text,'%') AND tweet.authorId IN :userIds OR tweet.authorId IN :userIds) " +
+            "AND (tweet.text LIKE CONCAT('%',:text,'%') AND tweet.author.id IN :userIds OR tweet.author.id IN :userIds) " +
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> searchTweets(@Param("text") String text, @Param("userIds") List<Long> userIds, Pageable pageable);
 
-    @Query("SELECT tweet.authorId FROM Tweet tweet WHERE tweet.text LIKE CONCAT('%',:text,'%')")
+    @Query("SELECT tweet.author.id FROM Tweet tweet WHERE tweet.text LIKE CONCAT('%',:text,'%')")
     List<Long> getUserIdsByTweetText(@Param("text") String text);
 
     @Modifying
@@ -128,7 +128,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query(value = "INSERT INTO quotes (tweet_id, quote_id) VALUES (?1, ?2)", nativeQuery = true)
     void addQuote(@Param("tweetId") Long tweetId, @Param("quoteTweetId") Long quoteTweetId);
 
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.authorId = :userId")
+    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.author.id = :userId")
     Optional<Tweet> getTweetByAuthorIdAndTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
 
     @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.poll.id = :pollId")
@@ -152,7 +152,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("SELECT tweet.id AS tweetId, image.id AS imageId, image.src AS src FROM Tweet tweet " +
             "LEFT JOIN tweet.images image " +
             "WHERE tweet.scheduledDate IS NULL " +
-            "AND tweet.authorId = :userId " +
+            "AND tweet.author.id = :userId " +
             "AND image.id IS NOT NULL " +
             "AND tweet.deleted = false " +
             "ORDER BY tweet.dateTime DESC")

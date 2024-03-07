@@ -85,7 +85,7 @@ describe("QuoteIconButton", () => {
                 tweetId={mockFullTweet.id}
                 dateTime={mockFullTweet.dateTime}
                 text={mockFullTweet.text}
-                user={mockFullTweet.user}
+                user={mockFullTweet.author}
                 isTweetRetweeted={isTweetRetweetedByMe}
                 retweetsCount={retweetsCount}
             />, mockRootState);

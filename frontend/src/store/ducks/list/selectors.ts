@@ -6,7 +6,7 @@ import { LoadingStatus } from "../../../types/common";
 export const selectList = (state: RootState): ListState => state.list;
 export const selectListItem = (state: RootState): ListState["list"] => selectList(state).list;
 export const selectListItemId = (state: RootState) => selectListItem(state)?.id;
-export const selectListItemName = (state: RootState) => selectListItem(state)?.name;
+export const selectListItemName = (state: RootState) => selectListItem(state)?.listName;
 export const selectListItemDescription = (state: RootState) => selectListItem(state)?.description;
 export const selectListItemIsPrivate = (state: RootState) => selectListItem(state)?.isPrivate;
 export const selectListItemIsFollower = (state: RootState) => selectListItem(state)?.isFollower;

@@ -29,7 +29,7 @@ public class TweetValidationHelper {
     public Tweet checkValidTweet(Long tweetId) {
         Tweet tweet = tweetRepository.findById(tweetId)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
-        validateTweet(tweet.isDeleted(), tweet.getAuthorId());
+        validateTweet(tweet.isDeleted(), tweet.getAuthor().getId());
         return tweet;
     }
 

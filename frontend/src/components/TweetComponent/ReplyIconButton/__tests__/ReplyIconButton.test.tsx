@@ -19,7 +19,7 @@ describe("ReplyIconButton", () => {
                 text={mockFullTweet.text}
                 image={mockFullTweet.images[0]}
                 dateTime={mockFullTweet.dateTime}
-                tweetUser={mockFullTweet.user}
+                tweetUser={mockFullTweet.author}
                 repliesCount={1}
                 isUserCanReply={false}
             />, mockRootState);
@@ -38,7 +38,7 @@ describe("ReplyIconButton", () => {
                 text={mockFullTweet.text}
                 image={mockFullTweet.images[0]}
                 dateTime={mockFullTweet.dateTime}
-                tweetUser={mockFullTweet.user}
+                tweetUser={mockFullTweet.author}
                 repliesCount={0}
                 isUserCanReply
             />, mockRootState);

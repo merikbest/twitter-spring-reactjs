@@ -64,6 +64,6 @@ public class LikeTweetServiceImpl implements LikeTweetService {
             userClient.updateLikeCount(true);
             isTweetLiked = true;
         }
-        return tweetServiceHelper.sendNotification(NotificationType.LIKE, isTweetLiked, tweet.getAuthorId(), authUserId, tweetId);
+        return tweetServiceHelper.sendNotification(NotificationType.LIKE, isTweetLiked, tweet.getAuthor().getId(), authUserId, tweetId);
     }
 }

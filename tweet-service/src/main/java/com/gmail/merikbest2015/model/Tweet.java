@@ -10,13 +10,15 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"id", "authorId"})
+@EqualsAndHashCode(of = "id")
 @Table(name = "tweets", indexes = @Index(name = "tweets_author_id_idx", columnList = "author_id"))
 public class Tweet {
 
@@ -66,8 +68,9 @@ public class Tweet {
     @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
     private boolean deleted = false;
 
-    @Column(name = "author_id", nullable = false)
-    private Long authorId;
+    @OneToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 
     @Column(name = "list_id")
     private Long listId;
@@ -78,10 +81,11 @@ public class Tweet {
     @OneToMany
     private List<TweetImage> images = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(name = "tagged_image_users", joinColumns = @JoinColumn(name = "tweet_id"))
-    @Column(name = "tagged_image_user_id")
-    private List<Long> taggedImageUsers;
+    @OneToMany
+    @JoinTable(name = "tagged_image_users",
+            joinColumns = @JoinColumn(name = "tweet_id"),
+            inverseJoinColumns = @JoinColumn(name = "tagged_image_user_id"))
+    private Set<User> taggedImageUsers = new HashSet<>();
 
     @OneToOne
     @JoinTable(name = "tweet_quote",

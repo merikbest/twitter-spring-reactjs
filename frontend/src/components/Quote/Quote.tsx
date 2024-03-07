@@ -23,14 +23,14 @@ const Quote: FC<QuoteProps> = memo(({ quoteTweet }): ReactElement => {
                 <div className={classes.quoteTweetWrapper}>
                     <Avatar
                         className={classes.quoteTweetAvatar}
-                        alt={`avatar ${quoteTweet.user.avatar}`}
-                        src={quoteTweet.user.avatar ?? DEFAULT_PROFILE_IMG}
+                        alt={`avatar ${quoteTweet.author.avatar}`}
+                        src={quoteTweet.author.avatar ?? DEFAULT_PROFILE_IMG}
                     />
                     <Typography component={"span"} className={classes.quoteTweetFullName}>
-                        {quoteTweet.user.fullName}
+                        {quoteTweet.author.fullName}
                     </Typography>
                     <Typography component={"span"} className={classes.quoteTweetUsername}>
-                        @{quoteTweet.user.username}
+                        @{quoteTweet.author.username}
                     </Typography>&nbsp;
                     <Typography component={"span"} className={classes.quoteTweetUsername}>·</Typography>&nbsp;
                     <Typography component={"span"} className={classes.quoteTweetUsername}>

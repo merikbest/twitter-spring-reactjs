@@ -26,7 +26,7 @@ public class TweetResponse {
     private String linkCover;
     private GifImageResponse gifImage;
     private LinkCoverSize linkCoverSize;
-    private TweetAuthorResponse user;
+    private TweetAuthorResponse author;
     private List<ImageResponse> images;
     private String imageDescription;
     private List<TaggedUserResponse> taggedImageUsers;

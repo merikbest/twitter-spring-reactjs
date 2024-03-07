@@ -109,7 +109,7 @@ public class TweetController {
     public ResponseEntity<TweetResponse> createTweet(@RequestBody TweetRequest tweetRequest) {
         TweetResponse tweet = tweetMapper.createTweet(tweetRequest);
         webSocketClient.send(TOPIC_FEED_ADD, tweet);
-        webSocketClient.send(TOPIC_USER_ADD_TWEET + tweet.getUser().getId(), tweet);
+        webSocketClient.send(TOPIC_USER_ADD_TWEET + tweet.getAuthor().getId(), tweet);
         return ResponseEntity.ok(tweet);
     }
 

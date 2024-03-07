@@ -12,14 +12,14 @@ describe("TweetHeader", () => {
         jest.useFakeTimers();
         const wrapper = mountWithStore(
             <TweetHeader
-                userId={mockFullTweet.user.id}
-                fullName={mockFullTweet.user.fullName}
-                username={mockFullTweet.user.username}
+                userId={mockFullTweet.author.id}
+                fullName={mockFullTweet.author.fullName}
+                username={mockFullTweet.author.username}
                 isPrivateProfile={true}
                 dateTime={mockFullTweet.dateTime}
             />, createMockRootState(LoadingStatus.SUCCESS));
-        expect(wrapper.text().includes(mockFullTweet.user.fullName)).toBe(true);
-        expect(wrapper.text().includes(mockFullTweet.user.username)).toBe(true);
+        expect(wrapper.text().includes(mockFullTweet.author.fullName)).toBe(true);
+        expect(wrapper.text().includes(mockFullTweet.author.username)).toBe(true);
         expect(wrapper.text().includes(formatDate(new Date(mockFullTweet.dateTime)))).toBe(true);
         wrapper.find("span").at(0).simulate("mouseenter");
         jest.runAllTimers();
