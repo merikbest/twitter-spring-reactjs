@@ -1,7 +1,11 @@
 package com.gmail.merikbest2015.repository;
 
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.TaggedUserProjection;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -47,4 +51,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
             AND follower.id = :userId
             """)
     boolean isUserFollowByOtherUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Query("""
+            SELECT user From User user
+            WHERE user.id IN (
+                SELECT likeTweet.user.id
+                FROM LikeTweet likeTweet
+                WHERE likeTweet.tweet = :tweet
+            )
+            """)
+    Page<UserProjection> getLikedUsersByTweet(@Param("tweet") Tweet tweet, Pageable pageable);
 }

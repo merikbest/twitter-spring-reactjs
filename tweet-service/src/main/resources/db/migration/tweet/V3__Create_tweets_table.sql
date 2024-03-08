@@ -73,11 +73,9 @@ CREATE TABLE quotes
 
 CREATE TABLE liked_tweets
 (
-    id               INT8      NOT NULL,
-    liked_tweet_date TIMESTAMP NOT NULL DEFAULT current_timestamp,
     tweet_id         INT8      NOT NULL REFERENCES tweets,
     user_id          INT8      NOT NULL REFERENCES users,
-    PRIMARY KEY (id)
+    liked_tweet_date TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 CREATE INDEX liked_tweets_tweet_id_idx ON liked_tweets (tweet_id);
 CREATE INDEX liked_tweets_user_id_idx ON liked_tweets (user_id);

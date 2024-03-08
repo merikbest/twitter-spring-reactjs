@@ -35,7 +35,6 @@ public class BookmarkServiceImpl implements BookmarkService {
     public Boolean processUserBookmarks(Long tweetId) {
         Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
         User authUser = userService.getAuthUser();
-
         Bookmark bookmark = bookmarkRepository.getUserBookmark(authUser, tweet);
 
         if (bookmark != null) {

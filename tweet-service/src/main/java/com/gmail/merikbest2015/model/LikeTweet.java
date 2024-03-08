@@ -3,14 +3,15 @@ package com.gmail.merikbest2015.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
-@RequiredArgsConstructor
-@EqualsAndHashCode(of = "id")
+@AllArgsConstructor
+@Entity
 @Table(
         name = "liked_tweets",
         indexes = {
@@ -19,19 +20,38 @@ import java.time.LocalDateTime;
         })
 public class LikeTweet {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "liked_tweets_seq")
-    @SequenceGenerator(name = "liked_tweets_seq", sequenceName = "liked_tweets_seq", initialValue = 100, allocationSize = 1)
-    private Long id;
+    @EmbeddedId
+    private TweetUserId tweetUserId;
+
+    @MapsId("userId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @MapsId("tweetId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tweet_id", nullable = false)
+    private Tweet tweet;
 
     @Column(name = "liked_tweet_date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime likeTweetDate = LocalDateTime.now();
 
-    @NonNull
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    public LikeTweet(User user, Tweet tweet) {
+        this.tweetUserId = new TweetUserId(user.getId(), tweet.getId());
+        this.user = user;
+        this.tweet = tweet;
+    }
 
-    @NonNull
-    @Column(name = "tweet_id", nullable = false)
-    private Long tweetId;
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Embeddable
+    public static class TweetUserId implements Serializable {
+
+        @Column(name = "user_id", nullable = false)
+        private Long userId;
+
+        @Column(name = "tweet_id", nullable = false)
+        private Long tweetId;
+    }
 }

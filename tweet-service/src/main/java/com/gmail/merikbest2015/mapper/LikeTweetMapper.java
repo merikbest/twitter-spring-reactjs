@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.LikeTweetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,7 +31,8 @@ public class LikeTweetMapper {
     }
 
     public HeaderResponse<UserResponse> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
-        return likeTweetService.getLikedUsersByTweetId(tweetId, pageable);
+        Page<UserProjection> users = likeTweetService.getLikedUsersByTweetId(tweetId, pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
     public NotificationResponse likeTweet(Long tweetId) {
