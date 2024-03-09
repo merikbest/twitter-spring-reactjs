@@ -6,7 +6,6 @@ import com.gmail.merikbest2015.model.LikeTweet;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.LikeTweetRepository;
-import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.LikeTweetService;
@@ -27,7 +26,6 @@ public class LikeTweetServiceImpl implements LikeTweetService {
     private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
     private final UserService userService;
-    private final UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -40,7 +38,7 @@ public class LikeTweetServiceImpl implements LikeTweetService {
     @Transactional(readOnly = true)
     public Page<UserProjection> getLikedUsersByTweetId(Long tweetId, Pageable pageable) {
         Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
-        return userRepository.getLikedUsersByTweet(tweet, pageable);
+        return userService.getLikedUsersByTweet(tweet, pageable);
     }
 
     @Override

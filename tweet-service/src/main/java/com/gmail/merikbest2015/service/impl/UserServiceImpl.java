@@ -1,11 +1,15 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +34,33 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 
+    @Override
+    public Boolean isUserExists(Long userId) {
+        return userRepository.isUserExists(userId);
+    }
+
+    @Override
+    public boolean isUserHavePrivateProfile(Long userId) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return !userRepository.isUserHavePrivateProfile(userId, authUserId);
+    }
+
+    @Override
+    public boolean isMyProfileBlockedByUser(Long userId) {
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return userRepository.isUserBlocked(userId, authUserId);
+    }
+
+    @Override
+    public Page<UserProjection> getLikedUsersByTweet(Tweet tweet, Pageable pageable) {
+        return userRepository.getLikedUsersByTweet(tweet, pageable);
+    }
+
+    @Override
+    public Page<UserProjection> getRetweetedUsersByTweet(Tweet tweet, Pageable pageable) {
+        return userRepository.getRetweetedUsersByTweet(tweet, pageable);
+    }
+
     public boolean isUserMutedByMyProfile(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return userRepository.isUserMuted(authUserId, userId);
@@ -38,11 +69,6 @@ public class UserServiceImpl implements UserService {
     public boolean isUserBlockedByMyProfile(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return userRepository.isUserBlocked(authUserId, userId);
-    }
-
-    public boolean isMyProfileBlockedByUser(Long userId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return userRepository.isUserBlocked(userId, authUserId);
     }
 
     public boolean isMyProfileWaitingForApprove(Long userId) {

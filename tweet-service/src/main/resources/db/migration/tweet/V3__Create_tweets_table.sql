@@ -82,11 +82,9 @@ CREATE INDEX liked_tweets_user_id_idx ON liked_tweets (user_id);
 
 CREATE TABLE retweets
 (
-    id           INT8      NOT NULL,
-    retweet_date TIMESTAMP NOT NULL DEFAULT current_timestamp,
     tweet_id     INT8      NOT NULL REFERENCES tweets,
     user_id      INT8      NOT NULL REFERENCES users,
-    PRIMARY KEY (id)
+    retweet_date TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
 CREATE INDEX retweets_tweet_id_idx ON retweets (tweet_id);
 CREATE INDEX retweets_user_id_idx ON retweets (user_id);

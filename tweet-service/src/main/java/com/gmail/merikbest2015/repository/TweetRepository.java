@@ -53,12 +53,14 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> getUserMediaTweets(@Param("userId") Long userId, Pageable pageable);
 
-    @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.author.id = :userId " +
-            "AND tweet.addressedUsername IS NOT NULL " +
-            "AND tweet.scheduledDate IS NULL " +
-            "AND tweet.deleted = false " +
-            "ORDER BY tweet.dateTime DESC")
+    @Query("""
+            SELECT tweet FROM Tweet tweet
+            WHERE tweet.author.id = :userId
+            AND tweet.addressedUsername IS NOT NULL
+            AND tweet.scheduledDate IS NULL
+            AND tweet.deleted = false
+            ORDER BY tweet.dateTime DESC
+            """)
     List<TweetUserProjection> getRepliesByUserId(@Param("userId") Long userId);
 
     @Query("SELECT tweet FROM Tweet tweet " +
@@ -98,11 +100,13 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             "ORDER BY tweet.dateTime DESC")
     Page<TweetProjection> getFollowersTweets(@Param("userIds") List<Long> userIds, Pageable pageable);
 
-    @Query("SELECT tweet FROM Tweet tweet " +
-            "WHERE tweet.author.id = :userId " +
-            "AND tweet.scheduledDate IS NOT NULL " +
-            "AND tweet.deleted = false " +
-            "ORDER BY tweet.scheduledDate DESC")
+    @Query("""
+            SELECT tweet FROM Tweet tweet
+            WHERE tweet.author.id = :userId
+            AND tweet.scheduledDate IS NOT NULL
+            AND tweet.deleted = false
+            ORDER BY tweet.scheduledDate DESC
+            """)
     Page<TweetProjection> getScheduledTweets(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT tweet FROM Tweet tweet " +

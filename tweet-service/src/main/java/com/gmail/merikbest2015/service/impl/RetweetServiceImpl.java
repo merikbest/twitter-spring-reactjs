@@ -1,21 +1,19 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Retweet;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.RetweetService;
-import com.gmail.merikbest2015.service.util.TweetValidationHelper;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
+import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,10 +27,10 @@ import java.util.List;
 public class RetweetServiceImpl implements RetweetService {
 
     private final TweetRepository tweetRepository;
+    private final RetweetRepository retweetRepository;
     private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
-    private final RetweetRepository retweetRepository;
-    private final UserClient userClient;
+    private final UserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -46,29 +44,28 @@ public class RetweetServiceImpl implements RetweetService {
 
     @Override
     @Transactional(readOnly = true)
-    public HeaderResponse<UserResponse> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
-        tweetValidationHelper.checkValidTweet(tweetId);
-        List<Long> retweetedUserIds = retweetRepository.getRetweetedUserIds(tweetId);
-        return userClient.getUsersByIds(new IdsRequest(retweetedUserIds), pageable);
+    public Page<UserProjection> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable) {
+        Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
+        return userService.getRetweetedUsersByTweet(tweet, pageable);
     }
 
     @Override
     @Transactional
     public NotificationResponse retweet(Long tweetId) {
         Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        Retweet retweet = retweetRepository.isTweetRetweeted(authUserId, tweetId);
+        User authUser = userService.getAuthUser();
+        Retweet retweet = retweetRepository.isTweetRetweeted(authUser, tweet);
         boolean isRetweeted;
 
         if (retweet != null) {
             retweetRepository.delete(retweet);
-            userClient.updateTweetCount(false);
+//            userClient.updateTweetCount(false); // TODO add kafka update event
             isRetweeted = false;
         } else {
-            retweetRepository.save(new Retweet(authUserId, tweetId));
-            userClient.updateTweetCount(true);
+            retweetRepository.save(new Retweet(authUser, tweet));
+//            userClient.updateTweetCount(true); // TODO add kafka update event
             isRetweeted = true;
         }
-        return tweetServiceHelper.sendNotification(NotificationType.RETWEET, isRetweeted, tweet.getAuthor().getId(), authUserId, tweetId);
+        return tweetServiceHelper.sendNotification(NotificationType.RETWEET, isRetweeted, tweet.getAuthor().getId(), authUser.getId(), tweetId);
     }
 }

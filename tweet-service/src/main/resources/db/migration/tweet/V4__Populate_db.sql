@@ -63,9 +63,9 @@ INSERT INTO liked_tweets (liked_tweet_date, tweet_id, user_id) VALUES ('2021-10-
 INSERT INTO liked_tweets (liked_tweet_date, tweet_id, user_id) VALUES ('2021-10-15 22:08:53.000000', 1, 1);
 INSERT INTO liked_tweets (liked_tweet_date, tweet_id, user_id) VALUES ('2021-10-15 22:39:04.000000', 8, 1);
 -- retweets
-INSERT INTO retweets (id, retweet_date, tweet_id, user_id) VALUES (1, '2021-10-15 21:50:56.000000', 10, 1);
-INSERT INTO retweets (id, retweet_date, tweet_id, user_id) VALUES (2, '2021-10-15 22:00:41.000000', 13, 2);
-INSERT INTO retweets (id, retweet_date, tweet_id, user_id) VALUES (3, '2021-10-15 22:07:48.000000', 10, 2);
+INSERT INTO retweets (retweet_date, tweet_id, user_id) VALUES ('2021-10-15 21:50:56.000000', 10, 1);
+INSERT INTO retweets (retweet_date, tweet_id, user_id) VALUES ('2021-10-15 22:00:41.000000', 13, 2);
+INSERT INTO retweets (retweet_date, tweet_id, user_id) VALUES ('2021-10-15 22:07:48.000000', 10, 2);
 -- bookmarks
 INSERT INTO bookmarks (bookmark_date, tweet_id, user_id) VALUES ('2022-02-10 21:09:18.000000', 8, 1);
 INSERT INTO bookmarks (bookmark_date, tweet_id, user_id) VALUES ('2022-02-10 21:09:28.000000', 15, 1);

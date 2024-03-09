@@ -19,6 +19,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user FROM User user WHERE user.id IN :userIds")
     List<TaggedUserProjection> getTaggedImageUsers(@Param("userIds") List<Long> userIds);
 
+    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
+    boolean isUserExists(@Param("userId") Long userId);
+
     @Query("""
             SELECT CASE WHEN count(userMuted) > 0 THEN true ELSE false END FROM User user
             LEFT JOIN user.userMutedList userMuted
@@ -53,6 +56,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean isUserFollowByOtherUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
     @Query("""
+            SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user
+            LEFT JOIN user.following following
+            WHERE user.id = :userId AND user.privateProfile = false
+            OR user.id = :userId AND user.privateProfile = true AND following.id = :authUserId
+            """)
+    boolean isUserHavePrivateProfile(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
+
+    @Query("""
             SELECT user From User user
             WHERE user.id IN (
                 SELECT likeTweet.user.id
@@ -61,4 +72,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
             )
             """)
     Page<UserProjection> getLikedUsersByTweet(@Param("tweet") Tweet tweet, Pageable pageable);
+
+    @Query("""
+            SELECT user From User user
+            WHERE user.id IN (
+                SELECT retweet.user.id
+                FROM Retweet retweet
+                WHERE retweet.tweet = :tweet
+            )
+            """)
+    Page<UserProjection> getRetweetedUsersByTweet(@Param("tweet") Tweet tweet, Pageable pageable);
 }

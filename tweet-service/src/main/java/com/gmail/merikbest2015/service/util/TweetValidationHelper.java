@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class TweetValidationHelper {
 
     private final TweetRepository tweetRepository;
     private final UserClient userClient;
+    private final UserService userService;
 
     public List<Long> getValidUserIds() {
         List<Long> tweetAuthorIds = tweetRepository.getTweetAuthorIds();
@@ -41,7 +43,7 @@ public class TweetValidationHelper {
     }
 
     public void validateUserProfile(Long userId) {
-        if (!userClient.isUserExists(userId)) {
+        if (!userService.isUserExists(userId)) {
             throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
         }
         checkIsValidUserProfile(userId);
@@ -51,10 +53,10 @@ public class TweetValidationHelper {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
         if (!userId.equals(authUserId)) {
-            if (userClient.isUserHavePrivateProfile(userId)) {
+            if (userService.isUserHavePrivateProfile(userId)) {
                 throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
-            if (userClient.isMyProfileBlockedByUser(userId)) {
+            if (userService.isMyProfileBlockedByUser(userId)) {
                 throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
             }
         }

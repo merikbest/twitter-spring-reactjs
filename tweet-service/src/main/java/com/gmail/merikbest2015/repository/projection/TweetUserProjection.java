@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
-import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,22 +23,18 @@ public interface TweetUserProjection {
     String getLinkCover();
     GifImageProjection getGifImage();
     LinkCoverSize getLinkCoverSize();
-    Long getAuthorId();
     Long getListId();
     List<TweetImageProjection> getImages();
     String getImageDescription();
     QuoteTweetProjection getQuoteTweet();
     PollProjection getPoll();
     boolean isDeleted();
-
-    @Value("#{@tweetProjectionHelper.getTweetAuthor(target.authorId)}")
-    TweetAuthorResponse getUser();
+    TweetAuthorProjection getAuthor();
 
     @Value("#{target.listId == null ? null : @tweetProjectionHelper.getTweetList(target.listId)}")
     TweetListResponse getTweetList();
 
-    @Value("#{target.images.size() != 0 ? @tweetProjectionHelper.getTaggedImageUsers(target.id) : T(java.util.Collections).emptyList()}")
-    List<TaggedUserResponse> getTaggedImageUsers();
+    List<TaggedUserProjection> getTaggedImageUsers();
 
     @Value("#{@retweetRepository.getRetweetsUserIds(target.id)}")
     List<Long> getRetweetsUserIds();
@@ -54,7 +48,7 @@ public interface TweetUserProjection {
     @Value("#{@tweetProjectionHelper.isUserBookmarkedTweet(target.id)}")
     boolean getIsTweetBookmarked();
 
-    @Value("#{@tweetProjectionHelper.isUserFollowByOtherUser(target.authorId)}")
+    @Value("#{@tweetProjectionHelper.isUserFollowByOtherUser(target.author.id)}")
     boolean getIsUserFollowByOtherUser();
 
     @Value("#{@retweetRepository.getRetweetSize(target.id)}")
@@ -91,11 +85,7 @@ public interface TweetUserProjection {
         @Value("#{target.isDeleted ? null : target.linkCoverSize}")
         LinkCoverSize getLinkCoverSize();
 
-        @Value("#{target.isDeleted ? null : target.authorId}")
-        Long getAuthorId();
-
-        @Value("#{target.isDeleted ? null : @tweetProjectionHelper.getTweetAuthor(target.authorId)}")
-        TweetAuthorResponse getUser();
+        TweetAuthorProjection getAuthor();
 
         boolean isDeleted();
     }
