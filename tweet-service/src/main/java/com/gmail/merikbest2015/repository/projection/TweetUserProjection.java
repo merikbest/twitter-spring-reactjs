@@ -48,7 +48,7 @@ public interface TweetUserProjection {
     @Value("#{@tweetProjectionHelper.isUserBookmarkedTweet(target.id)}")
     boolean getIsTweetBookmarked();
 
-    @Value("#{@tweetProjectionHelper.isUserFollowByOtherUser(target.author.id)}")
+    @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.author.id)}")
     boolean getIsUserFollowByOtherUser();
 
     @Value("#{@retweetRepository.getRetweetSize(target.id)}")

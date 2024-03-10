@@ -71,9 +71,9 @@ public class TweetServiceHelper {
 
         if (tweet.getScheduledDate() == null) {
             if (isMediaTweetCreated || !tweet.getImages().isEmpty()) {
-                userClient.updateMediaTweetCount(true);
+                userClient.updateMediaTweetCount(true); // TODO add kafka update event
             } else {
-                userClient.updateTweetCount(true);
+                userClient.updateTweetCount(true); // TODO add kafka update event
             }
         }
         return processTweetResponse(tweet);
@@ -164,7 +164,7 @@ public class TweetServiceHelper {
 
         if (!usernames.isEmpty()) {
             usernames.forEach(username -> {
-                Long userId = userClient.getUserIdByUsername(username);
+                Long userId = userService.getUserIdByUsername(username);
 
                 if (userId != null) {
                     Long authUserId = AuthUtil.getAuthenticatedUserId();

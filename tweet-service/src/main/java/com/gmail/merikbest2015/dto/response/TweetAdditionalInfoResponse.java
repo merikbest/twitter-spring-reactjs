@@ -10,7 +10,7 @@ public class TweetAdditionalInfoResponse {
     private String text;
     private ReplyType replyType;
     private Long addressedTweetId;
-    private TweetAdditionalInfoUserResponse user;
+    private TweetAdditionalInfoUserResponse author;
     @JsonProperty("isDeleted")
     private boolean isDeleted;
 }

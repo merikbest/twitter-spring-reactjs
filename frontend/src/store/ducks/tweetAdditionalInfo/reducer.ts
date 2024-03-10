@@ -19,19 +19,19 @@ export const tweetAdditionalInfoReducer = produce((draft: Draft<TweetAdditionalI
 
         case TweetAdditionalInfoType.SET_MUTED_TWEET_ADDITIONAL_INFO:
             if (draft.tweetAdditionalInfo) {
-                draft.tweetAdditionalInfo.user.isUserMuted = action.payload;
+                draft.tweetAdditionalInfo.author.isUserMuted = action.payload;
             }
             break;
 
         case TweetAdditionalInfoType.SET_BLOCKED_TWEET_ADDITIONAL_INFO:
             if (draft.tweetAdditionalInfo) {
-                draft.tweetAdditionalInfo.user.isUserBlocked = action.payload;
+                draft.tweetAdditionalInfo.author.isUserBlocked = action.payload;
             }
             break;
 
         case TweetAdditionalInfoType.SET_FOLLOWED_TWEET_ADDITIONAL_INFO:
             if (draft.tweetAdditionalInfo) {
-                draft.tweetAdditionalInfo.user.isFollower = action.payload;
+                draft.tweetAdditionalInfo.author.isFollower = action.payload;
             }
             break;
 

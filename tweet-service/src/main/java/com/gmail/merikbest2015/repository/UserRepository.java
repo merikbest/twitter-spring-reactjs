@@ -16,6 +16,9 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
+    @Query("SELECT user.id FROM User user WHERE UPPER(user.username) = UPPER(:username)")
+    Long getUserIdByUsername(@Param("username") String username);
+
     @Query("SELECT user FROM User user WHERE user.id IN :userIds")
     List<TaggedUserProjection> getTaggedImageUsers(@Param("userIds") List<Long> userIds);
 

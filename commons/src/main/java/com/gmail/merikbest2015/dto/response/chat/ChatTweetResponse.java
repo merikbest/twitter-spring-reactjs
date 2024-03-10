@@ -10,7 +10,7 @@ public class ChatTweetResponse {
     private Long id;
     private String text;
     private LocalDateTime dateTime;
-    private TweetUserResponse user;
+    private TweetUserResponse author;
     @JsonProperty("isDeleted")
     private boolean isDeleted;
 

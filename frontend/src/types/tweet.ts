@@ -42,7 +42,7 @@ export interface TweetAdditionalInfoResponse {
     replyType: ReplyType;
     addressedTweetId: number;
     isDeleted: boolean;
-    user: {
+    author: {
         id: number;
         fullName: string;
         username: string;

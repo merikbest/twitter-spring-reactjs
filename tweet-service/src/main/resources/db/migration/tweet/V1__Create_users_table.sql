@@ -6,6 +6,7 @@ CREATE TABLE users
     username              VARCHAR(255) NOT NULL,
     about                 VARCHAR(255),
     avatar                VARCHAR(255),
+    pinned_tweet_id       INT8,
     private_profile       BOOLEAN DEFAULT FALSE,
     muted_direct_messages BOOLEAN DEFAULT FALSE,
     active                BOOLEAN DEFAULT FALSE,

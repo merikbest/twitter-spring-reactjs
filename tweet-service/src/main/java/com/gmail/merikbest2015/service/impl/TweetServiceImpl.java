@@ -11,11 +11,13 @@ import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetImageRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.TweetService;
+import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import com.gmail.merikbest2015.util.AuthUtil;
@@ -42,14 +44,15 @@ public class TweetServiceImpl implements TweetService {
     private final TweetImageRepository tweetImageRepository;
     private final RetweetRepository retweetRepository;
     private final UserClient userClient;
+    private final UserService userService;
     private final TagClient tagClient;
     private final ImageClient imageClient;
 
     @Override
     @Transactional(readOnly = true)
     public Page<TweetProjection> getTweets(Pageable pageable) {
-        List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
-        return tweetRepository.getTweetsByAuthorIds(validUserIds, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.getTweetsByAuthors(authUserId, pageable);
     }
 
     @Override
@@ -68,7 +71,7 @@ public class TweetServiceImpl implements TweetService {
         List<TweetUserProjection> tweets = tweetRepository.getTweetsByUserId(userId);
         List<RetweetProjection> retweets = retweetRepository.getRetweetsByUserId(userId);
         List<TweetUserProjection> userTweets = tweetServiceHelper.combineTweetsArrays(tweets, retweets);
-        Long pinnedTweetId = userClient.getUserPinnedTweetId(userId);
+        Long pinnedTweetId = userClient.getUserPinnedTweetId(userId); // TODO get User Pinned Tweet
 
         if (pinnedTweetId != null) {
             TweetUserProjection pinnedTweet = tweetRepository.getTweetById(pinnedTweetId, TweetUserProjection.class).get();
@@ -100,7 +103,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
         TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetById(tweetId, TweetAdditionalInfoProjection.class)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
-        tweetValidationHelper.validateTweet(additionalInfo.isDeleted(), additionalInfo.getAuthorId());
+        tweetValidationHelper.validateTweet(additionalInfo.isDeleted(), additionalInfo.getAuthor().getId());
         return additionalInfo;
     }
 
@@ -164,10 +167,12 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional
     public String deleteTweet(Long tweetId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        Tweet tweet = tweetRepository.getTweetByUserId(authUserId, tweetId)
+        User authUser = userService.getAuthUser();
+        Tweet tweet = tweetRepository.getTweetByUserId(authUser.getId(), tweetId)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
-        userClient.updatePinnedTweetId(tweetId);
+        if (authUser.getPinnedTweet().equals(tweet)) {
+            authUser.setPinnedTweet(null); // TODO add kafka update event
+        }
         tagClient.deleteTagsByTweetId(tweetId);
         tweet.setDeleted(true);
         return "Your Tweet was deleted";

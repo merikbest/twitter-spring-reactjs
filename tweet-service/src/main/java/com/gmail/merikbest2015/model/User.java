@@ -45,6 +45,10 @@ public class User {
     @Column(name = "muted_direct_messages", columnDefinition = "boolean default false")
     private boolean mutedDirectMessages;
 
+    @OneToOne
+    @JoinColumn(name = "pinned_tweet_id")
+    private Tweet pinnedTweet;
+
     @ManyToMany
     @JoinTable(name = "user_blocked",
             joinColumns = @JoinColumn(name = "user_id"),

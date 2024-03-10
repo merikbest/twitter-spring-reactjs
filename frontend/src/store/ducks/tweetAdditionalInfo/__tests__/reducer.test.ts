@@ -39,7 +39,7 @@ describe("tweetAdditionalInfoReducer:", () => {
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
                     user: {
-                        ...mockUserTweetAdditionalInfo.user, isUserMuted: true
+                        ...mockUserTweetAdditionalInfo.author, isUserMuted: true
                     }
                 }
             }
@@ -59,7 +59,7 @@ describe("tweetAdditionalInfoReducer:", () => {
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
                     user: {
-                        ...mockUserTweetAdditionalInfo.user, isUserBlocked: true
+                        ...mockUserTweetAdditionalInfo.author, isUserBlocked: true
                     }
                 }
             }
@@ -79,7 +79,7 @@ describe("tweetAdditionalInfoReducer:", () => {
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
                     user: {
-                        ...mockUserTweetAdditionalInfo.user, isFollower: true
+                        ...mockUserTweetAdditionalInfo.author, isFollower: true
                     }
                 }
             }
