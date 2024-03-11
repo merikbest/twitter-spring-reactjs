@@ -116,24 +116,24 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId) {
+    public Page<TweetProjection> getQuotesByTweetId(Long tweetId, Pageable pageable) {
         tweetValidationHelper.checkValidTweet(tweetId);
-        List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
-        return tweetRepository.getQuotesByTweetId(validUserIds, tweetId, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.getQuotesByTweet(authUserId, tweetId, pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<TweetProjection> getMediaTweets(Pageable pageable) {
-        List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
-        return tweetRepository.getMediaTweets(validUserIds, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.getMediaTweets(authUserId, pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<TweetProjection> getTweetsWithVideo(Pageable pageable) {
-        List<Long> validUserIds = tweetValidationHelper.getValidUserIds();
-        return tweetRepository.getTweetsWithVideo(validUserIds, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.getTweetsWithVideo(authUserId, pageable);
     }
 
     @Override

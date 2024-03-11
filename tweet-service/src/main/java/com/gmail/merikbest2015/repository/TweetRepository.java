@@ -111,32 +111,63 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet FROM Tweet tweet
             LEFT JOIN tweet.quoteTweet quoteTweet
-            WHERE tweet.author.id IN :userIds
+            WHERE tweet.author.id NOT IN (
+                    SELECT user.id FROM User user
+                    JOIN user.userBlockedList blockedUser
+                    WHERE blockedUser.id = :userId
+            )
+            AND tweet.author.id IN (
+                SELECT user.id FROM User user
+                LEFT JOIN user.following following
+                WHERE (user.privateProfile = false
+                OR (user.privateProfile = true AND (following.id = :userId OR user.id = :userId))
+                AND user.active = true)
+            )
             AND quoteTweet.id = :tweetId
             AND quoteTweet.deleted = false
             """)
-    Page<TweetProjection> getQuotesByTweetId(@Param("userIds") List<Long> userIds,
-                                             @Param("tweetId") Long tweetId,
-                                             Pageable pageable);
+    Page<TweetProjection> getQuotesByTweet(@Param("userId") Long userId, @Param("tweetId") Long tweetId, Pageable pageable);
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id IN :userIds
+            WHERE tweet.author.id NOT IN (
+                    SELECT user.id FROM User user
+                    JOIN user.userBlockedList blockedUser
+                    WHERE blockedUser.id = :userId
+            )
+            AND tweet.author.id IN (
+                SELECT user.id FROM User user
+                LEFT JOIN user.following following
+                WHERE (user.privateProfile = false
+                OR (user.privateProfile = true AND (following.id = :userId OR user.id = :userId))
+                AND user.active = true)
+            )
             AND tweet.scheduledDate IS NULL
             AND tweet.images.size <> 0
             AND tweet.deleted = false
             ORDER BY tweet.dateTime DESC
             """)
-    Page<TweetProjection> getMediaTweets(@Param("userIds") List<Long> userIds, Pageable pageable);
+    Page<TweetProjection> getMediaTweets(@Param("userId") Long userId, Pageable pageable);
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id IN :userIds
+            WHERE tweet.author.id NOT IN (
+                    SELECT user.id FROM User user
+                    JOIN user.userBlockedList blockedUser
+                    WHERE blockedUser.id = :userId
+            )
+            AND tweet.author.id IN (
+                SELECT user.id FROM User user
+                LEFT JOIN user.following following
+                WHERE (user.privateProfile = false
+                OR (user.privateProfile = true AND (following.id = :userId OR user.id = :userId))
+                AND user.active = true)
+            )
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             AND tweet.text LIKE CONCAT('%','youtu','%')
             """)
-    Page<TweetProjection> getTweetsWithVideo(@Param("userIds") List<Long> userIds, Pageable pageable);
+    Page<TweetProjection> getTweetsWithVideo(@Param("userId") Long userId, Pageable pageable);
 
     @Query("""
             SELECT tweet FROM Tweet tweet

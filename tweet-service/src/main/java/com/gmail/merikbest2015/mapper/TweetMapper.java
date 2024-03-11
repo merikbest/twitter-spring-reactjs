@@ -61,8 +61,8 @@ public class TweetMapper {
         return basicMapper.convertToResponseList(tweets, TweetResponse.class);
     }
 
-    public HeaderResponse<TweetResponse> getQuotesByTweetId(Pageable pageable, Long tweetId) {
-        Page<TweetProjection> tweets = tweetService.getQuotesByTweetId(pageable, tweetId);
+    public HeaderResponse<TweetResponse> getQuotesByTweetId(Long tweetId, Pageable pageable) {
+        Page<TweetProjection> tweets = tweetService.getQuotesByTweetId(tweetId, pageable);
         return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 

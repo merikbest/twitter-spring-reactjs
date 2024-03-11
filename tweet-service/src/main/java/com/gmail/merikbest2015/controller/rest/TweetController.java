@@ -71,7 +71,7 @@ public class TweetController {
     @GetMapping(TWEET_ID_QUOTES)
     public ResponseEntity<List<TweetResponse>> getQuotesByTweetId(@PathVariable("tweetId") Long tweetId,
                                                                   @PageableDefault(size = 10) Pageable pageable) {
-        HeaderResponse<TweetResponse> response = tweetMapper.getQuotesByTweetId(pageable, tweetId);
+        HeaderResponse<TweetResponse> response = tweetMapper.getQuotesByTweetId(tweetId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 

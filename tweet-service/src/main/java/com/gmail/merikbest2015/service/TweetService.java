@@ -32,7 +32,7 @@ public interface TweetService {
 
     List<TweetProjection> getRepliesByTweetId(Long tweetId);
 
-    Page<TweetProjection> getQuotesByTweetId(Pageable pageable, Long tweetId);
+    Page<TweetProjection> getQuotesByTweetId(Long tweetId, Pageable pageable);
 
     Page<TweetProjection> getMediaTweets(Pageable pageable);
 
