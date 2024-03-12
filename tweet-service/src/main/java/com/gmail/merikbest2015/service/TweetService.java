@@ -1,15 +1,10 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
-import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
-import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
-import com.gmail.merikbest2015.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,7 +37,7 @@ public interface TweetService {
 
     TweetImage uploadTweetImage(MultipartFile file);
 
-    HeaderResponse<UserResponse> getTaggedImageUsers(Long tweetId, Pageable pageable);
+    Page<UserProjection> getTaggedImageUsers(Long tweetId, Pageable pageable);
 
     TweetResponse createNewTweet(Tweet tweet);
 

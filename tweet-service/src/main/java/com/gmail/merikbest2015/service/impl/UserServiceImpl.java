@@ -66,6 +66,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.getRetweetedUsersByTweet(tweet, pageable);
     }
 
+    @Override
+    public Page<UserProjection> getTaggedImageUsers(Tweet tweet, Pageable pageable) {
+        return userRepository.getTaggedImageUsers(tweet, pageable);
+    }
+
     public boolean isUserMutedByMyProfile(Long userId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return userRepository.isUserMuted(authUserId, userId);

@@ -171,12 +171,16 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id IN :userIds
+            WHERE tweet.author.id IN (
+                SELECT follower.id FROM User user
+                JOIN user.followers follower
+                WHERE user.id = :userId
+            )
             AND tweet.addressedUsername IS NULL
             AND tweet.deleted = false
             ORDER BY tweet.dateTime DESC
             """)
-    Page<TweetProjection> getFollowersTweets(@Param("userIds") List<Long> userIds, Pageable pageable);
+    Page<TweetProjection> getFollowersTweets(@Param("userId") Long userId, Pageable pageable);
 
     @Query("""
             SELECT tweet FROM Tweet tweet

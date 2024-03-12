@@ -69,20 +69,25 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("""
             SELECT user From User user
             WHERE user.id IN (
-                SELECT likeTweet.user.id
-                FROM LikeTweet likeTweet
-                WHERE likeTweet.tweet = :tweet
-            )
+                SELECT likeTweet.user.id FROM LikeTweet likeTweet
+                WHERE likeTweet.tweet = :tweet)
             """)
     Page<UserProjection> getLikedUsersByTweet(@Param("tweet") Tweet tweet, Pageable pageable);
 
     @Query("""
             SELECT user From User user
             WHERE user.id IN (
-                SELECT retweet.user.id
-                FROM Retweet retweet
-                WHERE retweet.tweet = :tweet
-            )
+                SELECT retweet.user.id FROM Retweet retweet
+                WHERE retweet.tweet = :tweet)
             """)
     Page<UserProjection> getRetweetedUsersByTweet(@Param("tweet") Tweet tweet, Pageable pageable);
+
+    @Query("""
+            SELECT user From User user
+            WHERE user.id IN (
+                SELECT tagged.id FROM Tweet tweet
+                LEFT JOIN tweet.taggedImageUsers tagged
+                WHERE tweet = :tweet)
+            """)
+    Page<UserProjection> getTaggedImageUsers(@Param("tweet") Tweet tweet, Pageable pageable);
 }

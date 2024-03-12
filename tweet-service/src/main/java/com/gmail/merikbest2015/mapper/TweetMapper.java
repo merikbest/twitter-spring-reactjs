@@ -87,7 +87,8 @@ public class TweetMapper {
     }
 
     public HeaderResponse<UserResponse> getTaggedImageUsers(Long tweetId, Pageable pageable) {
-        return tweetService.getTaggedImageUsers(tweetId, pageable);
+        Page<UserProjection> users = tweetService.getTaggedImageUsers(tweetId, pageable);
+        return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
     public TweetResponse createTweet(TweetRequest tweetRequest) {

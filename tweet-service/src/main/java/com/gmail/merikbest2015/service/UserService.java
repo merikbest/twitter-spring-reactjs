@@ -23,4 +23,6 @@ public interface UserService {
     Page<UserProjection> getLikedUsersByTweet(Tweet tweet, Pageable pageable);
 
     Page<UserProjection> getRetweetedUsersByTweet(Tweet tweet, Pageable pageable);
+
+    Page<UserProjection> getTaggedImageUsers(Tweet tweet, Pageable pageable);
 }

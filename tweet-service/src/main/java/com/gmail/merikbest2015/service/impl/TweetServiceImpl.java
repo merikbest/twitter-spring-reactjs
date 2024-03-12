@@ -1,9 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.ImageClient;
@@ -139,8 +137,8 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional(readOnly = true)
     public Page<TweetProjection> getFollowersTweets(Pageable pageable) {
-        List<Long> userFollowersIds = userClient.getUserFollowersIds();
-        return tweetRepository.getFollowersTweets(userFollowersIds, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.getFollowersTweets(authUserId, pageable);
     }
 
     @Override
@@ -152,10 +150,9 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     @Transactional(readOnly = true)
-    public HeaderResponse<UserResponse> getTaggedImageUsers(Long tweetId, Pageable pageable) {
-        tweetValidationHelper.checkValidTweet(tweetId);
-        List<Long> taggedImageUserIds = tweetRepository.getTaggedImageUserIds(tweetId);
-        return userClient.getUsersByIds(new IdsRequest(taggedImageUserIds), pageable);
+    public Page<UserProjection> getTaggedImageUsers(Long tweetId, Pageable pageable) {
+        Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
+        return userService.getTaggedImageUsers(tweet, pageable);
     }
 
     @Override
