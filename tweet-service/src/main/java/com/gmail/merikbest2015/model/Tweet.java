@@ -9,9 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -79,7 +77,7 @@ public class Tweet {
     private String imageDescription;
 
     @OneToMany
-    private List<TweetImage> images = new ArrayList<>();
+    private Set<TweetImage> images = new HashSet<>();
 
     @OneToMany
     @JoinTable(name = "tagged_image_users",
@@ -105,11 +103,11 @@ public class Tweet {
     @JoinTable(name = "replies",
             joinColumns = @JoinColumn(name = "tweet_id"),
             inverseJoinColumns = @JoinColumn(name = "reply_id"))
-    private List<Tweet> replies;
+    private Set<Tweet> replies = new HashSet<>();
 
     @OneToMany
     @JoinTable(name = "quotes",
             joinColumns = @JoinColumn(name = "tweet_id"),
             inverseJoinColumns = @JoinColumn(name = "quote_id"))
-    private List<Tweet> quotes;
+    private Set<Tweet> quotes = new HashSet<>();
 }

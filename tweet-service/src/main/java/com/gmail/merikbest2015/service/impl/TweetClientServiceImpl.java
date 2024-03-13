@@ -37,11 +37,6 @@ public class TweetClientServiceImpl implements TweetClientService {
     }
 
     @Override
-    public Page<TweetProjection> getTweetsByIds(IdsRequest request, Pageable pageable) {
-        return tweetRepository.getTweetsByIds(request.getIds(), pageable);
-    }
-
-    @Override
     public NotificationTweetProjection getNotificationTweet(Long tweetId) {
         return tweetRepository.getTweetById(tweetId, NotificationTweetProjection.class).get();
     }

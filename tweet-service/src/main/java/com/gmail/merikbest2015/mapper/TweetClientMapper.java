@@ -38,11 +38,6 @@ public class TweetClientMapper {
         return basicMapper.convertToResponse(tweet, TweetResponse.class);
     }
 
-    public HeaderResponse<TweetResponse> getTweetsByIds(IdsRequest request, Pageable pageable) {
-        Page<TweetProjection> tweets = tweetClientService.getTweetsByIds(request, pageable);
-        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
-    }
-
     public NotificationTweetResponse getNotificationTweet(Long tweetId) {
         NotificationTweetProjection tweet = tweetClientService.getNotificationTweet(tweetId);
         return basicMapper.convertToResponse(tweet, NotificationTweetResponse.class);

@@ -17,8 +17,6 @@ public interface TweetClientService {
 
     TweetProjection getTweetById(Long tweetId);
 
-    Page<TweetProjection> getTweetsByIds(IdsRequest request, Pageable pageable);
-
     NotificationTweetProjection getNotificationTweet(Long tweetId);
 
     Boolean isTweetExists(Long tweetId);

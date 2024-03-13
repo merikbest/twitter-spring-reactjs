@@ -18,4 +18,11 @@ public interface ChatTweetProjection {
     ChatTweetUserProjection getAuthor();
 
     boolean isDeleted();
+
+    interface ChatTweetUserProjection {
+        Long getId();
+        String getFullName();
+        String getUsername();
+        String getAvatar();
+    }
 }

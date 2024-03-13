@@ -1,6 +1,5 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
@@ -167,7 +166,7 @@ public class TweetServiceImpl implements TweetService {
         User authUser = userService.getAuthUser();
         Tweet tweet = tweetRepository.getTweetByUserId(authUser.getId(), tweetId)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
-        if (authUser.getPinnedTweet().equals(tweet)) {
+        if (authUser.getPinnedTweet() != null && authUser.getPinnedTweet().equals(tweet)) {
             authUser.setPinnedTweet(null); // TODO add kafka update event
         }
         tagClient.deleteTagsByTweetId(tweetId);
@@ -178,9 +177,8 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional(readOnly = true)
     public Page<TweetProjection> searchTweets(String text, Pageable pageable) {
-        List<Long> userIds = tweetRepository.getUserIdsByTweetText(text);
-        List<Long> validUserIds = userClient.getValidTweetUserIds(new IdsRequest(userIds), text);
-        return tweetRepository.searchTweets(text, validUserIds, pageable);
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        return tweetRepository.searchTweets(text, authUserId, pageable);
     }
 
     @Override

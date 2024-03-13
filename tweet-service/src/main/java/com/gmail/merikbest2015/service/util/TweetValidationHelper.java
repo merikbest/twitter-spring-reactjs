@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.service.UserService;
@@ -11,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 
 @Component
@@ -20,13 +16,7 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 public class TweetValidationHelper {
 
     private final TweetRepository tweetRepository;
-    private final UserClient userClient;
     private final UserService userService;
-
-    public List<Long> getValidUserIds() {
-        List<Long> tweetAuthorIds = tweetRepository.getTweetAuthorIds();
-        return userClient.getValidUserIds(new IdsRequest(tweetAuthorIds));
-    }
 
     public Tweet checkValidTweet(Long tweetId) {
         Tweet tweet = tweetRepository.findById(tweetId)
