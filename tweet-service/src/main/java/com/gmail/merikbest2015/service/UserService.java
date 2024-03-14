@@ -6,11 +6,13 @@ import com.gmail.merikbest2015.repository.projection.UserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface UserService {
 
     User getAuthUser();
 
-    User getUserById(Long userId);
+    Optional<User> getUserById(Long userId);
 
     Long getUserIdByUsername(String username);
 

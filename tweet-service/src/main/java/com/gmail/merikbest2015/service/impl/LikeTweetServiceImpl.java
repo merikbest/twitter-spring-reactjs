@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.model.LikeTweet;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.repository.LikeTweetRepository;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
@@ -25,6 +26,7 @@ public class LikeTweetServiceImpl implements LikeTweetService {
     private final LikeTweetRepository likeTweetRepository;
     private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
+    private final UpdateTweetCountProducer updateTweetCountProducer;
     private final UserService userService;
 
     @Override
@@ -51,14 +53,13 @@ public class LikeTweetServiceImpl implements LikeTweetService {
 
         if (likedTweet != null) {
             likeTweetRepository.delete(likedTweet);
-//            userClient.updateLikeCount(false); // TODO add kafka update event
             isTweetLiked = false;
         } else {
             LikeTweet newLikeTweet = new LikeTweet(authUser, tweet);
             likeTweetRepository.save(newLikeTweet);
-//            userClient.updateLikeCount(true); // TODO add kafka update event
             isTweetLiked = true;
         }
+        updateTweetCountProducer.sendUpdateLikeTweetCountEvent(authUser.getId(), isTweetLiked);
         return tweetServiceHelper.sendNotification(NotificationType.LIKE, isTweetLiked, tweet.getAuthor().getId(), authUser.getId(), tweetId);
     }
 }

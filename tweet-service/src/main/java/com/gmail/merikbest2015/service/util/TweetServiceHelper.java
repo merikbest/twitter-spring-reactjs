@@ -8,10 +8,10 @@ import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.TagClient;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -50,7 +50,7 @@ public class TweetServiceHelper {
     private final TweetRepository tweetRepository;
     private final TweetValidationHelper tweetValidationHelper;
     private final NotificationClient notificationClient;
-    private final UserClient userClient;
+    private final UpdateTweetCountProducer updateTweetCountProducer;
     private final UserService userService;
     private final TagClient tagClient;
     private final BasicMapper basicMapper;
@@ -71,9 +71,9 @@ public class TweetServiceHelper {
 
         if (tweet.getScheduledDate() == null) {
             if (isMediaTweetCreated || !tweet.getImages().isEmpty()) {
-                userClient.updateMediaTweetCount(true); // TODO add kafka update event
+                updateTweetCountProducer.sendUpdateMediaTweetCountEvent(authUser.getId(), true);
             } else {
-                userClient.updateTweetCount(true); // TODO add kafka update event
+                updateTweetCountProducer.sendUpdateTweetCountEvent(authUser.getId(), true);
             }
         }
         return processTweetResponse(tweet);

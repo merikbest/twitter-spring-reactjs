@@ -9,7 +9,6 @@ import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.NotificationClient;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.LikeTweet;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.LikeTweetRepository;

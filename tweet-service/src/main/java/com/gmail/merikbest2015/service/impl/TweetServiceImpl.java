@@ -5,7 +5,6 @@ import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.ImageClient;
 import com.gmail.merikbest2015.feign.TagClient;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.model.User;
@@ -40,7 +39,6 @@ public class TweetServiceImpl implements TweetService {
     private final TweetValidationHelper tweetValidationHelper;
     private final TweetImageRepository tweetImageRepository;
     private final RetweetRepository retweetRepository;
-    private final UserClient userClient;
     private final UserService userService;
     private final TagClient tagClient;
     private final ImageClient imageClient;
@@ -64,14 +62,14 @@ public class TweetServiceImpl implements TweetService {
     @Override
     @Transactional(readOnly = true)
     public Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable) {
-        tweetValidationHelper.validateUserProfile(userId);
+        User user = tweetValidationHelper.validateUserProfile(userId);
         List<TweetUserProjection> tweets = tweetRepository.getTweetsByUserId(userId);
         List<RetweetProjection> retweets = retweetRepository.getRetweetsByUserId(userId);
         List<TweetUserProjection> userTweets = tweetServiceHelper.combineTweetsArrays(tweets, retweets);
-        Long pinnedTweetId = userClient.getUserPinnedTweetId(userId); // TODO get User Pinned Tweet
+        Tweet userPinnedTweet = user.getPinnedTweet();
 
-        if (pinnedTweetId != null) {
-            TweetUserProjection pinnedTweet = tweetRepository.getTweetById(pinnedTweetId, TweetUserProjection.class).get();
+        if (userPinnedTweet != null) {
+            TweetUserProjection pinnedTweet = tweetRepository.getTweetById(userPinnedTweet.getId(), TweetUserProjection.class).get();
             boolean isTweetExist = userTweets.removeIf(tweet -> tweet.getId().equals(pinnedTweet.getId()));
 
             if (isTweetExist) {
@@ -167,7 +165,7 @@ public class TweetServiceImpl implements TweetService {
         Tweet tweet = tweetRepository.getTweetByUserId(authUser.getId(), tweetId)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         if (authUser.getPinnedTweet() != null && authUser.getPinnedTweet().equals(tweet)) {
-            authUser.setPinnedTweet(null); // TODO add kafka update event
+            authUser.setPinnedTweet(null);
         }
         tagClient.deleteTagsByTweetId(tweetId);
         tweet.setDeleted(true);

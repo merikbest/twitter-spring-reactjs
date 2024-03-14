@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.model.Retweet;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
@@ -30,6 +31,7 @@ public class RetweetServiceImpl implements RetweetService {
     private final RetweetRepository retweetRepository;
     private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
+    private final UpdateTweetCountProducer updateTweetCountProducer;
     private final UserService userService;
 
     @Override
@@ -59,13 +61,12 @@ public class RetweetServiceImpl implements RetweetService {
 
         if (retweet != null) {
             retweetRepository.delete(retweet);
-//            userClient.updateTweetCount(false); // TODO add kafka update event
             isRetweeted = false;
         } else {
             retweetRepository.save(new Retweet(authUser, tweet));
-//            userClient.updateTweetCount(true); // TODO add kafka update event
             isRetweeted = true;
         }
+        updateTweetCountProducer.sendUpdateTweetCountEvent(authUser.getId(), isRetweeted);
         return tweetServiceHelper.sendNotification(NotificationType.RETWEET, isRetweeted, tweet.getAuthor().getId(), authUser.getId(), tweetId);
     }
 }

@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Bookmark;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.BookmarkRepository;

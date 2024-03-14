@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.util.AuthUtil;
@@ -32,11 +33,11 @@ public class TweetValidationHelper {
         checkIsValidUserProfile(tweetAuthorId);
     }
 
-    public void validateUserProfile(Long userId) {
-        if (!userService.isUserExists(userId)) {
-            throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
-        }
+    public User validateUserProfile(Long userId) {
+        User user = userService.getUserById(userId)
+                .orElseThrow(() -> new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND));
         checkIsValidUserProfile(userId);
+        return user;
     }
 
     public void checkIsValidUserProfile(Long userId) {

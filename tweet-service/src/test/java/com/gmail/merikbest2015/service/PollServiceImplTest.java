@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.UserClient;
 import com.gmail.merikbest2015.model.Poll;
 import com.gmail.merikbest2015.model.PollChoice;
 import com.gmail.merikbest2015.model.PollChoiceVoted;
