@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateTweetCountEvent {
-    private boolean hasUpdateTweetsCount;
+    private boolean updateTweetsCount;
 }

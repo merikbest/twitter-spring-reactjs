@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
+import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.TweetClient;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static java.lang.Long.parseLong;
 
 @Service
 @RequiredArgsConstructor
@@ -139,5 +141,32 @@ public class UserServiceImpl implements UserService {
         userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
         return userRepository.getUserById(userId, UserDetailProjection.class)
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+    }
+
+    @Override
+    @Transactional
+    public void handleUpdateTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
+        User user = userRepository.getUserById(parseLong(authId), User.class)
+                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+        Long tweetCount = tweetCountEvent.isUpdateTweetsCount() ? user.getTweetCount() + 1 : user.getTweetCount() - 1;
+        user.setTweetCount(tweetCount);
+    }
+
+    @Override
+    @Transactional
+    public void handleUpdateLikeTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
+        User user = userRepository.getUserById(parseLong(authId), User.class)
+                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+        Long likeTweetCount = tweetCountEvent.isUpdateTweetsCount() ? user.getLikeCount() + 1 : user.getLikeCount() - 1;
+        user.setLikeCount(likeTweetCount);
+    }
+
+    @Override
+    @Transactional
+    public void handleUpdateMediaTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
+        User user = userRepository.getUserById(parseLong(authId), User.class)
+                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+        Long mediaTweetCount = tweetCountEvent.isUpdateTweetsCount() ? user.getMediaTweetCount() + 1 : user.getMediaTweetCount() - 1;
+        user.setMediaTweetCount(mediaTweetCount);
     }
 }
