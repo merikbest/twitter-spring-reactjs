@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class TweetAuthorResponse {
     private Long id;
-    private String email;
     private String fullName;
     private String username;
     private String avatar;

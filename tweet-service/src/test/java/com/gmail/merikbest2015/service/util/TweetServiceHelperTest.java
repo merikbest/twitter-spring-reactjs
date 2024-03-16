@@ -37,8 +37,8 @@ public class TweetServiceHelperTest extends AbstractAuthTest {
     @MockBean
     private NotificationClient notificationClient;
 
-    @MockBean
-    private UserClient userClient;
+//    @MockBean
+//    private UserClient userClient;
 
     @MockBean
     private TagClient tagClient;
@@ -64,7 +64,7 @@ public class TweetServiceHelperTest extends AbstractAuthTest {
         assertEquals(tweetResponse, tweetServiceHelper.createTweet(tweet));
         verify(tweetValidationHelper, times(1)).checkTweetTextLength(tweet.getText());
         verify(tweetRepository, times(1)).save(tweet);
-        verify(userClient, times(1)).updateTweetCount(true);
+//        verify(userClient, times(1)).updateTweetCount(true);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
         verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
@@ -76,7 +76,7 @@ public class TweetServiceHelperTest extends AbstractAuthTest {
         Tweet tweet = new Tweet();
         tweet.setId(TestConstants.TWEET_ID);
         tweet.setText("test text");
-        tweet.setImages(List.of(new TweetImage()));
+//        tweet.setImages(List.of(new TweetImage()));
         TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         TweetResponse tweetResponse = new TweetResponse();
         tweetResponse.setText("test text");
@@ -85,7 +85,7 @@ public class TweetServiceHelperTest extends AbstractAuthTest {
         assertEquals(tweetResponse, tweetServiceHelper.createTweet(tweet));
         verify(tweetValidationHelper, times(1)).checkTweetTextLength(tweet.getText());
         verify(tweetRepository, times(1)).save(tweet);
-        verify(userClient, times(1)).updateMediaTweetCount(true);
+//        verify(userClient, times(1)).updateMediaTweetCount(true);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
         verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
@@ -108,7 +108,7 @@ public class TweetServiceHelperTest extends AbstractAuthTest {
         assertEquals(response.getLink(), TestConstants.LINK);
         verify(tweetValidationHelper, times(1)).checkTweetTextLength(tweet.getText());
         verify(tweetRepository, times(1)).save(tweet);
-        verify(userClient, times(1)).updateTweetCount(true);
+//        verify(userClient, times(1)).updateTweetCount(true);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
         verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));

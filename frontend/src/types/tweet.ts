@@ -55,7 +55,6 @@ export interface TweetAdditionalInfoResponse {
 
 export interface UserTweetResponse {
     id: number;
-    email: string;
     fullName: string;
     username: string;
     avatar: string;

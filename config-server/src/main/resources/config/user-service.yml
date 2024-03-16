@@ -22,6 +22,8 @@ spring:
         addresses: ${RABBITMQ_HOST:localhost}:5672
     kafka:
         bootstrap-servers: localhost:9092
+        consumer:
+            group-id: user
 rabbitmq:
     exchanges:
         internal: internal.exchange

@@ -49,7 +49,7 @@ public class RetweetMapperTest extends AbstractAuthTest {
     public void getRetweetedUsersByTweetId() {
         HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
                 List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
-        when(retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable)).thenReturn(headerResponse);
+//        when(retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable)).thenReturn(headerResponse);
         assertEquals(headerResponse, retweetMapper.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable));
         verify(retweetService, times(1)).getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable);
     }

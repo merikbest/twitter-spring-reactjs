@@ -1,7 +1,6 @@
 CREATE TABLE users
 (
     id                    INT8         NOT NULL,
-    email                 VARCHAR(255) UNIQUE NOT NULL,
     full_name             VARCHAR(255) NOT NULL,
     username              VARCHAR(255) NOT NULL,
     about                 VARCHAR(255),

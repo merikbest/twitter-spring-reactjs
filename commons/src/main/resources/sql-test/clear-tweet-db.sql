@@ -1,3 +1,8 @@
+delete from "tweet-test".public.user_blocked;
+delete from "tweet-test".public.user_muted;
+delete from "tweet-test".public.user_subscriptions;
+delete from "tweet-test".public.user_follower_requests;
+
 delete from "tweet-test".public.replies;
 delete from "tweet-test".public.quotes;
 delete from "tweet-test".public.tweets_images;
@@ -14,3 +19,4 @@ delete from "tweet-test".public.retweets;
 
 delete from "tweet-test".public.tweets;
 delete from "tweet-test".public.polls;
+delete from "tweet-test".public.users;

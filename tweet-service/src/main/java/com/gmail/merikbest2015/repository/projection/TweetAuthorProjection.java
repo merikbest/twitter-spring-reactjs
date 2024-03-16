@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 
 public interface TweetAuthorProjection {
     Long getId();
-    String getEmail();
     String getFullName();
     String getUsername();
     String getAvatar();
