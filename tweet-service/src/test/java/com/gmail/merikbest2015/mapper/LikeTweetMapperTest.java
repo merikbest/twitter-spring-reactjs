@@ -28,7 +28,7 @@ public class LikeTweetMapperTest extends AbstractAuthTest {
     public void getLikedUsersByTweetId() {
         HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
                 List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
-        when(likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable)).thenReturn(headerResponse);
+//        when(likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable)).thenReturn(headerResponse);
         assertEquals(headerResponse, likeTweetMapper.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
         verify(likeTweetService, times(1)).getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable);
     }

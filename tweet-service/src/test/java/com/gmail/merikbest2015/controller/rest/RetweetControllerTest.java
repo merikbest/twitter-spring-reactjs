@@ -52,7 +52,7 @@ public class RetweetControllerTest {
                 .andExpect(jsonPath("$[0].linkCover").isEmpty())
                 .andExpect(jsonPath("$[0].linkCoverSize").isEmpty())
                 .andExpect(jsonPath("$[0].quoteTweet.id").value(40L))
-                .andExpect(jsonPath("$[0].user.id").value(1L))
+                .andExpect(jsonPath("$[0].author.id").value(1L))
                 .andExpect(jsonPath("$[0].poll").isEmpty())
                 .andExpect(jsonPath("$[*].images", hasSize(1)))
                 .andExpect(jsonPath("$[0].retweetsCount").value(1L))

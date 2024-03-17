@@ -79,7 +79,7 @@ public class TweetApiControllerTest {
                 .andExpect(jsonPath("$.linkDescription").value(TestConstants.LINK_DESCRIPTION))
                 .andExpect(jsonPath("$.linkCover").value(TestConstants.LINK_COVER))
                 .andExpect(jsonPath("$.linkCoverSize").value("LARGE"))
-                .andExpect(jsonPath("$.user.id").value(2L))
+                .andExpect(jsonPath("$.author.id").value(2L))
                 .andExpect(jsonPath("$.images").isEmpty())
                 .andExpect(jsonPath("$.quoteTweet").isEmpty())
                 .andExpect(jsonPath("$.poll").isEmpty())
@@ -133,9 +133,9 @@ public class TweetApiControllerTest {
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))
                 .andExpect(jsonPath("$.dateTime").value(TestConstants.TWEET_DATETIME))
                 .andExpect(jsonPath("$.isDeleted").value(false))
-                .andExpect(jsonPath("$.user.id").value(TestConstants.USER_ID))
-                .andExpect(jsonPath("$.user.fullName").value(TestConstants.USERNAME))
-                .andExpect(jsonPath("$.user.username").value(TestConstants.USERNAME))
-                .andExpect(jsonPath("$.user.avatar").value(TestConstants.AVATAR_SRC_1));
+                .andExpect(jsonPath("$.author.id").value(TestConstants.USER_ID))
+                .andExpect(jsonPath("$.author.fullName").value(TestConstants.USERNAME))
+                .andExpect(jsonPath("$.author.username").value(TestConstants.USERNAME))
+                .andExpect(jsonPath("$.author.avatar").value(TestConstants.AVATAR_SRC_1));
     }
 }

@@ -18,6 +18,10 @@ spring:
         init:
             mode: always
             data-locations: classpath:sql-test/clear-user-db.sql, classpath:sql-test/populate-user-db.sql
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            group-id: user-test
 eureka:
     client:
         service-url:

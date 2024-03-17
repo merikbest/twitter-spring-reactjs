@@ -18,6 +18,10 @@ spring:
         init:
             mode: always
             data-locations: classpath:sql-test/clear-tweet-db.sql, classpath:sql-test/populate-tweet-db.sql
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            group-id: tweet-test
 google:
     api:
         url: https://www.googleapis.com/youtube/v3/videos?id=%s&key=%s&part=snippet,contentDetails,statistics,status
