@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
+import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.RetweetService;
 import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -49,7 +50,9 @@ public class RetweetMapperTest extends AbstractAuthTest {
     public void getRetweetedUsersByTweetId() {
         HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
                 List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
-//        when(retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable)).thenReturn(headerResponse);
+        Page<UserProjection> userProjections = TweetServiceTestHelper.createUserProjections();
+        when(basicMapper.getHeaderResponse(userProjections, UserResponse.class)).thenReturn(headerResponse);
+        when(retweetService.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable)).thenReturn(userProjections);
         assertEquals(headerResponse, retweetMapper.getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable));
         verify(retweetService, times(1)).getRetweetedUsersByTweetId(TestConstants.TWEET_ID, pageable);
     }

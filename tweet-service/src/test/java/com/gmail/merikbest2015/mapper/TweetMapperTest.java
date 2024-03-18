@@ -12,10 +12,7 @@ import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
-import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
-import com.gmail.merikbest2015.repository.projection.TweetAdditionalInfoProjection;
-import com.gmail.merikbest2015.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
+import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.TweetService;
 import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -162,7 +159,9 @@ public class TweetMapperTest extends AbstractAuthTest {
     public void getTaggedImageUsers() {
         HeaderResponse<UserResponse> headerResponse = new HeaderResponse<>(
                 List.of(new UserResponse(), new UserResponse()), new HttpHeaders());
-//        when(tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable)).thenReturn(headerResponse);
+        Page<UserProjection> userProjections = TweetServiceTestHelper.createUserProjections();
+        when(tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable)).thenReturn(userProjections);
+        when(basicMapper.getHeaderResponse(userProjections, UserResponse.class)).thenReturn(headerResponse);
         assertEquals(headerResponse, tweetMapper.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
         verify(tweetService, times(1)).getTaggedImageUsers(TestConstants.TWEET_ID, pageable);
     }
