@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Bookmark;
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.BookmarkRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.BookmarkProjection;
@@ -35,43 +36,47 @@ public class BookmarkServiceImplTest extends AbstractAuthTest {
     @MockBean
     private TweetRepository tweetRepository;
 
-//    @MockBean
-//    private UserClient userClient;
+    @MockBean
+    private UserService userService;
 
     private static Tweet tweet;
+    private static User authUser;
 
     @Before
     public void setUp() {
         super.setUp();
+        authUser = new User();
+        authUser.setId(TestConstants.USER_ID);
         tweet = new Tweet();
         tweet.setDeleted(false);
-//        tweet.setAuthorId(TestConstants.USER_ID);
+        tweet.setAuthor(authUser);
     }
 
     @Test
     public void getUserBookmarks() {
-//        Page<BookmarkProjection> bookmark = new PageImpl<>(createMockBookmarkProjectionList(), pageable, 20);
-//        when(bookmarkRepository.getUserBookmarks(TestConstants.USER_ID, pageable)).thenReturn(bookmark);
-//        assertEquals(bookmark, bookmarkService.getUserBookmarks(pageable));
-//        verify(bookmarkRepository, times(1)).getUserBookmarks(TestConstants.USER_ID, pageable);
+        Page<BookmarkProjection> bookmark = new PageImpl<>(createMockBookmarkProjectionList(), pageable, 20);
+        when(bookmarkRepository.getUserBookmarks(authUser, pageable)).thenReturn(bookmark);
+        assertEquals(bookmark, bookmarkService.getUserBookmarks(pageable));
+        verify(bookmarkRepository, times(1)).getUserBookmarks(authUser, pageable);
     }
 
     @Test
     public void processUserBookmarks_ShouldDeleteBookmark() {
-//        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-//        when(bookmarkRepository.getUserBookmark(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(new Bookmark());
-//        assertFalse(bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
-//        verify(bookmarkRepository, times(1)).getUserBookmark(TestConstants.USER_ID, TestConstants.TWEET_ID);
-//        verify(bookmarkRepository, times(1)).delete(new Bookmark());
+        Bookmark bookmark = new Bookmark();
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(bookmarkRepository.getUserBookmark(authUser, tweet)).thenReturn(bookmark);
+        assertFalse(bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
+        verify(bookmarkRepository, times(1)).getUserBookmark(authUser, tweet);
+        verify(bookmarkRepository, times(1)).delete(bookmark);
     }
 
     @Test
     public void processUserBookmarks_ShouldCreateBookmark() {
-//        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-//        when(bookmarkRepository.getUserBookmark(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(null);
-//        assertTrue(bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
-//        verify(bookmarkRepository, times(1)).getUserBookmark(TestConstants.USER_ID, TestConstants.TWEET_ID);
-//        verify(bookmarkRepository, times(1)).save(new Bookmark(TestConstants.USER_ID, TestConstants.TWEET_ID));
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(bookmarkRepository.getUserBookmark(authUser, tweet)).thenReturn(null);
+        assertTrue(bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
+        verify(bookmarkRepository, times(1)).getUserBookmark(authUser, tweet);
+        verify(bookmarkRepository, times(1)).save(any());
     }
 
     @Test
@@ -95,25 +100,29 @@ public class BookmarkServiceImplTest extends AbstractAuthTest {
 
     @Test
     public void processUserBookmarks_ShouldUserNotFound() {
-//        tweet.setAuthorId(1L);
-//        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-//        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
-//        ApiRequestException exception = assertThrows(ApiRequestException.class,
-//                () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
-//        assertEquals(USER_NOT_FOUND, exception.getMessage());
-//        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        User authUser = new User();
+        authUser.setId(1L);
+        tweet.setAuthor(authUser);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userService.isUserHavePrivateProfile(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
     @Test
     public void processUserBookmarks_ShouldUserProfileBlocked() {
-//        tweet.setAuthorId(1L);
-//        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-//        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(false);
-//        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
-//        ApiRequestException exception = assertThrows(ApiRequestException.class,
-//                () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
-//        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
-//        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        User authUser = new User();
+        authUser.setId(1L);
+        tweet.setAuthor(authUser);
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(userService.isUserHavePrivateProfile(1L)).thenReturn(false);
+        when(userService.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
     @Test
