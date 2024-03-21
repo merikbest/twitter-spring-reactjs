@@ -3,10 +3,7 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.model.Poll;
-import com.gmail.merikbest2015.model.PollChoice;
-import com.gmail.merikbest2015.model.PollChoiceVoted;
-import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.*;
 import com.gmail.merikbest2015.repository.PollChoiceRepository;
 import com.gmail.merikbest2015.repository.PollChoiceVotedRepository;
 import com.gmail.merikbest2015.repository.PollRepository;
@@ -56,8 +53,8 @@ public class PollServiceImplTest extends AbstractAuthTest {
     @MockBean
     private TweetRepository tweetRepository;
 
-//    @MockBean
-//    private UserClient userClient;
+    @MockBean
+    private UserService userService;
 
     private static Tweet tweet;
 
@@ -65,7 +62,9 @@ public class PollServiceImplTest extends AbstractAuthTest {
     public void setUp() {
         super.setUp();
         tweet = new Tweet();
-//        tweet.setAuthorId(TestConstants.USER_ID);
+        User authUser = new User();
+        authUser.setId(TestConstants.USER_ID);
+        tweet.setAuthor(authUser);
     }
 
     @Test
@@ -124,25 +123,29 @@ public class PollServiceImplTest extends AbstractAuthTest {
 
     @Test
     public void voteInPoll_ShouldUserNotFound() {
-//        tweet.setAuthorId(1L);
-//        when(tweetRepository.getTweetByPollIdAndTweetId(TestConstants.TWEET_ID, TestConstants.POLL_ID)).thenReturn(Optional.of(tweet));
-//        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(true);
-//        ApiRequestException exception = assertThrows(ApiRequestException.class,
-//                () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
-//        assertEquals(USER_NOT_FOUND, exception.getMessage());
-//        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        User authUser = new User();
+        authUser.setId(1L);
+        tweet.setAuthor(authUser);
+        when(tweetRepository.getTweetByPollIdAndTweetId(TestConstants.TWEET_ID, TestConstants.POLL_ID)).thenReturn(Optional.of(tweet));
+        when(userService.isUserHavePrivateProfile(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
+        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
     @Test
     public void voteInPoll_ShouldUserProfileBlocked() {
-//        tweet.setAuthorId(1L);
-//        when(tweetRepository.getTweetByPollIdAndTweetId(TestConstants.TWEET_ID, TestConstants.POLL_ID)).thenReturn(Optional.of(tweet));
-//        when(userClient.isUserHavePrivateProfile(1L)).thenReturn(false);
-//        when(userClient.isMyProfileBlockedByUser(1L)).thenReturn(true);
-//        ApiRequestException exception = assertThrows(ApiRequestException.class,
-//                () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
-//        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
-//        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        User authUser = new User();
+        authUser.setId(1L);
+        tweet.setAuthor(authUser);
+        when(tweetRepository.getTweetByPollIdAndTweetId(TestConstants.TWEET_ID, TestConstants.POLL_ID)).thenReturn(Optional.of(tweet));
+        when(userService.isUserHavePrivateProfile(1L)).thenReturn(false);
+        when(userService.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
+        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
     @Test

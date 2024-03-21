@@ -66,13 +66,6 @@ public class TweetClientServiceImplTest extends AbstractAuthTest {
     }
 
     @Test
-    public void getTweetsByIds_Pageable() {
-//        when(tweetRepository.getTweetsByIds(ids, pageable)).thenReturn(pageableTweetProjections);
-//        assertEquals(pageableTweetProjections, tweetClientService.getTweetsByIds(idsRequest, pageable));
-//        verify(tweetRepository, times(1)).getTweetsByIds(ids, pageable);
-    }
-
-    @Test
     public void getNotificationTweet() {
         NotificationTweetProjection notificationTweetProjection = TweetServiceTestHelper.createNotificationTweetProjection();
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, NotificationTweetProjection.class))
