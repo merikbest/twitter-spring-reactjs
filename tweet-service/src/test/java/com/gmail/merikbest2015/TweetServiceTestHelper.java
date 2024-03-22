@@ -46,7 +46,7 @@ public class TweetServiceTestHelper {
         tweetMap.put("linkCover", TestConstants.LINK_COVER);
         tweetMap.put("gifImage", new GifImage());
         tweetMap.put("linkCoverSize", LinkCoverSize.LARGE);
-        tweetMap.put("authorId", TestConstants.USER_ID);
+        tweetMap.put("author", createTweetAuthorProjection());
         tweetMap.put("listId", TestConstants.LIST_ID);
         tweetMap.put("images", new ArrayList<>());
         tweetMap.put("imageDescription", "");
@@ -68,6 +68,23 @@ public class TweetServiceTestHelper {
             tweetMap.put("retweetsUserIds", List.of(1L, 2L));
         }
         return factory.createProjection(type, tweetMap);
+    }
+
+    public static TweetAuthorProjection createTweetAuthorProjection() {
+        return factory.createProjection(
+                TweetAuthorProjection.class,
+                new HashMap<>() {{
+                    put("id", TestConstants.USER_ID);
+                    put("fullName", TestConstants.FULL_NAME);
+                    put("username", TestConstants.USERNAME);
+                    put("avatar", TestConstants.AVATAR_SRC_1);
+                    put("isPrivateProfile", false);
+                    put("isMutedDirectMessages", false);
+                    put("isUserBlocked", false);
+                    put("isMyProfileBlocked", false);
+                    put("isWaitingForApprove", false);
+                    put("isFollower", false);
+                }});
     }
 
     public static List<TweetUserProjection> createMockTweetUserProjectionList() {
