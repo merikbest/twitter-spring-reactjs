@@ -4,8 +4,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +32,7 @@ public class Lists {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "private", columnDefinition = "boolean default false")
+    @Column(name = "private", nullable = false, columnDefinition = "boolean default false")
     private boolean isPrivate = false;
 
     @Column(name = "alt_wallpaper")
@@ -37,6 +40,14 @@ public class Lists {
 
     @Column(name = "wallpaper")
     private String wallpaper;
+
+    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @OneToOne
     @JoinColumn(name = "list_owner_id", nullable = false)

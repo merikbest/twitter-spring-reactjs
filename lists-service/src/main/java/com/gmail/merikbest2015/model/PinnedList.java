@@ -28,7 +28,7 @@ public class PinnedList {
     @JoinColumn(name = "pinned_user_id", nullable = false)
     private User pinnedUser;
 
-    @Column(name = "pinned_date", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "pinned_date", nullable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime pinnedDate = LocalDateTime.now();
 
     public PinnedList(Lists lists, User pinnedUser) {

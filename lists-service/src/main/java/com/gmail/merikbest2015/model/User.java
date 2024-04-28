@@ -33,10 +33,10 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "private_profile", columnDefinition = "boolean default false")
+    @Column(name = "private_profile", nullable = false, columnDefinition = "boolean default false")
     private boolean privateProfile;
 
-    @Column(name = "active", columnDefinition = "boolean default false")
+    @Column(name = "active", nullable = false, columnDefinition = "boolean default false")
     private boolean active;
 
     @ManyToMany
