@@ -15,7 +15,7 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
     flyway:
-        locations: classpath:db/migration/chat
+        locations: classpath:db/migration
     zipkin:
         base-url: http://${ZIPKIN_HOST:localhost}:9411
     rabbitmq:
