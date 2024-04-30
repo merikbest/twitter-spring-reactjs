@@ -19,8 +19,8 @@ INSERT INTO "chat-test".public.user_blocked (user_id, blocked_user_id) VALUES (5
 INSERT INTO "chat-test".public.user_blocked (user_id, blocked_user_id) VALUES (6, 2);
 
 -- chats
-INSERT INTO "chat-test".public.chats (id, creation_date) VALUES (8, '2021-10-03 20:29:55.000000');
-INSERT INTO "chat-test".public.chats (id, creation_date) VALUES (10, '2021-10-03 20:29:55.000000');
+INSERT INTO "chat-test".public.chats (id, created_at, updated_at) VALUES (8, '2021-10-03 20:29:55.000000', null);
+INSERT INTO "chat-test".public.chats (id, created_at, updated_at) VALUES (10, '2021-10-03 20:29:55.000000', null);
 
 -- chats_participants
 INSERT INTO "chat-test".public.chats_participants (chat_id, user_id, left_chat) VALUES (8, 2, false);
@@ -29,6 +29,6 @@ INSERT INTO "chat-test".public.chats_participants (chat_id, user_id, left_chat) 
 INSERT INTO "chat-test".public.chats_participants (chat_id, user_id, left_chat) VALUES (10, 5, true);
 
 -- chat_messages
-INSERT INTO "chat-test".public.chat_messages (id, date, text, author_id, chat_id, tweet_id, is_unread) VALUES (5, '2021-10-03 20:39:55.000000', 'hello from MrCat', 2, 8, 40, true);
-INSERT INTO "chat-test".public.chat_messages (id, date, text, author_id, chat_id, tweet_id, is_unread) VALUES (6, '2021-10-03 20:40:19.000000', 'hello from John Doe', 1, 8, null, false);
-INSERT INTO "chat-test".public.chat_messages (id, date, text, author_id, chat_id, tweet_id, is_unread) VALUES (7, '2021-10-03 20:41:03.000000', 'test message 2 from John Doe', 1, 8, null, true);
+INSERT INTO "chat-test".public.chat_messages (id, created_at, text, author_id, chat_id, tweet_id, is_unread) VALUES (5, '2021-10-03 20:39:55.000000', 'hello from MrCat', 2, 8, 40, true);
+INSERT INTO "chat-test".public.chat_messages (id, created_at, text, author_id, chat_id, tweet_id, is_unread) VALUES (6, '2021-10-03 20:40:19.000000', 'hello from John Doe', 1, 8, null, false);
+INSERT INTO "chat-test".public.chat_messages (id, created_at, text, author_id, chat_id, tweet_id, is_unread) VALUES (7, '2021-10-03 20:41:03.000000', 'test message 2 from John Doe', 1, 8, null, true);

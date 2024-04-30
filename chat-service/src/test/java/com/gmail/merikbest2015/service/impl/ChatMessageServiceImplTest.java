@@ -70,7 +70,7 @@ public class ChatMessageServiceImplTest {
         chatMessage = new ChatMessage();
         chatMessage.setId(2L);
         chatMessage.setText("test text");
-        chatMessage.setDate(LocalDateTime.now());
+        chatMessage.setCreatedAt(LocalDateTime.now());
         chatMessage.setUnread(false);
         TestUtil.mockAuthenticatedUserId();
     }

@@ -19,7 +19,7 @@ describe("ChatMessage", () => {
         const wrapper = mountWithStore(<ChatMessage message={mockUserMessage} isParticipantMessage />, mockChatStore);
         expect(wrapper.find(Avatar).at(0).prop("src")).toEqual(mockChat.participants[0].user.avatar);
         expect(wrapper.text().includes(mockUserMessage.text)).toBe(true);
-        expect(wrapper.text().includes(formatChatMessageDate(new Date(mockUserMessage.date)))).toBe(true);
+        expect(wrapper.text().includes(formatChatMessageDate(new Date(mockUserMessage.createdAt)))).toBe(true);
     });
 
     it("should render participant message with tweet", () => {
@@ -42,7 +42,7 @@ describe("ChatMessage", () => {
         const wrapper = mountWithStore(<ChatMessage message={mockMyMessage}
                                                     isParticipantMessage={false} />, mockChatStore);
         expect(wrapper.text().includes(mockMyMessage.text)).toBe(true);
-        expect(wrapper.text().includes(formatChatMessageDate(new Date(mockMyMessage.date)))).toBe(true);
+        expect(wrapper.text().includes(formatChatMessageDate(new Date(mockMyMessage.createdAt)))).toBe(true);
         expect(wrapper.find("#checkIcon").exists()).toBeTruthy();
     });
 });

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.model;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,10 +30,11 @@ public class ChatMessage {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "date", columnDefinition = "timestamp default current_timestamp")
-    private LocalDateTime date = LocalDateTime.now();
+    @Column(name = "created_at", nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    @Column(name = "is_unread", columnDefinition = "boolean default true")
+    @Column(name = "is_unread", nullable = false, columnDefinition = "boolean default true")
     private boolean unread = true;
 
     @NonNull

@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ChatProjection {
     Long getId();
-    LocalDateTime getCreationDate();
+    LocalDateTime getCreatedAt();
     List<ChatParticipantProjection> getParticipants();
 
     interface ChatParticipantProjection {

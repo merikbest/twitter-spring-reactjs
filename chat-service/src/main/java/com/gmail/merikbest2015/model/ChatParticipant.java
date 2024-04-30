@@ -32,7 +32,7 @@ public class ChatParticipant {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "left_chat", columnDefinition = "boolean default false")
+    @Column(name = "left_chat", nullable = false, columnDefinition = "boolean default false")
     private boolean leftChat;
 
     public ChatParticipant(Chat chat, User user) {

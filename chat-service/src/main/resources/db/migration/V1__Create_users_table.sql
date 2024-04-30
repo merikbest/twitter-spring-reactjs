@@ -5,9 +5,9 @@ CREATE TABLE users
     username              VARCHAR(255) NOT NULL,
     about                 VARCHAR(255),
     avatar                VARCHAR(255),
-    private_profile       BOOLEAN DEFAULT FALSE,
-    muted_direct_messages BOOLEAN DEFAULT FALSE,
-    active                BOOLEAN DEFAULT FALSE,
+    private_profile       BOOLEAN      NOT NULL DEFAULT FALSE,
+    muted_direct_messages BOOLEAN      NOT NULL DEFAULT FALSE,
+    active                BOOLEAN      NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id)
 );
 

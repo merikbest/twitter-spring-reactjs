@@ -14,8 +14,8 @@ INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (2, 1);
 INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (5, 1);
 
 -- chats
-INSERT INTO chats (id, creation_date) VALUES (8, '2021-10-03 20:29:55.000000');
-INSERT INTO chats (id, creation_date) VALUES (10, '2021-10-03 20:29:55.000000');
+INSERT INTO chats (id, created_at, updated_at) VALUES (8, '2021-10-03 20:29:55.000000', null);
+INSERT INTO chats (id, created_at, updated_at) VALUES (10, '2021-10-03 20:29:55.000000', null);
 
 -- chat_participants
 INSERT INTO chats_participants (chat_id, user_id, left_chat) VALUES (8, 2, false);
@@ -24,6 +24,6 @@ INSERT INTO chats_participants (chat_id, user_id, left_chat) VALUES (10, 2, fals
 INSERT INTO chats_participants (chat_id, user_id, left_chat) VALUES (10, 5, true);
 
 -- chat_messages
-INSERT INTO chat_messages (id, date, text, is_unread, author_id, chat_id, tweet_id)VALUES (5, '2021-10-03 20:39:55.000000', 'hello from MrCat', false, 2, 8, 6);
-INSERT INTO chat_messages (id, date, text, is_unread, author_id, chat_id, tweet_id)VALUES (6, '2021-10-03 20:40:19.000000', 'hello from John Doe', false, 1, 8, null);
-INSERT INTO chat_messages (id, date, text, is_unread, author_id, chat_id, tweet_id)VALUES (7, '2021-10-03 20:41:03.000000', 'test message 2 from John Doe', false, 1, 8, null);
+INSERT INTO chat_messages (id, created_at, text, is_unread, author_id, chat_id, tweet_id) VALUES (5, '2021-10-03 20:39:55.000000', 'hello from MrCat', false, 2, 8, 6);
+INSERT INTO chat_messages (id, created_at, text, is_unread, author_id, chat_id, tweet_id) VALUES (6, '2021-10-03 20:40:19.000000', 'hello from John Doe', false, 1, 8, null);
+INSERT INTO chat_messages (id, created_at, text, is_unread, author_id, chat_id, tweet_id) VALUES (7, '2021-10-03 20:41:03.000000', 'test message 2 from John Doe', false, 1, 8, null);

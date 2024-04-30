@@ -104,7 +104,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
             <div className={classes.myMessageDate}>
                 {!isParticipantMessage && <span>{CheckIcon}</span>}
                 <Typography variant={"subtitle2"} component={"span"}>
-                    {formatChatMessageDate(new Date(message.date))}
+                    {formatChatMessageDate(new Date(message.createdAt))}
                 </Typography>
             </div>
         </>

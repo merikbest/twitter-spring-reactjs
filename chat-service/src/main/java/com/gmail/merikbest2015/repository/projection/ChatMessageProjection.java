@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public interface ChatMessageProjection {
     Long getId();
     String getText();
-    LocalDateTime getDate();
+    LocalDateTime getCreatedAt();
     Long getTweetId();
     UserProjection getAuthor();
     ChatProjection getChat();

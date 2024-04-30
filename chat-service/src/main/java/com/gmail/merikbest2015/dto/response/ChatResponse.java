@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class ChatResponse {
     private Long id;
-    private LocalDateTime creationDate;
+    private LocalDateTime createdAt;
     private List<ParticipantResponse> participants;
 
     @Data

@@ -1,6 +1,6 @@
 export interface ChatResponse {
     id: number;
-    creationDate: string;
+    createdAt: string;
     participants: ParticipantResponse[];
 }
 
@@ -20,7 +20,7 @@ export interface ParticipantResponse {
 export interface ChatMessageResponse {
     id: number;
     text: string;
-    date: string;
+    createdAt: string;
     tweet: {
         id: number;
         text: string;

@@ -24,7 +24,7 @@ public class ChatServiceTestHelper {
     public static Chat createMockChat(boolean isLeftChat) {
         Chat chat = new Chat();
         chat.setId(TestConstants.CHAT_ID);
-        chat.setCreationDate(LocalDateTime.now());
+        chat.setCreatedAt(LocalDateTime.now());
 
         ChatParticipant chatParticipant1 = new ChatParticipant();
         chatParticipant1.setLeftChat(isLeftChat);
@@ -39,7 +39,7 @@ public class ChatServiceTestHelper {
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setId(1L);
         chatMessage.setText("test text");
-        chatMessage.setDate(LocalDateTime.now());
+        chatMessage.setCreatedAt(LocalDateTime.now());
         chatMessage.setUnread(false);
         chatMessage.setTweetId(1L);
         chatMessage.setAuthor(createMockUser(TestConstants.USER_ID));

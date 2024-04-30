@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class ChatMessageResponse {
     private Long id;
     private String text;
-    private LocalDateTime date;
+    private LocalDateTime createdAt;
     private ChatTweetResponse tweet;
     private AuthorResponse author;
     private ChatResponse chat;
