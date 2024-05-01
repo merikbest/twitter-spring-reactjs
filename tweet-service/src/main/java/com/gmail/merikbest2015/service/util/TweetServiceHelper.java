@@ -209,7 +209,7 @@ public class TweetServiceHelper {
         int j = 0;
 
         while (i < tweets.size() && j < retweets.size()) {
-            if (tweets.get(i).getDateTime().isAfter(retweets.get(j).getRetweetDate())) {
+            if (tweets.get(i).getCreatedAt().isAfter(retweets.get(j).getRetweetDate())) {
                 allTweets.add(tweets.get(i));
                 i++;
             } else {

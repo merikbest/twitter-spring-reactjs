@@ -36,7 +36,7 @@ public class CronService {
                 updateTweetCountProducer.sendUpdateTweetCountEvent(tweet.getAuthor().getId(), true);
             }
             tweet.setScheduledDate(null);
-            tweet.setDateTime(LocalDateTime.now());
+            tweet.setCreatedAt(LocalDateTime.now());
             TweetResponse tweetResponse = tweetServiceHelper.processTweetResponse(tweet);
             webSocketClient.send(TOPIC_FEED_SCHEDULE, tweetResponse);
         });

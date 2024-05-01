@@ -82,7 +82,7 @@ public class ChatMapperTest {
         participantResponse2.setLeftChat(false);
         ChatResponse chatResponse = new ChatResponse();
         chatResponse.setId(TestConstants.CHAT_ID);
-        chatResponse.setCreationDate(LocalDateTime.now());
+        chatResponse.setCreatedAt(LocalDateTime.now());
         chatResponse.setParticipants(Arrays.asList(participantResponse1, participantResponse2));
         return chatResponse;
     }

@@ -30,8 +30,8 @@ public class ChatMessage {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "created_at", nullable = false)
     @CreationTimestamp
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "is_unread", nullable = false, columnDefinition = "boolean default true")

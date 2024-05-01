@@ -21,8 +21,8 @@ public class Poll {
     private Long id;
 
     @NonNull
-    @Column(name = "date_time", nullable = false)
-    private LocalDateTime dateTime;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
     @NonNull
     @OneToOne(mappedBy = "poll")

@@ -12,8 +12,8 @@ public interface ChatTweetProjection {
     @Value("#{target.isDeleted ? null : target.text}")
     String getText();
 
-    @Value("#{target.isDeleted ? null : target.dateTime}")
-    LocalDateTime getDateTime();
+    @Value("#{target.isDeleted ? null : target.createdAt}")
+    LocalDateTime getCreatedAt();
 
     ChatTweetUserProjection getAuthor();
 

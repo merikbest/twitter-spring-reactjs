@@ -33,7 +33,7 @@ public class LikeTweet {
     @JoinColumn(name = "tweet_id", nullable = false)
     private Tweet tweet;
 
-    @Column(name = "liked_tweet_date", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "liked_tweet_date", nullable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime likeTweetDate = LocalDateTime.now();
 
     public LikeTweet(User user, Tweet tweet) {

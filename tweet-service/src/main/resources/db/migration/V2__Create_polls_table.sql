@@ -4,8 +4,8 @@ CREATE SEQUENCE poll_choice_voted_seq START 100 INCREMENT 1;
 
 CREATE TABLE polls
 (
-    id        INT8      NOT NULL,
-    date_time TIMESTAMP NOT NULL,
+    id         INT8      NOT NULL,
+    created_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -18,7 +18,7 @@ CREATE TABLE poll_choices
 
 CREATE TABLE polls_poll_choices
 (
-    poll_id         INT8 NOT NULL REFERENCES polls,
+    poll_id         INT8        NOT NULL REFERENCES polls,
     poll_choices_id INT8 UNIQUE NOT NULL REFERENCES poll_choices
 );
 

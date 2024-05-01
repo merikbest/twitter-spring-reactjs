@@ -11,7 +11,7 @@ import java.util.List;
 public interface TweetProjection {
     Long getId();
     String getText();
-    LocalDateTime getDateTime();
+    LocalDateTime getCreatedAt();
     LocalDateTime getScheduledDate();
     String getAddressedUsername();
     Long getAddressedId();
@@ -67,8 +67,8 @@ public interface TweetProjection {
         @Value("#{target.isDeleted ? null : target.text}")
         String getText();
 
-        @Value("#{target.isDeleted ? null : target.dateTime}")
-        LocalDateTime getDateTime();
+        @Value("#{target.isDeleted ? null : target.createdAt}")
+        LocalDateTime getCreatedAt();
 
         @Value("#{target.isDeleted ? null : target.link}")
         String getLink();
@@ -92,7 +92,7 @@ public interface TweetProjection {
 
     interface PollProjection {
         Long getId();
-        LocalDateTime getDateTime();
+        LocalDateTime getCreatedAt();
         List<PollChoiceProjection> getPollChoices();
     }
 

@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -28,8 +30,13 @@ public class Tweet {
     @Column(name = "tweet_text", length = 1337, nullable = false)
     private String text;
 
-    @Column(name = "date_time", nullable = false, columnDefinition = "timestamp default current_timestamp")
-    private LocalDateTime dateTime = LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "scheduled_date")
     private LocalDateTime scheduledDate;
@@ -43,7 +50,7 @@ public class Tweet {
     @Column(name = "addressed_tweet_id")
     private Long addressedTweetId;
 
-    @Column(name = "reply_type", columnDefinition = "varchar(255) default 'EVERYONE'")
+    @Column(name = "reply_type", nullable = false, columnDefinition = "varchar(255) default 'EVERYONE'")
     @Enumerated(EnumType.STRING)
     private ReplyType replyType = ReplyType.EVERYONE;
 

@@ -33,7 +33,7 @@ public class Bookmark {
     @JoinColumn(name = "tweet_id", nullable = false)
     private Tweet tweet;
 
-    @Column(name = "bookmark_date", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "bookmark_date", nullable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime bookmarkDate = LocalDateTime.now();
 
     public Bookmark(User user, Tweet tweet) {

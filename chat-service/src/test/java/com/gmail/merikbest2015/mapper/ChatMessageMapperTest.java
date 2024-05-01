@@ -93,14 +93,14 @@ public class ChatMessageMapperTest {
         ChatMessageResponse messageResponse1 = new ChatMessageResponse();
         messageResponse1.setId(1L);
         messageResponse1.setText(TestConstants.CHAT_MESSAGE_TEXT);
-        messageResponse1.setDate(LocalDateTime.now());
+        messageResponse1.setCreatedAt(LocalDateTime.now());
         messageResponse1.setAuthor(new ChatMessageResponse.AuthorResponse());
         messageResponse1.setTweet(new ChatTweetResponse());
         messageResponse1.setChat(new ChatMessageResponse.ChatResponse());
         ChatMessageResponse messageResponse2 = new ChatMessageResponse();
         messageResponse2.setId(2L);
         messageResponse2.setText(TestConstants.CHAT_MESSAGE_TEXT);
-        messageResponse2.setDate(LocalDateTime.now());
+        messageResponse2.setCreatedAt(LocalDateTime.now());
         messageResponse2.setAuthor(new ChatMessageResponse.AuthorResponse());
         messageResponse2.setTweet(new ChatTweetResponse());
         messageResponse2.setChat(new ChatMessageResponse.ChatResponse());

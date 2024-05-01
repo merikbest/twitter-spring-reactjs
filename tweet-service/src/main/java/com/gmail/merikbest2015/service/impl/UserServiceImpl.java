@@ -26,7 +26,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getAuthUser() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        return userRepository.findById(authUserId)
+        Optional<User> byId = userRepository.findById(authUserId);
+        return byId
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.UNAUTHORIZED));
     }
 

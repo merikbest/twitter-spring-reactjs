@@ -68,7 +68,7 @@ public class PollServiceImpl implements PollService {
         tweetValidationHelper.checkIsValidUserProfile(tweet.getAuthor().getId());
         Poll poll = pollRepository.getPollByPollChoiceId(pollId, pollChoiceId)
                 .orElseThrow(() -> new ApiRequestException(POLL_CHOICE_NOT_FOUND, HttpStatus.NOT_FOUND));
-        if (LocalDateTime.now().isAfter(poll.getDateTime())) {
+        if (LocalDateTime.now().isAfter(poll.getCreatedAt())) {
             throw new ApiRequestException(POLL_IS_NOT_AVAILABLE, HttpStatus.BAD_REQUEST);
         }
         Long authUserId = AuthUtil.getAuthenticatedUserId();

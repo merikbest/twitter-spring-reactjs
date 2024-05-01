@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class ChatTweetResponse {
     private Long id;
     private String text;
-    private LocalDateTime dateTime;
+    private LocalDateTime createdAt;
     private TweetUserResponse author;
     @JsonProperty("isDeleted")
     private boolean isDeleted;

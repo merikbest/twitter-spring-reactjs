@@ -33,7 +33,7 @@ public class Retweet {
     @JoinColumn(name = "tweet_id", nullable = false)
     private Tweet tweet;
 
-    @Column(name = "retweet_date", columnDefinition = "timestamp default current_timestamp")
+    @Column(name = "retweet_date", nullable = false, columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime retweetDate = LocalDateTime.now();
 
     public Retweet(User user, Tweet tweet) {

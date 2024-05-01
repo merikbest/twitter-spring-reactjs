@@ -14,7 +14,7 @@ import java.util.List;
 public class TweetResponse {
     private Long id;
     private String text;
-    private LocalDateTime dateTime;
+    private LocalDateTime createdAt;
     private LocalDateTime scheduledDate;
     private String addressedUsername;
     private Long addressedId;
@@ -59,7 +59,7 @@ public class TweetResponse {
     @Data
     static class PollResponse {
         private Long id;
-        private LocalDateTime dateTime;
+        private LocalDateTime createdAt;
         private List<PollChoiceResponse> pollChoices;
     }
 

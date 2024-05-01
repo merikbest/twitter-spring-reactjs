@@ -28,7 +28,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             AND tweet.addressedUsername IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     Page<TweetProjection> getTweetsByAuthorIds(@Param("userIds") List<Long> userIds, Pageable pageable);
 
@@ -61,7 +61,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             AND tweet.addressedUsername IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     Page<TweetProjection> getTweetsByAuthors(@Param("userId") Long userId, Pageable pageable);
 
@@ -71,7 +71,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             AND tweet.addressedUsername IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     List<TweetUserProjection> getTweetsByUserId(@Param("userId") Long userId);
 
@@ -82,7 +82,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             AND (tweet.author.id = :userId AND image.id IS NOT NULL)
             OR tweet.scheduledDate IS NULL AND tweet.deleted = false
             AND (tweet.author.id = :userId AND tweet.text LIKE CONCAT('%','youtu','%'))
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     Page<TweetProjection> getUserMediaTweets(@Param("userId") Long userId, Pageable pageable);
 
@@ -92,7 +92,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             AND tweet.addressedUsername IS NOT NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     List<TweetUserProjection> getRepliesByUserId(@Param("userId") Long userId);
 
@@ -100,7 +100,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             SELECT tweet FROM Tweet tweet
             WHERE tweet.addressedTweetId = :tweetId
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     List<TweetProjection> getRepliesByTweetId(@Param("tweetId") Long tweetId);
 
@@ -141,7 +141,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             AND tweet.scheduledDate IS NULL
             AND tweet.images.size <> 0
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     Page<TweetProjection> getMediaTweets(@Param("userId") Long userId, Pageable pageable);
 
@@ -174,7 +174,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             )
             AND tweet.addressedUsername IS NULL
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     Page<TweetProjection> getFollowersTweets(@Param("userId") Long userId, Pageable pageable);
 
@@ -211,7 +211,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
                 OR (user.privateProfile = true AND (following.id = :userId OR user.id = :userId))
                 AND user.active = true)
             )
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     Page<TweetProjection> searchTweets(@Param("text") String text, @Param("userId") Long userId, Pageable pageable);
 
@@ -236,7 +236,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             SELECT tweet FROM Tweet tweet
             WHERE tweet.id IN :tweetIds
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     List<TweetProjection> getTweetListsByIds(@Param("tweetIds") List<Long> tweetIds);
 
@@ -247,7 +247,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             AND tweet.author.id = :userId
             AND image.id IS NOT NULL
             AND tweet.deleted = false
-            ORDER BY tweet.dateTime DESC
+            ORDER BY tweet.createdAt DESC
             """)
     List<ProfileTweetImageProjection> getUserTweetImages(@Param("userId") Long userId, Pageable pageable);
 
