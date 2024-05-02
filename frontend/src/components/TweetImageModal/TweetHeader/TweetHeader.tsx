@@ -9,10 +9,10 @@ import { PROFILE } from "../../../constants/path-constants";
 import LinkWrapper from "../../LinkWrapper/LinkWrapper";
 import PopperUserWindow from "../../PopperUserWindow/PopperUserWindow";
 import {
-    selectTweetUserAvatar,
-    selectTweetUserFullName,
-    selectTweetUserId,
-    selectTweetUserUsername
+    selectTweetAuthorAvatar,
+    selectTweetAuthorFullName,
+    selectTweetAuthorId,
+    selectTweetAuthorUsername
 } from "../../../store/ducks/tweet/selectors";
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { HoverItemDetail, useHoverItem } from "../../../hook/useHoverItem";
@@ -23,27 +23,27 @@ const TweetHeader = memo((): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useTweetHeaderStyles();
     const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
-    const tweetUserId = useSelector(selectTweetUserId);
-    const avatar = useSelector(selectTweetUserAvatar);
-    const userFullName = useSelector(selectTweetUserFullName);
-    const userUsername = useSelector(selectTweetUserUsername);
+    const tweetAuthorId = useSelector(selectTweetAuthorId);
+    const avatar = useSelector(selectTweetAuthorAvatar);
+    const tweetAuthorFullName = useSelector(selectTweetAuthorFullName);
+    const tweetAuthorUsername = useSelector(selectTweetAuthorUsername);
 
     return (
         <div className={classes.header}>
-            <Link to={`${PROFILE}/${tweetUserId}`}>
+            <Link to={`${PROFILE}/${tweetAuthorId}`}>
                 <Avatar className={classnames(globalClasses.avatar, classes.avatar)} src={avatar} alt={avatar} />
             </Link>
-            <LinkWrapper path={`${PROFILE}/${tweetUserId}`} visiblePopperWindow={visiblePopperWindow}>
+            <LinkWrapper path={`${PROFILE}/${tweetAuthorId}`} visiblePopperWindow={visiblePopperWindow}>
                 <div
                     id={"userInfo"}
-                    onMouseEnter={() => handleHoverPopper({ userId: tweetUserId } as HoverItemDetail)}
+                    onMouseEnter={() => handleHoverPopper({ userId: tweetAuthorId } as HoverItemDetail)}
                     onMouseLeave={handleLeavePopper}
                 >
                     <Typography variant={"h6"} component={"div"} id={"link"}>
-                        {userFullName}
+                        {tweetAuthorFullName}
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        @{userUsername}
+                        @{tweetAuthorUsername}
                     </Typography>
                     <PopperUserWindow visible={visiblePopperWindow} isTweetImageModal />
                 </div>

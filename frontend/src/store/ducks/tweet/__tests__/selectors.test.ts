@@ -22,7 +22,7 @@ import {
     selectRetweetsCount,
     selectTaggedImageUsers,
     selectTweetData,
-    selectTweetDateTime,
+    selectTweetCreatedAt,
     selectTweetId,
     selectTweetImageDescription,
     selectTweetImages,
@@ -33,12 +33,12 @@ import {
     selectTweetReplyType,
     selectTweetTaggedImageUsers,
     selectTweetText,
-    selectTweetUser,
-    selectTweetUserAvatar,
-    selectTweetUserFullName,
-    selectTweetUserId,
-    selectTweetUserIsFollower,
-    selectTweetUserUsername,
+    selectTweetAuthor,
+    selectTweetAuthorAvatar,
+    selectTweetAuthorFullName,
+    selectTweetAuthorId,
+    selectTweetAuthorIsFollower,
+    selectTweetAuthorUsername,
     selectUsersPagesCount
 } from "../selectors";
 import { createMockRootState } from "../../../../util/test-utils/test-helper";
@@ -149,9 +149,9 @@ describe("tweet selectors:", () => {
         });
     });
 
-    describe("selectTweetDateTime", () => {
+    describe("selectTweetCreatedAt", () => {
         it("should return TweetDateTime", () => {
-            expect(selectTweetDateTime(mockState)).toBe("2021-10-15T21:20:33");
+            expect(selectTweetCreatedAt(mockState)).toBe("2021-10-15T21:20:33");
         });
     });
 
@@ -191,39 +191,39 @@ describe("tweet selectors:", () => {
         });
     });
 
-    describe("selectTweetUser", () => {
-        it("should return TweetUser", () => {
-            expect(selectTweetUser(mockState)).toBe(mockFullTweet.author);
+    describe("selectTweetAuthor", () => {
+        it("should return TweetAuthor", () => {
+            expect(selectTweetAuthor(mockState)).toBe(mockFullTweet.author);
         });
     });
 
-    describe("selectTweetUserId", () => {
-        it("should return TweetUserId number", () => {
-            expect(selectTweetUserId(mockState)).toBe(mockFullTweet.author.id);
+    describe("selectTweetAuthorId", () => {
+        it("should return TweetAuthorId number", () => {
+            expect(selectTweetAuthorId(mockState)).toBe(mockFullTweet.author.id);
         });
     });
 
-    describe("selectTweetUserAvatar", () => {
-        it("should return TweetUserAvatar", () => {
-            expect(selectTweetUserAvatar(mockState)).toBe(mockFullTweet.author.avatar);
+    describe("selectTweetAuthorAvatar", () => {
+        it("should return TweetAuthorAvatar", () => {
+            expect(selectTweetAuthorAvatar(mockState)).toBe(mockFullTweet.author.avatar);
         });
     });
 
-    describe("selectTweetUserUsername", () => {
-        it("should return TweetUserUsername string", () => {
-            expect(selectTweetUserUsername(mockState)).toBe("JavaCat");
+    describe("selectTweetAuthorUsername", () => {
+        it("should return TweetAuthorUsername string", () => {
+            expect(selectTweetAuthorUsername(mockState)).toBe("JavaCat");
         });
     });
 
-    describe("selectTweetUserFullName", () => {
-        it("should return TweetUserFullName string", () => {
-            expect(selectTweetUserFullName(mockState)).toBe("JavaCat");
+    describe("selectTweetAuthorFullName", () => {
+        it("should return TweetAuthorFullName string", () => {
+            expect(selectTweetAuthorFullName(mockState)).toBe("JavaCat");
         });
     });
 
-    describe("selectTweetUserIsFollower", () => {
-        it("should return TweetUserIsFollower boolean", () => {
-            expect(selectTweetUserIsFollower(mockState)).toBe(false);
+    describe("selectTweetAuthorIsFollower", () => {
+        it("should return TweetAuthorIsFollower boolean", () => {
+            expect(selectTweetAuthorIsFollower(mockState)).toBe(false);
         });
     });
 

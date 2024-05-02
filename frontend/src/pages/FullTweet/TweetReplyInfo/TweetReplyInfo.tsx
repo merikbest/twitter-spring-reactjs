@@ -5,13 +5,13 @@ import Paper from "@material-ui/core/Paper";
 
 import { ReplyType } from "../../../types/common";
 import { FollowReplyIcon, MentionReplyIcon } from "../../../icons";
-import { selectTweetReplyType, selectTweetUserFullName } from "../../../store/ducks/tweet/selectors";
+import { selectTweetReplyType, selectTweetAuthorFullName } from "../../../store/ducks/tweet/selectors";
 import { useFullTweetStyles } from "../FullTweetStyles";
 
 const TweetReplyInfo = (): ReactElement => {
     const classes = useFullTweetStyles();
     const replyType = useSelector(selectTweetReplyType);
-    const tweetUserFullName = useSelector(selectTweetUserFullName);
+    const tweetAuthorFullName = useSelector(selectTweetAuthorFullName);
 
     return (
         <>
@@ -31,7 +31,7 @@ const TweetReplyInfo = (): ReactElement => {
                                 Who can reply?
                             </Typography>
                             <Typography variant={"body1"} component={"div"}>
-                                People @{tweetUserFullName}
+                                People @{tweetAuthorFullName}
                                 {(replyType === ReplyType.FOLLOW) ? (" follows or ") : (" ")}
                                 mentioned can reply
                             </Typography>

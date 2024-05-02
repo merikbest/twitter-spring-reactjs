@@ -17,7 +17,7 @@ import { useClickAway } from "../../hook/useClickAway";
 
 export interface QuoteTweetProps {
     tweetId?: number;
-    dateTime?: string;
+    createdAt?: string;
     text?: string;
     author?: UserTweetResponse;
     isTweetRetweeted?: boolean;
@@ -27,7 +27,7 @@ export interface QuoteTweetProps {
 const QuoteIconButton: FC<QuoteTweetProps> = memo((
     {
         tweetId,
-        dateTime,
+        createdAt,
         text,
         author,
         isTweetRetweeted,
@@ -86,7 +86,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
                     </div>
                 )}
                 <QuoteTweetModal
-                    quoteTweet={{ id: tweetId, dateTime, text, author } as QuoteTweetResponse}
+                    quoteTweet={{ id: tweetId, createdAt, text, author } as QuoteTweetResponse}
                     onClose={onCloseModalWindow}
                     visible={visibleModalWindow}
                 />

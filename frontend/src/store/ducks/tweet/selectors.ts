@@ -25,7 +25,7 @@ export const selectRepliesCount = (state: RootState) => selectTweetState(state).
 export const selectRetweetsCount = (state: RootState) => selectTweetState(state).tweet?.retweetsCount;
 export const selectQuotesCount = (state: RootState) => selectTweetState(state).tweet?.quotesCount;
 export const selectLikedTweetsCount = (state: RootState) => selectTweetState(state).tweet?.likedTweetsCount;
-export const selectTweetDateTime = (state: RootState) => selectTweetState(state).tweet?.dateTime;
+export const selectTweetCreatedAt = (state: RootState) => selectTweetState(state).tweet?.createdAt;
 export const selectTweetImages = (state: RootState) => selectTweetState(state).tweet?.images;
 export const selectTweetImageDescription = (state: RootState) => selectTweetState(state).tweet?.imageDescription;
 export const selectTweetTaggedImageUsers = (state: RootState) => selectTweetState(state).tweet?.taggedImageUsers;
@@ -35,14 +35,14 @@ export const selectTweetList = (state: RootState) => selectTweetState(state).twe
 export const selectTweetGifImage = (state: RootState) => selectTweetState(state).tweet?.gifImage;
 
 // user
-export const selectTweetUser = (state: RootState) => selectTweetState(state).tweet?.author;
-export const selectTweetUserId = (state: RootState) => selectTweetState(state).tweet?.author.id;
-export const selectTweetUserAvatar = (state: RootState) => (
+export const selectTweetAuthor = (state: RootState) => selectTweetState(state).tweet?.author;
+export const selectTweetAuthorId = (state: RootState) => selectTweetState(state).tweet?.author.id;
+export const selectTweetAuthorAvatar = (state: RootState) => (
     selectTweetState(state).tweet?.author.avatar ?? DEFAULT_PROFILE_IMG
 );
-export const selectTweetUserUsername = (state: RootState) => selectTweetState(state).tweet?.author.username;
-export const selectTweetUserFullName = (state: RootState) => selectTweetState(state).tweet?.author.fullName;
-export const selectTweetUserIsFollower = (state: RootState) => selectTweetState(state).tweet?.author.isFollower;
+export const selectTweetAuthorUsername = (state: RootState) => selectTweetState(state).tweet?.author.username;
+export const selectTweetAuthorFullName = (state: RootState) => selectTweetState(state).tweet?.author.fullName;
+export const selectTweetAuthorIsFollower = (state: RootState) => selectTweetState(state).tweet?.author.isFollower;
 
 export const selectTweetLink = (state: RootState) => selectTweetState(state).tweet?.link;
 export const selectLinkCover = (state: RootState) => selectTweetState(state).tweet?.linkCover;

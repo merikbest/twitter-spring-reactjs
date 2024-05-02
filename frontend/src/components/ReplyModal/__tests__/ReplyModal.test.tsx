@@ -31,11 +31,11 @@ describe("ReplyModal", () => {
     const createReplyModalWrapper = (visible = true, image?: Image) => {
         return mountWithStore(
             <ReplyModal
-                user={mockMyFullTweet.author}
+                author={mockMyFullTweet.author}
                 tweetId={1}
                 text={mockMyFullTweet.text}
                 image={image}
-                dateTime={mockMyFullTweet.dateTime}
+                createdAt={mockMyFullTweet.createdAt}
                 visible={visible}
                 onClose={jest.fn()}
             />, mockRootState);

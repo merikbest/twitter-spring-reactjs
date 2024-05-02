@@ -26,7 +26,7 @@ export const mockTweets = [
     {
         "id": 1,
         "text": "My #FirstTweet :slightly_smiling_face:",
-        "dateTime": "2021-10-15T21:20:15",
+        "createdAt": "2021-10-15T21:20:15",
         "scheduledDate": null,
         "addressedUsername": null,
         "addressedId": null,
@@ -37,7 +37,7 @@ export const mockTweets = [
         "linkDescription": null,
         "linkCover": null,
         "linkCoverSize": null,
-        "user": {
+        "author": {
             "id": 1,
             "email": "user2015@gmail.com",
             "fullName": "Random",
@@ -67,7 +67,7 @@ export const mockTweets = [
     {
         "id": 15,
         "text": "Hello :wave:",
-        "dateTime": "2021-10-15T22:11:59",
+        "createdAt": "2021-10-15T22:11:59",
         "scheduledDate": null,
         "addressedUsername": null,
         "addressedId": null,
@@ -78,7 +78,7 @@ export const mockTweets = [
         "linkDescription": null,
         "linkCover": null,
         "linkCoverSize": null,
-        "user": {
+        "author": {
             "id": 1,
             "email": "user2015@gmail.com",
             "fullName": "Random",
@@ -97,13 +97,13 @@ export const mockTweets = [
         "quoteTweet": {
             "id": 13,
             "text": "#JavaScript",
-            "dateTime": "2021-10-15T21:57:21",
+            "createdAt": "2021-10-15T21:57:21",
             "link": null,
             "linkTitle": null,
             "linkDescription": null,
             "linkCover": null,
             "linkCoverSize": null,
-            "user": {
+            "author": {
                 "id": 4,
                 "email": "user2019@gmail.com",
                 "fullName": "JavaCat",
@@ -472,7 +472,7 @@ export const mockMediaTweets = [
     {
         "id": 12,
         "text": "#myCat  :smiley_cat:",
-        "dateTime": "2021-10-15T21:23:41",
+        "createdAt": "2021-10-15T21:23:41",
         "scheduledDate": null,
         "addressedUsername": null,
         "addressedId": null,
@@ -483,7 +483,7 @@ export const mockMediaTweets = [
         "linkDescription": null,
         "linkCover": null,
         "linkCoverSize": null,
-        "user": {
+        "author": {
             "id": 5,
             "email": "user2018@gmail.com",
             "fullName": "КотБегемот",
@@ -513,7 +513,7 @@ export const mockMediaTweets = [
     {
         "id": 10,
         "text": "#myCat  :kissing_cat:",
-        "dateTime": "2021-10-15T21:21:48",
+        "createdAt": "2021-10-15T21:21:48",
         "scheduledDate": null,
         "addressedUsername": null,
         "addressedId": null,
@@ -524,7 +524,7 @@ export const mockMediaTweets = [
         "linkDescription": null,
         "linkCover": null,
         "linkCoverSize": null,
-        "user": {
+        "author": {
             "id": 4,
             "email": "user2019@gmail.com",
             "fullName": "JavaCat",
@@ -557,7 +557,7 @@ export const mockVideoTweets = [
     {
         "id": 4,
         "text": "https://www.youtube.com/watch?v=hTWKbfoikeg&ab_channel=NirvanaVEVO",
-        "dateTime": "2021-10-15T21:20:22",
+        "createdAt": "2021-10-15T21:20:22",
         "scheduledDate": null,
         "addressedUsername": null,
         "addressedId": null,
@@ -568,7 +568,7 @@ export const mockVideoTweets = [
         "linkDescription": null,
         "linkCover": "https://i.ytimg.com/vi/hTWKbfoikeg/mqdefault.jpg",
         "linkCoverSize": null,
-        "user": {
+        "author": {
             "id": 1,
             "email": "user2015@gmail.com",
             "fullName": "Random",
@@ -759,7 +759,7 @@ export const mockSimpleList = [
 export const mockFullTweet = {
     "id": 9,
     "text": "#FirstTweet",
-    "dateTime": "2021-10-15T21:20:33",
+    "createdAt": "2021-10-15T21:20:33",
     "scheduledDate": null,
     "addressedUsername": null,
     "addressedId": null,
@@ -770,7 +770,7 @@ export const mockFullTweet = {
     "linkDescription": null,
     "linkCover": "https://i.ytimg.com/vi/ewZZNeYDiLo/mqdefault.jpg",
     "linkCoverSize": null,
-    "user": {
+    "author": {
         "id": 4,
         "email": "user2019@gmail.com",
         "fullName": "JavaCat",
@@ -792,14 +792,14 @@ export const mockFullTweet = {
     "taggedImageUsers": [],
     "quoteTweet": {
         "id": 13,
-        "dateTime": "2021-10-15T21:57:21",
+        "createdAt": "2021-10-15T21:57:21",
         "link": null,
         "linkCover": null,
         "linkCoverSize": null,
         "linkDescription": null,
         "linkTitle": null,
         "text": "#JavaScript",
-        "user": {
+        "author": {
             "id": 4,
             "email": "user2019@gmail.com",
             "fullName": "JavaCat",
@@ -829,7 +829,7 @@ export const mockFullTweet = {
     },
     "poll": {
         "id": 100,
-        "dateTime": "2022-04-11T16:53:49.696909",
+        "createdAt": "2022-04-11T16:53:49.696909",
         "pollChoices": [
             { "id": 100, "choice": "test choice 1", "votedUser": [{ "id": 2 }] },
             { "id": 101, "choice": "test choice 2", "votedUser": [] },
@@ -852,7 +852,7 @@ export const mockUserTweetAdditionalInfo = {
     "text": "Feels Good Man  :sunglasses:",
     "replyType": "MENTION",
     "addressedTweetId": null,
-    "user": {
+    "author": {
         "id": 1,
         "fullName": "Random",
         "username": "Random",
@@ -867,7 +867,7 @@ export const mockMyTweetAdditionalInfo = {
     "text": "Another #FirstTweet",
     "replyType": "EVERYONE",
     "addressedTweetId": null,
-    "user": {
+    "author": {
         "id": 2,
         "fullName": "MrCat",
         "username": "Cat",
@@ -881,7 +881,7 @@ export const mockMyTweetAdditionalInfo = {
 export const mockMyFullTweet = {
     "id": 102,
     "text": "hello23",
-    "dateTime": "2022-03-22T21:49:28",
+    "createdAt": "2022-03-22T21:49:28",
     "scheduledDate": null,
     "addressedUsername": null,
     "addressedId": null,
@@ -892,7 +892,7 @@ export const mockMyFullTweet = {
     "linkDescription": "test",
     "linkCover": null,
     "linkCoverSize": null,
-    "user": {
+    "author": {
         "id": 2,
         "email": "user2016@gmail.com",
         "fullName": "MrCat",
@@ -920,13 +920,13 @@ export const mockMyFullTweet = {
 export const mockQuoteTweet = {
     "id": 13,
     "text": "#JavaScript",
-    "dateTime": "2021-10-15T21:57:21",
+    "createdAt": "2021-10-15T21:57:21",
     "link": null,
     "linkCover": null,
     "linkCoverSize": null,
     "linkDescription": null,
     "linkTitle": null,
-    "user": {
+    "author": {
         "id": 4,
         "email": "user2019@gmail.com",
         "fullName": "JavaCat",
@@ -944,7 +944,7 @@ export const mockQuoteTweet = {
 export const mockChats = [
     {
         "id": 1,
-        "creationDate": "2021-10-16T16:40:07",
+        "createdAt": "2021-10-16T16:40:07",
         "participants": [
             {
                 "id": 1,
@@ -980,7 +980,7 @@ export const mockMessages = [
     {
         "id": 1,
         "text": "Hello Cat",
-        "date": "2021-10-16T16:40:07",
+        "createdAt": "2021-10-16T16:40:07",
         "author": { "id": 1 },
         "tweet": null,
         "chat": { "id": 1 }
@@ -988,7 +988,7 @@ export const mockMessages = [
     {
         "id": 2,
         "text": "How are you?",
-        "date": "2021-10-16T16:40:41",
+        "createdAt": "2021-10-16T16:40:41",
         "author": { "id": 1 },
         "tweet": null,
         "chat": { "id": 1 }
@@ -996,7 +996,7 @@ export const mockMessages = [
     {
         "id": 3,
         "text": "I'm fine, thanks, and you? ",
-        "date": "2021-10-16T16:41:59",
+        "createdAt": "2021-10-16T16:41:59",
         "author": { "id": 2 },
         "tweet": null,
         "chat": { "id": 1 }
@@ -1004,13 +1004,13 @@ export const mockMessages = [
     {
         "id": 4,
         "text": "Good)",
-        "date": "2021-10-16T16:42:50",
+        "createdAt": "2021-10-16T16:42:50",
         "author": { "id": 1 },
         "tweet": {
             "id": 14,
             "text": "Feels Good Man  :sunglasses:",
-            "dateTime": "2021-10-15T22:10:14",
-            "user": {
+            "createdAt": "2021-10-15T22:10:14",
+            "author": {
                 "id": 1,
                 "fullName": "Random",
                 "username": "Random",
@@ -1022,7 +1022,7 @@ export const mockMessages = [
     {
         "id": 100,
         "text": "helo",
-        "date": "2022-03-10T20:47:10",
+        "createdAt": "2022-03-10T20:47:10",
         "author": { "id": 2 },
         "tweet": null,
         "chat": { "id": 1 }

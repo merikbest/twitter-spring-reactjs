@@ -25,7 +25,7 @@ describe("ChatMessage", () => {
     it("should render participant message with tweet", () => {
         const wrapper = mountWithStore(<ChatMessage message={mockUserMessageWithTweet}
                                                     isParticipantMessage />, mockChatStore);
-        expect(wrapper.text().includes(formatDate(new Date(mockUserMessageWithTweet.tweet.dateTime)))).toBe(true);
+        expect(wrapper.text().includes(formatDate(new Date(mockUserMessageWithTweet.tweet.createdAt)))).toBe(true);
     });
 
     it("should render participant message with deleted tweet", () => {

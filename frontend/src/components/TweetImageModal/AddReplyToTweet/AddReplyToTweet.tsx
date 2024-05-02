@@ -5,26 +5,26 @@ import { useSelector } from "react-redux";
 
 import { PROFILE } from "../../../constants/path-constants";
 import AddTweetForm from "../../AddTweetForm/AddTweetForm";
-import { selectTweetId, selectTweetUserId, selectTweetUserUsername } from "../../../store/ducks/tweet/selectors";
+import { selectTweetId, selectTweetAuthorId, selectTweetAuthorUsername } from "../../../store/ducks/tweet/selectors";
 import { useAddReplyToTweetStyles } from "./AddReplyToTweetStyles";
 
 const AddReplyToTweet = (): ReactElement => {
     const classes = useAddReplyToTweetStyles();
     const tweetId = useSelector(selectTweetId);
-    const tweetUserId = useSelector(selectTweetUserId);
-    const username = useSelector(selectTweetUserUsername);
+    const tweetAuthorId = useSelector(selectTweetAuthorId);
+    const tweetAuthorUsername = useSelector(selectTweetAuthorUsername);
 
     return (
         <>
             <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                 {"Replying to "}
-                <Link to={`${PROFILE}/${tweetUserId}`}>
-                    @{username}
+                <Link to={`${PROFILE}/${tweetAuthorId}`}>
+                    @{tweetAuthorUsername}
                 </Link>
             </Typography>
             <AddTweetForm
                 tweetId={tweetId}
-                addressedUsername={username}
+                addressedUsername={tweetAuthorUsername}
                 maxRows={15}
                 title={"Tweet your reply"}
                 buttonName={"Reply"}

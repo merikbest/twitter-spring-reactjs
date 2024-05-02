@@ -16,11 +16,11 @@ describe("TweetHeader", () => {
                 fullName={mockFullTweet.author.fullName}
                 username={mockFullTweet.author.username}
                 isPrivateProfile={true}
-                dateTime={mockFullTweet.dateTime}
+                dateTime={mockFullTweet.createdAt}
             />, createMockRootState(LoadingStatus.SUCCESS));
         expect(wrapper.text().includes(mockFullTweet.author.fullName)).toBe(true);
         expect(wrapper.text().includes(mockFullTweet.author.username)).toBe(true);
-        expect(wrapper.text().includes(formatDate(new Date(mockFullTweet.dateTime)))).toBe(true);
+        expect(wrapper.text().includes(formatDate(new Date(mockFullTweet.createdAt)))).toBe(true);
         wrapper.find("span").at(0).simulate("mouseenter");
         jest.runAllTimers();
         wrapper.update();

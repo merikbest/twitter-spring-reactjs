@@ -17,22 +17,22 @@ import { PROFILE } from "../../constants/path-constants";
 import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
 
 interface ReplyModalProps {
-    user: UserTweetResponse;
+    author: UserTweetResponse;
     tweetId: number;
     text: string;
     image?: Image;
-    dateTime: string;
+    createdAt: string;
     visible?: boolean;
     onClose: () => void;
 }
 
 const ReplyModal: FC<ReplyModalProps> = (
     {
-        user,
+        author,
         tweetId,
         text,
         image,
-        dateTime,
+        createdAt,
         visible,
         onClose
     }
@@ -52,21 +52,21 @@ const ReplyModal: FC<ReplyModalProps> = (
                     <div className={classes.verticalLine} />
                     <Avatar
                         className={classnames(globalClasses.avatar, classes.avatar)}
-                        alt={`avatar ${user.id}`}
-                        src={user.avatar ?? DEFAULT_PROFILE_IMG}
+                        alt={`avatar ${author.id}`}
+                        src={author.avatar ?? DEFAULT_PROFILE_IMG}
                     />
                     <div>
                         <div className={classes.header}>
                             <div>
                                 <Typography variant={"h6"} component={"span"}>
-                                    {user.fullName}
+                                    {author.fullName}
                                 </Typography>&nbsp;
                                 <Typography variant={"subtitle1"} component={"span"}>
-                                    @{user.username}
+                                    @{author.username}
                                 </Typography>&nbsp;
                                 <Typography variant={"subtitle1"} component={"span"}>·</Typography>&nbsp;
                                 <Typography variant={"subtitle1"} component={"span"}>
-                                    {formatDate(new Date(dateTime))}
+                                    {formatDate(new Date(createdAt))}
                                 </Typography>
                             </div>
                         </div>
@@ -81,8 +81,8 @@ const ReplyModal: FC<ReplyModalProps> = (
                         <object>
                             <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
                                 {"Replying to "}
-                                <MuiLink variant="subtitle1" to={`${PROFILE}/${user.id}`} component={Link}>
-                                    @{user.username}
+                                <MuiLink variant="subtitle1" to={`${PROFILE}/${author.id}`} component={Link}>
+                                    @{author.username}
                                 </MuiLink>
                             </Typography>
                         </object>
@@ -92,8 +92,8 @@ const ReplyModal: FC<ReplyModalProps> = (
                     <AddTweetForm
                         minRows={3}
                         tweetId={tweetId}
-                        addressedUsername={user.username}
-                        addressedId={user.id}
+                        addressedUsername={author.username}
+                        addressedId={author.id}
                         title={"Tweet your reply"}
                         buttonName={"Reply"}
                         onCloseModal={onClose}

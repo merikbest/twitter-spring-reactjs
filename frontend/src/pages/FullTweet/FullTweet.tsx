@@ -15,7 +15,7 @@ import {
     selectReplies,
     selectTweetId,
     selectTweetText,
-    selectTweetUserFullName
+    selectTweetAuthorFullName
 } from "../../store/ducks/tweet/selectors";
 import {
     fetchReplies,
@@ -64,7 +64,7 @@ const FullTweet = (): ReactElement | null => {
     const isTweetLoading = useSelector(selectIsTweetLoading);
     const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
     const isError = useSelector(selectIsTweetError);
-    const tweetUserFullName = useSelector(selectTweetUserFullName);
+    const tweetAuthorFullName = useSelector(selectTweetAuthorFullName);
     const replies = useSelector(selectReplies);
     const isRepliesLoading = useSelector(selectIsRepliesLoading);
 
@@ -94,7 +94,7 @@ const FullTweet = (): ReactElement | null => {
     useEffect(() => {
         if (isTweetLoadedSuccess) {
             dispatch(fetchReplies(parseInt(params.id)));
-            document.title = `${tweetUserFullName} on Twitter: "${tweetText}"`;
+            document.title = `${tweetAuthorFullName} on Twitter: "${tweetText}"`;
         }
         return () => {
             dispatch(resetRepliesState());

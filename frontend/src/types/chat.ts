@@ -24,7 +24,7 @@ export interface ChatMessageResponse {
     tweet: {
         id: number;
         text: string;
-        dateTime: string;
+        createdAt: string;
         isDeleted: boolean;
         author: {
             id: number;

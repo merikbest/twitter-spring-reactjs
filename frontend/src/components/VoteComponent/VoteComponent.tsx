@@ -22,7 +22,7 @@ const VoteComponent: FC<VoteComponentProps> = memo(({ tweetId, poll }): ReactEle
     const userVoteSum = poll?.pollChoices.reduce((a, b) => a + b.votedUser.length, 0);
     const isUserVoted = poll?.pollChoices.map((pollChoice) =>
         pollChoice.votedUser.findIndex((user) => user.id === myProfileId)).filter(value => value !== -1);
-    const isPollEnded = isAfter(Date.now(), new Date(poll?.dateTime!));
+    const isPollEnded = isAfter(Date.now(), new Date(poll?.createdAt!));
 
     const onClickVote = (pollChoiceId: number): void => {
         dispatch(vote({ tweetId, pollId: poll?.id!, pollChoiceId }));

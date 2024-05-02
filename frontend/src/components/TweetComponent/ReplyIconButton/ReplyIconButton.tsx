@@ -12,8 +12,8 @@ interface TweetReplyIconButtonProps {
     tweetId?: number;
     text?: string;
     image?: Image;
-    dateTime?: string;
-    tweetUser?: UserTweetResponse;
+    createdAt?: string;
+    tweetAuthor?: UserTweetResponse;
     repliesCount?: number;
     isUserCanReply: boolean;
 }
@@ -23,8 +23,8 @@ const ReplyIconButton: FC<TweetReplyIconButtonProps> = memo((
         tweetId,
         text,
         image,
-        dateTime,
-        tweetUser,
+        createdAt,
+        tweetAuthor,
         repliesCount,
         isUserCanReply
     }
@@ -46,11 +46,11 @@ const ReplyIconButton: FC<TweetReplyIconButtonProps> = memo((
                 </span>
             )}
             <ReplyModal
-                user={tweetUser!}
+                author={tweetAuthor!}
                 tweetId={tweetId!}
                 text={text!}
                 image={image}
-                dateTime={dateTime!}
+                createdAt={createdAt!}
                 visible={visibleModalWindow}
                 onClose={onCloseModalWindow}
             />

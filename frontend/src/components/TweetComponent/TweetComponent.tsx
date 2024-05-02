@@ -50,7 +50,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                             fullName={tweet?.author.fullName}
                             username={tweet?.author.username}
                             isPrivateProfile={tweet?.author.isPrivateProfile}
-                            dateTime={tweet!.dateTime}
+                            dateTime={tweet!.createdAt}
                         />
                         <TweetComponentActions tweetId={tweet!.id} />
                     </div>
@@ -96,14 +96,14 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                             tweetId={tweet?.id}
                             text={tweet?.text}
                             image={tweet?.images?.[0]}
-                            dateTime={tweet?.dateTime}
-                            tweetUser={tweet?.author}
+                            createdAt={tweet?.createdAt}
+                            tweetAuthor={tweet?.author}
                             repliesCount={tweet?.repliesCount}
                             isUserCanReply={isUserCanReply}
                         />
                         <QuoteIconButton
                             tweetId={tweet?.id}
-                            dateTime={tweet?.dateTime}
+                            createdAt={tweet?.createdAt}
                             text={tweet?.text}
                             author={tweet?.author}
                             isTweetRetweeted={tweet?.isTweetRetweeted}

@@ -10,9 +10,9 @@ import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import {
     selectTweetId,
     selectTweetReplyType,
-    selectTweetUserId,
-    selectTweetUserIsFollower,
-    selectTweetUserUsername
+    selectTweetAuthorId,
+    selectTweetAuthorIsFollower,
+    selectTweetAuthorUsername
 } from "../../../store/ducks/tweet/selectors";
 import { useFullTweetStyles } from "../FullTweetStyles";
 
@@ -20,27 +20,27 @@ const AddReplyToTweet = memo((): ReactElement => {
     const classes = useFullTweetStyles();
     const tweetId = useSelector(selectTweetId);
     const myProfileId = useSelector(selectUserDataId);
-    const tweetUserId = useSelector(selectTweetUserId);
+    const tweetAuthorId = useSelector(selectTweetAuthorId);
     const replyType = useSelector(selectTweetReplyType);
-    const tweetUserIsFollower = useSelector(selectTweetUserIsFollower);
-    const tweetUserUsername = useSelector(selectTweetUserUsername);
+    const tweetAuthorIsFollower = useSelector(selectTweetAuthorIsFollower);
+    const tweetAuthorUsername = useSelector(selectTweetAuthorUsername);
 
     return (
         <>
             {((replyType !== ReplyType.FOLLOW) && (replyType !== ReplyType.MENTION) ||
-                (myProfileId === tweetUserId) || (tweetUserIsFollower && replyType === ReplyType.FOLLOW)
+                (myProfileId === tweetAuthorId) || (tweetAuthorIsFollower && replyType === ReplyType.FOLLOW)
             ) ? (
                 <>
                     <Typography variant={"subtitle1"} className={classes.replyWrapper}>
                         {"Replying to "}
-                        <Link to={`${PROFILE}/${tweetUserId}`}>
-                            @{tweetUserUsername}
+                        <Link to={`${PROFILE}/${tweetAuthorId}`}>
+                            @{tweetAuthorUsername}
                         </Link>
                     </Typography>
                     <AddTweetForm
                         tweetId={tweetId}
-                        addressedUsername={tweetUserUsername}
-                        addressedId={tweetUserId}
+                        addressedUsername={tweetAuthorUsername}
+                        addressedId={tweetAuthorId}
                         maxRows={15}
                         title={"Tweet your reply"}
                         buttonName={"Reply"}

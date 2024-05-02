@@ -47,7 +47,7 @@ describe("ChatMessages", () => {
             chatMessages: { ...mockStore.chatMessages, items: mockMessages }
         };
         const wrapper = mountWithStore(
-            <ChatMessages participantId={mockParticipant.id} chatId={mockChat.id} />,
+            <ChatMessages participantId={mockParticipant.user.id} chatId={mockChat.id} />,
             mockChatMessagesStore);
 
         expect(wrapper.find(Spinner).exists()).toBe(true);
@@ -55,7 +55,7 @@ describe("ChatMessages", () => {
 
     it("should open/close Popup", (done) => {
         const wrapper = mountWithStore(
-            <ChatMessages participantId={mockParticipant.id} chatId={mockChat.id} />,
+            <ChatMessages participantId={mockParticipant.user.id} chatId={mockChat.id} />,
             mockChatMessagesStore);
         expect(wrapper.find(Popover).prop("open")).toBe(false);
         expect(wrapper.find(Popover).prop("id")).toBe(undefined);
@@ -76,7 +76,7 @@ describe("ChatMessages", () => {
 
     it("should add Emoji and send message", () => {
         const wrapper = mountWithStore(
-            <ChatMessages participantId={mockParticipant.id} chatId={mockChat.id} />,
+            <ChatMessages participantId={mockParticipant.user.id} chatId={mockChat.id} />,
             mockChatMessagesStore);
 
         wrapper.find("#handleOpenPopup").simulate("click");
@@ -92,7 +92,7 @@ describe("ChatMessages", () => {
 
     it("should unmount ChatMessages", () => {
         const wrapper = mountWithStore(
-            <ChatMessages participantId={mockParticipant.id} chatId={mockChat.id} />,
+            <ChatMessages participantId={mockParticipant.user.id} chatId={mockChat.id} />,
             mockChatMessagesStore);
         wrapper.unmount();
         expect(mockDispatchFn).nthCalledWith(5, { type: ChatMessagesActionsType.RESET_CHAT_MESSAGES });

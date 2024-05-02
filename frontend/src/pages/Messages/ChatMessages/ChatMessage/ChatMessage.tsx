@@ -76,7 +76,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
                                                 component={"span"}
                                                 className={classes.tweetUsername}
                                             >
-                                                {formatDate(new Date(message.tweet?.dateTime!))}
+                                                {formatDate(new Date(message.tweet?.createdAt!))}
                                             </Typography>
                                         </div>
                                         <Typography variant={"body1"} component={"span"}>

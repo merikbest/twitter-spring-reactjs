@@ -5,7 +5,7 @@ import { TweetListResponse } from "./lists";
 export interface TweetResponse {
     id: number;
     text: string;
-    dateTime: string;
+    createdAt: string;
     scheduledDate: string;
     addressedUsername: string;
     addressedId: number;
@@ -68,7 +68,7 @@ export interface UserTweetResponse {
 export interface QuoteTweetResponse {
     id: number;
     text: string;
-    dateTime: string;
+    createdAt: string;
     link: string;
     linkTitle: string;
     linkDescription: string;
@@ -80,7 +80,7 @@ export interface QuoteTweetResponse {
 
 export interface PollResponse {
     id: number;
-    dateTime: string;
+    createdAt: string;
     pollChoices: PollChoiceResponse[];
 }
 

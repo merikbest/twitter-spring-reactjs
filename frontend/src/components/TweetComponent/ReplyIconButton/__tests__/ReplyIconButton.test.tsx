@@ -18,8 +18,8 @@ describe("ReplyIconButton", () => {
                 tweetId={mockFullTweet.id}
                 text={mockFullTweet.text}
                 image={mockFullTweet.images[0]}
-                dateTime={mockFullTweet.dateTime}
-                tweetUser={mockFullTweet.author}
+                dateTime={mockFullTweet.createdAt}
+                tweetAuthor={mockFullTweet.author}
                 repliesCount={1}
                 isUserCanReply={false}
             />, mockRootState);
@@ -37,8 +37,8 @@ describe("ReplyIconButton", () => {
                 tweetId={mockFullTweet.id}
                 text={mockFullTweet.text}
                 image={mockFullTweet.images[0]}
-                dateTime={mockFullTweet.dateTime}
-                tweetUser={mockFullTweet.author}
+                dateTime={mockFullTweet.createdAt}
+                tweetAuthor={mockFullTweet.author}
                 repliesCount={0}
                 isUserCanReply
             />, mockRootState);

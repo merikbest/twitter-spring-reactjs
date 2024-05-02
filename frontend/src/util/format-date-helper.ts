@@ -48,9 +48,9 @@ export const formatChatMessageDate = (date: Date): string => {
 };
 
 export const voteFormatDate = (poll: PollResponse): string => {
-    const diffInDays = differenceInDays(new Date(poll?.dateTime!), Date.now());
-    const diffInHours = differenceInHours(new Date(poll?.dateTime!), Date.now());
-    const diffInMinutes = differenceInMinutes(new Date(poll?.dateTime!), Date.now());
+    const diffInDays = differenceInDays(new Date(poll?.createdAt!), Date.now());
+    const diffInHours = differenceInHours(new Date(poll?.createdAt!), Date.now());
+    const diffInMinutes = differenceInMinutes(new Date(poll?.createdAt!), Date.now());
 
     if (diffInDays !== 0) {
         return diffInDays + " days";

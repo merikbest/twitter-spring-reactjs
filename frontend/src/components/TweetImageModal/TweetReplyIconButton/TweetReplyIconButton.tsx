@@ -5,13 +5,13 @@ import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { ReplyIcon } from "../../../icons";
 import ReplyModal from "../../ReplyModal/ReplyModal";
 import {
-    selectTweetDateTime,
+    selectTweetCreatedAt,
     selectTweetId,
     selectTweetImages,
     selectTweetReplyType,
     selectTweetText,
-    selectTweetUser,
-    selectTweetUserId
+    selectTweetAuthor,
+    selectTweetAuthorId
 } from "../../../store/ducks/tweet/selectors";
 import { ReplyType } from "../../../types/common";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
@@ -20,14 +20,14 @@ import { useModalWindow } from "../../../hook/useModalWindow";
 
 const TweetReplyIconButton = memo((): ReactElement => {
     const myProfileId = useSelector(selectUserDataId);
-    const tweetUserId = useSelector(selectTweetUserId);
-    const user = useSelector(selectTweetUser);
+    const tweetAuthorId = useSelector(selectTweetAuthorId);
+    const author = useSelector(selectTweetAuthor);
     const tweetId = useSelector(selectTweetId);
     const text = useSelector(selectTweetText);
     const images = useSelector(selectTweetImages);
-    const dateTime = useSelector(selectTweetDateTime);
+    const createdAt = useSelector(selectTweetCreatedAt);
     const tweetReplyType = useSelector(selectTweetReplyType);
-    const isUserCanReply = (tweetReplyType === ReplyType.MENTION) && (myProfileId !== tweetUserId);
+    const isUserCanReply = (tweetReplyType === ReplyType.MENTION) && (myProfileId !== tweetAuthorId);
     const classes = useTweetReplyIconButtonStyles({ isUserCanReply });
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
@@ -40,11 +40,11 @@ const TweetReplyIconButton = memo((): ReactElement => {
                 disabled={isUserCanReply}
             />
             <ReplyModal
-                user={user!}
+                author={author!}
                 tweetId={tweetId!}
                 text={text!}
                 image={images?.[0]}
-                dateTime={dateTime!}
+                createdAt={createdAt!}
                 visible={visibleModalWindow}
                 onClose={onCloseModalWindow}
             />
