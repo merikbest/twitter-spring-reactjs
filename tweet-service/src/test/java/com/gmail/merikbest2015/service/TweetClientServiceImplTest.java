@@ -2,17 +2,14 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
-import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.impl.TweetClientServiceImpl;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -24,13 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class TweetClientServiceImplTest extends AbstractAuthTest {
+public class TweetClientServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private TweetClientServiceImpl tweetClientService;
-
-    @MockBean
-    private TweetRepository tweetRepository;
 
     private static final IdsRequest idsRequest = new IdsRequest(ids);
     private static final List<TweetProjection> tweetProjections = Arrays.asList(

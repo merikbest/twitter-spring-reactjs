@@ -4,20 +4,14 @@ import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.repository.RetweetRepository;
-import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.impl.TweetServiceImpl;
-import com.gmail.merikbest2015.service.util.TweetServiceHelper;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -32,34 +26,22 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class TweetServiceImplTest extends AbstractAuthTest {
+public class TweetServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private TweetServiceImpl tweetService;
-
-    @MockBean
-    private TweetRepository tweetRepository;
-
-    @MockBean
-    private TweetServiceHelper tweetServiceHelper;
-
-    @MockBean
-    private RetweetRepository retweetRepository;
-
-    @MockBean
-    private UserService userService;
-
-    @MockBean
-    private TagClient tagClient;
 
     private static final List<TweetProjection> tweetProjections = Arrays.asList(
             TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class),
             TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class));
     private static final Page<TweetProjection> pageableTweetProjections = new PageImpl<>(tweetProjections, pageable, 20);
+    private static final TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
 
     @Before
     public void setUp() {
         super.setUp();
+        User authUser = new User();
+        authUser.setId(TestConstants.USER_ID);
     }
 
     @Test
@@ -71,7 +53,6 @@ public class TweetServiceImplTest extends AbstractAuthTest {
 
     @Test
     public void getTweetById() {
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         assertEquals(tweetProjection, tweetService.getTweetById(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, TweetProjection.class);
@@ -99,9 +80,8 @@ public class TweetServiceImplTest extends AbstractAuthTest {
     @Test
     public void getTweetById_ShouldUserNotFound() {
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetById(TestConstants.TWEET_ID));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -111,10 +91,9 @@ public class TweetServiceImplTest extends AbstractAuthTest {
     @Test
     public void getTweetById_ShouldUserProfileBlocked() {
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID,1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetById(TestConstants.TWEET_ID));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -125,27 +104,20 @@ public class TweetServiceImplTest extends AbstractAuthTest {
     public void getUserTweets() {
         List<TweetUserProjection> tweetUserProjections = new ArrayList<>(TweetServiceTestHelper.createMockTweetUserProjectionList());
         List<RetweetProjection> retweetProjections = TweetServiceTestHelper.createMockRetweetProjectionList();
-        Page<TweetUserProjection> pageableTweetUserProjections = new PageImpl<>(tweetUserProjections, pageable, 20);
-        int totalPages = tweetUserProjections.size() + retweetProjections.size();
         Tweet tweet = new Tweet();
         tweet.setId(TestConstants.TWEET_ID);
         User user = new User();
         user.setId(TestConstants.USER_ID);
         user.setPinnedTweet(tweet);
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getTweetsByUserId(TestConstants.USER_ID)).thenReturn(tweetUserProjections);
         when(retweetRepository.getRetweetsByUserId(TestConstants.USER_ID)).thenReturn(retweetProjections);
-        when(tweetServiceHelper.combineTweetsArrays(tweetUserProjections, retweetProjections))
-                .thenReturn(tweetUserProjections);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetUserProjection.class))
                 .thenReturn(Optional.of(tweetUserProjections.get(0)));
-        when(tweetServiceHelper.getPageableTweetProjectionList(pageable, tweetUserProjections, totalPages))
-                .thenReturn(pageableTweetUserProjections);
         tweetService.getUserTweets(TestConstants.USER_ID, pageable);
-        verify(userService, times(1)).getUserById(TestConstants.USER_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetRepository, times(1)).getTweetsByUserId(TestConstants.USER_ID);
         verify(retweetRepository, times(1)).getRetweetsByUserId(TestConstants.USER_ID);
-        verify(tweetServiceHelper, times(1)).combineTweetsArrays(tweetUserProjections, retweetProjections);
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, TweetUserProjection.class);
     }
 
@@ -154,32 +126,25 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         TweetUserProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class);
         List<TweetUserProjection> tweetUserProjections = new ArrayList<>(TweetServiceTestHelper.createMockTweetUserProjectionList());
         List<RetweetProjection> retweetProjections = TweetServiceTestHelper.createMockRetweetProjectionList();
-        Page<TweetUserProjection> pageableTweetUserProjections = new PageImpl<>(tweetUserProjections, pageable, 20);
-        int totalPages = tweetUserProjections.size() + retweetProjections.size();
         Tweet tweet = new Tweet();
         tweet.setId(TestConstants.TWEET_ID);
         User user = new User();
         user.setId(TestConstants.USER_ID);
         user.setPinnedTweet(tweet);
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getTweetsByUserId(TestConstants.USER_ID)).thenReturn(tweetUserProjections);
         when(retweetRepository.getRetweetsByUserId(TestConstants.USER_ID)).thenReturn(retweetProjections);
-        when(tweetServiceHelper.combineTweetsArrays(tweetUserProjections, retweetProjections))
-                .thenReturn(tweetUserProjections);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetUserProjection.class)).thenReturn(Optional.of(tweetProjection));
-        when(tweetServiceHelper.getPageableTweetProjectionList(pageable, tweetUserProjections, totalPages))
-                .thenReturn(pageableTweetUserProjections);
         tweetService.getUserTweets(TestConstants.USER_ID, pageable);
-        verify(userService, times(1)).getUserById(TestConstants.USER_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetRepository, times(1)).getTweetsByUserId(TestConstants.USER_ID);
         verify(retweetRepository, times(1)).getRetweetsByUserId(TestConstants.USER_ID);
-        verify(tweetServiceHelper, times(1)).combineTweetsArrays(tweetUserProjections, retweetProjections);
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, TweetUserProjection.class);
     }
 
     @Test
     public void getUserTweets_ShouldUserIdNotFound() {
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.empty());
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
         assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
@@ -191,8 +156,8 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         User user = new User();
         user.setId(TestConstants.USER_ID);
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -204,9 +169,9 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         User user = new User();
         user.setId(TestConstants.USER_ID);
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -217,16 +182,16 @@ public class TweetServiceImplTest extends AbstractAuthTest {
     public void getUserMediaTweets() {
         User user = new User();
         user.setId(TestConstants.USER_ID);
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getUserMediaTweets(TestConstants.USER_ID, pageable)).thenReturn(pageableTweetProjections);
         assertEquals(pageableTweetProjections, tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
-        verify(userService, times(1)).getUserById(TestConstants.USER_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetRepository, times(1)).getUserMediaTweets(TestConstants.USER_ID, pageable);
     }
 
     @Test
     public void getUserMediaTweets_ShouldUserIdNotFound() {
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.empty());
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
         assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
@@ -238,8 +203,8 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         User user = new User();
         user.setId(TestConstants.USER_ID);
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -251,9 +216,9 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         User user = new User();
         user.setId(TestConstants.USER_ID);
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -265,17 +230,17 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         User user = new User();
         user.setId(TestConstants.USER_ID);
         List<ProfileTweetImageProjection> mockProfileTweetImageProjections = TweetServiceTestHelper.createMockProfileTweetImageProjections();
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getUserTweetImages(TestConstants.USER_ID, PageRequest.of(0, 6)))
                 .thenReturn(mockProfileTweetImageProjections);
         assertEquals(mockProfileTweetImageProjections, tweetService.getUserTweetImages(TestConstants.USER_ID));
-        verify(userService, times(1)).getUserById(TestConstants.USER_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetRepository, times(1)).getUserTweetImages(TestConstants.USER_ID, PageRequest.of(0, 6));
     }
 
     @Test
     public void getUserTweetImages_ShouldUserIdNotFound() {
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.empty());
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
         assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
@@ -287,8 +252,8 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         User user = new User();
         user.setId(TestConstants.USER_ID);
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -300,9 +265,9 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         User user = new User();
         user.setId(TestConstants.USER_ID);
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        when(userService.getUserById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -330,7 +295,7 @@ public class TweetServiceImplTest extends AbstractAuthTest {
     public void getTweetAdditionalInfoById_ShouldTweetDeleted() {
         TweetAdditionalInfoProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(true, TweetAdditionalInfoProjection.class);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetAdditionalInfoProjection.class)).thenReturn(Optional.of(tweetProjection));
-        when(userService.isUserHavePrivateProfile(1L)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetAdditionalInfoById(TestConstants.TWEET_ID));
         assertEquals(TWEET_DELETED, exception.getMessage());
@@ -342,7 +307,7 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         TweetServiceTestHelper.mockAuthenticatedUserId();
         TweetAdditionalInfoProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetAdditionalInfoProjection.class);
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetAdditionalInfoProjection.class)).thenReturn(Optional.of(tweetProjection));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetAdditionalInfoById(TestConstants.TWEET_ID));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -351,11 +316,14 @@ public class TweetServiceImplTest extends AbstractAuthTest {
 
     @Test
     public void getTweetAdditionalInfoById_ShouldUserProfileBlocked() {
+        User user = new User();
+        user.setId(TestConstants.USER_ID);
         TweetServiceTestHelper.mockAuthenticatedUserId();
         TweetAdditionalInfoProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetAdditionalInfoProjection.class);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetAdditionalInfoProjection.class)).thenReturn(Optional.of(tweetProjection));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetAdditionalInfoById(TestConstants.TWEET_ID));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -406,7 +374,7 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         Tweet tweet = new Tweet();
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getRepliesByTweetId(TestConstants.TWEET_ID));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -421,8 +389,9 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         Tweet tweet = new Tweet();
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getRepliesByTweetId(TestConstants.TWEET_ID));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -473,7 +442,7 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         Tweet tweet = new Tweet();
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getQuotesByTweetId(TestConstants.TWEET_ID, pageable));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -488,8 +457,8 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         Tweet tweet = new Tweet();
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getQuotesByTweetId(TestConstants.TWEET_ID, pageable));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -525,10 +494,10 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         tweet.setAuthor(user);
         Page<UserProjection> userProjections = TweetServiceTestHelper.createUserProjections();
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.getTaggedImageUsers(tweet, pageable)).thenReturn(userProjections);
+        when(userRepository.getTaggedImageUsers(tweet, pageable)).thenReturn(userProjections);
         assertEquals(userProjections, tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
-        verify(userService, times(1)).getTaggedImageUsers(tweet, pageable);
+        verify(userRepository, times(1)).getTaggedImageUsers(tweet, pageable);
     }
 
     @Test
@@ -562,7 +531,7 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         Tweet tweet = new Tweet();
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -577,8 +546,8 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         Tweet tweet = new Tweet();
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -588,45 +557,54 @@ public class TweetServiceImplTest extends AbstractAuthTest {
     @Test
     public void createNewTweet() {
         Tweet tweet = new Tweet();
+        tweet.setId(TestConstants.TWEET_ID);
         tweet.setText("test tweet");
         TweetResponse tweetResponse = new TweetResponse();
         tweetResponse.setText("test tweet");
-        when(tweetServiceHelper.createTweet(tweet)).thenReturn(tweetResponse);
+        User user = new User();
+        user.setId(TestConstants.USER_ID);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(tweetRepository.getTweetById(tweet.getId(), TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
+        when(basicMapper.convertToResponse(tweetProjection, TweetResponse.class)).thenReturn(tweetResponse);
         assertEquals(tweetResponse, tweetService.createNewTweet(tweet));
-        verify(tweetServiceHelper, times(1)).createTweet(tweet);
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, TweetProjection.class);
     }
 
     @Test
     public void deleteTweet() {
+        Tweet tweet = new Tweet();
+        tweet.setId(TestConstants.TWEET_ID);
+        tweet.setText("test text");
         User user = new User();
         user.setId(TestConstants.USER_ID);
-        when(userService.getAuthUser()).thenReturn(user);
-        when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.of(new Tweet()));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         assertEquals("Your Tweet was deleted", tweetService.deleteTweet(TestConstants.TWEET_ID));
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetRepository, times(1)).getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID);
-        verify(tagClient, times(1)).deleteTagsByTweetId(TestConstants.TWEET_ID);
     }
 
     @Test
     public void deleteTweet_pinnedTweet() {
         Tweet tweet = new Tweet();
         tweet.setId(TestConstants.TWEET_ID);
+        tweet.setText("test text");
         User user = new User();
         user.setId(TestConstants.USER_ID);
         user.setPinnedTweet(tweet);
-        when(userService.getAuthUser()).thenReturn(user);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         assertEquals("Your Tweet was deleted", tweetService.deleteTweet(TestConstants.TWEET_ID));
         assertNull(user.getPinnedTweet());
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetRepository, times(1)).getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID);
-        verify(tagClient, times(1)).deleteTagsByTweetId(TestConstants.TWEET_ID);
     }
 
     @Test
     public void deleteTweet_ShouldTweetNotFound() {
         User user = new User();
         user.setId(TestConstants.USER_ID);
-        when(userService.getAuthUser()).thenReturn(user);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.deleteTweet(TestConstants.TWEET_ID));
@@ -648,14 +626,17 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         user.setId(TestConstants.USER_ID);
         Tweet tweet = new Tweet();
         tweet.setId(TestConstants.TWEET_ID);
+        tweet.setText(TestConstants.TEST_TWEET_TEXT);
         tweet.setAuthor(user);
         TweetResponse tweetResponse = new TweetResponse();
         tweetResponse.setId(TestConstants.TWEET_ID);
+        tweetResponse.setText(TestConstants.TEST_TWEET_TEXT);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(tweetServiceHelper.createTweet(tweet)).thenReturn(tweetResponse);
+        when(tweetRepository.getTweetById(tweet.getId(), TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
+        when(basicMapper.convertToResponse(tweetProjection, TweetResponse.class)).thenReturn(tweetResponse);
         assertEquals(tweetResponse, tweetService.replyTweet(TestConstants.TWEET_ID, tweet));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
-        verify(tweetServiceHelper, times(1)).createTweet(tweet);
         verify(tweetRepository, times(1)).addReply(TestConstants.TWEET_ID, TestConstants.TWEET_ID);
     }
 
@@ -692,7 +673,7 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         tweet.setId(TestConstants.TWEET_ID);
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.replyTweet(TestConstants.TWEET_ID, tweet));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -708,8 +689,8 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         tweet.setId(TestConstants.TWEET_ID);
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.replyTweet(TestConstants.TWEET_ID, tweet));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -722,14 +703,17 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         user.setId(TestConstants.USER_ID);
         Tweet tweet = new Tweet();
         tweet.setId(TestConstants.TWEET_ID);
+        tweet.setText(TestConstants.TEST_TWEET_TEXT);
         tweet.setAuthor(user);
         TweetResponse tweetResponse = new TweetResponse();
         tweetResponse.setId(TestConstants.TWEET_ID);
+        tweetResponse.setText(TestConstants.TEST_TWEET_TEXT);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(tweetServiceHelper.createTweet(tweet)).thenReturn(tweetResponse);
+        when(tweetRepository.getTweetById(tweet.getId(), TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
+        when(basicMapper.convertToResponse(tweetProjection, TweetResponse.class)).thenReturn(tweetResponse);
         assertEquals(tweetResponse, tweetService.quoteTweet(TestConstants.TWEET_ID, tweet));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
-        verify(tweetServiceHelper, times(1)).createTweet(tweet);
         verify(tweetRepository, times(1)).addQuote(TestConstants.TWEET_ID, TestConstants.TWEET_ID);
     }
 
@@ -766,7 +750,7 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         tweet.setId(TestConstants.TWEET_ID);
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.quoteTweet(TestConstants.TWEET_ID, new Tweet()));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -782,8 +766,8 @@ public class TweetServiceImplTest extends AbstractAuthTest {
         tweet.setId(TestConstants.TWEET_ID);
         tweet.setAuthor(user);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(TestConstants.USER_ID)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
+        when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.quoteTweet(TestConstants.TWEET_ID, new Tweet()));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
@@ -792,7 +776,6 @@ public class TweetServiceImplTest extends AbstractAuthTest {
 
     @Test
     public void changeTweetReplyType() {
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
         User user = new User();
         user.setId(TestConstants.USER_ID);
         Tweet tweet = new Tweet();

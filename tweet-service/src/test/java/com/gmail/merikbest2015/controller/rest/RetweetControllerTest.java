@@ -40,7 +40,7 @@ public class RetweetControllerTest {
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(45L))
                 .andExpect(jsonPath("$[0].text").value("media tweet test"))
-                .andExpect(jsonPath("$[0].dateTime").value("2021-10-03T20:38:51"))
+                .andExpect(jsonPath("$[0].createdAt").value("2021-10-03T20:38:51"))
                 .andExpect(jsonPath("$[0].scheduledDate").isEmpty())
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())

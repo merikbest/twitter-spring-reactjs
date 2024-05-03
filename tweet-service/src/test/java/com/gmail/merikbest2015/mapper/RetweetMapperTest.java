@@ -8,13 +8,16 @@ import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.RetweetService;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 
 import java.util.List;
@@ -22,16 +25,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class RetweetMapperTest extends AbstractAuthTest {
+@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
+public class RetweetMapperTest {
 
-    @Autowired
+    @InjectMocks
     private RetweetMapper retweetMapper;
 
-    @MockBean
+    @Mock
     private BasicMapper basicMapper;
 
-    @MockBean
+    @Mock
     private RetweetService retweetService;
+
+    private static final PageRequest pageable = TweetServiceTestHelper.pageable;
 
     @Test
     public void getUserRetweetsAndReplies() {

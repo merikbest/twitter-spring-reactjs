@@ -14,13 +14,16 @@ import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.TweetService;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 
 import java.util.Arrays;
@@ -29,17 +32,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class TweetMapperTest extends AbstractAuthTest {
+@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
+public class TweetMapperTest {
 
-    @Autowired
+    @InjectMocks
     private TweetMapper tweetMapper;
 
-    @MockBean
+    @Mock
     private BasicMapper basicMapper;
 
-    @MockBean
+    @Mock
     private TweetService tweetService;
 
+    private static final PageRequest pageable = TweetServiceTestHelper.pageable;
     private static final List<TweetProjection> tweetProjections = Arrays.asList(
             TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class),
             TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class));

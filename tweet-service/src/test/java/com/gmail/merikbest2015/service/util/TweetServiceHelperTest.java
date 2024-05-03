@@ -3,19 +3,15 @@ package com.gmail.merikbest2015.service.util;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.request.TweetTextRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.feign.NotificationClient;
-import com.gmail.merikbest2015.feign.TagClient;
-import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
-import com.gmail.merikbest2015.repository.TweetRepository;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
+import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
 import java.util.Set;
@@ -23,43 +19,34 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class TweetServiceHelperTest extends AbstractAuthTest {
+public class TweetServiceHelperTest extends AbstractServiceTest {
 
     @Autowired
     private TweetServiceHelper tweetServiceHelper;
-
-    @MockBean
-    private TweetRepository tweetRepository;
-
-    @MockBean
-    private TweetValidationHelper tweetValidationHelper;
-
-    @MockBean
-    private NotificationClient notificationClient;
-
-    @MockBean
-    private TagClient tagClient;
-
-    @MockBean
-    private BasicMapper basicMapper;
+    private static User user;
+    private static Tweet tweet;
+    private static TweetResponse tweetResponse;
+    private static final TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
 
     @Before
     public void setUp() {
+        user = new User();
+        user.setId(TestConstants.USER_ID);
+        tweet = new Tweet();
+        tweet.setId(TestConstants.TWEET_ID);
+        tweet.setText("test text");
+        tweetResponse = new TweetResponse();
+        tweetResponse.setText("test text");
         super.setUp();
     }
 
     @Test
     public void createTweet() {
-        Tweet tweet = new Tweet();
-        tweet.setId(TestConstants.TWEET_ID);
-        tweet.setText("test text");
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
-        TweetResponse tweetResponse = new TweetResponse();
-        tweetResponse.setText("test text");
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(tweetRepository.getTweetById(tweet.getId(), TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         when(basicMapper.convertToResponse(tweetProjection, TweetResponse.class)).thenReturn(tweetResponse);
         assertEquals(tweetResponse, tweetServiceHelper.createTweet(tweet));
-        verify(tweetValidationHelper, times(1)).checkTweetTextLength(tweet.getText());
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
@@ -69,17 +56,12 @@ public class TweetServiceHelperTest extends AbstractAuthTest {
 
     @Test
     public void createTweetWithImage() {
-        Tweet tweet = new Tweet();
-        tweet.setId(TestConstants.TWEET_ID);
-        tweet.setText("test text");
         tweet.setImages(Set.of(new TweetImage()));
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
-        TweetResponse tweetResponse = new TweetResponse();
-        tweetResponse.setText("test text");
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(tweetRepository.getTweetById(tweet.getId(), TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         when(basicMapper.convertToResponse(tweetProjection, TweetResponse.class)).thenReturn(tweetResponse);
         assertEquals(tweetResponse, tweetServiceHelper.createTweet(tweet));
-        verify(tweetValidationHelper, times(1)).checkTweetTextLength(tweet.getText());
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
@@ -89,19 +71,16 @@ public class TweetServiceHelperTest extends AbstractAuthTest {
 
     @Test
     public void createTweetAndParseMetadataFromUrlLink() {
-        Tweet tweet = new Tweet();
-        tweet.setId(TestConstants.TWEET_ID);
         tweet.setText(TestConstants.TWEET_TEXT);
-        TweetProjection tweetProjection = TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class);
-        TweetResponse tweetResponse = new TweetResponse();
         tweetResponse.setText(TestConstants.TWEET_TEXT);
         tweetResponse.setLink(TestConstants.LINK);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
+        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(tweetRepository.getTweetById(tweet.getId(), TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         when(basicMapper.convertToResponse(tweetProjection, TweetResponse.class)).thenReturn(tweetResponse);
         TweetResponse response = tweetServiceHelper.createTweet(tweet);
         assertEquals(tweetResponse, response);
         assertEquals(response.getLink(), TestConstants.LINK);
-        verify(tweetValidationHelper, times(1)).checkTweetTextLength(tweet.getText());
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);

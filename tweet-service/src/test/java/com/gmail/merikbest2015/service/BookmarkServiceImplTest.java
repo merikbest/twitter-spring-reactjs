@@ -4,16 +4,12 @@ import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Bookmark;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.repository.BookmarkRepository;
-import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.BookmarkProjection;
 import com.gmail.merikbest2015.service.impl.BookmarkServiceImpl;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
@@ -25,19 +21,10 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class BookmarkServiceImplTest extends AbstractAuthTest {
+public class BookmarkServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private BookmarkServiceImpl bookmarkService;
-
-    @MockBean
-    private BookmarkRepository bookmarkRepository;
-
-    @MockBean
-    private TweetRepository tweetRepository;
-
-    @MockBean
-    private UserService userService;
 
     private static Tweet tweet;
     private static User authUser;
@@ -47,7 +34,9 @@ public class BookmarkServiceImplTest extends AbstractAuthTest {
         super.setUp();
         authUser = new User();
         authUser.setId(TestConstants.USER_ID);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
         tweet = new Tweet();
+        tweet.setId(TestConstants.TWEET_ID);
         tweet.setDeleted(false);
         tweet.setAuthor(authUser);
     }
@@ -104,7 +93,7 @@ public class BookmarkServiceImplTest extends AbstractAuthTest {
         authUser.setId(1L);
         tweet.setAuthor(authUser);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(1L)).thenReturn(true);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
         assertEquals(USER_NOT_FOUND, exception.getMessage());
@@ -117,8 +106,8 @@ public class BookmarkServiceImplTest extends AbstractAuthTest {
         authUser.setId(1L);
         tweet.setAuthor(authUser);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        when(userService.isUserHavePrivateProfile(1L)).thenReturn(false);
-        when(userService.isMyProfileBlockedByUser(1L)).thenReturn(true);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(true);
+        when(userRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
         assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());

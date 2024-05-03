@@ -28,13 +28,13 @@ import java.util.*;
 public class TweetServiceTestHelper {
 
     private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-    private static final PageRequest pageable = PageRequest.of(0, 20);
+    public static final PageRequest pageable = PageRequest.of(0, 20);
 
     public static <T> T createTweetProjection(boolean isDeleted, Class<T> type) {
         Map<String, Object> tweetMap = new HashMap<>();
         tweetMap.put("id", TestConstants.TWEET_ID);
         tweetMap.put("text", TestConstants.TWEET_TEXT);
-        tweetMap.put("dateTime", LocalDateTime.now());
+        tweetMap.put("createdAt", LocalDateTime.now());
         tweetMap.put("scheduledDate", LocalDateTime.now());
         tweetMap.put("addressedUsername", TestConstants.USERNAME);
         tweetMap.put("addressedId", TestConstants.USER_ID);
@@ -53,7 +53,6 @@ public class TweetServiceTestHelper {
         tweetMap.put("quoteTweet", new Tweet());
         tweetMap.put("poll", new Poll());
         tweetMap.put("deleted", isDeleted);
-        tweetMap.put("user", new TweetAuthorResponse());
         tweetMap.put("tweetList", new TweetListResponse());
         tweetMap.put("taggedImageUsers", new ArrayList<>());
         tweetMap.put("isTweetLiked", false);
@@ -174,7 +173,7 @@ public class TweetServiceTestHelper {
                 ChatTweetProjection.class,
                 Map.of("id", 1L,
                         "text", "test text",
-                        "dateTime", LocalDateTime.now(),
+                        "createdAt", LocalDateTime.now(),
                         "user", new ChatTweetUserResponse(),
                         "authorId", TestConstants.USER_ID,
                         "deleted", false));

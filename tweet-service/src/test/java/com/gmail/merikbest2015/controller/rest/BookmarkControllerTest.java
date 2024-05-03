@@ -41,7 +41,7 @@ public class BookmarkControllerTest {
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(40L))
                 .andExpect(jsonPath("$[0].text").value("test tweet"))
-                .andExpect(jsonPath("$[0].dateTime").value("2021-10-03T20:29:03"))
+                .andExpect(jsonPath("$[0].createdAt").value("2021-10-03T20:29:03"))
                 .andExpect(jsonPath("$[0].scheduledDate").isEmpty())
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())
