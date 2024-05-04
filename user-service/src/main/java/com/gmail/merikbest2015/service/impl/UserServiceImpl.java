@@ -6,7 +6,7 @@ import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.producer.UpdateUserProducer;
+import com.gmail.merikbest2015.kafka.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;

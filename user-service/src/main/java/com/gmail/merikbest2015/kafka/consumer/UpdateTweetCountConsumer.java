@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.consumer;
+package com.gmail.merikbest2015.kafka.consumer;
 
 import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
 import com.gmail.merikbest2015.service.UserService;

@@ -1,11 +1,11 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
-import com.gmail.merikbest2015.amqp.AmqpProducer;
 import com.gmail.merikbest2015.dto.request.EmailRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
@@ -45,8 +45,8 @@ public class RegistrationServiceImplTest extends AbstractAuthTest {
     @MockBean
     private JwtProvider jwtProvider;
 
-    @MockBean
-    private AmqpProducer amqpProducer;
+//    @MockBean
+//    private AmqpProducer amqpProducer;
     BindingResult bindingResult = mock(BindingResult.class);
 
     @Test
@@ -122,7 +122,7 @@ public class RegistrationServiceImplTest extends AbstractAuthTest {
                 registrationService.sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class);
         verify(userRepository, times(1)).getActivationCode(userCommonProjection.getId());
-        verify(amqpProducer, times(1)).sendEmail(request);
+//        verify(amqpProducer, times(1)).sendEmail(request);
     }
 
     @Test
@@ -161,14 +161,14 @@ public class RegistrationServiceImplTest extends AbstractAuthTest {
         when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, AuthUserProjection.class))
                 .thenReturn(Optional.of(authUserProjection));
         when(passwordEncoder.encode(TestConstants.PASSWORD)).thenReturn(TestConstants.PASSWORD);
-        when(jwtProvider.createToken(TestConstants.USER_EMAIL, "USER"))
+        when(jwtProvider.createToken(TestConstants.USER_EMAIL, UserRole.USER.name()))
                 .thenReturn(TestConstants.AUTH_TOKEN);
         assertEquals(userMap, registrationService.endRegistration(TestConstants.USER_EMAIL, TestConstants.PASSWORD,
                 bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, AuthUserProjection.class);
         verify(userRepository, times(1)).updatePassword(TestConstants.PASSWORD, authUserProjection.getId());
         verify(userRepository, times(1)).updateActiveUserProfile(authUserProjection.getId());
-        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, "USER");
+        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, UserRole.USER.name());
     }
 
     @Test

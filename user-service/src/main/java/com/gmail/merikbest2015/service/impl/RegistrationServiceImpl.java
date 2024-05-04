@@ -1,11 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.amqp.AmqpProducer;
-import com.gmail.merikbest2015.dto.request.EmailRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
+import com.gmail.merikbest2015.event.SendEmailEvent;
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.kafka.producer.SendEmailProducer;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.producer.UpdateUserProducer;
+import com.gmail.merikbest2015.model.UserRole;
+import com.gmail.merikbest2015.kafka.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
 import com.gmail.merikbest2015.security.JwtProvider;
@@ -23,6 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.kafka.producer.SendEmailProducer.toSendRegistrationEmailEvent;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final UpdateUserProducer updateUserProducer;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
-    private final AmqpProducer amqpProducer;
+    private final SendEmailProducer sendEmailProducer;
 
     @Override
     @Transactional
@@ -47,6 +49,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             user.setUsername(request.getUsername());
             user.setFullName(request.getUsername());
             user.setBirthday(request.getBirthday());
+            user.setRole(UserRole.USER);
             userRepository.save(user);
             updateUserProducer.sendUpdateUserEvent(user);
             return "User data checked.";
@@ -70,15 +73,8 @@ public class RegistrationServiceImpl implements RegistrationService {
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updateActivationCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
         String activationCode = userRepository.getActivationCode(user.getId());
-        EmailRequest request = EmailRequest.builder()
-                .to(user.getEmail())
-                .subject("Registration code")
-                .template("registration-template")
-                .attributes(Map.of(
-                        "fullName", user.getFullName(),
-                        "registrationCode", activationCode))
-                .build();
-        amqpProducer.sendEmail(request);
+        SendEmailEvent sendEmailEvent = toSendRegistrationEmailEvent(user.getEmail(), user.getFullName(), activationCode);
+        sendEmailProducer.sendEmail(sendEmailEvent);
         return "Registration code sent successfully";
     }
 
@@ -103,7 +99,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
         userRepository.updateActiveUserProfile(user.getId());
         updateUserProducer.sendUpdateUserEvent(user);
-        String token = jwtProvider.createToken(email, "USER");
+        String token = jwtProvider.createToken(email, UserRole.USER.name());
         return Map.of("user", user, "token", token);
     }
 }

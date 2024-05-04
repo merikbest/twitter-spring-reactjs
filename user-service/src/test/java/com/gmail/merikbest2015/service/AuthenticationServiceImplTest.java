@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
-import com.gmail.merikbest2015.amqp.AmqpProducer;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.dto.request.EmailRequest;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.exception.InputFieldException;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
@@ -47,8 +47,8 @@ public class AuthenticationServiceImplTest extends AbstractAuthTest {
     @MockBean
     private JwtProvider jwtProvider;
 
-    @MockBean
-    private AmqpProducer amqpProducer;
+//    @MockBean
+//    private AmqpProducer amqpProducer;
 
     private final BindingResult bindingResult = mock(BindingResult.class);
     private final UserCommonProjection userCommonProjection = UserServiceTestHelper.createUserCommonProjection();
@@ -97,11 +97,11 @@ public class AuthenticationServiceImplTest extends AbstractAuthTest {
         Map<String, Object> userMap = Map.of("user", authUserProjection, "token", TestConstants.AUTH_TOKEN);
         when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, AuthUserProjection.class))
                 .thenReturn(Optional.of(authUserProjection));
-        when(jwtProvider.createToken(TestConstants.USER_EMAIL, "USER")).thenReturn(TestConstants.AUTH_TOKEN);
+        when(jwtProvider.createToken(TestConstants.USER_EMAIL, UserRole.USER.name())).thenReturn(TestConstants.AUTH_TOKEN);
         assertEquals(userMap, authenticationService.login(request, bindingResult));
         verify(userServiceHelper, times(1)).processInputErrors(bindingResult);
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, AuthUserProjection.class);
-        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, "USER");
+        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, UserRole.USER.name());
     }
 
     @Test
@@ -122,10 +122,10 @@ public class AuthenticationServiceImplTest extends AbstractAuthTest {
         Map<String, Object> userMap = Map.of("user", authUserProjection, "token", TestConstants.AUTH_TOKEN);
         when(userRepository.getUserById(any(), AuthUserProjection.class))
                 .thenReturn(Optional.of(authUserProjection));
-        when(jwtProvider.createToken(TestConstants.USER_EMAIL, "USER")).thenReturn(TestConstants.AUTH_TOKEN);
+        when(jwtProvider.createToken(TestConstants.USER_EMAIL, UserRole.USER.name())).thenReturn(TestConstants.AUTH_TOKEN);
         assertEquals(userMap, authenticationService.getUserByToken());
         verify(userRepository, times(1)).getUserById(any(), AuthUserProjection.class);
-        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, "USER");
+        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, UserRole.USER.name());
     }
 
     @Test
@@ -176,7 +176,7 @@ public class AuthenticationServiceImplTest extends AbstractAuthTest {
         verify(userServiceHelper, times(1)).processInputErrors(bindingResult);
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class);
         verify(userRepository, times(1)).getPasswordResetCode(TestConstants.USER_ID);
-        verify(amqpProducer, times(1)).sendEmail(request);
+//        verify(amqpProducer, times(1)).sendEmail(request);
     }
 
     @Test

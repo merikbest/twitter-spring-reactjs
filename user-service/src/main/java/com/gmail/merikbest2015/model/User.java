@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -64,8 +66,13 @@ public class User {
     @Column(name = "birthday")
     private String birthday;
 
-    @Column(name = "registration_date", columnDefinition = "timestamp default current_timestamp")
-    private LocalDateTime registrationDate = LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "registration_date", nullable = false)
+    private LocalDateTime registrationDate;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "activation_code")
     private String activationCode;
@@ -73,45 +80,46 @@ public class User {
     @Column(name = "password_reset_code")
     private String passwordResetCode;
 
-    @Column(name = "role", columnDefinition = "varchar(255) default 'USER'")
-    private String role = "USER";
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private UserRole role;
 
-    @Column(name = "tweet_count", columnDefinition = "int8 default 0")
+    @Column(name = "tweet_count", nullable = false, columnDefinition = "int8 default 0")
     private Long tweetCount = 0L;
 
-    @Column(name = "media_tweet_count", columnDefinition = "int8 default 0")
+    @Column(name = "media_tweet_count", nullable = false, columnDefinition = "int8 default 0")
     private Long mediaTweetCount = 0L;
 
-    @Column(name = "like_count", columnDefinition = "int8 default 0")
+    @Column(name = "like_count", nullable = false, columnDefinition = "int8 default 0")
     private Long likeCount = 0L;
 
-    @Column(name = "notifications_count", columnDefinition = "int8 default 0")
+    @Column(name = "notifications_count", nullable = false, columnDefinition = "int8 default 0")
     private Long notificationsCount = 0L;
 
-    @Column(name = "mentions_count", columnDefinition = "int8 default 0")
+    @Column(name = "mentions_count", nullable = false, columnDefinition = "int8 default 0")
     private Long mentionsCount = 0L;
 
-    @Column(name = "active", columnDefinition = "boolean default false")
+    @Column(name = "active", nullable = false, columnDefinition = "boolean default false")
     private boolean active = false;
 
-    @Column(name = "profile_customized", columnDefinition = "boolean default false")
+    @Column(name = "profile_customized", nullable = false, columnDefinition = "boolean default false")
     private boolean profileCustomized = false;
 
-    @Column(name = "profile_started", columnDefinition = "boolean default false")
+    @Column(name = "profile_started", nullable = false, columnDefinition = "boolean default false")
     private boolean profileStarted = false;
 
-    @Column(name = "muted_direct_messages", columnDefinition = "boolean default false")
+    @Column(name = "muted_direct_messages", nullable = false, columnDefinition = "boolean default false")
     private boolean mutedDirectMessages = false;
 
-    @Column(name = "private_profile", columnDefinition = "boolean default false")
+    @Column(name = "private_profile", nullable = false, columnDefinition = "boolean default false")
     private boolean privateProfile = false;
 
-    @Column(name = "background_color", columnDefinition = "varchar(255) default 'DEFAULT'")
     @Enumerated(EnumType.STRING)
+    @Column(name = "background_color", nullable = false, columnDefinition = "varchar(255) default 'DEFAULT'")
     private BackgroundColorType backgroundColor= BackgroundColorType.DEFAULT;
 
-    @Column(name = "color_scheme", columnDefinition = "varchar(255) default 'BLUE'")
     @Enumerated(EnumType.STRING)
+    @Column(name = "color_scheme", nullable = false, columnDefinition = "varchar(255) default 'BLUE'")
     private ColorSchemeType colorScheme = ColorSchemeType.BLUE;
 
     @Column(name = "pinned_tweet_id")
@@ -123,7 +131,7 @@ public class User {
     @Column(name = "wallpaper")
     private String wallpaper;
 
-    @Column(name = "unread_messages_count", columnDefinition = "int8 default 0")
+    @Column(name = "unread_messages_count", nullable = false, columnDefinition = "int8 default 0")
     private Long unreadMessagesCount = 0L;
 
     @ManyToMany

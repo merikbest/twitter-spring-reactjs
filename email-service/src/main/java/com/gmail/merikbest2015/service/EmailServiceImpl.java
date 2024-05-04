@@ -1,9 +1,8 @@
-package com.gmail.merikbest2015.amqp;
+package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.request.EmailRequest;
+import com.gmail.merikbest2015.event.SendEmailEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @RequiredArgsConstructor
-public class EmailConsumer {
+public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine thymeleafTemplateEngine;
@@ -23,18 +22,19 @@ public class EmailConsumer {
     @Value("${spring.mail.username}")
     private String username;
 
+    @Override
     @SneakyThrows
-    @RabbitListener(queues = "${rabbitmq.queues.mail}")
-    public void sendMessageHtml(EmailRequest emailRequest) {
+    public void sendEmail(SendEmailEvent emailEvent) {
         Context thymeleafContext = new Context();
-        thymeleafContext.setVariables(emailRequest.getAttributes());
-        String htmlBody = thymeleafTemplateEngine.process(emailRequest.getTemplate(), thymeleafContext);
+        thymeleafContext.setVariables(emailEvent.getAttributes());
+        String htmlBody = thymeleafTemplateEngine.process(emailEvent.getTemplate(), thymeleafContext);
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setFrom(username);
-        helper.setTo(emailRequest.getTo());
-        helper.setSubject(emailRequest.getSubject());
+        helper.setTo(emailEvent.getToEmail());
+        helper.setSubject(emailEvent.getSubject());
         helper.setText(htmlBody, true);
+        System.out.println(emailEvent.getToEmail());
         mailSender.send(message);
     }
 }

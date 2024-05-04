@@ -1,11 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.amqp.AmqpProducer;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
-import com.gmail.merikbest2015.dto.request.EmailRequest;
+import com.gmail.merikbest2015.event.SendEmailEvent;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.exception.InputFieldException;
+import com.gmail.merikbest2015.kafka.producer.SendEmailProducer;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
@@ -29,6 +30,7 @@ import java.util.UUID;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+import static com.gmail.merikbest2015.kafka.producer.SendEmailProducer.toSendPasswordResetEmailEvent;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final UserServiceHelper userServiceHelper;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
-    private final AmqpProducer amqpProducer;
+    private final SendEmailProducer sendEmailProducer;
 
     @Override
     public Long getAuthenticatedUserId() {
@@ -62,7 +64,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userServiceHelper.processInputErrors(bindingResult);
         AuthUserProjection user = userRepository.getUserByEmail(request.getEmail(), AuthUserProjection.class)
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-        String token = jwtProvider.createToken(request.getEmail(), "USER");
+        String token = jwtProvider.createToken(request.getEmail(), UserRole.USER.name());
         return Map.of("user", user, "token", token);
     }
 
@@ -70,7 +72,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public Map<String, Object> getUserByToken() {
         AuthUserProjection user = userRepository.getUserById(getUserId(), AuthUserProjection.class)
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-        String token = jwtProvider.createToken(user.getEmail(), "USER");
+        String token = jwtProvider.createToken(user.getEmail(), UserRole.USER.name());
         return Map.of("user", user, "token", token);
     }
 
@@ -90,15 +92,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(() -> new ApiRequestException(EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updatePasswordResetCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
         String passwordResetCode = userRepository.getPasswordResetCode(user.getId());
-        EmailRequest request = EmailRequest.builder()
-                .to(user.getEmail())
-                .subject("Password reset")
-                .template("password-reset-template")
-                .attributes(Map.of(
-                        "fullName", user.getFullName(),
-                        "passwordResetCode", passwordResetCode))
-                .build();
-        amqpProducer.sendEmail(request);
+        SendEmailEvent sendEmailEvent = toSendPasswordResetEmailEvent(user.getEmail(), user.getFullName(), passwordResetCode);
+        sendEmailProducer.sendEmail(sendEmailEvent);
         return "Reset password code is send to your E-mail";
     }
 

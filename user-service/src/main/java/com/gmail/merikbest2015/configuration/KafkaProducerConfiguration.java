@@ -1,9 +1,6 @@
 package com.gmail.merikbest2015.configuration;
 
-import com.gmail.merikbest2015.event.BlockUserEvent;
-import com.gmail.merikbest2015.event.FollowRequestUserEvent;
-import com.gmail.merikbest2015.event.FollowUserEvent;
-import com.gmail.merikbest2015.event.UpdateUserEvent;
+import com.gmail.merikbest2015.event.*;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +47,11 @@ public class KafkaProducerConfiguration {
 
     @Bean
     public KafkaTemplate<String, FollowRequestUserEvent> kafkaFollowRequestUserTemplate() {
+        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
+    }
+
+    @Bean
+    public KafkaTemplate<String, SendEmailEvent> kafkaSendEmailTemplate() {
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
     }
 }

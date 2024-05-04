@@ -4,7 +4,8 @@ import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.producer.UpdateUserProducer;
+import com.gmail.merikbest2015.kafka.producer.UpdateUserProducer;
+import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.UserSettingsRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -48,7 +49,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         if (!userSettingsRepository.isEmailExist(email)) {
             Long authUserId = authenticationService.getAuthenticatedUserId();
             userSettingsRepository.updateEmail(email, authUserId);
-            String token = jwtProvider.createToken(email, "USER");
+            String token = jwtProvider.createToken(email, UserRole.USER.name());
             AuthUserProjection user = userRepository.getUserById(authUserId, AuthUserProjection.class).get();
             return Map.of("user", user, "token", token);
         }

@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.UserSettingsRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -61,14 +62,14 @@ public class UserSettingsServiceImplTest extends AbstractAuthTest {
         AuthUserProjection authUserProjection = UserServiceTestHelper.createAuthUserProjection();
         when(userSettingsRepository.isEmailExist(TestConstants.USER_EMAIL)).thenReturn(true);
         when(authenticationService.getAuthenticatedUserId()).thenReturn(TestConstants.USER_ID);
-        when(jwtProvider.createToken(TestConstants.USER_EMAIL, "USER")).thenReturn(TestConstants.AUTH_TOKEN);
+        when(jwtProvider.createToken(TestConstants.USER_EMAIL, UserRole.USER.name())).thenReturn(TestConstants.AUTH_TOKEN);
         when(userRepository.getUserById(TestConstants.USER_ID, AuthUserProjection.class)).thenReturn(Optional.of(authUserProjection));
         assertEquals(Map.of("user", authUserProjection, "token", TestConstants.AUTH_TOKEN),
                 userSettingsService.updateEmail(TestConstants.USER_EMAIL));
         verify(userSettingsRepository, times(1)).isEmailExist(TestConstants.USER_EMAIL);
         verify(authenticationService, times(1)).getAuthenticatedUserId();
         verify(userSettingsRepository, times(1)).updateEmail(TestConstants.USER_EMAIL, TestConstants.USER_ID);
-        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, "USER");
+        verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, UserRole.USER.name());
         verify(userRepository, times(1)).getUserById(TestConstants.USER_ID, AuthUserProjection.class);
     }
 

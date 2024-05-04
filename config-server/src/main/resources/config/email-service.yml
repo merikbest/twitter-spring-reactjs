@@ -20,16 +20,12 @@ spring:
                     auth: true
                     starttls:
                         enable: true
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            group-id: email
 mail:
     debug: false
-
-rabbitmq:
-    exchanges:
-        internal: internal.exchange
-    queues:
-        mail: mail.queue
-    routing-keys:
-        internal-mail: internal.mail.routing-key
 
 eureka:
     client:
