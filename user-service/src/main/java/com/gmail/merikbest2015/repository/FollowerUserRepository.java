@@ -31,9 +31,6 @@ public interface FollowerUserRepository extends JpaRepository<User, Long> {
             "WHERE ufr.user_id = :userId", nativeQuery = true)
     Page<FollowerUserProjection> getFollowerRequests(@Param("userId") Long userId, Pageable pageable);
 
-    @Query("SELECT follower.id FROM User user LEFT JOIN user.followers follower WHERE user.id = :userId")
-    List<Long> getUserFollowersIds(@Param("userId") Long userId);
-
     @Query("SELECT CASE WHEN count(follower) > 0 THEN true ELSE false END " +
             "FROM User user " +
             "LEFT JOIN user.followers follower " +

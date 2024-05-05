@@ -137,7 +137,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private void checkMatchPasswords(String password, String password2) {
-        if (password != null && !password.equals(password2)) {
+        if (password == null || !password.equals(password2)) {
             processPasswordException("password", PASSWORDS_NOT_MATCH, HttpStatus.BAD_REQUEST);
         }
     }

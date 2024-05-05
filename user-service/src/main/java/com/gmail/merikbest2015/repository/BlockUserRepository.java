@@ -5,7 +5,6 @@ import com.gmail.merikbest2015.repository.projection.BlockedUserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -31,12 +30,4 @@ public interface BlockUserRepository extends JpaRepository<User, Long> {
             "WHERE user.id = :userId " +
             "AND blockedUser.id = :blockedUserId")
     boolean isUserBlocked(@Param("userId") Long userId, @Param("blockedUserId") Long blockedUserId);
-
-    @Modifying
-    @Query(value = "INSERT INTO user_blocked (user_id, blocked_user_id) VALUES (?1, ?2)", nativeQuery = true)
-    void blockUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
-
-    @Modifying
-    @Query(value = "DELETE FROM user_blocked WHERE user_id = ?1 AND blocked_user_id = ?2", nativeQuery = true)
-    void unblockUser(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 }
