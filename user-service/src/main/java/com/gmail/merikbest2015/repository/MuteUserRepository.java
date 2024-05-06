@@ -13,15 +13,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MuteUserRepository extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT *, users.full_name as fullName, users.private_profile as privateProfile FROM users " +
-            "LEFT JOIN user_muted ON user_muted.muted_user_id = users.id " +
-            "WHERE user_muted.user_id = :userId", nativeQuery = true)
+    @Query(value = """
+            SELECT *, users.full_name as fullName, users.private_profile as privateProfile FROM users
+            LEFT JOIN user_muted ON user_muted.muted_user_id = users.id
+            WHERE user_muted.user_id = :userId
+            """, nativeQuery = true)
     Page<MutedUserProjection> getUserMuteListById(@Param("userId") Long userId, Pageable pageable);
 
-    @Query("SELECT CASE WHEN count(userMuted) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.userMutedList userMuted " +
-            "WHERE user.id = :userId " +
-            "AND userMuted.id = :mutedUserId")
+    @Query("""
+            SELECT CASE WHEN count(userMuted) > 0 THEN true ELSE false END FROM User user
+            LEFT JOIN user.userMutedList userMuted
+            WHERE user.id = :userId
+            AND userMuted.id = :mutedUserId
+            """)
     boolean isUserMuted(@Param("userId") Long userId, @Param("mutedUserId") Long mutedUserId);
 
     @Modifying

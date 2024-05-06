@@ -55,15 +55,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public UserPrincipalProjection getUserPrincipalByEmail(String email) {
-        return userRepository.getUserByEmail(email, UserPrincipalProjection.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+        return getUserByEmail(email, UserPrincipalProjection.class);
     }
 
     @Override
     public Map<String, Object> login(AuthenticationRequest request, BindingResult bindingResult) {
         userServiceHelper.processInputErrors(bindingResult);
-        AuthUserProjection user = userRepository.getUserByEmail(request.getEmail(), AuthUserProjection.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+        AuthUserProjection user = getUserByEmail(request.getEmail(), AuthUserProjection.class);
         String token = jwtProvider.createToken(request.getEmail(), UserRole.USER.name());
         return Map.of("user", user, "token", token);
     }
@@ -79,8 +77,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public String getExistingEmail(String email, BindingResult bindingResult) {
         userServiceHelper.processInputErrors(bindingResult);
-        userRepository.getUserByEmail(email, UserCommonProjection.class)
-                .orElseThrow(() -> new ApiRequestException(EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND));
+        getUserByEmail(email, UserCommonProjection.class);
         return "Reset password code is send to your E-mail";
     }
 
@@ -88,8 +85,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transactional
     public String sendPasswordResetCode(String email, BindingResult bindingResult) {
         userServiceHelper.processInputErrors(bindingResult);
-        UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
-                .orElseThrow(() -> new ApiRequestException(EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND));
+        UserCommonProjection user = getUserByEmail(email, UserCommonProjection.class);
         userRepository.updatePasswordResetCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
         String passwordResetCode = userRepository.getPasswordResetCode(user.getId());
         SendEmailEvent sendEmailEvent = toSendPasswordResetEmailEvent(user.getEmail(), user.getFullName(), passwordResetCode);
@@ -108,8 +104,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String passwordReset(String email, String password, String password2, BindingResult bindingResult) {
         userServiceHelper.processInputErrors(bindingResult);
         checkMatchPasswords(password, password2);
-        UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
-                .orElseThrow(() -> new InputFieldException(HttpStatus.NOT_FOUND, Map.of("email", EMAIL_NOT_FOUND)));
+        UserCommonProjection user = getUserByEmail(email, UserCommonProjection.class);
         userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
         userRepository.updatePasswordResetCode(null, user.getId());
         return "Password successfully changed!";
@@ -128,6 +123,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         checkMatchPasswords(password, password2);
         userRepository.updatePassword(passwordEncoder.encode(password), authUserId);
         return "Your password has been successfully updated.";
+    }
+
+    private <T> T getUserByEmail(String email, Class<T> type) {
+        return userRepository.getUserByEmail(email, type)
+                .orElseThrow(() -> new InputFieldException(HttpStatus.NOT_FOUND, Map.of("email", EMAIL_NOT_FOUND)));
     }
 
     private Long getUserId() {

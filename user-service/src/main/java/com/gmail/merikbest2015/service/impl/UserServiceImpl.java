@@ -38,8 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserProfileProjection getUserById(Long userId) {
-        return userRepository.getUserById(userId, UserProfileProjection.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+        return getUserById(userId, UserProfileProjection.class);
     }
 
     @Override
@@ -107,9 +106,8 @@ public class UserServiceImpl implements UserService {
     public Boolean processSubscribeToNotifications(Long userId) {
         userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        boolean isUserSubscribed = userRepository.isUserSubscribed(userId, authUserId);
 
-        if (isUserSubscribed) {
+        if (userRepository.isUserSubscribed(userId, authUserId)) {
             userRepository.unsubscribe(authUserId, userId);
             return false;
         } else {
@@ -139,34 +137,39 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetailProjection getUserDetails(Long userId) {
         userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
-        return userRepository.getUserById(userId, UserDetailProjection.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+        return getUserById(userId, UserDetailProjection.class);
     }
 
     @Override
     @Transactional
     public void handleUpdateTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
-        User user = userRepository.getUserById(parseLong(authId), User.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-        Long tweetCount = tweetCountEvent.isUpdateTweetsCount() ? user.getTweetCount() + 1 : user.getTweetCount() - 1;
+        User user = getUserById(parseLong(authId), User.class);
+        Long tweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getTweetCount());
         user.setTweetCount(tweetCount);
     }
 
     @Override
     @Transactional
     public void handleUpdateLikeTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
-        User user = userRepository.getUserById(parseLong(authId), User.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-        Long likeTweetCount = tweetCountEvent.isUpdateTweetsCount() ? user.getLikeCount() + 1 : user.getLikeCount() - 1;
+        User user = getUserById(parseLong(authId), User.class);
+        Long likeTweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getLikeCount());
         user.setLikeCount(likeTweetCount);
     }
 
     @Override
     @Transactional
     public void handleUpdateMediaTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
-        User user = userRepository.getUserById(parseLong(authId), User.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-        Long mediaTweetCount = tweetCountEvent.isUpdateTweetsCount() ? user.getMediaTweetCount() + 1 : user.getMediaTweetCount() - 1;
+        User user = getUserById(parseLong(authId), User.class);
+        Long mediaTweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getMediaTweetCount());
         user.setMediaTweetCount(mediaTweetCount);
+    }
+
+    private <T> T getUserById(Long userId, Class<T> type) {
+        return userRepository.getUserById(userId, type)
+                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+    }
+
+    private Long updateCount(boolean isUpdateTweetsCount, Long count) {
+        return isUpdateTweetsCount ? count + 1 : count - 1;
     }
 }

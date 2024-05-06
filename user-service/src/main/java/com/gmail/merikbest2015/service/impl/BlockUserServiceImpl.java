@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.kafka.producer.BlockUserProducer;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
+import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.projection.BlockedUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.BlockUserService;
@@ -20,6 +21,7 @@ public class BlockUserServiceImpl implements BlockUserService {
     private final AuthenticationService authenticationService;
     private final BlockUserRepository blockUserRepository;
     private final UserServiceHelper userServiceHelper;
+    private final FollowerUserRepository followerUserRepository;
     private final BlockUserProducer blockUserProducer;
 
     @Override
@@ -32,19 +34,19 @@ public class BlockUserServiceImpl implements BlockUserService {
     @Transactional
     public Boolean processBlockList(Long userId) {
         User user = userServiceHelper.getUserById(userId);
-        User authUser = authenticationService.getAuthenticatedUser();
+        Long authUserId = authenticationService.getAuthenticatedUserId();
         boolean hasUserBlocked;
 
-        if (blockUserRepository.isUserBlocked(authUser, user)) {
-            authUser.getUserBlockedList().remove(user);
+        if (blockUserRepository.isUserBlocked(authUserId, userId)) {
+            blockUserRepository.unblockUser(authUserId, userId);
             hasUserBlocked = false;
         } else {
-            authUser.getUserBlockedList().add(user);
-            authUser.getFollowers().remove(user);
-            authUser.getFollowing().remove(user);
+            blockUserRepository.blockUser(authUserId, userId);
+            followerUserRepository.unfollow(authUserId, userId);
+            followerUserRepository.unfollow(userId, authUserId);
             hasUserBlocked = true;
         }
-        blockUserProducer.sendBlockUserEvent(user, authUser.getId(), hasUserBlocked);
+        blockUserProducer.sendBlockUserEvent(user, authUserId, hasUserBlocked);
         return hasUserBlocked;
     }
 }

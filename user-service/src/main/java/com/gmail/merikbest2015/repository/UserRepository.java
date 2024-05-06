@@ -57,14 +57,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<UserProjection> findTop5ByActiveTrue();
 
-    @Query("SELECT user FROM User user " +
-            "WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true " +
-            "OR UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true")
+    @Query("""
+            SELECT user FROM User user
+            WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true
+            OR UPPER(user.username) LIKE UPPER(CONCAT('%',:username,'%')) AND user.active = true
+            """)
     <T> Page<T> searchUsersByUsername(@Param("username") String name, Pageable pageable, Class<T> type);
 
-    @Query("SELECT user FROM User user " +
-            "WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:text,'%')) AND user.active = true " +
-            "OR UPPER(user.username) LIKE UPPER(CONCAT('%',:text,'%')) AND user.active = true ")
+    @Query("""
+            SELECT user FROM User user
+            WHERE UPPER(user.fullName) LIKE UPPER(CONCAT('%',:text,'%')) AND user.active = true
+            OR UPPER(user.username) LIKE UPPER(CONCAT('%',:text,'%')) AND user.active = true
+            """)
     List<CommonUserProjection> searchUserByText(@Param("text") String text);
 
     @Modifying
@@ -77,22 +81,28 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user.privateProfile FROM User user WHERE user.id = :userId")
     boolean getUserPrivateProfile(@Param("userId") Long userId);
 
-    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.following following " +
-            "WHERE user.id = :userId AND user.privateProfile = false " +
-            "OR user.id = :userId AND user.privateProfile = true AND following.id = :authUserId")
+    @Query("""
+            SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user
+            LEFT JOIN user.following following
+            WHERE user.id = :userId AND user.privateProfile = false
+            OR user.id = :userId AND user.privateProfile = true AND following.id = :authUserId
+            """)
     boolean isUserHavePrivateProfile(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
-    @Query("SELECT CASE WHEN count(followerRequest) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.followerRequests followerRequest " +
-            "WHERE user.id = :userId " +
-            "AND followerRequest.id = :authUserId")
+    @Query("""
+            SELECT CASE WHEN count(followerRequest) > 0 THEN true ELSE false END FROM User user
+            LEFT JOIN user.followerRequests followerRequest
+            WHERE user.id = :userId
+            AND followerRequest.id = :authUserId
+            """)
     boolean isMyProfileWaitingForApprove(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
-    @Query("SELECT CASE WHEN count(subscriber) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.subscribers subscriber " +
-            "WHERE user.id = :userId " +
-            "AND subscriber.id = :subscriberUserId")
+    @Query("""
+            SELECT CASE WHEN count(subscriber) > 0 THEN true ELSE false END FROM User user
+            LEFT JOIN user.subscribers subscriber
+            WHERE user.id = :userId
+            AND subscriber.id = :subscriberUserId
+            """)
     boolean isMyProfileSubscribed(@Param("userId") Long userId, @Param("subscriberUserId") Long subscriberUserId);
 
     @Modifying
@@ -113,14 +123,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User user SET user.pinnedTweetId = :tweetId WHERE user.id = :userId")
     void updatePinnedTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
 
-    @Query("SELECT user FROM User user " +
-            "LEFT JOIN user.subscribers subscriber " +
-            "WHERE subscriber.id = :userId")
+    @Query("""
+            SELECT user FROM User user
+            LEFT JOIN user.subscribers subscriber
+            WHERE subscriber.id = :userId
+            """)
     List<NotificationUserProjection> getUsersWhichUserSubscribed(@Param("userId") Long userId);
 
-    @Query("SELECT user.id FROM User user " +
-            "LEFT JOIN user.subscribers subscriber " +
-            "WHERE subscriber.id = :userId")
+    @Query("""
+            SELECT user.id FROM User user
+            LEFT JOIN user.subscribers subscriber
+            WHERE subscriber.id = :userId
+            """)
     List<Long> getUserIdsWhichUserSubscribed(@Param("userId") Long userId);
 
     @Modifying
@@ -131,10 +145,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("UPDATE User user SET user.mentionsCount = 0 WHERE user.id = :userId")
     void resetMentionCount(@Param("userId") Long userId);
 
-    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user " +
-            "LEFT JOIN user.subscribers subscriber " +
-            "WHERE user.id = :userId " +
-            "AND subscriber.id = :authUserId")
+    @Query("""
+            SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user
+            LEFT JOIN user.subscribers subscriber
+            WHERE user.id = :userId
+            AND subscriber.id = :authUserId
+            """)
     boolean isUserSubscribed(@Param("userId") Long userId, @Param("authUserId") Long authUserId);
 
     @Modifying

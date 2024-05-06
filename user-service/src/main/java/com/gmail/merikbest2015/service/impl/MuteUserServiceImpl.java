@@ -30,9 +30,8 @@ public class MuteUserServiceImpl implements MuteUserService {
     public Boolean processMutedList(Long userId) {
         userServiceHelper.checkIsUserExist(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        boolean isUserMuted = muteUserRepository.isUserMuted(authUserId, userId);
 
-        if (isUserMuted) {
+        if (muteUserRepository.isUserMuted(authUserId, userId)) {
             muteUserRepository.unmuteUser(authUserId, userId);
             return false;
         } else {

@@ -57,15 +57,13 @@ public class UserServiceHelper {
     }
 
     public void checkIsUserExist(Long userId) {
-        boolean userExist = userRepository.isUserExist(userId);
-
-        if (!userExist) {
+        if (!userRepository.isUserExist(userId)) {
             throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
         }
     }
 
-    public void checkIsUserBlocked(User user, User authUser) {
-        if (blockUserRepository.isUserBlocked(user, authUser)) {
+    public void checkIsUserBlocked(Long userId, Long authUserId) {
+        if (blockUserRepository.isUserBlocked(userId, authUserId)) {
             throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
         }
     }

@@ -57,28 +57,28 @@ public class FollowerUserServiceImpl implements FollowerUserService {
     @Transactional
     public Boolean processFollow(Long userId) {
         User user = userServiceHelper.getUserById(userId);
-        User authUser = authenticationService.getAuthenticatedUser();
-        userServiceHelper.checkIsUserBlocked(user, authUser);
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userServiceHelper.checkIsUserBlocked(user.getId(), authUserId);
 
-        if (followerUserRepository.isFollower(authUser, user)) {
-            authUser.getFollowers().remove(user);
-            user.getSubscribers().remove(authUser);
-            followUserProducer.sendFollowUserEvent(user, authUser.getId(), false);
+        if (followerUserRepository.isFollower(authUserId, user.getId())) {
+            followerUserRepository.unfollow(authUserId, user.getId());
+            userRepository.unsubscribe(authUserId, user.getId());
+            followUserProducer.sendFollowUserEvent(user, authUserId, false);
         } else {
             if (!user.isPrivateProfile()) {
-                authUser.getFollowers().add(user);
+                followerUserRepository.follow(authUserId, user.getId());
                 NotificationRequest request = NotificationRequest.builder()
                         .notificationType(NotificationType.FOLLOW)
-                        .userId(authUser.getId())
-                        .userToFollowId(userId)
-                        .notifiedUserId(userId)
+                        .userId(authUserId)
+                        .userToFollowId(user.getId())
+                        .notifiedUserId(user.getId())
                         .build();
                 notificationClient.sendNotification(request);
-                followUserProducer.sendFollowUserEvent(user, authUser.getId(), true);
+                followUserProducer.sendFollowUserEvent(user, authUserId, true);
                 return true;
             } else {
-                followerUserRepository.addFollowerRequest(authUser.getId(), userId);
-                followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), true);
+                followerUserRepository.addFollowerRequest(authUserId, user.getId());
+                followRequestUserProducer.sendFollowRequestUserEvent(user, authUserId, true);
             }
         }
         return false;
@@ -95,18 +95,18 @@ public class FollowerUserServiceImpl implements FollowerUserService {
     @Transactional
     public UserProfileProjection processFollowRequestToPrivateProfile(Long userId) {
         User user = userServiceHelper.getUserById(userId);
-        userServiceHelper.checkIsUserExistOrMyProfileBlocked(userId);
-        User authUser = authenticationService.getAuthenticatedUser();
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userServiceHelper.checkIsUserBlocked(user.getId(), authUserId);
         boolean hasUserFollowRequest;
 
-        if (followerUserRepository.isFollowerRequest(user.getId(), authUser.getId())) {
-            followerUserRepository.removeFollowerRequest(authUser.getId(), user.getId());
+        if (followerUserRepository.isFollowerRequest(user.getId(), authUserId)) {
+            followerUserRepository.removeFollowerRequest(authUserId, user.getId());
             hasUserFollowRequest = false;
         } else {
-            followerUserRepository.addFollowerRequest(authUser.getId(), user.getId());
+            followerUserRepository.addFollowerRequest(authUserId, user.getId());
             hasUserFollowRequest = true;
         }
-        followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), hasUserFollowRequest);
+        followRequestUserProducer.sendFollowRequestUserEvent(user, authUserId, hasUserFollowRequest);
         return userRepository.getUserById(user.getId(), UserProfileProjection.class).get();
     }
 
