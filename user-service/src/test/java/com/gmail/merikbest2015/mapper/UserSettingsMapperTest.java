@@ -5,11 +5,13 @@ import com.gmail.merikbest2015.dto.response.UserPhoneResponse;
 import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.service.UserSettingsService;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,12 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class UserSettingsMapperTest extends AbstractAuthTest {
+@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
+public class UserSettingsMapperTest {
 
-    @Autowired
+    @InjectMocks
     private UserSettingsMapper userSettingsMapper;
 
-    @MockBean
+    @Mock
     private UserSettingsService userSettingsService;
 
     @Test
@@ -52,7 +56,7 @@ public class UserSettingsMapperTest extends AbstractAuthTest {
     @Test
     public void updateCountry() {
         SettingsRequest request = new SettingsRequest();
-        request.setCountryCode(TestConstants.COUNTRY);
+        request.setCountry(TestConstants.COUNTRY);
         when(userSettingsService.updateCountry(TestConstants.COUNTRY)).thenReturn(TestConstants.COUNTRY);
         assertEquals(TestConstants.COUNTRY, userSettingsMapper.updateCountry(request));
         verify(userSettingsService, times(1)).updateCountry(TestConstants.COUNTRY);

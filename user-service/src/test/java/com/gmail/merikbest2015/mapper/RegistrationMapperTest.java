@@ -6,11 +6,13 @@ import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.service.RegistrationService;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindingResult;
 
 import java.util.Map;
@@ -18,15 +20,17 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class RegistrationMapperTest extends AbstractAuthTest {
+@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
+public class RegistrationMapperTest {
 
-    @Autowired
+    @InjectMocks
     private RegistrationMapper registrationMapper;
 
-    @MockBean
+    @Mock
     private RegistrationService registrationService;
 
-    @MockBean
+    @Mock
     private AuthenticationMapper authenticationMapper;
 
     private final BindingResult bindingResult = mock(BindingResult.class);

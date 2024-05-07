@@ -1,31 +1,50 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
+import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.response.MutedUserResponse;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.service.MuteUserService;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class MuteUserMapperTest extends AbstractAuthTest {
+@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
+public class MuteUserMapperTest {
 
-    @Autowired
+    @InjectMocks
     private MuteUserMapper muteUserMapper;
 
-    @MockBean
+    @Mock
     private MuteUserService muteUserService;
+
+    @Mock
+    private BasicMapper basicMapper;
+
+    private static final PageRequest pageable = PageRequest.of(0, 20);
 
     @Test
     public void getMutedList() {
         Page<MutedUserProjection> mutedUserProjections = UserServiceTestHelper.createMutedUserProjections();
+        HeaderResponse<MutedUserResponse> headerResponse = new HeaderResponse<>(
+                List.of(new MutedUserResponse(), new MutedUserResponse()), new HttpHeaders());
         when(muteUserService.getMutedList(pageable)).thenReturn(mutedUserProjections);
-        muteUserMapper.getMutedList(pageable);
+        when(basicMapper.getHeaderResponse(mutedUserProjections, MutedUserResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, muteUserMapper.getMutedList(pageable));
         verify(muteUserService, times(1)).getMutedList(pageable);
     }
 

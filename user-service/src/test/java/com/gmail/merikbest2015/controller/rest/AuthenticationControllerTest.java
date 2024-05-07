@@ -92,7 +92,7 @@ public class AuthenticationControllerTest {
 
     @Test
     @DisplayName("[200] POST /ui/v1/auth/forgot/email - Find existing email")
-    public void findExistingEmail() throws Exception {
+    public void getExistingEmail() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail(TestConstants.USER_EMAIL);
         mockMvc.perform(post(UI_V1_AUTH + FORGOT_EMAIL)
@@ -104,7 +104,7 @@ public class AuthenticationControllerTest {
 
     @Test
     @DisplayName("[400] POST /ui/v1/auth/forgot/email - Should email not valid")
-    public void findExistingEmail_ShouldEmailNotValid() throws Exception {
+    public void getExistingEmail_ShouldEmailNotValid() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail("test2015@test");
         mockMvc.perform(post(UI_V1_AUTH + FORGOT_EMAIL)
@@ -116,7 +116,7 @@ public class AuthenticationControllerTest {
 
     @Test
     @DisplayName("[404] POST /ui/v1/auth/forgot/email - Email not found")
-    public void findExistingEmail_EmailNotFound() throws Exception {
+    public void getExistingEmail_EmailNotFound() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail(TestConstants.NOT_VALID_EMAIL);
         mockMvc.perform(post(UI_V1_AUTH + FORGOT_EMAIL)
@@ -164,7 +164,7 @@ public class AuthenticationControllerTest {
 
     @Test
     @DisplayName("[200] GET /ui/v1/auth/reset/1234567890 - Get user by reset code")
-    public void getUserByResetCode() throws Exception {
+    public void getUserByPasswordResetCode() throws Exception {
         mockMvc.perform(get(UI_V1_AUTH + RESET_CODE, 1234567890))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(3))
@@ -185,7 +185,7 @@ public class AuthenticationControllerTest {
 
     @Test
     @DisplayName("[400] GET /ui/v1/auth/reset/test123 - Get user by reset code bad request")
-    public void getUserByResetCode_BadRequest() throws Exception {
+    public void getUserByPasswordResetCode_BadRequest() throws Exception {
         mockMvc.perform(get(UI_V1_AUTH + RESET_CODE, "test123"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(INVALID_PASSWORD_RESET_CODE)));
