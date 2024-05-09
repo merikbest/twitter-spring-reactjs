@@ -2,9 +2,12 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.feign.NotificationClient;
+import com.gmail.merikbest2015.feign.TagClient;
+import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.kafka.producer.FollowRequestUserProducer;
 import com.gmail.merikbest2015.kafka.producer.FollowUserProducer;
 import com.gmail.merikbest2015.kafka.producer.SendEmailProducer;
+import com.gmail.merikbest2015.kafka.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.security.JwtProvider;
@@ -51,6 +54,9 @@ public abstract class AbstractServiceTest {
     protected FollowRequestUserProducer followRequestUserProducer;
 
     @MockBean
+    protected UpdateUserProducer updateUserProducer;
+
+    @MockBean
     protected JwtProvider jwtProvider;
 
     @MockBean
@@ -63,7 +69,10 @@ public abstract class AbstractServiceTest {
     protected BasicMapper basicMapper;
 
     @MockBean
-    protected AuthenticationService authenticationService;
+    protected TweetClient tweetClient;
+
+    @MockBean
+    protected TagClient tagClient;
 
     protected static final PageRequest pageable = PageRequest.of(0, 20);
     protected static final List<Long> ids = List.of(1L, 2L, 3L);
