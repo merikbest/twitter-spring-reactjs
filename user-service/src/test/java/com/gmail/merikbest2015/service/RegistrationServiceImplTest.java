@@ -1,23 +1,16 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
-import com.gmail.merikbest2015.dto.request.EmailRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
+import com.gmail.merikbest2015.event.SendEmailEvent;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.model.UserRole;
-import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
-import com.gmail.merikbest2015.security.JwtProvider;
-import com.gmail.merikbest2015.service.util.UserServiceHelper;
-import com.gmail.merikbest2015.util.AbstractAuthTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 
 import java.util.Map;
@@ -28,25 +21,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class RegistrationServiceImplTest extends AbstractAuthTest {
+public class RegistrationServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private RegistrationService registrationService;
 
-    @MockBean
-    private UserRepository userRepository;
-
-    @MockBean
-    private UserServiceHelper userServiceHelper;
-
-    @MockBean
-    private PasswordEncoder passwordEncoder;
-
-    @MockBean
-    private JwtProvider jwtProvider;
-
-//    @MockBean
-//    private AmqpProducer amqpProducer;
     BindingResult bindingResult = mock(BindingResult.class);
 
     @Test
@@ -106,8 +85,8 @@ public class RegistrationServiceImplTest extends AbstractAuthTest {
     @Test
     public void sendRegistrationCode_ShouldReturnSuccessMessage() {
         UserCommonProjection userCommonProjection = UserServiceTestHelper.createUserCommonProjection();
-        EmailRequest request = EmailRequest.builder()
-                .to(userCommonProjection.getEmail())
+        SendEmailEvent event = SendEmailEvent.builder()
+                .toEmail(userCommonProjection.getEmail())
                 .subject("Registration code")
                 .template("registration-template")
                 .attributes(Map.of(
@@ -122,7 +101,7 @@ public class RegistrationServiceImplTest extends AbstractAuthTest {
                 registrationService.sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class);
         verify(userRepository, times(1)).getActivationCode(userCommonProjection.getId());
-//        verify(amqpProducer, times(1)).sendEmail(request);
+        verify(sendEmailProducer, times(1)).sendEmail(event);
     }
 
     @Test
@@ -156,18 +135,18 @@ public class RegistrationServiceImplTest extends AbstractAuthTest {
 
     @Test
     public void endRegistration_ShouldReturnSuccessMessage() {
-        AuthUserProjection authUserProjection = UserServiceTestHelper.createAuthUserProjection();
-        Map<String, Object> userMap = Map.of("user", authUserProjection, "token", TestConstants.AUTH_TOKEN);
-        when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, AuthUserProjection.class))
-                .thenReturn(Optional.of(authUserProjection));
+        User user = new User();
+        user.setId(TestConstants.USER_ID);
+        Map<String, Object> userMap = Map.of("user", user, "token", TestConstants.AUTH_TOKEN);
+        when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, User.class)).thenReturn(Optional.of(user));
         when(passwordEncoder.encode(TestConstants.PASSWORD)).thenReturn(TestConstants.PASSWORD);
         when(jwtProvider.createToken(TestConstants.USER_EMAIL, UserRole.USER.name()))
                 .thenReturn(TestConstants.AUTH_TOKEN);
         assertEquals(userMap, registrationService.endRegistration(TestConstants.USER_EMAIL, TestConstants.PASSWORD,
                 bindingResult));
-        verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, AuthUserProjection.class);
-        verify(userRepository, times(1)).updatePassword(TestConstants.PASSWORD, authUserProjection.getId());
-        verify(userRepository, times(1)).updateActiveUserProfile(authUserProjection.getId());
+        verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, User.class);
+        verify(userRepository, times(1)).updatePassword(TestConstants.PASSWORD, TestConstants.USER_ID);
+        verify(userRepository, times(1)).updateActiveUserProfile(TestConstants.USER_ID);
         verify(jwtProvider, times(1)).createToken(TestConstants.USER_EMAIL, UserRole.USER.name());
     }
 
