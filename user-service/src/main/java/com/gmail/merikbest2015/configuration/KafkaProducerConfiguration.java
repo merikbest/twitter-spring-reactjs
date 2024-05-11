@@ -41,6 +41,11 @@ public class KafkaProducerConfiguration {
     }
 
     @Bean
+    public KafkaTemplate<String, MuteUserEvent> kafkaMuteUserTemplate() {
+        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
+    }
+
+    @Bean
     public KafkaTemplate<String, FollowUserEvent> kafkaFollowUserTemplate() {
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
     }

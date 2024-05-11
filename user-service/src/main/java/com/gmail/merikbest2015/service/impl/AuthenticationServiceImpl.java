@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.event.SendEmailEvent;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.exception.InputFieldException;
-import com.gmail.merikbest2015.kafka.producer.SendEmailProducer;
+import com.gmail.merikbest2015.broker.producer.SendEmailProducer;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.UserRepository;
@@ -30,7 +30,7 @@ import java.util.UUID;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
-import static com.gmail.merikbest2015.kafka.producer.SendEmailProducer.toSendPasswordResetEmailEvent;
+import static com.gmail.merikbest2015.broker.producer.SendEmailProducer.toSendPasswordResetEmailEvent;
 
 @Service
 @RequiredArgsConstructor

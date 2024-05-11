@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.event.*;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.service.UserServiceHandler;
+import com.gmail.merikbest2015.service.UserHandlerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import static java.lang.Long.parseLong;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceHandlerImpl implements UserServiceHandler {
+public class UserHandlerServiceImpl implements UserHandlerService {
 
     private final UserRepository userRepository;
 
@@ -27,6 +27,7 @@ public class UserServiceHandlerImpl implements UserServiceHandler {
                     user.setAvatar(updateUserEvent.getAvatar());
                     user.setPrivateProfile(updateUserEvent.isPrivateProfile());
                     user.setActive(updateUserEvent.isActive());
+                    user.setMutedDirectMessages(updateUserEvent.isMutedDirectMessages());
                     return user;
                 })
                 .orElseGet(() -> createUser(updateUserEvent));
@@ -45,6 +46,20 @@ public class UserServiceHandlerImpl implements UserServiceHandler {
             authUser.getFollowing().remove(user);
         } else {
             authUser.getUserBlockedList().remove(user);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void handleMuteUser(MuteUserEvent muteUserEvent, String authId) {
+        User user = userRepository.findById(muteUserEvent.getId())
+                .orElseGet(() -> createUser(muteUserEvent));
+        User authUser = userRepository.findById(parseLong(authId)).get();
+
+        if (muteUserEvent.isUserMuted()) {
+            authUser.getUserMutedList().add(user);
+        } else {
+            authUser.getUserMutedList().remove(user);
         }
     }
 

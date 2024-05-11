@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.kafka.producer;
+package com.gmail.merikbest2015.broker.producer;
 
 import com.gmail.merikbest2015.event.UpdateUserEvent;
 import com.gmail.merikbest2015.model.User;

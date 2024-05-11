@@ -5,7 +5,7 @@ import com.gmail.merikbest2015.event.FollowRequestUserEvent;
 import com.gmail.merikbest2015.event.FollowUserEvent;
 import com.gmail.merikbest2015.event.UpdateUserEvent;
 
-public interface UserServiceHandler {
+public interface UserHandlerService {
 
     void handleUpdateUser(UpdateUserEvent updateUserEvent);
 

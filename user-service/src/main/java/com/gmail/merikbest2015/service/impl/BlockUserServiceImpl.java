@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.kafka.producer.BlockUserProducer;
+import com.gmail.merikbest2015.broker.producer.BlockUserProducer;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
 import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.projection.BlockedUserProjection;

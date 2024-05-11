@@ -5,7 +5,7 @@ import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.model.Retweet;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.producer.UpdateTweetCountProducer;
+import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;

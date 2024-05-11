@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
-import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
 import org.springframework.data.domain.Page;
@@ -33,10 +32,4 @@ public interface UserService {
     Long processPinTweet(Long tweetId);
 
     UserDetailProjection getUserDetails(Long userId);
-
-    void handleUpdateTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId);
-
-    void handleUpdateLikeTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId);
-
-    void handleUpdateMediaTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId);
 }

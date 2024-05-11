@@ -1,12 +1,11 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
-import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.feign.TweetClient;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.kafka.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -23,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static java.lang.Long.parseLong;
 
 @Service
 @RequiredArgsConstructor
@@ -140,36 +138,8 @@ public class UserServiceImpl implements UserService {
         return getUserById(userId, UserDetailProjection.class);
     }
 
-    @Override
-    @Transactional
-    public void handleUpdateTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
-        User user = getUserById(parseLong(authId), User.class);
-        Long tweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getTweetCount());
-        user.setTweetCount(tweetCount);
-    }
-
-    @Override
-    @Transactional
-    public void handleUpdateLikeTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
-        User user = getUserById(parseLong(authId), User.class);
-        Long likeTweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getLikeCount());
-        user.setLikeCount(likeTweetCount);
-    }
-
-    @Override
-    @Transactional
-    public void handleUpdateMediaTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
-        User user = getUserById(parseLong(authId), User.class);
-        Long mediaTweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getMediaTweetCount());
-        user.setMediaTweetCount(mediaTweetCount);
-    }
-
     private <T> T getUserById(Long userId, Class<T> type) {
         return userRepository.getUserById(userId, type)
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-    }
-
-    private Long updateCount(boolean isUpdateTweetsCount, Long count) {
-        return isUpdateTweetsCount ? count + 1 : count - 1;
     }
 }

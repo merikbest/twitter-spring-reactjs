@@ -1,5 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.broker.producer.MuteUserProducer;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.MuteUserRepository;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
@@ -18,6 +20,7 @@ public class MuteUserServiceImpl implements MuteUserService {
     private final MuteUserRepository muteUserRepository;
     private final AuthenticationService authenticationService;
     private final UserServiceHelper userServiceHelper;
+    private final MuteUserProducer muteUserProducer;
 
     @Override
     public Page<MutedUserProjection> getMutedList(Pageable pageable) {
@@ -28,15 +31,18 @@ public class MuteUserServiceImpl implements MuteUserService {
     @Override
     @Transactional
     public Boolean processMutedList(Long userId) {
-        userServiceHelper.checkIsUserExist(userId);
+        User user = userServiceHelper.getUserById(userId);
         Long authUserId = authenticationService.getAuthenticatedUserId();
+        boolean hasUserMuted;
 
         if (muteUserRepository.isUserMuted(authUserId, userId)) {
             muteUserRepository.unmuteUser(authUserId, userId);
-            return false;
+            hasUserMuted = false;
         } else {
             muteUserRepository.muteUser(authUserId, userId);
-            return true;
+            hasUserMuted = true;
         }
+        muteUserProducer.sendMuteUserEvent(user, authUserId, hasUserMuted);
+        return hasUserMuted;
     }
 }

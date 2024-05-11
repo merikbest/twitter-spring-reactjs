@@ -1,8 +1,7 @@
-package com.gmail.merikbest2015.kafka.producer;
+package com.gmail.merikbest2015.broker.producer;
 
 import com.gmail.merikbest2015.event.SendEmailEvent;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +16,7 @@ public class SendEmailProducer {
     private final KafkaTemplate<String, SendEmailEvent> kafkaTemplate;
 
     public void sendEmail(SendEmailEvent sendEmailEvent) {
-        ProducerRecord<String, SendEmailEvent> producerRecord = new ProducerRecord<>(SEND_EMAIL_TOPIC, sendEmailEvent);
-        kafkaTemplate.send(producerRecord);
+        kafkaTemplate.send(SEND_EMAIL_TOPIC, sendEmailEvent);
     }
 
     public static SendEmailEvent toSendRegistrationEmailEvent(String email, String fullName, String activationCode) {

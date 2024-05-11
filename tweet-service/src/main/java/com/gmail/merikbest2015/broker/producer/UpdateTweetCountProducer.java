@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.producer;
+package com.gmail.merikbest2015.broker.producer;
 
 import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
 import lombok.RequiredArgsConstructor;

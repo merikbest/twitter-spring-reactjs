@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.service.cron;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.feign.WebSocketClient;
 import com.gmail.merikbest2015.model.Tweet;
-import com.gmail.merikbest2015.producer.UpdateTweetCountProducer;
+import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;

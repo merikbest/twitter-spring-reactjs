@@ -3,10 +3,10 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.event.SendEmailEvent;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.kafka.producer.SendEmailProducer;
+import com.gmail.merikbest2015.broker.producer.SendEmailProducer;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.model.UserRole;
-import com.gmail.merikbest2015.kafka.producer.UpdateUserProducer;
+import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
 import com.gmail.merikbest2015.security.JwtProvider;
@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.kafka.producer.SendEmailProducer.toSendRegistrationEmailEvent;
+import static com.gmail.merikbest2015.broker.producer.SendEmailProducer.toSendRegistrationEmailEvent;
 
 @Service
 @RequiredArgsConstructor

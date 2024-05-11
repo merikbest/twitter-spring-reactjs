@@ -18,6 +18,10 @@ spring:
         init:
             mode: always
             data-locations: classpath:sql-test/clear-notification-db.sql, classpath:sql-test/populate-notification-db.sql
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            group-id: notification-test
 eureka:
     client:
         service-url:
