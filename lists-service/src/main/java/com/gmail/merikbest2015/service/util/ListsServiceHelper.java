@@ -1,9 +1,6 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.dto.request.NotificationRequest;
-import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +17,6 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.LIST_NOT_FOUND;
 public class ListsServiceHelper {
 
     private final ListsRepository listsRepository;
-    private final NotificationClient notificationClient;
 
     public boolean isListIncludeUser(Long listId, Long memberId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
@@ -38,17 +34,6 @@ public class ListsServiceHelper {
         if (!listsRepository.isListExist(listId, listOwnerId)) {
             throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
-    }
-
-    public void sendNotification(Long notifiedUserId, Long userId, Long listId) {
-        NotificationRequest request = NotificationRequest.builder()
-                .notificationType(NotificationType.LISTS)
-                .notificationCondition(true)
-                .notifiedUserId(notifiedUserId)
-                .userId(userId)
-                .listId(listId)
-                .build();
-        notificationClient.sendNotification(request);
     }
 
     public void validateListNameLength(String listName) {

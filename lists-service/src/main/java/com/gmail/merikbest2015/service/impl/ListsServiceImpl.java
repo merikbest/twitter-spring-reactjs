@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.broker.producer.ListsNotificationProducer;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
@@ -38,6 +39,7 @@ public class ListsServiceImpl implements ListsService {
 
     private final ListsRepository listsRepository;
     private final ListsServiceHelper listsServiceHelper;
+    private final ListsNotificationProducer listsNotificationProducer;
     private final UserService userService;
     private final TweetClient tweetClient;
 
@@ -199,7 +201,7 @@ public class ListsServiceImpl implements ListsService {
             } else {
                 if (!list.getListsMembers().contains(user)) {
                     list.getListsMembers().add(user);
-                    listsServiceHelper.sendNotification(user.getId(), authUser.getId(), list.getId());
+                    listsNotificationProducer.sendNotificationEvent(user, authUser, list);
                 }
             }
         });
@@ -222,7 +224,7 @@ public class ListsServiceImpl implements ListsService {
             return false;
         }
         list.getListsMembers().add(user);
-        listsServiceHelper.sendNotification(userId, authUser.getId(), listId);
+        listsNotificationProducer.sendNotificationEvent(user, authUser, list);
         return true;
     }
 

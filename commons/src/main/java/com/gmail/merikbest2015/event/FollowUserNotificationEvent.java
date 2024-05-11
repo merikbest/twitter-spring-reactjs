@@ -9,16 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListsNotificationEvent {
+public class FollowUserNotificationEvent {
     private boolean notificationCondition;
     private UserNotificationEvent notifiedUser;
     private UserNotificationEvent user;
-    private Lists lists;
-
-    @Data
-    @Builder
-    public static class Lists {
-        private Long id;
-        private String listName;
-    }
+    private UserNotificationEvent userToFollow;
 }

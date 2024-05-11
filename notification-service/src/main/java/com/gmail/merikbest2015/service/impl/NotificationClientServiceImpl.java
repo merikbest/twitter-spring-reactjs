@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.broker.producer.UserNotificationProducer;
 import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
@@ -24,6 +25,7 @@ import java.util.List;
 public class NotificationClientServiceImpl implements NotificationClientService {
 
     private final NotificationRepository notificationRepository;
+    private final UserNotificationProducer userNotificationProducer;
     private final UserClient userClient;
     private final ListsClient listsClient;
     private final TweetClient tweetClient;
@@ -34,18 +36,18 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     public NotificationResponse sendNotification(Notification notification, boolean notificationCondition) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
 
-        if (!notification.getNotifiedUserId().equals(authUserId)) {
+        if (!notification.getNotifiedUser().getId().equals(authUserId)) {
             boolean isNotificationExists = switch (notification.getNotificationType()) {
                 case LISTS -> notificationRepository.isListNotificationExists(
-                        notification.getNotifiedUserId(), notification.getListId(), authUserId, notification.getNotificationType());
+                        notification.getNotifiedUser().getId(), notification.getList().getId(), authUserId, notification.getNotificationType());
                 case FOLLOW -> notificationRepository.isUserNotificationExists(
-                        notification.getNotifiedUserId(), notification.getUserToFollowId(), authUserId, notification.getNotificationType());
+                        notification.getNotifiedUser().getId(), notification.getUserToFollow().getId(), authUserId, notification.getNotificationType());
                 default -> notificationRepository.isTweetNotificationExists(
-                        notification.getNotifiedUserId(), notification.getTweetId(), authUserId, notification.getNotificationType());
+                        notification.getNotifiedUser().getId(), notification.getTweet().getId(), authUserId, notification.getNotificationType());
             };
             if (!isNotificationExists) {
                 notificationRepository.save(notification);
-                userClient.increaseNotificationsCount(notification.getNotifiedUserId());
+                userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
                 return convertToNotificationResponse(notification, notificationCondition);
             }
         }
@@ -56,7 +58,7 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     @Transactional
     public void sendTweetMentionNotification(Notification notification) {
         notificationRepository.save(notification);
-        userClient.increaseMentionsCount(notification.getNotifiedUserId());
+        userNotificationProducer.increaseMentionsCount(notification.getNotifiedUser().getId());
     }
 
     @Override
@@ -69,11 +71,11 @@ public class NotificationClientServiceImpl implements NotificationClientService 
             subscribersIds.forEach(subscriberId -> {
                 Notification notification = new Notification();
                 notification.setNotificationType(NotificationType.TWEET);
-                notification.setUserId(authUserId);
-                notification.setTweetId(tweetId);
-                notification.setNotifiedUserId(subscriberId);
+//                notification.setUserId(authUserId);
+//                notification.setTweetId(tweetId);
+//                notification.setNotifiedUserId(subscriberId);
                 notificationRepository.save(notification);
-                userClient.increaseNotificationsCount(subscriberId);
+                userNotificationProducer.increaseNotificationsCount(subscriberId);
             });
         }
     }
@@ -87,8 +89,8 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     }
 
     private NotificationResponse convertToNotificationListResponse(Notification notification, boolean isAddedToList) {
-        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUserId());
-        NotificationListResponse listResponse = listsClient.getNotificationList(notification.getListId());
+        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUser().getId());
+        NotificationListResponse listResponse = listsClient.getNotificationList(notification.getList().getId());
         NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
         notificationResponse.setUser(userResponse);
         notificationResponse.setList(listResponse);
@@ -97,8 +99,8 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     }
 
     private NotificationResponse convertToNotificationUserResponse(Notification notification, boolean isFollowed) {
-        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUserId());
-        NotificationUserResponse followerResponse = userClient.getNotificationUser(notification.getUserToFollowId());
+        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUser().getId());
+        NotificationUserResponse followerResponse = userClient.getNotificationUser(notification.getUserToFollow().getId());
         followerResponse.setFollower(isFollowed);
         NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
         notificationResponse.setUser(userResponse);
@@ -107,8 +109,8 @@ public class NotificationClientServiceImpl implements NotificationClientService 
     }
 
     private NotificationResponse convertToNotificationTweetResponse(Notification notification, boolean isTweetLiked) {
-        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUserId());
-        NotificationTweetResponse tweetResponse = tweetClient.getNotificationTweet(notification.getTweetId());
+        NotificationUserResponse userResponse = userClient.getNotificationUser(notification.getUser().getId());
+        NotificationTweetResponse tweetResponse = tweetClient.getNotificationTweet(notification.getTweet().getId());
         tweetResponse.setNotificationCondition(isTweetLiked);
         NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
         notificationResponse.setUser(userResponse);

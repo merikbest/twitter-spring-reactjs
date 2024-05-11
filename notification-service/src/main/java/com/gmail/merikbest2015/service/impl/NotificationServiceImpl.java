@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.broker.producer.UserNotificationProducer;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
@@ -29,6 +30,7 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.NOTIFICATION_NOT_FO
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
+    private final UserNotificationProducer userNotificationProducer;
     private final UserClient userClient;
     private final TweetClient tweetClient;
 
@@ -36,7 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional
     public Page<NotificationProjection> getUserNotifications(Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        userClient.resetNotificationCount();
+        userNotificationProducer.resetNotificationCount(authUserId);
         return notificationRepository.getNotificationsByUserId(authUserId, pageable);
     }
 
@@ -44,7 +46,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Transactional
     public Page<TweetResponse> getUserMentionsNotifications(Pageable pageable) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
-        userClient.resetMentionCount();
+        userNotificationProducer.resetMentionCount(authUserId);
         Page<Long> tweetIds = notificationRepository.getTweetNotificationMentionIds(authUserId, pageable);
         return getTweetResponses(tweetIds, pageable);
     }
@@ -52,7 +54,8 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     @Transactional
     public List<NotificationUserResponse> getTweetAuthorsNotifications() {
-        userClient.resetNotificationCount();
+        Long authUserId = AuthUtil.getAuthenticatedUserId();
+        userNotificationProducer.resetNotificationCount(authUserId);
         return userClient.getUsersWhichUserSubscribed();
     }
 

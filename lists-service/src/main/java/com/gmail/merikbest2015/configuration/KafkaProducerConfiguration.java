@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.configuration;
 
-import com.gmail.merikbest2015.event.*;
+import com.gmail.merikbest2015.event.ListsNotificationEvent;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,37 +31,7 @@ public class KafkaProducerConfiguration {
     }
 
     @Bean
-    public KafkaTemplate<String, UpdateUserEvent> kafkaUpdateUserTemplate() {
-        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
-    }
-
-    @Bean
-    public KafkaTemplate<String, BlockUserEvent> kafkaBlockUserTemplate() {
-        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
-    }
-
-    @Bean
-    public KafkaTemplate<String, MuteUserEvent> kafkaMuteUserTemplate() {
-        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
-    }
-
-    @Bean
-    public KafkaTemplate<String, FollowUserEvent> kafkaFollowUserTemplate() {
-        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
-    }
-
-    @Bean
-    public KafkaTemplate<String, FollowUserNotificationEvent> kafkaFollowUserNotificationEventTemplate() {
-        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
-    }
-
-    @Bean
-    public KafkaTemplate<String, FollowRequestUserEvent> kafkaFollowRequestUserTemplate() {
-        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
-    }
-
-    @Bean
-    public KafkaTemplate<String, SendEmailEvent> kafkaSendEmailTemplate() {
+    public KafkaTemplate<String, ListsNotificationEvent> kafkaListsNotificationTemplate() {
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
     }
 }

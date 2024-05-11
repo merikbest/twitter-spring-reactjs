@@ -25,22 +25,27 @@ public class Notification {
     @Column(name = "date", columnDefinition = "timestamp default current_timestamp")
     private LocalDateTime date = LocalDateTime.now();
 
-    @Column(name = "notification_type", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Column(name = "notification_type", nullable = false)
     private NotificationType notificationType;
 
-    @Column(name = "notified_user_id", nullable = false)
-    private Long notifiedUserId;
+    @OneToOne
+    @JoinColumn(name = "notified_user_id", nullable = false)
+    private User notifiedUser;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @Column(name = "user_to_follow_id")
-    private Long userToFollowId;
+    @OneToOne
+    @JoinColumn(name = "user_to_follow_id")
+    private User userToFollow;
 
-    @Column(name = "tweet_id")
-    private Long tweetId;
+    @OneToOne
+    @JoinColumn(name = "tweet_id")
+    private Tweet tweet;
 
-    @Column(name = "list_id")
-    private Long listId;
+    @OneToOne
+    @JoinColumn(name = "list_id")
+    private Lists list;
 }

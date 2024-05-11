@@ -10,5 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserNotificationEvent {
-    private Long userId;
+    private Long id;
+    private String username;
+    private String avatar;
 }
