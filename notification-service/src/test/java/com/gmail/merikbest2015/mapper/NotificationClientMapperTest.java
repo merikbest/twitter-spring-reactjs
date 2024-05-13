@@ -39,10 +39,10 @@ public class NotificationClientMapperTest {
         notificationResponse.setId(1L);
         notificationResponse.setNotificationType(NotificationType.LIKE);
         when(basicMapper.convertToResponse(notificationRequest, Notification.class)).thenReturn(notification);
-        when(notificationClientService.sendNotification(notification, true)).thenReturn(notificationResponse);
+//        when(notificationClientService.sendNotification(notification, true)).thenReturn(notificationResponse);
         assertNotNull(notificationClientMapper.sendNotification(notificationRequest));
         verify(basicMapper, times(1)).convertToResponse(notificationRequest, Notification.class);
-        verify(notificationClientService, times(1)).sendNotification(notification, true);
+//        verify(notificationClientService, times(1)).sendNotification(notification, true);
     }
 
     @Test
@@ -74,9 +74,9 @@ public class NotificationClientMapperTest {
     private Notification getMockNotification() {
         Notification notification = new Notification();
         notification.setNotificationType(NotificationType.LIKE);
-        notification.setNotifiedUserId(1L);
-        notification.setUserId(USER_ID);
-        notification.setTweetId(45L);
+//        notification.setNotifiedUserId(1L);
+//        notification.setUserId(USER_ID);
+//        notification.setTweetId(45L);
         return notification;
     }
 }

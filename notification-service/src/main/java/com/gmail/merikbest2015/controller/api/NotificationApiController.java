@@ -21,13 +21,13 @@ public class NotificationApiController {
     @PostMapping
     public void sendNotification(@RequestBody NotificationRequest request) {
         NotificationResponse notification = notificationClientMapper.sendNotification(request);
-        sendTopicNotification(notification, notification.getNotifiedUserId());
+        sendTopicNotification(notification, notification.getNotifiedUser().getId());
     }
 
     @PostMapping(TWEET)
     public NotificationResponse sendTweetNotification(@RequestBody NotificationRequest request) {
         NotificationResponse notification = notificationClientMapper.sendNotification(request);
-        sendTopicNotification(notification, notification.getTweet().getAuthorId());
+        sendTopicNotification(notification, notification.getTweet().getAuthor().getId());
         webSocketClient.send(TOPIC_FEED, notification);
         webSocketClient.send(TOPIC_TWEET + notification.getTweet().getId(), notification);
         return notification;

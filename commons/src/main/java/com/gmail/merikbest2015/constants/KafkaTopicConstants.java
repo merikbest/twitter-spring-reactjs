@@ -11,6 +11,7 @@ public class KafkaTopicConstants {
     public static final String UPDATE_LISTS_TOPIC = "lists-service.lists.update";
     public static final String CREATE_LISTS_NOTIFICATION_TOPIC = "lists-service.notification.create";
     public static final String CREATE_USER_NOTIFICATION_TOPIC = "user-service.notification.create";
+    public static final String CREATE_TWEET_NOTIFICATION_TOPIC = "tweet-service.notification.create";
     public static final String UPDATE_USER_TWEETS_COUNT_TOPIC = "tweet-service.user.update-tweets-count";
     public static final String UPDATE_USER_LIKES_COUNT_TOPIC = "tweet-service.user.update-likes-count";
     public static final String UPDATE_USER_MEDIA_COUNT_TOPIC = "tweet-service.user.update-media-count";

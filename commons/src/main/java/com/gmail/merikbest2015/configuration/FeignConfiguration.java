@@ -18,8 +18,10 @@ public class FeignConfiguration {
     public RequestInterceptor requestInterceptor() {
         return template -> {
             RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = ((ServletRequestAttributes) attributes).getRequest();
-            template.header(AUTH_USER_ID_HEADER, request.getHeader(AUTH_USER_ID_HEADER));
+            if (attributes != null) {
+                HttpServletRequest request = ((ServletRequestAttributes) attributes).getRequest();
+                template.header(AUTH_USER_ID_HEADER, request.getHeader(AUTH_USER_ID_HEADER));
+            }
         };
     }
 }

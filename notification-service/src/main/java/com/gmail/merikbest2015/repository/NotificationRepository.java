@@ -27,6 +27,18 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
                                      @Param("authUserId") Long authUserId,
                                      @Param("notificationType") NotificationType type);
 
+    @Query("""
+            SELECT notification FROM Notification notification
+            WHERE notification.notifiedUser.id = :userId
+            AND notification.list.id = :listId
+            AND notification.user.id= :authUserId
+            AND notification.notificationType = :notificationType
+            """)
+    Optional<Notification> getListNotification(@Param("userId") Long userId,
+                                               @Param("listId") Long listId,
+                                               @Param("authUserId") Long authUserId,
+                                               @Param("notificationType") NotificationType type);
+
     @Query("SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification " +
             "WHERE notification.notifiedUser.id = :userId " +
             "AND notification.userToFollow.id = :userToFollowId " +
@@ -36,6 +48,18 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
                                      @Param("userToFollowId") Long userToFollowId,
                                      @Param("authUserId") Long authUserId,
                                      @Param("notificationType") NotificationType type);
+
+    @Query("""
+            SELECT notification FROM Notification notification
+            WHERE notification.notifiedUser.id = :userId
+            AND notification.userToFollow.id = :userToFollowId
+            AND notification.user.id = :authUserId
+            AND notification.notificationType = :notificationType
+            """)
+    Optional<Notification> getUserNotification(@Param("userId") Long userId,
+                                               @Param("userToFollowId") Long userToFollowId,
+                                               @Param("authUserId") Long authUserId,
+                                               @Param("notificationType") NotificationType type);
 
     @Query("SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification " +
             "WHERE notification.notifiedUser.id = :userId " +
@@ -47,13 +71,25 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
                                       @Param("authUserId") Long authUserId,
                                       @Param("notificationType") NotificationType type);
 
+    @Query("""
+            SELECT notification FROM Notification notification
+            WHERE notification.notifiedUser.id = :userId
+            AND notification.tweet.id = :tweetId
+            AND notification.user.id = :authUserId
+            AND notification.notificationType = :notificationType
+            """)
+    Optional<Notification> getTweetNotification(@Param("userId") Long userId,
+                                                @Param("tweetId") Long tweetId,
+                                                @Param("authUserId") Long authUserId,
+                                                @Param("notificationType") NotificationType type);
+
     @Query("SELECT notification FROM Notification notification " +
             "WHERE notification.notifiedUser.id = :userId " +
             "AND notification.notificationType NOT IN ('TWEET', 'MENTION') " +
             "ORDER BY notification.date DESC")
     Page<NotificationProjection> getNotificationsByUserId(@Param("userId") Long userId, Pageable pageable);
 
-    @Query("SELECT notification.tweetId FROM Notification notification " +
+    @Query("SELECT notification.tweet.id FROM Notification notification " +
             "WHERE notification.notifiedUser.id = :userId " +
             "AND notification.notificationType = 'MENTION' " +
             "ORDER BY notification.date DESC")

@@ -6,6 +6,6 @@ import lombok.Data;
 public class NotificationTweetResponse {
     private Long id;
     private String text;
-    private Long authorId;
+    private NotificationUserResponse author;
     private boolean notificationCondition;
 }

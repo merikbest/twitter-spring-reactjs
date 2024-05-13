@@ -97,7 +97,7 @@ const UserPage = (): ReactElement => {
             stompClient?.subscribe(TOPIC_USER_ADD_TWEET(params.userId), (response) => {
                 dispatch(setAddedUserTweet(JSON.parse(response.body)));
             });
-            stompClient?.subscribe(TOPIC_USER_UPDATE_TWEET(params.userId), (response) => {
+            stompClient?.subscribe(TOPIC_USER_UPDATE_TWEET, (response) => {
                 dispatch(setUpdatedUserTweet(JSON.parse(response.body)));
             });
             stompClient?.subscribe(TOPIC_USER_VOTE_TWEET(params.userId), (response) => {

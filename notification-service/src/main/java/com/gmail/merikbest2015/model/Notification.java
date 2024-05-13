@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,8 +23,9 @@ public class Notification {
     @SequenceGenerator(name = "notifications_seq", sequenceName = "notifications_seq", initialValue = 100, allocationSize = 1)
     private Long id;
 
-    @Column(name = "date", columnDefinition = "timestamp default current_timestamp")
-    private LocalDateTime date = LocalDateTime.now();
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime date;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "notification_type", nullable = false)

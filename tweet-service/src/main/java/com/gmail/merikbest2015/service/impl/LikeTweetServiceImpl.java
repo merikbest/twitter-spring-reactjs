@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.model.LikeTweet;
 import com.gmail.merikbest2015.model.Tweet;
@@ -11,7 +11,6 @@ import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.LikeTweetService;
 import com.gmail.merikbest2015.service.UserService;
-import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import com.gmail.merikbest2015.service.util.TweetValidationHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,9 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class LikeTweetServiceImpl implements LikeTweetService {
 
     private final LikeTweetRepository likeTweetRepository;
-    private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
-    private final UpdateTweetCountProducer updateTweetCountProducer;
+    private final UpdateTweetCountProducer tweetCountProducer;
+    private final TweetNotificationProducer tweetNotificationProducer;
     private final UserService userService;
 
     @Override
@@ -45,7 +44,7 @@ public class LikeTweetServiceImpl implements LikeTweetService {
 
     @Override
     @Transactional
-    public NotificationResponse likeTweet(Long tweetId) {
+    public Tweet likeTweet(Long tweetId) {
         Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
         User authUser = userService.getAuthUser();
         LikeTweet likedTweet = likeTweetRepository.getLikedTweet(authUser, tweet);
@@ -59,7 +58,8 @@ public class LikeTweetServiceImpl implements LikeTweetService {
             likeTweetRepository.save(newLikeTweet);
             isTweetLiked = true;
         }
-        updateTweetCountProducer.sendUpdateLikeTweetCountEvent(authUser.getId(), isTweetLiked);
-        return tweetServiceHelper.sendNotification(NotificationType.LIKE, isTweetLiked, tweet.getAuthor().getId(), authUser.getId(), tweetId);
+        tweetCountProducer.sendUpdateLikeTweetCountEvent(authUser.getId(), isTweetLiked);
+        tweetNotificationProducer.sendTweetNotificationEvent(NotificationType.LIKE, tweet, authUser, isTweetLiked);
+        return tweet;
     }
 }

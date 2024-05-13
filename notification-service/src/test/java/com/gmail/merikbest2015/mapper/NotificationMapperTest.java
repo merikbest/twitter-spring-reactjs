@@ -55,7 +55,7 @@ public class NotificationMapperTest {
         notificationResponse.setDate(LocalDateTime.now());
         notificationResponse.setNotificationType(NotificationType.TWEET);
         notificationResponse.setUser(new NotificationUserResponse());
-        notificationResponse.setNotifiedUserId(1L);
+//        notificationResponse.setNotifiedUserId(1L);
         notificationResponse.setUserToFollow(new NotificationUserResponse());
         notificationResponse.setTweet(new NotificationTweetResponse());
         notificationResponse.setList(new NotificationListResponse());

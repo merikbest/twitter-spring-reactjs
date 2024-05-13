@@ -1,9 +1,10 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
@@ -35,7 +36,8 @@ public class LikeTweetMapper {
         return basicMapper.getHeaderResponse(users, UserResponse.class);
     }
 
-    public NotificationResponse likeTweet(Long tweetId) {
-        return likeTweetService.likeTweet(tweetId);
+    public NotificationTweetResponse likeTweet(Long tweetId) {
+        Tweet tweet = likeTweetService.likeTweet(tweetId);
+        return basicMapper.convertToResponse(tweet, NotificationTweetResponse.class);
     }
 }

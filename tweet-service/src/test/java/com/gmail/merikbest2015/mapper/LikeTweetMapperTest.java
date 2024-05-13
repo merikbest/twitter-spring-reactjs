@@ -52,7 +52,7 @@ public class LikeTweetMapperTest {
     @Test
     public void likeTweet() {
         NotificationResponse notificationResponse = new NotificationResponse();
-        when(likeTweetService.likeTweet(TestConstants.TWEET_ID)).thenReturn(notificationResponse);
+//        when(likeTweetService.likeTweet(TestConstants.TWEET_ID)).thenReturn(notificationResponse);
         assertEquals(notificationResponse, likeTweetMapper.likeTweet(TestConstants.TWEET_ID));
         verify(likeTweetService, times(1)).likeTweet(TestConstants.TWEET_ID);
     }

@@ -71,9 +71,9 @@ public class NotificationClientServiceImpl implements NotificationClientService 
             subscribersIds.forEach(subscriberId -> {
                 Notification notification = new Notification();
                 notification.setNotificationType(NotificationType.TWEET);
-//                notification.setUserId(authUserId);
-//                notification.setTweetId(tweetId);
-//                notification.setNotifiedUserId(subscriberId);
+//                notification.setUser(authUserId);
+//                notification.setTweet(tweetId);
+//                notification.setNotifiedUser(subscriberId);
                 notificationRepository.save(notification);
                 userNotificationProducer.increaseNotificationsCount(subscriberId);
             });
