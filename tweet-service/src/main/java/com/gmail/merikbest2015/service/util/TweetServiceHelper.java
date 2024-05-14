@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service.util;
 
+import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.dto.request.TweetTextRequest;
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.NotificationType;
@@ -11,7 +11,6 @@ import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -181,18 +180,6 @@ public class TweetServiceHelper {
                 }
             });
         }
-    }
-
-    public NotificationResponse sendNotification(NotificationType notificationType, boolean notificationCondition,
-                                                 Long notifiedUserId, Long userId, Long tweetId) {
-        NotificationRequest request = NotificationRequest.builder()
-                .notificationType(notificationType)
-                .notificationCondition(notificationCondition)
-                .notifiedUserId(notifiedUserId)
-                .userId(userId)
-                .tweetId(tweetId)
-                .build();
-        return notificationClient.sendTweetNotification(request);
     }
 
     public <T> Page<T> getPageableTweetProjectionList(Pageable pageable, List<T> tweets, int totalPages) {

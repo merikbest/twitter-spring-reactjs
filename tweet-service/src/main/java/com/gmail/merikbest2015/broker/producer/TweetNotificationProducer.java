@@ -10,7 +10,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.CREATE_TWEET_NOTIFICATION_TOPIC;
+import static com.gmail.merikbest2015.constants.KafkaTopicConstants.SEND_TWEET_NOTIFICATION_TOPIC;
 import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
 
 @Component
@@ -21,8 +21,7 @@ public class TweetNotificationProducer {
 
     public void sendTweetNotificationEvent(NotificationType type, Tweet tweet, User authUser, boolean notificationCondition) {
         ProducerRecord<String, TweetNotificationEvent> producerRecord = new ProducerRecord<>(
-                CREATE_TWEET_NOTIFICATION_TOPIC,
-                toTweetNotificationEvent(type, tweet, authUser, notificationCondition));
+                SEND_TWEET_NOTIFICATION_TOPIC, toTweetNotificationEvent(type, tweet, authUser, notificationCondition));
         producerRecord.headers().add(AUTH_USER_ID_HEADER, authUser.getId().toString().getBytes());
         kafkaTemplate.send(producerRecord);
     }

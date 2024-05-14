@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.model.Retweet;
 import com.gmail.merikbest2015.model.Tweet;
@@ -32,6 +32,7 @@ public class RetweetServiceImpl implements RetweetService {
     private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
     private final UpdateTweetCountProducer updateTweetCountProducer;
+    private final TweetNotificationProducer tweetNotificationProducer;
     private final UserService userService;
 
     @Override
@@ -53,7 +54,7 @@ public class RetweetServiceImpl implements RetweetService {
 
     @Override
     @Transactional
-    public NotificationResponse retweet(Long tweetId) {
+    public Tweet retweet(Long tweetId) {
         Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
         User authUser = userService.getAuthUser();
         Retweet retweet = retweetRepository.isTweetRetweeted(authUser, tweet);
@@ -67,6 +68,7 @@ public class RetweetServiceImpl implements RetweetService {
             isRetweeted = true;
         }
         updateTweetCountProducer.sendUpdateTweetCountEvent(authUser.getId(), isRetweeted);
-        return tweetServiceHelper.sendNotification(NotificationType.RETWEET, isRetweeted, tweet.getAuthor().getId(), authUser.getId(), tweetId);
+        tweetNotificationProducer.sendTweetNotificationEvent(NotificationType.RETWEET, tweet, authUser, isRetweeted);
+        return tweet;
     }
 }

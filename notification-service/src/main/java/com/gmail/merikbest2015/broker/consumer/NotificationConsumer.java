@@ -18,17 +18,17 @@ public class NotificationConsumer {
 
     private final NotificationHandlerService notificationHandlerService;
 
-    @KafkaListener(topics = CREATE_LISTS_NOTIFICATION_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = SEND_LISTS_NOTIFICATION_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
     public void listsNotificationListener(ListsNotificationEvent event, @Header(AUTH_USER_ID_HEADER) String authId) {
         notificationHandlerService.handleListsNotification(event, authId);
     }
 
-    @KafkaListener(topics = CREATE_USER_NOTIFICATION_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = SEND_USER_NOTIFICATION_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
     public void followUserNotificationListener(FollowUserNotificationEvent event, @Header(AUTH_USER_ID_HEADER) String authId) {
         notificationHandlerService.handleFollowUserNotification(event, authId);
     }
 
-    @KafkaListener(topics = CREATE_TWEET_NOTIFICATION_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = SEND_TWEET_NOTIFICATION_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
     public void tweetNotificationListener(TweetNotificationEvent event, @Header(AUTH_USER_ID_HEADER) String authId) {
         notificationHandlerService.handleTweetNotification(event, authId);
     }

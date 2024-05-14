@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import org.springframework.data.domain.Page;
@@ -12,5 +12,5 @@ public interface RetweetService {
 
     Page<UserProjection> getRetweetedUsersByTweetId(Long tweetId, Pageable pageable);
 
-    NotificationResponse retweet(Long tweetId);
+    Tweet retweet(Long tweetId);
 }
