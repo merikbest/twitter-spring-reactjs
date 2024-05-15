@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ListsNotificationEvent {
     private boolean notificationCondition;
-    private UserNotificationEvent notifiedUser;
-    private UserNotificationEvent user;
+    private UserNotificationDto notifiedUser;
+    private UserNotificationDto user;
     private Lists lists;
 
     @Data

@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.broker.consumer;
 import com.gmail.merikbest2015.event.FollowUserNotificationEvent;
 import com.gmail.merikbest2015.event.ListsNotificationEvent;
 import com.gmail.merikbest2015.event.TweetNotificationEvent;
+import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
 import com.gmail.merikbest2015.service.NotificationHandlerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -31,5 +32,10 @@ public class NotificationConsumer {
     @KafkaListener(topics = SEND_TWEET_NOTIFICATION_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
     public void tweetNotificationListener(TweetNotificationEvent event, @Header(AUTH_USER_ID_HEADER) String authId) {
         notificationHandlerService.handleTweetNotification(event, authId);
+    }
+
+    @KafkaListener(topics = SEND_TWEET_SUBSCRIBER_NOTIFICATION_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
+    public void tweetSubscriberNotificationListener(TweetSubscriberNotificationEvent event) {
+        notificationHandlerService.tweetSubscriberNotification(event);
     }
 }

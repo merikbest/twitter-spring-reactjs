@@ -71,15 +71,19 @@ public interface UserRepository extends JpaRepository<User, Long> {
             """)
     List<CommonUserProjection> searchUserByText(@Param("text") String text);
 
+    @Query("""
+            SELECT subscriber FROM User user
+            JOIN user.subscribers subscriber
+            WHERE user.id = :userId
+            """)
+    List<User> getSubscribersByUserId(@Param("userId") Long userId);
+
     @Modifying
     @Query("UPDATE User user SET user.profileStarted = true WHERE user.id = :userId")
     void updateProfileStarted(@Param("userId") Long userId);
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
     boolean isUserExist(@Param("userId") Long userId);
-
-    @Query("SELECT user.privateProfile FROM User user WHERE user.id = :userId")
-    boolean getUserPrivateProfile(@Param("userId") Long userId);
 
     @Query("""
             SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user

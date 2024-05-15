@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserNotificationEvent {
+public class UserNotificationDto {
     private Long id;
     private String username;
     private String avatar;

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.broker.producer;
 
 import com.gmail.merikbest2015.event.FollowUserNotificationEvent;
-import com.gmail.merikbest2015.event.UserNotificationEvent;
+import com.gmail.merikbest2015.event.UserNotificationDto;
 import com.gmail.merikbest2015.model.User;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -32,8 +32,8 @@ public class FollowUserNotificationProducer {
                 .build();
     }
 
-    private static UserNotificationEvent toUserDto(User user) {
-        return UserNotificationEvent.builder()
+    private static UserNotificationDto toUserDto(User user) {
+        return UserNotificationDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .avatar(user.getAvatar())

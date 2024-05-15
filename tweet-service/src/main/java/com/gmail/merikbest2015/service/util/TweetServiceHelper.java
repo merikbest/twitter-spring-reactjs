@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.util;
 
+import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
 import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.dto.request.TweetTextRequest;
@@ -50,6 +51,7 @@ public class TweetServiceHelper {
     private final TweetValidationHelper tweetValidationHelper;
     private final NotificationClient notificationClient;
     private final UpdateTweetCountProducer updateTweetCountProducer;
+    private final TweetNotificationProducer tweetNotificationProducer;
     private final UserService userService;
     private final TagClient tagClient;
     private final BasicMapper basicMapper;
@@ -75,7 +77,7 @@ public class TweetServiceHelper {
                 updateTweetCountProducer.sendUpdateTweetCountEvent(authUser.getId(), true);
             }
         }
-        return processTweetResponse(tweet);
+        return processTweetResponse(tweet, authUser);
     }
 
     @SneakyThrows
@@ -143,12 +145,12 @@ public class TweetServiceHelper {
         return element == null ? "" : element.attr("content");
     }
 
-    public TweetResponse processTweetResponse(Tweet tweet) {
+    public TweetResponse processTweetResponse(Tweet tweet, User authUser) {
         TweetProjection tweetProjection = tweetRepository.getTweetById(tweet.getId(), TweetProjection.class).get();
         TweetResponse tweetResponse = basicMapper.convertToResponse(tweetProjection, TweetResponse.class);
         parseUserMentionFromText(tweetResponse);
         tagClient.parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
-        notificationClient.sendTweetNotificationToSubscribers(tweet.getId());
+        tweetNotificationProducer.sendTweetSubscriberNotificationEvent(tweet, authUser);
         return tweetResponse;
     }
 

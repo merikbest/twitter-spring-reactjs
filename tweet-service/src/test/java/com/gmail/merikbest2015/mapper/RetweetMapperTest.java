@@ -67,7 +67,7 @@ public class RetweetMapperTest {
     @Test
     public void retweet() {
         NotificationResponse notificationResponse = new NotificationResponse();
-        when(retweetService.retweet(TestConstants.TWEET_ID)).thenReturn(notificationResponse);
+//        when(retweetService.retweet(TestConstants.TWEET_ID)).thenReturn(notificationResponse);
         assertEquals(notificationResponse, retweetMapper.retweet(TestConstants.TWEET_ID));
         verify(retweetService, times(1)).retweet(TestConstants.TWEET_ID);
     }

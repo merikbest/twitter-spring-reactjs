@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.configuration;
 
+import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
 import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -49,6 +50,15 @@ public class KafkaConsumerConfiguration {
     }
 
     @Bean
+    public ConsumerFactory<String, TweetSubscriberNotificationEvent> tweetSubscriberNotificationFactory() {
+        return new DefaultKafkaConsumerFactory<>(
+                consumerConfigs(),
+                new StringDeserializer(),
+                new JsonDeserializer<>(TweetSubscriberNotificationEvent.class)
+        );
+    }
+
+    @Bean
     public RecordMessageConverter typeConverter() {
         StringJsonMessageConverter converter = new StringJsonMessageConverter();
         DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
@@ -57,6 +67,7 @@ public class KafkaConsumerConfiguration {
         typeMapper.addTrustedPackages("*");
         Map<String, Class<?>> mappings = new HashMap<>();
         mappings.put("tweetCount", UpdateTweetCountEvent.class);
+        mappings.put("subscriberNotification", TweetSubscriberNotificationEvent.class);
         typeMapper.setIdClassMapping(mappings);
         headerMapper.setEncodeStrings(true);
         converter.setTypeMapper(typeMapper);

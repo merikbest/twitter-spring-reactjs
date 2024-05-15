@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.event.FollowUserNotificationEvent;
 import com.gmail.merikbest2015.event.ListsNotificationEvent;
 import com.gmail.merikbest2015.event.TweetNotificationEvent;
+import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
 import com.gmail.merikbest2015.feign.WebSocketClient;
 import com.gmail.merikbest2015.mapper.NotificationHandlerMapper;
 import com.gmail.merikbest2015.model.Lists;
@@ -129,6 +130,25 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
         }
         tweetNotification.ifPresent(notification ->
                 sendNotification(notification, notificationEvent.isNotificationCondition()));
+    }
+
+    @Override
+    @Transactional
+    public void tweetSubscriberNotification(TweetSubscriberNotificationEvent event) {
+        Tweet tweet = tweetHandlerService.getOrCreateTweet(event.getTweet());
+        User user = userHandlerService.getOrCreateUser(event.getUser());
+        event.getSubscribers().stream()
+                .map(userHandlerService::getOrCreateUser)
+                .toList()
+                .forEach(subscriber -> {
+                    Notification notification = new Notification();
+                    notification.setNotificationType(NotificationType.TWEET);
+                    notification.setUser(user);
+                    notification.setTweet(tweet);
+                    notification.setNotifiedUser(subscriber);
+                    notificationRepository.save(notification);
+                    userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
+                });
     }
 
     private NotificationResponse sendNotification(Notification notification, boolean isTweetLiked) {

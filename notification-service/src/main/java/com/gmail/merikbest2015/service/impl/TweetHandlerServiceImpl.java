@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.TweetNotificationEvent;
+import com.gmail.merikbest2015.event.TweetNotificationDto;
 import com.gmail.merikbest2015.event.UpdateTweetEvent;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
@@ -23,7 +23,7 @@ public class TweetHandlerServiceImpl implements TweetHandlerService {
     }
 
     @Override
-    public Tweet getOrCreateTweet(TweetNotificationEvent.Tweet tweet) {
+    public Tweet getOrCreateTweet(TweetNotificationDto tweet) {
         User author = userHandlerService.getOrCreateUser(tweet.getAuthor());
         return tweetRepository.findById(tweet.getId())
                 .orElseGet(() -> {

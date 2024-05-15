@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.event.UpdateUserEvent;
-import com.gmail.merikbest2015.event.UserNotificationEvent;
+import com.gmail.merikbest2015.event.UserNotificationDto;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserHandlerService;
@@ -34,7 +34,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     }
 
     @Override
-    public User getOrCreateUser(UserNotificationEvent user) {
+    public User getOrCreateUser(UserNotificationDto user) {
         return userRepository.findById(user.getId())
                 .orElseGet(() -> {
                     User newUser = new User();

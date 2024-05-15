@@ -5,13 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FollowUserNotificationEvent {
-    private boolean notificationCondition;
-    private UserNotificationDto notifiedUser;
+public class TweetSubscriberNotificationEvent {
+    private TweetNotificationDto tweet;
     private UserNotificationDto user;
-    private UserNotificationDto userToFollow;
+    private List<UserNotificationDto> subscribers;
 }

@@ -13,17 +13,7 @@ import lombok.NoArgsConstructor;
 public class TweetNotificationEvent {
     private NotificationType notificationType;
     private boolean notificationCondition;
-    private UserNotificationEvent notifiedUser;
-    private UserNotificationEvent user;
-    private Tweet tweet;
-
-    @Data
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Tweet {
-        private Long id;
-        private String text;
-        private UserNotificationEvent author;
-    }
+    private UserNotificationDto notifiedUser;
+    private UserNotificationDto user;
+    private TweetNotificationDto tweet;
 }

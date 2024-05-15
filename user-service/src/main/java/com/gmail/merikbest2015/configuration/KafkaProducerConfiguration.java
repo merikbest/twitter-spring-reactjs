@@ -64,4 +64,9 @@ public class KafkaProducerConfiguration {
     public KafkaTemplate<String, SendEmailEvent> kafkaSendEmailTemplate() {
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
     }
+
+    @Bean
+    public KafkaTemplate<String, TweetSubscriberNotificationEvent> kafkaTweetSubscriberNotificationTemplate() {
+        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
+    }
 }
