@@ -14,9 +14,7 @@ public interface UserService {
 
     Optional<User> getUserById(Long userId);
 
-    Long getUserIdByUsername(String username);
-
-    Boolean isUserExists(Long userId);
+    Optional<User> getUserIdByUsername(String username);
 
     boolean isUserHavePrivateProfile(Long userId);
 

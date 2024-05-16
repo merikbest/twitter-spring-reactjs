@@ -13,7 +13,8 @@ public class KafkaTopicConstants {
     public static final String SEND_USER_NOTIFICATION_TOPIC = "user-service.notification.create";
     public static final String SEND_TWEET_NOTIFICATION_TOPIC = "tweet-service.notification.tweet.create";
     public static final String SEND_SUBSCRIBER_NOTIFICATION_TOPIC = "tweet-service.notification.subscriber.create";
-    public static final String SEND_TWEET_SUBSCRIBER_NOTIFICATION_TOPIC = "tweet-service.notification.tweet.subscriber.create";
+    public static final String SEND_TWEET_SUBSCRIBER_NOTIFICATION_TOPIC = "user-service.notification.tweet.subscriber.create";
+    public static final String SEND_TWEET_MENTION_NOTIFICATION_TOPIC = "tweet-service.notification.tweet.mention.create";
     public static final String UPDATE_USER_TWEETS_COUNT_TOPIC = "tweet-service.user.update-tweets-count";
     public static final String UPDATE_USER_LIKES_COUNT_TOPIC = "tweet-service.user.update-likes-count";
     public static final String UPDATE_USER_MEDIA_COUNT_TOPIC = "tweet-service.user.update-media-count";

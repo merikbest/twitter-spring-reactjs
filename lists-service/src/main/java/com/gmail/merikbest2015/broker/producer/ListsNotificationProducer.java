@@ -5,12 +5,10 @@ import com.gmail.merikbest2015.event.UserNotificationDto;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.User;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import static com.gmail.merikbest2015.constants.KafkaTopicConstants.SEND_LISTS_NOTIFICATION_TOPIC;
-import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
 
 @Component
 @RequiredArgsConstructor
@@ -19,10 +17,7 @@ public class ListsNotificationProducer {
     private final KafkaTemplate<String, ListsNotificationEvent> kafkaTemplate;
 
     public void sendNotificationEvent(User notifiedUser, User user, Lists lists) {
-        ProducerRecord<String, ListsNotificationEvent> producerRecord = new ProducerRecord<>(
-                SEND_LISTS_NOTIFICATION_TOPIC, toListsNotificationEvent(notifiedUser, user, lists));
-        producerRecord.headers().add(AUTH_USER_ID_HEADER, user.getId().toString().getBytes());
-        kafkaTemplate.send(producerRecord);
+        kafkaTemplate.send(SEND_LISTS_NOTIFICATION_TOPIC, toListsNotificationEvent(notifiedUser, user, lists));
     }
 
     private static ListsNotificationEvent toListsNotificationEvent(User notifiedUser, User user, Lists lists) {

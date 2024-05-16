@@ -103,6 +103,15 @@ public class KafkaConsumerConfiguration {
     }
 
     @Bean
+    public ConsumerFactory<String, TweetMentionNotificationEvent> tweetMentionNotificationFactory() {
+        return new DefaultKafkaConsumerFactory<>(
+                consumerConfigs(),
+                new StringDeserializer(),
+                new JsonDeserializer<>(TweetMentionNotificationEvent.class)
+        );
+    }
+
+    @Bean
     public RecordMessageConverter typeConverter() {
         StringJsonMessageConverter converter = new StringJsonMessageConverter();
         DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
@@ -117,6 +126,7 @@ public class KafkaConsumerConfiguration {
         mappings.put("updateTweet", UpdateTweetEvent.class);
         mappings.put("updateUser", UpdateUserEvent.class);
         mappings.put("subscriberNotification", TweetSubscriberNotificationEvent.class);
+        mappings.put("mentionNotification", TweetMentionNotificationEvent.class);
         typeMapper.setIdClassMapping(mappings);
         headerMapper.setEncodeStrings(true);
         converter.setTypeMapper(typeMapper);

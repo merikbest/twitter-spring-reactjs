@@ -10,11 +10,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT user.id FROM User user WHERE UPPER(user.username) = UPPER(:username)")
-    Long getUserIdByUsername(@Param("username") String username);
+    @Query("SELECT user FROM User user WHERE UPPER(user.username) = UPPER(:username)")
+    Optional<User> getUserIdByUsername(@Param("username") String username);
 
     @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.id = :userId")
     boolean isUserExists(@Param("userId") Long userId);

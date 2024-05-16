@@ -36,13 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long getUserIdByUsername(String username) {
+    public Optional<User> getUserIdByUsername(String username) {
         return userRepository.getUserIdByUsername(username.substring(1));
-    }
-
-    @Override
-    public Boolean isUserExists(Long userId) {
-        return userRepository.isUserExists(userId);
     }
 
     @Override

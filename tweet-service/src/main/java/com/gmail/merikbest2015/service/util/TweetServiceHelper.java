@@ -2,12 +2,9 @@ package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
 import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
-import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.dto.request.TweetTextRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
-import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.feign.TagClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
@@ -17,7 +14,6 @@ import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.service.UserService;
-import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.json.JSONArray;
@@ -49,7 +45,6 @@ public class TweetServiceHelper {
 
     private final TweetRepository tweetRepository;
     private final TweetValidationHelper tweetValidationHelper;
-    private final NotificationClient notificationClient;
     private final UpdateTweetCountProducer updateTweetCountProducer;
     private final TweetNotificationProducer tweetNotificationProducer;
     private final UserService userService;
@@ -148,40 +143,33 @@ public class TweetServiceHelper {
     public TweetResponse processTweetResponse(Tweet tweet, User authUser) {
         TweetProjection tweetProjection = tweetRepository.getTweetById(tweet.getId(), TweetProjection.class).get();
         TweetResponse tweetResponse = basicMapper.convertToResponse(tweetProjection, TweetResponse.class);
-        parseUserMentionFromText(tweetResponse);
+        sendUserReplyMention(tweet, authUser);
+        sendUserMentions(tweet, authUser);
         tagClient.parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
         tweetNotificationProducer.sendTweetSubscriberNotificationEvent(tweet, authUser);
         return tweetResponse;
     }
 
-    private void parseUserMentionFromText(TweetResponse tweetResponse) {
-        Pattern pattern = Pattern.compile("(@\\w+)\\b");
-        Matcher match = pattern.matcher(tweetResponse.getText());
-        List<String> usernames = new ArrayList<>();
+    private void sendUserReplyMention(Tweet tweet, User authUser) {
+        if (tweet.getAddressedId() != null) {
+            userService.getUserById(tweet.getAddressedId())
+                    .ifPresent(user -> tweetNotificationProducer.sendTweetMentionNotificationEvent(tweet, user, authUser));
+        }
+    }
 
+    private void sendUserMentions(Tweet tweet, User authUser) {
+        parseUserMentionFromText(tweet.getText()).forEach(username -> userService.getUserIdByUsername(username)
+                .ifPresent(user -> tweetNotificationProducer.sendTweetMentionNotificationEvent(tweet, user, authUser)));
+    }
+
+    private List<String> parseUserMentionFromText(String tweetText) {
+        Pattern pattern = Pattern.compile("(@\\w+)\\b");
+        Matcher match = pattern.matcher(tweetText);
+        List<String> usernames = new ArrayList<>();
         while (match.find()) {
             usernames.add(match.group(1));
         }
-
-        if (!usernames.isEmpty()) {
-            usernames.forEach(username -> {
-                Long userId = userService.getUserIdByUsername(username);
-
-                if (userId != null) {
-                    Long authUserId = AuthUtil.getAuthenticatedUserId();
-                    NotificationRequest request = NotificationRequest.builder()
-                            .tweetId((tweetResponse.getAddressedTweetId() != null)
-                                    ? tweetResponse.getAddressedTweetId()
-                                    : tweetResponse.getId())
-                            .notificationType(NotificationType.MENTION)
-                            .tweet(tweetResponse)
-                            .notifiedUserId(userId)
-                            .userId(authUserId)
-                            .build();
-                    notificationClient.sendTweetMentionNotification(request);
-                }
-            });
-        }
+        return usernames;
     }
 
     public <T> Page<T> getPageableTweetProjectionList(Pageable pageable, List<T> tweets, int totalPages) {

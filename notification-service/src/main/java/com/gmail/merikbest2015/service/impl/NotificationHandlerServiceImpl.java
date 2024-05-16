@@ -3,10 +3,7 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.broker.producer.UserNotificationProducer;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.event.FollowUserNotificationEvent;
-import com.gmail.merikbest2015.event.ListsNotificationEvent;
-import com.gmail.merikbest2015.event.TweetNotificationEvent;
-import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
+import com.gmail.merikbest2015.event.*;
 import com.gmail.merikbest2015.feign.WebSocketClient;
 import com.gmail.merikbest2015.mapper.NotificationHandlerMapper;
 import com.gmail.merikbest2015.model.Lists;
@@ -40,8 +37,8 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
 
     @Override
     @Transactional
-    public void handleListsNotification(ListsNotificationEvent notificationEvent, String authId) {
-        Long authUserId = Long.parseLong(authId);
+    public void handleListsNotification(ListsNotificationEvent notificationEvent) {
+        Long authUserId = notificationEvent.getUser().getId();
         Optional<Notification> tweetNotification = notificationRepository.getListNotification(
                 notificationEvent.getNotifiedUser().getId(),
                 notificationEvent.getLists().getId(),
@@ -71,8 +68,8 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
 
     @Override
     @Transactional
-    public void handleFollowUserNotification(FollowUserNotificationEvent notificationEvent, String authId) {
-        Long authUserId = Long.parseLong(authId);
+    public void handleFollowUserNotification(FollowUserNotificationEvent notificationEvent) {
+        Long authUserId = notificationEvent.getUser().getId();
         Optional<Notification> tweetNotification = notificationRepository.getUserNotification(
                 notificationEvent.getNotifiedUser().getId(),
                 notificationEvent.getUserToFollow().getId(),
@@ -103,8 +100,8 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
 
     @Override
     @Transactional
-    public void handleTweetNotification(TweetNotificationEvent notificationEvent, String authId) {
-        Long authUserId = Long.parseLong(authId);
+    public void handleTweetNotification(TweetNotificationEvent notificationEvent) {
+        Long authUserId = notificationEvent.getUser().getId();
         Optional<Notification> tweetNotification = notificationRepository.getTweetNotification(
                 notificationEvent.getNotifiedUser().getId(),
                 notificationEvent.getTweet().getId(),
@@ -134,10 +131,10 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
 
     @Override
     @Transactional
-    public void tweetSubscriberNotification(TweetSubscriberNotificationEvent event) {
-        Tweet tweet = tweetHandlerService.getOrCreateTweet(event.getTweet());
-        User user = userHandlerService.getOrCreateUser(event.getUser());
-        event.getSubscribers().stream()
+    public void handleTweetSubscriberNotification(TweetSubscriberNotificationEvent notificationEvent) {
+        Tweet tweet = tweetHandlerService.getOrCreateTweet(notificationEvent.getTweet());
+        User user = userHandlerService.getOrCreateUser(notificationEvent.getUser());
+        notificationEvent.getSubscribers().stream()
                 .map(userHandlerService::getOrCreateUser)
                 .toList()
                 .forEach(subscriber -> {
@@ -149,6 +146,21 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
                     notificationRepository.save(notification);
                     userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
                 });
+    }
+
+    @Override
+    @Transactional
+    public void handleTweetMentionNotification(TweetMentionNotificationEvent notificationEvent) {
+        User notifiedUser = userHandlerService.getOrCreateUser(notificationEvent.getNotifiedUser());
+        User user = userHandlerService.getOrCreateUser(notificationEvent.getUser());
+        Tweet tweet = tweetHandlerService.getOrCreateTweet(notificationEvent.getTweet());
+        Notification notification = new Notification();
+        notification.setNotificationType(NotificationType.MENTION);
+        notification.setNotifiedUser(notifiedUser);
+        notification.setUser(user);
+        notification.setTweet(tweet);
+        userNotificationProducer.increaseMentionsCount(notifiedUser.getId());
+        webSocketClient.send(TOPIC_MENTIONS + user.getId(), notificationEvent.getTweetResponse());
     }
 
     private NotificationResponse sendNotification(Notification notification, boolean isTweetLiked) {

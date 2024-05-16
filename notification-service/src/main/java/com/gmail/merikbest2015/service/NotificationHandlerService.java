@@ -1,17 +1,16 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.event.FollowUserNotificationEvent;
-import com.gmail.merikbest2015.event.ListsNotificationEvent;
-import com.gmail.merikbest2015.event.TweetNotificationEvent;
-import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
+import com.gmail.merikbest2015.event.*;
 
 public interface NotificationHandlerService {
 
-    void handleListsNotification(ListsNotificationEvent listsNotificationEvent, String authId);
+    void handleListsNotification(ListsNotificationEvent notificationEvent);
 
-    void handleFollowUserNotification(FollowUserNotificationEvent followUserNotificationEvent, String authId);
+    void handleFollowUserNotification(FollowUserNotificationEvent notificationEvent);
 
-    void handleTweetNotification(TweetNotificationEvent tweetNotificationEvent, String authId);
+    void handleTweetNotification(TweetNotificationEvent notificationEvent);
 
-    void tweetSubscriberNotification(TweetSubscriberNotificationEvent event);
+    void handleTweetSubscriberNotification(TweetSubscriberNotificationEvent notificationEvent);
+
+    void handleTweetMentionNotification(TweetMentionNotificationEvent notificationEvent);
 }
