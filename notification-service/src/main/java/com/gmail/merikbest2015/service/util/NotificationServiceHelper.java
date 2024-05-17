@@ -5,9 +5,9 @@ import com.gmail.merikbest2015.dto.response.notification.NotificationTweetRespon
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.feign.ListsClient;
-import com.gmail.merikbest2015.feign.TweetClient;
-import com.gmail.merikbest2015.feign.UserClient;
+import com.gmail.merikbest2015.client.ListsClient;
+import com.gmail.merikbest2015.client.TweetClient;
+import com.gmail.merikbest2015.client.UserClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

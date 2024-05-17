@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.controller.rest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.request.VoteRequest;
-import com.gmail.merikbest2015.feign.WebSocketClient;
+import com.gmail.merikbest2015.client.WebSocketClient;
 import com.gmail.merikbest2015.mapper.PollMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

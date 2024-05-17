@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.TweetClient;
+import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;

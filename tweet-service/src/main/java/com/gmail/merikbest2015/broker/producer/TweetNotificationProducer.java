@@ -32,8 +32,8 @@ public class TweetNotificationProducer {
         tweetSubscriberNotificationTemplate.send(SEND_SUBSCRIBER_NOTIFICATION_TOPIC, event);
     }
 
-    public void sendTweetMentionNotificationEvent(Tweet tweet, User user, User authUser) {
-        TweetMentionNotificationEvent event = mapper.toTweetMentionNotificationEvent(tweet, user, authUser);
+    public void sendTweetMentionNotificationEvent(NotificationType notificationType, Tweet tweet, User user, User authUser) {
+        TweetMentionNotificationEvent event = mapper.toTweetMentionNotificationEvent(notificationType, tweet, user, authUser);
         tweetMentionNotificationTemplate.send(SEND_TWEET_MENTION_NOTIFICATION_TOPIC, event);
     }
 }

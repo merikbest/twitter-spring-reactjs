@@ -7,7 +7,7 @@ import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.TweetClient;
+import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.PinnedList;
 import com.gmail.merikbest2015.model.User;

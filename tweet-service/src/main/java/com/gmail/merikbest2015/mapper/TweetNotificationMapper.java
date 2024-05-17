@@ -31,8 +31,10 @@ public class TweetNotificationMapper {
                 .build();
     }
 
-    public TweetMentionNotificationEvent toTweetMentionNotificationEvent(Tweet tweet, User user, User authUser) {
+    public TweetMentionNotificationEvent toTweetMentionNotificationEvent(NotificationType notificationType, Tweet tweet,
+                                                                         User user, User authUser) {
         return TweetMentionNotificationEvent.builder()
+                .notificationType(notificationType)
                 .notifiedUser(toUserDto(user))
                 .user(toUserDto(authUser))
                 .tweet(toTweetDto(tweet))

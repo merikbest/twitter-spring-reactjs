@@ -6,7 +6,7 @@ import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.*;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
-import com.gmail.merikbest2015.feign.WebSocketClient;
+import com.gmail.merikbest2015.client.WebSocketClient;
 import com.gmail.merikbest2015.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

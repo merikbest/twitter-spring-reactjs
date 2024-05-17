@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.broker.producer.UserNotificationProducer;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.event.*;
-import com.gmail.merikbest2015.feign.WebSocketClient;
+import com.gmail.merikbest2015.client.WebSocketClient;
 import com.gmail.merikbest2015.mapper.NotificationHandlerMapper;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.Notification;
@@ -155,7 +155,7 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
         User user = userHandlerService.getOrCreateUser(notificationEvent.getUser());
         Tweet tweet = tweetHandlerService.getOrCreateTweet(notificationEvent.getTweet());
         Notification notification = new Notification();
-        notification.setNotificationType(NotificationType.MENTION);
+        notification.setNotificationType(notificationEvent.getNotificationType());
         notification.setNotifiedUser(notifiedUser);
         notification.setUser(user);
         notification.setTweet(tweet);

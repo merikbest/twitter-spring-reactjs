@@ -1,33 +1,10 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.feign.ListsClient;
-import com.gmail.merikbest2015.feign.TweetClient;
-import com.gmail.merikbest2015.feign.UserClient;
-import com.gmail.merikbest2015.mapper.BasicMapper;
-import com.gmail.merikbest2015.model.Notification;
-import com.gmail.merikbest2015.repository.NotificationRepository;
-import com.gmail.merikbest2015.service.NotificationClientService;
-import com.gmail.merikbest2015.util.TestUtil;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

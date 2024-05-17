@@ -1,9 +1,8 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.constants.PathConstants;
-import com.gmail.merikbest2015.feign.ListsClient;
-import com.gmail.merikbest2015.feign.NotificationClient;
-import com.gmail.merikbest2015.feign.TagClient;
+import com.gmail.merikbest2015.client.ListsClient;
+import com.gmail.merikbest2015.client.TagClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -34,9 +33,6 @@ public abstract class AbstractServiceTest {
 
     @MockBean
     public LikeTweetRepository likeTweetRepository;
-
-    @MockBean
-    public NotificationClient notificationClient;
 
     @MockBean
     public PollRepository pollRepository;

@@ -1,9 +1,8 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.constants.PathConstants;
-import com.gmail.merikbest2015.feign.NotificationClient;
-import com.gmail.merikbest2015.feign.TagClient;
-import com.gmail.merikbest2015.feign.TweetClient;
+import com.gmail.merikbest2015.client.TagClient;
+import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.broker.producer.FollowRequestUserProducer;
 import com.gmail.merikbest2015.broker.producer.FollowUserProducer;
 import com.gmail.merikbest2015.broker.producer.SendEmailProducer;
@@ -43,9 +42,6 @@ public abstract class AbstractServiceTest {
 
     @MockBean
     protected UserSettingsRepository userSettingsRepository;
-
-    @MockBean
-    protected NotificationClient notificationClient;
 
     @MockBean
     protected FollowUserProducer followUserProducer;

@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.feign.WebSocketClient;
+import com.gmail.merikbest2015.client.WebSocketClient;
 import com.gmail.merikbest2015.mapper.NotificationClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

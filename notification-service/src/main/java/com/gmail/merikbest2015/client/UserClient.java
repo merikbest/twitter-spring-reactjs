@@ -1,4 +1,4 @@
-package com.gmail.merikbest2015.feign;
+package com.gmail.merikbest2015.client;
 
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;

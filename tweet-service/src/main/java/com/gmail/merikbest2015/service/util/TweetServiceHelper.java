@@ -5,7 +5,8 @@ import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.dto.request.TweetTextRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
-import com.gmail.merikbest2015.feign.TagClient;
+import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.client.TagClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
@@ -153,13 +154,15 @@ public class TweetServiceHelper {
     private void sendUserReplyMention(Tweet tweet, User authUser) {
         if (tweet.getAddressedId() != null) {
             userService.getUserById(tweet.getAddressedId())
-                    .ifPresent(user -> tweetNotificationProducer.sendTweetMentionNotificationEvent(tweet, user, authUser));
+                    .ifPresent(user ->
+                            tweetNotificationProducer.sendTweetMentionNotificationEvent(NotificationType.REPLY, tweet, user, authUser));
         }
     }
 
     private void sendUserMentions(Tweet tweet, User authUser) {
         parseUserMentionFromText(tweet.getText()).forEach(username -> userService.getUserIdByUsername(username)
-                .ifPresent(user -> tweetNotificationProducer.sendTweetMentionNotificationEvent(tweet, user, authUser)));
+                .ifPresent(user ->
+                        tweetNotificationProducer.sendTweetMentionNotificationEvent(NotificationType.MENTION, tweet, user, authUser)));
     }
 
     private List<String> parseUserMentionFromText(String tweetText) {

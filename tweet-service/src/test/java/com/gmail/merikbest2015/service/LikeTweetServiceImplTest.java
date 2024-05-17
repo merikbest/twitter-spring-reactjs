@@ -158,12 +158,12 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
         NotificationRequest request = TweetServiceTestHelper.createMockNotificationRequest(NotificationType.LIKE, false);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(likeTweetRepository.getLikedTweet(authUser, tweet)).thenReturn(new LikeTweet());
-        when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
+//        when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
         assertEquals(new NotificationResponse(), likeTweetService.likeTweet(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
         verify(likeTweetRepository, times(1)).getLikedTweet(authUser, tweet);
         verify(likeTweetRepository, times(1)).delete(any());
-        verify(notificationClient, times(1)).sendTweetNotification(request);
+//        verify(notificationClient, times(1)).sendTweetNotification(request);
     }
 
     @Test
@@ -171,12 +171,12 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
         NotificationRequest request = TweetServiceTestHelper.createMockNotificationRequest(NotificationType.LIKE, true);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(likeTweetRepository.getLikedTweet(authUser, tweet)).thenReturn(null);
-        when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
+//        when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
         assertEquals(new NotificationResponse(), likeTweetService.likeTweet(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
         verify(likeTweetRepository, times(1)).getLikedTweet(authUser, tweet);
         verify(likeTweetRepository, times(1)).save(any());
-        verify(notificationClient, times(1)).sendTweetNotification(request);
+//        verify(notificationClient, times(1)).sendTweetNotification(request);
     }
 
     @Test

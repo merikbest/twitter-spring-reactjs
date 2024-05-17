@@ -102,7 +102,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         verify(blockUserRepository, times(1)).isUserBlocked(1L, TestConstants.USER_ID);
         verify(followerUserRepository, times(1)).isFollower(TestConstants.USER_ID, 1L);
         verify(followerUserRepository, times(1)).follow(TestConstants.USER_ID, 1L);
-        verify(notificationClient, times(1)).sendNotification(request);
+//        verify(notificationClient, times(1)).sendNotification(request);
         verify(followUserProducer, times(1)).sendFollowUserEvent(user, TestConstants.USER_ID, true);
     }
 

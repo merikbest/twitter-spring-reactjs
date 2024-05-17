@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.controller;
 import com.gmail.merikbest2015.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
 import com.gmail.merikbest2015.dto.response.ChatMessageResponse;
-import com.gmail.merikbest2015.feign.WebSocketClient;
+import com.gmail.merikbest2015.client.WebSocketClient;
 import com.gmail.merikbest2015.mapper.ChatMessageMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

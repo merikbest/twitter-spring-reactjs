@@ -7,8 +7,7 @@ import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.NotificationClient;
-import com.gmail.merikbest2015.feign.TweetClient;
+import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.PinnedList;
 import com.gmail.merikbest2015.model.User;
@@ -60,9 +59,6 @@ public class ListsServiceImplTest {
 
     @MockBean
     private TweetClient tweetClient;
-
-    @MockBean
-    private NotificationClient notificationClient;
 
     @Before
     public void setUp() {
@@ -398,7 +394,7 @@ public class ListsServiceImplTest {
         verify(listsRepository, times(1)).getListWhereUserConsist(listsRequest.getLists().get(1).getListId(), USER_ID);
         assertEquals(1, mockLists1.getListsMembers().size());
         assertEquals(1, mockLists2.getListsMembers().size());
-        verify(notificationClient, times(2)).sendNotification(any());
+//        verify(notificationClient, times(2)).sendNotification(any());
     }
 
     @Test
@@ -461,7 +457,7 @@ public class ListsServiceImplTest {
         when(listsRepository.getListWhereUserConsist(1L, USER_ID)).thenReturn(Optional.of(mockLists));
         assertTrue(listsService.addUserToList(1L, TestConstants.LIST_ID));
         assertEquals(1, mockLists.getListsMembers().size());
-        verify(notificationClient, times(1)).sendNotification(any());
+//        verify(notificationClient, times(1)).sendNotification(any());
     }
 
     @Test

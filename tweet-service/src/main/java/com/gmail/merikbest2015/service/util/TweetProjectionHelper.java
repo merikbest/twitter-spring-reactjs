@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
-import com.gmail.merikbest2015.feign.ListsClient;
+import com.gmail.merikbest2015.client.ListsClient;
 import com.gmail.merikbest2015.repository.BookmarkRepository;
 import com.gmail.merikbest2015.repository.LikeTweetRepository;
 import com.gmail.merikbest2015.repository.RetweetRepository;

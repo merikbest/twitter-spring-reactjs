@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.service.util;
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.feign.NotificationClient;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.util.TestConstants;
 import com.gmail.merikbest2015.util.TestUtil;
@@ -31,9 +30,6 @@ public class ListsServiceHelperTest {
 
     @MockBean
     private ListsRepository listsRepository;
-
-    @MockBean
-    private NotificationClient notificationClient;
 
     @Before
     public void setUp() {
