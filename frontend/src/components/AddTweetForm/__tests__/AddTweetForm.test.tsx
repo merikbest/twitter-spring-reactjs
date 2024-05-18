@@ -17,7 +17,7 @@ import Poll from "../Poll/Poll";
 import { TweetActionType } from "../../../store/ducks/tweet/contracts/actionTypes";
 import CloseButton from "../../CloseButton/CloseButton";
 import UnsentTweetsModal from "../UnsentTweetsModal/UnsentTweetsModal";
-import { API_TWEETS_UPLOAD } from "../../../constants/endpoint-constants";
+import { UI_V1_TWEETS_UPLOAD } from "../../../constants/endpoint-constants";
 import { LoadingStatus, ReplyType } from "../../../types/common";
 import EmojiIconButton from "../EmojiIconButton/EmojiIconButton";
 import { ActionSnackbarTypes } from "../../../store/ducks/actionSnackbar/contracts/actionTypes";
@@ -73,7 +73,7 @@ describe("AddTweetForm", () => {
             type: AddTweetFormTypes.SET_IMAGES
         });
 
-        mock.onPost(API_TWEETS_UPLOAD).reply(200, mockFullTweet.images[0]);
+        mock.onPost(UI_V1_TWEETS_UPLOAD).reply(200, mockFullTweet.images[0]);
 
         wrapper.find(Button).at(1).simulate("click");
 
@@ -219,7 +219,7 @@ describe("AddTweetForm", () => {
         expect(wrapper.find(IconButton).at(5).prop("disabled")).toBe(true);
 
         wrapper.find(TextareaAutosize).find("textarea").at(0).simulate("change", { target: { value: mockTestMessage } });
-        mock.onPost(API_TWEETS_UPLOAD).reply(200, mockFullTweet.images[0]);
+        mock.onPost(UI_V1_TWEETS_UPLOAD).reply(200, mockFullTweet.images[0]);
         wrapper.find(Button).at(1).simulate("click");
 
         setImmediate(() => {
@@ -259,7 +259,7 @@ describe("AddTweetForm", () => {
         expect(wrapper.find(Button).at(1).text()).toBe("Reply");
 
         wrapper.find(TextareaAutosize).find("textarea").at(0).simulate("change", { target: { value: mockTestMessage } });
-        mock.onPost(API_TWEETS_UPLOAD).reply(200, mockFullTweet.images[0]);
+        mock.onPost(UI_V1_TWEETS_UPLOAD).reply(200, mockFullTweet.images[0]);
         wrapper.find(Button).at(1).simulate("click");
 
         setImmediate(() => {

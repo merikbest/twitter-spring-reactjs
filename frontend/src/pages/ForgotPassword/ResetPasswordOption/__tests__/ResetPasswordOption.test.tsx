@@ -8,7 +8,7 @@ import { setImmediate } from "timers";
 
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import ResetPasswordOption from "../ResetPasswordOption";
-import { API_AUTH_FORGOT } from "../../../../constants/endpoint-constants";
+import { UI_V1_AUTH_FORGOT } from "../../../../constants/endpoint-constants";
 import {
     ACCOUNT_FORGOT_CONFIRM_PIN_RESET,
     ACCOUNT_FORGOT_SEND_PASSWORD_RESET
@@ -35,7 +35,7 @@ describe("ResetPasswordOption", () => {
 
     it("should redirect to CheckEmailCode on submit", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onPost(API_AUTH_FORGOT, { email: mockUser?.email }).reply(200);
+        mock.onPost(UI_V1_AUTH_FORGOT, { email: mockUser?.email }).reply(200);
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<ResetPasswordOption />, mockStore, history);

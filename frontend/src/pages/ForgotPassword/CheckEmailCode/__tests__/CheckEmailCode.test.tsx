@@ -8,7 +8,7 @@ import { setImmediate } from "timers";
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import CheckEmailCode from "../CheckEmailCode";
 import { ForgotPasswordTextField } from "../../ForgotPasswordTextField/ForgotPasswordTextField";
-import { API_AUTH_RESET } from "../../../../constants/endpoint-constants";
+import { UI_V1_AUTH_RESET_CODE } from "../../../../constants/endpoint-constants";
 import { mockUser } from "../../../../util/test-utils/mock-test-data";
 import { ACCOUNT_FORGOT_RESET_PASSWORD } from "../../../../constants/path-constants";
 
@@ -28,7 +28,7 @@ describe("CheckEmailCode", () => {
 
     it("should verify reset code", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onGet(`${API_AUTH_RESET}/${mockResetCode}`).reply(200, mockUser);
+        mock.onGet(UI_V1_AUTH_RESET_CODE(mockResetCode)).reply(200, mockUser);
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<CheckEmailCode />, createMockRootState(), history);
@@ -50,7 +50,7 @@ describe("CheckEmailCode", () => {
 
     it("should return error on verify code", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onGet(`${API_AUTH_RESET}/${mockResetCode}`).reply(400, mockUser);
+        mock.onGet(UI_V1_AUTH_RESET_CODE(mockResetCode)).reply(400, mockUser);
         const wrapper = mountWithStore(<CheckEmailCode />, mockStore);
         const input = wrapper.find(ForgotPasswordTextField).find("input").at(0);
 

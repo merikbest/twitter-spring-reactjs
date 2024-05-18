@@ -12,8 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserSettingsRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user WHERE user.email = :email")
-    boolean isEmailExist(@Param("email") String email);
+    @Query("""
+            SELECT CASE WHEN count(user) > 0 THEN true ELSE false END FROM User user
+            WHERE user.id <> :userId
+            AND user.email = :email
+            """)
+    boolean isEmailExist(@Param("userId") Long userId, @Param("email") String email);
 
     @Modifying
     @Query("UPDATE User user SET user.email = :email WHERE user.id = :userId")

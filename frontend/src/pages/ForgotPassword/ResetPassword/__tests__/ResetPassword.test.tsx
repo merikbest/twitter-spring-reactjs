@@ -9,7 +9,7 @@ import { setImmediate } from "timers";
 import ResetPassword from "../ResetPassword";
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { ForgotPasswordTextField } from "../../ForgotPasswordTextField/ForgotPasswordTextField";
-import { API_AUTH_RESET } from "../../../../constants/endpoint-constants";
+import { UI_V1_AUTH_RESET } from "../../../../constants/endpoint-constants";
 import {
     ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE,
     ACCOUNT_FORGOT_RESET_PASSWORD
@@ -57,7 +57,7 @@ describe("ResetPassword", () => {
 
     it("should submit password reset", (done) => {
         const mock = new MockAdapter(axios);
-        mock.onPost(API_AUTH_RESET, {
+        mock.onPost(UI_V1_AUTH_RESET, {
             email: mockUser?.email,
             password: mockPassword,
             password2: mockPassword

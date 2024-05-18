@@ -7,7 +7,7 @@ import { ReactWrapper } from "enzyme";
 import ChangeYourPassword from "../ChangeYourPassword";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
-import { API_AUTH_RESET_CURRENT } from "../../../../../constants/endpoint-constants";
+import { UI_V1_AUTH_RESET_CURRENT } from "../../../../../constants/endpoint-constants";
 import { LoadingStatus } from "../../../../../types/common";
 import { ActionSnackbarTypes } from "../../../../../store/ducks/actionSnackbar/contracts/actionTypes";
 
@@ -37,7 +37,7 @@ describe("ChangeYourPassword", () => {
         expect(wrapper.find(ChangeInfoTextField).at(1).prop("value")).toBe(mockNewPassword);
         expect(wrapper.find(ChangeInfoTextField).at(2).prop("value")).toBe(mockNewPassword);
 
-        mockAdapter.onPost(API_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(200, mockSuccessMessage);
+        mockAdapter.onPost(UI_V1_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(200, mockSuccessMessage);
 
         setImmediate(() => {
             wrapper.update();
@@ -59,7 +59,7 @@ describe("ChangeYourPassword", () => {
 
         submitChangePasswordForm(wrapper);
 
-        mockAdapter.onPost(API_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(404, { currentPassword: mockErrorMessage });
+        mockAdapter.onPost(UI_V1_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(404, { currentPassword: mockErrorMessage });
 
         setImmediate(() => {
             wrapper.update();
@@ -76,7 +76,7 @@ describe("ChangeYourPassword", () => {
 
         submitChangePasswordForm(wrapper);
 
-        mockAdapter.onPost(API_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(400, { password: mockErrorMessage });
+        mockAdapter.onPost(UI_V1_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(400, { password: mockErrorMessage });
 
         setImmediate(() => {
             wrapper.update();
@@ -93,7 +93,7 @@ describe("ChangeYourPassword", () => {
 
         submitChangePasswordForm(wrapper);
 
-        mockAdapter.onPost(API_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(400, { password2: mockErrorMessage });
+        mockAdapter.onPost(UI_V1_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(400, { password2: mockErrorMessage });
 
         setImmediate(() => {
             wrapper.update();

@@ -3,9 +3,10 @@ import MockAdapter from "axios-mock-adapter";
 
 import { testApiCall } from "../../../../util/test-utils/api-test-helper";
 import {
-    API_AUTH_REGISTRATION_ACTIVATE,
-    API_AUTH_REGISTRATION_CHECK,
-    API_AUTH_REGISTRATION_CODE, API_AUTH_REGISTRATION_CONFIRM
+    UI_V1_AUTH_REGISTRATION_ACTIVATE_CODE,
+    UI_V1_AUTH_REGISTRATION_CHECK,
+    UI_V1_AUTH_REGISTRATION_CODE,
+    UI_V1_AUTH_REGISTRATION_CONFIRM
 } from "../../../../constants/endpoint-constants";
 import { mockUser } from "../../../../util/test-utils/mock-test-data";
 import { RegistrationApi } from "../registrationApi";
@@ -23,11 +24,11 @@ describe("RegistrationApi", () => {
         const mockErrorResponse = "Email has already been taken.";
 
         it("[200] should Check Email Success", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_REGISTRATION_CHECK, 200, mockResponse, RegistrationApi.registration, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_REGISTRATION_CHECK, 200, mockResponse, RegistrationApi.registration, mockRequest);
         });
 
         it("[403] should return email error", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_REGISTRATION_CHECK, 403, mockErrorResponse, RegistrationApi.registration, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_REGISTRATION_CHECK, 403, mockErrorResponse, RegistrationApi.registration, mockRequest);
         });
     });
 
@@ -36,17 +37,17 @@ describe("RegistrationApi", () => {
         const mockResponse = "Registration code sent successfully";
 
         it("[200] should send registration code success", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_REGISTRATION_CODE, 200, mockResponse, RegistrationApi.sendRegistrationCode, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_REGISTRATION_CODE, 200, mockResponse, RegistrationApi.sendRegistrationCode, mockRequest);
         });
 
         it("[404] should User not found", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_REGISTRATION_CODE, 404, mockUserErrorResponse, RegistrationApi.sendRegistrationCode, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_REGISTRATION_CODE, 404, mockUserErrorResponse, RegistrationApi.sendRegistrationCode, mockRequest);
         });
     });
 
     describe("should fetch RegistrationApi.checkRegistrationCode", () => {
         const mockRequest = "test_code";
-        const mockUrl = `${API_AUTH_REGISTRATION_ACTIVATE}/${mockRequest}`;
+        const mockUrl = UI_V1_AUTH_REGISTRATION_ACTIVATE_CODE(mockRequest);
         const mockResponse = "User successfully activated.";
         const mockErrorResponse = "Activation code not found.";
 
@@ -64,15 +65,15 @@ describe("RegistrationApi", () => {
         const mockPasswordError = "Your password needs to be at least 8 characters";
 
         it("[200] should end registration success", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_REGISTRATION_CONFIRM, 200, mockAuthUserResponse, RegistrationApi.endRegistration, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_REGISTRATION_CONFIRM, 200, mockAuthUserResponse, RegistrationApi.endRegistration, mockRequest);
         });
 
         it("[400] should return bad request", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_REGISTRATION_CONFIRM, 400, mockPasswordError, RegistrationApi.endRegistration, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_REGISTRATION_CONFIRM, 400, mockPasswordError, RegistrationApi.endRegistration, mockRequest);
         });
 
         it("[404] should User not found", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_REGISTRATION_CONFIRM, 404, mockUserErrorResponse, RegistrationApi.endRegistration, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_REGISTRATION_CONFIRM, 404, mockUserErrorResponse, RegistrationApi.endRegistration, mockRequest);
         });
     });
 });

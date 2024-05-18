@@ -2,7 +2,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 import { testApiCall } from "../../../../util/test-utils/api-test-helper";
-import { API_CHAT_LEAVE, API_CHAT_PARTICIPANT, API_CHAT_SEARCH } from "../../../../constants/endpoint-constants";
+import { UI_V1_CHAT_LEAVE, UI_V1_CHAT_PARTICIPANT, UI_V1_CHAT_SEARCH } from "../../../../constants/endpoint-constants";
 import { mockUsers } from "../../../../util/test-utils/mock-test-data";
 import { ChatParticipantApi } from "../chatParticipantApi";
 
@@ -15,7 +15,7 @@ describe("ChatParticipantApi", () => {
 
     describe("should fetch ChatParticipantApi.getParticipant", () => {
         const mockRequest = { participantId: 1, chatId: 1 };
-        const mockURL = `${API_CHAT_PARTICIPANT}/1/1`;
+        const mockURL = `${UI_V1_CHAT_PARTICIPANT}/1/1`;
 
         it("[200] should get participant Success", () => {
             testApiCall(mockAdapter, "onGet", mockURL, 200, mockUsers[0], ChatParticipantApi.getParticipant, mockRequest);
@@ -32,7 +32,7 @@ describe("ChatParticipantApi", () => {
 
     describe("should fetch ChatParticipantApi.leaveFromConversation", () => {
         const mockRequest = { participantId: 1, chatId: 1 };
-        const mockURL = `${API_CHAT_LEAVE}/1/1`;
+        const mockURL = `${UI_V1_CHAT_LEAVE}/1/1`;
 
         it("[200] should leave from conversation Success", () => {
             const mockResponse = "Successfully left the chat";
@@ -51,7 +51,7 @@ describe("ChatParticipantApi", () => {
     describe("should fetch ChatParticipantApi.searchParticipantsByUsername", () => {
         it("[200] should leave from conversation Success", () => {
             const mockRequest = { username: "test_username", pageNumber: 1 };
-            testApiCall(mockAdapter, "onGet", `${API_CHAT_SEARCH}/test_username`, 200, mockUsers, ChatParticipantApi.searchParticipantsByUsername, mockRequest);
+            testApiCall(mockAdapter, "onGet", `${UI_V1_CHAT_SEARCH}/test_username`, 200, mockUsers, ChatParticipantApi.searchParticipantsByUsername, mockRequest);
         });
     });
 });

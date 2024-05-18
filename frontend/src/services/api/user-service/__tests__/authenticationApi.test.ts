@@ -4,11 +4,12 @@ import MockAdapter from "axios-mock-adapter";
 import { mockUser } from "../../../../util/test-utils/mock-test-data";
 import { testApiCall } from "../../../../util/test-utils/api-test-helper";
 import {
-    API_AUTH_FORGOT,
-    API_AUTH_FORGOT_EMAIL,
-    API_AUTH_LOGIN,
-    API_AUTH_RESET,
-    API_AUTH_RESET_CURRENT
+    UI_V1_AUTH_FORGOT,
+    UI_V1_AUTH_FORGOT_EMAIL,
+    UI_V1_AUTH_LOGIN,
+    UI_V1_AUTH_RESET,
+    UI_V1_AUTH_RESET_CODE,
+    UI_V1_AUTH_RESET_CURRENT
 } from "../../../../constants/endpoint-constants";
 import { AuthUserResponse } from "../../../../types/user";
 import { AuthenticationApi } from "../authenticationApi";
@@ -25,15 +26,15 @@ describe("AuthenticationApi", () => {
         const mockPasswordErrorResponse = "Incorrect password or email";
 
         it("[200] should Login Success", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_LOGIN, 200, mockAuthUserResponse, AuthenticationApi.login, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_LOGIN, 200, mockAuthUserResponse, AuthenticationApi.login, mockRequest);
         });
 
         it("[404] should User not found", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_LOGIN, 404, mockUserErrorResponse, AuthenticationApi.login, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_LOGIN, 404, mockUserErrorResponse, AuthenticationApi.login, mockRequest);
         });
 
         it("[403] Incorrect password or email", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_LOGIN, 403, mockPasswordErrorResponse, AuthenticationApi.login, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_LOGIN, 403, mockPasswordErrorResponse, AuthenticationApi.login, mockRequest);
         });
     });
 
@@ -43,11 +44,11 @@ describe("AuthenticationApi", () => {
         const mockError = "Email not found";
 
         it("[200] should find existing email success", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_FORGOT_EMAIL, 200, mockResponse, AuthenticationApi.getExistingEmail, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_FORGOT_EMAIL, 200, mockResponse, AuthenticationApi.getExistingEmail, mockRequest);
         });
 
         it("[404] should email not found", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_FORGOT_EMAIL, 404, mockError, AuthenticationApi.getExistingEmail, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_FORGOT_EMAIL, 404, mockError, AuthenticationApi.getExistingEmail, mockRequest);
         });
     });
 
@@ -57,17 +58,17 @@ describe("AuthenticationApi", () => {
         const mockError = "Email not found";
 
         it("[200] should send password reset code success", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_FORGOT, 200, mockResponse, AuthenticationApi.sendPasswordResetCode, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_FORGOT, 200, mockResponse, AuthenticationApi.sendPasswordResetCode, mockRequest);
         });
 
         it("[404] should email not found", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_FORGOT, 404, mockError, AuthenticationApi.sendPasswordResetCode, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_FORGOT, 404, mockError, AuthenticationApi.sendPasswordResetCode, mockRequest);
         });
     });
 
     describe("should fetch AuthenticationApi.getUserByPasswordResetCode", () => {
         const mockRequest = "test_code";
-        const mockUrl = `${API_AUTH_RESET}/${mockRequest}`;
+        const mockUrl = UI_V1_AUTH_RESET_CODE(mockRequest);
         const mockResponse = { id: 1 } as AuthUserResponse;
         const mockErrorResponse = "Password reset code is invalid!";
 
@@ -86,11 +87,11 @@ describe("AuthenticationApi", () => {
         const mockError = "Email not found";
 
         it("[200] should password reset success", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_RESET, 200, mockResponse, AuthenticationApi.passwordReset, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_RESET, 200, mockResponse, AuthenticationApi.passwordReset, mockRequest);
         });
 
         it("[404] should email not found", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_RESET, 404, mockError, AuthenticationApi.passwordReset, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_RESET, 404, mockError, AuthenticationApi.passwordReset, mockRequest);
         });
     });
 
@@ -104,11 +105,11 @@ describe("AuthenticationApi", () => {
         const mockError = "The password you entered was incorrect.";
 
         it("[200] should current password reset success", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_RESET_CURRENT, 200, mockResponse, AuthenticationApi.currentPasswordReset, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_RESET_CURRENT, 200, mockResponse, AuthenticationApi.currentPasswordReset, mockRequest);
         });
 
         it("[404] should password incorrect", () => {
-            testApiCall(mockAdapter, "onPost", API_AUTH_RESET_CURRENT, 404, mockError, AuthenticationApi.currentPasswordReset, mockRequest);
+            testApiCall(mockAdapter, "onPost", UI_V1_AUTH_RESET_CURRENT, 404, mockError, AuthenticationApi.currentPasswordReset, mockRequest);
         });
     });
 });

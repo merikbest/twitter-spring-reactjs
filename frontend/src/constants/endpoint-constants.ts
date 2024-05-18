@@ -1,123 +1,133 @@
 export const HOST = "http://localhost:8000";
-export const API_ENDPOINT = HOST + "/ui/v1";
-export const WS_URL = HOST + "/websocket";
+export const UI_V1 = `${HOST}/ui/v1`;
+export const WS_URL = `${HOST}/websocket`;
+export const UI_V1_IMAGE_UPLOAD = `${UI_V1}/image/upload`;
 
-// AuthApi
-export const API_AUTH_LOGIN = `${API_ENDPOINT}/auth/login`;
-export const API_AUTH_REGISTRATION_CHECK = `${API_ENDPOINT}/auth/registration/check`;
-export const API_AUTH_REGISTRATION_CODE = `${API_ENDPOINT}/auth/registration/code`;
-export const API_AUTH_REGISTRATION_ACTIVATE = `${API_ENDPOINT}/auth/registration/activate`;
-export const API_AUTH_REGISTRATION_CONFIRM = `${API_ENDPOINT}/auth/registration/confirm`;
-export const API_AUTH_FORGOT_EMAIL = `${API_ENDPOINT}/auth/forgot/email`;
-export const API_AUTH_FORGOT = `${API_ENDPOINT}/auth/forgot`;
-export const API_AUTH_RESET = `${API_ENDPOINT}/auth/reset`;
-export const API_AUTH_RESET_CURRENT = `${API_ENDPOINT}/auth/reset/current`;
+// user-service
+export const UI_V1_USER = `${UI_V1}/user`;
+export const UI_V1_AUTH = `${UI_V1}/auth`;
+export const UI_V1_AUTH_LOGIN = `${UI_V1_AUTH}/login`;
+export const UI_V1_AUTH_FORGOT_EMAIL = `${UI_V1_AUTH}/forgot/email`;
+export const UI_V1_AUTH_FORGOT = `${UI_V1_AUTH}/forgot`;
+export const UI_V1_AUTH_RESET = `${UI_V1_AUTH}/reset`;
+export const UI_V1_AUTH_RESET_CODE = (code: string) => `${UI_V1_AUTH}/reset/${code}`;
+export const UI_V1_AUTH_RESET_CURRENT = `${UI_V1_AUTH}/reset/current`;
+export const UI_V1_AUTH_REGISTRATION_CHECK = `${UI_V1_AUTH}/registration/check`;
+export const UI_V1_AUTH_REGISTRATION_CODE = `${UI_V1_AUTH}/registration/code`;
+export const UI_V1_AUTH_REGISTRATION_ACTIVATE_CODE = (code: string) => `${UI_V1_AUTH}/registration/activate/${code}`;
+export const UI_V1_AUTH_REGISTRATION_CONFIRM = `${UI_V1_AUTH}/registration/confirm`;
+export const UI_V1_USER_BLOCKED = `${UI_V1_USER}/blocked`;
+export const UI_V1_USER_BLOCKED_USER_ID = (userId: string | number) => `${UI_V1_USER}/blocked/${userId}`;
+export const UI_V1_USER_FOLLOWERS_USER_ID = (userId: string | number) => `${UI_V1_USER}/followers/${userId}`;
+export const UI_V1_USER_FOLLOWING_USER_ID = (userId: string | number) => `${UI_V1_USER}/following/${userId}`;
+export const UI_V1_USER_FOLLOWER_REQUESTS = `${UI_V1_USER}/follower-requests`;
+export const UI_V1_USER_FOLLOW_USER_ID = (userId: number) => `${UI_V1_USER}/follow/${userId}`;
+export const UI_V1_USER_FOLLOW_OVERALL_USER_ID = (userId: string | number) => `${UI_V1_USER}/follow/overall/${userId}`;
+export const UI_V1_USER_FOLLOW_PRIVATE_USER_ID = (userId: number) => `${UI_V1_USER}/follow/private/${userId}`;
+export const UI_V1_USER_FOLLOW_ACCEPT_USER_ID = (userId: number) => `${UI_V1_USER}/follow/accept/${userId}`;
+export const UI_V1_USER_FOLLOW_DECLINE_USER_ID = (userId: number) => `${UI_V1_USER}/follow/decline/${userId}`;
+export const UI_V1_USER_MUTED = `${UI_V1_USER}/muted`;
+export const UI_V1_USER_MUTED_USER_ID = (userId: number) => `${UI_V1_USER}/muted/${userId}`;
+export const UI_V1_USER_TOKEN = `${UI_V1_USER}/token`;
+export const UI_V1_USER_USER_ID = (userId: number) => `${UI_V1_USER}/${userId}`;
+export const UI_V1_USER_ALL = `${UI_V1_USER}/all`;
+export const UI_V1_USER_RELEVANT = `${UI_V1_USER}/relevant`;
+export const UI_V1_USER_SEARCH_USERNAME = (username: string) => `${UI_V1_USER}/items/search/${username}`;
+export const UI_V1_USER_SEARCH_TEXT = (text: string) => `${UI_V1_USER}/search/${text}`;
+export const UI_V1_USER_SEARCH_RESULTS = `${UI_V1_USER}/search/results`;
+export const UI_V1_USER_START = `${UI_V1_USER}/start`;
+export const UI_V1_USER_SUBSCRIBE_USER_ID = (userId: number) => `${UI_V1_USER}/subscribe/${userId}`;
+export const UI_V1_USER_PIN_TWEET_ID = (tweetId: number) => `${UI_V1_USER}/pin/tweet/${tweetId}`;
+export const UI_V1_USER_DETAILS_USER_ID = (userId: number) => `${UI_V1_USER}/details/${userId}`;
+export const UI_V1_USER_SETTINGS_UPDATE_USERNAME = `${UI_V1_USER}/settings/update/username`;
+export const UI_V1_USER_SETTINGS_UPDATE_EMAIL = `${UI_V1_USER}/settings/update/email`;
+export const UI_V1_USER_SETTINGS_UPDATE_PHONE = `${UI_V1_USER}/settings/update/phone`;
+export const UI_V1_USER_SETTINGS_UPDATE_COUNTRY = `${UI_V1_USER}/settings/update/country`;
+export const UI_V1_USER_SETTINGS_UPDATE_GENDER = `${UI_V1_USER}/settings/update/gender`;
+export const UI_V1_USER_SETTINGS_UPDATE_LANGUAGE = `${UI_V1_USER}/settings/update/language`;
+export const UI_V1_USER_SETTINGS_UPDATE_DIRECT = `${UI_V1_USER}/settings/update/direct`;
+export const UI_V1_USER_SETTINGS_UPDATE_PRIVATE = `${UI_V1_USER}/settings/update/private`;
+export const UI_V1_USER_SETTINGS_UPDATE_COLOR_SCHEME = `${UI_V1_USER}/settings/update/color_scheme`;
+export const UI_V1_USER_SETTINGS_UPDATE_BACKGROUND_COLOR = `${UI_V1_USER}/settings/update/background_color`;
 
-// ChatApi
-export const API_CHAT = `${API_ENDPOINT}/chat`;
-export const API_CHAT_USERS = `${API_ENDPOINT}/chat/users`;
-export const API_CHAT_CREATE = `${API_ENDPOINT}/chat/create`;
-export const API_CHAT_MESSAGES = (chatId: number) => `${API_ENDPOINT}/chat/${chatId}/messages`;
-export const API_CHAT_READ_MESSAGES = (chatId: number) => `${API_ENDPOINT}/chat/${chatId}/read/messages`;
-export const API_CHAT_ADD_MESSAGE = `${API_ENDPOINT}/chat/add/message`;
-export const API_CHAT_ADD_MESSAGE_TWEET = `${API_ENDPOINT}/chat/add/message/tweet`;
-export const API_CHAT_PARTICIPANT = `${API_ENDPOINT}/chat/participant`;
-export const API_CHAT_LEAVE = `${API_ENDPOINT}/chat/leave`;
-export const API_CHAT_SEARCH = `${API_ENDPOINT}/chat/items/search`;
+// tweets-service
+export const UI_V1_TWEETS = `${UI_V1}/tweets`;
+export const UI_V1_TWEETS_USER_BOOKMARKS = `${UI_V1_TWEETS}/user/bookmarks`;
+export const UI_V1_TWEETS_USER_BOOKMARKS_TWEET_ID = (tweetId: number) => `${UI_V1_TWEETS}/user/bookmarks/${tweetId}`;
+export const UI_V1_TWEETS_ID_BOOKMARKED = (tweetId: number) => `${UI_V1_TWEETS}/${tweetId}/bookmarked`;
+export const UI_V1_TWEETS_LIKE = `${UI_V1_TWEETS}/like`;
+export const UI_V1_TWEETS_LIKED_USER_ID = (userId: string | number) => `${UI_V1_TWEETS}/liked/user/${userId}`;
+export const UI_V1_TWEETS_ID_LIKED_USERS = (tweetId: number) => `${UI_V1_TWEETS}/${tweetId}/liked-users`;
+export const UI_V1_TWEETS_POOL = `${UI_V1_TWEETS}/poll`;
+export const UI_V1_TWEETS_VOTE = `${UI_V1_TWEETS}/vote`;
+export const UI_V1_TWEETS_USER_REPLIES = (userId: string | number) => `${UI_V1_TWEETS}/replies/user/${userId}`;
+export const UI_V1_TWEETS_ID_RETWEETED_USERS = (tweetId: number) => `${UI_V1_TWEETS}/${tweetId}/retweeted-users`;
+export const UI_V1_TWEETS_RETWEET = `${UI_V1_TWEETS}/retweet`;
+export const UI_V1_TWEETS_SCHEDULE = `${UI_V1_TWEETS}/schedule`;
+export const UI_V1_TWEETS_ID = (tweetId: number) => `${UI_V1}/tweets/${tweetId}`;
+export const UI_V1_TWEETS_USER_ID = (userId: string | number) => `${UI_V1_TWEETS}/user/${userId}`;
+export const UI_V1_TWEETS_MEDIA_USER_ID = (userId: string | number) => `${UI_V1_TWEETS}/media/user/${userId}`;
+export const UI_V1_TWEETS_IMAGES_USER_ID = (userId: number) => `${UI_V1_TWEETS}/images/${userId}`;
+export const UI_V1_TWEETS_ID_INFO = (tweetId: number) => `${UI_V1_TWEETS}/${tweetId}/info`;
+export const UI_V1_TWEETS_ID_REPLIES = (tweetId: number) => `${UI_V1_TWEETS}/${tweetId}/replies`;
+export const UI_V1_TWEETS_ID_QUOTES = (tweetId: number) => `${UI_V1_TWEETS}/${tweetId}/quotes`;
+export const UI_V1_TWEETS_MEDIA = `${UI_V1_TWEETS}/media`;
+export const UI_V1_TWEETS_VIDEO = `${UI_V1_TWEETS}/video`;
+export const UI_V1_TWEETS_FOLLOWER = `${UI_V1_TWEETS}/follower`;
+export const UI_V1_TWEETS_UPLOAD = `${UI_V1_TWEETS}/upload`;
+export const UI_V1_TWEETS_IMAGE_TAGGED = `${UI_V1_TWEETS}/image/tagged`;
+export const UI_V1_TWEETS_SEARCH_TEXT = (text: string) => `${UI_V1_TWEETS}/search/${text}`;
+export const UI_V1_TWEETS_REPLY = `${UI_V1_TWEETS}/reply`;
+export const UI_V1_TWEETS_QUOTE = `${UI_V1_TWEETS}/quote`;
+export const UI_V1_TWEETS_CHANGE_REPLY = `${UI_V1_TWEETS}/reply/change`;
 
-// ListsApi
-export const API_LISTS = `${API_ENDPOINT}/lists`;
-export const API_LISTS_USER = `${API_ENDPOINT}/lists/user`;
-export const API_LISTS_USER_CONSIST = `${API_ENDPOINT}/lists/user/consist`;
-export const API_LISTS_PINNED = `${API_ENDPOINT}/lists/pined`;
-export const API_LISTS_FOLLOW = `${API_ENDPOINT}/lists/follow`;
-export const API_LISTS_PIN = `${API_ENDPOINT}/lists/pin`;
-export const API_LISTS_ADD_USER = `${API_ENDPOINT}/lists/add/user`;
-export const API_LISTS_TWEETS = (listId: number) => `${API_ENDPOINT}/lists/${listId}/tweets`;
-export const API_LISTS_DETAILS = (listId: number) => `${API_ENDPOINT}/lists/${listId}/details`;
-export const API_LISTS_FOLLOWERS = (listId: number, listOwnerId: number) => `${API_ENDPOINT}/lists/${listId}/${listOwnerId}/followers`;
-export const API_LISTS_MEMBERS = (listId: number, listOwnerId: number) => `${API_ENDPOINT}/lists/${listId}/${listOwnerId}/members`;
-export const API_LISTS_SEARCH = `${API_ENDPOINT}/lists/search`;
+// chat-service
+export const UI_V1_CHAT = `${UI_V1}/chat`;
+export const UI_V1_CHAT_CHAT_ID = (chatId: number) => `${UI_V1_CHAT}/${chatId}`;
+export const UI_V1_CHAT_USERS = `${UI_V1_CHAT}/users`;
+export const UI_V1_CHAT_CREATE_USER_ID = (chatId: number) => `${UI_V1_CHAT}/create/${chatId}`;
+export const UI_V1_CHAT_ID_MESSAGES = (chatId: number) => `${UI_V1_CHAT}/${chatId}/messages`;
+export const UI_V1_CHAT_ID_READ_MESSAGES = (chatId: number) => `${UI_V1_CHAT}/${chatId}/read/messages`;
+export const UI_V1_CHAT_ADD_MESSAGE = `${UI_V1_CHAT}/add/message`;
+export const UI_V1_CHAT_ADD_MESSAGE_TWEET = `${UI_V1_CHAT}/add/message/tweet`;
+export const UI_V1_CHAT_PARTICIPANT = `${UI_V1_CHAT}/participant`;
+export const UI_V1_CHAT_LEAVE = `${UI_V1_CHAT}/leave`;
+export const UI_V1_CHAT_SEARCH = `${UI_V1_CHAT}/items/search`;
 
-// TagApi
-export const API_TAGS = `${API_ENDPOINT}/tags`;
-export const API_TAGS_TRENDS = `${API_ENDPOINT}/tags/trends`;
-export const API_TAGS_SEARCH = `${API_ENDPOINT}/tags/search`;
+// lists-service
+export const UI_V1_LISTS = `${UI_V1}/lists`;
+export const UI_V1_LISTS_ID = (listId: number) => `${UI_V1_LISTS}/${listId}`
+export const UI_V1_LISTS_USER = `${UI_V1_LISTS}/user`;
+export const UI_V1_LISTS_USER_ID = (userId: number) => `${UI_V1_LISTS}/user/${userId}`;
+export const UI_V1_LISTS_USER_CONSIST = `${UI_V1_LISTS}/user/consist`;
+export const UI_V1_LISTS_PINNED = `${UI_V1_LISTS}/pined`;
+export const UI_V1_LISTS_FOLLOW = (listId: number) => `${UI_V1_LISTS}/follow/${listId}`;
+export const UI_V1_LISTS_PIN = (listId: number) => `${UI_V1_LISTS}/pin/${listId}`;
+export const UI_V1_LISTS_ADD_USER = `${UI_V1_LISTS}/add/user`;
+export const UI_V1_LISTS_TWEETS = (listId: number) => `${UI_V1_LISTS}/${listId}/tweets`;
+export const UI_V1_LISTS_DETAILS = (listId: number) => `${UI_V1_LISTS}/${listId}/details`;
+export const UI_V1_LISTS_FOLLOWERS = (listId: number, listOwnerId: number) => `${UI_V1_LISTS}/${listId}/${listOwnerId}/followers`;
+export const UI_V1_LISTS_MEMBERS = (listId: number, listOwnerId: number) => `${UI_V1_LISTS}/${listId}/${listOwnerId}/members`;
+export const UI_V1_LISTS_SEARCH = `${UI_V1_LISTS}/search`;
 
-// TopicApi
-export const API_TOPICS = `${API_ENDPOINT}/topics`;
-export const API_TOPICS_SUGGESTED = `${API_ENDPOINT}/topics/suggested`;
-export const API_TOPICS_CATEGORY = `${API_ENDPOINT}/topics/category`;
-export const API_TOPICS_FOLLOWED = `${API_ENDPOINT}/topics/followed`;
-export const API_TOPICS_NOT_INTERESTED = `${API_ENDPOINT}/topics/not_interested`;
-export const API_TOPICS_FOLLOW = `${API_ENDPOINT}/topics/follow`;
+// tag-service
+export const UI_V1_TAGS = `${UI_V1}/tags`;
+export const UI_V1_TAGS_TRENDS = `${UI_V1_TAGS}/trends`;
+export const UI_V1_TAGS_SEARCH = `${UI_V1_TAGS}/search`;
 
-// TweetApi
-export const API_TWEETS = `${API_ENDPOINT}/tweets`;
-export const API_TWEETS_MEDIA = `${API_ENDPOINT}/tweets/media`;
-export const API_TWEETS_VIDEO = `${API_ENDPOINT}/tweets/video`;
-export const API_TWEETS_FOLLOWER = `${API_ENDPOINT}/tweets/follower`;
-export const API_TWEETS_SCHEDULE = `${API_ENDPOINT}/tweets/schedule`;
-export const API_TWEETS_INFO = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/info`;
-export const API_TWEETS_REPLIES = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/replies`;
-export const API_TWEETS_QUOTES = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/quotes`;
-export const API_TWEETS_LIKED_USERS = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/liked-users`;
-export const API_TWEETS_RETWEETED_USERS = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/retweeted-users`;
-export const API_TWEETS_BOOKMARKED = (tweetId: number) => `${API_ENDPOINT}/tweets/${tweetId}/bookmarked`;
-export const API_TWEETS_IMAGE_TAGGED = `${API_ENDPOINT}/tweets/image/tagged`;
-export const API_TWEETS_POOL = `${API_ENDPOINT}/tweets/poll`;
-export const API_TWEETS_SEARCH = `${API_ENDPOINT}/tweets/search`;
-export const API_TWEETS_LIKE = `${API_ENDPOINT}/tweets/like`;
-export const API_TWEETS_RETWEET = `${API_ENDPOINT}/tweets/retweet`;
-export const API_TWEETS_REPLY = `${API_ENDPOINT}/tweets/reply`;
-export const API_TWEETS_QUOTE = `${API_ENDPOINT}/tweets/quote`;
-export const API_TWEETS_CHANGE_REPLY = `${API_ENDPOINT}/tweets/reply/change`;
-export const API_TWEETS_VOTE = `${API_ENDPOINT}/tweets/vote`;
-export const API_TWEETS_USER_BOOKMARKS = `${API_ENDPOINT}/tweets/user/bookmarks`;
-export const API_TWEETS_USER_LIKED = (userId: string | number) => `${API_ENDPOINT}/tweets/liked/user/${userId}`;
-export const API_TWEETS_USER_REPLIES = (userId: string | number) => `${API_ENDPOINT}/tweets/replies/user/${userId}`;
-export const API_TWEETS_USER_MEDIA = (userId: string | number) => `${API_ENDPOINT}/tweets/media/user/${userId}`;
-export const API_TWEETS_USER_TWEETS = (userId: string | number) => `${API_ENDPOINT}/tweets/user/${userId}`;
-export const API_TWEETS_IMAGES = `${API_ENDPOINT}/tweets/images`;
-export const API_TWEETS_UPLOAD = `${API_ENDPOINT}/tweets/upload`;
+// topic-service
+export const UI_V1_TOPICS = `${UI_V1}/topics`;
+export const UI_V1_TOPICS_SUGGESTED = `${UI_V1_TOPICS}/suggested`;
+export const UI_V1_TOPICS_CATEGORY = `${UI_V1_TOPICS}/category`;
+export const UI_V1_TOPICS_FOLLOWED = `${UI_V1_TOPICS}/followed`;
+export const UI_V1_TOPICS_FOLLOWED_ID = (userId: number) => `${UI_V1_TOPICS}/followed/${userId}`;
+export const UI_V1_TOPICS_NOT_INTERESTED = `${UI_V1_TOPICS}/not_interested`;
+export const UI_V1_TOPICS_NOT_INTERESTED_TOPIC_ID = (topicId: number) => `${UI_V1_TOPICS}/not_interested/${topicId}`;
+export const UI_V1_TOPICS_FOLLOW_TOPIC_ID = (topicId: number) => `${UI_V1_TOPICS}/follow/${topicId}`;
 
-// UserApi
-export const API_USER = `${API_ENDPOINT}/user`;
-export const API_USER_ALL = `${API_ENDPOINT}/user/all`;
-export const API_USER_RELEVANT = `${API_ENDPOINT}/user/relevant`;
-export const API_USER_SEARCH_USERNAME = `${API_ENDPOINT}/user/items/search`;
-export const API_USER_SEARCH_TEXT = `${API_ENDPOINT}/user/search`;
-export const API_USER_SEARCH_RESULTS = `${API_ENDPOINT}/user/search/results`;
-export const API_USER_UPLOAD_IMAGE = `${API_ENDPOINT}/user/upload`;
-export const API_USER_FOLLOWERS = `${API_ENDPOINT}/user/followers`;
-export const API_USER_FOLLOWING = `${API_ENDPOINT}/user/following`;
-export const API_USER_FOLLOWER_REQUESTS = `${API_ENDPOINT}/user/follower-requests`;
-export const API_USER_FOLLOW = `${API_ENDPOINT}/user/follow`;
-export const API_USER_FOLLOW_OVERALL = `${API_ENDPOINT}/user/follow/overall`;
-export const API_USER_FOLLOW_PRIVATE = `${API_ENDPOINT}/user/follow/private`;
-export const API_USER_FOLLOW_ACCEPT = `${API_ENDPOINT}/user/follow/accept`;
-export const API_USER_FOLLOW_DECLINE = `${API_ENDPOINT}/user/follow/decline`;
-export const API_USER_SUBSCRIBE = `${API_ENDPOINT}/user/subscribe`;
-export const API_NOTIFICATION = `${API_ENDPOINT}/notification`;
-export const API_NOTIFICATION_USER = `${API_ENDPOINT}/notification/user`;
-export const API_NOTIFICATION_MENTIONS = `${API_ENDPOINT}/notification/mentions`;
-export const API_NOTIFICATION_SUBSCRIBES = `${API_ENDPOINT}/notification/subscribes`;
-export const API_NOTIFICATION_TIMELINE = `${API_ENDPOINT}/notification/timeline`;
-export const API_USER_START = `${API_ENDPOINT}/user/start`;
-export const API_USER_PIN_TWEET = `${API_ENDPOINT}/user/pin/tweet`;
-export const API_USER_BLOCKED = `${API_ENDPOINT}/user/blocked`;
-export const API_USER_MUTED = `${API_ENDPOINT}/user/muted`;
-export const API_USER_DETAILS = `${API_ENDPOINT}/user/details`;
-export const API_USER_TOKEN = `${API_ENDPOINT}/user/token`;
-
-// UserSettingsApi
-export const API_SETTINGS_UPDATE_USERNAME = `${API_ENDPOINT}/settings/update/username`;
-export const API_SETTINGS_UPDATE_EMAIL = `${API_ENDPOINT}/settings/update/email`;
-export const API_SETTINGS_UPDATE_PHONE = `${API_ENDPOINT}/settings/update/phone`;
-export const API_SETTINGS_UPDATE_COUNTRY = `${API_ENDPOINT}/settings/update/country`;
-export const API_SETTINGS_UPDATE_GENDER = `${API_ENDPOINT}/settings/update/gender`;
-export const API_SETTINGS_UPDATE_LANGUAGE = `${API_ENDPOINT}/settings/update/language`;
-export const API_SETTINGS_UPDATE_DIRECT = `${API_ENDPOINT}/settings/update/direct`;
-export const API_SETTINGS_UPDATE_PRIVATE = `${API_ENDPOINT}/settings/update/private`;
-export const API_SETTINGS_UPDATE_COLOR_SCHEME = `${API_ENDPOINT}/settings/update/color_scheme`;
-export const API_SETTINGS_UPDATE_BACKGROUND_COLOR = `${API_ENDPOINT}/settings/update/background_color`;
+// notification-service
+export const UI_V1_NOTIFICATION = `${UI_V1}/notification`;
+export const UI_V1_NOTIFICATION_USER = `${UI_V1_NOTIFICATION}/user`;
+export const UI_V1_NOTIFICATION_MENTIONS = `${UI_V1_NOTIFICATION}/mentions`;
+export const UI_V1_NOTIFICATION_SUBSCRIBES = `${UI_V1_NOTIFICATION}/subscribes`;
+export const UI_V1_NOTIFICATION_TIMELINE = `${UI_V1_NOTIFICATION}/timeline`;

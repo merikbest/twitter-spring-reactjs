@@ -46,8 +46,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Override
     @Transactional
     public Map<String, Object> updateEmail(String email) {
-        if (userSettingsRepository.isEmailExist(email)) {
-            Long authUserId = authenticationService.getAuthenticatedUserId();
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+
+        if (!userSettingsRepository.isEmailExist(authUserId, email)) {
             userSettingsRepository.updateEmail(email, authUserId);
             String token = jwtProvider.createToken(email, UserRole.USER.name());
             AuthUserProjection user = userRepository.getUserById(authUserId, AuthUserProjection.class).get();

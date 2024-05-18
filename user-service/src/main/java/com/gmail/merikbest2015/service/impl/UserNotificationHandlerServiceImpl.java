@@ -5,7 +5,6 @@ import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserNotificationHandlerService;
-import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,15 +33,13 @@ public class UserNotificationHandlerServiceImpl implements UserNotificationHandl
     @Override
     @Transactional
     public void resetNotificationCount(Long notifiedUserEventId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        userRepository.resetNotificationCount(authUserId);
+        userRepository.resetNotificationCount(notifiedUserEventId);
     }
 
     @Override
     @Transactional
     public void resetMentionCount(Long notifiedUserEventId) {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        userRepository.resetMentionCount(authUserId);
+        userRepository.resetMentionCount(notifiedUserEventId);
     }
 
     @Override

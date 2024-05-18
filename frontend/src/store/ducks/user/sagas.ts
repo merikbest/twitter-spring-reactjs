@@ -201,9 +201,9 @@ export function* updateUsernameRequest({ payload }: UpdateUsernameActionInterfac
 export function* updateEmailRequest({ payload }: UpdateEmailActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const item: AuthenticationResponse = yield call(UserSettingsApi.updateEmail, payload);
-        localStorage.setItem(TOKEN, item.token);
-        yield put(setEmail(item.user.email));
+        const item: AxiosResponse<AuthenticationResponse> = yield call(UserSettingsApi.updateEmail, payload);
+        localStorage.setItem(TOKEN, item.data.token);
+        yield put(setEmail(item.data.user.email));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
