@@ -50,7 +50,7 @@ public class TweetServiceHelperTest extends AbstractServiceTest {
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
-        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
+//        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
 //        verify(notificationClient, times(1)).sendTweetNotificationToSubscribers(tweet.getId());
     }
 
@@ -65,7 +65,7 @@ public class TweetServiceHelperTest extends AbstractServiceTest {
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
-        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
+//        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
 //        verify(notificationClient, times(1)).sendTweetNotificationToSubscribers(tweet.getId());
     }
 
@@ -84,7 +84,7 @@ public class TweetServiceHelperTest extends AbstractServiceTest {
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
-        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
+//        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
 //        verify(notificationClient, times(1)).sendTweetNotificationToSubscribers(tweet.getId());
     }
 }

@@ -22,4 +22,6 @@ public class KafkaTopicConstants {
     public static final String UPDATE_USER_MENTIONS_COUNT_TOPIC = "notification-service.user.update-mentions-count";
     public static final String RESET_USER_NOTIFICATIONS_COUNT_TOPIC = "notification-service.user.reset-notifications-count";
     public static final String RESET_USER_MENTIONS_COUNT_TOPIC = "notification-service.user.reset-mentions-count";
+    public static final String PARSE_TWEETS_HASHTAG_TOPIC = "tweet-service.tweet.parse.tag";
+    public static final String DELETE_TWEETS_HASHTAG_TOPIC = "tweet-service.tweet.delete.tag";
 }

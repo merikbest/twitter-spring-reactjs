@@ -1,9 +1,6 @@
 package com.gmail.merikbest2015.configuration;
 
-import com.gmail.merikbest2015.event.TweetMentionNotificationEvent;
-import com.gmail.merikbest2015.event.TweetNotificationEvent;
-import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
-import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
+import com.gmail.merikbest2015.event.*;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +31,11 @@ public class KafkaProducerConfiguration {
     }
 
     @Bean
+    public KafkaTemplate<String, Long> kafkaTemplate() {
+        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
+    }
+
+    @Bean
     public KafkaTemplate<String, UpdateTweetCountEvent> kafkaUpdateTweetCountTemplate() {
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
     }
@@ -50,6 +52,11 @@ public class KafkaProducerConfiguration {
 
     @Bean
     public KafkaTemplate<String, TweetMentionNotificationEvent> kafkaTweetMentionNotificationTemplate() {
+        return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
+    }
+
+    @Bean
+    public KafkaTemplate<String, TweetTagEvent> kafkaTagTemplate() {
         return new KafkaTemplate<>(new DefaultKafkaProducerFactory<>(producerConfigs()));
     }
 }

@@ -1,12 +1,11 @@
 package com.gmail.merikbest2015.service.util;
 
+import com.gmail.merikbest2015.broker.producer.TagProducer;
 import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
 import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
-import com.gmail.merikbest2015.dto.request.TweetTextRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.client.TagClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
@@ -49,7 +48,7 @@ public class TweetServiceHelper {
     private final UpdateTweetCountProducer updateTweetCountProducer;
     private final TweetNotificationProducer tweetNotificationProducer;
     private final UserService userService;
-    private final TagClient tagClient;
+    private final TagProducer tagProducer;
     private final BasicMapper basicMapper;
 
     @Value("${google.api.url}")
@@ -146,7 +145,7 @@ public class TweetServiceHelper {
         TweetResponse tweetResponse = basicMapper.convertToResponse(tweetProjection, TweetResponse.class);
         sendUserReplyMention(tweet, authUser);
         sendUserMentions(tweet, authUser);
-        tagClient.parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
+        tagProducer.parseHashtag(tweet.getId(), tweet.getText());
         tweetNotificationProducer.sendTweetSubscriberNotificationEvent(tweet, authUser);
         return tweetResponse;
     }

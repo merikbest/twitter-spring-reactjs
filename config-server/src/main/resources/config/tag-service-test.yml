@@ -18,6 +18,10 @@ spring:
         init:
             mode: always
             data-locations: classpath:sql-test/clear-tag-db.sql, classpath:sql-test/populate-tag-db.sql
+    kafka:
+        bootstrap-servers: localhost:9092
+        consumer:
+            group-id: tag-test
 eureka:
     client:
         service-url:

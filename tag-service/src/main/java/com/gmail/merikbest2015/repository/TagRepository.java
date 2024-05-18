@@ -28,9 +28,14 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     List<Tag> getTagsByIds(@Param("tagIds") List<Long> tagIds);
 
     @Modifying
-    @Query("UPDATE Tag tag SET tag.tweetsQuantity = " +
-            "CASE WHEN :increaseCount = true THEN (tag.tweetsQuantity + 1) " +
-            "ELSE (tag.tweetsQuantity - 1) END " +
-            "WHERE tag.id = :tagId")
+    @Query("""
+            UPDATE Tag tag SET tag.tweetsQuantity =
+            CASE
+                WHEN :increaseCount = true
+                THEN (tag.tweetsQuantity + 1)
+                ELSE (tag.tweetsQuantity - 1)
+            END
+            WHERE tag.id = :tagId
+            """)
     void updateTagQuantity(@Param("tagId") Long tagId, @Param("increaseCount") boolean increaseCount);
 }

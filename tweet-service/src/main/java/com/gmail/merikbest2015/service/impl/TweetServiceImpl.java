@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.broker.producer.TagProducer;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.ImageClient;
-import com.gmail.merikbest2015.client.TagClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.model.User;
@@ -40,7 +40,7 @@ public class TweetServiceImpl implements TweetService {
     private final TweetImageRepository tweetImageRepository;
     private final RetweetRepository retweetRepository;
     private final UserService userService;
-    private final TagClient tagClient;
+    private final TagProducer tagProducer;
     private final ImageClient imageClient;
 
     @Override
@@ -167,7 +167,7 @@ public class TweetServiceImpl implements TweetService {
         if (authUser.getPinnedTweet() != null && authUser.getPinnedTweet().equals(tweet)) {
             authUser.setPinnedTweet(null);
         }
-        tagClient.deleteTagsByTweetId(tweetId);
+        tagProducer.deleteTag(tweetId);
         tweet.setDeleted(true);
         return "Your Tweet was deleted";
     }
