@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListsNotificationEvent {
-    private boolean notificationCondition;
-    private UserNotificationDto notifiedUser;
-    private UserNotificationDto user;
-    private ListsNotificationDto lists;
+public class ListsNotificationDto {
+    private Long id;
+    private String listName;
 }

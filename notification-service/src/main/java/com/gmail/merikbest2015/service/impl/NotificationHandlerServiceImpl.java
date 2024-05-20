@@ -19,8 +19,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static com.gmail.merikbest2015.constants.WebsocketConstants.*;
 
 @Service
@@ -37,50 +35,42 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
 
     @Override
     @Transactional
-    public void handleListsNotification(ListsNotificationEvent notificationEvent) {
-        Long authUserId = notificationEvent.getUser().getId();
-        Optional<Notification> tweetNotification = notificationRepository.getListNotification(
-                notificationEvent.getNotifiedUser().getId(),
-                notificationEvent.getLists().getId(),
-                authUserId,
-                NotificationType.LISTS
-        );
-        if (!notificationEvent.getNotifiedUser().getId().equals(authUserId)) {
-            if (tweetNotification.isEmpty()) {
-                User notifiedUser = userHandlerService.getOrCreateUser(notificationEvent.getNotifiedUser());
-                User user = userHandlerService.getOrCreateUser(notificationEvent.getUser());
-                Lists list = listsHandlerService.getOrCreateList(notificationEvent.getLists());
-                Notification newNotification = new Notification();
-                newNotification.setNotificationType(NotificationType.LISTS);
-                newNotification.setNotifiedUser(notifiedUser);
-                newNotification.setUser(user);
-                newNotification.setList(list);
-                notificationRepository.save(newNotification);
-                userNotificationProducer.increaseNotificationsCount(newNotification.getNotifiedUser().getId());
-                NotificationResponse response = sendNotification(newNotification, notificationEvent.isNotificationCondition());
-                webSocketClient.send(TOPIC_NOTIFICATIONS + notifiedUser.getId(), response);
-                return;
+    public void handleListsNotification(ListsNotificationEvent event) {
+        Long notifiedUserId = event.getNotifiedUser().getId();
+        Long authUserId = event.getUser().getId();
+        Long listId = event.getLists().getId();
+
+        if (!notifiedUserId.equals(authUserId)) {
+            if (!notificationRepository.isListNotificationExists(notifiedUserId, listId, authUserId, NotificationType.LISTS)) {
+                User notifiedUser = userHandlerService.getOrCreateUser(event.getNotifiedUser());
+                User user = userHandlerService.getOrCreateUser(event.getUser());
+                Lists list = listsHandlerService.getOrCreateList(event.getLists());
+                Notification notification = new Notification();
+                notification.setNotificationType(NotificationType.LISTS);
+                notification.setNotifiedUser(notifiedUser);
+                notification.setUser(user);
+                notification.setList(list);
+                notificationRepository.save(notification);
+                userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
+                NotificationResponse response = notificationHandlerMapper.convertToNotificationListResponse(
+                        notification, event.isNotificationCondition());
+                webSocketClient.send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
             }
         }
-        tweetNotification.ifPresent(notification ->
-                sendNotification(notification, notificationEvent.isNotificationCondition()));
     }
 
     @Override
     @Transactional
-    public void handleFollowUserNotification(FollowUserNotificationEvent notificationEvent) {
-        Long authUserId = notificationEvent.getUser().getId();
-        Optional<Notification> tweetNotification = notificationRepository.getUserNotification(
-                notificationEvent.getNotifiedUser().getId(),
-                notificationEvent.getUserToFollow().getId(),
-                authUserId,
-                NotificationType.FOLLOW
-        );
-        if (!notificationEvent.getNotifiedUser().getId().equals(authUserId)) {
-            if (tweetNotification.isEmpty()) {
-                User notifiedUser = userHandlerService.getOrCreateUser(notificationEvent.getNotifiedUser());
-                User user = userHandlerService.getOrCreateUser(notificationEvent.getUser());
-                User follower = userHandlerService.getOrCreateUser(notificationEvent.getUserToFollow());
+    public void handleFollowUserNotification(FollowUserNotificationEvent event) {
+        Long authUserId = event.getUser().getId();
+        Long notifiedUserId = event.getNotifiedUser().getId();
+        Long followId = event.getUserToFollow().getId();
+
+        if (!notifiedUserId.equals(authUserId)) {
+            if (!notificationRepository.isUserNotificationExists(notifiedUserId, followId, authUserId, NotificationType.FOLLOW)) {
+                User notifiedUser = userHandlerService.getOrCreateUser(event.getNotifiedUser());
+                User user = userHandlerService.getOrCreateUser(event.getUser());
+                User follower = userHandlerService.getOrCreateUser(event.getUserToFollow());
                 Notification notification = new Notification();
                 notification.setNotificationType(NotificationType.FOLLOW);
                 notification.setNotifiedUser(notifiedUser);
@@ -88,45 +78,46 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
                 notification.setUserToFollow(follower);
                 notificationRepository.save(notification);
                 userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
-                NotificationResponse notificationResponse = notificationHandlerMapper.convertToNotificationUserResponse(
-                        notification, notificationEvent.isNotificationCondition());
-                webSocketClient.send(TOPIC_NOTIFICATIONS + notificationResponse.getNotifiedUser().getId(), notificationResponse);
-                return;
+                NotificationResponse response = notificationHandlerMapper.convertToNotificationUserResponse(
+                        notification, event.isNotificationCondition());
+                webSocketClient.send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
             }
         }
-        tweetNotification.ifPresent(notification ->
-                sendNotification(notification, notificationEvent.isNotificationCondition()));
     }
 
     @Override
     @Transactional
-    public void handleTweetNotification(TweetNotificationEvent notificationEvent) {
-        Long authUserId = notificationEvent.getUser().getId();
-        Optional<Notification> tweetNotification = notificationRepository.getTweetNotification(
-                notificationEvent.getNotifiedUser().getId(),
-                notificationEvent.getTweet().getId(),
-                authUserId,
-                notificationEvent.getNotificationType()
-        );
-        if (!notificationEvent.getNotifiedUser().getId().equals(authUserId)) {
-            if (tweetNotification.isEmpty()) {
-                User notifiedUser = userHandlerService.getOrCreateUser(notificationEvent.getNotifiedUser());
-                User user = userHandlerService.getOrCreateUser(notificationEvent.getUser());
-                Tweet tweet = tweetHandlerService.getOrCreateTweet(notificationEvent.getTweet());
-                Notification newNotification = new Notification();
-                newNotification.setNotificationType(notificationEvent.getNotificationType());
-                newNotification.setNotifiedUser(notifiedUser);
-                newNotification.setUser(user);
-                newNotification.setTweet(tweet);
-                notificationRepository.save(newNotification);
-                userNotificationProducer.increaseNotificationsCount(newNotification.getNotifiedUser().getId());
-                NotificationResponse response = sendNotification(newNotification, notificationEvent.isNotificationCondition());
-                webSocketClient.send(TOPIC_NOTIFICATIONS + notifiedUser.getId(), response);
+    public void handleTweetNotification(TweetNotificationEvent event) {
+        Long authUserId = event.getUser().getId();
+        Long notifiedUserId = event.getNotifiedUser().getId();
+        Long tweetId = event.getTweet().getId();
+        NotificationType notificationType = event.getNotificationType();
+
+        if (!notifiedUserId.equals(authUserId)) {
+            if (!notificationRepository.isTweetNotificationExists(notifiedUserId, tweetId, authUserId, notificationType)) {
+                User notifiedUser = userHandlerService.getOrCreateUser(event.getNotifiedUser());
+                User user = userHandlerService.getOrCreateUser(event.getUser());
+                Tweet tweet = tweetHandlerService.getOrCreateTweet(event.getTweet());
+                Notification notification = new Notification();
+                notification.setNotificationType(event.getNotificationType());
+                notification.setNotifiedUser(notifiedUser);
+                notification.setUser(user);
+                notification.setTweet(tweet);
+                notificationRepository.save(notification);
+                userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
+                NotificationResponse response = notificationHandlerMapper.convertToNotificationTweetResponse(
+                        notification, event.isNotificationCondition());
+                webSocketClient.send(TOPIC_FEED, response);
+                webSocketClient.send(TOPIC_USER_UPDATE_TWEET, response);
+                webSocketClient.send(TOPIC_TWEET + response.getTweet().getId(), response);
+                webSocketClient.send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
                 return;
             }
         }
-        tweetNotification.ifPresent(notification ->
-                sendNotification(notification, notificationEvent.isNotificationCondition()));
+        NotificationResponse response = notificationHandlerMapper.convertToNotificationTweetResponse(event);
+        webSocketClient.send(TOPIC_FEED, response);
+        webSocketClient.send(TOPIC_USER_UPDATE_TWEET, response);
+        webSocketClient.send(TOPIC_TWEET + response.getTweet().getId(), response);
     }
 
     @Override
@@ -159,15 +150,8 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
         notification.setNotifiedUser(notifiedUser);
         notification.setUser(user);
         notification.setTweet(tweet);
+        notificationRepository.save(notification);
         userNotificationProducer.increaseMentionsCount(notifiedUser.getId());
-        webSocketClient.send(TOPIC_MENTIONS + user.getId(), notificationEvent.getTweetResponse());
-    }
-
-    private NotificationResponse sendNotification(Notification notification, boolean isTweetLiked) {
-        NotificationResponse response = notificationHandlerMapper.convertToNotificationTweetResponse(notification, isTweetLiked);
-        webSocketClient.send(TOPIC_FEED, response);
-        webSocketClient.send(TOPIC_USER_UPDATE_TWEET, response);
-        webSocketClient.send(TOPIC_TWEET + notification.getTweet().getId(), response);
-        return response;
+        webSocketClient.send(TOPIC_MENTIONS + notifiedUser.getId(), notificationEvent.getTweetResponse());
     }
 }

@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.ListsNotificationEvent;
+import com.gmail.merikbest2015.event.ListsNotificationDto;
 import com.gmail.merikbest2015.event.UpdateListsEvent;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.repository.ListsRepository;
@@ -20,7 +20,7 @@ public class ListsHandlerServiceImpl implements ListsHandlerService {
     }
 
     @Override
-    public Lists getOrCreateList(ListsNotificationEvent.Lists lists) {
+    public Lists getOrCreateList(ListsNotificationDto lists) {
         return listsRepository.findById(lists.getId())
                 .orElseGet(() -> {
                     Lists newList = new Lists();

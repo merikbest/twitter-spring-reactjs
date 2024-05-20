@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.mapper;
 
+import com.gmail.merikbest2015.event.ListsNotificationDto;
 import com.gmail.merikbest2015.event.ListsNotificationEvent;
 import com.gmail.merikbest2015.event.UserNotificationDto;
 import com.gmail.merikbest2015.model.Lists;
@@ -26,7 +27,7 @@ public class ListsNotificationMapper {
         return basicMapper.convertToResponse(user, UserNotificationDto.class);
     }
 
-    private ListsNotificationEvent.Lists toListsDto(Lists lists) {
-        return basicMapper.convertToResponse(lists, ListsNotificationEvent.Lists.class);
+    private ListsNotificationDto toListsDto(Lists lists) {
+        return basicMapper.convertToResponse(lists, ListsNotificationDto.class);
     }
 }

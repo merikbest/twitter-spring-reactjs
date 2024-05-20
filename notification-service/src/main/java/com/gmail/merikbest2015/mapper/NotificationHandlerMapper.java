@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.event.TweetNotificationEvent;
 import com.gmail.merikbest2015.model.Notification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,12 @@ public class NotificationHandlerMapper {
     public NotificationResponse convertToNotificationTweetResponse(Notification notification, boolean isTweetLiked) {
         NotificationResponse notificationResponse = basicMapper.convertToResponse(notification, NotificationResponse.class);
         notificationResponse.getTweet().setNotificationCondition(isTweetLiked);
+        return notificationResponse;
+    }
+
+    public NotificationResponse convertToNotificationTweetResponse(TweetNotificationEvent event) {
+        NotificationResponse notificationResponse = basicMapper.convertToResponse(event, NotificationResponse.class);
+        notificationResponse.getTweet().setNotificationCondition(event.isNotificationCondition());
         return notificationResponse;
     }
 }
