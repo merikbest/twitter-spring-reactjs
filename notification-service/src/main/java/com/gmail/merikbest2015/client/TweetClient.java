@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.client;
 
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,9 +21,6 @@ public interface TweetClient {
 
     @GetMapping(TWEET_ID)
     TweetResponse getTweetById(@PathVariable("tweetId") Long tweetId);
-
-    @GetMapping(NOTIFICATION_TWEET_ID)
-    NotificationTweetResponse getNotificationTweet(@PathVariable("tweetId") Long tweetId);
 
     @PostMapping(IDS)
     List<TweetResponse> getTweetsByIds(@RequestBody IdsRequest idsRequest);

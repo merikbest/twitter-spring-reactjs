@@ -41,7 +41,7 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
         Long listId = event.getLists().getId();
 
         if (!notifiedUserId.equals(authUserId)) {
-            if (!notificationRepository.isListNotificationExists(notifiedUserId, listId, authUserId, NotificationType.LISTS)) {
+            if (!notificationRepository.isNotificationExists(notifiedUserId, authUserId, NotificationType.LISTS, listId)) {
                 User notifiedUser = userHandlerService.getOrCreateUser(event.getNotifiedUser());
                 User user = userHandlerService.getOrCreateUser(event.getUser());
                 Lists list = listsHandlerService.getOrCreateList(event.getLists());
@@ -67,7 +67,7 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
         Long followId = event.getUserToFollow().getId();
 
         if (!notifiedUserId.equals(authUserId)) {
-            if (!notificationRepository.isUserNotificationExists(notifiedUserId, followId, authUserId, NotificationType.FOLLOW)) {
+            if (!notificationRepository.isNotificationExists(notifiedUserId, authUserId, NotificationType.FOLLOW, followId)) {
                 User notifiedUser = userHandlerService.getOrCreateUser(event.getNotifiedUser());
                 User user = userHandlerService.getOrCreateUser(event.getUser());
                 User follower = userHandlerService.getOrCreateUser(event.getUserToFollow());
@@ -94,7 +94,7 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
         NotificationType notificationType = event.getNotificationType();
 
         if (!notifiedUserId.equals(authUserId)) {
-            if (!notificationRepository.isTweetNotificationExists(notifiedUserId, tweetId, authUserId, notificationType)) {
+            if (!notificationRepository.isNotificationExists(notifiedUserId, authUserId, notificationType, tweetId)) {
                 User notifiedUser = userHandlerService.getOrCreateUser(event.getNotifiedUser());
                 User user = userHandlerService.getOrCreateUser(event.getUser());
                 Tweet tweet = tweetHandlerService.getOrCreateTweet(event.getTweet());

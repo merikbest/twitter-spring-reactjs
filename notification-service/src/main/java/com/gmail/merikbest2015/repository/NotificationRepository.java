@@ -18,40 +18,21 @@ import java.util.Optional;
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
     @Query("""
-            SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification
-            WHERE notification.notifiedUser.id = :userId
-            AND notification.list.id = :listId
-            AND notification.user.id= :authUserId
-            AND notification.notificationType = :notificationType
-            """)
-    boolean isListNotificationExists(@Param("userId") Long userId,
-                                     @Param("listId") Long listId,
-                                     @Param("authUserId") Long authUserId,
-                                     @Param("notificationType") NotificationType type);
-
-    @Query("""
-            SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification
-            WHERE notification.notifiedUser.id = :userId
-            AND notification.userToFollow.id = :userToFollowId
+            SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END
+            FROM Notification notification
+            WHERE notification.notifiedUser.id = :notifiedUserId
             AND notification.user.id = :authUserId
             AND notification.notificationType = :notificationType
+            AND (
+                    (:notificationType IN ('TWEET', 'RETWEET', 'REPLY', 'LIKE') AND notification.tweet.id = :id) OR
+                    (:notificationType = 'LISTS' AND notification.list.id = :id) OR
+                    (:notificationType = 'FOLLOW' AND notification.userToFollow.id = :id)
+                )
             """)
-    boolean isUserNotificationExists(@Param("userId") Long userId,
-                                     @Param("userToFollowId") Long userToFollowId,
-                                     @Param("authUserId") Long authUserId,
-                                     @Param("notificationType") NotificationType type);
-
-    @Query("""
-            SELECT CASE WHEN count(notification) > 0 THEN true ELSE false END FROM Notification notification
-            WHERE notification.notifiedUser.id = :userId
-            AND notification.tweet.id = :tweetId
-            AND notification.user.id = :authUserId
-            AND notification.notificationType = :notificationType
-            """)
-    boolean isTweetNotificationExists(@Param("userId") Long userId,
-                                      @Param("tweetId") Long tweetId,
-                                      @Param("authUserId") Long authUserId,
-                                      @Param("notificationType") NotificationType type);
+    boolean isNotificationExists(@Param("notifiedUserId") Long notifiedUserId,
+                                 @Param("authUserId") Long authUserId,
+                                 @Param("notificationType") NotificationType notificationType,
+                                 @Param("id") Long id);
 
     @Query("""
             SELECT notification FROM Notification notification

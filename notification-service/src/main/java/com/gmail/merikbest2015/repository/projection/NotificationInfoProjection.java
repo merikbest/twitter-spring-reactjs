@@ -11,12 +11,10 @@ public interface NotificationInfoProjection {
     Long getId();
     LocalDateTime getDate();
     NotificationType getNotificationType();
-    Long getUserId();
-    Long getTweetId();
 
-    @Value("#{target.userId == null ? null : @notificationServiceHelper.getUserById(target.userId)}")
+    @Value("#{target.user == null ? null : @notificationServiceHelper.getUserById(target.user.id)}")
     UserResponse getUser();
 
-    @Value("#{target.tweetId == null ? null : @notificationServiceHelper.getTweetById(target.tweetId)}")
+    @Value("#{target.tweet == null ? null : @notificationServiceHelper.getTweetById(target.tweet.id)}")
     TweetResponse getTweet();
 }
