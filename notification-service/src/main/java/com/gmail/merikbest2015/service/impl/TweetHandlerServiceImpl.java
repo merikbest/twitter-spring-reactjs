@@ -9,6 +9,7 @@ import com.gmail.merikbest2015.service.TweetHandlerService;
 import com.gmail.merikbest2015.service.UserHandlerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,11 +19,17 @@ public class TweetHandlerServiceImpl implements TweetHandlerService {
     private final UserHandlerService userHandlerService;
 
     @Override
+    @Transactional
     public void handleUpdateTweet(UpdateTweetEvent tweetEvent) {
-        // TODO add tweet creation
+        tweetRepository.findById(tweetEvent.getId())
+                .map(tweet -> {
+                    tweet.setText(tweetEvent.getText());
+                    return tweet;
+                });
     }
 
     @Override
+    @Transactional
     public Tweet getOrCreateTweet(TweetNotificationDto tweet) {
         User author = userHandlerService.getOrCreateUser(tweet.getAuthor());
         return tweetRepository.findById(tweet.getId())

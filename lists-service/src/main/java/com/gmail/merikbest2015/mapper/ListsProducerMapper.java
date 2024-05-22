@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ListsNotificationMapper {
+public class ListsProducerMapper {
 
     private final BasicMapper basicMapper;
 

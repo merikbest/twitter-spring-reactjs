@@ -34,6 +34,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     }
 
     @Override
+    @Transactional
     public User getOrCreateUser(UserNotificationDto user) {
         return userRepository.findById(user.getId())
                 .orElseGet(() -> {
