@@ -18,8 +18,6 @@ spring:
         locations: classpath:db/migration
     zipkin:
         base-url: http://${ZIPKIN_HOST:localhost}:9411
-    rabbitmq:
-        addresses: ${RABBITMQ_HOST:localhost}:5672
     kafka:
         bootstrap-servers: localhost:9092
         consumer:
@@ -28,8 +26,6 @@ spring:
 resilience4j:
     circuitbreaker:
         instances:
-            lists-service:
-                minimum-number-of-calls: 5
             tweet-service:
                 minimum-number-of-calls: 5
             user-service:

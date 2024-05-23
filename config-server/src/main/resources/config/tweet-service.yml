@@ -18,8 +18,6 @@ spring:
         locations: classpath:db/migration
     zipkin:
         base-url: http://${ZIPKIN_HOST:localhost}:9411
-    rabbitmq:
-        addresses: ${RABBITMQ_HOST:localhost}:5672
     kafka:
         bootstrap-servers: localhost:9092
         consumer:

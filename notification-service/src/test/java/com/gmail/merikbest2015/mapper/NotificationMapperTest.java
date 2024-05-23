@@ -14,15 +14,15 @@ import com.gmail.merikbest2015.repository.projection.NotificationProjection;
 import com.gmail.merikbest2015.service.NotificationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -32,16 +32,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class NotificationMapperTest {
 
-    @Autowired
+    @InjectMocks
     private NotificationMapper notificationMapper;
 
-    @MockBean
+    @Mock
     private BasicMapper basicMapper;
 
-    @MockBean
+    @Mock
     private NotificationService notificationService;
 
     private final Pageable pageable = PageRequest.of(0, 20);
@@ -55,7 +55,6 @@ public class NotificationMapperTest {
         notificationResponse.setDate(LocalDateTime.now());
         notificationResponse.setNotificationType(NotificationType.TWEET);
         notificationResponse.setUser(new NotificationUserResponse());
-//        notificationResponse.setNotifiedUserId(1L);
         notificationResponse.setUserToFollow(new NotificationUserResponse());
         notificationResponse.setTweet(new NotificationTweetResponse());
         notificationResponse.setList(new NotificationListResponse());
