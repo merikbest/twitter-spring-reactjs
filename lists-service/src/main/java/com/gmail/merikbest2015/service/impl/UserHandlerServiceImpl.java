@@ -30,7 +30,6 @@ public class UserHandlerServiceImpl implements UserHandlerService {
                     user.setAvatar(updateUserEvent.getAvatar());
                     user.setPrivateProfile(updateUserEvent.isPrivateProfile());
                     user.setActive(updateUserEvent.isActive());
-
                     return user;
                 })
                 .orElseGet(() -> createUser(updateUserEvent));

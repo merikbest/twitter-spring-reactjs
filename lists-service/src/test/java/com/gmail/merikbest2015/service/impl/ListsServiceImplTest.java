@@ -7,29 +7,21 @@ import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.PinnedList;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.repository.ListsRepository;
-import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.BaseListProjection;
 import com.gmail.merikbest2015.repository.projection.ListProjection;
 import com.gmail.merikbest2015.repository.projection.ListUserProjection;
 import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
+import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.ListsService;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
 import java.util.List;
@@ -44,26 +36,10 @@ import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class ListsServiceImplTest {
+public class ListsServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private ListsService listsService;
-
-    @MockBean
-    private ListsRepository listsRepository;
-
-    @MockBean
-    private UserRepository userRepository;
-
-    @MockBean
-    private TweetClient tweetClient;
-
-    @Before
-    public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
-    }
 
     @Test
     public void getAllTweetLists() {
