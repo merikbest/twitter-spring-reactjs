@@ -22,11 +22,6 @@ spring:
         bootstrap-servers: localhost:9092
         consumer:
             group-id: topic
-resilience4j:
-    circuitbreaker:
-        instances:
-            tweet-service:
-                minimum-number-of-calls: 5
 feign:
     circuitbreaker:
         enabled: true

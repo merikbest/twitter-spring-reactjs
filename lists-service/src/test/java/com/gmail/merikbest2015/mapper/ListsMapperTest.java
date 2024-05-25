@@ -20,13 +20,13 @@ import com.gmail.merikbest2015.service.ListsService;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,16 +39,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ListsMapperTest {
 
-    @Autowired
+    @InjectMocks
     private ListsMapper listsMapper;
 
-    @MockBean
+    @Mock
     private BasicMapper basicMapper;
 
-    @MockBean
+    @Mock
     private ListsService listsService;
 
     @Test

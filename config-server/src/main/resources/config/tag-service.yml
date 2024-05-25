@@ -26,7 +26,7 @@ spring:
 resilience4j:
     circuitbreaker:
         instances:
-            user-service:
+            tweet-service:
                 minimum-number-of-calls: 5
 feign:
     circuitbreaker:

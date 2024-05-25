@@ -12,11 +12,11 @@ public interface UserService {
 
     List<User> searchListMembersByUsername(String username);
 
-    boolean isUserBlocked(Long userId, Long supposedBlockedUserId);
-
-    boolean isUserHavePrivateProfile(Long userId, Long authUserId);
-
     void checkUserIsBlocked(Long userId, Long supposedBlockedUserId);
 
     void checkIsPrivateUserProfile(Long userId, Long authUserId);
+
+    boolean isUserBlocked(Long userId, Long supposedBlockedUserId);
+
+    boolean isUserHavePrivateProfile(Long userId, Long authUserId);
 }
