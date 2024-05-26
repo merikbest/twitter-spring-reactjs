@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "../../../../icons";
 import {
     selectUserDataIsPrivateProfile,
+    selectUserProfileCountry,
     selectUserProfileCountryCode,
     selectUserProfileEmail,
     selectUserProfileGender,
@@ -36,6 +37,7 @@ const AccountInformation: FC = (): ReactElement => {
     const username = useSelector(selectUserProfileUsername);
     const countryCode = useSelector(selectUserProfileCountryCode);
     const phone = useSelector(selectUserProfilePhone);
+    const country = useSelector(selectUserProfileCountry);
     const email = useSelector(selectUserProfileEmail);
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
     const registrationDate = useSelector(selectUserProfileRegistrationDate);
@@ -71,7 +73,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Phone
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {`${getPhoneCode(countryCode)}${phone}`}
+                                {phone && `${getPhoneCode(countryCode)}${phone}`}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -137,7 +139,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Country
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {getCountry(countryCode)}
+                                {country && getCountry(country)}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>

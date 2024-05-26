@@ -37,7 +37,7 @@ public class ChatControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.creationDate").isNotEmpty())
+                .andExpect(jsonPath("$.createdAt").isNotEmpty())
                 .andExpect(jsonPath("$.participants").isNotEmpty())
                 .andExpect(jsonPath("$.participants[*]", hasSize(2)))
                 .andExpect(jsonPath("$.participants[0].user.id").value(2L))
@@ -74,7 +74,7 @@ public class ChatControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNotEmpty())
-                .andExpect(jsonPath("$.creationDate").isNotEmpty())
+                .andExpect(jsonPath("$.createdAt").isNotEmpty())
                 .andExpect(jsonPath("$.participants").isNotEmpty())
                 .andExpect(jsonPath("$.participants[*]", hasSize(2)));
     }

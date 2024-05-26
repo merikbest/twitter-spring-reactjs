@@ -75,7 +75,7 @@ spring:
                 -   id: notification-service
                     uri: lb://notification-service
                     predicates:
-                        - Path=/ui/v1/notification/**, /api/v1/notification/**
+                        - Path=/ui/v1/notification/**
                     filters:
                         - AuthFilter
 

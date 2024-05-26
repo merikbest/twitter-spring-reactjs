@@ -2,27 +2,18 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ChatServiceTestHelper;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatMessage;
 import com.gmail.merikbest2015.model.ChatParticipant;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.repository.ChatMessageRepository;
-import com.gmail.merikbest2015.repository.ChatParticipantRepository;
-import com.gmail.merikbest2015.repository.ChatRepository;
 import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import com.gmail.merikbest2015.repository.projection.ChatProjection;
-import com.gmail.merikbest2015.service.UserService;
+import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.util.TestConstants;
-import com.gmail.merikbest2015.util.TestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,27 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class ChatMessageServiceImplTest {
+public class ChatMessageServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private ChatMessageServiceImpl chatMessageService;
-
-    @MockBean
-    private ChatRepository chatRepository;
-
-    @MockBean
-    private ChatParticipantRepository chatParticipantRepository;
-
-    @MockBean
-    private ChatMessageRepository chatMessageRepository;
-
-    @MockBean
-    private UserService userService;
-
-    @MockBean
-    private TweetClient tweetClient;
 
     private ChatMessage chatMessage;
     private final Chat mockChat = ChatServiceTestHelper.createMockChat(false);
@@ -67,12 +41,12 @@ public class ChatMessageServiceImplTest {
 
     @Before
     public void setUp() {
+        super.setUp();
         chatMessage = new ChatMessage();
         chatMessage.setId(2L);
         chatMessage.setText("test text");
         chatMessage.setCreatedAt(LocalDateTime.now());
         chatMessage.setUnread(false);
-        TestUtil.mockAuthenticatedUserId();
     }
 
     @Test
@@ -121,14 +95,14 @@ public class ChatMessageServiceImplTest {
     public void addMessage() {
         User mockAuthUser = ChatServiceTestHelper.createMockUser(TestConstants.USER_ID);
         ChatParticipant mockChatParticipant = ChatServiceTestHelper.createMockChatParticipant(mockAuthUser, mockChat);
-        when(userService.getAuthUser()).thenReturn(mockAuthUser);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(mockAuthUser));
         when(chatRepository.getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class))
                 .thenReturn(Optional.of(mockChat));
         when(chatParticipantRepository.getChatParticipantExcludeUserId(TestConstants.USER_ID, TestConstants.CHAT_ID))
                 .thenReturn(Optional.of(mockChatParticipant));
         when(chatMessageRepository.getChatMessageById(chatMessage.getId())).thenReturn(Optional.of(chatMessageProjection));
-        assertEquals(chatParticipants, chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
-        verify(userService, times(1)).getAuthUser();
+        chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(chatRepository, times(1)).getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class);
         verify(chatMessageRepository, times(1)).save(chatMessage);
         verify(chatParticipantRepository, times(1)).updateParticipantWhoLeftChat(TestConstants.USER_ID, TestConstants.CHAT_ID);
@@ -146,7 +120,8 @@ public class ChatMessageServiceImplTest {
 
     @Test
     public void addMessage_shouldChatNotFound() {
-        when(userService.getAuthUser()).thenReturn(ChatServiceTestHelper.createMockUser(TestConstants.USER_ID));
+        when(userRepository.findById(TestConstants.USER_ID))
+                .thenReturn(Optional.of(ChatServiceTestHelper.createMockUser(TestConstants.USER_ID)));
         when(chatRepository.getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class))
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
@@ -157,7 +132,8 @@ public class ChatMessageServiceImplTest {
 
     @Test
     public void addMessage_shouldChatParticipantNotFound() {
-        when(userService.getAuthUser()).thenReturn(ChatServiceTestHelper.createMockUser(TestConstants.USER_ID));
+        when(userRepository.findById(TestConstants.USER_ID))
+                .thenReturn(Optional.of(ChatServiceTestHelper.createMockUser(TestConstants.USER_ID)));
         when(chatRepository.getChatById(TestConstants.CHAT_ID, TestConstants.USER_ID, Chat.class))
                 .thenReturn(Optional.of(mockChat));
         when(chatParticipantRepository.getChatParticipantExcludeUserId(TestConstants.USER_ID, TestConstants.CHAT_ID))
@@ -175,8 +151,8 @@ public class ChatMessageServiceImplTest {
                 ChatServiceTestHelper.createMockUser(1L),
                 ChatServiceTestHelper.createMockUser(3L));
         when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(true);
-        when(userService.getAuthUser()).thenReturn(mockAuthUser);
-        when(userService.getNotBlockedUsers(validUserIds)).thenReturn(mockUsers);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(mockAuthUser));
+        when(userRepository.getNotBlockedUsers(validUserIds, TestConstants.USER_ID)).thenReturn(mockUsers);
         when(chatRepository.getChatByParticipants(TestConstants.USER_ID, 1L)).thenReturn(mockChat);
         when(chatRepository.getChatByParticipants(TestConstants.USER_ID, 3L)).thenReturn(mockChat);
         when(chatMessageRepository.getChatMessageById(any())).thenReturn(Optional.of(chatMessageProjection));
@@ -203,8 +179,8 @@ public class ChatMessageServiceImplTest {
         userParticipant.setUser(ChatServiceTestHelper.createMockUser(3L));
         userParticipant.setChat(newChat);
         when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(true);
-        when(userService.getAuthUser()).thenReturn(mockAuthUser);
-        when(userService.getNotBlockedUsers(validUserIds)).thenReturn(mockUsers);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(mockAuthUser));
+        when(userRepository.getNotBlockedUsers(validUserIds, TestConstants.USER_ID)).thenReturn(mockUsers);
         when(chatRepository.getChatByParticipants(TestConstants.USER_ID, 1L)).thenReturn(null);
         when(chatRepository.getChatByParticipants(TestConstants.USER_ID, 3L)).thenReturn(newChat);
         when(chatMessageRepository.getChatMessageById(any())).thenReturn(Optional.of(chatMessageProjection));

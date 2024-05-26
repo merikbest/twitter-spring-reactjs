@@ -49,7 +49,7 @@ public class ChatMessageControllerTest {
                 .andExpect(jsonPath("$[*]", hasSize(3)))
                 .andExpect(jsonPath("$[0].id").value(5L))
                 .andExpect(jsonPath("$[0].text").value("hello from MrCat"))
-                .andExpect(jsonPath("$[0].date").value("2021-10-03T20:39:55"))
+                .andExpect(jsonPath("$[0].createdAt").value("2021-10-03T20:39:55"))
                 .andExpect(jsonPath("$[0].author.id").value(2L))
                 .andExpect(jsonPath("$[0].tweet.id").value(40L));
     }

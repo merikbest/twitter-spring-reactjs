@@ -8,10 +8,10 @@ import com.gmail.merikbest2015.service.ChatService;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,16 +21,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ChatMapperTest {
 
-    @Autowired
+    @InjectMocks
     private ChatMapper chatMapper;
 
-    @MockBean
+    @Mock
     private BasicMapper basicMapper;
 
-    @MockBean
+    @Mock
     private ChatService chatService;
 
     @Test

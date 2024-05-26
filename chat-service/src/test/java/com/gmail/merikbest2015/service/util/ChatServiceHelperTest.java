@@ -2,30 +2,22 @@ package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.client.TweetClient;
+import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_CHAT_MESSAGE_LENGTH;
+import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class ChatServiceHelperTest {
+public class ChatServiceHelperTest extends AbstractServiceTest {
 
     @Autowired
     private ChatServiceHelper chatServiceHelper;
-
-    @MockBean
-    private TweetClient tweetClient;
 
     @Test
     public void getChatTweet() {
