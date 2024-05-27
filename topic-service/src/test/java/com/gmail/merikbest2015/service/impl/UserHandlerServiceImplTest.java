@@ -1,21 +1,15 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.TopicTestHelper;
 import com.gmail.merikbest2015.event.BlockUserEvent;
 import com.gmail.merikbest2015.event.FollowUserEvent;
 import com.gmail.merikbest2015.event.UpdateUserEvent;
 import com.gmail.merikbest2015.event.UserEvent;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserHandlerService;
-import com.gmail.merikbest2015.util.TestUtil;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -25,22 +19,11 @@ import static com.gmail.merikbest2015.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class UserHandlerServiceImplTest {
+public class UserHandlerServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private UserHandlerService userHandlerService;
-
-    @MockBean
-    private UserRepository userRepository;
-
-    @Before
-    public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
-    }
 
     @Test
     public void handleUpdateUser_updateUser() {

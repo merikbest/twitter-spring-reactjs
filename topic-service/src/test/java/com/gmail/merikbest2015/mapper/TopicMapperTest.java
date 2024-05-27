@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.mapper;
 
+import com.gmail.merikbest2015.TopicTestHelper;
 import com.gmail.merikbest2015.dto.response.TopicResponse;
 import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.enums.TopicCategory;
@@ -7,40 +8,33 @@ import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.TopicProjection;
 import com.gmail.merikbest2015.service.TopicService;
-import com.gmail.merikbest2015.TopicTestHelper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class TopicMapperTest {
 
-    @Autowired
+    @InjectMocks
     private TopicMapper topicMapper;
 
-    @MockBean
-    private TopicService topicService;
-
-    @MockBean
+    @Mock
     private BasicMapper basicMapper;
 
-    @MockBean
-    private ModelMapper modelMapper;
+    @Mock
+    private TopicService topicService;
 
     @Test
     public void getTopicsByIds() {
@@ -111,33 +105,6 @@ public class TopicMapperTest {
         when(topicService.processFollowTopic(1L)).thenReturn(true);
         assertTrue(topicMapper.processFollowTopic(1L));
         verify(topicService, times(1)).processFollowTopic(1L);
-    }
-
-    @Test
-    public void convertTopicProjectionToTopicResponse() {
-        ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-        TopicProjection topic = factory.createProjection(
-                TopicProjection.class,
-                Map.of(
-                        "id", 1L,
-                        "topicName", "test topic 1",
-                        "topicCategory", TopicCategory.TRAVEL,
-                        "isTopicFollowed", true,
-                        "isTopicNotInterested", false
-                ));
-        TopicResponse response = new TopicResponse();
-        response.setId(1L);
-        response.setTopicName("test topic 1");
-        response.setTopicCategory(TopicCategory.TRAVEL);
-        response.setTopicFollowed(true);
-        response.setTopicNotInterested(false);
-        when(modelMapper.map(topic, TopicResponse.class)).thenReturn(response);
-        TopicResponse topicResponse = modelMapper.map(topic, TopicResponse.class);
-        assertEquals(topic.getId(), topicResponse.getId());
-        assertEquals(topic.getTopicName(), topicResponse.getTopicName());
-        assertEquals(topic.getTopicCategory(), topicResponse.getTopicCategory());
-        assertTrue(topicResponse.isTopicFollowed());
-        assertFalse(topicResponse.isTopicNotInterested());
     }
 
     private List<TopicResponse> getTopicResponseList() {

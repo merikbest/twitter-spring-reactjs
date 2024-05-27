@@ -1,33 +1,17 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.repository.TopicRepository;
-import com.gmail.merikbest2015.util.TestUtil;
-import org.junit.Before;
+import com.gmail.merikbest2015.service.AbstractServiceTest;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class TopicProjectionHelperTest {
+public class TopicProjectionHelperTest extends AbstractServiceTest {
 
     @Autowired
     private TopicProjectionHelper topicProjectionHelper;
-
-    @MockBean
-    private TopicRepository topicRepository;
-
-    @Before
-    public void setUp() {
-        TestUtil.mockAuthenticatedUserId();
-    }
 
     @Test
     public void isTopicFollowed() {
