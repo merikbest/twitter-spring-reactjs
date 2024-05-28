@@ -3,22 +3,15 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.exception.ApiRequestException;
-import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.model.Tag;
-import com.gmail.merikbest2015.repository.TagRepository;
-import com.gmail.merikbest2015.repository.TweetTagRepository;
 import com.gmail.merikbest2015.service.TagService;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,21 +21,11 @@ import static com.gmail.merikbest2015.constants.ErrorMessage.TAG_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-public class TagServiceImplTest {
+public class TagServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private TagService tagService;
 
-    @MockBean
-    private TagRepository tagRepository;
-
-    @MockBean
-    private TweetTagRepository tweetTagRepository;
-
-    @MockBean
-    private TweetClient tweetClient;
 
     @Test
     public void getTags() {

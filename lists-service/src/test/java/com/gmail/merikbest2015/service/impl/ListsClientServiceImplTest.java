@@ -1,20 +1,15 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ListsServiceTestHelper;
-import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.dto.response.user.CommonUserResponse;
-import com.gmail.merikbest2015.repository.projection.NotificationListProjection;
 import com.gmail.merikbest2015.repository.projection.TweetListProjection;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.ListsClientService;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.projection.ProjectionFactory;
-import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,23 +19,6 @@ public class ListsClientServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private ListsClientService listsClientService;
-
-    private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
-
-    @Test
-    public void getNotificationList() {
-        NotificationListProjection notificationList = factory.createProjection(
-                NotificationListProjection.class,
-                Map.of("id", 1L, "name", TestConstants.LIST_NAME));
-        NotificationListResponse listResponse = new NotificationListResponse();
-        listResponse.setId(1L);
-        listResponse.setListName(TestConstants.LIST_NAME);
-        when(listsRepository.getListById(TestConstants.LIST_ID, NotificationListProjection.class)).thenReturn(notificationList);
-        when(basicMapper.convertToResponse(notificationList, NotificationListResponse.class)).thenReturn(listResponse);
-        assertEquals(listResponse, listsClientService.getNotificationList(TestConstants.LIST_ID));
-        verify(listsRepository, times(1)).getListById(TestConstants.LIST_ID, NotificationListProjection.class);
-        verify(basicMapper, times(1)).convertToResponse(notificationList, NotificationListResponse.class);
-    }
 
     @Test
     public void getTweetList() {

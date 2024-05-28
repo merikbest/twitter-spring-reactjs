@@ -28,16 +28,6 @@ public class ListsApiControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("[200] GET /api/v1/lists/4 - Get Notification List")
-    public void getNotificationList() throws Exception {
-        mockMvc.perform(get(API_V1_LISTS + LIST_ID, 4)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(4))
-                .andExpect(jsonPath("$.listName").value(TestConstants.LIST_NAME));
-    }
-
-    @Test
     @DisplayName("[200] GET /api/v1/lists/tweet/4 - Get tweet list by id")
     public void getTweetList() throws Exception {
         mockMvc.perform(get(API_V1_LISTS + TWEET_LIST_ID, 4)
