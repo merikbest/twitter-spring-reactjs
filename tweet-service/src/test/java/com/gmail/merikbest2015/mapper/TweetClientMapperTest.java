@@ -4,10 +4,8 @@ import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
-import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -77,17 +75,6 @@ public class TweetClientMapperTest {
         assertEquals(new TweetResponse(), tweetClientMapper.getTweetById(TestConstants.TWEET_ID));
         verify(tweetClientService, times(1)).getTweetById(TestConstants.TWEET_ID);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
-    }
-
-    @Test
-    public void getNotificationTweet() {
-        NotificationTweetProjection notificationTweetProjection = TweetServiceTestHelper.createNotificationTweetProjection();
-        when(tweetClientService.getNotificationTweet(TestConstants.TWEET_ID)).thenReturn(notificationTweetProjection);
-        when(basicMapper.convertToResponse(notificationTweetProjection, NotificationTweetResponse.class))
-                .thenReturn(new NotificationTweetResponse());
-        assertEquals(new NotificationTweetResponse(), tweetClientMapper.getNotificationTweet(TestConstants.TWEET_ID));
-        verify(tweetClientService, times(1)).getNotificationTweet(TestConstants.TWEET_ID);
-        verify(basicMapper, times(1)).convertToResponse(notificationTweetProjection, NotificationTweetResponse.class);
     }
 
     @Test

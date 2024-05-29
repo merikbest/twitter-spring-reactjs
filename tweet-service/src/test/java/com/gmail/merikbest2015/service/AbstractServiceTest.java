@@ -1,5 +1,8 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.broker.producer.TagProducer;
+import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
+import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.client.ListsClient;
 import com.gmail.merikbest2015.mapper.BasicMapper;
@@ -50,6 +53,15 @@ public abstract class AbstractServiceTest {
 
     @MockBean
     public BasicMapper basicMapper;
+
+    @MockBean
+    public TweetNotificationProducer tweetNotificationProducer;
+
+    @MockBean
+    public UpdateTweetCountProducer updateTweetCountProducer;
+
+    @MockBean
+    public TagProducer tagProducer;
 
     public static final PageRequest pageable = PageRequest.of(0, 20);
     public static final List<Long> ids = List.of(1L, 2L, 3L);

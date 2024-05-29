@@ -4,9 +4,7 @@ import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
-import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +34,6 @@ public class TweetClientMapper {
     public TweetResponse getTweetById(Long tweetId) {
         TweetProjection tweet = tweetClientService.getTweetById(tweetId);
         return basicMapper.convertToResponse(tweet, TweetResponse.class);
-    }
-
-    public NotificationTweetResponse getNotificationTweet(Long tweetId) {
-        NotificationTweetProjection tweet = tweetClientService.getNotificationTweet(tweetId);
-        return basicMapper.convertToResponse(tweet, NotificationTweetResponse.class);
     }
 
     public Boolean isTweetExists(Long tweetId) {

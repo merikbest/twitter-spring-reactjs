@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
-import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +33,6 @@ public class TweetClientServiceImpl implements TweetClientService {
     @Override
     public TweetProjection getTweetById(Long tweetId) {
         return tweetRepository.getTweetById(tweetId, TweetProjection.class).get();
-    }
-
-    @Override
-    public NotificationTweetProjection getNotificationTweet(Long tweetId) {
-        return tweetRepository.getTweetById(tweetId, NotificationTweetProjection.class).get();
     }
 
     @Override

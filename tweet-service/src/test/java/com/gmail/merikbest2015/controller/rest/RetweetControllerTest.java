@@ -137,8 +137,7 @@ public class RetweetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43))
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))
-                .andExpect(jsonPath("$.authorId").value(2))
-                .andExpect(jsonPath("$.notificationCondition").value(true));
+                .andExpect(jsonPath("$.author.id").value(2));
     }
 
     @Test
@@ -149,8 +148,7 @@ public class RetweetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(45))
                 .andExpect(jsonPath("$.text").value("media tweet test"))
-                .andExpect(jsonPath("$.authorId").value(1))
-                .andExpect(jsonPath("$.notificationCondition").value(false));
+                .andExpect(jsonPath("$.author.id").value(1));
     }
 
     @Test

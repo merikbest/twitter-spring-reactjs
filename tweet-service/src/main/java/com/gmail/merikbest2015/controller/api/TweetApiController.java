@@ -4,7 +4,6 @@ import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.mapper.TweetClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -36,11 +35,6 @@ public class TweetApiController {
     @GetMapping(TWEET_ID)
     public TweetResponse getTweetById(@PathVariable("tweetId") Long tweetId) {
         return tweetClientMapper.getTweetById(tweetId);
-    }
-
-    @GetMapping(NOTIFICATION_TWEET_ID)
-    public NotificationTweetResponse getNotificationTweet(@PathVariable("tweetId") Long tweetId) {
-        return tweetClientMapper.getNotificationTweet(tweetId);
     }
 
     @GetMapping(ID_TWEET_ID)

@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
-import com.gmail.merikbest2015.dto.request.NotificationRequest;
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.LikeTweet;
@@ -155,28 +153,24 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void likeTweet_ShouldUnlikeTweet() {
-        NotificationRequest request = TweetServiceTestHelper.createMockNotificationRequest(NotificationType.LIKE, false);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(likeTweetRepository.getLikedTweet(authUser, tweet)).thenReturn(new LikeTweet());
-//        when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
-        assertEquals(new NotificationResponse(), likeTweetService.likeTweet(TestConstants.TWEET_ID));
+        assertEquals(tweet, likeTweetService.likeTweet(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
         verify(likeTweetRepository, times(1)).getLikedTweet(authUser, tweet);
         verify(likeTweetRepository, times(1)).delete(any());
-//        verify(notificationClient, times(1)).sendTweetNotification(request);
+        verify(tweetNotificationProducer, times(1)).sendTweetNotificationEvent(NotificationType.LIKE, tweet, authUser, false);
     }
 
     @Test
     public void likeTweet_ShouldLikeTweet() {
-        NotificationRequest request = TweetServiceTestHelper.createMockNotificationRequest(NotificationType.LIKE, true);
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         when(likeTweetRepository.getLikedTweet(authUser, tweet)).thenReturn(null);
-//        when(notificationClient.sendTweetNotification(request)).thenReturn(new NotificationResponse());
-        assertEquals(new NotificationResponse(), likeTweetService.likeTweet(TestConstants.TWEET_ID));
+        assertEquals(tweet, likeTweetService.likeTweet(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
         verify(likeTweetRepository, times(1)).getLikedTweet(authUser, tweet);
         verify(likeTweetRepository, times(1)).save(any());
-//        verify(notificationClient, times(1)).sendTweetNotification(request);
+        verify(tweetNotificationProducer, times(1)).sendTweetNotificationEvent(NotificationType.LIKE, tweet, authUser, true);
     }
 
     @Test

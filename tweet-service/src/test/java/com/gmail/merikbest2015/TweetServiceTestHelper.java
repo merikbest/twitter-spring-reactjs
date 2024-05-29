@@ -3,7 +3,6 @@ package com.gmail.merikbest2015;
 import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.dto.request.NotificationRequest;
 import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetAuthorResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.NotificationType;
@@ -158,14 +157,6 @@ public class TweetServiceTestHelper {
                         "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetProjection.class)
                 ));
         return Arrays.asList(bookmarkProjection1, bookmarkProjection2);
-    }
-
-    public static NotificationTweetProjection createNotificationTweetProjection() {
-        return factory.createProjection(
-                NotificationTweetProjection.class,
-                Map.of("id", 1L,
-                        "text", "test text",
-                        "authorId", TestConstants.USER_ID));
     }
 
     public static ChatTweetProjection createChatTweetProjection() {

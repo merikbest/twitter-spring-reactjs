@@ -94,18 +94,6 @@ public class TweetApiControllerTest {
     }
 
     @Test
-    @DisplayName("[200] GET /api/v1/tweets/notification/43 - Get notification tweet")
-    public void getNotificationTweet() throws Exception {
-        mockMvc.perform(get(API_V1_TWEETS + NOTIFICATION_TWEET_ID, 43)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(43))
-                .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))
-                .andExpect(jsonPath("$.authorId").value(2))
-                .andExpect(jsonPath("$.notificationCondition").value(false));
-    }
-
-    @Test
     @DisplayName("[200] GET /api/v1/tweets/id/43 - Is tweet exists")
     public void isTweetExists() throws Exception {
         mockMvc.perform(get(API_V1_TWEETS + ID_TWEET_ID, 43)

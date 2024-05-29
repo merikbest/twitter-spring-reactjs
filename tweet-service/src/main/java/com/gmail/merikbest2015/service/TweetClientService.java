@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
-import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +15,6 @@ public interface TweetClientService {
     Page<TweetProjection> getTweetsByUserIds(IdsRequest request, Pageable pageable);
 
     TweetProjection getTweetById(Long tweetId);
-
-    NotificationTweetProjection getNotificationTweet(Long tweetId);
 
     Boolean isTweetExists(Long tweetId);
 

@@ -1,7 +1,6 @@
 package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
-import com.gmail.merikbest2015.dto.request.TweetTextRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
@@ -50,8 +49,8 @@ public class TweetServiceHelperTest extends AbstractServiceTest {
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
-//        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
-//        verify(notificationClient, times(1)).sendTweetNotificationToSubscribers(tweet.getId());
+        verify(tagProducer, times(1)).parseHashtag(tweet.getId(), tweet.getText());
+        verify(tweetNotificationProducer, times(1)).sendTweetSubscriberNotificationEvent(tweet, user);
     }
 
     @Test
@@ -65,8 +64,8 @@ public class TweetServiceHelperTest extends AbstractServiceTest {
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
-//        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
-//        verify(notificationClient, times(1)).sendTweetNotificationToSubscribers(tweet.getId());
+        verify(tagProducer, times(1)).parseHashtag(tweet.getId(), tweet.getText());
+        verify(tweetNotificationProducer, times(1)).sendTweetSubscriberNotificationEvent(tweet, user);
     }
 
     @Test
@@ -84,7 +83,7 @@ public class TweetServiceHelperTest extends AbstractServiceTest {
         verify(tweetRepository, times(1)).save(tweet);
         verify(tweetRepository, times(1)).getTweetById(tweet.getId(), TweetProjection.class);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
-//        verify(tagClient, times(1)).parseHashtagsFromText(tweet.getId(), new TweetTextRequest(tweet.getText()));
-//        verify(notificationClient, times(1)).sendTweetNotificationToSubscribers(tweet.getId());
+        verify(tagProducer, times(1)).parseHashtag(tweet.getId(), tweet.getText());
+        verify(tweetNotificationProducer, times(1)).sendTweetSubscriberNotificationEvent(tweet, user);
     }
 }

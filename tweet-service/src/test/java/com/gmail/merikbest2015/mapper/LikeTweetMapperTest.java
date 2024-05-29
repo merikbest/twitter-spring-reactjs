@@ -2,8 +2,9 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.LikeTweetService;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -51,8 +52,10 @@ public class LikeTweetMapperTest {
 
     @Test
     public void likeTweet() {
-        NotificationResponse notificationResponse = new NotificationResponse();
-//        when(likeTweetService.likeTweet(TestConstants.TWEET_ID)).thenReturn(notificationResponse);
+        Tweet tweet = new Tweet();
+        NotificationTweetResponse notificationResponse = new NotificationTweetResponse();
+        when(likeTweetService.likeTweet(TestConstants.TWEET_ID)).thenReturn(tweet);
+        when(basicMapper.convertToResponse(tweet, NotificationTweetResponse.class)).thenReturn(notificationResponse);
         assertEquals(notificationResponse, likeTweetMapper.likeTweet(TestConstants.TWEET_ID));
         verify(likeTweetService, times(1)).likeTweet(TestConstants.TWEET_ID);
     }

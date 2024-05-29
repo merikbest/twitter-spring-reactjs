@@ -3,7 +3,6 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
-import com.gmail.merikbest2015.repository.projection.NotificationTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.impl.TweetClientServiceImpl;
 import com.gmail.merikbest2015.util.TestConstants;
@@ -57,15 +56,6 @@ public class TweetClientServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         assertEquals(tweetProjection, tweetClientService.getTweetById(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, TweetProjection.class);
-    }
-
-    @Test
-    public void getNotificationTweet() {
-        NotificationTweetProjection notificationTweetProjection = TweetServiceTestHelper.createNotificationTweetProjection();
-        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, NotificationTweetProjection.class))
-                .thenReturn(Optional.of(notificationTweetProjection));
-        assertEquals(notificationTweetProjection, tweetClientService.getNotificationTweet(TestConstants.TWEET_ID));
-        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, NotificationTweetProjection.class);
     }
 
     @Test
