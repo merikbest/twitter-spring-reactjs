@@ -1,8 +1,6 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
-import com.gmail.merikbest2015.dto.request.NotificationRequest;
-import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.BaseUserProjection;
@@ -11,6 +9,7 @@ import com.gmail.merikbest2015.repository.projection.UserProfileProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.util.TestConstants;
 import lombok.SneakyThrows;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,18 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     private static final Page<UserProjection> userProjections = UserServiceTestHelper.createUserProjections();
     private static final UserProfileProjection userProfileProjection = UserServiceTestHelper.createUserProfileProjection();
+
+    private User user;
+    private User authUser;
+
+    @Before
+    public void setUp() {
+        super.setUp();
+        user = new User();
+        user.setId(1L);
+        authUser = new User();
+        authUser.setId(TestConstants.USER_ID);
+    }
 
     @Test
     public void getFollowers_ShouldReturnUserProjections() {
@@ -86,15 +97,8 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processFollow_ShouldFollow() {
-        NotificationRequest request = NotificationRequest.builder()
-                .notificationType(NotificationType.FOLLOW)
-                .userId(TestConstants.USER_ID)
-                .userToFollowId(1L)
-                .notifiedUserId(1L)
-                .build();
-        User user = new User();
-        user.setId(1L);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
         when(followerUserRepository.isFollower(TestConstants.USER_ID, 1L)).thenReturn(false);
         assertTrue(followerUserService.processFollow(1L));
@@ -102,16 +106,15 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         verify(blockUserRepository, times(1)).isUserBlocked(1L, TestConstants.USER_ID);
         verify(followerUserRepository, times(1)).isFollower(TestConstants.USER_ID, 1L);
         verify(followerUserRepository, times(1)).follow(TestConstants.USER_ID, 1L);
-//        verify(notificationClient, times(1)).sendNotification(request);
+        verify(followUserNotificationProducer, times(1)).sendFollowUserNotificationEvent(authUser, user);
         verify(followUserProducer, times(1)).sendFollowUserEvent(user, TestConstants.USER_ID, true);
     }
 
     @Test
     public void processFollow_ShouldFollowPrivateProfile() {
-        User user = new User();
-        user.setId(1L);
         user.setPrivateProfile(true);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
         when(followerUserRepository.isFollower(TestConstants.USER_ID, 1L)).thenReturn(false);
         assertFalse(followerUserService.processFollow(1L));
@@ -124,9 +127,8 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processFollow_ShouldUnfollow() {
-        User user = new User();
-        user.setId(1L);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
         when(followerUserRepository.isFollower(TestConstants.USER_ID, 1L)).thenReturn(true);
         assertFalse(followerUserService.processFollow(1L));
@@ -150,9 +152,8 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processFollow_ShouldThrowUserProfileBLocked() {
-        User user = new User();
-        user.setId(1L);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> followerUserService.processFollow(1L));
@@ -187,8 +188,6 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processFollowRequestToPrivateProfile_ShouldAddFollowerRequest() {
-        User user = new User();
-        user.setId(1L);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
         when(followerUserRepository.isFollowerRequest(1L, TestConstants.USER_ID)).thenReturn(false);
@@ -203,8 +202,6 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processFollowRequestToPrivateProfile_ShouldRemoveFollowerRequest() {
-        User user = new User();
-        user.setId(1L);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
         when(followerUserRepository.isFollowerRequest(1L, TestConstants.USER_ID)).thenReturn(true);
@@ -229,8 +226,6 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processFollowRequestToPrivateProfile_ShouldThrowUserProfileBlocke() {
-        User user = new User();
-        user.setId(1L);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
@@ -241,8 +236,6 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void acceptFollowRequest() {
-        User user = new User();
-        user.setId(1L);
         User authUser = new User();
         authUser.setId(TestConstants.USER_ID);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
@@ -257,8 +250,6 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void declineFollowRequest() {
-        User user = new User();
-        user.setId(1L);
         User authUser = new User();
         authUser.setId(TestConstants.USER_ID);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));

@@ -2,12 +2,16 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.util.TestConstants;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+
+import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.USER_ID_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +21,15 @@ public class MuteUserServiceImplTest extends AbstractServiceTest {
 
     @Autowired
     private MuteUserService muteUserService;
+
+    private User user;
+
+    @Before
+    public void setUp() {
+        super.setUp();
+        user = new User();
+        user.setId(1L);
+    }
 
     @Test
     public void getMutedList_ShouldReturnMutedUserProjections() {
@@ -28,31 +41,33 @@ public class MuteUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processMutedList_ShouldMuteUser() {
-        when(userRepository.isUserExist(TestConstants.USER_ID)).thenReturn(true);
-        when(muteUserRepository.isUserMuted(TestConstants.USER_ID, 2L)).thenReturn(false);
-        assertTrue(muteUserService.processMutedList(TestConstants.USER_ID));
-        verify(userRepository, times(1)).isUserExist(TestConstants.USER_ID);
-        verify(muteUserRepository, times(1)).isUserMuted(TestConstants.USER_ID, 2L);
-        verify(muteUserRepository, times(1)).muteUser(TestConstants.USER_ID, 2L);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(muteUserRepository.isUserMuted(TestConstants.USER_ID, 1L)).thenReturn(false);
+        assertTrue(muteUserService.processMutedList(1L));
+        verify(userRepository, times(1)).findById(1L);
+        verify(muteUserRepository, times(1)).isUserMuted(TestConstants.USER_ID, 1L);
+        verify(muteUserRepository, times(1)).muteUser(TestConstants.USER_ID, 1L);
+        verify(muteUserProducer, times(1)).sendMuteUserEvent(user, TestConstants.USER_ID, true);
     }
 
     @Test
     public void processMutedList_ShouldUnmuteUser() {
-        when(userRepository.isUserExist(TestConstants.USER_ID)).thenReturn(true);
-        when(muteUserRepository.isUserMuted(TestConstants.USER_ID, 2L)).thenReturn(true);
-        assertFalse(muteUserService.processMutedList(TestConstants.USER_ID));
-        verify(userRepository, times(1)).isUserExist(TestConstants.USER_ID);
-        verify(muteUserRepository, times(1)).isUserMuted(TestConstants.USER_ID, 2L);
-        verify(muteUserRepository, times(1)).unmuteUser(TestConstants.USER_ID, 2L);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(muteUserRepository.isUserMuted(TestConstants.USER_ID, 1L)).thenReturn(true);
+        assertFalse(muteUserService.processMutedList(1L));
+        verify(userRepository, times(1)).findById(1L);
+        verify(muteUserRepository, times(1)).isUserMuted(TestConstants.USER_ID, 1L);
+        verify(muteUserRepository, times(1)).unmuteUser(TestConstants.USER_ID, 1L);
+        verify(muteUserProducer, times(1)).sendMuteUserEvent(user, TestConstants.USER_ID, false);
     }
 
     @Test
     public void processMutedList_ShouldUserNotFound() {
-        when(userRepository.isUserExist(TestConstants.USER_ID)).thenReturn(false);
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
-                () -> muteUserService.processMutedList(TestConstants.USER_ID));
-        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+                () -> muteUserService.processMutedList(1L));
+        assertEquals(String.format(USER_ID_NOT_FOUND, 1L), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-        verify(userRepository, times(1)).isUserExist(TestConstants.USER_ID);
+        verify(userRepository, times(1)).findById(1L);
     }
 }

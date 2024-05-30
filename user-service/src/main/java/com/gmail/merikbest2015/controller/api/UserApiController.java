@@ -20,21 +20,6 @@ public class UserApiController {
 
     private final UserClientService userService;
 
-    @GetMapping(NOTIFICATION_USER_ID)
-    public void increaseNotificationsCount(@PathVariable("userId") Long userId) {
-        userService.increaseNotificationsCount(userId);
-    }
-
-    @GetMapping(MENTION_USER_ID)
-    public void increaseMentionsCount(@PathVariable("userId") Long userId) {
-        userService.increaseMentionsCount(userId);
-    }
-
-    @GetMapping(NOTIFICATION_USER_USER_ID)
-    public NotificationUserResponse getNotificationUser(@PathVariable("userId") Long userId) {
-        return userService.getNotificationUser(userId);
-    }
-
     @GetMapping(USER_ID)
     public UserResponse getUserById(@PathVariable("userId") Long userId) {
         return userService.getUserResponseById(userId);
@@ -48,15 +33,5 @@ public class UserApiController {
     @GetMapping(SUBSCRIBERS_IDS)
     public List<Long> getUserIdsWhichUserSubscribed() {
         return userService.getUserIdsWhichUserSubscribed();
-    }
-
-    @GetMapping(NOTIFICATION_RESET)
-    public void resetNotificationCount() {
-        userService.resetNotificationCount();
-    }
-
-    @GetMapping(MENTION_RESET)
-    public void resetMentionCount() {
-        userService.resetMentionCount();
     }
 }

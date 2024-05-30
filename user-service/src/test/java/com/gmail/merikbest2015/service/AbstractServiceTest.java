@@ -1,12 +1,9 @@
 package com.gmail.merikbest2015.service;
 
+import com.gmail.merikbest2015.broker.producer.*;
 import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.client.TagClient;
 import com.gmail.merikbest2015.client.TweetClient;
-import com.gmail.merikbest2015.broker.producer.FollowRequestUserProducer;
-import com.gmail.merikbest2015.broker.producer.FollowUserProducer;
-import com.gmail.merikbest2015.broker.producer.SendEmailProducer;
-import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.*;
 import com.gmail.merikbest2015.security.JwtProvider;
@@ -29,49 +26,58 @@ import java.util.List;
 public abstract class AbstractServiceTest {
 
     @MockBean
-    protected UserRepository userRepository;
+    UserRepository userRepository;
 
     @MockBean
-    protected BlockUserRepository blockUserRepository;
+    BlockUserRepository blockUserRepository;
 
     @MockBean
-    protected FollowerUserRepository followerUserRepository;
+    FollowerUserRepository followerUserRepository;
 
     @MockBean
-    protected MuteUserRepository muteUserRepository;
+    MuteUserRepository muteUserRepository;
 
     @MockBean
-    protected UserSettingsRepository userSettingsRepository;
+    UserSettingsRepository userSettingsRepository;
 
     @MockBean
-    protected FollowUserProducer followUserProducer;
+    FollowUserProducer followUserProducer;
 
     @MockBean
-    protected FollowRequestUserProducer followRequestUserProducer;
+    FollowRequestUserProducer followRequestUserProducer;
 
     @MockBean
-    protected UpdateUserProducer updateUserProducer;
+    FollowUserNotificationProducer followUserNotificationProducer;
 
     @MockBean
-    protected JwtProvider jwtProvider;
+    MuteUserProducer muteUserProducer;
 
     @MockBean
-    protected SendEmailProducer sendEmailProducer;
+    BlockUserProducer blockUserProducer;
 
     @MockBean
-    protected PasswordEncoder passwordEncoder;
+    UpdateUserProducer updateUserProducer;
 
     @MockBean
-    protected BasicMapper basicMapper;
+    JwtProvider jwtProvider;
 
     @MockBean
-    protected TweetClient tweetClient;
+    SendEmailProducer sendEmailProducer;
 
     @MockBean
-    protected TagClient tagClient;
+    PasswordEncoder passwordEncoder;
 
-    protected static final PageRequest pageable = PageRequest.of(0, 20);
-    protected static final List<Long> ids = List.of(1L, 2L, 3L);
+    @MockBean
+    BasicMapper basicMapper;
+
+    @MockBean
+    TweetClient tweetClient;
+
+    @MockBean
+    TagClient tagClient;
+
+    static final PageRequest pageable = PageRequest.of(0, 20);
+    static final List<Long> ids = List.of(1L, 2L, 3L);
 
     @Before
     public void setUp() {

@@ -89,11 +89,6 @@ public class UserServiceHelper {
         return followerUserRepository.isUserFollowByOtherUser(authUserId, userId);
     }
 
-    public boolean isUserHavePrivateProfile(Long userId) {
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        return !userRepository.isUserHavePrivateProfile(userId, authUserId);
-    }
-
     public boolean isUserBlockedByMyProfile(Long userId) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         return blockUserRepository.isUserBlocked(authUserId, userId);

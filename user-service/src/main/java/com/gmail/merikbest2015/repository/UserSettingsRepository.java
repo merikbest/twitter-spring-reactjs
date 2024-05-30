@@ -24,10 +24,6 @@ public interface UserSettingsRepository extends JpaRepository<User, Long> {
     void updateEmail(@Param("email") String email, @Param("userId") Long userId);
 
     @Modifying
-    @Query("UPDATE User user SET user.username = :username WHERE user.id = :userId")
-    void updateUsername(@Param("username") String username, @Param("userId") Long userId);
-
-    @Modifying
     @Query("UPDATE User user SET user.countryCode = :countryCode, user.phone = :phone WHERE user.id = :userId")
     void updatePhone(@Param("countryCode") String countryCode, @Param("phone") Long phone, @Param("userId") Long userId);
 
@@ -42,14 +38,6 @@ public interface UserSettingsRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User user SET user.language = :language WHERE user.id = :userId")
     void updateLanguage(@Param("language") String language, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.mutedDirectMessages = :mutedDirectMessages WHERE user.id = :userId")
-    void updateDirectMessageRequests(@Param("mutedDirectMessages") boolean mutedDirectMessages, @Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.privateProfile = :privateProfile WHERE user.id = :userId")
-    void updatePrivateProfile(@Param("privateProfile") boolean privateProfile, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.colorScheme = :colorSchemeType WHERE user.id = :userId")

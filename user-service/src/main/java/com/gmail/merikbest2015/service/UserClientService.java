@@ -7,19 +7,9 @@ import java.util.List;
 
 public interface UserClientService {
 
-    void increaseNotificationsCount(Long userId);
-
-    void increaseMentionsCount(Long userId);
-
-    NotificationUserResponse getNotificationUser(Long userId);
-
     UserResponse getUserResponseById(Long userId);
 
     List<NotificationUserResponse> getUsersWhichUserSubscribed();
 
     List<Long> getUserIdsWhichUserSubscribed();
-
-    void resetNotificationCount();
-
-    void resetMentionCount();
 }

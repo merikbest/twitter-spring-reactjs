@@ -10,7 +10,6 @@ import com.gmail.merikbest2015.service.UserClientService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,24 +19,6 @@ public class UserClientServiceImpl implements UserClientService {
 
     private final UserRepository userRepository;
     private final BasicMapper basicMapper;
-
-    @Override
-    @Transactional
-    public void increaseNotificationsCount(Long userId) {
-        userRepository.increaseNotificationsCount(userId);
-    }
-
-    @Override
-    @Transactional
-    public void increaseMentionsCount(Long userId) {
-        userRepository.increaseMentionsCount(userId);
-    }
-
-    @Override
-    public NotificationUserResponse getNotificationUser(Long userId) {
-        NotificationUserProjection user = userRepository.getUserById(userId, NotificationUserProjection.class).get();
-        return basicMapper.convertToResponse(user, NotificationUserResponse.class);
-    }
 
     @Override
     public UserResponse getUserResponseById(Long userId) {
@@ -56,19 +37,5 @@ public class UserClientServiceImpl implements UserClientService {
     public List<Long> getUserIdsWhichUserSubscribed() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return userRepository.getUserIdsWhichUserSubscribed(authUserId);
-    }
-
-    @Override
-    @Transactional
-    public void resetNotificationCount() {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        userRepository.resetNotificationCount(authUserId);
-    }
-
-    @Override
-    @Transactional
-    public void resetMentionCount() {
-        Long authUserId = AuthUtil.getAuthenticatedUserId();
-        userRepository.resetMentionCount(authUserId);
     }
 }

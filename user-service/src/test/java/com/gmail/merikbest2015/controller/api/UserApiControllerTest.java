@@ -32,34 +32,6 @@ public class UserApiControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("[200] GET /api/v1/user/notification/2 - Increase notifications count")
-    public void increaseNotificationsCount() throws Exception {
-        mockMvc.perform(get(API_V1_USER + NOTIFICATION_USER_ID, 2)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("[200] GET /api/v1/user/mention/2 - Increase mentions count")
-    public void increaseMentionsCount() throws Exception {
-        mockMvc.perform(get(API_V1_USER + MENTION_USER_ID, 2)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("[200] GET /api/v1/user/notification/user/2 - Get Notification User")
-    public void getNotificationUser() throws Exception {
-        mockMvc.perform(get(API_V1_USER + NOTIFICATION_USER_USER_ID, TestConstants.USER_ID)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(TestConstants.USER_ID))
-                .andExpect(jsonPath("$.username").value(TestConstants.USERNAME))
-                .andExpect(jsonPath("$.avatar").value(TestConstants.AVATAR_SRC_1))
-                .andExpect(jsonPath("$.isFollower").value(false));
-    }
-
-    @Test
     @DisplayName("[200] GET /api/v1/user/2 - Get user by id")
     public void getUserById() throws Exception {
         mockMvc.perform(get(API_V1_USER + "/2")
@@ -98,21 +70,5 @@ public class UserApiControllerTest {
                         .header(AUTH_USER_ID_HEADER, 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(List.of(2))));
-    }
-
-    @Test
-    @DisplayName("[200] GET /api/v1/user/notification/reset - Reset notification count")
-    public void resetNotificationCount() throws Exception {
-        mockMvc.perform(get(API_V1_USER + NOTIFICATION_RESET)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("[200] GET /api/v1/user/mention/reset - Reset mention count")
-    public void resetMentionCount() throws Exception {
-        mockMvc.perform(get(API_V1_USER + MENTION_RESET)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
-                .andExpect(status().isOk());
     }
 }

@@ -54,7 +54,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
     @Test
     public void updateEmail_ShouldReturnUpdatedUser() {
         AuthUserProjection authUserProjection = UserServiceTestHelper.createAuthUserProjection();
-        when(userSettingsRepository.isEmailExist(TestConstants.USER_ID, TestConstants.USER_EMAIL)).thenReturn(true);
+        when(userSettingsRepository.isEmailExist(TestConstants.USER_ID, TestConstants.USER_EMAIL)).thenReturn(false);
         when(jwtProvider.createToken(TestConstants.USER_EMAIL, UserRole.USER.name())).thenReturn(TestConstants.AUTH_TOKEN);
         when(userRepository.getUserById(TestConstants.USER_ID, AuthUserProjection.class)).thenReturn(Optional.of(authUserProjection));
         assertEquals(Map.of("user", authUserProjection, "token", TestConstants.AUTH_TOKEN),
@@ -67,7 +67,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void updateEmail_ShouldThrowEmailException() {
-        when(userSettingsRepository.isEmailExist(TestConstants.USER_ID, TestConstants.USER_EMAIL)).thenReturn(false);
+        when(userSettingsRepository.isEmailExist(TestConstants.USER_ID, TestConstants.USER_EMAIL)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userSettingsService.updateEmail(TestConstants.USER_EMAIL));
         assertEquals(EMAIL_HAS_ALREADY_BEEN_TAKEN, exception.getMessage());

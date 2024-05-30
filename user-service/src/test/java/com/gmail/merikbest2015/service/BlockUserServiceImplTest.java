@@ -28,7 +28,7 @@ public class BlockUserServiceImplTest extends AbstractServiceTest {
     public void setUp() {
         super.setUp();
         user = new User();
-        user.setId(2L);
+        user.setId(1L);
     }
 
     @Test
@@ -41,20 +41,26 @@ public class BlockUserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processBlockList_ShouldBlockUser() {
-        when(userRepository.findById(2L)).thenReturn(Optional.of(user));
-        when(blockUserRepository.isUserBlocked(TestConstants.USER_ID, 2L)).thenReturn(false);
-        assertTrue(blockUserService.processBlockList(2L));
-        verify(userRepository, times(1)).findById(2L);
-        verify(blockUserRepository, times(1)).isUserBlocked(TestConstants.USER_ID, 2L);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(blockUserRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(false);
+        assertTrue(blockUserService.processBlockList(1L));
+        verify(userRepository, times(1)).findById(1L);
+        verify(blockUserRepository, times(1)).isUserBlocked(TestConstants.USER_ID, 1L);
+        verify(blockUserRepository, times(1)).blockUser(TestConstants.USER_ID, 1L);
+        verify(followerUserRepository, times(1)).unfollow(TestConstants.USER_ID, 1L);
+        verify(followerUserRepository, times(1)).unfollow(1L, TestConstants.USER_ID);
+        verify(blockUserProducer, times(1)).sendBlockUserEvent(user, TestConstants.USER_ID, true);
     }
 
     @Test
     public void processBlockList_ShouldUnblockUser() {
-        when(userRepository.findById(2L)).thenReturn(Optional.of(user));
-        when(blockUserRepository.isUserBlocked(TestConstants.USER_ID, 2L)).thenReturn(true);
-        assertFalse(blockUserService.processBlockList(TestConstants.USER_ID));
-        verify(userRepository, times(1)).findById(2L);
-        verify(blockUserRepository, times(1)).isUserBlocked(TestConstants.USER_ID, 2L);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(blockUserRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
+        assertFalse(blockUserService.processBlockList(1L));
+        verify(userRepository, times(1)).findById(1L);
+        verify(blockUserRepository, times(1)).isUserBlocked(TestConstants.USER_ID, 1L);
+        verify(blockUserRepository, times(1)).unblockUser(TestConstants.USER_ID, 1L);
+        verify(blockUserProducer, times(1)).sendBlockUserEvent(user, TestConstants.USER_ID, false);
     }
 
     @Test

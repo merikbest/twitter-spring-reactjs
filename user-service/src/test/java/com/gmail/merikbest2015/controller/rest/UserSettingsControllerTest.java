@@ -120,10 +120,10 @@ public class UserSettingsControllerTest {
     }
 
     @Test
-    @DisplayName("[403] PUT /ui/v1/settings/update/email -Should user email is exist")
+    @DisplayName("[403] PUT /ui/v1/settings/update/email - Should user email is exist")
     public void updateEmail_ShouldUserEmailIsExist() throws Exception {
         SettingsRequest request = new SettingsRequest();
-        request.setEmail("test2015@test.test");
+        request.setEmail("test2016@test.test");
         mockMvc.perform(put(UI_V1_USER_SETTINGS_UPDATE + EMAIL)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
