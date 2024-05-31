@@ -13,7 +13,7 @@ describe("PopperListDescription", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(<PopperListDescription />, mockListDetail);
         expect(wrapper.find(Avatar).at(0).prop("src")).toBe(mockUserFullList.listOwner.avatar);
-        expect(wrapper.text().includes(mockUserFullList.name)).toBe(true);
+        expect(wrapper.text().includes(mockUserFullList.listName)).toBe(true);
         expect(wrapper.text().includes(mockUserFullList.description)).toBe(true);
         expect(wrapper.text().includes(mockUserFullList.listOwner.fullName)).toBe(true);
         expect(wrapper.text().includes(mockUserFullList.listOwner.username)).toBe(true);

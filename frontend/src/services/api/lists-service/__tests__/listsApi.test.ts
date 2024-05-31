@@ -77,7 +77,7 @@ describe("ListsApi", () => {
     });
 
     describe("should fetch ListsApi.createTweetList", () => {
-        const mockRequest = { name: "test list", isPrivate: true };
+        const mockRequest = { listName: "test list", isPrivate: true };
 
         it("[200] should create tweet list Success", () => {
             testApiCall(mockAdapter, "onPost", UI_V1_LISTS, 200, mockUserLists[0], ListsApi.createTweetList, mockRequest);
@@ -89,7 +89,7 @@ describe("ListsApi", () => {
     });
 
     describe("should fetch ListsApi.editList", () => {
-        const mockRequest = { id: 1, name: "test list", isPrivate: true };
+        const mockRequest = { id: 1, listName: "test list", isPrivate: true };
 
         it("[200] should edit list Success", () => {
             testApiCall(mockAdapter, "onPut", UI_V1_LISTS, 200, mockFullList, ListsApi.editList, mockRequest);

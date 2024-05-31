@@ -1,7 +1,8 @@
 import { Action } from "redux";
 
-import { EditListsRequest, ListState } from "./state";
-import { LoadingStatus } from "../../../../types/common";
+import { EditListsRequest, ListState, TweetsByListIdRequest } from "./state";
+import { LoadingStatus, PageableResponse } from "../../../../types/common";
+import { NotificationReplyResponse, NotificationResponse } from "../../../../types/notification";
 
 export enum ListActionType {
     SET_LIST = "list/SET_LISTS",
@@ -12,6 +13,10 @@ export enum ListActionType {
     DELETE_LIST = "list/DELETE_LIST",
     RESET_LIST_STATE = "list/RESET_LIST_STATE",
     SET_LOADING_STATE = "list/SET_LOADING_STATE",
+    FETCH_TWEETS_BY_LIST_ID = "list/FETCH_TWEETS_BY_LIST_ID",
+    SET_LIST_TWEETS = "list/SET_LIST_TWEETS",
+    SET_UPDATED_LIST_TWEET = "list/SET_UPDATED_LIST_TWEET",
+    SET_TWEETS_LOADING_STATE = "list/SET_TWEETS_LOADING_STATE",
 }
 
 export interface SetListActionInterface extends Action<ListActionType> {
@@ -53,9 +58,32 @@ export interface SetListLoadingStateInterface extends Action<ListActionType> {
     payload: LoadingStatus;
 }
 
+export interface FetchTweetsByListIdActionInterface extends Action<ListActionType> {
+    type: ListActionType.FETCH_TWEETS_BY_LIST_ID;
+    payload: TweetsByListIdRequest;
+}
+
+export interface SetListTweetsActionInterface extends Action<ListActionType> {
+    type: ListActionType.SET_LIST_TWEETS;
+    payload: PageableResponse<ListState["tweets"]>;
+}
+
+export interface SetUpdatedListTweetActionInterface extends Action<ListActionType> {
+    type: ListActionType.SET_UPDATED_LIST_TWEET;
+    payload: NotificationResponse | NotificationReplyResponse;
+}
+
+export interface SetTweetsLoadingStateInterface extends Action<ListActionType> {
+    type: ListActionType.SET_TWEETS_LOADING_STATE;
+    payload: LoadingStatus;
+}
+
 export type ListActions =
     | SetListActionInterface
     | UpdateFollowToFullListActionInterface
     | SetMembersSizeActionInterface
     | ResetListStateActionInterface
-    | SetListLoadingStateInterface;
+    | SetListLoadingStateInterface
+    | SetListTweetsActionInterface
+    | SetUpdatedListTweetActionInterface
+    | SetTweetsLoadingStateInterface;

@@ -95,6 +95,7 @@ import {
     TOPIC_NOTIFICATIONS
 } from "./constants/ws-constants";
 import { BACKGROUND, COLOR, TOKEN } from "./constants/common-constants";
+import { setUpdatedListTweet } from "./store/ducks/list/actionCreators";
 
 const App: FC = (): ReactElement => {
     const history = useHistory();
@@ -127,6 +128,7 @@ const App: FC = (): ReactElement => {
         stompClient.connect({}, () => {
             stompClient?.subscribe(TOPIC_FEED, (response) => {
                 dispatch(setUpdatedTweet(JSON.parse(response.body)));
+                dispatch(setUpdatedListTweet(JSON.parse(response.body)));
                 dispatch(updateNotificationInfoTweet(JSON.parse(response.body)));
             });
 

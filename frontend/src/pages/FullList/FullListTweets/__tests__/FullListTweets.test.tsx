@@ -8,6 +8,8 @@ import TweetComponent from "../../../../components/TweetComponent/TweetComponent
 import Spinner from "../../../../components/Spinner/Spinner";
 import EmptyPageDescription from "../../../../components/EmptyPageDescription/EmptyPageDescription";
 import FullListTweets from "../FullListTweets";
+import { mockTweets } from "../../../../util/test-utils/mock-test-data";
+import { ListActionType } from "../../../../store/ducks/list/contracts/actionTypes";
 
 describe("FullListTweets", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
@@ -19,18 +21,20 @@ describe("FullListTweets", () => {
     });
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<FullListTweets />, createMockRootState());
+        const wrapper = mountWithStore(<FullListTweets />, {
+            ...mockRootState,
+            list: { ...mockRootState.list, loadingState: LoadingStatus.LOADING, loadingTweetsState: LoadingStatus.LOADING, tweets: mockTweets }
+        });
         expect(wrapper.find(TweetComponent).length).toEqual(2);
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
             payload: { listId: 3, pageNumber: 0 },
-            type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID
+            type: ListActionType.FETCH_TWEETS_BY_LIST_ID
         });
     });
 
     it("should render EmptyPageDescription component", () => {
-        const mockState = { ...mockRootState, tweets: { ...mockRootState.tweets, items: [] } };
-        const wrapper = mountWithStore(<FullListTweets />, mockState);
+        const wrapper = mountWithStore(<FullListTweets />, mockRootState);
         expect(wrapper.find(EmptyPageDescription).exists()).toBe(true);
     });
 

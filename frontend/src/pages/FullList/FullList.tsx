@@ -13,7 +13,7 @@ import {
     selectListItemOwnerId,
     selectListItemOwnerUsername
 } from "../../store/ducks/list/selectors";
-import { fetchListById } from "../../store/ducks/list/actionCreators";
+import { fetchListById, resetListState } from "../../store/ducks/list/actionCreators";
 import { selectUserDataId } from "../../store/ducks/user/selectors";
 import Spinner from "../../components/Spinner/Spinner";
 import { useGlobalStyles } from "../../util/globalClasses";
@@ -42,6 +42,10 @@ const FullList: FC = (): ReactElement => {
     useEffect(() => {
         window.scrollTo(0, 0);
         dispatch(fetchListById(parseInt(params.listId)));
+
+        return () => {
+            dispatch(resetListState());
+        };
     }, [params.listId]);
 
     useEffect(() => {

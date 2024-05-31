@@ -1,6 +1,8 @@
 import {
     selectIsListLoaded,
     selectIsListLoading,
+    selectIsTweetsLoaded,
+    selectIsTweetsLoading,
     selectListItem,
     selectListItemDescription,
     selectListItemFollowersSize,
@@ -13,17 +15,19 @@ import {
     selectListItemOwnerFullName,
     selectListItemOwnerId,
     selectListItemOwnerUsername,
-    selectListItemOwnerWallpaper
+    selectListItemOwnerWallpaper,
+    selectListTweets,
+    selectListTweetsPagesCount
 } from "../selectors";
 import { createMockRootState } from "../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../types/common";
-import { mockFullList } from "../../../../util/test-utils/mock-test-data";
+import { mockFullList, mockTweets } from "../../../../util/test-utils/mock-test-data";
 
 describe("list selectors:", () => {
     const mockState = createMockRootState();
     const mockListState = {
         ...mockState,
-        list: { ...mockState.list, list: mockFullList }
+        list: { ...mockState.list, list: mockFullList, tweets: mockTweets }
     };
 
     describe("selectListItem", () => {
@@ -101,6 +105,30 @@ describe("list selectors:", () => {
     describe("selectListItemOwnerFullName", () => {
         it("should return OwnerFullName string", () => {
             expect(selectListItemOwnerFullName(mockListState)).toBe(mockFullList.listOwner.fullName);
+        });
+    });
+
+    describe("selectListTweets", () => {
+        it("should return TweetResponse array", () => {
+            expect(selectListTweets(mockListState)).toBe(mockTweets);
+        });
+    });
+
+    describe("selectListTweetsPagesCount", () => {
+        it("should return correct result", () => {
+            expect(selectListTweetsPagesCount(mockListState)).toBe(1);
+        });
+    });
+
+    describe("selectIsTweetsLoaded", () => {
+        it("should return correct result", () => {
+            expect(selectIsTweetsLoaded(createMockRootState(LoadingStatus.LOADED))).toBe(true);
+        });
+    });
+
+    describe("selectIsTweetsLoading", () => {
+        it("should return correct result", () => {
+            expect(selectIsTweetsLoading(createMockRootState(LoadingStatus.LOADING))).toBe(true);
         });
     });
 

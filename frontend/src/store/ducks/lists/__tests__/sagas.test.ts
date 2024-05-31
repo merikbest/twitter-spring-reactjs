@@ -105,7 +105,7 @@ describe("listsSaga:", () => {
 
     describe("createListRequest:", () => {
         const mockListUserResponse = { data: { id: 1 } } as AxiosResponse<ListUserResponse>;
-        const mockAddLists = { name: "test", description: "test", isPrivate: true } as ListsRequest;
+        const mockAddLists = { listName: "test", description: "test", isPrivate: true } as ListsRequest;
         const worker = createListRequest(createList(mockAddLists));
         testLoadingStatus(worker, setLoadingState, LoadingStatus.LOADING);
         testCall(worker, ListsApi.createTweetList, mockAddLists);

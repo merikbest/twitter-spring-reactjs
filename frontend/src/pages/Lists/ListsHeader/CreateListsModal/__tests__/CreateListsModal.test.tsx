@@ -53,7 +53,7 @@ describe("CreateListsModal", () => {
                     altWallpaper: wallpapers[wallpapers.length],
                     description: "Test description",
                     isPrivate: false,
-                    name: "Test name",
+                    listName: "Test name",
                     wallpaper: undefined
                 },
                 type: ListsActionType.CREATE_LIST

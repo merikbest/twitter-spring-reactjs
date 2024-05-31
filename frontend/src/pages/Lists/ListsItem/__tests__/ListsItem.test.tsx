@@ -24,7 +24,7 @@ describe("ListsItem", () => {
         const wrapper = mountWithStore(<ListsItem list={mockList} listIndex={2} isMyList={false} />, mockStore);
 
         expect(wrapper.find(Avatar).at(0).prop("src")).toEqual(mockList.altWallpaper);
-        expect(wrapper.text().includes(mockList.name)).toBe(true);
+        expect(wrapper.text().includes(mockList.listName)).toBe(true);
         expect(wrapper.text().includes(mockList.description)).toBe(true);
         expect(wrapper.find(Avatar).at(1).prop("src")).toEqual(mockList.listOwner.avatar);
         expect(wrapper.text().includes(mockList.listOwner.fullName)).toBe(true);

@@ -25,7 +25,7 @@ describe("PinnedListsItem", () => {
         const wrapper = mountWithStore(<PinnedListsItem pinnedList={mockPinnedList} />, mockStore);
 
         expect(wrapper.find(Avatar).prop("src")).toEqual(mockPinnedList.altWallpaper);
-        expect(wrapper.text().includes(mockPinnedList.name)).toBe(true);
+        expect(wrapper.text().includes(mockPinnedList.listName)).toBe(true);
     });
 
     it("should hover list info and render Popper List Window", () => {

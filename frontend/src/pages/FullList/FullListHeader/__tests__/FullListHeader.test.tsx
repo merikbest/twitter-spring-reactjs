@@ -11,7 +11,7 @@ describe("FullListHeader", () => {
     it("should render correctly", () => {
         const mockState = { ...mockRootState, list: { ...mockRootState.list, list: mockFullList } };
         const wrapper = mountWithStore(<FullListHeader />, mockState);
-        expect(wrapper.text().includes(mockFullList.name)).toBe(true);
+        expect(wrapper.text().includes(mockFullList.listName)).toBe(true);
         expect(wrapper.text().includes(mockFullList.listOwner.username)).toBe(true);
     });
 

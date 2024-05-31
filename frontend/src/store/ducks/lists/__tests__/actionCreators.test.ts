@@ -94,9 +94,9 @@ describe("lists actions", () => {
         payload: { id: 1 } as ListUserResponse
     });
 
-    testAction(createList, createList({ name: "test list", isPrivate: true } as ListsRequest), {
+    testAction(createList, createList({ listName: "test list", isPrivate: true } as ListsRequest), {
         type: ListsActionType.CREATE_LIST,
-        payload: { name: "test list", isPrivate: true } as ListsRequest
+        payload: { listName: "test list", isPrivate: true } as ListsRequest
     });
 
     testAction(fetchLists, fetchLists(), {

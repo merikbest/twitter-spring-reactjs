@@ -13,7 +13,7 @@ describe("FullListDescription", () => {
         const mockState = { ...mockRootState, list: { ...mockRootState.list, list: mockFullList } };
         const wrapper = mountWithStore(<FullListDescription />, mockState);
         expect(wrapper.find(Avatar).at(0).prop("src")).toEqual(mockFullList.listOwner.avatar);
-        expect(wrapper.text().includes(mockFullList.name)).toBe(true);
+        expect(wrapper.text().includes(mockFullList.listName)).toBe(true);
         expect(wrapper.text().includes(mockFullList.description)).toBe(true);
         expect(wrapper.text().includes(mockFullList.listOwner.fullName)).toBe(true);
         expect(wrapper.text().includes(mockFullList.listOwner.username)).toBe(true);

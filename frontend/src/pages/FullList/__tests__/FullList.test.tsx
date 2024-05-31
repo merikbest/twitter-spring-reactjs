@@ -5,9 +5,8 @@ import ReactRouter from "react-router";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
 import Spinner from "../../../components/Spinner/Spinner";
 import FullList from "../FullList";
-import { mockFullList, mockUserFullList } from "../../../util/test-utils/mock-test-data";
+import { mockFullList, mockTweets, mockUserFullList } from "../../../util/test-utils/mock-test-data";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
-import { TweetsActionType } from "../../../store/ducks/tweets/contracts/actionTypes";
 import { ListActionType } from "../../../store/ducks/list/contracts/actionTypes";
 import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import EditListModal from "../EditListButton/EditListModal/EditListModal";
@@ -36,17 +35,20 @@ describe("FullList", () => {
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, {
             payload: { listId: 3, pageNumber: 0 },
-            type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID
+            type: ListActionType.FETCH_TWEETS_BY_LIST_ID
         });
         expect(mockDispatchFn).nthCalledWith(2, { payload: 3, type: ListActionType.FETCH_LIST_BY_ID });
     });
 
     it("should render FullList correctly", () => {
-        const wrapper = mountWithStore(<FullList />, { ...mockStore, list: { ...mockStore.list, list: mockFullList } });
+        const wrapper = mountWithStore(<FullList />, {
+            ...mockStore,
+            list: { ...mockStore.list, list: mockFullList, tweets: mockTweets }
+        });
 
         expect(wrapper.find(Spinner).exists()).toBe(false);
-        expect(global.window.document.title).toBe(`@${mockFullList.listOwner.username}/${mockFullList.name} / Twitter`);
-        expect(wrapper.text().includes(mockFullList.name)).toBe(true);
+        expect(global.window.document.title).toBe(`@${mockFullList.listOwner.username}/${mockFullList.listName} / Twitter`);
+        expect(wrapper.text().includes(mockFullList.listName)).toBe(true);
         expect(wrapper.text().includes(mockFullList.description)).toBe(true);
         expect(wrapper.text().includes(mockFullList.listOwner.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockFullList.listOwner.username}`)).toBe(true);

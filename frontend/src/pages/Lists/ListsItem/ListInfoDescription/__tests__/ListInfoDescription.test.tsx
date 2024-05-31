@@ -17,14 +17,14 @@ describe("ListInfoDescription", () => {
         const wrapper = mountWithStore(
             <ListInfoDescription
                 listId={mockList.id}
-                listName={mockList.name}
+                listName={mockList.listName}
                 listDescription={mockList.description}
                 listIsPrivate={false}
                 listOwnerFullName={mockList.listOwner.fullName}
                 listOwnerUsername={mockList.listOwner.username}
                 listOwnerAvatar={mockList.listOwner.avatar}
             />, mockStore);
-        expect(wrapper.text().includes(mockList.name)).toBe(true);
+        expect(wrapper.text().includes(mockList.listName)).toBe(true);
         expect(wrapper.text().includes(mockList.description)).toBe(true);
         expect(wrapper.text().includes(mockList.listOwner.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockList.listOwner.username}`)).toBe(true);
@@ -35,7 +35,7 @@ describe("ListInfoDescription", () => {
         const wrapper = mountWithStore(
             <ListInfoDescription
                 listId={mockList.id}
-                listName={mockList.name}
+                listName={mockList.listName}
                 listDescription={mockList.description}
                 listIsPrivate={true}
                 listOwnerFullName={mockList.listOwner.fullName}

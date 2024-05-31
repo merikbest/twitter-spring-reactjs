@@ -38,7 +38,7 @@ describe("ListsModal", () => {
 
         expect(wrapper.find(ListItem).length).toEqual(1);
         expect(wrapper.find(ListItem).at(0).prop("selected")).toBe(true);
-        expect(wrapper.text().includes(mockSimpleList[0].name)).toBe(true);
+        expect(wrapper.text().includes(mockSimpleList[0].listName)).toBe(true);
         expect(wrapper.find(Avatar).at(0).prop("src")).toBe(mockSimpleList[0].altWallpaper);
         expect(wrapper.find("#check").exists()).toBeTruthy();
     });

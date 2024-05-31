@@ -199,7 +199,10 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         },
         list: {
             list: undefined,
-            loadingState: loadingStatus
+            tweets: [],
+            pagesCount: 1,
+            loadingState: loadingStatus,
+            loadingTweetsState: loadingStatus
         },
         listDetail: {
             item: undefined,

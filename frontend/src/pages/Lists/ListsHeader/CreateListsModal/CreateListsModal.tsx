@@ -28,7 +28,7 @@ interface CreateListsModalFormProps {
 }
 
 const CreateListsModalFormSchema = yup.object().shape({
-    name: yup.string().min(1, "List Name can’t be blank").required()
+    listName: yup.string().min(1, "List Name can’t be blank").required()
 });
 
 const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): ReactElement | null => {

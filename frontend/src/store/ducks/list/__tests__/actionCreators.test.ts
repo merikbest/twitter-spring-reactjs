@@ -3,10 +3,13 @@ import {
     deleteList,
     editList,
     fetchListById,
+    fetchTweetsByListId,
     resetListState,
     setList,
     setListLoadingState,
+    setListTweets,
     setMembersSize,
+    setTweetsLoadingState,
     updateFollowToFullList
 } from "../actionCreators";
 import { ListActionType } from "../contracts/actionTypes";
@@ -33,6 +36,21 @@ describe("list actions", () => {
     testAction(fetchListById, fetchListById(1), {
         type: ListActionType.FETCH_LIST_BY_ID,
         payload: 1
+    });
+
+    testAction(fetchTweetsByListId, fetchTweetsByListId({ listId: 1, pageNumber: 1 }), {
+        type: ListActionType.FETCH_TWEETS_BY_LIST_ID,
+        payload: { listId: 1, pageNumber: 1 }
+    });
+
+    testAction(setListTweets, setListTweets({ items: [], pagesCount: 1 }), {
+        type: ListActionType.SET_LIST_TWEETS,
+        payload: { items: [], pagesCount: 1 }
+    });
+
+    testAction(setTweetsLoadingState, setTweetsLoadingState(LoadingStatus.LOADING), {
+        type: ListActionType.SET_TWEETS_LOADING_STATE,
+        payload: LoadingStatus.LOADING
     });
 
     testAction(editList, editList({ id: 1 } as EditListsRequest), {

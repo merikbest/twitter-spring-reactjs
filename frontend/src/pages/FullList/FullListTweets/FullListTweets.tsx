@@ -5,22 +5,23 @@ import { useParams } from "react-router-dom";
 import EmptyPageDescription from "../../../components/EmptyPageDescription/EmptyPageDescription";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import Spinner from "../../../components/Spinner/Spinner";
+import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import { resetTweets } from "../../../store/ducks/tweets/actionCreators";
 import {
     selectIsTweetsLoaded,
     selectIsTweetsLoading,
-    selectPagesCount,
-    selectTweetsItems
-} from "../../../store/ducks/tweets/selectors";
-import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
-import { fetchTweetsByListId, resetTweets } from "../../../store/ducks/tweets/actionCreators";
+    selectListTweets,
+    selectListTweetsPagesCount
+} from "../../../store/ducks/list/selectors";
+import { fetchTweetsByListId } from "../../../store/ducks/list/actionCreators";
 
 const FullListTweets = memo((): ReactElement => {
     const dispatch = useDispatch();
     const params = useParams<{ listId: string }>();
-    const tweets = useSelector(selectTweetsItems);
+    const tweets = useSelector(selectListTweets);
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const isTweetsLoaded = useSelector(selectIsTweetsLoaded);
-    const pagesCount = useSelector(selectPagesCount);
+    const pagesCount = useSelector(selectListTweetsPagesCount);
 
     useEffect(() => {
         loadTweets(0);

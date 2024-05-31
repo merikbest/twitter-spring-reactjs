@@ -597,7 +597,7 @@ export const mockVideoTweets = [
 // lists
 export const mockFullList = {
     "id": 3,
-    "name": "Hello World!",
+    "listName": "Hello World!",
     "description": "Hello from my list",
     "isListPinned": true,
     "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
@@ -617,7 +617,7 @@ export const mockFullList = {
 
 export const mockUserFullList = {
     "id": 1,
-    "name": "Random List",
+    "listName": "Random List",
     "description": "Random List Description",
     "isListPinned": true,
     "altWallpaper": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small",
@@ -666,7 +666,7 @@ export const mockListsOwnerMember = [
 export const mockPinnedLists = [
     {
         "id": 3,
-        "name": "Hello World!",
+        "listName": "Hello World!",
         "isListPinned": true,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
         "wallpaper": null,
@@ -677,7 +677,7 @@ export const mockPinnedLists = [
 export const mockLists = [
     {
         "id": 2,
-        "name": "Internal",
+        "listName": "Internal",
         "description": "Some description",
         "isListPinned": false,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ2w_qUcAMwN3x?format=png&name=small",
@@ -693,7 +693,7 @@ export const mockLists = [
     },
     {
         "id": 1,
-        "name": "Random List",
+        "listName": "Random List",
         "description": "Random List Description",
         "isListPinned": true,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small",
@@ -709,7 +709,7 @@ export const mockLists = [
     },
     {
         "id": 3,
-        "name": "Hello World!",
+        "listName": "Hello World!",
         "description": "Hello from my list",
         "isListPinned": true,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
@@ -728,7 +728,7 @@ export const mockLists = [
 export const mockUserLists = [
     {
         "id": 3,
-        "name": "Hello World!",
+        "listName": "Hello World!",
         "description": "Hello from my list",
         "isListPinned": true,
         "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
@@ -747,7 +747,7 @@ export const mockUserLists = [
 export const mockSimpleList = [
     {
         "id": 3,
-        "name": "Hello World!",
+        "listName": "Hello World!",
         "altWallpaper": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small",
         "wallpaper": null,
         "isMemberInList": true,
@@ -814,7 +814,7 @@ export const mockFullTweet = {
     },
     "tweetList": {
         "id": 1,
-        "name": "Random List",
+        "listName": "Random List",
         "altWallpaper": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small",
         "wallpaper": null,
         "listOwner": {

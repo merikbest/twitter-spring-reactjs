@@ -3,6 +3,7 @@ import { ListActions, ListActionType } from "../contracts/actionTypes";
 import { testActionDispatch } from "../../../../util/test-utils/test-helper";
 import { BaseListResponse } from "../../../../types/lists";
 import { LoadingStatus } from "../../../../types/common";
+import { TweetResponse } from "../../../../types/tweet";
 
 describe("listReducer:", () => {
     describe("initial state:", () => {
@@ -45,6 +46,20 @@ describe("listReducer:", () => {
         );
 
         testActionDispatch(
+            ListActionType.SET_LIST_TWEETS,
+            listReducer(initialListState, {
+                type: ListActionType.SET_LIST_TWEETS,
+                payload: { items: [{ id: 1 }] as TweetResponse[], pagesCount: 2 }
+            }),
+            {
+                ...initialListState,
+                tweets: [{ id: 1 }] as TweetResponse[],
+                pagesCount: 2,
+                loadingTweetsState: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
             ListActionType.UPDATE_FOLLOW_TO_FULL_LIST,
             listReducer(
                 {
@@ -77,6 +92,9 @@ describe("listReducer:", () => {
             {
                 ...initialListState,
                 list: undefined,
+                tweets: [],
+                pagesCount: 0,
+                loadingTweetsState: LoadingStatus.LOADING,
                 loadingState: LoadingStatus.LOADING
             }
         );
@@ -90,6 +108,18 @@ describe("listReducer:", () => {
             {
                 ...initialListState,
                 loadingState: LoadingStatus.SUCCESS
+            }
+        );
+
+        testActionDispatch(
+            ListActionType.SET_TWEETS_LOADING_STATE,
+            listReducer(initialListState, {
+                type: ListActionType.SET_TWEETS_LOADING_STATE,
+                payload: LoadingStatus.SUCCESS
+            }),
+            {
+                ...initialListState,
+                loadingTweetsState: LoadingStatus.SUCCESS
             }
         );
     });

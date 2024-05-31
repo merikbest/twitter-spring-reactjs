@@ -76,7 +76,7 @@ describe("EditListModal", () => {
                         username: mockFullList.listOwner.username,
                         isPrivateProfile: false
                     },
-                    name: "Test name",
+                    listName: "Test name",
                     wallpaper: undefined
                 },
                 type: ListActionType.EDIT_LIST
