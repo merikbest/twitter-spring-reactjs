@@ -37,6 +37,7 @@ import { PollApi } from "../../../services/api/tweet-service/pollApi";
 import { RetweetApi } from "../../../services/api/tweet-service/retweetApi";
 import { ScheduledTweetApi } from "../../../services/api/tweet-service/scheduledTweetApi";
 import { TweetApi } from "../../../services/api/tweet-service/tweetApi";
+import { deleteListTweet } from "../list/actionCreators";
 
 export function* fetchTweetsRequest({ payload }: FetchTweetsActionInterface) {
     try {
@@ -199,6 +200,7 @@ export function* fetchDeleteTweetRequest({ payload }: FetchDeleteTweetActionInte
     try {
         yield call(TweetApi.deleteTweet, payload);
         yield put(deleteUserTweet(payload));
+        yield put(deleteListTweet(payload));
         yield put(deleteTweet(payload));
     } catch (error) {
         yield put(setTweetsLoadingState(LoadingStatus.ERROR));

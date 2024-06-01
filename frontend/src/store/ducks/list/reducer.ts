@@ -34,6 +34,14 @@ export const listReducer = produce((draft: Draft<ListState>, action: ListActions
             draft.loadingTweetsState = LoadingStatus.LOADED;
             break;
 
+        case ListActionType.UPDATE_FOLLOW_TO_FULL_LIST:
+            if (draft.list) {
+                draft.list.isFollower = action.payload;
+                draft.list.followersSize = action.payload ? draft.list.followersSize + 1 : draft.list.followersSize - 1;
+                draft.loadingState = LoadingStatus.LOADED;
+            }
+            break;
+
         case ListActionType.SET_UPDATED_LIST_TWEET:
             if (action.payload.notificationType === NotificationType.LIKE) {
                 const payload = action.payload as NotificationResponse;
@@ -60,12 +68,68 @@ export const listReducer = produce((draft: Draft<ListState>, action: ListActions
             }
             break;
 
-        case ListActionType.UPDATE_FOLLOW_TO_FULL_LIST:
-            if (draft.list) {
-                draft.list.isFollower = action.payload;
-                draft.list.followersSize = action.payload ? draft.list.followersSize + 1 : draft.list.followersSize - 1;
-                draft.loadingState = LoadingStatus.LOADED;
+        case ListActionType.SET_UPDATED_BOOKMARKED_LIST_TWEET:
+            const bookmarkedTweetIndex = draft.tweets.findIndex((tweet) => tweet.id === action.payload.tweetId);
+            if (bookmarkedTweetIndex !== -1) draft.tweets[bookmarkedTweetIndex].isTweetBookmarked = action.payload.isTweetBookmarked;
+            break;
+
+        case ListActionType.SET_VOTE_LIST_TWEET:
+            const tweetIndex = draft.tweets.findIndex((tweet) => tweet.id === action.payload.id);
+            if (tweetIndex !== -1) draft.tweets[tweetIndex].poll.pollChoices = action.payload.poll.pollChoices;
+            break;
+
+        case ListActionType.DELETE_LIST_TWEET:
+            draft.tweets = draft.tweets.filter((tweet) => tweet.id !== action.payload);
+            break;
+
+        case ListActionType.SET_FOLLOW_TO_LIST_TWEETS_STATE:
+            if (action.payload.tweetId) {
+                const followUserTweetIndex = draft.tweets.findIndex((tweet) => tweet.id === action.payload.tweetId);
+                if (followUserTweetIndex !== -1) draft.tweets[followUserTweetIndex].author.isFollower = action.payload.isFollower;
+            } else {
+                draft.tweets = draft.tweets.map((tweet) => {
+                    if (tweet.author.id === action.payload.userId) {
+                        tweet.author.isFollower = action.payload.isFollower;
+                        return tweet;
+                    } else {
+                        return tweet;
+                    }
+                });
             }
+            break;
+
+        case ListActionType.SET_BLOCKED_TO_LIST_TWEETS_STATE:
+            if (action.payload.tweetId) {
+                const blockedUserTweetIndex = draft.tweets.findIndex((tweet) => tweet.id === action.payload.tweetId);
+                if (blockedUserTweetIndex !== -1) draft.tweets[blockedUserTweetIndex].author.isUserBlocked = action.payload.isUserBlocked;
+            } else {
+                draft.tweets = draft.tweets.map((tweet) => {
+                    if (tweet.author.id === action.payload.userId) {
+                        tweet.author.isUserBlocked = action.payload.isUserBlocked;
+                        return tweet;
+                    } else {
+                        return tweet;
+                    }
+                });
+            }
+            draft.loadingTweetsState = LoadingStatus.LOADED;
+            break;
+
+        case ListActionType.SET_MUTED_TO_LIST_TWEETS_STATE:
+            if (action.payload.tweetId) {
+                const mutedUserTweetIndex = draft.tweets.findIndex((tweet) => tweet.id === action.payload.tweetId);
+                if (mutedUserTweetIndex !== -1) draft.tweets[mutedUserTweetIndex].author.isUserMuted = action.payload.isUserMuted;
+            } else {
+                draft.tweets = draft.tweets.map((tweet) => {
+                    if (tweet.author.id === action.payload.userId) {
+                        tweet.author.isUserMuted = action.payload.isUserMuted;
+                        return tweet;
+                    } else {
+                        return tweet;
+                    }
+                });
+            }
+            draft.loadingTweetsState = LoadingStatus.LOADED;
             break;
 
         case ListActionType.RESET_LIST_STATE:

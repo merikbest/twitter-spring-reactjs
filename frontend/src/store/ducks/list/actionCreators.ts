@@ -1,22 +1,35 @@
 import {
     DeleteListActionInterface,
+    DeleteListTweetActionInterface,
     EditListActionInterface,
     FetchListByIdActionInterface,
     FetchTweetsByListIdActionInterface,
     ListActionType,
     ResetListStateActionInterface,
+    SetBlockedToListTweetsStateActionInterface,
+    SetFollowToListTweetsStateActionInterface,
     SetListActionInterface,
     SetListLoadingStateInterface,
     SetListTweetsActionInterface,
     SetMembersSizeActionInterface,
+    SetMutedToListTweetsStateActionInterface,
     SetTweetsLoadingStateInterface,
+    SetUpdatedBookmarkedListTweetActionInterface,
     SetUpdatedListTweetActionInterface,
+    SetVoteListTweetActionInterface,
     UpdateFollowToFullListActionInterface
 } from "./contracts/actionTypes";
 import { BaseListResponse } from "../../../types/lists";
 import { EditListsRequest, ListState, TweetsByListIdRequest } from "./contracts/state";
 import { LoadingStatus, PageableResponse } from "../../../types/common";
 import { NotificationReplyResponse, NotificationResponse } from "../../../types/notification";
+import { UpdatedBookmarkedTweetPayload } from "../tweets/contracts/state";
+import {
+    BlockedToTweetsPayload,
+    FollowToTweetsPayload,
+    MutedToTweetsPayload,
+    TweetResponse
+} from "../../../types/tweet";
 
 export const setList = (payload: BaseListResponse): SetListActionInterface => ({
     type: ListActionType.SET_LIST,
@@ -50,6 +63,36 @@ export const setListTweets = (payload: PageableResponse<ListState["tweets"]>): S
 
 export const setUpdatedListTweet = (payload: NotificationResponse | NotificationReplyResponse): SetUpdatedListTweetActionInterface => ({
     type: ListActionType.SET_UPDATED_LIST_TWEET,
+    payload
+});
+
+export const setUpdatedBookmarkedListTweetTweetsState = (payload: UpdatedBookmarkedTweetPayload): SetUpdatedBookmarkedListTweetActionInterface => ({
+    type: ListActionType.SET_UPDATED_BOOKMARKED_LIST_TWEET,
+    payload
+});
+
+export const setFollowToListTweetsState = (payload: FollowToTweetsPayload): SetFollowToListTweetsStateActionInterface => ({
+    type: ListActionType.SET_FOLLOW_TO_LIST_TWEETS_STATE,
+    payload
+});
+
+export const setBlockedToListTweetsState = (payload: BlockedToTweetsPayload): SetBlockedToListTweetsStateActionInterface => ({
+    type: ListActionType.SET_BLOCKED_TO_LIST_TWEETS_STATE,
+    payload
+});
+
+export const setMutedToListTweetsState = (payload: MutedToTweetsPayload): SetMutedToListTweetsStateActionInterface => ({
+    type: ListActionType.SET_MUTED_TO_LIST_TWEETS_STATE,
+    payload
+});
+
+export const setVoteListTweet = (payload: TweetResponse): SetVoteListTweetActionInterface => ({
+    type: ListActionType.SET_VOTE_LIST_TWEET,
+    payload
+});
+
+export const deleteListTweet = (payload: number): DeleteListTweetActionInterface => ({
+    type: ListActionType.DELETE_LIST_TWEET,
     payload
 });
 

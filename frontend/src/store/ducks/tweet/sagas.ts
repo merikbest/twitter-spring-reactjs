@@ -37,6 +37,7 @@ import { BookmarkApi } from "../../../services/api/tweet-service/bookmarkApi";
 import { LikeTweetApi } from "../../../services/api/tweet-service/likeTweetApi";
 import { RetweetApi } from "../../../services/api/tweet-service/retweetApi";
 import { TweetApi } from "../../../services/api/tweet-service/tweetApi";
+import { deleteListTweet, setUpdatedBookmarkedListTweetTweetsState } from "../list/actionCreators";
 
 export function* fetchTweetDataRequest({ payload: tweetId }: FetchTweetDataActionInterface) {
     try {
@@ -54,6 +55,7 @@ export function* addTweetToBookmarksRequest({ payload }: AddTweetToBookmarksActi
         yield put(setBookmarkedTweet(data));
         yield put(setUpdatedBookmarkedTweetTweetsState({ tweetId: payload, isTweetBookmarked: data }));
         yield put(setUpdatedBookmarkedTweetUserTweetState({ tweetId: payload, isTweetBookmarked: data }));
+        yield put(setUpdatedBookmarkedListTweetTweetsState({ tweetId: payload, isTweetBookmarked: data }));
         yield put(setIsTweetBookmarkedAdditionalInfo(data));
     } catch (error) {
         yield put(setTweetLoadingState(LoadingStatus.ERROR));
@@ -72,6 +74,7 @@ export function* deleteTweetReplyRequest({ payload }: DeleteTweetReplyActionInte
     try {
         yield call(TweetApi.deleteTweet, payload);
         yield put(deleteUserTweet(payload));
+        yield put(deleteListTweet(payload));
         yield put(deleteTweet(payload));
     } catch (error) {
         yield put(setTweetLoadingState(LoadingStatus.ERROR));

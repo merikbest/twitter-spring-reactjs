@@ -3,6 +3,13 @@ import { Action } from "redux";
 import { EditListsRequest, ListState, TweetsByListIdRequest } from "./state";
 import { LoadingStatus, PageableResponse } from "../../../../types/common";
 import { NotificationReplyResponse, NotificationResponse } from "../../../../types/notification";
+import { UpdatedBookmarkedTweetPayload } from "../../tweets/contracts/state";
+import {
+    BlockedToTweetsPayload,
+    FollowToTweetsPayload,
+    MutedToTweetsPayload,
+    TweetResponse
+} from "../../../../types/tweet";
 
 export enum ListActionType {
     SET_LIST = "list/SET_LISTS",
@@ -16,6 +23,12 @@ export enum ListActionType {
     FETCH_TWEETS_BY_LIST_ID = "list/FETCH_TWEETS_BY_LIST_ID",
     SET_LIST_TWEETS = "list/SET_LIST_TWEETS",
     SET_UPDATED_LIST_TWEET = "list/SET_UPDATED_LIST_TWEET",
+    SET_UPDATED_BOOKMARKED_LIST_TWEET = "list/SET_UPDATED_BOOKMARKED_LIST_TWEET",
+    SET_FOLLOW_TO_LIST_TWEETS_STATE = "list/SET_FOLLOW_TO_LIST_TWEETS_STATE",
+    SET_BLOCKED_TO_LIST_TWEETS_STATE = "list/SET_BLOCKED_TO_LIST_TWEETS_STATE",
+    SET_MUTED_TO_LIST_TWEETS_STATE = "list/SET_MUTED_TO_LIST_TWEETS_STATE",
+    SET_VOTE_LIST_TWEET = "list/SET_VOTE_LIST_TWEET",
+    DELETE_LIST_TWEET = "list/DELETE_LIST_TWEET",
     SET_TWEETS_LOADING_STATE = "list/SET_TWEETS_LOADING_STATE",
 }
 
@@ -73,6 +86,36 @@ export interface SetUpdatedListTweetActionInterface extends Action<ListActionTyp
     payload: NotificationResponse | NotificationReplyResponse;
 }
 
+export interface SetUpdatedBookmarkedListTweetActionInterface extends Action<ListActionType> {
+    type: ListActionType.SET_UPDATED_BOOKMARKED_LIST_TWEET;
+    payload: UpdatedBookmarkedTweetPayload;
+}
+
+export interface SetFollowToListTweetsStateActionInterface extends Action<ListActionType> {
+    type: ListActionType.SET_FOLLOW_TO_LIST_TWEETS_STATE;
+    payload: FollowToTweetsPayload;
+}
+
+export interface SetBlockedToListTweetsStateActionInterface extends Action<ListActionType> {
+    type: ListActionType.SET_BLOCKED_TO_LIST_TWEETS_STATE;
+    payload: BlockedToTweetsPayload;
+}
+
+export interface SetMutedToListTweetsStateActionInterface extends Action<ListActionType> {
+    type: ListActionType.SET_MUTED_TO_LIST_TWEETS_STATE;
+    payload: MutedToTweetsPayload;
+}
+
+export interface SetVoteListTweetActionInterface extends Action<ListActionType> {
+    type: ListActionType.SET_VOTE_LIST_TWEET;
+    payload: TweetResponse;
+}
+
+export interface DeleteListTweetActionInterface extends Action<ListActionType> {
+    type: ListActionType.DELETE_LIST_TWEET;
+    payload: number;
+}
+
 export interface SetTweetsLoadingStateInterface extends Action<ListActionType> {
     type: ListActionType.SET_TWEETS_LOADING_STATE;
     payload: LoadingStatus;
@@ -86,4 +129,10 @@ export type ListActions =
     | SetListLoadingStateInterface
     | SetListTweetsActionInterface
     | SetUpdatedListTweetActionInterface
-    | SetTweetsLoadingStateInterface;
+    | SetTweetsLoadingStateInterface
+    | SetUpdatedBookmarkedListTweetActionInterface
+    | SetFollowToListTweetsStateActionInterface
+    | SetBlockedToListTweetsStateActionInterface
+    | SetMutedToListTweetsStateActionInterface
+    | SetVoteListTweetActionInterface
+    | DeleteListTweetActionInterface;

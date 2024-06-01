@@ -28,7 +28,6 @@ import {
     ProcessFollowRequestActionInterface,
     ProcessUserToBlocklistActionInterface,
     ProcessUserToMuteListActionInterface,
-    StartUseTwitterActionInterface,
     UpdateBackgroundColorActionInterface,
     UpdateColorSchemeActionInterface,
     UpdateCountryActionInterface,
@@ -92,6 +91,11 @@ import { BlockUserApi } from "../../../services/api/user-service/blockUserApi";
 import { FollowerUserApi } from "../../../services/api/user-service/followerUserApi";
 import { MuteUserApi } from "../../../services/api/user-service/muteUserApi";
 import { RegistrationApi } from "../../../services/api/user-service/registrationApi";
+import {
+    setBlockedToListTweetsState,
+    setFollowToListTweetsState,
+    setMutedToListTweetsState
+} from "../list/actionCreators";
 
 export function* updateUserDataRequest({ payload }: UpdateUserDataActionInterface) {
     try {
@@ -145,6 +149,7 @@ export function* processFollowUserRequest({ payload }: FollowUserActionInterface
         const { data }: AxiosResponse<boolean> = yield call(FollowerUserApi.processFollow, payload.userId);
         yield put(setFollowToTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isFollower: data }));
         yield put(setFollowToUsersTweetState({ userId: payload.userId, tweetId: payload.tweetId!, isFollower: data }));
+        yield put(setFollowToListTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isFollower: data }));
         yield put(setUserFollowing(data));
         yield put(setFollowToUserProfile({ userId: payload.userId, isFollower: data }));
         yield put(setFollowToUserDetail(data));
@@ -292,11 +297,8 @@ export function* processUserToBlocklistRequest({ payload }: ProcessUserToBlockli
     try {
         const { data }: AxiosResponse<boolean> = yield call(BlockUserApi.processBlockList, payload.userId);
         yield put(setBlockedToTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: data }));
-        yield put(setBlockedUsersTweetState({
-            userId: payload.userId,
-            tweetId: payload.tweetId!,
-            isUserBlocked: data
-        }));
+        yield put(setBlockedUsersTweetState({ userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: data }));
+        yield put(setBlockedToListTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isUserBlocked: data }));
         yield put(setBlocked(data));
         yield put(setBlockUserDetail(data));
         yield put(setBlockedUser({ userId: payload.userId, isUserBlocked: data }));
@@ -315,6 +317,7 @@ export function* processUserToMuteListRequest({ payload }: ProcessUserToMuteList
         const { data }: AxiosResponse<boolean> = yield call(MuteUserApi.processMutedList, payload.userId);
         yield put(setMutedToTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: data }));
         yield put(setMutedUsersTweetState({ userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: data }));
+        yield put(setMutedToListTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: data }));
         yield put(setMuted(data));
         yield put(setMutedUser({ userId: payload.userId, isUserMuted: data }));
         yield put(setMutedUsersState({ userId: payload.userId, isUserMuted: data })); // TODO NOT NEEDED ???
