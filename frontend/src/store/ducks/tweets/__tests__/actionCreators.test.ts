@@ -11,7 +11,6 @@ import {
     fetchFollowersTweets,
     fetchMediaTweets,
     fetchTweets,
-    fetchTweetsByListId,
     fetchTweetsByTag,
     fetchTweetsByText,
     fetchTweetsWithVideo,
@@ -191,11 +190,6 @@ describe("tweets actions", () => {
     testAction(fetchFollowersTweets, fetchFollowersTweets(1), {
         type: TweetsActionType.FETCH_FOLLOWERS_TWEETS,
         payload: 1
-    });
-
-    testAction(fetchTweetsByListId, fetchTweetsByListId({ listId: 1, pageNumber: 1 }), {
-        type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID,
-        payload: { listId: 1, pageNumber: 1 }
     });
 
     testAction(fetchUserBookmarks, fetchUserBookmarks(1), {

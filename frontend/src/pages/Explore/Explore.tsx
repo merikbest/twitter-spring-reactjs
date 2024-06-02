@@ -16,7 +16,7 @@ import {
     resetTweets
 } from "../../store/ducks/tweets/actionCreators";
 import BackButton from "../../components/BackButton/BackButton";
-import { selectIsTweetsLoaded, selectPagesCount, selectTweetsItemsSize } from "../../store/ducks/tweets/selectors";
+import { selectPagesCount, selectTweetsItemsSize } from "../../store/ducks/tweets/selectors";
 import { useExploreStyles } from "./ExploreStyles";
 import { EditIcon, SearchIcon } from "../../icons";
 import {
@@ -30,113 +30,126 @@ import { withDocumentTitle } from "../../hoc/withDocumentTitle";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
 import UsersList from "./UsersList/UsersList";
 import TweetsList from "./TweetsList/TweetsList";
+import {
+    FetchTweetsByTagActionInterface,
+    FetchTweetsByTextActionInterface
+} from "../../store/ducks/tweets/contracts/actionTypes";
 
 const Explore: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useExploreStyles();
     const dispatch = useDispatch();
-    const isTweetsLoaded = useSelector(selectIsTweetsLoaded);
     const tweetsSize = useSelector(selectTweetsItemsSize);
     const tweetsPagesCount = useSelector(selectPagesCount);
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const location = useLocation<{ tag: string | undefined; text: string | undefined; }>();
     const history = useHistory();
-    const [text, setText] = useState<string>("");
+    const [searchText, setSearchText] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
-    const [page, setPage] = useState<number>(0);
+    const [pageNumber, setPageNumber] = useState<number>(0);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        loadTweets();
+
+        return () => {
+            dispatch(resetTweets());
+            history.replace({ state: {} });
+        };
+    }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);
 
         if (location.state?.tag) {
-            dispatch(fetchTweetsByTag({ tag: location.state?.tag, pageNumber: 0 }));
-            setText(decodeURIComponent(location.state?.tag));
+            fetchTweetsByStateText(fetchTweetsByTag({ tag: location.state.tag, pageNumber: 0 }), location.state.tag);
         }
-
         if (location.state?.text) {
-            dispatch(fetchTweetsByText({ text: location.state?.text, pageNumber: 0 }));
-            setText(decodeURIComponent(location.state?.text));
-        }
-
-        if (!location.state?.tag && !location.state?.text) {
-            loadTweets();
+            fetchTweetsByStateText(fetchTweetsByText({ text: location.state.text, pageNumber: 0 }), location.state.text);
         }
 
         return () => {
             dispatch(resetTweets());
         };
-    }, [location.state?.tag, location.state?.text]);
+    }, [location.state]);
+
+    const fetchTweetsByStateText = (fetch: FetchTweetsByTextActionInterface | FetchTweetsByTagActionInterface, stateText: string): void => {
+        dispatch(fetch);
+        setSearchText(decodeURIComponent(stateText));
+        setPageNumber(prevState => prevState + 1);
+    };
 
     const loadTweets = (): void => {
-        if (text) {
+        if (searchText) {
+            const encodedText = encodeURIComponent(searchText);
+
             if (activeTab !== 2) {
-                dispatch(fetchTweetsByText({ text: encodeURIComponent(text), pageNumber: page }));
+                dispatch(fetchTweetsByText({ text: encodedText, pageNumber }));
             } else {
-                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: page }));
+                dispatch(fetchUsersSearchByUsername({ username: encodedText, pageNumber }));
             }
         } else {
             if (activeTab === 2) {
-                dispatch(fetchUsersSearch(page));
+                dispatch(fetchUsersSearch(pageNumber));
             } else if (activeTab === 3) {
-                dispatch(fetchMediaTweets(page));
+                dispatch(fetchMediaTweets(pageNumber));
             } else if (activeTab === 4) {
-                dispatch(fetchTweetsWithVideo(page));
+                dispatch(fetchTweetsWithVideo(pageNumber));
             } else {
-                dispatch(fetchTweets(page));
+                dispatch(fetchTweets(pageNumber));
             }
         }
-
-        if (isTweetsLoaded) {
-            setPage(prevState => prevState + 1);
-        }
+        setPageNumber(prevState => prevState + 1);
     };
 
     const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
-        setText("");
-        history.replace({ pathname: location.pathname, state: {} });
+        setSearchText("");
         setActiveTab(newValue);
     };
 
     const handleSubmitSearch = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
 
-        if (text) {
+        if (searchText) {
+            const encodedText = encodeURIComponent(searchText);
+
             if (activeTab !== 2) {
                 dispatch(resetTweets());
-                dispatch(fetchTweetsByText({ text: encodeURIComponent(text), pageNumber: 0 }));
+                dispatch(fetchTweetsByText({ text: encodedText, pageNumber: 0 }));
             } else {
                 dispatch(resetUsersState());
-                dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: 0 }));
+                dispatch(fetchUsersSearchByUsername({ username: encodedText, pageNumber: 0 }));
             }
         }
     };
 
+    const handleSearchText = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
+        setSearchText(event.target.value);
+    };
+
     const handleShowItems = (callback: () => void): void => {
         window.scrollTo(0, 0);
-        setPage(0);
+        setPageNumber(0);
         dispatch(resetTweets());
         dispatch(resetUsersState());
         callback();
+        setPageNumber(prevState => prevState + 1);
     };
 
     const showTopTweets = (): void => {
         dispatch(fetchTweets(0));
-        setPage(prevState => prevState + 1);
     };
 
     const showUsers = (): void => {
         dispatch(fetchUsersSearch(0));
-        setPage(prevState => prevState + 1);
     };
 
     const showMediaTweets = (): void => {
         dispatch(fetchMediaTweets(0));
-        setPage(prevState => prevState + 1);
     };
 
     const showTweetsWithVideos = (): void => {
         dispatch(fetchTweetsWithVideo(0));
-        setPage(prevState => prevState + 1);
     };
 
     return (
@@ -150,8 +163,8 @@ const Explore: FC = (): ReactElement => {
                         <MainSearchTextField
                             variant="outlined"
                             placeholder="Explore Twitter"
-                            onChange={(event) => setText(event.target.value)}
-                            value={text}
+                            onChange={handleSearchText}
+                            value={searchText}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -165,7 +178,7 @@ const Explore: FC = (): ReactElement => {
                         </IconButton>
                     </form>
                     <div className={classes.tabs}>
-                        <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
+                        <Tabs value={activeTab} onChange={handleChangeTab} indicatorColor="primary" textColor="primary">
                             <Tab onClick={() => handleShowItems(showTopTweets)} label="Top" />
                             <Tab onClick={() => handleShowItems(showTopTweets)} label="Latest" />
                             <Tab onClick={() => handleShowItems(showUsers)} label="People" />
@@ -180,13 +193,13 @@ const Explore: FC = (): ReactElement => {
                     style={{ overflow: "unset" }}
                     dataLength={tweetsSize}
                     next={loadTweets}
-                    hasMore={page < (activeTab === 2 ? usersPagesCount : tweetsPagesCount)}
+                    hasMore={pageNumber < (activeTab === 2 ? usersPagesCount : tweetsPagesCount)}
                     loader={null}
                 >
-                    {(activeTab !== 2) ? (
-                        <TweetsList />
-                    ) : (
+                    {(activeTab === 2) ? (
                         <UsersList />
+                    ) : (
+                        <TweetsList />
                     )}
                 </InfiniteScroll>
             </div>

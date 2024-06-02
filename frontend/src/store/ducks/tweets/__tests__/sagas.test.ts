@@ -11,7 +11,6 @@ import {
     fetchFollowersTweetsRequest,
     fetchMediaTweetsRequest,
     fetchQuotesByTweetIdRequest,
-    fetchTweetsByListIdRequest,
     fetchTweetsByTagRequest,
     fetchTweetsByTextRequest,
     fetchTweetsRequest,
@@ -35,7 +34,6 @@ import {
     fetchMediaTweets,
     fetchQuotesByTweetId,
     fetchTweets,
-    fetchTweetsByListId,
     fetchTweetsByTag,
     fetchTweetsByText,
     fetchTweetsWithVideo,
@@ -52,7 +50,6 @@ import { TweetApi } from "../../../../services/api/tweet-service/tweetApi";
 import { TweetResponse } from "../../../../types/tweet";
 import { AxiosResponse } from "axios";
 import { TagApi } from "../../../../services/api/tag-service/tagApi";
-import { ListsApi } from "../../../../services/api/lists-service/listsApi";
 import { AddQuoteTweetRequest, TweetRequest, VoteRequest } from "../contracts/state";
 import {
     mockExpectedResponse,
@@ -136,19 +133,6 @@ describe("tweetsSaga:", () => {
         it("should call searchTweets", () => {
             const actualYield = worker.next().value;
             const expectedYield = call(TweetApi.searchTweets, "test", 1);
-            expect(actualYield).toEqual(expectedYield);
-        });
-        testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
-        testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.ERROR);
-    });
-
-    describe("fetchTweetsByListIdRequest:", () => {
-        const worker = fetchTweetsByListIdRequest(fetchTweetsByListId({ listId: 1, pageNumber: 1 }));
-        testLoadingStatus(worker, setTweetsLoadingState, LoadingStatus.LOADING);
-        it("should call getTweetsByListId", () => {
-            const actualYield = worker.next().value;
-            const expectedYield = call(ListsApi.getTweetsByListId, 1, 1);
-
             expect(actualYield).toEqual(expectedYield);
         });
         testSetResponse(worker, mockPageableTweets, setPageableTweets, mockExpectedResponse(mockPageableTweets), "TweetResponse");
@@ -261,7 +245,6 @@ describe("tweetsSaga:", () => {
         { actionType: TweetsActionType.RETWEET, workSaga: retweetRequest },
         { actionType: TweetsActionType.FETCH_TWEETS_BY_TAG, workSaga: fetchTweetsByTagRequest },
         { actionType: TweetsActionType.FETCH_TWEETS_BY_TEXT, workSaga: fetchTweetsByTextRequest },
-        { actionType: TweetsActionType.FETCH_TWEETS_BY_LIST_ID, workSaga: fetchTweetsByListIdRequest },
         { actionType: TweetsActionType.FETCH_TWEETS_WITH_QUOTES_BY_ID, workSaga: fetchQuotesByTweetIdRequest },
         { actionType: TweetsActionType.FETCH_BOOKMARKS, workSaga: fetchUserBookmarksRequest }
     ]);

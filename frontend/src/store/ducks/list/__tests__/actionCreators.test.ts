@@ -1,21 +1,30 @@
 import { testAction } from "../../../../util/test-utils/test-helper";
 import {
     deleteList,
+    deleteListTweet,
     editList,
     fetchListById,
     fetchTweetsByListId,
     resetListState,
+    setBlockedToListTweetsState,
+    setFollowToListTweetsState,
     setList,
     setListLoadingState,
     setListTweets,
     setMembersSize,
+    setMutedToListTweetsState,
     setTweetsLoadingState,
+    setUpdatedBookmarkedListTweetTweetsState,
+    setUpdatedListTweet,
+    setVoteListTweet,
     updateFollowToFullList
 } from "../actionCreators";
 import { ListActionType } from "../contracts/actionTypes";
 import { BaseListResponse } from "../../../../types/lists";
 import { EditListsRequest } from "../contracts/state";
 import { LoadingStatus } from "../../../../types/common";
+import { NotificationResponse } from "../../../../types/notification";
+import { TweetResponse } from "../../../../types/tweet";
 
 describe("list actions", () => {
     testAction(setList, setList({ id: 1 } as BaseListResponse), {
@@ -46,6 +55,44 @@ describe("list actions", () => {
     testAction(setListTweets, setListTweets({ items: [], pagesCount: 1 }), {
         type: ListActionType.SET_LIST_TWEETS,
         payload: { items: [], pagesCount: 1 }
+    });
+
+    testAction(setUpdatedListTweet, setUpdatedListTweet({ id: 1 } as NotificationResponse), {
+        type: ListActionType.SET_UPDATED_LIST_TWEET,
+        payload: { id: 1 } as NotificationResponse
+    });
+
+    testAction(setUpdatedBookmarkedListTweetTweetsState, setUpdatedBookmarkedListTweetTweetsState({
+        tweetId: 1,
+        isTweetBookmarked: true
+    }), {
+        type: ListActionType.SET_UPDATED_BOOKMARKED_LIST_TWEET,
+        payload: { tweetId: 1, isTweetBookmarked: true }
+    });
+
+    testAction(setFollowToListTweetsState, setFollowToListTweetsState({ userId: 1, tweetId: 1, isFollower: true }), {
+        type: ListActionType.SET_FOLLOW_TO_LIST_TWEETS_STATE,
+        payload: { userId: 1, tweetId: 1, isFollower: true }
+    });
+
+    testAction(setBlockedToListTweetsState, setBlockedToListTweetsState({ userId: 1, tweetId: 1, isUserBlocked: true }), {
+        type: ListActionType.SET_BLOCKED_TO_LIST_TWEETS_STATE,
+        payload: { userId: 1, tweetId: 1, isUserBlocked: true }
+    });
+
+    testAction(setMutedToListTweetsState, setMutedToListTweetsState({ userId: 1, tweetId: 1, isUserMuted: true }), {
+        type: ListActionType.SET_MUTED_TO_LIST_TWEETS_STATE,
+        payload: { userId: 1, tweetId: 1, isUserMuted: true }
+    });
+
+    testAction(setVoteListTweet, setVoteListTweet({ id: 1 } as TweetResponse), {
+        type: ListActionType.SET_VOTE_LIST_TWEET,
+        payload: { id: 1 } as TweetResponse
+    });
+
+    testAction(deleteListTweet, deleteListTweet(1), {
+        type: ListActionType.DELETE_LIST_TWEET,
+        payload: 1
     });
 
     testAction(setTweetsLoadingState, setTweetsLoadingState(LoadingStatus.LOADING), {

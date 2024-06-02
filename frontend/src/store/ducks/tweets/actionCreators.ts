@@ -5,7 +5,6 @@ import {
     FetchTweetsByTagRequest,
     FetchTweetsByTextRequest,
     TweetActionPayload,
-    TweetsByListIdRequest,
     TweetsState,
     TweetsWithQuotesByIdRequest,
     UpdatedBookmarkedTweetPayload,
@@ -24,7 +23,6 @@ import {
     FetchFollowersTweetsActionInterface,
     FetchMediaTweetsActionInterface,
     FetchTweetsActionInterface,
-    FetchTweetsByListIdActionInterface,
     FetchTweetsByTagActionInterface,
     FetchTweetsByTextActionInterface,
     FetchTweetsWithQuotesByIdActionInterface,
@@ -203,11 +201,6 @@ export const fetchTweetsWithVideo = (payload: number): FetchTweetsWithVideoActio
 
 export const fetchFollowersTweets = (payload: number): FetchFollowersTweetsActionInterface => ({
     type: TweetsActionType.FETCH_FOLLOWERS_TWEETS,
-    payload
-});
-
-export const fetchTweetsByListId = (payload: TweetsByListIdRequest): FetchTweetsByListIdActionInterface => ({
-    type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID,
     payload
 });
 

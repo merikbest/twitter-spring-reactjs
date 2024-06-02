@@ -7,7 +7,6 @@ import {
     FetchTweetsByTagRequest,
     FetchTweetsByTextRequest,
     TweetActionPayload,
-    TweetsByListIdRequest,
     TweetsState,
     TweetsWithQuotesByIdRequest,
     UpdatedBookmarkedTweetPayload,
@@ -31,7 +30,6 @@ export enum TweetsActionType {
     FETCH_MEDIA_TWEETS = "tweets/FETCH_MEDIA_TWEETS",
     FETCH_TWEETS_WITH_VIDEO = "tweets/FETCH_TWEETS_WITH_VIDEO",
     FETCH_FOLLOWERS_TWEETS = "tweets/FETCH_FOLLOWERS_TWEETS",
-    FETCH_TWEETS_BY_LIST_ID = "tweets/FETCH_TWEETS_BY_LIST_ID",
     FETCH_TWEETS_WITH_QUOTES_BY_ID = "tweets/FETCH_TWEETS_WITH_QUOTES_BY_ID",
     SET_PAGEABLE_TWEETS = "tweets/SET_PAGEABLE_TWEETS",
     SET_LOADING_STATE = "tweets/SET_LOADING_STATE",
@@ -111,11 +109,6 @@ export interface FetchTweetsWithVideoActionInterface extends Action<TweetsAction
 export interface FetchFollowersTweetsActionInterface extends Action<TweetsActionType> {
     type: TweetsActionType.FETCH_FOLLOWERS_TWEETS;
     payload: number;
-}
-
-export interface FetchTweetsByListIdActionInterface extends Action<TweetsActionType> {
-    type: TweetsActionType.FETCH_TWEETS_BY_LIST_ID;
-    payload: TweetsByListIdRequest;
 }
 
 export interface FetchTweetsWithQuotesByIdActionInterface extends Action<TweetsActionType> {
