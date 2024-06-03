@@ -53,12 +53,12 @@ INSERT INTO "tweet-test".public.tweets (id, addressed_id, addressed_tweet_id, ad
 INSERT INTO "tweet-test".public.tagged_image_users (tweet_id, tagged_image_user_id) VALUES (45, 1);
 INSERT INTO "tweet-test".public.tagged_image_users (tweet_id, tagged_image_user_id) VALUES (45, 2);
 
--- tweet_quote
-INSERT INTO "tweet-test".public.tweet_quote (tweet_id, quote_tweet_id) VALUES (44, 43);
-INSERT INTO "tweet-test".public.tweet_quote (tweet_id, quote_tweet_id) VALUES (45, 40);
+-- tweet_quotes
+INSERT INTO "tweet-test".public.tweet_quotes (tweet_id, quote_tweet_id) VALUES (44, 43);
+INSERT INTO "tweet-test".public.tweet_quotes (tweet_id, quote_tweet_id) VALUES (45, 40);
 
 -- tweets_images
-INSERT INTO "tweet-test".public.tweets_images (tweet_id, images_id) VALUES (45, 1);
+INSERT INTO "tweet-test".public.tweets_images (tweet_id, image_id) VALUES (45, 1);
 
 -- liked_tweets
 INSERT INTO "tweet-test".public.liked_tweets (liked_tweet_date, tweet_id, user_id) VALUES ('2021-10-03 20:31:44.000000', 40, 1);

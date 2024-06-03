@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
 import com.gmail.merikbest2015.model.Tweet;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
@@ -34,7 +35,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id NOT IN (
+            WHERE tweet.tweetType = 'TWEET'
+            AND tweet.author.id NOT IN (
                     SELECT user.id FROM User user
                     JOIN user.userBlockedList blockedUser
                     WHERE user.id IN (
@@ -74,6 +76,17 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             ORDER BY tweet.createdAt DESC
             """)
     List<TweetUserProjection> getTweetsByUserId(@Param("userId") Long userId);
+
+    @Query("""
+            SELECT tweet FROM Tweet tweet
+            WHERE tweet.author.id = :userId
+            AND tweet.tweetType IN ('TWEET', 'RETWEET')
+            AND tweet.addressedUsername IS NULL
+            AND tweet.scheduledDate IS NULL
+            AND tweet.deleted = false
+            ORDER BY tweet.createdAt DESC
+            """)
+    Page<TweetUserProjection> getTweetsByUserId(@Param("userId") Long userId, Pageable pageable);
 
     @Query("""
             SELECT tweet FROM Tweet tweet
@@ -260,4 +273,17 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     Long getTweetCountByText(@Param("text") String text);
 
     List<Tweet> findAllByScheduledDate(LocalDateTime now);
+
+    @Query("""
+            SELECT tweet FROM Tweet tweet
+            WHERE tweet.author = :user
+            AND tweet.retweet = :tweet
+            """)
+    Optional<Tweet> getTweetRetweeted(@Param("user") User user, @Param("tweet") Tweet tweet);
+
+    @Query("SELECT COUNT(reply) FROM Tweet tweet LEFT JOIN tweet.replies reply WHERE tweet.id = :tweetId")
+    Long getRepliesSize(@Param("tweetId") Long tweetId);
+
+    @Query("SELECT COUNT(quote) FROM Tweet tweet LEFT JOIN tweet.quotes quote WHERE tweet.id = :tweetId")
+    Long getQuotesSize(@Param("tweetId") Long tweetId);
 }

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(
-        name = "retweets",
+        name = "retweets_test",
         indexes = {
                 @Index(name = "retweets_user_id_idx", columnList = "user_id"),
                 @Index(name = "retweets_tweet_id_idx", columnList = "tweet_id"),

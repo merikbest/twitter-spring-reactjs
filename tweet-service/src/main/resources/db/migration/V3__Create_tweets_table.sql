@@ -18,6 +18,7 @@ CREATE TABLE tweets
 (
     id                 INT8         NOT NULL,
     tweet_text         VARCHAR(255) NOT NULL,
+    tweet_type         VARCHAR(255) NOT NULL DEFAULT 'TWEET',
     created_at         TIMESTAMP    NOT NULL,
     updated_at         TIMESTAMP,
     scheduled_date     TIMESTAMP,
@@ -49,15 +50,21 @@ CREATE TABLE tweet_images
 
 CREATE TABLE tweets_images
 (
-    tweet_id  INT8        NOT NULL REFERENCES tweets,
-    images_id INT8 UNIQUE NOT NULL REFERENCES tweet_images
+    tweet_id INT8        NOT NULL REFERENCES tweets,
+    image_id INT8 UNIQUE NOT NULL REFERENCES tweet_images
 );
 
-CREATE TABLE tweet_quote
+CREATE TABLE tweet_quotes
 (
     quote_tweet_id INT8 REFERENCES tweets,
     tweet_id       INT8 NOT NULL REFERENCES tweets,
     PRIMARY KEY (tweet_id)
+);
+
+CREATE TABLE retweets
+(
+    retweet_id INT8 NOT NULL REFERENCES tweets,
+    tweet_id   INT8 NOT NULL REFERENCES tweets
 );
 
 CREATE TABLE replies
@@ -81,14 +88,14 @@ CREATE TABLE liked_tweets
 CREATE INDEX liked_tweets_tweet_id_idx ON liked_tweets (tweet_id);
 CREATE INDEX liked_tweets_user_id_idx ON liked_tweets (user_id);
 
-CREATE TABLE retweets
+CREATE TABLE retweets_test
 (
     tweet_id     INT8      NOT NULL REFERENCES tweets,
     user_id      INT8      NOT NULL REFERENCES users,
     retweet_date TIMESTAMP NOT NULL DEFAULT current_timestamp
 );
-CREATE INDEX retweets_tweet_id_idx ON retweets (tweet_id);
-CREATE INDEX retweets_user_id_idx ON retweets (user_id);
+CREATE INDEX retweets_tweet_id_idx ON retweets_test (tweet_id);
+CREATE INDEX retweets_user_id_idx ON retweets_test (user_id);
 
 CREATE TABLE tagged_image_users
 (

@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.dto.ImageResponse;
 import com.gmail.merikbest2015.dto.response.user.TaggedUserResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.enums.TweetType;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.util.List;
 public class TweetResponse {
     private Long id;
     private String text;
+    private TweetType tweetType;
     private LocalDateTime createdAt;
     private LocalDateTime scheduledDate;
     private String addressedUsername;
@@ -31,6 +33,7 @@ public class TweetResponse {
     private String imageDescription;
     private List<TaggedUserResponse> taggedImageUsers;
     private QuoteTweetResponse quoteTweet;
+    private TweetResponse retweet;
     private TweetListResponse tweetList;
     private PollResponse poll;
     private Long retweetsCount;

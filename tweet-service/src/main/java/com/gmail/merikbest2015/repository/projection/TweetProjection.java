@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.repository.projection;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.enums.TweetType;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 public interface TweetProjection {
     Long getId();
     String getText();
+    TweetType getTweetType();
     LocalDateTime getCreatedAt();
     LocalDateTime getScheduledDate();
     String getAddressedUsername();
@@ -27,6 +29,7 @@ public interface TweetProjection {
     List<TweetImageProjection> getImages();
     String getImageDescription();
     QuoteTweetProjection getQuoteTweet();
+    TweetProjection getRetweet();
     PollProjection getPoll();
     boolean isDeleted();
     TweetAuthorProjection getAuthor();
@@ -54,10 +57,10 @@ public interface TweetProjection {
     @Value("#{@likeTweetRepository.getLikedTweetsSize(target.id)}")
     Long getLikedTweetsCount();
 
-    @Value("#{target.replies != null ? target.replies.size() : 0}")
+    @Value("#{@tweetRepository.getRepliesSize(target.id)}")
     Long getRepliesCount();
 
-    @Value("#{target.quotes != null ? target.quotes.size() : 0}")
+    @Value("#{@tweetRepository.getQuotesSize(target.id)}")
     Long getQuotesCount();
 
     interface QuoteTweetProjection {
@@ -66,6 +69,9 @@ public interface TweetProjection {
 
         @Value("#{target.isDeleted ? null : target.text}")
         String getText();
+
+        @Value("#{target.isDeleted ? null : target.tweetType}")
+        TweetType getTweetType();
 
         @Value("#{target.isDeleted ? null : target.createdAt}")
         LocalDateTime getCreatedAt();

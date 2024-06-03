@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.model;
 
 import com.gmail.merikbest2015.enums.LinkCoverSize;
 import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.enums.TweetType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,10 @@ public class Tweet {
     @Column(name = "tweet_text", length = 1337, nullable = false)
     private String text;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tweet_type", nullable = false, columnDefinition = "varchar(255) default 'TWEET'")
+    private TweetType tweetType = TweetType.TWEET;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -50,8 +55,8 @@ public class Tweet {
     @Column(name = "addressed_tweet_id")
     private Long addressedTweetId;
 
-    @Column(name = "reply_type", nullable = false, columnDefinition = "varchar(255) default 'EVERYONE'")
     @Enumerated(EnumType.STRING)
+    @Column(name = "reply_type", nullable = false, columnDefinition = "varchar(255) default 'EVERYONE'")
     private ReplyType replyType = ReplyType.EVERYONE;
 
     @Column(name = "link")
@@ -66,8 +71,8 @@ public class Tweet {
     @Column(name = "link_cover")
     private String linkCover;
 
-    @Column(name = "link_cover_size")
     @Enumerated(EnumType.STRING)
+    @Column(name = "link_cover_size")
     private LinkCoverSize linkCoverSize;
 
     @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
@@ -84,6 +89,9 @@ public class Tweet {
     private String imageDescription;
 
     @OneToMany
+    @JoinTable(name = "tweets_images",
+            joinColumns = @JoinColumn(name = "tweet_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id"))
     private Set<TweetImage> images = new HashSet<>();
 
     @OneToMany
@@ -93,10 +101,16 @@ public class Tweet {
     private Set<User> taggedImageUsers = new HashSet<>();
 
     @OneToOne
-    @JoinTable(name = "tweet_quote",
+    @JoinTable(name = "tweet_quotes",
             joinColumns = @JoinColumn(name = "tweet_id"),
             inverseJoinColumns = @JoinColumn(name = "quote_tweet_id"))
     private Tweet quoteTweet;
+
+    @OneToOne
+    @JoinTable(name = "retweets",
+            joinColumns = @JoinColumn(name = "tweet_id"),
+            inverseJoinColumns = @JoinColumn(name = "retweet_id"))
+    private Tweet retweet;
 
     @OneToOne
     @JoinColumn(name = "poll_id")

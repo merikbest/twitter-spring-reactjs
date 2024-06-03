@@ -10,7 +10,7 @@ delete from "tweet-test".public.tagged_image_users;
 delete from "tweet-test".public.tweet_images;
 delete from "tweet-test".public.poll_choice_voted;
 delete from "tweet-test".public.polls_poll_choices;
-delete from "tweet-test".public.tweet_quote;
+delete from "tweet-test".public.tweet_quotes;
 
 delete from "tweet-test".public.bookmarks;
 delete from "tweet-test".public.liked_tweets;

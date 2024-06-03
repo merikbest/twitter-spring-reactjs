@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -65,6 +66,30 @@ public class RetweetServiceImpl implements RetweetService {
             isRetweeted = false;
         } else {
             retweetRepository.save(new Retweet(authUser, tweet));
+            isRetweeted = true;
+        }
+        updateTweetCountProducer.sendUpdateTweetCountEvent(authUser.getId(), isRetweeted);
+        tweetNotificationProducer.sendTweetNotificationEvent(NotificationType.RETWEET, tweet, authUser, isRetweeted);
+        return tweet;
+    }
+
+//    @Override
+    @Transactional
+    public Tweet retweet2(Long tweetId) {
+        Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
+        User authUser = userService.getAuthUser();
+        Optional<Tweet> tweetRetweeted = tweetRepository.getTweetRetweeted(authUser, tweet);
+        boolean isRetweeted;
+
+        if (tweetRetweeted.isPresent()) {
+            tweetRepository.delete(tweetRetweeted.get());
+            isRetweeted = false;
+        } else {
+            Tweet newRetweet = new Tweet();
+            newRetweet.setText(String.format("RT: %s", tweet.getText()));
+            newRetweet.setAuthor(authUser);
+            newRetweet.setRetweet(tweet);
+            tweetRepository.save(newRetweet);
             isRetweeted = true;
         }
         updateTweetCountProducer.sendUpdateTweetCountEvent(authUser.getId(), isRetweeted);
