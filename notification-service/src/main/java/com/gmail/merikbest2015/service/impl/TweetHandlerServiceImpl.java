@@ -37,6 +37,7 @@ public class TweetHandlerServiceImpl implements TweetHandlerService {
                     Tweet newTweet = new Tweet();
                     newTweet.setId(tweet.getId());
                     newTweet.setText(tweet.getText());
+                    newTweet.setTweetType(tweet.getTweetType());
                     newTweet.setAuthor(author);
                     return tweetRepository.save(newTweet);
                 });

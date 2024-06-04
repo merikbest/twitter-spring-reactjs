@@ -3,11 +3,11 @@ INSERT INTO "notification-test".public.users (id, username, avatar) VALUES (1, '
 INSERT INTO "notification-test".public.users (id, username, avatar) VALUES (2, 'MrCat', 'https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg');
 
 -- tweets
-INSERT INTO "notification-test".public.tweets (id, tweet_text, author_id) VALUES (40, 'test tweet',  2);
-INSERT INTO "notification-test".public.tweets (id, tweet_text, author_id) VALUES (45, 'media tweet test', 1);
-INSERT INTO "notification-test".public.tweets (id, tweet_text, author_id) VALUES (46, 'hello world1', 2);
-INSERT INTO "notification-test".public.tweets (id, tweet_text, author_id) VALUES (47, 'hello world2', 2);
-INSERT INTO "notification-test".public.tweets (id, tweet_text, author_id) VALUES (48, 'hello world3', 2);
+INSERT INTO "notification-test".public.tweets (id, tweet_type, tweet_text, author_id) VALUES (40, 'TWEET', 'test tweet',  2);
+INSERT INTO "notification-test".public.tweets (id, tweet_type, tweet_text, author_id) VALUES (45, 'TWEET', 'media tweet test', 1);
+INSERT INTO "notification-test".public.tweets (id, tweet_type, tweet_text, author_id) VALUES (46, 'TWEET', 'hello world1', 2);
+INSERT INTO "notification-test".public.tweets (id, tweet_type, tweet_text, author_id) VALUES (47, 'TWEET', 'hello world2', 2);
+INSERT INTO "notification-test".public.tweets (id, tweet_type, tweet_text, author_id) VALUES (48, 'TWEET', 'hello world3', 2);
 
 -- notifications
 INSERT INTO "notification-test".public.notifications (id, created_at, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (37, '2021-10-03 20:31:44.000000', 'LIKE', 40, 1, null, null, 2);

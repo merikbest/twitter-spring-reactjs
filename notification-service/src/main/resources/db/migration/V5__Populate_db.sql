@@ -6,22 +6,22 @@ INSERT INTO users (id, username, avatar) VALUES (4, 'JavaCat', 'https://perfumew
 INSERT INTO users (id, username, avatar) VALUES (5, 'Кот Бегемот', 'https://perfumeweb2.s3.eu-central-1.amazonaws.com/68a7b0d5-2b0c-493e-85ff-098725c52ecc_Cl5DjoUWYAAslnd.jfif');
 
 -- tweets
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (1, 'My #FirstTweet :slightly_smiling_face:', 1);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (2, 'https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH', 1);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (3, 'https://www.youtube.com/watch?v=-k9qDxyxS3s&ab_channel=BMTHOfficialVEVO', 1);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (4, 'https://www.youtube.com/watch?v=hTWKbfoikeg&ab_channel=NirvanaVEVO', 1);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (5, 'Another #FirstTweet', 2);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (6, '#myCat  :smile_cat:', 2);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (7, 'Hello #FirstTweet  :sunglasses:', 3);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (8, '#myCat  :smiley_cat:', 3);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (9, '#FirstTweet', 4);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (10, '#myCat  :kissing_cat:', 4);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (11, 'My #FirstTweet', 5);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (12, '#myCat  :smiley_cat:', 5);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (13, '#JavaScript', 4);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (14, 'Feels Good Man  :sunglasses:', 1);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (15, 'Hello :wave:', 1);
-INSERT INTO tweets (id, tweet_text, author_id) VALUES (16, 'Feels good man  :sunglasses:', 2);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (1, 'TWEET', 'My #FirstTweet :slightly_smiling_face:', 1);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (2, 'TWEET', 'https://www.youtube.com/watch?v=ewZZNeYDiLo&ab_channel=TeamSESH', 1);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (3, 'TWEET', 'https://www.youtube.com/watch?v=-k9qDxyxS3s&ab_channel=BMTHOfficialVEVO', 1);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (4, 'TWEET', 'https://www.youtube.com/watch?v=hTWKbfoikeg&ab_channel=NirvanaVEVO', 1);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (5, 'TWEET', 'Another #FirstTweet', 2);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (6, 'TWEET', '#myCat  :smile_cat:', 2);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (7, 'TWEET', 'Hello #FirstTweet  :sunglasses:', 3);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (8, 'TWEET', '#myCat  :smiley_cat:', 3);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (9, 'TWEET', '#FirstTweet', 4);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (10, 'TWEET', '#myCat  :kissing_cat:', 4);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (11, 'TWEET', 'My #FirstTweet', 5);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (12, 'TWEET', '#myCat  :smiley_cat:', 5);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (13, 'TWEET', '#JavaScript', 4);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (14, 'TWEET', 'Feels Good Man  :sunglasses:', 1);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (15, 'TWEET', 'Hello :wave:', 1);
+INSERT INTO tweets (id, tweet_type, tweet_text, author_id) VALUES (16, 'REPLY', 'Feels good man  :sunglasses:', 2);
 
 -- notifications
 INSERT INTO notifications (id, created_at, notification_type, tweet_id, user_id, user_to_follow_id, list_id, notified_user_id) VALUES (1, '2021-10-15 21:36:52.000000', 'LIKE', 1, 2, null, null, 1);

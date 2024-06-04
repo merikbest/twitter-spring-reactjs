@@ -22,7 +22,7 @@ public class TweetValidationHelper {
     private final UserService userService;
 
     public Tweet checkValidTweet(Long tweetId) {
-        Tweet tweet = tweetRepository.findById(tweetId)
+        Tweet tweet = tweetRepository.getTweetById(tweetId, Tweet.class)
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         validateTweet(tweet.isDeleted(), tweet.getAuthor().getId());
         return tweet;

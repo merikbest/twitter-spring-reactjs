@@ -20,12 +20,17 @@ import java.util.Optional;
 @Repository
 public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId")
+    @Query("""
+            SELECT tweet FROM Tweet tweet
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.id = :tweetId
+            """)
     <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id IN :userIds
+            WHERE tweet.tweetType = 'TWEET'
+            AND tweet.author.id IN :userIds
             AND tweet.addressedUsername IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
@@ -80,7 +85,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet FROM Tweet tweet
             WHERE tweet.author.id = :userId
-            AND tweet.tweetType IN ('TWEET', 'RETWEET')
+            AND tweet.tweetType != 'REPLY'
             AND tweet.addressedUsername IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
@@ -91,7 +96,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet FROM Tweet tweet
             LEFT JOIN tweet.images image
-            WHERE tweet.scheduledDate IS NULL AND tweet.deleted = false
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.scheduledDate IS NULL AND tweet.deleted = false
             AND (tweet.author.id = :userId AND image.id IS NOT NULL)
             OR tweet.scheduledDate IS NULL AND tweet.deleted = false
             AND (tweet.author.id = :userId AND tweet.text LIKE CONCAT('%','youtu','%'))
@@ -101,17 +107,19 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id = :userId
+            WHERE tweet.tweetType != 'TWEET'
+            AND tweet.author.id = :userId
             AND tweet.addressedUsername IS NOT NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
             """)
-    List<TweetUserProjection> getRepliesByUserId(@Param("userId") Long userId);
+    Page<TweetUserProjection> getRetweetsAndRepliesByUserId(@Param("userId") Long userId, Pageable pageable);
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.addressedTweetId = :tweetId
+            WHERE tweet.tweetType = 'REPLY'
+            AND tweet.addressedTweetId = :tweetId
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
             """)
@@ -120,7 +128,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet FROM Tweet tweet
             LEFT JOIN tweet.quoteTweet quoteTweet
-            WHERE tweet.author.id NOT IN (
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.author.id NOT IN (
                     SELECT user.id FROM User user
                     JOIN user.userBlockedList blockedUser
                     WHERE blockedUser.id = :userId
@@ -139,7 +148,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id NOT IN (
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.author.id NOT IN (
                     SELECT user.id FROM User user
                     JOIN user.userBlockedList blockedUser
                     WHERE blockedUser.id = :userId
@@ -160,7 +170,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id NOT IN (
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.author.id NOT IN (
                     SELECT user.id FROM User user
                     JOIN user.userBlockedList blockedUser
                     WHERE blockedUser.id = :userId
@@ -180,7 +191,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id IN (
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.author.id IN (
                 SELECT follower.id FROM User user
                 JOIN user.followers follower
                 WHERE user.id = :userId
@@ -193,7 +205,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id = :userId
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.author.id = :userId
             AND tweet.scheduledDate IS NOT NULL
             AND tweet.deleted = false
             ORDER BY tweet.scheduledDate DESC
@@ -202,14 +215,16 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id = :userId
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.author.id = :userId
             AND tweet.id = :tweetId
             """)
     Optional<Tweet> getTweetByUserId(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.scheduledDate IS NULL
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             AND tweet.text LIKE CONCAT('%',:text,'%')
             AND tweet.author.id NOT IN (
@@ -236,18 +251,33 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query(value = "INSERT INTO quotes (tweet_id, quote_id) VALUES (?1, ?2)", nativeQuery = true)
     void addQuote(@Param("tweetId") Long tweetId, @Param("quoteTweetId") Long quoteTweetId);
 
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.author.id = :userId")
+    @Query("""
+            SELECT tweet FROM Tweet tweet
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.id = :tweetId
+            AND tweet.author.id = :userId
+            """)
     Optional<Tweet> getTweetByAuthorIdAndTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
 
-    @Query("SELECT tweet FROM Tweet tweet WHERE tweet.id = :tweetId AND tweet.poll.id = :pollId")
+    @Query("""
+            SELECT tweet FROM Tweet tweet
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.id = :tweetId
+            AND tweet.poll.id = :pollId
+            """)
     Optional<Tweet> getTweetByPollIdAndTweetId(@Param("tweetId") Long tweetId, @Param("pollId") Long pollId);
 
-    @Query("SELECT CASE WHEN count(tweet) > 0 THEN true ELSE false END FROM Tweet tweet WHERE tweet.id = :tweetId")
+    @Query("""
+            SELECT CASE WHEN count(tweet) > 0 THEN true ELSE false END FROM Tweet tweet
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.id = :tweetId
+            """)
     boolean isTweetExists(@Param("tweetId") Long tweetId);
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.id IN :tweetIds
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.id IN :tweetIds
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
             """)
@@ -256,7 +286,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet.id AS tweetId, image.id AS imageId, image.src AS src FROM Tweet tweet
             LEFT JOIN tweet.images image
-            WHERE tweet.scheduledDate IS NULL
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.scheduledDate IS NULL
             AND tweet.author.id = :userId
             AND image.id IS NOT NULL
             AND tweet.deleted = false
@@ -266,7 +297,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT COUNT(tweet) FROM Tweet tweet
-            WHERE tweet.scheduledDate IS NULL
+            WHERE tweet.tweetType != 'RETWEET'
+            AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             AND UPPER(tweet.text) LIKE UPPER(CONCAT('%',:text,'%'))
             """)

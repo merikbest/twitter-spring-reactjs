@@ -3,12 +3,12 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.broker.producer.TagProducer;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.enums.TweetType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.ImageClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.model.User;
-import com.gmail.merikbest2015.repository.RetweetRepository;
 import com.gmail.merikbest2015.repository.TweetImageRepository;
 import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.*;
@@ -38,7 +38,6 @@ public class TweetServiceImpl implements TweetService {
     private final TweetServiceHelper tweetServiceHelper;
     private final TweetValidationHelper tweetValidationHelper;
     private final TweetImageRepository tweetImageRepository;
-    private final RetweetRepository retweetRepository;
     private final UserService userService;
     private final TagProducer tagProducer;
     private final ImageClient imageClient;
@@ -63,20 +62,7 @@ public class TweetServiceImpl implements TweetService {
     @Transactional(readOnly = true)
     public Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable) {
         User user = tweetValidationHelper.validateUserProfile(userId);
-        List<TweetUserProjection> tweets = tweetRepository.getTweetsByUserId(userId);
-        List<RetweetProjection> retweets = retweetRepository.getRetweetsByUserId(userId);
-        List<TweetUserProjection> userTweets = tweetServiceHelper.combineTweetsArrays(tweets, retweets);
-        Tweet userPinnedTweet = user.getPinnedTweet();
-
-        if (userPinnedTweet != null) {
-            TweetUserProjection pinnedTweet = tweetRepository.getTweetById(userPinnedTweet.getId(), TweetUserProjection.class).get();
-            boolean isTweetExist = userTweets.removeIf(tweet -> tweet.getId().equals(pinnedTweet.getId()));
-
-            if (isTweetExist) {
-                userTweets.add(0, pinnedTweet);
-            }
-        }
-        return tweetServiceHelper.getPageableTweetProjectionList(pageable, userTweets, tweets.size() + retweets.size());
+        return tweetRepository.getTweetsByUserId(userId, pageable);
     }
 
     @Override
@@ -184,6 +170,7 @@ public class TweetServiceImpl implements TweetService {
     public TweetResponse replyTweet(Long tweetId, Tweet reply) {
         tweetValidationHelper.checkValidTweet(tweetId);
         reply.setAddressedTweetId(tweetId);
+        reply.setTweetType(TweetType.REPLY);
         TweetResponse tweetResponse = tweetServiceHelper.createTweet(reply);
         tweetRepository.addReply(tweetId, tweetResponse.getId());
         return tweetResponse;
