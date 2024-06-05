@@ -28,11 +28,11 @@ INSERT INTO topics (id, topic_category, topic_name) VALUES (1027, 'GAMING', 'Gam
 INSERT INTO topics (id, topic_category, topic_name) VALUES (1028, 'GAMING', 'Among Us');
 
 -- users
-INSERT INTO users(id, full_name, username, private_profile) VALUES (1, 'Random', 'Random', true);
-INSERT INTO users(id, full_name, username, private_profile) VALUES (2, 'MrCat', 'Cat', true);
-INSERT INTO users(id, full_name, username, private_profile) VALUES (3, 'Kitty', 'Kitty', true);
-INSERT INTO users(id, full_name, username, private_profile) VALUES (4, 'JavaCat', 'JavaCat', false);
-INSERT INTO users(id, full_name, username, private_profile) VALUES (5, 'КотБегемот', 'Кот Бегемот', false);
+INSERT INTO users (id, full_name, username, private_profile) VALUES (1, 'Random', 'Random', false);
+INSERT INTO users (id, full_name, username, private_profile) VALUES (2, 'MrCat', 'Cat', true);
+INSERT INTO users (id, full_name, username, private_profile) VALUES (3, 'Kitty', 'Kitty', false);
+INSERT INTO users (id, full_name, username, private_profile) VALUES (4, 'JavaCat', 'JavaCat', false);
+INSERT INTO users (id, full_name, username, private_profile) VALUES (5, 'КотБегемот', 'Кот Бегемот', false);
 
 -- user_subscriptions
 INSERT INTO user_subscriptions (subscriber_id, user_id) VALUES (1, 2);

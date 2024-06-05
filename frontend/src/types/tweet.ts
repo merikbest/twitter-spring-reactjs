@@ -22,6 +22,7 @@ export interface TweetResponse {
     imageDescription: string;
     taggedImageUsers: TaggedUserResponse[];
     quoteTweet: QuoteTweetResponse;
+    retweet: TweetResponse;
     tweetList: TweetListResponse;
     poll: PollResponse;
     retweetsCount: number;

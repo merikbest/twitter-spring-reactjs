@@ -25,7 +25,7 @@ const TweetActions: FC<TweetActionsProps> = memo(({ retweetsUserIds, tweetId, ac
 
     return (
         <>
-            {isTweetRetweetedByUser && userProfileId ? (
+            {activeTab === 0 && isTweetRetweetedByUser && userProfileId ? (
                 <TweetActionResult
                     action={TweetActionResults.RETWEET}
                     text={((myProfileId === userProfileId) ? ("You") : (fullName)) + " Retweeted"}

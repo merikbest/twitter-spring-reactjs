@@ -62,7 +62,7 @@ public class TweetServiceImpl implements TweetService {
     @Transactional(readOnly = true)
     public Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable) {
         User user = tweetValidationHelper.validateUserProfile(userId);
-        return tweetRepository.getTweetsByUserId(userId, pageable);
+        return tweetRepository.getTweetsByUserId(user, user.getPinnedTweet(), pageable);
     }
 
     @Override
