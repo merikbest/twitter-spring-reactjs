@@ -60,16 +60,21 @@ public class FollowerUserServiceImpl implements FollowerUserService {
 
         if (followerUserRepository.isFollower(authUser.getId(), user.getId())) {
             followerUserRepository.unfollow(authUser.getId(), user.getId());
+            followerUserRepository.updateFollowersCount(false, user.getId());
+            followerUserRepository.updateFollowingCount(false, authUser.getId());
             userRepository.unsubscribe(authUser.getId(), user.getId());
             followUserProducer.sendFollowUserEvent(user, authUser.getId(), false);
         } else {
             if (!user.isPrivateProfile()) {
                 followerUserRepository.follow(authUser.getId(), user.getId());
+                followerUserRepository.updateFollowersCount(true, user.getId());
+                followerUserRepository.updateFollowingCount(true, authUser.getId());
                 followUserNotificationProducer.sendFollowUserNotificationEvent(authUser, user);
                 followUserProducer.sendFollowUserEvent(user, authUser.getId(), true);
                 return true;
             } else {
                 followerUserRepository.addFollowerRequest(authUser.getId(), user.getId());
+                followerUserRepository.updateFollowerRequestsCount(true, user.getId());
                 followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), true);
             }
         }
@@ -98,6 +103,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
             followerUserRepository.addFollowerRequest(authUserId, user.getId());
             hasUserFollowRequest = true;
         }
+        followerUserRepository.updateFollowerRequestsCount(hasUserFollowRequest, user.getId());
         followRequestUserProducer.sendFollowRequestUserEvent(user, authUserId, hasUserFollowRequest);
         return userRepository.getUserById(user.getId(), UserProfileProjection.class).get();
     }
@@ -108,7 +114,10 @@ public class FollowerUserServiceImpl implements FollowerUserService {
         User user = userServiceHelper.getUserById(userId);
         User authUser = authenticationService.getAuthenticatedUser();
         followerUserRepository.removeFollowerRequest(user.getId(), authUser.getId());
+        followerUserRepository.updateFollowerRequestsCount(false, user.getId());
         followerUserRepository.follow(user.getId(), authUser.getId());
+        followerUserRepository.updateFollowersCount(true, user.getId());
+        followerUserRepository.updateFollowingCount(true, authUser.getId());
         followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), false);
         followUserProducer.sendFollowUserEvent(user, authUser.getId(), true);
         return String.format("User (id:%s) accepted.", userId);
@@ -120,6 +129,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
         User user = userServiceHelper.getUserById(userId);
         User authUser = authenticationService.getAuthenticatedUser();
         followerUserRepository.removeFollowerRequest(user.getId(), authUser.getId());
+        followerUserRepository.updateFollowerRequestsCount(false, user.getId());
         followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), false);
         return String.format("User (id:%s) declined.", userId);
     }

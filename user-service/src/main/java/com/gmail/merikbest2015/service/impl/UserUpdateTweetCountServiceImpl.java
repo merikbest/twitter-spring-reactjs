@@ -23,32 +23,25 @@ public class UserUpdateTweetCountServiceImpl implements UserUpdateTweetCountServ
     @Transactional
     public void handleUpdateTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
         User user = getUserById(parseLong(authId));
-        Long tweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getTweetCount());
-        user.setTweetCount(tweetCount);
+        userRepository.updateTweetCount(tweetCountEvent.isUpdateTweetsCount(), user.getId());
     }
 
     @Override
     @Transactional
     public void handleUpdateLikeTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
         User user = getUserById(parseLong(authId));
-        Long likeTweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getLikeCount());
-        user.setLikeCount(likeTweetCount);
+        userRepository.updateLikeCount(tweetCountEvent.isUpdateTweetsCount(), user.getId());
     }
 
     @Override
     @Transactional
     public void handleUpdateMediaTweetCount(UpdateTweetCountEvent tweetCountEvent, String authId) {
         User user = getUserById(parseLong(authId));
-        Long mediaTweetCount = updateCount(tweetCountEvent.isUpdateTweetsCount(), user.getMediaTweetCount());
-        user.setMediaTweetCount(mediaTweetCount);
+        userRepository.updateMediaTweetCount(tweetCountEvent.isUpdateTweetsCount(), user.getId());
     }
 
     private User getUserById(Long userId) {
         return userRepository.getUserById(userId, User.class)
                 .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
-    }
-
-    private Long updateCount(boolean isUpdateTweetsCount, Long count) {
-        return isUpdateTweetsCount ? count + 1 : count - 1;
     }
 }

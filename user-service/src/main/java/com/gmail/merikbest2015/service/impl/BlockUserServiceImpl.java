@@ -44,6 +44,8 @@ public class BlockUserServiceImpl implements BlockUserService {
             blockUserRepository.blockUser(authUserId, userId);
             followerUserRepository.unfollow(authUserId, userId);
             followerUserRepository.unfollow(userId, authUserId);
+            followerUserRepository.updateFollowersCount(false, userId);
+            followerUserRepository.updateFollowingCount(false, authUserId);
             hasUserBlocked = true;
         }
         blockUserProducer.sendBlockUserEvent(user, authUserId, hasUserBlocked);

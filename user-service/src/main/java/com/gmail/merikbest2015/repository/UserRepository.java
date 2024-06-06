@@ -164,4 +164,37 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "DELETE FROM subscribers WHERE subscriber_id = ?1 AND user_id = ?2", nativeQuery = true)
     void unsubscribe(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("""
+            UPDATE User user SET user.tweetCount =
+                CASE WHEN :increaseCount = true
+                THEN (user.tweetCount + 1)
+                ELSE (user.tweetCount - 1)
+                END
+            WHERE user.id = :userId
+            """)
+    void updateTweetCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("""
+            UPDATE User user SET user.likeCount =
+                CASE WHEN :increaseCount = true
+                THEN (user.likeCount + 1)
+                ELSE (user.likeCount - 1)
+                END
+            WHERE user.id = :userId
+            """)
+    void updateLikeCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("""
+            UPDATE User user SET user.mediaTweetCount =
+                CASE WHEN :increaseCount = true
+                THEN (user.mediaTweetCount + 1)
+                ELSE (user.mediaTweetCount - 1)
+                END
+            WHERE user.id = :userId
+            """)
+    void updateMediaTweetCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
 }

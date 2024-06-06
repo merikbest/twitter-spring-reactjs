@@ -99,6 +99,15 @@ public class User {
     @Column(name = "mentions_count", nullable = false, columnDefinition = "int8 default 0")
     private Long mentionsCount = 0L;
 
+    @Column(name = "followers_count", nullable = false, columnDefinition = "int8 default 0")
+    private Long followersCount = 0L;
+
+    @Column(name = "following_count", nullable = false, columnDefinition = "int8 default 0")
+    private Long followingCount = 0L;
+
+    @Column(name = "followers_requests_count", nullable = false, columnDefinition = "int8 default 0")
+    private Long followerRequestsCount = 0L;
+
     @Column(name = "active", nullable = false, columnDefinition = "boolean default false")
     private boolean active = false;
 

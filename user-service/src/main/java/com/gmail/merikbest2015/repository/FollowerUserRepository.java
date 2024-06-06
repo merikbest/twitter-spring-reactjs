@@ -63,6 +63,39 @@ public interface FollowerUserRepository extends JpaRepository<User, Long> {
     void unfollow(@Param("authUserId") Long authUserId, @Param("userId") Long userId);
 
     @Modifying
+    @Query("""
+            UPDATE User user SET user.followersCount =
+                CASE WHEN :increaseCount = true
+                THEN (user.followersCount + 1)
+                ELSE (user.followersCount - 1)
+                END
+            WHERE user.id = :userId
+            """)
+    void updateFollowersCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("""
+            UPDATE User user SET user.followingCount =
+                CASE WHEN :increaseCount = true
+                THEN (user.followingCount + 1)
+                ELSE (user.followingCount - 1)
+                END
+            WHERE user.id = :userId
+            """)
+    void updateFollowingCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
+
+    @Modifying
+    @Query("""
+            UPDATE User user SET user.followerRequestsCount =
+                CASE WHEN :increaseCount = true
+                THEN (user.followerRequestsCount + 1)
+                ELSE (user.followerRequestsCount - 1)
+                END
+            WHERE user.id = :userId
+            """)
+    void updateFollowerRequestsCount(@Param("increaseCount") boolean increaseCount, @Param("userId") Long userId);
+
+    @Modifying
     @Query(value = """
             INSERT INTO user_follower_requests (follower_id, user_id)
             SELECT * FROM (SELECT ?1, ?2) AS tmp
