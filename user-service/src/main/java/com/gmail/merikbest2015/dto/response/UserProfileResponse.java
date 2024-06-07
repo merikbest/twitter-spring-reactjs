@@ -23,8 +23,8 @@ public class UserProfileResponse {
     private String avatar;
     private String wallpaper;
     private Long pinnedTweetId;
-    private Long followersSize;
-    private Long followingSize;
+    private Long followersCount;
+    private Long followingCount;
     private List<SameFollowerResponse> sameFollowers;
 
     @JsonProperty("isMutedDirectMessages")

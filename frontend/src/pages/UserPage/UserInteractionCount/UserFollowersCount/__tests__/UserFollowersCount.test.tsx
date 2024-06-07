@@ -8,6 +8,6 @@ import { mockUser } from "../../../../../util/test-utils/mock-test-data";
 describe("UserFollowersCount", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(<UserFollowersCount />, createMockRootState(LoadingStatus.SUCCESS));
-        expect(wrapper.text().includes(`${mockUser.followersSize} Following`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUser.followersCount} Following`)).toBe(true);
     });
 });

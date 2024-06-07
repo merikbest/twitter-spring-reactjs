@@ -84,8 +84,8 @@ describe("UserPage", () => {
         expect(wrapper.text().includes(mockUser.website)).toBe(true);
         expect(wrapper.text().includes(`Date of Birth: ${mockUser.birthday}`)).toBe(true);
         expect(wrapper.text().includes("Joined: August 2021")).toBe(true);
-        expect(wrapper.text().includes(`${mockUser.followersSize} Following`)).toBe(true);
-        expect(wrapper.text().includes(`${mockUser.followingSize} Followers`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUser.followersCount} Following`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUser.followingCount} Followers`)).toBe(true);
         expect(wrapper.find(Spinner).exists()).toBe(true);
     });
 

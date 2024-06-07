@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 import { Typography } from "@material-ui/core";
 
 import { USER } from "../../../constants/path-constants";
-import { selectUserDetailFollowersSize, selectUserDetailId } from "../../../store/ducks/userDetail/selectors";
+import { selectUserDetailFollowersCount, selectUserDetailId } from "../../../store/ducks/userDetail/selectors";
 import { usePopperFooterStyles } from "./PopperFooterStyles";
 
 const PopperFooterFollowing = memo((): ReactElement => {
     const classes = usePopperFooterStyles();
     const userId = useSelector(selectUserDetailId);
-    const followersSize = useSelector(selectUserDetailFollowersSize);
+    const followersSize = useSelector(selectUserDetailFollowersCount);
 
     return (
         <Link to={`${USER}/${userId}/following`} className={classes.followLink}>

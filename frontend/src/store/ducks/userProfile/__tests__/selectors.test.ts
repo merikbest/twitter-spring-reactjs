@@ -6,8 +6,8 @@ import {
     selectUserProfileAbout,
     selectUserProfileAvatar,
     selectUserProfileBirthday,
-    selectUserProfileFollowersSize,
-    selectUserProfileFollowingSize,
+    selectUserProfileFollowersCount,
+    selectUserProfileFollowingCount,
     selectUserProfileFullName,
     selectUserProfileId,
     selectUserProfileIsFollower,
@@ -111,13 +111,13 @@ describe("userProfile selectors:", () => {
 
     describe("selectUserProfileFollowersSize", () => {
         it("should return UserProfileFollowersSize number", () => {
-            expect(selectUserProfileFollowersSize(mockRootState)).toBe(1);
+            expect(selectUserProfileFollowersCount(mockRootState)).toBe(1);
         });
     });
 
     describe("selectUserProfileFollowingSize", () => {
         it("should return UserProfileFollowingSize number", () => {
-            expect(selectUserProfileFollowingSize(mockRootState)).toBe(1);
+            expect(selectUserProfileFollowingCount(mockRootState)).toBe(1);
         });
     });
 

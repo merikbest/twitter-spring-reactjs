@@ -2,7 +2,6 @@ package com.gmail.merikbest2015.repository.projection;
 
 import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 
@@ -37,13 +36,7 @@ public interface AuthUserProjection {
     String getWallpaper();
     Long getPinnedTweetId();
     Long getUnreadMessagesCount();
-
-    @Value("#{target.followers.size()}")
-    Long getFollowersSize();
-
-    @Value("#{target.following.size()}")
-    Long getFollowingSize();
-
-    @Value("#{target.followerRequests.size()}")
-    Long getFollowerRequestsSize();
+    Long getFollowersCount();
+    Long getFollowingCount();
+    Long getFollowerRequestsCount();
 }

@@ -31,8 +31,8 @@ describe("PopperUserWindow", () => {
         expect(wrapper.find(Link).at(1).prop("to")).toBe(`${PROFILE}/${mockUserDetailResponse.id}`);
         expect(wrapper.text().includes(mockUserDetailResponse.fullName)).toBe(true);
         expect(wrapper.text().includes(mockUserDetailResponse.username)).toBe(true);
-        expect(wrapper.text().includes(`${mockUserDetailResponse.followingSize}Followers`)).toBe(true);
-        expect(wrapper.text().includes(`${mockUserDetailResponse.followersSize}Following`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUserDetailResponse.followingCount}Followers`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUserDetailResponse.followersCount}Following`)).toBe(true);
         expect(wrapper.find(FollowerGroup).exists()).toBeTruthy();
         expect(wrapper.text().includes("Not followed by anyone you’re following")).toBe(true);
     });

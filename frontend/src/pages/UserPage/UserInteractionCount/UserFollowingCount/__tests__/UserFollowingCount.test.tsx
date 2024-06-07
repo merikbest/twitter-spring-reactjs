@@ -8,6 +8,6 @@ import UserFollowingCount from "../UserFollowingCount";
 describe("UserFollowingCount", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(<UserFollowingCount />, createMockRootState(LoadingStatus.SUCCESS));
-        expect(wrapper.text().includes(`${mockUser.followingSize} Followers`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUser.followingCount} Followers`)).toBe(true);
     });
 });

@@ -9,8 +9,8 @@ export const selectUserDetailId = (state: RootState) => selectUserDetailItem(sta
 export const selectUserDetailUsername = (state: RootState) => selectUserDetailItem(state)?.username;
 export const selectUserDetailFullName = (state: RootState) => selectUserDetailItem(state)?.fullName;
 export const selectUserDetailAbout = (state: RootState) => selectUserDetailItem(state)?.about;
-export const selectUserDetailFollowersSize = (state: RootState) => selectUserDetailItem(state)?.followersSize;
-export const selectUserDetailFollowingSize = (state: RootState) => selectUserDetailItem(state)?.followingSize;
+export const selectUserDetailFollowersCount = (state: RootState) => selectUserDetailItem(state)?.followersCount;
+export const selectUserDetailFollowingCount = (state: RootState) => selectUserDetailItem(state)?.followingCount;
 export const selectUserDetailAvatar = (state: RootState) => selectUserDetailItem(state)!.avatar ?? DEFAULT_PROFILE_IMG;
 export const selectUserDetailIsMyProfileBlocked = (state: RootState) => selectUserDetailItem(state)?.isMyProfileBlocked;
 export const selectUserDetailIsFollower = (state: RootState) => selectUserDetailItem(state)?.isFollower;

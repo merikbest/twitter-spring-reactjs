@@ -325,7 +325,7 @@ describe("userReducer:", () => {
             userReducer(
                 {
                     ...initialUserState,
-                    data: { id: 1, followersSize: 0 } as AuthUserResponse
+                    data: { id: 1, followersCount: 0 } as AuthUserResponse
                 },
                 {
                     type: UserActionsType.SET_FOLLOWERS_SIZE
@@ -333,7 +333,7 @@ describe("userReducer:", () => {
             ),
             {
                 ...initialUserState,
-                data: { id: 1, followersSize: 1 } as AuthUserResponse,
+                data: { id: 1, followersCount: 1 } as AuthUserResponse,
                 status: LoadingStatus.LOADED
             }
         );
@@ -381,7 +381,7 @@ describe("userReducer:", () => {
             userReducer(
                 {
                     ...initialUserState,
-                    data: { id: 1, followersSize: 1 } as AuthUserResponse
+                    data: { id: 1, followersCount: 1 } as AuthUserResponse
                 },
                 {
                     type: UserActionsType.SET_USER_FOLLOWING,
@@ -390,7 +390,7 @@ describe("userReducer:", () => {
             ),
             {
                 ...initialUserState,
-                data: { id: 1, followersSize: 2 } as AuthUserResponse,
+                data: { id: 1, followersCount: 2 } as AuthUserResponse,
                 status: LoadingStatus.LOADED
             }
         );

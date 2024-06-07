@@ -22,7 +22,7 @@ import { useSideMenuStyles } from "../SideMenuStyles";
 import { usePopup } from "../../../hook/usePopup";
 import { useGlobalStyles } from "../../../util/globalClasses";
 import {
-    selectUserDataFollowerRequestsSize,
+    selectUserDataFollowerRequestsCount,
     selectUserDataIsPrivateProfile
 } from "../../../store/ducks/user/selectors";
 import { DisplayProps } from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
@@ -35,7 +35,7 @@ const SideMenuMoreItem: FC<DisplayProps> = ({ changeBackgroundColor, changeColor
     const classes = useSideMenuStyles();
     const dispatch = useDispatch();
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
-    const followerRequestsSize = useSelector(selectUserDataFollowerRequestsSize);
+    const followerRequestsSize = useSelector(selectUserDataFollowerRequestsCount);
     const [visibleDisplayModal, setVisibleDisplayModal] = useState<boolean>(false);
     const [visibleFollowerRequestsModal, setVisibleFollowerRequestsModal] = useState<boolean>(false);
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();

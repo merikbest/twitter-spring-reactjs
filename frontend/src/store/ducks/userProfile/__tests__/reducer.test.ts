@@ -44,7 +44,7 @@ describe("userProfileReducer:", () => {
             userProfileReducer(
                 {
                     ...initialUserProfileState,
-                    user: { id: 1, isFollower: false, followingSize: 0 } as UserProfileResponse
+                    user: { id: 1, isFollower: false, followingCount: 0 } as UserProfileResponse
                 },
                 {
                     type: UserProfileActionsType.SET_FOLLOW_TO_USER_PROFILE,
@@ -53,7 +53,7 @@ describe("userProfileReducer:", () => {
             ),
             {
                 ...initialUserProfileState,
-                user: { id: 1, isFollower: true, followingSize: 1 } as UserProfileResponse,
+                user: { id: 1, isFollower: true, followingCount: 1 } as UserProfileResponse,
                 loadingState: LoadingStatus.SUCCESS
             }
         );

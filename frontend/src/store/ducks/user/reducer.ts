@@ -130,7 +130,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
 
         case UserActionsType.SET_FOLLOWERS_SIZE:
             if (draft.data) {
-                draft.data.followersSize = draft.data.followersSize + 1;
+                draft.data.followersCount = draft.data.followersCount + 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;
@@ -158,7 +158,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
 
         case UserActionsType.SET_USER_FOLLOWING:
             if (draft.data) {
-                draft.data.followersSize = action.payload ? draft.data.followersSize + 1 : draft.data.followersSize - 1;
+                draft.data.followersCount = action.payload ? draft.data.followersCount + 1 : draft.data.followersCount - 1;
                 draft.status = LoadingStatus.LOADED;
             }
             break;

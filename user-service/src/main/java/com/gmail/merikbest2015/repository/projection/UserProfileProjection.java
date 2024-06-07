@@ -23,12 +23,8 @@ public interface UserProfileProjection {
     String getAvatar();
     String getWallpaper();
     Long getPinnedTweetId();
-
-    @Value("#{target.followers.size()}")
-    Long getFollowersSize();
-
-    @Value("#{target.following.size()}")
-    Long getFollowingSize();
+    Long getFollowersCount();
+    Long getFollowingCount();
 
     @Value("#{@userServiceHelper.isUserMutedByMyProfile(target.id)}")
     boolean getIsUserMuted();

@@ -18,8 +18,8 @@ export interface UserProfileResponse {
     avatar: string;
     wallpaper: string;
     pinnedTweetId: number;
-    followersSize: number;
-    followingSize: number;
+    followersCount: number;
+    followingCount: number;
     isUserMuted: boolean;
     isUserBlocked: boolean;
     isMyProfileBlocked: boolean;
@@ -94,9 +94,9 @@ export interface AuthUserResponse {
     avatar: string;
     wallpaper: string;
     pinnedTweetId: number;
-    followersSize: number;
-    followingSize: number;
-    followerRequestsSize: number;
+    followersCount: number;
+    followingCount: number;
+    followerRequestsCount: number;
     unreadMessagesCount: number;
 }
 
@@ -139,7 +139,7 @@ export interface UserDetailResponse {
     isMyProfileBlocked: boolean;
     isWaitingForApprove: boolean;
     isFollower: boolean;
-    followersSize: number;
-    followingSize: number;
+    followersCount: number;
+    followingCount: number;
     sameFollowers: SameFollowerResponse[];
 }

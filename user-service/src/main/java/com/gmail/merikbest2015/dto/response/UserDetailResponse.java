@@ -12,8 +12,8 @@ public class UserDetailResponse {
     private String username;
     private String about;
     private String avatar;
-    private Long followersSize;
-    private Long followingSize;
+    private Long followersCount;
+    private Long followingCount;
     private List<SameFollowerResponse> sameFollowers;
 
     @JsonProperty("isPrivateProfile")

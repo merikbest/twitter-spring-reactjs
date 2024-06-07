@@ -18,8 +18,8 @@ export const selectUserProfileBirthday = (state: RootState) => selectUserProfile
 export const selectUserProfileRegistrationDate = (state: RootState) => selectUserProfileState(state).user?.registrationDate;
 export const selectUserProfileWallpaper = (state: RootState) => selectUserProfileState(state).user?.wallpaper;
 export const selectUserProfileAvatar = (state: RootState) => selectUserProfileState(state).user?.avatar;
-export const selectUserProfileFollowersSize = (state: RootState) => selectUserProfileState(state).user?.followersSize;
-export const selectUserProfileFollowingSize = (state: RootState) => selectUserProfileState(state).user?.followingSize;
+export const selectUserProfileFollowersCount = (state: RootState) => selectUserProfileState(state).user?.followersCount;
+export const selectUserProfileFollowingCount = (state: RootState) => selectUserProfileState(state).user?.followingCount;
 export const selectUserProfileSameFollowers = (state: RootState) => selectUserProfileState(state).user?.sameFollowers;
 export const selectUserProfilePinnedTweetId = (state: RootState) => selectUserProfileState(state).user?.pinnedTweetId;
 

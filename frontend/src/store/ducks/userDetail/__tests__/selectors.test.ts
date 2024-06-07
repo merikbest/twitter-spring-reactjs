@@ -3,8 +3,8 @@ import {
     selectIsUserDetailLoading,
     selectUserDetailAbout,
     selectUserDetailAvatar,
-    selectUserDetailFollowersSize,
-    selectUserDetailFollowingSize,
+    selectUserDetailFollowersCount,
+    selectUserDetailFollowingCount,
     selectUserDetailFullName,
     selectUserDetailId,
     selectUserDetailIsFollower,
@@ -54,13 +54,13 @@ describe("userDetail selectors:", () => {
 
     describe("selectUserDetailFollowersSize", () => {
         it("should return UserDetailFollowersSize number", () => {
-            expect(selectUserDetailFollowersSize(createMockRootState())).toBe(2);
+            expect(selectUserDetailFollowersCount(createMockRootState())).toBe(2);
         });
     });
 
     describe("selectUserDetailFollowingSize", () => {
         it("should return UserDetailFollowingSize number", () => {
-            expect(selectUserDetailFollowingSize(createMockRootState())).toBe(4);
+            expect(selectUserDetailFollowingCount(createMockRootState())).toBe(4);
         });
     });
 

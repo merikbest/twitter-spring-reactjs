@@ -30,7 +30,7 @@ describe("userDetailReducer:", () => {
             userDetailReducer(
                 {
                     ...initialUserDetailState,
-                    item: { id: 1, isFollower: false, followingSize: 0 } as UserDetailResponse
+                    item: { id: 1, isFollower: false, followingCount: 0 } as UserDetailResponse
                 },
                 {
                     type: UserDetailActionsType.SET_FOLLOW_TO_USER_DETAIL,
@@ -39,7 +39,7 @@ describe("userDetailReducer:", () => {
             ),
             {
                 ...initialUserDetailState,
-                item: { id: 1, isFollower: true, followingSize: 1 } as UserDetailResponse,
+                item: { id: 1, isFollower: true, followingCount: 1 } as UserDetailResponse,
                 loadingState: LoadingStatus.LOADED
             }
         );

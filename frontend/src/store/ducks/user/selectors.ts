@@ -16,7 +16,7 @@ export const selectUserDataNotificationsCount = (state: RootState) => {
 };
 export const selectUserDataMentionsCount = (state: RootState) => selectUserData(state)?.mentionsCount;
 export const selectUserDataUnreadMessagesCount = (state: RootState) => selectUserData(state)?.unreadMessagesCount;
-export const selectUserDataFollowerRequestsSize = (state: RootState) => selectUserData(state)?.followerRequestsSize;
+export const selectUserDataFollowerRequestsCount = (state: RootState) => selectUserData(state)?.followerRequestsCount;
 export const selectUserDataIsPrivateProfile = (state: RootState) => selectUserData(state)?.isPrivateProfile;
 export const selectUserDataIsProfileStarted = (state: RootState) => selectUserData(state)?.profileStarted;
 export const selectUserDataIsMutedDirectMessages = (state: RootState) => selectUserData(state)?.isMutedDirectMessages;
@@ -33,8 +33,8 @@ export const selectUserProfileEmail = (state: RootState) => selectUserData(state
 export const selectUserProfileWebsite = (state: RootState) => selectUserData(state)?.website;
 export const selectUserProfileRegistrationDate = (state: RootState) => selectUserData(state)?.registrationDate;
 export const selectUserPinnedTweetId = (state: RootState) => selectUserData(state)?.pinnedTweetId;
-export const selectUserFollowingSize = (state: RootState) => selectUserData(state)?.followingSize;
-export const selectUserFollowersSize = (state: RootState) => selectUserData(state)?.followersSize;
+export const selectUserFollowingCount = (state: RootState) => selectUserData(state)?.followingCount;
+export const selectUserFollowersCount = (state: RootState) => selectUserData(state)?.followersCount;
 export const selectUserProfileCustomized = (state: RootState) => selectUserData(state)?.profileCustomized;
 
 export const selectIsAuth = (state: RootState): boolean => !!selectUserState(state).data;

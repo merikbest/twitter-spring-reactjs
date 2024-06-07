@@ -2,14 +2,14 @@ import React, { memo, ReactElement } from "react";
 import { ListItem, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
-import { selectUserDataId, selectUserFollowersSize } from "../../../../store/ducks/user/selectors";
-import { selectUserProfileFollowersSize, selectUserProfileId } from "../../../../store/ducks/userProfile/selectors";
+import { selectUserDataId, selectUserFollowersCount } from "../../../../store/ducks/user/selectors";
+import { selectUserProfileFollowersCount, selectUserProfileId } from "../../../../store/ducks/userProfile/selectors";
 
 const UserFollowersCount = memo((): ReactElement => {
     const myProfileId = useSelector(selectUserDataId);
     const userProfileId = useSelector(selectUserProfileId);
-    const myProfileFollowersSize = useSelector(selectUserFollowersSize);
-    const userProfileFollowersSize = useSelector(selectUserProfileFollowersSize);
+    const myProfileFollowersSize = useSelector(selectUserFollowersCount);
+    const userProfileFollowersSize = useSelector(selectUserProfileFollowersCount);
 
     return (
         <ListItem>

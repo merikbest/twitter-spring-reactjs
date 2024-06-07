@@ -11,12 +11,8 @@ public interface UserDetailProjection {
     String getAbout();
     String getAvatar();
     boolean getPrivateProfile();
-
-    @Value("#{target.followers.size()}")
-    Long getFollowersSize();
-
-    @Value("#{target.following.size()}")
-    Long getFollowingSize();
+    Long getFollowersCount();
+    Long getFollowingCount();
 
     @Value("#{@userServiceHelper.isUserBlockedByMyProfile(target.id)}")
     boolean getIsUserBlocked();

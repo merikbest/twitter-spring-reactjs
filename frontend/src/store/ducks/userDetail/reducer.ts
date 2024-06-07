@@ -19,7 +19,7 @@ export const userDetailReducer = produce((draft: Draft<UserDetailState>, action:
         case UserDetailActionsType.SET_FOLLOW_TO_USER_DETAIL:
             if (draft.item) {
                 draft.item.isFollower = action.payload;
-                draft.item.followingSize = action.payload ? draft.item.followingSize + 1 : draft.item.followingSize - 1;
+                draft.item.followingCount = action.payload ? draft.item.followingCount + 1 : draft.item.followingCount - 1;
                 draft.loadingState = LoadingStatus.LOADED;
             }
             break;

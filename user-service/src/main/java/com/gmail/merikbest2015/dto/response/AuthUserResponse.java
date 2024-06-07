@@ -40,8 +40,8 @@ public class AuthUserResponse {
     private String avatar;
     private String wallpaper;
     private Long pinnedTweetId;
-    private Long followersSize;
-    private Long followingSize;
-    private Long followerRequestsSize;
+    private Long followersCount;
+    private Long followingCount;
+    private Long followerRequestsCount;
     private Long unreadMessagesCount;
 }

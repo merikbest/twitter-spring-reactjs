@@ -1,15 +1,15 @@
 import {
     selectIsAuth,
     selectUserData,
-    selectUserDataFollowerRequestsSize,
+    selectUserDataFollowerRequestsCount,
     selectUserDataId,
     selectUserDataIsMutedDirectMessages,
     selectUserDataIsPrivateProfile,
     selectUserDataIsProfileStarted,
     selectUserDataNotificationsCount,
     selectUserDataUnreadMessagesCount,
-    selectUserFollowersSize,
-    selectUserFollowingSize,
+    selectUserFollowersCount,
+    selectUserFollowingCount,
     selectUserIsError,
     selectUserIsLoaded,
     selectUserIsLoading,
@@ -62,7 +62,7 @@ describe("user selectors:", () => {
 
     describe("selectUserDataFollowerRequestsSize", () => {
         it("should return followerRequestsSize number", () => {
-            expect(selectUserDataFollowerRequestsSize(createMockRootState())).toBe(null);
+            expect(selectUserDataFollowerRequestsCount(createMockRootState())).toBe(null);
         });
     });
 
@@ -164,13 +164,13 @@ describe("user selectors:", () => {
 
     describe("selectUserFollowingSize", () => {
         it("should return followingSize number", () => {
-            expect(selectUserFollowingSize(createMockRootState())).toBe(1);
+            expect(selectUserFollowingCount(createMockRootState())).toBe(1);
         });
     });
 
     describe("selectUserFollowersSize", () => {
         it("should return followersSize number", () => {
-            expect(selectUserFollowersSize(createMockRootState())).toBe(1);
+            expect(selectUserFollowersCount(createMockRootState())).toBe(1);
         });
     });
 
