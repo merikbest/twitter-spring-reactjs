@@ -111,9 +111,9 @@ public class UserSettingsControllerTest {
                 .andExpect(jsonPath("$.user.avatar").value(TestConstants.AVATAR_SRC_1))
                 .andExpect(jsonPath("$.user.wallpaper").value(TestConstants.WALLPAPER_SRC))
                 .andExpect(jsonPath("$.user.pinnedTweetId").value(TestConstants.PINNED_TWEET_ID))
-                .andExpect(jsonPath("$.user.followersSize").value(2L))
-                .andExpect(jsonPath("$.user.followingSize").value(1L))
-                .andExpect(jsonPath("$.user.followerRequestsSize").value(1L))
+                .andExpect(jsonPath("$.user.followersCount").value(2L))
+                .andExpect(jsonPath("$.user.followingCount").value(1L))
+                .andExpect(jsonPath("$.user.followerRequestsCount").value(1L))
                 .andExpect(jsonPath("$.user.unreadMessagesCount").value(1L))
                 .andExpect(jsonPath("$.user.isMutedDirectMessages").value(true))
                 .andExpect(jsonPath("$.user.isPrivateProfile").value(false));

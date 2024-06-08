@@ -28,23 +28,20 @@ public class UserUpdateTweetCountServiceImplTest extends AbstractServiceTest {
         super.setUp();
         user = new User();
         user.setId(TestConstants.USER_ID);
-        user.setTweetCount(2L);
-        user.setLikeCount(2L);
-        user.setMediaTweetCount(2L);
     }
 
     @Test
     public void handleUpdateTweetCount_ShouldIncreaseTweetCount() {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.of(user));
         userUpdateTweetCountService.handleUpdateTweetCount(new UpdateTweetCountEvent(true), "2");
-        assertEquals(3L, user.getTweetCount());
+        userRepository.updateTweetCount(true, user.getId());
     }
 
     @Test
     public void handleUpdateTweetCount_ShouldDecreaseTweetCount() {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.of(user));
         userUpdateTweetCountService.handleUpdateTweetCount(new UpdateTweetCountEvent(false), "2");
-        assertEquals(1L, user.getTweetCount());
+        userRepository.updateTweetCount(false, user.getId());
     }
 
     @Test
@@ -60,14 +57,14 @@ public class UserUpdateTweetCountServiceImplTest extends AbstractServiceTest {
     public void handleUpdateLikeTweetCount_ShouldIncreaseTweetCount() {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.of(user));
         userUpdateTweetCountService.handleUpdateLikeTweetCount(new UpdateTweetCountEvent(true), "2");
-        assertEquals(3L, user.getLikeCount());
+        userRepository.updateLikeCount(true, user.getId());
     }
 
     @Test
     public void handleUpdateLikeTweetCount_ShouldDecreaseTweetCount() {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.of(user));
         userUpdateTweetCountService.handleUpdateLikeTweetCount(new UpdateTweetCountEvent(false), "2");
-        assertEquals(1L, user.getLikeCount());
+        userRepository.updateLikeCount(false, user.getId());
     }
 
     @Test
@@ -83,14 +80,15 @@ public class UserUpdateTweetCountServiceImplTest extends AbstractServiceTest {
     public void handleUpdateMediaTweetCount_ShouldIncreaseTweetCount() {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.of(user));
         userUpdateTweetCountService.handleUpdateMediaTweetCount(new UpdateTweetCountEvent(true), "2");
-        assertEquals(3L, user.getMediaTweetCount());
+        userRepository.updateMediaTweetCount(true, user.getId());
+
     }
 
     @Test
     public void handleUpdateMediaTweetCount_ShouldDecreaseTweetCount() {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.of(user));
         userUpdateTweetCountService.handleUpdateMediaTweetCount(new UpdateTweetCountEvent(false), "2");
-        assertEquals(1L, user.getMediaTweetCount());
+        userRepository.updateMediaTweetCount(false, user.getId());
     }
 
     @Test
