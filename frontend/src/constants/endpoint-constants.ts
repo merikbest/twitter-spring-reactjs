@@ -64,7 +64,8 @@ export const UI_V1_TWEETS_USER_REPLIES = (userId: string | number) => `${UI_V1_T
 export const UI_V1_TWEETS_ID_RETWEETED_USERS = (tweetId: number) => `${UI_V1_TWEETS}/${tweetId}/retweeted-users`;
 export const UI_V1_TWEETS_RETWEET = `${UI_V1_TWEETS}/retweet`;
 export const UI_V1_TWEETS_SCHEDULE = `${UI_V1_TWEETS}/schedule`;
-export const UI_V1_TWEETS_ID = (tweetId: number) => `${UI_V1}/tweets/${tweetId}`;
+export const UI_V1_TWEETS_ID = (tweetId: number) => `${UI_V1_TWEETS}/${tweetId}`;
+export const UI_V1_PINNED_TWEET_USER_ID = (userId: string) => `${UI_V1_TWEETS}/pinned/user/${userId}`;
 export const UI_V1_TWEETS_USER_ID = (userId: string | number) => `${UI_V1_TWEETS}/user/${userId}`;
 export const UI_V1_TWEETS_MEDIA_USER_ID = (userId: string | number) => `${UI_V1_TWEETS}/media/user/${userId}`;
 export const UI_V1_TWEETS_IMAGES_USER_ID = (userId: number) => `${UI_V1_TWEETS}/images/${userId}`;

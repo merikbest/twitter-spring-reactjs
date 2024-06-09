@@ -116,7 +116,7 @@ const UserPage = (): ReactElement => {
     useEffect(() => {
         if (isUserProfileSuccessLoaded) {
             document.title = `${fullName} (@${username}) / Twitter`;
-            dispatch(fetchUserTweets({ userId: params.userId, page: 0 }));
+            dispatch(fetchUserTweets({ userId: params.userId, page: 0, activeTab }));
         }
 
         return () => {

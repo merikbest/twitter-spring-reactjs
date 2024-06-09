@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
 
@@ -56,6 +57,13 @@ public class TweetServiceImpl implements TweetService {
                 .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         tweetValidationHelper.validateTweet(tweet.isDeleted(), tweet.getAuthor().getId());
         return tweet;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<TweetUserProjection> getPinnedTweetByUserId(Long userId) {
+        User user = tweetValidationHelper.validateUserProfile(userId);
+        return tweetRepository.getPinnedTweetById(user.getPinnedTweet());
     }
 
     @Override

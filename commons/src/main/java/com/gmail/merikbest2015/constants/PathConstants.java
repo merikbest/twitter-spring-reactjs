@@ -122,6 +122,7 @@ public class PathConstants {
     public static final String TWEET_ID_RETWEETED_USERS = "/{tweetId}/retweeted-users";
     public static final String RETWEET_USER_ID_TWEET_ID = "/retweet/{userId}/{tweetId}";
     public static final String USER_USER_ID = "/user/{userId}";
+    public static final String PINNED_TWEET_USER_ID = "/pinned/user/{userId}";
     public static final String MEDIA_USER_USER_ID = "/media/user/{userId}";
     public static final String IMAGES_USER_ID = "/images/{userId}";
     public static final String TWEET_ID_INFO = "/{tweetId}/info";

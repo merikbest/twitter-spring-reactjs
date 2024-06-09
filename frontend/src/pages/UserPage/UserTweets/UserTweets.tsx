@@ -38,13 +38,13 @@ const UserTweets: FC<UserTweetsProps> = memo(({ activeTab, handleChangeTab }): R
 
     const loadUserTweets = (): void => {
         if (activeTab === 1) {
-            dispatch(fetchUserRetweetsAndReplies({ userId: params.userId, page: page }));
+            dispatch(fetchUserRetweetsAndReplies({ userId: params.userId, page }));
         } else if (activeTab === 2) {
-            dispatch(fetchUserMediaTweets({ userId: params.userId, page: page }));
+            dispatch(fetchUserMediaTweets({ userId: params.userId, page }));
         } else if (activeTab === 3) {
-            dispatch(fetchUserLikedTweets({ userId: params.userId, page: page }));
+            dispatch(fetchUserLikedTweets({ userId: params.userId, page }));
         } else {
-            dispatch(fetchUserTweets({ userId: params.userId, page: page }));
+            dispatch(fetchUserTweets({ userId: params.userId, page, activeTab }));
         }
 
         if (isTweetsLoaded) {

@@ -27,6 +27,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             """)
     <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);
 
+    @Query("SELECT tweet FROM Tweet tweet WHERE tweet = :tweet")
+    Optional<TweetUserProjection> getPinnedTweetById(@Param("tweet") Tweet tweet);
+
     @Query("""
             SELECT tweet FROM Tweet tweet
             WHERE tweet.tweetType = 'TWEET'

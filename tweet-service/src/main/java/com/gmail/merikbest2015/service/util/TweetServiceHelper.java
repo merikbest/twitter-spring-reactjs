@@ -10,9 +10,7 @@ import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.TweetRepository;
-import com.gmail.merikbest2015.repository.projection.RetweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
-import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import com.gmail.merikbest2015.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -23,10 +21,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.support.PagedListHolder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -172,38 +166,5 @@ public class TweetServiceHelper {
             usernames.add(match.group(1));
         }
         return usernames;
-    }
-
-    public <T> Page<T> getPageableTweetProjectionList(Pageable pageable, List<T> tweets, int totalPages) {
-        PagedListHolder<T> page = new PagedListHolder<>(tweets);
-        page.setPage(pageable.getPageNumber());
-        page.setPageSize(pageable.getPageSize());
-        return new PageImpl<>(page.getPageList(), pageable, totalPages);
-    }
-
-    public List<TweetUserProjection> combineTweetsArrays(List<TweetUserProjection> tweets,
-                                                         List<RetweetProjection> retweets) {
-        List<TweetUserProjection> allTweets = new ArrayList<>();
-        int i = 0;
-        int j = 0;
-
-        while (i < tweets.size() && j < retweets.size()) {
-            if (tweets.get(i).getCreatedAt().isAfter(retweets.get(j).getRetweetDate())) {
-                allTweets.add(tweets.get(i));
-                i++;
-            } else {
-                allTweets.add(retweets.get(j).getTweet());
-                j++;
-            }
-        }
-        while (i < tweets.size()) {
-            allTweets.add(tweets.get(i));
-            i++;
-        }
-        while (j < retweets.size()) {
-            allTweets.add(retweets.get(j).getTweet());
-            j++;
-        }
-        return allTweets;
     }
 }

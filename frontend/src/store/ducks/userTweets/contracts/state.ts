@@ -16,4 +16,5 @@ export interface BookmarkedTweetPayload {
 export interface UserTweetRequest {
     userId: string;
     page: number;
+    activeTab?: number;
 }

@@ -10,12 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TweetService {
 
     Page<TweetProjection> getTweets(Pageable pageable);
 
     TweetProjection getTweetById(Long tweetId);
+
+    Optional<TweetUserProjection> getPinnedTweetByUserId(Long userId);
 
     Page<TweetUserProjection> getUserTweets(Long userId, Pageable pageable);
 

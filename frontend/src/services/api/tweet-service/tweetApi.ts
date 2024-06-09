@@ -19,7 +19,8 @@ import {
     UI_V1_TWEETS_SEARCH_TEXT,
     UI_V1_TWEETS_UPLOAD,
     UI_V1_TWEETS_USER_ID,
-    UI_V1_TWEETS_VIDEO
+    UI_V1_TWEETS_VIDEO,
+    UI_V1_PINNED_TWEET_USER_ID
 } from "../../../constants/endpoint-constants";
 import { UserTweetRequest } from "../../../store/ducks/userTweets/contracts/state";
 import { Image } from "../../../types/common";
@@ -37,6 +38,9 @@ export const TweetApi = {
     },
     async getTweetById(tweetId: number): Promise<AxiosResponse<TweetResponse>> {
         return await axios.get<TweetResponse>(UI_V1_TWEETS_ID(tweetId));
+    },
+    async getPinnedTweetByUserId(userId: string): Promise<AxiosResponse<TweetResponse>> {
+        return await axios.get<TweetResponse>(UI_V1_PINNED_TWEET_USER_ID(userId));
     },
     async getUserTweets({ userId, page }: UserTweetRequest): Promise<AxiosResponse<TweetResponse[]>> {
         return await axios.get<TweetResponse[]>(UI_V1_TWEETS_USER_ID(userId), { params: { page: page } });

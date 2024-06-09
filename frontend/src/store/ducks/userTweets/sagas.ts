@@ -19,8 +19,13 @@ import { TweetApi } from "../../../services/api/tweet-service/tweetApi";
 export function* fetchUserTweetsRequest({ payload }: FetchUserTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
+        let pinnedTweet: AxiosResponse<TweetResponse> | null = null;
+        if (payload.activeTab === 0) {
+            pinnedTweet = yield call(TweetApi.getPinnedTweetByUserId, payload.userId);
+        }
         const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserTweets, payload);
-        yield put(setUserTweets({ items: response.data, pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT]) }));
+        const items = pinnedTweet?.data ? [pinnedTweet.data, ...response.data] : response.data;
+        yield put(setUserTweets({ items: items, pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT]) }));
     } catch (e) {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));
     }

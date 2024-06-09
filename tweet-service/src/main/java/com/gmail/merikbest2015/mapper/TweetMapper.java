@@ -36,6 +36,12 @@ public class TweetMapper {
         return basicMapper.convertToResponse(tweet, TweetResponse.class);
     }
 
+    public TweetResponse getPinnedTweetByUserId(Long userId) {
+        return tweetService.getPinnedTweetByUserId(userId)
+                .map(tweet -> basicMapper.convertToResponse(tweet, TweetUserResponse.class))
+                .orElse(null);
+    }
+
     public HeaderResponse<TweetUserResponse> getUserTweets(Long userId, Pageable pageable) {
         Page<TweetUserProjection> tweets = tweetService.getUserTweets(userId, pageable);
         return basicMapper.getHeaderResponse(tweets, TweetUserResponse.class);

@@ -39,6 +39,11 @@ public class TweetController {
         return ResponseEntity.ok(tweetMapper.getTweetById(tweetId));
     }
 
+    @GetMapping(PINNED_TWEET_USER_ID)
+    public ResponseEntity<TweetResponse> getPinnedTweetByUserId(@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(tweetMapper.getPinnedTweetByUserId(userId));
+    }
+
     @GetMapping(USER_USER_ID)
     public ResponseEntity<List<TweetUserResponse>> getUserTweets(@PathVariable("userId") Long userId,
                                                                  @PageableDefault(size = 10) Pageable pageable) {
