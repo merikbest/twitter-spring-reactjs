@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
 import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.enums.TweetType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
@@ -57,6 +58,7 @@ public class RetweetServiceImpl implements RetweetService {
         } else {
             Tweet newRetweet = new Tweet();
             newRetweet.setText(String.format("RT: %s", tweet.getText()));
+            newRetweet.setTweetType(TweetType.RETWEET);
             newRetweet.setAuthor(authUser);
             newRetweet.setRetweet(tweet);
             tweetRepository.save(newRetweet);

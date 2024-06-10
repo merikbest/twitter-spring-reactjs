@@ -73,8 +73,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("""
             SELECT user From User user
             WHERE user.id IN (
-                SELECT retweet.user.id FROM Retweet retweet
-                WHERE retweet.tweet = :tweet)
+                SELECT tweet.author.id FROM Tweet tweet
+                WHERE tweet.retweet = :tweet)
             """)
     Page<UserProjection> getRetweetedUsersByTweet(@Param("tweet") Tweet tweet, Pageable pageable);
 

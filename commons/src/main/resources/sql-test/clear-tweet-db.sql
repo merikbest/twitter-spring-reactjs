@@ -15,7 +15,6 @@ delete from "tweet-test".public.tweet_quotes;
 delete from "tweet-test".public.bookmarks;
 delete from "tweet-test".public.liked_tweets;
 delete from "tweet-test".public.poll_choices;
-delete from "tweet-test".public.retweets_test;
 delete from "tweet-test".public.retweets;
 
 delete from "tweet-test".public.tweets;

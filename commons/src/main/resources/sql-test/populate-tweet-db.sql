@@ -70,10 +70,6 @@ INSERT INTO "tweet-test".public.liked_tweets (liked_tweet_date, tweet_id, user_i
 INSERT INTO retweets (retweet_id, tweet_id) VALUES (40, 52);
 INSERT INTO retweets (retweet_id, tweet_id) VALUES (45, 53);
 
--- retweets_test
-INSERT INTO "tweet-test".public.retweets_test (retweet_date, tweet_id, user_id) VALUES ('2021-10-03 20:31:47.000000', 40, 1);
-INSERT INTO "tweet-test".public.retweets_test (retweet_date, tweet_id, user_id) VALUES ('2021-10-03 20:31:47.000000', 45, 2);
-
 -- replies
 INSERT INTO "tweet-test".public.replies (tweet_id, reply_id) VALUES (40, 41);
 

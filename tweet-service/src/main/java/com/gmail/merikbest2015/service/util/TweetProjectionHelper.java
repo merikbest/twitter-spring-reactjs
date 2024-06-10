@@ -34,12 +34,6 @@ public class TweetProjectionHelper {
     }
 
     public TweetListResponse getTweetList(Long listId) {
-        TweetListResponse tweetList = listsClient.getTweetList(listId);
-
-        if (tweetList.getId() != null) {
-            return tweetList;
-        } else {
-            return null;
-        }
+        return listsClient.getTweetList(listId);
     }
 }
