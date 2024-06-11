@@ -52,8 +52,7 @@ public class TweetProjectionHelperTest extends AbstractServiceTest {
 
     @Test
     public void getTweetList_ShouldReturnNull() {
-        TweetListResponse tweetListResponse = new TweetListResponse();
-        when(listsClient.getTweetList(TestConstants.LIST_ID)).thenReturn(tweetListResponse);
+        when(listsClient.getTweetList(TestConstants.LIST_ID)).thenReturn(null);
         assertNull(tweetProjectionHelper.getTweetList(TestConstants.LIST_ID));
         verify(listsClient, times(1)).getTweetList(TestConstants.LIST_ID);
     }

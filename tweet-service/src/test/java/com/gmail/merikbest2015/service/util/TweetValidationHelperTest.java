@@ -36,14 +36,14 @@ public class TweetValidationHelperTest extends AbstractServiceTest {
 
     @Test
     public void checkValidTweet() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         assertEquals(tweet, tweetValidationHelper.checkValidTweet(TestConstants.TWEET_ID));
-        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
     }
 
     @Test
     public void checkValidTweet_ShouldTweetNotFound() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetValidationHelper.checkValidTweet(TestConstants.TWEET_ID));
         assertEquals(TWEET_NOT_FOUND, exception.getMessage());
@@ -57,7 +57,7 @@ public class TweetValidationHelperTest extends AbstractServiceTest {
         Tweet tweet = new Tweet();
         tweet.setDeleted(true);
         tweet.setAuthor(authUser);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetValidationHelper.checkValidTweet(TestConstants.TWEET_ID));
         assertEquals(TWEET_DELETED, exception.getMessage());
@@ -67,7 +67,7 @@ public class TweetValidationHelperTest extends AbstractServiceTest {
     @Test
     public void checkValidTweet_ShouldUserNotFound() {
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetValidationHelper.checkValidTweet(TestConstants.TWEET_ID));
@@ -78,7 +78,7 @@ public class TweetValidationHelperTest extends AbstractServiceTest {
     @Test
     public void checkValidTweet_ShouldUserProfileBlocked() {
         TweetServiceTestHelper.mockAuthenticatedUserId();
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.isUserHavePrivateProfile(TestConstants.USER_ID, 1L)).thenReturn(true);
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,

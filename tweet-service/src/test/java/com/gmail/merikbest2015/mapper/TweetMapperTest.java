@@ -28,6 +28,7 @@ import org.springframework.http.HttpHeaders;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -70,6 +71,17 @@ public class TweetMapperTest {
         assertEquals(new TweetResponse(), tweetMapper.getTweetById(TestConstants.TWEET_ID));
         verify(tweetService, times(1)).getTweetById(TestConstants.TWEET_ID);
         verify(basicMapper, times(1)).convertToResponse(tweetProjection, TweetResponse.class);
+    }
+
+    @Test
+    public void getPinnedTweetByUserId() {
+        Optional<TweetUserProjection> tweetUserProjection = Optional.of(
+                TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class));
+        when(tweetService.getPinnedTweetByUserId(TestConstants.USER_ID)).thenReturn(tweetUserProjection);
+        when(basicMapper.convertToResponse(tweetUserProjection.get(), TweetUserResponse.class)).thenReturn(new TweetUserResponse());
+        assertEquals(new TweetUserResponse(), tweetMapper.getPinnedTweetByUserId(TestConstants.USER_ID));
+        verify(tweetService, times(1)).getPinnedTweetByUserId(TestConstants.USER_ID);
+        verify(basicMapper, times(1)).convertToResponse(tweetUserProjection.get(), TweetUserResponse.class);
     }
 
     @Test
@@ -127,11 +139,11 @@ public class TweetMapperTest {
 
     @Test
     public void getQuotesByTweetId() {
-//        when(tweetService.getQuotesByTweetId(pageable, TestConstants.TWEET_ID)).thenReturn(pageableTweetProjections);
-//        when(basicMapper.getHeaderResponse(pageableTweetProjections, TweetResponse.class)).thenReturn(headerResponse);
-//        assertEquals(headerResponse, tweetMapper.getQuotesByTweetId(pageable, TestConstants.TWEET_ID));
-//        verify(tweetService, times(1)).getQuotesByTweetId(pageable, TestConstants.TWEET_ID);
-//        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
+        when(tweetService.getQuotesByTweetId(TestConstants.TWEET_ID, pageable)).thenReturn(pageableTweetProjections);
+        when(basicMapper.getHeaderResponse(pageableTweetProjections, TweetResponse.class)).thenReturn(headerResponse);
+        assertEquals(headerResponse, tweetMapper.getQuotesByTweetId(TestConstants.TWEET_ID, pageable));
+        verify(tweetService, times(1)).getQuotesByTweetId(TestConstants.TWEET_ID, pageable);
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetProjections, TweetResponse.class);
     }
 
     @Test

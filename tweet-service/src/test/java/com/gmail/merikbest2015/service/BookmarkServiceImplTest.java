@@ -52,7 +52,7 @@ public class BookmarkServiceImplTest extends AbstractServiceTest {
     @Test
     public void processUserBookmarks_ShouldDeleteBookmark() {
         Bookmark bookmark = new Bookmark();
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(bookmarkRepository.getUserBookmark(authUser, tweet)).thenReturn(bookmark);
         assertFalse(bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
         verify(bookmarkRepository, times(1)).getUserBookmark(authUser, tweet);
@@ -61,7 +61,7 @@ public class BookmarkServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processUserBookmarks_ShouldCreateBookmark() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(bookmarkRepository.getUserBookmark(authUser, tweet)).thenReturn(null);
         assertTrue(bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
         verify(bookmarkRepository, times(1)).getUserBookmark(authUser, tweet);
@@ -70,7 +70,7 @@ public class BookmarkServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processUserBookmarks_ShouldTweetNotFound() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
         assertEquals(TWEET_NOT_FOUND, exception.getMessage());
@@ -80,7 +80,7 @@ public class BookmarkServiceImplTest extends AbstractServiceTest {
     @Test
     public void processUserBookmarks_ShouldTweetDeleted() {
         tweet.setDeleted(true);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
         assertEquals(TWEET_DELETED, exception.getMessage());
@@ -92,7 +92,7 @@ public class BookmarkServiceImplTest extends AbstractServiceTest {
         User authUser = new User();
         authUser.setId(1L);
         tweet.setAuthor(authUser);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> bookmarkService.processUserBookmarks(TestConstants.TWEET_ID));
@@ -105,7 +105,7 @@ public class BookmarkServiceImplTest extends AbstractServiceTest {
         User authUser = new User();
         authUser.setId(1L);
         tweet.setAuthor(authUser);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(true);
         when(userRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,

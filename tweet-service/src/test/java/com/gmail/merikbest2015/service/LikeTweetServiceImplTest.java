@@ -98,16 +98,16 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
     @Test
     public void getLikedUsersByTweetId() {
         Page<UserProjection> userProjections = TweetServiceTestHelper.createUserProjections();
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.getLikedUsersByTweet(tweet, pageable)).thenReturn(userProjections);
         assertEquals(userProjections, likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
-        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
         verify(userRepository, times(1)).getLikedUsersByTweet(tweet, pageable);
     }
 
     @Test
     public void getLikedUsersByTweetId_ShouldTweetNotFound() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
         assertEquals(TWEET_NOT_FOUND, exception.getMessage());
@@ -117,7 +117,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
     @Test
     public void getLikedUsersByTweetId_ShouldTweetDeleted() {
         tweet.setDeleted(true);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
         assertEquals(TWEET_DELETED, exception.getMessage());
@@ -129,7 +129,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
         User authUser = new User();
         authUser.setId(1L);
         tweet.setAuthor(authUser);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> likeTweetService.getLikedUsersByTweetId(TestConstants.TWEET_ID, pageable));
@@ -142,7 +142,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
         User authUser = new User();
         authUser.setId(1L);
         tweet.setAuthor(authUser);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(true);
         when(userRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
@@ -153,10 +153,10 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void likeTweet_ShouldUnlikeTweet() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(likeTweetRepository.getLikedTweet(authUser, tweet)).thenReturn(new LikeTweet());
         assertEquals(tweet, likeTweetService.likeTweet(TestConstants.TWEET_ID));
-        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
         verify(likeTweetRepository, times(1)).getLikedTweet(authUser, tweet);
         verify(likeTweetRepository, times(1)).delete(any());
         verify(tweetNotificationProducer, times(1)).sendTweetNotificationEvent(NotificationType.LIKE, tweet, authUser, false);
@@ -164,10 +164,10 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void likeTweet_ShouldLikeTweet() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(likeTweetRepository.getLikedTweet(authUser, tweet)).thenReturn(null);
         assertEquals(tweet, likeTweetService.likeTweet(TestConstants.TWEET_ID));
-        verify(tweetRepository, times(1)).findById(TestConstants.TWEET_ID);
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
         verify(likeTweetRepository, times(1)).getLikedTweet(authUser, tweet);
         verify(likeTweetRepository, times(1)).save(any());
         verify(tweetNotificationProducer, times(1)).sendTweetNotificationEvent(NotificationType.LIKE, tweet, authUser, true);
@@ -175,7 +175,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void likeTweet_ShouldTweetNotFound() {
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> likeTweetService.likeTweet(TestConstants.TWEET_ID));
         assertEquals(TWEET_NOT_FOUND, exception.getMessage());
@@ -185,7 +185,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
     @Test
     public void likeTweet_ShouldTweetDeleted() {
         tweet.setDeleted(true);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> likeTweetService.likeTweet(TestConstants.TWEET_ID));
         assertEquals(TWEET_DELETED, exception.getMessage());
@@ -197,7 +197,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
         User authUser = new User();
         authUser.setId(1L);
         tweet.setAuthor(authUser);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> likeTweetService.likeTweet(TestConstants.TWEET_ID));
@@ -210,7 +210,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
         User authUser = new User();
         authUser.setId(1L);
         tweet.setAuthor(authUser);
-        when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
+        when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(true);
         when(userRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
