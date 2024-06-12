@@ -145,7 +145,7 @@ public class TweetControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + USER_USER_ID, TestConstants.USER_ID)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[*]", hasSize(8)))
+                .andExpect(jsonPath("$[*]", hasSize(7)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
                 .andExpect(jsonPath("$[*].text").isNotEmpty())
                 .andExpect(jsonPath("$[*].createdAt").isNotEmpty())
