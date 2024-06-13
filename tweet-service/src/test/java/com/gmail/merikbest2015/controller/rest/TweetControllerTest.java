@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.constants.PathConstants.*;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -68,6 +67,65 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$[0].isUserFollowByOtherUser").value(false))
                 .andExpect(jsonPath("$[0].isTweetDeleted").value(false))
                 .andExpect(jsonPath("$[0].isTweetBookmarked").value(false));
+    }
+
+    @Test
+    @DisplayName("[200] GET /ui/v1/tweets/pinned/user/2 - Get pinned tweet by user id")
+    public void getPinnedTweetByUserId() throws Exception {
+        mockMvc.perform(get(UI_V1_TWEETS + PINNED_TWEET_USER_ID, 2)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(40L))
+                .andExpect(jsonPath("$.text").value("test tweet"))
+                .andExpect(jsonPath("$.createdAt").value("2021-10-03T20:29:03"))
+                .andExpect(jsonPath("$.scheduledDate").isEmpty())
+                .andExpect(jsonPath("$.addressedUsername").isEmpty())
+                .andExpect(jsonPath("$.addressedId").isEmpty())
+                .andExpect(jsonPath("$.addressedTweetId").isEmpty())
+                .andExpect(jsonPath("$.replyType").value(ReplyType.EVERYONE.toString()))
+                .andExpect(jsonPath("$.link").isEmpty())
+                .andExpect(jsonPath("$.linkTitle").isEmpty())
+                .andExpect(jsonPath("$.linkDescription").isEmpty())
+                .andExpect(jsonPath("$.linkCover").isEmpty())
+                .andExpect(jsonPath("$.linkCoverSize").isEmpty())
+                .andExpect(jsonPath("$.quoteTweet").isEmpty())
+                .andExpect(jsonPath("$.author.id").value(2L))
+                .andExpect(jsonPath("$.poll.id").value(2L))
+                .andExpect(jsonPath("$.images").isEmpty())
+                .andExpect(jsonPath("$.retweetsCount").value(1L))
+                .andExpect(jsonPath("$.likedTweetsCount").value(1L))
+                .andExpect(jsonPath("$.repliesCount").value(1L))
+                .andExpect(jsonPath("$.isTweetLiked").value(false))
+                .andExpect(jsonPath("$.isTweetRetweeted").value(false))
+                .andExpect(jsonPath("$.isUserFollowByOtherUser").value(false))
+                .andExpect(jsonPath("$.isTweetDeleted").value(false))
+                .andExpect(jsonPath("$.isTweetBookmarked").value(true));
+    }
+
+    @Test
+    @DisplayName("[200] GET /ui/v1/tweets/pinned/user/1 - Should returns null")
+    public void getPinnedTweetByUserId_ShouldReturnNull() throws Exception {
+        mockMvc.perform(get(UI_V1_TWEETS + PINNED_TWEET_USER_ID, 1)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("[404] GET /ui/v1/tweets/pinned/user/3 - Should user have private profile")
+    public void getPinnedTweetByUserId_ShouldUserHavePrivateProfile() throws Exception {
+        mockMvc.perform(get(UI_V1_TWEETS + PINNED_TWEET_USER_ID, 3)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+    }
+
+    @Test
+    @DisplayName("[400] GET /ui/v1/tweets/pinned/user/6 - Should User blocked")
+    public void getPinnedTweetByUserId_ShouldUserBlocked() throws Exception {
+        mockMvc.perform(get(UI_V1_TWEETS + PINNED_TWEET_USER_ID, 6)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
     }
 
     @Test
