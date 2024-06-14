@@ -34,9 +34,6 @@ public interface LikeTweetRepository extends JpaRepository<LikeTweet, LikeTweet.
     @Query("SELECT COUNT(likeTweet) FROM LikeTweet likeTweet WHERE likeTweet.tweet.id = :tweetId")
     Long getLikedTweetsSize(@Param("tweetId") Long tweetId);
 
-    @Query("SELECT likeTweet.user.id FROM LikeTweet likeTweet WHERE likeTweet.tweet.id = :tweetId")
-    List<Long> getLikedUserIds(@Param("tweetId") Long tweetId);
-
     @Query("""
             SELECT likeTweet FROM LikeTweet likeTweet
             WHERE likeTweet.user = :user

@@ -8,6 +8,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static com.gmail.merikbest2015.constants.PathConstants.PAGE_TOTAL_COUNT;
+import static com.gmail.merikbest2015.constants.PathConstants.UI_V1;
+
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
@@ -22,10 +25,10 @@ public class MvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/ui/v1/**")
+        registry.addMapping(UI_V1 + "/**")
                 .allowedOrigins(hostname)
                 .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
-                .exposedHeaders("page-total-count")
+                .exposedHeaders(PAGE_TOTAL_COUNT)
                 .allowedHeaders("*");
     }
 }

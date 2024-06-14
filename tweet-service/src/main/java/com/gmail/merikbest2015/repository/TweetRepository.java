@@ -77,16 +77,6 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.author.id = :userId
-            AND tweet.addressedUsername IS NULL
-            AND tweet.scheduledDate IS NULL
-            AND tweet.deleted = false
-            ORDER BY tweet.createdAt DESC
-            """)
-    List<TweetUserProjection> getTweetsByUserId(@Param("userId") Long userId);
-
-    @Query("""
-            SELECT tweet FROM Tweet tweet
             WHERE tweet.author = :user
             AND tweet.tweetType != 'REPLY'
             AND (tweet != :pinnedTweet OR tweet.author.pinnedTweet = NULL)

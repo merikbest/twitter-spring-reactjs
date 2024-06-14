@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gmail.merikbest2015.constants.PathConstants.PAGE_TOTAL_COUNT;
+
 @Component
 @RequiredArgsConstructor
 public class BasicMapper {
@@ -38,7 +40,7 @@ public class BasicMapper {
 
     private <S> HeaderResponse<S> constructHeaderResponse(List<S> responses, Integer totalPages) {
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.add("page-total-count", String.valueOf(totalPages));
+        responseHeaders.add(PAGE_TOTAL_COUNT, String.valueOf(totalPages));
         return new HeaderResponse<S>(responses, responseHeaders);
     }
 }

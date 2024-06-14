@@ -1,11 +1,8 @@
 package com.gmail.merikbest2015;
 
 import com.gmail.merikbest2015.constants.PathConstants;
-import com.gmail.merikbest2015.dto.request.NotificationRequest;
-import com.gmail.merikbest2015.dto.response.chat.ChatTweetUserResponse;
 import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.enums.LinkCoverSize;
-import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.enums.ReplyType;
 import com.gmail.merikbest2015.model.GifImage;
 import com.gmail.merikbest2015.model.Poll;
@@ -91,26 +88,6 @@ public class TweetServiceTestHelper {
                 TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class));
     }
 
-    public static List<RetweetProjection> createMockRetweetProjectionList() {
-        RetweetProjection retweetProjection1 = factory.createProjection(
-                RetweetProjection.class,
-                Map.of(
-                        "id", 1L,
-                        "retweetDate", LocalDateTime.now(),
-                        "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class)
-                ));
-        RetweetProjection retweetProjection2 = factory.createProjection(
-                RetweetProjection.class,
-                Map.of(
-                        "id", 2L,
-                        "retweetDate", LocalDateTime.now(),
-                        "tweetId", TestConstants.TWEET_ID,
-                        "tweet", TweetServiceTestHelper.createTweetProjection(false, TweetUserProjection.class)
-                ));
-        return Arrays.asList(retweetProjection1, retweetProjection2);
-    }
-
     public static List<ProfileTweetImageProjection> createMockProfileTweetImageProjections() {
         ProfileTweetImageProjection profileTweetImageProjection1 = factory.createProjection(
                 ProfileTweetImageProjection.class,
@@ -127,16 +104,6 @@ public class TweetServiceTestHelper {
                         "src", "test src"
                 ));
         return Arrays.asList(profileTweetImageProjection1, profileTweetImageProjection2);
-    }
-
-    public static NotificationRequest createMockNotificationRequest(NotificationType notificationType, boolean notificationCondition) {
-        return NotificationRequest.builder()
-                .notificationType(notificationType)
-                .notificationCondition(notificationCondition)
-                .notifiedUserId(TestConstants.USER_ID)
-                .userId(TestConstants.USER_ID)
-                .tweetId(TestConstants.TWEET_ID)
-                .build();
     }
 
     public static List<BookmarkProjection> createMockBookmarkProjectionList() {
@@ -165,9 +132,15 @@ public class TweetServiceTestHelper {
                 Map.of("id", 1L,
                         "text", "test text",
                         "createdAt", LocalDateTime.now(),
-                        "user", new ChatTweetUserResponse(),
-                        "authorId", TestConstants.USER_ID,
-                        "deleted", false));
+                        "deleted", false,
+                        "author", factory.createProjection(
+                                ChatTweetProjection.ChatTweetUserProjection.class,
+                                Map.of("id", 1L,
+                                        "fullName", TestConstants.FULL_NAME,
+                                        "username", TestConstants.USERNAME,
+                                        "avatar", TestConstants.AVATAR_SRC_1
+                                ))
+                ));
     }
 
     public static Page<UserProjection> createUserProjections() {

@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.constants;
 public class PathConstants {
 
     public static final String AUTH_USER_ID_HEADER = "X-auth-user-id";
+    public static final String PAGE_TOTAL_COUNT = "page-total-count";
 
     public static final String API_V1 = "/api/v1";
     public static final String UI_V1 = "/ui/v1";
@@ -37,7 +38,6 @@ public class PathConstants {
     public static final String MUTED_USER_ID = MUTED + "/{userId}";
     public static final String TOKEN = "/token";
     public static final String USER_ID = "/{userId}";
-    public static final String USER_ID_USERNAME = "/id/{username}";
     public static final String ALL = "/all";
     public static final String RELEVANT = "/relevant";
     public static final String SEARCH_USERNAME = "/items/search/{username}";
@@ -45,7 +45,6 @@ public class PathConstants {
     public static final String SUBSCRIBE_USER_ID = "/subscribe/{userId}";
     public static final String PIN_TWEET_ID = "/pin/tweet/{tweetId}";
     public static final String DETAILS_USER_ID = "/details/{userId}";
-    public static final String TAGGED_IMAGE = "/tagged/image";
 
     public static final String UI_V1_USER_SETTINGS_UPDATE = UI_V1_USER + "/settings/update";
     public static final String USERNAME = "/username";
@@ -62,50 +61,19 @@ public class PathConstants {
     public static final String API_V1_AUTH = API_V1 + AUTH;
     public static final String USER_EMAIL = "/user/{email}";
     public static final String IDS = "/ids";
-    public static final String FOLLOWERS_IDS = "/followers/ids";
-    public static final String SUBSCRIBERS_USER_ID = "/subscribers/{userId}";
-    public static final String IS_FOLLOWED_USER_ID = "/is_followed/{userId}";
-    public static final String IS_PRIVATE_USER_ID = "/is_private/{userId}";
-    public static final String IS_BLOCKED_USER_ID = "/is_blocked/{userId}/{blockedUserId}";
-    public static final String IS_USER_BLOCKED_USER_ID = "/is_user_blocked/{userId}";
-    public static final String IS_MY_PROFILE_BLOCKED_USER_ID = "/is_my_profile_blocked/{userId}";
-    public static final String NOTIFICATION_USER_ID = "/notification/{userId}";
-    public static final String MENTION_USER_ID = "/mention/{userId}";
-    public static final String LIKE_COUNT = "/like/count/{increaseCount}";
-    public static final String TWEET_COUNT = "/tweet/count/{increaseCount}";
-    public static final String MEDIA_COUNT = "/media/count/{increaseCount}";
-    public static final String LIST_OWNER_USER_ID = "/list/owner/{userId}";
-    public static final String LIST_PARTICIPANTS = "/list/participants";
-    public static final String LIST_PARTICIPANTS_USERNAME = LIST_PARTICIPANTS + "/{username}";
-    public static final String NOTIFICATION_USER_USER_ID = "/notification/user/{userId}";
-    public static final String TWEET_AUTHOR_USER_ID = "/tweet/author/{userId}";
-    public static final String TWEET_ADDITIONAL_INFO_USER_ID = "/tweet/additional/info/{userId}";
-    public static final String TWEET_PINNED_TWEET_ID = "/tweet/pinned/{tweetId}";
-    public static final String TWEET_PINNED_USER_ID = "/tweet/pinned/{userId}";
-    public static final String TWEET_VALID_IDS = "/tweet/valid/ids/{text}";
-    public static final String VALID_IDS = "/valid/ids";
-    public static final String CHAT_PARTICIPANT_USER_ID = "/chat/participant/{userId}";
-    public static final String IS_EXISTS_USER_ID = "/is_exists/{userId}";
-    public static final String CHAT_USER_ID = "/chat/{userId}";
-    public static final String CHAT_VALID_IDS = "/chat/valid/ids";
     public static final String SUBSCRIBERS = "/subscribers";
     public static final String SUBSCRIBERS_IDS = SUBSCRIBERS + "/ids";
-    public static final String NOTIFICATION_RESET = "/notification/reset";
-    public static final String MENTION_RESET = "/mention/reset";
 
     public static final String TAGS = "/tags";
     public static final String UI_V1_TAGS = UI_V1 + TAGS;
     public static final String TRENDS = "/trends";
     public static final String SEARCH = "/search";
     public static final String API_V1_TAGS = API_V1 + TAGS;
-    public static final String PARSE_TWEET_ID = "/parse/{tweetId}";
-    public static final String DELETE_TWEET_ID = "/delete/{tweetId}";
 
     public static final String TWEETS = "/tweets";
     public static final String API_V1_TWEETS = API_V1 + TWEETS;
     public static final String USER_IDS = "/user/ids";
     public static final String TWEET_ID = "/{tweetId}";
-    public static final String NOTIFICATION_TWEET_ID = "/notification/{tweetId}";
     public static final String ID_TWEET_ID = "/id/{tweetId}";
     public static final String COUNT_TEXT = "/count/{text}";
     public static final String CHAT_TWEET_ID = "/chat/{tweetId}";
@@ -132,7 +100,6 @@ public class PathConstants {
     public static final String VIDEO = "/video";
     public static final String FOLLOWER = "/follower";
     public static final String SCHEDULE = "/schedule";
-    public static final String MENTION = "/mention";
     public static final String IMAGE_TAGGED = "/image/tagged/{tweetId}";
     public static final String SEARCH_TEXT = "/search/{text}";
     public static final String SEARCH_RESULTS = "/search/results";
@@ -184,10 +151,7 @@ public class PathConstants {
     public static final String LEAVE_CHAT_ID = "/leave/{participantId}/{chatId}";
 
     public static final String NOTIFICATION = "/notification";
-    public static final String API_V1_NOTIFICATION = API_V1 + NOTIFICATION;
-    public static final String LIST = "/list";
     public static final String TWEET = "/tweet";
-    public static final String TWEET_TWEET_ID = "/tweet/{tweetId}";
     public static final String UI_V1_NOTIFICATION = UI_V1 + NOTIFICATION;
     public static final String SUBSCRIBES = "/subscribes";
     public static final String MENTIONS = "/mentions";
