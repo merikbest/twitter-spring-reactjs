@@ -94,9 +94,9 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
                 const likedTweetIndex = draft.items.findIndex((tweet) => tweet.id === payload.tweet.id);
                 if (likedTweetIndex !== -1) {
                     draft.items[likedTweetIndex].isTweetLiked = payload.tweet.notificationCondition;
-                    draft.items[likedTweetIndex].likedTweetsCount = payload.tweet.notificationCondition
-                        ? draft.items[likedTweetIndex].likedTweetsCount + 1
-                        : draft.items[likedTweetIndex].likedTweetsCount - 1;
+                    draft.items[likedTweetIndex].likesCount = payload.tweet.notificationCondition
+                        ? draft.items[likedTweetIndex].likesCount + 1
+                        : draft.items[likedTweetIndex].likesCount - 1;
                 }
             } else if (action.payload.notificationType === NotificationType.RETWEET) {
                 const payload = action.payload as NotificationResponse;

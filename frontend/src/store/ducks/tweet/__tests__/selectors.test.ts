@@ -9,7 +9,7 @@ import {
     selectIsTweetLoadedSuccess,
     selectIsTweetLoading,
     selectIsTweetRetweeted,
-    selectLikedTweetsCount,
+    selectLikesCount,
     selectLikedUsers,
     selectLinkCover,
     selectLinkCoverSize,
@@ -143,9 +143,9 @@ describe("tweet selectors:", () => {
         });
     });
 
-    describe("selectLikedTweetsCount", () => {
-        it("should return LikedTweetsCount number", () => {
-            expect(selectLikedTweetsCount(mockState)).toBe(2);
+    describe("selectLikesCount", () => {
+        it("should return LikesCount number", () => {
+            expect(selectLikesCount(mockState)).toBe(2);
         });
     });
 

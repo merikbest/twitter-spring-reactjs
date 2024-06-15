@@ -54,8 +54,7 @@ public interface TweetProjection {
     @Value("#{@retweetRepository.getRetweetSize(target.id)}")
     Long getRetweetsCount();
 
-    @Value("#{@likeTweetRepository.getLikedTweetsSize(target.id)}")
-    Long getLikedTweetsCount();
+    Long getLikesCount();
 
     @Value("#{@tweetRepository.getRepliesSize(target.id)}")
     Long getRepliesCount();

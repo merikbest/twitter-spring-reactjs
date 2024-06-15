@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { LikeIcon, LikeOutlinedIcon } from "../../../icons";
 import { likeTweet } from "../../../store/ducks/tweets/actionCreators";
-import { selectIsTweetLiked, selectLikedTweetsCount } from "../../../store/ducks/tweet/selectors";
+import { selectIsTweetLiked, selectLikesCount } from "../../../store/ducks/tweet/selectors";
 import ImageFooterButton from "../ImageFooterButton/ImageFooterButton";
 
 const ImageFooterLikeButton = memo((): ReactElement => {
     const dispatch = useDispatch();
     const params = useParams<{ id: string }>();
     const isTweetLiked = useSelector(selectIsTweetLiked);
-    const likedTweetsCount = useSelector(selectLikedTweetsCount);
+    const likesCount = useSelector(selectLikesCount);
 
     const handleLike = (): void => {
         dispatch(likeTweet({ tweetId: parseInt(params.id) }));
@@ -19,9 +19,9 @@ const ImageFooterLikeButton = memo((): ReactElement => {
 
     return (
         <ImageFooterButton
-            id={"likedTweetsCount"}
+            id={"likesCount"}
             icon={isTweetLiked ? LikeIcon : LikeOutlinedIcon}
-            count={likedTweetsCount ?? 0}
+            count={likesCount ?? 0}
             onClick={handleLike}
         />
     );

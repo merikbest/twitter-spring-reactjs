@@ -126,7 +126,7 @@ describe("userTweetsReducer:", () => {
             UserTweetsActionType.SET_UPDATED_TWEET + "(NotificationType.LIKE)",
             userTweetsReducer({
                     ...initialUserTweetsState,
-                    items: [{ id: 1, isTweetLiked: false, likedTweetsCount: 0 }] as TweetResponse[]
+                    items: [{ id: 1, isTweetLiked: false, likesCount: 0 }] as TweetResponse[]
                 },
                 {
                     type: UserTweetsActionType.SET_UPDATED_TWEET,
@@ -138,7 +138,7 @@ describe("userTweetsReducer:", () => {
                 }),
             {
                 ...initialUserTweetsState,
-                items: [{ id: 1, isTweetLiked: true, likedTweetsCount: 1 }] as TweetResponse[],
+                items: [{ id: 1, isTweetLiked: true, likesCount: 1 }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADING
             }
         );

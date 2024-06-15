@@ -56,7 +56,7 @@ public class TweetServiceTestHelper {
         tweetMap.put("isTweetBookmarked", false);
         tweetMap.put("isUserFollowByOtherUser", false);
         tweetMap.put("retweetsCount", 1);
-        tweetMap.put("likedTweetsCount", 1);
+        tweetMap.put("likesCount", 1);
         tweetMap.put("repliesCount", 0);
         tweetMap.put("quotesCount", 0);
         if (type.equals(TweetUserProjection.class)) {

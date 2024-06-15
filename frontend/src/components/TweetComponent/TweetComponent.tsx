@@ -112,7 +112,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
                         <LikeIconButton
                             tweetId={tweet?.id}
                             isTweetLiked={tweet?.isTweetLiked}
-                            likedTweetsCount={tweet?.likedTweetsCount}
+                            likesCount={tweet?.likesCount}
                         />
                         <ShareTweetIconButton tweetId={tweet!.id} />
                         {(myProfileId === tweet?.author.id) && (

@@ -22,7 +22,7 @@ export const useLikeIconButtonStyles = makeStyles<Theme, TweetLikeIconButtonProp
             color: props => props.isTweetLiked ? "rgb(224, 36, 94)" : theme.palette.text.secondary
         }
     },
-    likedTweetsCount: {
+    likesCount: {
         position: "absolute",
         marginTop: 7
     }

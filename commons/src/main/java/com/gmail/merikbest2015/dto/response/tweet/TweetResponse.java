@@ -37,7 +37,7 @@ public class TweetResponse {
     private TweetListResponse tweetList;
     private PollResponse poll;
     private Long retweetsCount;
-    private Long likedTweetsCount;
+    private Long likesCount;
     private Long repliesCount;
     private Long quotesCount;
 

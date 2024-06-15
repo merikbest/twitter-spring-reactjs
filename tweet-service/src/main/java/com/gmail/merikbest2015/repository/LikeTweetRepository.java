@@ -11,8 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface LikeTweetRepository extends JpaRepository<LikeTweet, LikeTweet.TweetUserId> {
 
@@ -30,9 +28,6 @@ public interface LikeTweetRepository extends JpaRepository<LikeTweet, LikeTweet.
             AND likeTweet.tweet.id = :tweetId
             """)
     boolean isUserLikedTweet(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
-
-    @Query("SELECT COUNT(likeTweet) FROM LikeTweet likeTweet WHERE likeTweet.tweet.id = :tweetId")
-    Long getLikedTweetsSize(@Param("tweetId") Long tweetId);
 
     @Query("""
             SELECT likeTweet FROM LikeTweet likeTweet

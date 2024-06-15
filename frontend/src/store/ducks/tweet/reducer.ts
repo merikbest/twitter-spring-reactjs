@@ -42,9 +42,9 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetActi
                     if (action.payload.notificationType === NotificationType.LIKE) {
                         const payload = action.payload as NotificationResponse;
                         draft.tweet.isTweetLiked = payload.tweet.notificationCondition;
-                        draft.tweet.likedTweetsCount = payload.tweet.notificationCondition
-                            ? draft.tweet.likedTweetsCount + 1
-                            : draft.tweet.likedTweetsCount - 1;
+                        draft.tweet.likesCount = payload.tweet.notificationCondition
+                            ? draft.tweet.likesCount + 1
+                            : draft.tweet.likesCount - 1;
                     } else if (action.payload.notificationType === NotificationType.RETWEET) {
                         const payload = action.payload as NotificationResponse;
                         draft.tweet.isTweetRetweeted = payload.tweet.notificationCondition;

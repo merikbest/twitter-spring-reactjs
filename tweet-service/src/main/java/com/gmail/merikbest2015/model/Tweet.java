@@ -88,6 +88,18 @@ public class Tweet {
     @Column(name = "image_description")
     private String imageDescription;
 
+    @Column(name = "retweets_count", nullable = false, columnDefinition = "int8 default 0")
+    private Long retweetsCount = 0L;
+
+    @Column(name = "replies_count", nullable = false, columnDefinition = "int8 default 0")
+    private Long repliesCount = 0L;
+
+    @Column(name = "likes_count", nullable = false, columnDefinition = "int8 default 0")
+    private Long likesCount = 0L;
+
+    @Column(name = "quotes_count", nullable = false, columnDefinition = "int8 default 0")
+    private Long quotesCount = 0L;
+
     @OneToMany
     @JoinTable(name = "tweets_images",
             joinColumns = @JoinColumn(name = "tweet_id"),

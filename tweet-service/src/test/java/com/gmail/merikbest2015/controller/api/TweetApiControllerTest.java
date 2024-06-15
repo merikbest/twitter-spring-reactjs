@@ -84,7 +84,7 @@ public class TweetApiControllerTest {
                 .andExpect(jsonPath("$.quoteTweet").isEmpty())
                 .andExpect(jsonPath("$.poll").isEmpty())
                 .andExpect(jsonPath("$.retweetsCount").value(0L))
-                .andExpect(jsonPath("$.likedTweetsCount").value(0L))
+                .andExpect(jsonPath("$.likesCount").value(0L))
                 .andExpect(jsonPath("$.repliesCount").value(0L))
                 .andExpect(jsonPath("$.isTweetLiked").value(false))
                 .andExpect(jsonPath("$.isTweetRetweeted").value(false))

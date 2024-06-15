@@ -6,16 +6,16 @@ import RetweetsCount from "./RetweetsCount/RetweetsCount";
 import QuotesCount from "./QuotesCount/QuotesCount";
 import LikesCount from "./LikesCount/LikesCount";
 import { useFullTweetStyles } from "../FullTweetStyles";
-import { selectLikedTweetsCount, selectRetweetsCount } from "../../../store/ducks/tweet/selectors";
+import { selectLikesCount, selectRetweetsCount } from "../../../store/ducks/tweet/selectors";
 
 const TweetInteractionCount = (): ReactElement => {
     const classes = useFullTweetStyles();
-    const likedTweetsCount = useSelector(selectLikedTweetsCount);
     const retweetsCount = useSelector(selectRetweetsCount);
+    const likesCount = useSelector(selectLikesCount);
 
     return (
         <>
-            {(retweetsCount !== 0 || likedTweetsCount !== 0) && (
+            {(retweetsCount !== 0 || likesCount !== 0) && (
                 <>
                     <Divider />
                     <div className={classes.content}>

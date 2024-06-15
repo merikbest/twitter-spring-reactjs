@@ -21,11 +21,11 @@ describe("LikeIconButton", () => {
             <LikeIconButton
                 tweetId={1}
                 isTweetLiked={false}
-                likedTweetsCount={1}
+                likesCount={1}
             />, mockRootState);
         expect(wrapper.find(ActionIconButton).prop("actionText")).toBe("Like");
         expect(wrapper.find(ActionIconButton).prop("icon")).toBe(LikeOutlinedIcon);
-        expect(wrapper.find("#likedTweetsCount").exists()).toBeTruthy();
+        expect(wrapper.find("#likesCount").exists()).toBeTruthy();
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, { payload: { tweetId: 1 }, type: TweetsActionType.LIKE_TWEET });
     });
@@ -35,10 +35,10 @@ describe("LikeIconButton", () => {
             <LikeIconButton
                 tweetId={1}
                 isTweetLiked
-                likedTweetsCount={0}
+                likesCount={0}
             />, mockRootState);
         expect(wrapper.find(ActionIconButton).prop("actionText")).toBe("Unlike");
         expect(wrapper.find(ActionIconButton).prop("icon")).toBe(LikeIcon);
-        expect(wrapper.find("#likedTweetsCount").exists()).toBeFalsy();
+        expect(wrapper.find("#likesCount").exists()).toBeFalsy();
     });
 });

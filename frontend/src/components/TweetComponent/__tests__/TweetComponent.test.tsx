@@ -217,14 +217,14 @@ describe("TweetComponent", () => {
 
     it("should render liked count", () => {
         const { wrapper } = createTweetComponentWrapper();
-        expect(wrapper.find("#likedTweetsCount").exists()).toBeTruthy();
-        expect(wrapper.find("#likedTweetsCount").text().includes(String(mockFullTweet.likedTweetsCount))).toBe(true);
+        expect(wrapper.find("#likesCount").exists()).toBeTruthy();
+        expect(wrapper.find("#likesCount").text().includes(String(mockFullTweet.likesCount))).toBe(true);
     });
 
     it("should render empty liked count", () => {
-        const mockTweet = { ...mockFullTweet, likedTweetsCount: 0 };
+        const mockTweet = { ...mockFullTweet, likesCount: 0 };
         const { wrapper } = createTweetComponentWrapper(mockRootState, mockTweet);
-        expect(wrapper.find("#likedTweetsCount").exists()).toBeFalsy();
+        expect(wrapper.find("#likesCount").exists()).toBeFalsy();
     });
 
     it("should render LikeIcon", () => {

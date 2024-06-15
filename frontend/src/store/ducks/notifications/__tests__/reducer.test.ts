@@ -134,7 +134,7 @@ describe("notificationsReducer:", () => {
                     ...initialNotificationsState,
                     notificationInfo: {
                         id: 1,
-                        tweet: { id: 1, isTweetLiked: false, likedTweetsCount: 0 }
+                        tweet: { id: 1, isTweetLiked: false, likesCount: 0 }
                     } as NotificationInfoResponse
                 },
                 {
@@ -150,7 +150,7 @@ describe("notificationsReducer:", () => {
                 ...initialNotificationsState,
                 notificationInfo: {
                     id: 1,
-                    tweet: { id: 1, isTweetLiked: true, likedTweetsCount: 1 }
+                    tweet: { id: 1, isTweetLiked: true, likesCount: 1 }
                 } as NotificationInfoResponse,
                 loadingState: LoadingStatus.LOADING
             }

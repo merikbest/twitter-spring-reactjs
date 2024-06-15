@@ -83,7 +83,7 @@ describe("listReducer:", () => {
             ListActionType.SET_UPDATED_LIST_TWEET + "(NotificationType.LIKE)",
             listReducer({
                     ...initialListState,
-                    tweets: [{ id: 1, isTweetLiked: false, likedTweetsCount: 0 }] as TweetResponse[]
+                    tweets: [{ id: 1, isTweetLiked: false, likesCount: 0 }] as TweetResponse[]
                 },
                 {
                     type: ListActionType.SET_UPDATED_LIST_TWEET,
@@ -95,7 +95,7 @@ describe("listReducer:", () => {
                 }),
             {
                 ...initialListState,
-                tweets: [{ id: 1, isTweetLiked: true, likedTweetsCount: 1 }] as TweetResponse[],
+                tweets: [{ id: 1, isTweetLiked: true, likesCount: 1 }] as TweetResponse[],
                 loadingState: LoadingStatus.LOADING
             }
         );

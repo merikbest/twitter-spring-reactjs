@@ -79,8 +79,8 @@ describe("FullTweet", () => {
         expect(wrapper.find(SmallLinkPreview).prop("link")).toBe(mockFullTweet.link);
         expect(wrapper.find(SmallLinkPreview).prop("isFullTweet")).toBe(true);
         expect(wrapper.text().includes(`${mockFullTweet.retweetsCount}`)).toBe(true);
-        expect(wrapper.text().includes(`${mockFullTweet.likedTweetsCount}`)).toBe(true);
-        expect(wrapper.text().includes(`${mockFullTweet.likedTweetsCount}`)).toBe(true);
+        expect(wrapper.text().includes(`${mockFullTweet.likesCount}`)).toBe(true);
+        expect(wrapper.text().includes(`${mockFullTweet.likesCount}`)).toBe(true);
         expect(wrapper.find(AddTweetForm).prop("tweetId")).toBe(9);
         expect(wrapper.find(AddTweetForm).prop("addressedUsername")).toBe("JavaCat");
         expect(wrapper.find(AddTweetForm).prop("addressedId")).toBe(4);

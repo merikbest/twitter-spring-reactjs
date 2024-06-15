@@ -57,7 +57,7 @@ public class BookmarkControllerTest {
                 .andExpect(jsonPath("$[0].poll.id").value(2L))
                 .andExpect(jsonPath("$[*].images", hasSize(1)))
                 .andExpect(jsonPath("$[0].retweetsCount").value(1L))
-                .andExpect(jsonPath("$[0].likedTweetsCount").value(1L))
+                .andExpect(jsonPath("$[0].likesCount").value(1L))
                 .andExpect(jsonPath("$[0].repliesCount").value(1L))
                 .andExpect(jsonPath("$[0].isTweetLiked").value(false))
                 .andExpect(jsonPath("$[0].isTweetRetweeted").value(false))

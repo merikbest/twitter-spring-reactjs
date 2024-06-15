@@ -30,7 +30,7 @@ describe("ImageFooterLikeButton", () => {
             ...mockRootState,
             tweet: {
                 ...mockRootState.tweet,
-                tweet: { ...mockFullTweet, isTweetLiked: false, likedTweetsCount: 0 }
+                tweet: { ...mockFullTweet, isTweetLiked: false, likesCount: 0 }
             }
         };
         const wrapper = mountWithStore(<ImageFooterLikeButton />, mockState);

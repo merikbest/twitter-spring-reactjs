@@ -79,7 +79,7 @@ public class TagControllerTest {
                 .andExpect(jsonPath("$[0].quoteTweet").isEmpty())
                 .andExpect(jsonPath("$[0].poll").isEmpty())
                 .andExpect(jsonPath("$[0].retweetsCount").value(0L))
-                .andExpect(jsonPath("$[0].likedTweetsCount").value(0L))
+                .andExpect(jsonPath("$[0].likesCount").value(0L))
                 .andExpect(jsonPath("$[0].repliesCount").value(0L))
                 .andExpect(jsonPath("$[0].isTweetLiked").value(false))
                 .andExpect(jsonPath("$[0].isTweetRetweeted").value(false))

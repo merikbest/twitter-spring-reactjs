@@ -56,7 +56,7 @@ public class LikeTweetControllerTest {
                 .andExpect(jsonPath("$[0].poll").isEmpty())
                 .andExpect(jsonPath("$[*].images", hasSize(1)))
                 .andExpect(jsonPath("$[0].retweetsCount").value(1L))
-                .andExpect(jsonPath("$[0].likedTweetsCount").value(1L))
+                .andExpect(jsonPath("$[0].likesCount").value(1L))
                 .andExpect(jsonPath("$[0].repliesCount").value(0L))
                 .andExpect(jsonPath("$[0].isTweetLiked").value(true))
                 .andExpect(jsonPath("$[0].isTweetRetweeted").value(true))

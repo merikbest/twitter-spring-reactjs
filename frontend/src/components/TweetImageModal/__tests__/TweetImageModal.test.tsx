@@ -26,7 +26,7 @@ describe("TweetImageModal", () => {
             tweet: {
                 ...mockFullTweet,
                 retweetsCount: 0,
-                likedTweetsCount: 0,
+                likesCount: 0,
                 repliesCount: 0,
                 isTweetRetweeted: false,
                 isTweetLiked: false
@@ -49,7 +49,7 @@ describe("TweetImageModal", () => {
         expect(wrapper.text().includes(mockFullTweet.author.fullName)).toBe(true);
         expect(wrapper.text().includes(mockFullTweet.author.username)).toBe(true);
         expect(wrapper.text().includes(`${mockFullTweet.retweetsCount}Retweets`)).toBe(true);
-        expect(wrapper.text().includes(`${mockFullTweet.likedTweetsCount}Likes`)).toBe(true);
+        expect(wrapper.text().includes(`${mockFullTweet.likesCount}Likes`)).toBe(true);
         expect(wrapper.find("#tweetFooter").at(0).find("#retweetIcon").at(0).exists()).toBeTruthy();
         expect(wrapper.find("#tweetFooter").at(0).find("#likeIcon").at(0).exists()).toBeTruthy();
         expect(wrapper.text().includes(`Replying to @${mockFullTweet.author.username}`)).toBe(true);
@@ -70,7 +70,7 @@ describe("TweetImageModal", () => {
         expect(wrapper.find("#tweetFooter").at(0).find("#likeOutlinedIcon").at(0).exists()).toBeTruthy();
         expect(wrapper.find("#imageFooter").at(0).find("#repliesCount").at(0).exists()).toBeTruthy();
         expect(wrapper.find("#imageFooter").at(0).find("#retweetsCount").at(0).exists()).toBeTruthy();
-        expect(wrapper.find("#imageFooter").at(0).find("#likedTweetsCount").at(0).exists()).toBeTruthy();
+        expect(wrapper.find("#imageFooter").at(0).find("#likesCount").at(0).exists()).toBeTruthy();
     });
 
     it("should click onCloseImageModalWindow", () => {

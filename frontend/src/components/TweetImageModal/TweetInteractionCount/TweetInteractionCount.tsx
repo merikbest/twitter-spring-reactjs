@@ -1,7 +1,7 @@
 import React, { memo, ReactElement, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { selectLikedTweetsCount, selectRetweetsCount, selectTweetId } from "../../../store/ducks/tweet/selectors";
+import { selectLikesCount, selectRetweetsCount, selectTweetId } from "../../../store/ducks/tweet/selectors";
 import UsersListModal, { UsersListModalAction } from "../../UsersListModal/UsersListModal";
 import { useTweetInteractionCountStyles } from "./TweetInteractionCountStyles";
 import { useModalWindow } from "../../../hook/useModalWindow";
@@ -11,7 +11,7 @@ const TweetInteractionCount = memo((): ReactElement => {
     const classes = useTweetInteractionCountStyles();
     const tweetId = useSelector(selectTweetId);
     const retweetsCount = useSelector(selectRetweetsCount);
-    const likedTweetsCount = useSelector(selectLikedTweetsCount);
+    const likesCount = useSelector(selectLikesCount);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
     const [usersListModalAction, setUsersListModalAction] = useState<UsersListModalAction>(UsersListModalAction.LIKED);
 
@@ -22,7 +22,7 @@ const TweetInteractionCount = memo((): ReactElement => {
 
     return (
         <>
-            {(retweetsCount !== 0 || likedTweetsCount !== 0) && (
+            {(retweetsCount !== 0 || likesCount !== 0) && (
                 <div id={"content"} className={classes.content}>
                     <InteractionCount
                         id={"onOpenRetweetsModalWindow"}
@@ -34,7 +34,7 @@ const TweetInteractionCount = memo((): ReactElement => {
                     <InteractionCount
                         id={"onOpenLikesModalWindow"}
                         title={"Likes"}
-                        interactionCount={likedTweetsCount ?? 0}
+                        interactionCount={likesCount ?? 0}
                         modalAction={UsersListModalAction.LIKED}
                         onOpenUsersModalWindow={onOpenUsersModalWindow}
                     />

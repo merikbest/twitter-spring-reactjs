@@ -48,9 +48,9 @@ export const listReducer = produce((draft: Draft<ListState>, action: ListActions
                 const likedTweetIndex = draft.tweets.findIndex((tweet) => tweet.id === payload.tweet.id);
                 if (likedTweetIndex !== -1) {
                     draft.tweets[likedTweetIndex].isTweetLiked = payload.tweet.notificationCondition;
-                    draft.tweets[likedTweetIndex].likedTweetsCount = payload.tweet.notificationCondition
-                        ? draft.tweets[likedTweetIndex].likedTweetsCount + 1
-                        : draft.tweets[likedTweetIndex].likedTweetsCount - 1;
+                    draft.tweets[likedTweetIndex].likesCount = payload.tweet.notificationCondition
+                        ? draft.tweets[likedTweetIndex].likesCount + 1
+                        : draft.tweets[likedTweetIndex].likesCount - 1;
                 }
             } else if (action.payload.notificationType === NotificationType.RETWEET) {
                 const payload = action.payload as NotificationResponse;

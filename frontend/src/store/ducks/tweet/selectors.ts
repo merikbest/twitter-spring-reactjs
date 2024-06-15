@@ -24,7 +24,7 @@ export const selectIsTweetRetweeted = (state: RootState) => selectTweetState(sta
 export const selectRepliesCount = (state: RootState) => selectTweetState(state).tweet?.repliesCount;
 export const selectRetweetsCount = (state: RootState) => selectTweetState(state).tweet?.retweetsCount;
 export const selectQuotesCount = (state: RootState) => selectTweetState(state).tweet?.quotesCount;
-export const selectLikedTweetsCount = (state: RootState) => selectTweetState(state).tweet?.likedTweetsCount;
+export const selectLikesCount = (state: RootState) => selectTweetState(state).tweet?.likesCount;
 export const selectTweetCreatedAt = (state: RootState) => selectTweetState(state).tweet?.createdAt;
 export const selectTweetImages = (state: RootState) => selectTweetState(state).tweet?.images;
 export const selectTweetImageDescription = (state: RootState) => selectTweetState(state).tweet?.imageDescription;

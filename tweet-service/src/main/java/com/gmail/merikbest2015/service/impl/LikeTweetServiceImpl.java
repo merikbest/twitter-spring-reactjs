@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;
 import com.gmail.merikbest2015.repository.LikeTweetRepository;
+import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.projection.LikeTweetProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.LikeTweetService;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class LikeTweetServiceImpl implements LikeTweetService {
 
     private final LikeTweetRepository likeTweetRepository;
+    private final TweetRepository tweetRepository;
     private final TweetValidationHelper tweetValidationHelper;
     private final UpdateTweetCountProducer tweetCountProducer;
     private final TweetNotificationProducer tweetNotificationProducer;
@@ -58,6 +60,7 @@ public class LikeTweetServiceImpl implements LikeTweetService {
             likeTweetRepository.save(newLikeTweet);
             isTweetLiked = true;
         }
+        tweetRepository.updateLikesCount(isTweetLiked, tweet);
         tweetCountProducer.sendUpdateLikeTweetCountEvent(authUser.getId(), isTweetLiked);
         tweetNotificationProducer.sendTweetNotificationEvent(NotificationType.LIKE, tweet, authUser, isTweetLiked);
         return tweet;

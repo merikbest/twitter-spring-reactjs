@@ -26,7 +26,7 @@ export interface TweetResponse {
     tweetList: TweetListResponse;
     poll: PollResponse;
     retweetsCount: number;
-    likedTweetsCount: number;
+    likesCount: number;
     repliesCount: number;
     quotesCount: number;
     isDeleted: boolean;

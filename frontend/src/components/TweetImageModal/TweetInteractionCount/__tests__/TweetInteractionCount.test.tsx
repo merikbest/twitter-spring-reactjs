@@ -24,7 +24,7 @@ describe("TweetInteractionCount", () => {
         const mockState = {
             ...mockRootState, tweet: {
                 ...mockRootState.tweet, tweet: {
-                    ...mockFullTweet, retweetsCount: 0, likedTweetsCount: 0
+                    ...mockFullTweet, retweetsCount: 0, likesCount: 0
                 }
             }
         };

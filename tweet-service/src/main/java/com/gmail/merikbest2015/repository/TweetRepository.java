@@ -309,6 +309,17 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             """)
     Optional<Tweet> getTweetRetweeted(@Param("user") User user, @Param("tweet") Tweet tweet);
 
+    @Modifying
+    @Query("""
+            UPDATE Tweet tweet SET tweet.likesCount =
+                CASE WHEN :isTweetLiked = true
+                THEN (tweet.likesCount + 1)
+                ELSE (tweet.likesCount - 1)
+                END
+            WHERE tweet = :tweet
+            """)
+    void updateLikesCount(@Param("isTweetLiked") boolean isTweetLiked, @Param("tweet") Tweet tweet);
+
     @Query("SELECT COUNT(reply) FROM Tweet tweet LEFT JOIN tweet.replies reply WHERE tweet.id = :tweetId")
     Long getRepliesSize(@Param("tweetId") Long tweetId);
 
