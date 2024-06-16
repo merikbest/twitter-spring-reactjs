@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
+import com.gmail.merikbest2015.enums.NotificationType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
@@ -147,8 +148,9 @@ public class RetweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetRetweeted(authUser, tweet)).thenReturn(Optional.of(new Tweet()));
         retweetService.retweet(TestConstants.TWEET_ID);
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
-//        verify(retweetRepository, times(1)).isTweetRetweeted(authUser, tweet);
+        verify(tweetRepository, times(1)).updateRetweetsCount(false, tweet);
         verify(tweetRepository, times(1)).delete(any());
+        verify(tweetNotificationProducer, times(1)).sendTweetNotificationEvent(NotificationType.RETWEET, tweet, authUser, false);
     }
 
     @Test
@@ -156,10 +158,9 @@ public class RetweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         when(tweetRepository.getTweetRetweeted(authUser, tweet)).thenReturn(Optional.empty());
         retweetService.retweet(TestConstants.TWEET_ID);
-
-//        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
-//        verify(retweetRepository, times(1)).isTweetRetweeted(authUser, tweet);
-//        verify(retweetRepository, times(1)).save(any());
+        verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
+        verify(tweetRepository, times(1)).updateRetweetsCount(true, tweet);
+        verify(tweetNotificationProducer, times(1)).sendTweetNotificationEvent(NotificationType.RETWEET, tweet, authUser, true);
     }
 
     @Test

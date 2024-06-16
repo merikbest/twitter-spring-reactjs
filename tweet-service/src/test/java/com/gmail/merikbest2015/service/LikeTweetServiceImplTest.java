@@ -157,6 +157,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
         when(likeTweetRepository.getLikedTweet(authUser, tweet)).thenReturn(new LikeTweet());
         assertEquals(tweet, likeTweetService.likeTweet(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
+        verify(tweetRepository, times(1)).updateLikesCount(false, tweet);
         verify(likeTweetRepository, times(1)).getLikedTweet(authUser, tweet);
         verify(likeTweetRepository, times(1)).delete(any());
         verify(tweetNotificationProducer, times(1)).sendTweetNotificationEvent(NotificationType.LIKE, tweet, authUser, false);
@@ -168,6 +169,7 @@ public class LikeTweetServiceImplTest extends AbstractServiceTest {
         when(likeTweetRepository.getLikedTweet(authUser, tweet)).thenReturn(null);
         assertEquals(tweet, likeTweetService.likeTweet(TestConstants.TWEET_ID));
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
+        verify(tweetRepository, times(1)).updateLikesCount(true, tweet);
         verify(likeTweetRepository, times(1)).getLikedTweet(authUser, tweet);
         verify(likeTweetRepository, times(1)).save(any());
         verify(tweetNotificationProducer, times(1)).sendTweetNotificationEvent(NotificationType.LIKE, tweet, authUser, true);

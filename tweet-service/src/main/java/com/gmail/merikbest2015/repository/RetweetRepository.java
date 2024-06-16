@@ -19,9 +19,6 @@ public interface RetweetRepository extends JpaRepository<Tweet, Long> {
             """)
     boolean isUserRetweetedTweet(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
 
-    @Query("SELECT COUNT(tweet) FROM Tweet tweet WHERE tweet.retweet.id = :tweetId")
-    Long getRetweetSize(@Param("tweetId") Long tweetId);
-
     @Query("SELECT tweet.author.id FROM Tweet tweet WHERE tweet.retweet.id = :tweetId")
     List<Long> getRetweetsUserIds(@Param("tweetId") Long tweetId);
 }

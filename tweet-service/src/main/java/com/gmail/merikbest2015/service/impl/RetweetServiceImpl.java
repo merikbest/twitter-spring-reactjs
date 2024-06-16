@@ -64,6 +64,7 @@ public class RetweetServiceImpl implements RetweetService {
             tweetRepository.save(newRetweet);
             isRetweeted = true;
         }
+        tweetRepository.updateRetweetsCount(isRetweeted, tweet);
         updateTweetCountProducer.sendUpdateTweetCountEvent(authUser.getId(), isRetweeted);
         tweetNotificationProducer.sendTweetNotificationEvent(NotificationType.RETWEET, tweet, authUser, isRetweeted);
         return tweet;
