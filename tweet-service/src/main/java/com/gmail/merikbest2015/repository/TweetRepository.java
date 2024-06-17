@@ -331,8 +331,9 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             """)
     void updateRetweetsCount(@Param("isRetweeted") boolean isTweetLiked, @Param("tweet") Tweet tweet);
 
-    @Query("SELECT COUNT(reply) FROM Tweet tweet LEFT JOIN tweet.replies reply WHERE tweet.id = :tweetId")
-    Long getRepliesSize(@Param("tweetId") Long tweetId);
+    @Modifying
+    @Query("UPDATE Tweet tweet SET tweet.repliesCount = tweet.repliesCount + 1 WHERE tweet = :tweet")
+    void updateRepliesCount(@Param("tweet") Tweet tweet);
 
     @Query("SELECT COUNT(quote) FROM Tweet tweet LEFT JOIN tweet.quotes quote WHERE tweet.id = :tweetId")
     Long getQuotesSize(@Param("tweetId") Long tweetId);

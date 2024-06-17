@@ -662,6 +662,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(tweet.getId(), TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         when(basicMapper.convertToResponse(tweetProjection, TweetResponse.class)).thenReturn(tweetResponse);
         assertEquals(tweetResponse, tweetService.replyTweet(TestConstants.TWEET_ID, tweet));
+        verify(tweetRepository, times(1)).updateRepliesCount(tweet);
         verify(tweetRepository, times(1)).getTweetById(TestConstants.TWEET_ID, Tweet.class);
         verify(tweetRepository, times(1)).addReply(TestConstants.TWEET_ID, TestConstants.TWEET_ID);
     }
