@@ -192,6 +192,7 @@ public class TweetServiceImpl implements TweetService {
         quote.setQuoteTweet(tweet);
         TweetResponse tweetResponse = tweetServiceHelper.createTweet(quote);
         tweetRepository.addQuote(tweetId, tweetResponse.getId());
+        tweetRepository.updateQuotesCount(tweet);
         return tweetResponse;
     }
 

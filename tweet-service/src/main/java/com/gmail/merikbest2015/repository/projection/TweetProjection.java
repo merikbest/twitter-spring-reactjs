@@ -36,6 +36,7 @@ public interface TweetProjection {
     Long getRetweetsCount();
     Long getLikesCount();
     Long getRepliesCount();
+    Long getQuotesCount();
 
     @Value("#{target.listId == null ? null : @tweetProjectionHelper.getTweetList(target.listId)}")
     TweetListResponse getTweetList();
@@ -53,9 +54,6 @@ public interface TweetProjection {
 
     @Value("#{@userServiceImpl.isUserFollowByOtherUser(target.author.id)}")
     boolean getIsUserFollowByOtherUser();
-
-    @Value("#{@tweetRepository.getQuotesSize(target.id)}")
-    Long getQuotesCount();
 
     interface QuoteTweetProjection {
         @Value("#{target.isDeleted ? null : target.id}")
