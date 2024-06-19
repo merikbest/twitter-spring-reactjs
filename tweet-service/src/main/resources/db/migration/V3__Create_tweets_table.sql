@@ -22,9 +22,6 @@ CREATE TABLE tweets
     created_at         TIMESTAMP    NOT NULL,
     updated_at         TIMESTAMP,
     scheduled_date     TIMESTAMP,
-    addressed_username VARCHAR(255),
-    addressed_id       INT8,
-    addressed_tweet_id INT8,
     reply_type         VARCHAR(255) NOT NULL DEFAULT 'EVERYONE',
     link               VARCHAR(255),
     link_title         VARCHAR(255),
@@ -39,6 +36,8 @@ CREATE TABLE tweets
     quotes_count       INT8         NOT NULL DEFAULT 0,
     author_id          INT8         NOT NULL REFERENCES users,
     list_id            INT8,
+    addressed_user_id  INT8 REFERENCES users,
+    addressed_tweet_id INT8 REFERENCES tweets,
     poll_id            INT8 REFERENCES polls,
     gif_image_id       INT8 REFERENCES gif_image,
     PRIMARY KEY (id)

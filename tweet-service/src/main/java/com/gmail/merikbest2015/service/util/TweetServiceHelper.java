@@ -145,8 +145,8 @@ public class TweetServiceHelper {
     }
 
     private void sendUserReplyMention(Tweet tweet, User authUser) {
-        if (tweet.getAddressedId() != null) {
-            userService.getUserById(tweet.getAddressedId())
+        if (tweet.getAddressedUser() != null) {
+            userService.getUserById(tweet.getAddressedUser().getId())
                     .ifPresent(user ->
                             tweetNotificationProducer.sendTweetMentionNotificationEvent(NotificationType.REPLY, tweet, user, authUser));
         }

@@ -111,7 +111,8 @@ public class TweetMapper {
     }
 
     public NotificationReplyResponse replyTweet(Long tweetId, TweetRequest tweetRequest) {
-        TweetResponse replyTweet = tweetService.replyTweet(tweetId, basicMapper.convertToResponse(tweetRequest, Tweet.class));
+        Tweet reply = basicMapper.convertToResponse(tweetRequest, Tweet.class);
+        TweetResponse replyTweet = tweetService.replyTweet(tweetRequest.getAddressedId(), tweetId, reply);
         return new NotificationReplyResponse(tweetId, NotificationType.REPLY, replyTweet);
     }
 

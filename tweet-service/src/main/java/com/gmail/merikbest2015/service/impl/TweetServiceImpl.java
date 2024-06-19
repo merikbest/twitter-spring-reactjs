@@ -175,10 +175,12 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     @Transactional
-    public TweetResponse replyTweet(Long tweetId, Tweet reply) {
+    public TweetResponse replyTweet(Long addressedUserId, Long tweetId, Tweet reply) {
+        User addressedUser = tweetValidationHelper.validateUserProfile(addressedUserId);
         Tweet tweet = tweetValidationHelper.checkValidTweet(tweetId);
-        reply.setAddressedTweetId(tweetId);
         reply.setTweetType(TweetType.REPLY);
+        reply.setAddressedUser(addressedUser);
+        reply.setAddressedTweet(tweet);
         TweetResponse tweetResponse = tweetServiceHelper.createTweet(reply);
         tweetRepository.addReply(tweetId, tweetResponse.getId());
         tweetRepository.updateRepliesCount(tweet);

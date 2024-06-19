@@ -48,7 +48,7 @@ public interface TweetService {
 
     Page<TweetProjection> searchTweets(String text, Pageable pageable);
 
-    TweetResponse replyTweet(Long tweetId, Tweet reply);
+    TweetResponse replyTweet(Long addressedUserId, Long tweetId, Tweet reply);
 
     TweetResponse quoteTweet(Long tweetId, Tweet quote);
 

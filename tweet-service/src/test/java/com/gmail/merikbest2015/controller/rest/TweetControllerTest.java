@@ -891,9 +891,10 @@ public class TweetControllerTest {
     @DisplayName("[200] POST /ui/v1/tweets/reply/2/43 - Reply tweet by id")
     public void replyTweet() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setAddressedId(TestConstants.USER_ID);
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
-        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, 2, 43)
+        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 43)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -910,9 +911,10 @@ public class TweetControllerTest {
     @DisplayName("[404] POST /ui/v1/tweets/reply/2/99 - Should tweet Not Found by id")
     public void replyTweet_ShouldTweetNotFound() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setAddressedId(TestConstants.USER_ID);
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
-        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, 2, 99)
+        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -924,9 +926,10 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/reply/2/49 - Should tweet deleted")
     public void replyTweet_ShouldTweetDeleted() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setAddressedId(TestConstants.USER_ID);
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
-        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, 2, 49)
+        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 49)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -938,9 +941,10 @@ public class TweetControllerTest {
     @DisplayName("[404] GET /ui/v1/tweets/reply/2/50 - Should user have private profile")
     public void replyTweet_ShouldUserHavePrivateProfile() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setAddressedId(TestConstants.USER_ID);
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
-        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, 2, 50)
+        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 50)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -952,9 +956,10 @@ public class TweetControllerTest {
     @DisplayName("[400] GET /ui/v1/tweets/reply/2/51 - Should User blocked")
     public void replyTweet_ShouldUserBlocked() throws Exception {
         TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setAddressedId(TestConstants.USER_ID);
         tweetRequest.setText("test reply");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
-        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, 2, 51)
+        mockMvc.perform(post(UI_V1_TWEETS + REPLY_USER_ID_TWEET_ID, TestConstants.USER_ID, 51)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))

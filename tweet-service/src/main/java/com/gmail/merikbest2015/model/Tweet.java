@@ -46,15 +46,6 @@ public class Tweet {
     @Column(name = "scheduled_date")
     private LocalDateTime scheduledDate;
 
-    @Column(name = "addressed_username")
-    private String addressedUsername;
-
-    @Column(name = "addressed_id")
-    private Long addressedId;
-
-    @Column(name = "addressed_tweet_id")
-    private Long addressedTweetId;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "reply_type", nullable = false, columnDefinition = "varchar(255) default 'EVERYONE'")
     private ReplyType replyType = ReplyType.EVERYONE;
@@ -99,6 +90,14 @@ public class Tweet {
 
     @Column(name = "quotes_count", nullable = false, columnDefinition = "int8 default 0")
     private Long quotesCount = 0L;
+
+    @OneToOne
+    @JoinColumn(name = "addressed_user_id")
+    private User addressedUser;
+
+    @OneToOne
+    @JoinColumn(name = "addressed_tweet_id")
+    private Tweet addressedTweet;
 
     @OneToMany
     @JoinTable(name = "tweets_images",

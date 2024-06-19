@@ -15,9 +15,6 @@ public interface TweetProjection {
     TweetType getTweetType();
     LocalDateTime getCreatedAt();
     LocalDateTime getScheduledDate();
-    String getAddressedUsername();
-    Long getAddressedId();
-    Long getAddressedTweetId();
     ReplyType getReplyType();
     String getLink();
     String getLinkTitle();
@@ -37,6 +34,15 @@ public interface TweetProjection {
     Long getLikesCount();
     Long getRepliesCount();
     Long getQuotesCount();
+
+    @Value("#{target.addressedUser == null ? null : target.addressedUser.id}")
+    Long getAddressedId();
+
+    @Value("#{target.addressedUser == null ? null : target.addressedUser.username}")
+    String getAddressedUsername();
+
+    @Value("#{target.addressedTweet == null ? null : target.addressedTweet.id}")
+    Long getAddressedTweetId();
 
     @Value("#{target.listId == null ? null : @tweetProjectionHelper.getTweetList(target.listId)}")
     TweetListResponse getTweetList();

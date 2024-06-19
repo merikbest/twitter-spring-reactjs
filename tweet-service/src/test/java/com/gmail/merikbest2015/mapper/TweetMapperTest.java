@@ -213,14 +213,16 @@ public class TweetMapperTest {
     @Test
     public void replyTweet() {
         TweetRequest tweetRequest = new TweetRequest();
+        tweetRequest.setAddressedId(TestConstants.USER_ID);
         TweetResponse tweetResponse = new TweetResponse();
         NotificationReplyResponse notificationReplyResponse =
                 new NotificationReplyResponse(TestConstants.TWEET_ID, NotificationType.REPLY, tweetResponse);
-        when(basicMapper.convertToResponse(tweetRequest, Tweet.class)).thenReturn(new Tweet());
-        when(tweetService.replyTweet(TestConstants.TWEET_ID, new Tweet())).thenReturn(tweetResponse);
+        Tweet tweet = new Tweet();
+        when(basicMapper.convertToResponse(tweetRequest, Tweet.class)).thenReturn(tweet);
+        when(tweetService.replyTweet(tweetRequest.getAddressedId() ,TestConstants.TWEET_ID, tweet)).thenReturn(tweetResponse);
         assertEquals(notificationReplyResponse, tweetMapper.replyTweet(TestConstants.TWEET_ID, tweetRequest));
         verify(basicMapper, times(1)).convertToResponse(tweetRequest, Tweet.class);
-        verify(tweetService, times(1)).replyTweet(TestConstants.TWEET_ID, new Tweet());
+        verify(tweetService, times(1)).replyTweet(tweetRequest.getAddressedId(), TestConstants.TWEET_ID, tweet);
     }
 
     @Test

@@ -12,7 +12,6 @@ import java.util.List;
 public class TweetRequest {
     private Long id;
     private String text;
-    private String addressedUsername;
     private Long addressedId;
     private Long listId;
     private ReplyType replyType;

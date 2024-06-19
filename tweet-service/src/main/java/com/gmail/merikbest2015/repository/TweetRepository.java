@@ -34,7 +34,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             SELECT tweet FROM Tweet tweet
             WHERE tweet.tweetType = 'TWEET'
             AND tweet.author.id IN :userIds
-            AND tweet.addressedUsername IS NULL
+            AND tweet.addressedUser IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
@@ -49,7 +49,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
                     JOIN user.userBlockedList blockedUser
                     WHERE user.id IN (
                         SELECT DISTINCT tweet.author.id FROM Tweet tweet
-                        WHERE tweet.addressedUsername IS NULL
+                        WHERE tweet.addressedUser IS NULL
                         AND tweet.scheduledDate IS NULL
                         AND tweet.deleted = false
                     )
@@ -60,7 +60,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
                 LEFT JOIN user.following following
                 WHERE user.id IN (
                     SELECT DISTINCT tweet.author.id FROM Tweet tweet
-                    WHERE tweet.addressedUsername IS NULL
+                    WHERE tweet.addressedUser IS NULL
                     AND tweet.scheduledDate IS NULL
                     AND tweet.deleted = false
                 )
@@ -68,7 +68,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
                 OR (user.privateProfile = true AND (following.id = :userId OR user.id = :userId))
                 AND user.active = true)
             )
-            AND tweet.addressedUsername IS NULL
+            AND tweet.addressedUser IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
@@ -80,7 +80,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             WHERE tweet.author = :user
             AND tweet.tweetType != 'REPLY'
             AND (tweet != :pinnedTweet OR tweet.author.pinnedTweet = NULL)
-            AND tweet.addressedUsername IS NULL
+            AND tweet.addressedUser IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = FALSE
             ORDER BY tweet.createdAt DESC
@@ -105,7 +105,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
             SELECT tweet FROM Tweet tweet
             WHERE tweet.tweetType != 'TWEET'
             AND tweet.author.id = :userId
-            AND tweet.addressedUsername IS NOT NULL
+            AND tweet.addressedUser IS NOT NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
@@ -115,7 +115,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet FROM Tweet tweet
             WHERE tweet.tweetType = 'REPLY'
-            AND tweet.addressedTweetId = :tweetId
+            AND tweet.addressedTweet.id = :tweetId
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
             """)
@@ -193,7 +193,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
                 JOIN user.followers follower
                 WHERE user.id = :userId
             )
-            AND tweet.addressedUsername IS NULL
+            AND tweet.addressedUser IS NULL
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
             """)

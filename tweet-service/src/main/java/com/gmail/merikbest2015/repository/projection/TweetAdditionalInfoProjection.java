@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 public interface TweetAdditionalInfoProjection {
     String getText();
     ReplyType getReplyType();
-    Long getAddressedTweetId();
-    boolean isDeleted();
     TweetAdditionalInfoUserProjection getAuthor();
+    boolean isDeleted();
+
+    @Value("#{target.addressedTweet == null ? null : target.addressedTweet.id}")
+    Long getAddressedTweetId();
 
     interface TweetAdditionalInfoUserProjection {
         Long getId();
