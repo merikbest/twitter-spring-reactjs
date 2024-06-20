@@ -81,7 +81,7 @@ const UserPage = (): ReactElement => {
     const isUserProfileSuccessLoaded = useSelector(selectUsersIsSuccessLoaded);
     const isUserProfileNotLoaded = useSelector(selectUsersIsErrorLoaded);
     const params = useParams<{ userId: string }>();
-    const [activeTab, setActiveTab] = useState<number>(0);
+    const [userTweetsActiveTab, setUserTweetsActiveTab] = useState<number>(0);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -104,6 +104,7 @@ const UserPage = (): ReactElement => {
                 dispatch(setUserVote(JSON.parse(response.body)));
             });
         });
+        setUserTweetsActiveTab(0);
 
         return () => {
             dispatch(resetUserProfileState());
@@ -116,7 +117,7 @@ const UserPage = (): ReactElement => {
     useEffect(() => {
         if (isUserProfileSuccessLoaded) {
             document.title = `${fullName} (@${username}) / Twitter`;
-            dispatch(fetchUserTweets({ userId: params.userId, page: 0, activeTab }));
+            dispatch(fetchUserTweets({ userId: params.userId, page: 0, activeTab: userTweetsActiveTab }));
         }
 
         return () => {
@@ -125,8 +126,8 @@ const UserPage = (): ReactElement => {
         };
     }, [isUserProfileSuccessLoaded]);
 
-    const handleChangeTab = useCallback((newValue: number): void => {
-        setActiveTab(newValue);
+    const handleChangeUserTweetsTab = useCallback((newValue: number): void => {
+        setUserTweetsActiveTab(newValue);
     }, []);
 
     return (
@@ -135,7 +136,7 @@ const UserPage = (): ReactElement => {
                 <UserNotFound />
             ) : (
                 <Paper className={classnames(globalClasses.pageContainer, classes.container)} variant="outlined">
-                    <UserPageHeader activeTab={activeTab} />
+                    <UserPageHeader userTweetsActiveTab={userTweetsActiveTab} />
                     <div className={globalClasses.contentWrapper}>
                         <UserWallpaper />
                         <div className={classes.info}>
@@ -194,7 +195,10 @@ const UserPage = (): ReactElement => {
                                     isPrivateProfile && !isFollower && userProfileId !== myProfileId ? (
                                         <UserPrivateProfileMessage />
                                     ) : (
-                                        <UserTweets activeTab={activeTab} handleChangeTab={handleChangeTab} />
+                                        <UserTweets
+                                            userTweetsActiveTab={userTweetsActiveTab}
+                                            handleChangeUserTweetsTab={handleChangeUserTweetsTab}
+                                        />
                                     )
                                 )
                             )

@@ -20,7 +20,7 @@ describe("UserPageTweets", () => {
     it("should render Loading Spinner", () => {
         const wrapper = mountWithStore(
             <UserPageTweets
-                activeTab={0}
+                userTweetsActiveTab={0}
                 page={0}
                 loadUserTweets={jest.fn()}
             />, createMockRootState(LoadingStatus.LOADING));
@@ -30,7 +30,7 @@ describe("UserPageTweets", () => {
     it("should render Tweet Components", () => {
         const wrapper = mountWithStore(
             <UserPageTweets
-                activeTab={0}
+                userTweetsActiveTab={0}
                 page={0}
                 loadUserTweets={jest.fn()}
             />, mockWithTweets);
@@ -78,7 +78,7 @@ describe("UserPageTweets", () => {
     });
 
     const testAddTweetModal = (activeTab: number, buttonText: string): void => {
-        const wrapper = mountWithStore(<UserPageTweets activeTab={activeTab} page={0}
+        const wrapper = mountWithStore(<UserPageTweets userTweetsActiveTab={activeTab} page={0}
                                                        loadUserTweets={jest.fn()} />, mockRootState);
 
         expect(wrapper.find(AddTweetModal).prop("visible")).toBe(false);
@@ -96,7 +96,7 @@ describe("UserPageTweets", () => {
     const testTitleWithEmptyTweet = (activeTab: number, isUserProfile: boolean, title: string, text: string): void => {
         const wrapper = mountWithStore(
             <UserPageTweets
-                activeTab={activeTab}
+                userTweetsActiveTab={activeTab}
                 page={0}
                 loadUserTweets={jest.fn()}
             />, {

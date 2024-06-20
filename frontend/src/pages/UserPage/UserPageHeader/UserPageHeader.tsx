@@ -15,10 +15,10 @@ import {
 import { useUserPageStyles } from "../UserPageStyles";
 
 interface UserPageHeaderProps {
-    activeTab: number;
+    userTweetsActiveTab: number;
 }
 
-const UserPageHeader: FC<UserPageHeaderProps> = memo(({ activeTab }): ReactElement => {
+const UserPageHeader: FC<UserPageHeaderProps> = memo(({ userTweetsActiveTab }): ReactElement => {
     const classes = useUserPageStyles();
     const userProfileId = useSelector(selectUserProfileId);
     const fullName = useSelector(selectUserProfileFullName);
@@ -29,9 +29,9 @@ const UserPageHeader: FC<UserPageHeaderProps> = memo(({ activeTab }): ReactEleme
 
     const showTweetCount = (): string => {
         if (userProfileId) {
-            if (activeTab === 2) {
+            if (userTweetsActiveTab === 2) {
                 return `${mediaTweetCount} ${(mediaTweetCount === 1) ? "Photo & video" : "Photos & videos"}`;
-            } else if (activeTab === 3) {
+            } else if (userTweetsActiveTab === 3) {
                 return `${likeCount} ${(likeCount === 1) ? "Like" : "Likes"}`;
             } else {
                 return `${tweetCount} ${(tweetCount === 1) ? "Tweet" : "Tweets"}`;

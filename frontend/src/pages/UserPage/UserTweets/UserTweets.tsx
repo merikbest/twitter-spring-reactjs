@@ -18,11 +18,11 @@ import { selectIsUserTweetsLoaded } from "../../../store/ducks/userTweets/select
 import { selectUsersIsSuccessLoaded } from "../../../store/ducks/userProfile/selectors";
 
 interface UserTweetsProps {
-    activeTab: number;
-    handleChangeTab: (newValue: number) => void;
+    userTweetsActiveTab: number;
+    handleChangeUserTweetsTab: (newValue: number) => void;
 }
 
-const UserTweets: FC<UserTweetsProps> = memo(({ activeTab, handleChangeTab }): ReactElement => {
+const UserTweets: FC<UserTweetsProps> = memo(({ userTweetsActiveTab, handleChangeUserTweetsTab }): ReactElement => {
     const classes = useUserPageStyles();
     const dispatch = useDispatch();
     const params = useParams<{ userId: string }>();
@@ -37,14 +37,14 @@ const UserTweets: FC<UserTweetsProps> = memo(({ activeTab, handleChangeTab }): R
     }, [isUserProfileSuccessLoaded]);
 
     const loadUserTweets = (): void => {
-        if (activeTab === 1) {
+        if (userTweetsActiveTab === 1) {
             dispatch(fetchUserRetweetsAndReplies({ userId: params.userId, page }));
-        } else if (activeTab === 2) {
+        } else if (userTweetsActiveTab === 2) {
             dispatch(fetchUserMediaTweets({ userId: params.userId, page }));
-        } else if (activeTab === 3) {
+        } else if (userTweetsActiveTab === 3) {
             dispatch(fetchUserLikedTweets({ userId: params.userId, page }));
         } else {
-            dispatch(fetchUserTweets({ userId: params.userId, page, activeTab }));
+            dispatch(fetchUserTweets({ userId: params.userId, page, activeTab: userTweetsActiveTab }));
         }
 
         if (isTweetsLoaded) {
@@ -52,8 +52,8 @@ const UserTweets: FC<UserTweetsProps> = memo(({ activeTab, handleChangeTab }): R
         }
     };
 
-    const handleChange = (event: ChangeEvent<{}>, newValue: number): void => {
-        handleChangeTab(newValue);
+    const handleChangeActiveTab = (event: ChangeEvent<{}>, newValue: number): void => {
+        handleChangeUserTweetsTab(newValue);
     };
 
     const handleShowTweets = (callback: () => void): void => {
@@ -86,7 +86,7 @@ const UserTweets: FC<UserTweetsProps> = memo(({ activeTab, handleChangeTab }): R
     return (
         <>
             <div className={classes.tabs}>
-                <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChange}>
+                <Tabs value={userTweetsActiveTab} indicatorColor="primary" textColor="primary" onChange={handleChangeActiveTab}>
                     <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets" />
                     <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies" />
                     <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media" />
@@ -95,7 +95,7 @@ const UserTweets: FC<UserTweetsProps> = memo(({ activeTab, handleChangeTab }): R
             </div>
             <Divider />
             <div className={classes.tweets}>
-                <UserPageTweets activeTab={activeTab} page={page} loadUserTweets={loadUserTweets} />
+                <UserPageTweets userTweetsActiveTab={userTweetsActiveTab} page={page} loadUserTweets={loadUserTweets} />
             </div>
         </>
     );

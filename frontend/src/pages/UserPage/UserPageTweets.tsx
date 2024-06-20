@@ -17,12 +17,12 @@ import { selectUserProfileId, selectUserProfileUsername } from "../../store/duck
 import { useModalWindow } from "../../hook/useModalWindow";
 
 interface UserPageTweetsProps {
-    activeTab: number;
+    userTweetsActiveTab: number;
     page: number;
     loadUserTweets: () => void;
 }
 
-const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUserTweets }): ReactElement => {
+const UserPageTweets: FC<UserPageTweetsProps> = memo(({ userTweetsActiveTab, page, loadUserTweets }): ReactElement => {
     const classes = useUserPageStyles();
     const myProfileId = useSelector(selectUserDataId);
     const userProfileId = useSelector(selectUserProfileId);
@@ -33,7 +33,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const renderTweets = () => {
-        if (tweets?.length === 0 && activeTab === 0 && !isTweetsLoading) {
+        if (tweets?.length === 0 && userTweetsActiveTab === 0 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography variant={"h5"}>
@@ -63,7 +63,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
                     )}
                 </div>
             );
-        } else if (tweets?.length === 0 && activeTab === 1 && !isTweetsLoading) {
+        } else if (tweets?.length === 0 && userTweetsActiveTab === 1 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography variant={"h5"}>
@@ -82,7 +82,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
                     </Typography>
                 </div>
             );
-        } else if (tweets?.length === 0 && activeTab === 2 && !isTweetsLoading) {
+        } else if (tweets?.length === 0 && userTweetsActiveTab === 2 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography variant={"h5"}>
@@ -112,7 +112,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
                     )}
                 </div>
             );
-        } else if (tweets?.length === 0 && activeTab === 3 && !isTweetsLoading) {
+        } else if (tweets?.length === 0 && userTweetsActiveTab === 3 && !isTweetsLoading) {
             return (
                 <div className={classes.textWrapper}>
                     <Typography variant={"h5"}>
@@ -135,7 +135,7 @@ const UserPageTweets: FC<UserPageTweetsProps> = memo(({ activeTab, page, loadUse
             return (
                 <>
                     {tweets?.map((tweet) => (
-                        <TweetComponent key={tweet.id} tweet={tweet} activeTab={activeTab} />
+                        <TweetComponent key={tweet.id} tweet={tweet} activeTab={userTweetsActiveTab} />
                     ))}
                     {isTweetsLoading && <Spinner />}
                 </>

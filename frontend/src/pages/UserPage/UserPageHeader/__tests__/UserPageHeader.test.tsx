@@ -16,32 +16,32 @@ describe("UserPageHeader", () => {
     };
 
     it("should render tweetCount", () => {
-        const wrapper = mountWithStore(<UserPageHeader activeTab={1} />, mockRootState);
+        const wrapper = mountWithStore(<UserPageHeader userTweetsActiveTab={1} />, mockRootState);
         expect(wrapper.text().includes(`${mockMyProfile.tweetCount} Tweets`)).toBe(true);
     });
 
     it("should render mediaTweetCount", () => {
-        const wrapper = mountWithStore(<UserPageHeader activeTab={2} />, mockRootState);
+        const wrapper = mountWithStore(<UserPageHeader userTweetsActiveTab={2} />, mockRootState);
         expect(wrapper.text().includes(`${mockMyProfile.mediaTweetCount} Photos & videos`)).toBe(true);
     });
 
     it("should render likeCount", () => {
-        const wrapper = mountWithStore(<UserPageHeader activeTab={3} />, mockRootState);
+        const wrapper = mountWithStore(<UserPageHeader userTweetsActiveTab={3} />, mockRootState);
         expect(wrapper.text().includes(`${mockMyProfile.likeCount} Likes`)).toBe(true);
     });
 
     it("should render single tweetCount", () => {
-        const wrapper = mountWithStore(<UserPageHeader activeTab={1} />, mockState);
+        const wrapper = mountWithStore(<UserPageHeader userTweetsActiveTab={1} />, mockState);
         expect(wrapper.text().includes("1 Tweet")).toBe(true);
     });
 
     it("should render single mediaTweetCount", () => {
-        const wrapper = mountWithStore(<UserPageHeader activeTab={2} />, mockState);
+        const wrapper = mountWithStore(<UserPageHeader userTweetsActiveTab={2} />, mockState);
         expect(wrapper.text().includes("1 Photo & video")).toBe(true);
     });
 
     it("should render single likeCount", () => {
-        const wrapper = mountWithStore(<UserPageHeader activeTab={3} />, mockState);
+        const wrapper = mountWithStore(<UserPageHeader userTweetsActiveTab={3} />, mockState);
         expect(wrapper.text().includes("1 Like")).toBe(true);
     });
 });

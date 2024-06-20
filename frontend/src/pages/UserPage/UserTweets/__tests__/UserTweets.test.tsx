@@ -50,7 +50,7 @@ describe("UserTweets", () => {
     });
 
     const testClickTab = (tabIndex: number, tabText: string, typeAction: UserTweetsActionType): void => {
-        const wrapper = mountWithStore(<UserTweets activeTab={tabIndex} handleChangeTab={jest.fn()} />, mockRootState);
+        const wrapper = mountWithStore(<UserTweets userTweetsActiveTab={tabIndex} handleChangeUserTweetsTab={jest.fn()} />, mockRootState);
         wrapper.find(Tab).at(tabIndex).simulate("click");
         expect(wrapper.find(Tab).at(tabIndex).prop("selected")).toBe(true);
         expect(wrapper.find(Tab).at(tabIndex).text().includes(tabText)).toBe(true);
@@ -58,7 +58,7 @@ describe("UserTweets", () => {
     };
 
     const testLoadUserTweets = (tabIndex: number, actionType: UserTweetsActionType): void => {
-        const wrapper = mountWithStore(<UserTweets activeTab={tabIndex} handleChangeTab={jest.fn()} />, mockRootState);
+        const wrapper = mountWithStore(<UserTweets userTweetsActiveTab={tabIndex} handleChangeUserTweetsTab={jest.fn()} />, mockRootState);
         wrapper.find(Tab).at(tabIndex).simulate("click");
         wrapper.find(InfiniteScroll).prop("next")();
         expect(mockDispatchFn).nthCalledWith(2, { payload: { userId: "2", page: 0 }, type: actionType });
