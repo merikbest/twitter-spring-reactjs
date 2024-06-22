@@ -57,6 +57,7 @@ public class PathConstants {
     public static final String PRIVATE = "/private";
     public static final String COLOR_SCHEME = "/color_scheme";
     public static final String BACKGROUND_COLOR = "/background_color";
+    public static final String COUNTRY_CODES = "/country/codes";
 
     public static final String API_V1_AUTH = API_V1 + AUTH;
     public static final String USER_EMAIL = "/user/{email}";
