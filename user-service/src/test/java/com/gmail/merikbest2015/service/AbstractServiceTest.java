@@ -38,6 +38,9 @@ public abstract class AbstractServiceTest {
     MuteUserRepository muteUserRepository;
 
     @MockBean
+    CountryCodeRepository countryCodeRepository;
+
+    @MockBean
     UserSettingsRepository userSettingsRepository;
 
     @MockBean
