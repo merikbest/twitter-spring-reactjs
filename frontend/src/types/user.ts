@@ -143,3 +143,10 @@ export interface UserDetailResponse {
     followingCount: number;
     sameFollowers: SameFollowerResponse[];
 }
+
+export interface CountryCodeResponse {
+    id: number;
+    countryCode: string;
+    phoneCode: string;
+    country: string;
+}

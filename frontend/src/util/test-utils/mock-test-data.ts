@@ -1243,3 +1243,66 @@ export const mockGiphyData = [
         }
     }
 ];
+
+export const countryCodes = [
+    {
+        "id": 1,
+        "countryCode": "AF",
+        "phoneCode": "+93",
+        "country": "Afghanistan"
+    },
+    {
+        "id": 2,
+        "countryCode": "AL",
+        "phoneCode": "+355",
+        "country": "Albania"
+    },
+    {
+        "id": 3,
+        "countryCode": "DZ",
+        "phoneCode": "+213",
+        "country": "Algeria"
+    },
+    {
+        "id": 4,
+        "countryCode": "AS",
+        "phoneCode": "+1",
+        "country": "American Samoa"
+    },
+    {
+        "id": 5,
+        "countryCode": "AD",
+        "phoneCode": "+376",
+        "country": "Andorra"
+    },
+    {
+        "id": 6,
+        "countryCode": "AO",
+        "phoneCode": "+244",
+        "country": "Angola"
+    },
+    {
+        "id": 7,
+        "countryCode": "AI",
+        "phoneCode": "+1",
+        "country": "Anguilla"
+    },
+    {
+        "id": 8,
+        "countryCode": "AG",
+        "phoneCode": "+1",
+        "country": "Antigua and Barbuda"
+    },
+    {
+        "id": 9,
+        "countryCode": "AR",
+        "phoneCode": "+54",
+        "country": "Argentina"
+    },
+    {
+        "id": 10,
+        "countryCode": "AM",
+        "phoneCode": "+374",
+        "country": "Armenia"
+    }
+];

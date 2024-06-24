@@ -29,6 +29,7 @@ import { TopicsState } from "./ducks/topics/contracts/state";
 import { SearchState } from "./ducks/search/contracts/state";
 import { AddTweetFormState } from "./ducks/addTweetForm/constants/state";
 import { AuthenticationState } from "./ducks/authentication/constants/state";
+import { CountryCodesState } from "./ducks/countryCode/contracts/state";
 
 export interface RootState {
     tweets: TweetsState;
@@ -57,6 +58,7 @@ export interface RootState {
     search: SearchState;
     addTweetForm: AddTweetFormState;
     authentication: AuthenticationState;
+    countryCodes: CountryCodesState;
 }
 
 const composeEnhancers = (typeof window !== "undefined" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;

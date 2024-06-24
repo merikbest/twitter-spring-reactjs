@@ -26,6 +26,7 @@ import { topicsReducer } from "./ducks/topics/reducer";
 import { searchReducer } from "./ducks/search/reducer";
 import { addTweetFormReducer } from "./ducks/addTweetForm/reducer";
 import { authenticationReducer } from "./ducks/authentication/reducer";
+import { countryCodesReducer } from "./ducks/countryCode/reducer";
 
 export const rootReducer = combineReducers({
     tweets: tweetsReducer,
@@ -53,5 +54,6 @@ export const rootReducer = combineReducers({
     chat: chatReducer,
     search: searchReducer,
     addTweetForm: addTweetFormReducer,
-    authentication: authenticationReducer
+    authentication: authenticationReducer,
+    countryCodes: countryCodesReducer
 });
