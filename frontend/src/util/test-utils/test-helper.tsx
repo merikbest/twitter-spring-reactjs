@@ -322,6 +322,10 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             registrationStep: null,
             errorMessage: null,
             loadingState: LoadingStatus.LOADED
-        }
+        },
+        countryCodes: {
+            items: [],
+            loadingState: loadingStatus
+        },
     } as RootState;
 };
