@@ -5,6 +5,7 @@ import { createMockRootState, mockDispatch, mountWithStore } from "../../../../.
 import { FilledSelect } from "../../../../../../components/FilledSelect/FilledSelect";
 import { UserActionsType } from "../../../../../../store/ducks/user/contracts/actionTypes";
 import { LoadingStatus } from "../../../../../../types/common";
+import { CountryCodesActionsType } from "../../../../../../store/ducks/countryCode/contracts/actionTypes";
 
 describe("ChangeCountry", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -12,6 +13,15 @@ describe("ChangeCountry", () => {
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
+    });
+
+    it("should render correctly", () => {
+        const wrapper = mountWithStore(<ChangeCountry />, mockStore);
+
+        expect(wrapper.text().includes("Country")).toBe(true);
+        expect(wrapper.find(FilledSelect).prop("value")).toBe("UA");
+
+        expect(mockDispatchFn).nthCalledWith(1, { type: CountryCodesActionsType.FETCH_COUNTRY_CODES });
     });
 
     it("should render correctly and select country", () => {
@@ -23,14 +33,14 @@ describe("ChangeCountry", () => {
         wrapper.find(FilledSelect).find("select").simulate("change", { target: { value: "US" } });
 
         expect(wrapper.find(FilledSelect).prop("value")).toBe("US");
-        expect(mockDispatchFn).nthCalledWith(1, { payload: { country: "US" }, type: UserActionsType.UPDATE_COUNTRY });
+        expect(mockDispatchFn).nthCalledWith(2, { payload: { country: "US" }, type: UserActionsType.UPDATE_COUNTRY });
     });
 
     it("should reset state", () => {
         const wrapper = mountWithStore(<ChangeCountry />, mockStore);
         wrapper.unmount();
 
-        expect(mockDispatchFn).nthCalledWith(1, {
+        expect(mockDispatchFn).nthCalledWith(2, {
             payload: LoadingStatus.NEVER,
             type: UserActionsType.SET_USER_LOADING_STATE
         });

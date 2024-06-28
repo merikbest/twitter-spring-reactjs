@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Dialog } from "@material-ui/core";
+import { setImmediate } from "timers";
 
 import ChangePhoneModal from "../ChangePhoneModal";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../../util/test-utils/test-helper";
@@ -7,6 +8,7 @@ import { getCountryCode, getPhoneCode } from "../../../../../../../util/country-
 import { FilledSelect } from "../../../../../../../components/FilledSelect/FilledSelect";
 import { ChangeInfoTextField } from "../../../../../ChangeInfoTextField/ChangeInfoTextField";
 import { LoadingStatus } from "../../../../../../../types/common";
+import { CountryCodesActionsType } from "../../../../../../../store/ducks/countryCode/contracts/actionTypes";
 
 describe("ChangePhoneModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -14,6 +16,11 @@ describe("ChangePhoneModal", () => {
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
+    });
+
+    it("should render correctly", () => {
+        mountWithStore(<ChangePhoneModal visible={false} onClose={jest.fn()} />, mockStore);
+        expect(mockDispatchFn).nthCalledWith(1, { type: CountryCodesActionsType.FETCH_COUNTRY_CODES });
     });
 
     it("should render empty ChangePhoneModal window correctly", () => {
