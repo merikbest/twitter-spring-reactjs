@@ -60,7 +60,7 @@ const ChangeCountry: FC = (): ReactElement => {
                 >
                     <option aria-label="None" />
                     {countryCodes.map(countryCode => (
-                            <option key={countryCode.id} value={countryCode.countryCode}>
+                            <option key={countryCode.id} value={countryCode.country}>
                                 {countryCode.country}
                             </option>
                         )

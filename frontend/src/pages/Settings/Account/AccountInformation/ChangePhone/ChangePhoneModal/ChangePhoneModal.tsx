@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, memo, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     Button,
@@ -20,11 +20,10 @@ import { ChangeInfoTextField } from "../../../../ChangeInfoTextField/ChangeInfoT
 import { FilledSelect } from "../../../../../../components/FilledSelect/FilledSelect";
 import {
     selectUserIsLoading,
-    selectUserProfileCountryCode,
-    selectUserProfilePhone
+    selectUserProfilePhone,
+    selectUserProfilePhoneCode
 } from "../../../../../../store/ducks/user/selectors";
 import { updatePhone } from "../../../../../../store/ducks/user/actionCreators";
-import { getCountryCode, getPhoneCode } from "../../../../../../util/country-code-helper";
 import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../../../constants/url-constants";
 import { fetchCountryCodes } from "../../../../../../store/ducks/countryCode/actionCreators";
 import {
@@ -45,35 +44,35 @@ const SetPhoneFormSchema = yup.object().shape({
     phone: yup.string().matches(/^[0-9]\d{8}$/, "Please enter a valid phone number.").required()
 });
 
-const ChangePhoneModal: FC<ChangePhoneModalProps> = ({ visible, onClose }): ReactElement | null => {
+const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }): ReactElement | null => {
     const classes = useChangePhoneModalStyles();
     const dispatch = useDispatch();
     const countryCodes = useSelector(selectCountryCodeItems);
     const isCountryCodesLoading = useSelector(selectIsCountryCodesLoading);
-    const myProfilePhone = useSelector(selectUserProfilePhone);
-    const myProfileCountryCode = useSelector(selectUserProfileCountryCode);
+    const profilePhoneCode = useSelector(selectUserProfilePhoneCode);
+    const profilePhone = useSelector(selectUserProfilePhone);
     const isLoading = useSelector(selectUserIsLoading);
-    const [countryCode, setCountryCode] = useState<string>("");
+    const [phoneCode, setPhoneCode] = useState<string>("");
     const { control, handleSubmit, formState: { errors }, getValues } = useForm<PhoneFormProps>({
         resolver: yupResolver(SetPhoneFormSchema),
         mode: "onChange"
     });
-    const phoneCode = getPhoneCode(myProfileCountryCode);
 
     useEffect(() => {
-        dispatch(fetchCountryCodes());
-
-        if (myProfileCountryCode) {
-            setCountryCode(getCountryCode(myProfileCountryCode));
+        if (visible) {
+            dispatch(fetchCountryCodes());
         }
-    }, []);
+        if (profilePhoneCode) {
+            setPhoneCode(profilePhoneCode);
+        }
+    }, [visible, profilePhoneCode]);
 
     const onSubmit = (data: PhoneFormProps): void => {
-        dispatch(updatePhone({ countryCode, phone: parseInt(data.phone) }));
+        dispatch(updatePhone({ phoneCode, phone: parseInt(data.phone) }));
     };
 
     const changeCountryCode = (event: ChangeEvent<{ value: unknown }>): void => {
-        setCountryCode(event.target.value as string);
+        setPhoneCode(event.target.value as string);
     };
 
     if (!visible) {
@@ -91,7 +90,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({ visible, onClose }): Reac
                         Change phone
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        {`Your current phone number is ${phoneCode !== "" ? phoneCode : "none"}${myProfilePhone}. What would you like to update it to?`}
+                        {`Your current phone number is ${profilePhoneCode ? `${profilePhoneCode}${profilePhone}` : "none"}. What would you like to update it to?`}
                     </Typography>
                 </div>
                 <form onSubmit={(!getValues("phone") || !!errors.phone) ? onClose : handleSubmit(onSubmit)}>
@@ -105,7 +104,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({ visible, onClose }): Reac
                                 labelId="select-country-code"
                                 id="select-country-code"
                                 native
-                                value={countryCode}
+                                value={phoneCode}
                                 onChange={changeCountryCode}
                                 disabled={isCountryCodesLoading}
                                 label="Country code"
@@ -113,8 +112,8 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({ visible, onClose }): Reac
                             >
                                 <option aria-label="None" />
                                 {countryCodes.map(countryCode => (
-                                        <option key={countryCode.id} value={countryCode.countryCode}>
-                                            {countryCode.country}
+                                        <option key={countryCode.id} value={countryCode.phoneCode}>
+                                            {countryCode.phoneCode} {countryCode.country}
                                         </option>
                                     )
                                 )}
@@ -154,18 +153,18 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = ({ visible, onClose }): Reac
                     <div className={classes.footer}>
                         <Button
                             color="primary"
-                            variant={(!getValues("phone") || errors.phone) ? "outlined" : "contained"}
+                            variant={((!getValues("phone")|| errors.phone || !phoneCode) ) ? "outlined" : "contained"}
                             type="submit"
                             size="small"
                             fullWidth
                         >
-                            {(!getValues("phone") || errors.phone) ? "Cancel" : "Next"}
+                            {((!getValues("phone") || errors.phone || !phoneCode)) ? "Cancel" : "Next"}
                         </Button>
                     </div>
                 </form>
             </DialogContent>
         </Dialog>
     );
-};
+});
 
 export default ChangePhoneModal;

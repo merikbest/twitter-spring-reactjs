@@ -7,16 +7,15 @@ import { ArrowRightIcon } from "../../../../icons";
 import {
     selectUserDataIsPrivateProfile,
     selectUserProfileCountry,
-    selectUserProfileCountryCode,
     selectUserProfileEmail,
     selectUserProfileGender,
     selectUserProfileLanguage,
     selectUserProfilePhone,
+    selectUserProfilePhoneCode,
     selectUserProfileRegistrationDate,
     selectUserProfileUsername
 } from "../../../../store/ducks/user/selectors";
 import { formatScheduleDate } from "../../../../util/format-date-helper";
-import { getCountry, getPhoneCode } from "../../../../util/country-code-helper";
 import { fetchUserData } from "../../../../store/ducks/user/actionCreators";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
@@ -35,7 +34,7 @@ const AccountInformation: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const username = useSelector(selectUserProfileUsername);
-    const countryCode = useSelector(selectUserProfileCountryCode);
+    const phoneCode = useSelector(selectUserProfilePhoneCode);
     const phone = useSelector(selectUserProfilePhone);
     const country = useSelector(selectUserProfileCountry);
     const email = useSelector(selectUserProfileEmail);
@@ -73,7 +72,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Phone
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {phone && `${getPhoneCode(countryCode)}${phone}`}
+                                {(phone && phoneCode) && `${phoneCode}${phone}`}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>
@@ -139,7 +138,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Country
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {country && getCountry(country)}
+                                {country && country}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>

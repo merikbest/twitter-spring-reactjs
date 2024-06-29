@@ -1,13 +1,12 @@
 import { Action } from "redux";
 
-import { ChangePhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./state";
+import { UserPhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./state";
 import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
 import { LoginRequest } from "../../../../types/auth";
 
 export enum UserActionsType {
-    // followersSize
     SIGN_OUT = "user/SIGN_OUT",
     FETCH_SIGN_IN = "user/FETCH_SIGN_IN",
     FETCH_SIGN_UP = "user/FETCH_SIGN_UP",
@@ -234,7 +233,7 @@ export interface SetEmailActionInterface extends Action<UserActionsType> {
 
 export interface SetPhoneActionInterface extends Action<UserActionsType> {
     type: UserActionsType.SET_PHONE;
-    payload: ChangePhoneResponse;
+    payload: UserPhoneResponse;
 }
 
 export interface SetCountryActionInterface extends Action<UserActionsType> {

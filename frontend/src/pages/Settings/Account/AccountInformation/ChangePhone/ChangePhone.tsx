@@ -7,10 +7,9 @@ import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoText
 import ChangePhoneModal from "./ChangePhoneModal/ChangePhoneModal";
 import {
     selectUserIsSuccess,
-    selectUserProfileCountryCode,
-    selectUserProfilePhone
+    selectUserProfilePhone,
+    selectUserProfilePhoneCode
 } from "../../../../../store/ducks/user/selectors";
-import { getPhoneCode } from "../../../../../util/country-code-helper";
 import { setUserLoadingStatus } from "../../../../../store/ducks/user/actionCreators";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { LoadingStatus } from "../../../../../types/common";
@@ -19,7 +18,7 @@ import { useModalWindow } from "../../../../../hook/useModalWindow";
 const ChangePhone: FC = (): ReactElement => {
     const classes = useChangePhoneStyles();
     const dispatch = useDispatch();
-    const countryCode = useSelector(selectUserProfileCountryCode);
+    const phoneCode = useSelector(selectUserProfilePhoneCode);
     const phone = useSelector(selectUserProfilePhone);
     const isUpdatedSuccess = useSelector(selectUserIsSuccess);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
@@ -36,7 +35,7 @@ const ChangePhone: FC = (): ReactElement => {
                     label="Current"
                     type="text"
                     variant="filled"
-                    value={`${getPhoneCode(countryCode)}${phone}`}
+                    value={`${phoneCode}${phone}`}
                     fullWidth
                     disabled
                 />

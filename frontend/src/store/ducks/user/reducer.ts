@@ -45,7 +45,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
 
         case UserActionsType.SET_PHONE:
             if (draft.data) {
-                draft.data.countryCode = action.payload.countryCode;
+                draft.data.phoneCode = action.payload.phoneCode;
                 draft.data.phone = action.payload.phone;
                 draft.status = LoadingStatus.LOADED;
             }

@@ -78,7 +78,7 @@ import {
 } from "../notifications/actionCreators";
 import { setBlockedUser, setMutedUser } from "../blockedAndMutedUsers/actionCreators";
 import { HOME, PROFILE } from "../../../constants/path-constants";
-import { ChangePhoneResponse } from "./contracts/state";
+import { UserPhoneResponse } from "./contracts/state";
 import {
     setBlockedTweetAdditionalInfo,
     setFollowedTweetAdditionalInfo,
@@ -217,7 +217,7 @@ export function* updateEmailRequest({ payload }: UpdateEmailActionInterface) {
 export function* updatePhoneRequest({ payload }: UpdatePhoneActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const { data }: AxiosResponse<ChangePhoneResponse> = yield call(UserSettingsApi.updatePhone, payload);
+        const { data }: AxiosResponse<UserPhoneResponse> = yield call(UserSettingsApi.updatePhone, payload);
         yield put(setPhone(data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));

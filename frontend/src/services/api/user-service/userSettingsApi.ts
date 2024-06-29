@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { ChangePhoneResponse, SettingsRequest } from "../../../store/ducks/user/contracts/state";
+import { UserPhoneResponse, SettingsRequest } from "../../../store/ducks/user/contracts/state";
 import { axios } from "../../../core/axios";
 import { AuthenticationResponse } from "../../../types/auth";
 import {
@@ -23,8 +23,8 @@ export const UserSettingsApi = {
     async updateEmail(settings: SettingsRequest): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.put<AuthenticationResponse>(UI_V1_USER_SETTINGS_UPDATE_EMAIL, settings);
     },
-    async updatePhone(settings: SettingsRequest): Promise<AxiosResponse<ChangePhoneResponse>> {
-        return await axios.put<ChangePhoneResponse>(UI_V1_USER_SETTINGS_UPDATE_PHONE, settings);
+    async updatePhone(settings: SettingsRequest): Promise<AxiosResponse<UserPhoneResponse>> {
+        return await axios.put<UserPhoneResponse>(UI_V1_USER_SETTINGS_UPDATE_PHONE, settings);
     },
     async updateCountry(settings: SettingsRequest): Promise<AxiosResponse<string>> {
         return await axios.put<string>(UI_V1_USER_SETTINGS_UPDATE_COUNTRY, settings);

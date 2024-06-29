@@ -8,11 +8,7 @@ export const selectUserData = (state: RootState): UserState["data"] => selectUse
 export const selectUserDataId = (state: RootState) => selectUserData(state)?.id;
 export const selectUserDataNotificationsCount = (state: RootState) => {
     const userData = selectUserData(state);
-    if (userData) {
-        return userData.notificationsCount + userData.mentionsCount;
-    } else {
-        return 0;
-    }
+    return userData ? userData.notificationsCount + userData.mentionsCount : 0;
 };
 export const selectUserDataMentionsCount = (state: RootState) => selectUserData(state)?.mentionsCount;
 export const selectUserDataUnreadMessagesCount = (state: RootState) => selectUserData(state)?.unreadMessagesCount;
@@ -24,9 +20,10 @@ export const selectUserProfileAvatar = (state: RootState) => selectUserData(stat
 export const selectUserProfileFullName = (state: RootState) => selectUserData(state)?.fullName;
 export const selectUserProfileUsername = (state: RootState) => selectUserData(state)?.username;
 export const selectUserProfileCountryCode = (state: RootState) => selectUserData(state)?.countryCode;
+export const selectUserProfileCountry = (state: RootState) => selectUserData(state)?.country;
+export const selectUserProfilePhoneCode = (state: RootState) => selectUserData(state)?.phoneCode;
 export const selectUserProfilePhone = (state: RootState) => selectUserData(state)?.phone;
 export const selectUserProfileLanguage = (state: RootState) => selectUserData(state)?.language;
-export const selectUserProfileCountry = (state: RootState) => selectUserData(state)?.country;
 export const selectUserProfileGender = (state: RootState) => selectUserData(state)?.gender;
 export const selectUserProfileLocation = (state: RootState) => selectUserData(state)?.location;
 export const selectUserProfileEmail = (state: RootState) => selectUserData(state)?.email;

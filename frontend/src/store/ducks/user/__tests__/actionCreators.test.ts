@@ -226,7 +226,7 @@ describe("user actions", () => {
         payload: "test"
     });
 
-    testAction(setPhone, setPhone({ countryCode: "text", phone: 12345 }), {
+    testAction(setPhone, setPhone({ phoneCode: "+1", phone: 12345 }), {
         type: UserActionsType.SET_PHONE,
         payload: { countryCode: "text", phone: 12345 }
     });

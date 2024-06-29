@@ -1,4 +1,4 @@
-import { ChangePhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./contracts/state";
+import { UserPhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./contracts/state";
 import {
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
@@ -228,7 +228,7 @@ export const setEmail = (payload: string): SetEmailActionInterface => ({
     payload
 });
 
-export const setPhone = (payload: ChangePhoneResponse): SetPhoneActionInterface => ({
+export const setPhone = (payload: UserPhoneResponse): SetPhoneActionInterface => ({
     type: UserActionsType.SET_PHONE,
     payload
 });
