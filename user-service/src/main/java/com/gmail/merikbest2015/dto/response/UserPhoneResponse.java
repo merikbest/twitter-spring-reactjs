@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UserPhoneResponse {
-    private String countryCode;
+    private String phoneCode;
     private Long phone;
 }

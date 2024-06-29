@@ -42,15 +42,15 @@ public class UserSettingsMapperTest {
     @Test
     public void updatePhone() {
         SettingsRequest request = new SettingsRequest();
-        request.setCountryCode(TestConstants.COUNTRY_CODE);
+        request.setPhoneCode(TestConstants.PHONE_CODE);
         request.setPhone(TestConstants.PHONE);
         Map<String, Object> phoneParams = new HashMap<>();
-        phoneParams.put("countryCode", TestConstants.COUNTRY_CODE);
+        phoneParams.put("phoneCode", TestConstants.PHONE_CODE);
         phoneParams.put("phone", TestConstants.PHONE);
-        UserPhoneResponse userPhoneResponse = new UserPhoneResponse(TestConstants.COUNTRY_CODE, TestConstants.PHONE);
-        when(userSettingsService.updatePhone(TestConstants.COUNTRY_CODE, TestConstants.PHONE)).thenReturn(phoneParams);
+        UserPhoneResponse userPhoneResponse = new UserPhoneResponse(TestConstants.PHONE_CODE, TestConstants.PHONE);
+        when(userSettingsService.updatePhone(TestConstants.PHONE_CODE, TestConstants.PHONE)).thenReturn(phoneParams);
         assertEquals(userPhoneResponse, userSettingsMapper.updatePhone(request));
-        verify(userSettingsService, times(1)).updatePhone(TestConstants.COUNTRY_CODE, TestConstants.PHONE);
+        verify(userSettingsService, times(1)).updatePhone(TestConstants.PHONE_CODE, TestConstants.PHONE);
     }
 
     @Test

@@ -11,7 +11,7 @@ public interface UserSettingsService {
 
     Map<String, Object> updateEmail(String email);
 
-    Map<String, Object> updatePhone(String countryCode, Long phone);
+    Map<String, Object> updatePhone(String phoneCode, Long phone);
 
     String updateCountry(String country);
 

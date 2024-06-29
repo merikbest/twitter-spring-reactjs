@@ -59,15 +59,15 @@ public class UserSettingsServiceImpl implements UserSettingsService {
 
     @Override
     @Transactional
-    public Map<String, Object> updatePhone(String countryCode, Long phone) {
+    public Map<String, Object> updatePhone(String phoneCode, Long phone) {
         int phoneLength = String.valueOf(phone).length();
 
         if (phoneLength < 6 || phoneLength > 10) {
             throw new ApiRequestException(INVALID_PHONE_NUMBER, HttpStatus.BAD_REQUEST);
         }
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        userSettingsRepository.updatePhone(countryCode, phone, authUserId);
-        return Map.of("countryCode", countryCode, "phone", phone);
+        userSettingsRepository.updatePhone(phoneCode, phone, authUserId);
+        return Map.of("phoneCode", phoneCode, "phone", phone);
     }
 
     @Override

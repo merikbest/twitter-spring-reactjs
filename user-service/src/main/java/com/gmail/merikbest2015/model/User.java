@@ -51,11 +51,14 @@ public class User {
     @Column(name = "country_code")
     private String countryCode;
 
-    @Column(name = "phone")
-    private Long phone;
-
     @Column(name = "country")
     private String country;
+
+    @Column(name = "phone_code")
+    private String phoneCode;
+
+    @Column(name = "phone")
+    private Long phone;
 
     @Column(name = "gender")
     private String gender;

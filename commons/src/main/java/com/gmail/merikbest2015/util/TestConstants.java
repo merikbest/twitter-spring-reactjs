@@ -27,8 +27,9 @@ public class TestConstants {
     public static final String WALLPAPER_SRC = "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg";
     public static final Long WALLPAPER_ID = 44L;
     public static final String COUNTRY_CODE = "UA";
+    public static final String COUNTRY = "Ukraine";
+    public static final String PHONE_CODE = "+380";
     public static final Long PHONE = 666966623L;
-    public static final String COUNTRY = "UA";
     public static final String GENDER = "Cat";
     public static final String LANGUAGE = "Ukrainian - українська";
     public static final String BACKGROUND_COLOR = "DEFAULT";

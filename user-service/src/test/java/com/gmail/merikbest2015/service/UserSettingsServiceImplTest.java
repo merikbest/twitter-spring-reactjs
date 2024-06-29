@@ -76,10 +76,10 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void updatePhone_ShouldReturnUpdatedPhone() {
-        assertEquals(Map.of("countryCode", TestConstants.COUNTRY_CODE, "phone", TestConstants.PHONE),
-                userSettingsService.updatePhone(TestConstants.COUNTRY_CODE, TestConstants.PHONE));
+        assertEquals(Map.of("phoneCode", TestConstants.PHONE_CODE, "phone", TestConstants.PHONE),
+                userSettingsService.updatePhone(TestConstants.PHONE_CODE, TestConstants.PHONE));
         verify(userSettingsRepository, times(1))
-                .updatePhone(TestConstants.COUNTRY_CODE, TestConstants.PHONE, TestConstants.USER_ID);
+                .updatePhone(TestConstants.PHONE_CODE, TestConstants.PHONE, TestConstants.USER_ID);
     }
 
     @Test

@@ -30,8 +30,8 @@ public class UserSettingsMapper {
     }
 
     public UserPhoneResponse updatePhone(SettingsRequest request) {
-        Map<String, Object> phoneParams = userSettingsService.updatePhone(request.getCountryCode(), request.getPhone());
-        return new UserPhoneResponse((String) phoneParams.get("countryCode"), (Long) phoneParams.get("phone"));
+        Map<String, Object> phoneParams = userSettingsService.updatePhone(request.getPhoneCode(), request.getPhone());
+        return new UserPhoneResponse((String) phoneParams.get("phoneCode"), (Long) phoneParams.get("phone"));
     }
 
     public String updateCountry(SettingsRequest request) {
