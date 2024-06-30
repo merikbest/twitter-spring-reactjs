@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.response.CountryCodeResponse;
 import com.gmail.merikbest2015.model.CountryCode;
-import com.gmail.merikbest2015.service.CountryCodeService;
+import com.gmail.merikbest2015.service.LocalizationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,13 +17,13 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
-public class CountryCodeMapperTest {
+public class LocalizationMapperTest {
 
     @InjectMocks
-    private CountryCodeMapper countryCodeMapper;
+    private LocalizationMapper countryCodeMapper;
 
     @Mock
-    private CountryCodeService countryCodeService;
+    private LocalizationService localizationService;
 
     @Mock
     private BasicMapper basicMapper;
@@ -32,10 +32,10 @@ public class CountryCodeMapperTest {
     public void getCountryCodes() {
         List<CountryCode> countryCodes = List.of(new CountryCode(), new CountryCode());
         List<CountryCodeResponse> countryCodeResponses = List.of(new CountryCodeResponse(), new CountryCodeResponse());
-        when(countryCodeService.getCountryCodes()).thenReturn(countryCodes);
+        when(localizationService.getCountryCodes()).thenReturn(countryCodes);
         when(basicMapper.convertToResponseList(countryCodes, CountryCodeResponse.class)).thenReturn(countryCodeResponses);
         assertEquals(countryCodeResponses, countryCodeMapper.getCountryCodes());
-        verify(countryCodeService, times(1)).getCountryCodes();
+        verify(localizationService, times(1)).getCountryCodes();
         verify(basicMapper, times(1)).convertToResponseList(countryCodes, CountryCodeResponse.class);
     }
 }
