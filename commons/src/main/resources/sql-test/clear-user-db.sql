@@ -5,3 +5,4 @@ delete from "user-test".public.user_follower_requests;
 delete from "user-test".public.user_subscriptions;
 delete from "user-test".public.users;
 delete from "user-test".public.country_codes;
+delete from "user-test".public.languages;

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.model.CountryCode;
+import com.gmail.merikbest2015.model.Language;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,5 +21,13 @@ public class LocalizationServiceImplTest extends AbstractServiceTest {
         when(countryCodeRepository.findAll()).thenReturn(countryCodes);
         assertEquals(countryCodes, localizationService.getCountryCodes());
         verify(countryCodeRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void getLanguages_ShouldReturnLanguages() {
+        List<Language> languages = List.of(new Language(), new Language());
+        when(languageRepository.findAll()).thenReturn(languages);
+        assertEquals(languages, localizationService.getLanguages());
+        verify(languageRepository, times(1)).findAll();
     }
 }

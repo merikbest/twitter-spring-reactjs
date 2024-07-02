@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.response.CountryCodeResponse;
+import com.gmail.merikbest2015.dto.response.LanguagesResponse;
 import com.gmail.merikbest2015.model.CountryCode;
+import com.gmail.merikbest2015.model.Language;
 import com.gmail.merikbest2015.service.LocalizationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,5 +39,16 @@ public class LocalizationMapperTest {
         assertEquals(countryCodeResponses, countryCodeMapper.getCountryCodes());
         verify(localizationService, times(1)).getCountryCodes();
         verify(basicMapper, times(1)).convertToResponseList(countryCodes, CountryCodeResponse.class);
+    }
+
+    @Test
+    public void getLanguages() {
+        List<Language> languages = List.of(new Language(), new Language());
+        List<LanguagesResponse> languagesResponses = List.of(new LanguagesResponse(), new LanguagesResponse());
+        when(localizationService.getLanguages()).thenReturn(languages);
+        when(basicMapper.convertToResponseList(languages, LanguagesResponse.class)).thenReturn(languagesResponses);
+        assertEquals(languagesResponses, countryCodeMapper.getLanguages());
+        verify(localizationService, times(1)).getLanguages();
+        verify(basicMapper, times(1)).convertToResponseList(languages, LanguagesResponse.class);
     }
 }

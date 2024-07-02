@@ -38,4 +38,14 @@ public class LocalizationControllerTest {
                 .andExpect(jsonPath("$[9].phoneCode").value("+374"))
                 .andExpect(jsonPath("$[9].country").value("Armenia"));
     }
+
+    @Test
+    @DisplayName("[200] GET /ui/v1/user/languages - Get languages")
+    public void getLanguages() throws Exception {
+        mockMvc.perform(get(UI_V1_USER + LANGUAGES))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[*]", hasSize(10)))
+                .andExpect(jsonPath("$[9].id").value(10L))
+                .andExpect(jsonPath("$[9].language").value("Danish - dansk"));
+    }
 }

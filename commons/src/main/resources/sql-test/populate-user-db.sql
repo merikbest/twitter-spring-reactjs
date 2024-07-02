@@ -41,3 +41,15 @@ INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, coun
 INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (8, 'AG', '+1', 'Antigua and Barbuda');
 INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (9, 'AR', '+54', 'Argentina');
 INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (10, 'AM', '+374', 'Armenia');
+
+-- languages
+INSERT INTO "user-test".public.languages (id, language) VALUES (1, 'Arabic - العربية');
+INSERT INTO "user-test".public.languages (id, language) VALUES (2, 'Arabic (Feminine) - العربية (مؤنث)');
+INSERT INTO "user-test".public.languages (id, language) VALUES (3, 'Bangla - বাংলা');
+INSERT INTO "user-test".public.languages (id, language) VALUES (4, 'Basque (beta) - euskara');
+INSERT INTO "user-test".public.languages (id, language) VALUES (5, 'British English');
+INSERT INTO "user-test".public.languages (id, language) VALUES (6, 'Bulgarian - български');
+INSERT INTO "user-test".public.languages (id, language) VALUES (7, 'Catalan - català');
+INSERT INTO "user-test".public.languages (id, language) VALUES (8, 'Croatian - hrvatski');
+INSERT INTO "user-test".public.languages (id, language) VALUES (9, 'Czech - čeština');
+INSERT INTO "user-test".public.languages (id, language) VALUES (10, 'Danish - dansk');

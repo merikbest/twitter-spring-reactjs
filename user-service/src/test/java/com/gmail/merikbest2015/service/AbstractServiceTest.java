@@ -41,6 +41,9 @@ public abstract class AbstractServiceTest {
     CountryCodeRepository countryCodeRepository;
 
     @MockBean
+    LanguageRepository languageRepository;
+
+    @MockBean
     UserSettingsRepository userSettingsRepository;
 
     @MockBean
