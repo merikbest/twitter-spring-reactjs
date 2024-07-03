@@ -323,8 +323,9 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
             errorMessage: null,
             loadingState: LoadingStatus.LOADED
         },
-        countryCodes: {
-            items: [],
+        localization: {
+            countryCodes: [],
+            languages: [],
             loadingState: loadingStatus
         },
     } as RootState;

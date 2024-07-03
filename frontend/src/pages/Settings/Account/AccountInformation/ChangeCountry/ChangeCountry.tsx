@@ -11,15 +11,15 @@ import { useGlobalStyles } from "../../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { HOW_TO_CHANGE_COUNTRY_SETTINGS } from "../../../../../constants/url-constants";
 import { LoadingStatus } from "../../../../../types/common";
-import { fetchCountryCodes } from "../../../../../store/ducks/countryCode/actionCreators";
-import { selectCountryCodeItems, selectIsCountryCodesLoading } from "../../../../../store/ducks/countryCode/selectors";
+import { fetchCountryCodes } from "../../../../../store/ducks/localization/actionCreators";
+import { selectCountryCodes, selectIsLocalizationLoading } from "../../../../../store/ducks/localization/selectors";
 
 const ChangeCountry: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useChangeCountryStyles();
     const dispatch = useDispatch();
-    const countryCodes = useSelector(selectCountryCodeItems);
-    const isCountryCodesLoading = useSelector(selectIsCountryCodesLoading);
+    const countryCodes = useSelector(selectCountryCodes);
+    const isCountryCodesLoading = useSelector(selectIsLocalizationLoading);
     const myProfileId = useSelector(selectUserDataId);
     const myProfileCountry = useSelector(selectUserProfileCountry);
     const [country, setCountry] = useState<string>("");

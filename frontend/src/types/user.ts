@@ -151,3 +151,8 @@ export interface CountryCodeResponse {
     phoneCode: string;
     country: string;
 }
+
+export interface LanguagesResponse {
+    id: number;
+    language: string;
+}

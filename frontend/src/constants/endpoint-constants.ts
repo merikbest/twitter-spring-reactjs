@@ -40,6 +40,7 @@ export const UI_V1_USER_SUBSCRIBE_USER_ID = (userId: number) => `${UI_V1_USER}/s
 export const UI_V1_USER_PIN_TWEET_ID = (tweetId: number) => `${UI_V1_USER}/pin/tweet/${tweetId}`;
 export const UI_V1_USER_DETAILS_USER_ID = (userId: number) => `${UI_V1_USER}/details/${userId}`;
 export const UI_V1_USER_COUNTRY_CODES = `${UI_V1_USER}/country/codes`;
+export const UI_V1_USER_LANGUAGES = `${UI_V1_USER}/languages`;
 export const UI_V1_USER_SETTINGS_UPDATE_USERNAME = `${UI_V1_USER}/settings/update/username`;
 export const UI_V1_USER_SETTINGS_UPDATE_EMAIL = `${UI_V1_USER}/settings/update/email`;
 export const UI_V1_USER_SETTINGS_UPDATE_PHONE = `${UI_V1_USER}/settings/update/phone`;

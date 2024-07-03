@@ -25,7 +25,7 @@ import { topicsSaga } from "./ducks/topics/sagas";
 import { searchSaga } from "./ducks/search/sagas";
 import { addTweetFormSaga } from "./ducks/addTweetForm/sagas";
 import { authenticationSaga } from "./ducks/authentication/sagas";
-import { countryCodesSaga } from "./ducks/countryCode/sagas";
+import { localizationSaga } from "./ducks/localization/sagas";
 
 export default function* rootSaga() {
     yield all([
@@ -54,6 +54,6 @@ export default function* rootSaga() {
         searchSaga(),
         addTweetFormSaga(),
         authenticationSaga(),
-        countryCodesSaga()
+        localizationSaga()
     ]);
 }

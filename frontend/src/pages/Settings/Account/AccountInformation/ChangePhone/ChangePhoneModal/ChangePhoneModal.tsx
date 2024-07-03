@@ -25,11 +25,8 @@ import {
 } from "../../../../../../store/ducks/user/selectors";
 import { updatePhone } from "../../../../../../store/ducks/user/actionCreators";
 import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../../../constants/url-constants";
-import { fetchCountryCodes } from "../../../../../../store/ducks/countryCode/actionCreators";
-import {
-    selectCountryCodeItems,
-    selectIsCountryCodesLoading
-} from "../../../../../../store/ducks/countryCode/selectors";
+import { fetchCountryCodes } from "../../../../../../store/ducks/localization/actionCreators";
+import { selectCountryCodes, selectIsLocalizationLoading } from "../../../../../../store/ducks/localization/selectors";
 
 interface ChangePhoneModalProps {
     visible?: boolean;
@@ -47,8 +44,8 @@ const SetPhoneFormSchema = yup.object().shape({
 const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }): ReactElement | null => {
     const classes = useChangePhoneModalStyles();
     const dispatch = useDispatch();
-    const countryCodes = useSelector(selectCountryCodeItems);
-    const isCountryCodesLoading = useSelector(selectIsCountryCodesLoading);
+    const countryCodes = useSelector(selectCountryCodes);
+    const isCountryCodesLoading = useSelector(selectIsLocalizationLoading);
     const profilePhoneCode = useSelector(selectUserProfilePhoneCode);
     const profilePhone = useSelector(selectUserProfilePhone);
     const isLoading = useSelector(selectUserIsLoading);
@@ -153,7 +150,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                     <div className={classes.footer}>
                         <Button
                             color="primary"
-                            variant={((!getValues("phone")|| errors.phone || !phoneCode) ) ? "outlined" : "contained"}
+                            variant={((!getValues("phone") || errors.phone || !phoneCode)) ? "outlined" : "contained"}
                             type="submit"
                             size="small"
                             fullWidth

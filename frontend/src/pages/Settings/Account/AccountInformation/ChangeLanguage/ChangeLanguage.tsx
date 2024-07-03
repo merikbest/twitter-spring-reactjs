@@ -8,17 +8,23 @@ import { selectUserIsLoading, selectUserProfileLanguage } from "../../../../../s
 import { setUserLoadingStatus, updateLanguage } from "../../../../../store/ducks/user/actionCreators";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { LoadingStatus } from "../../../../../types/common";
+import { fetchLanguages } from "../../../../../store/ducks/localization/actionCreators";
+import { selectIsLocalizationLoading, selectLanguages } from "../../../../../store/ducks/localization/selectors";
 
 const ChangeLanguage: FC = (): ReactElement => {
     const classes = useChangeLanguageStyles();
     const dispatch = useDispatch();
-    const myProfileLanguage = useSelector(selectUserProfileLanguage);
+    const languages = useSelector(selectLanguages);
+    const languagesLoading = useSelector(selectIsLocalizationLoading);
+    const profileLanguage = useSelector(selectUserProfileLanguage);
     const isLoading = useSelector(selectUserIsLoading);
     const [language, setLanguage] = useState<string>("");
 
     useEffect(() => {
-        if (myProfileLanguage) {
-            setLanguage(myProfileLanguage);
+        dispatch(fetchLanguages());
+
+        if (profileLanguage) {
+            setLanguage(profileLanguage);
         }
 
         return () => {
@@ -48,11 +54,17 @@ const ChangeLanguage: FC = (): ReactElement => {
                         native
                         value={language}
                         onChange={changeLanguage}
+                        disabled={languagesLoading}
                         label="Display Language"
                         fullWidth
                     >
                         <option aria-label="None" />
-                        {languages()}
+                        {languages.map(language => (
+                                <option key={language.id} value={language.language}>
+                                    {language.language}
+                                </option>
+                            )
+                        )}
                     </FilledSelect>
                 </FormControl>
                 <Typography variant={"subtitle2"} component={"div"} className={classes.languageInfo}>
@@ -78,58 +90,3 @@ const ChangeLanguage: FC = (): ReactElement => {
 };
 
 export default withDocumentTitle(ChangeLanguage)("Change display language");
-
-const languages = (): JSX.Element => {
-    return (
-        <>
-            <option value="Arabic - العربية">Arabic - العربية</option>
-            <option value="Arabic (Feminine) - العربية (مؤنث)">Arabic (Feminine) - العربية (مؤنث)</option>
-            <option value="Bangla - বাংলা">Bangla - বাংলা</option>
-            <option value="Basque (beta) - euskara">Basque (beta) - euskara</option>
-            <option value="British English">British English</option>
-            <option value="Bulgarian - български">Bulgarian - български</option>
-            <option value="Catalan - català">Catalan - català</option>
-            <option value="Croatian - hrvatski">Croatian - hrvatski</option>
-            <option value="Czech - čeština">Czech - čeština</option>
-            <option value="Danish - dansk">Danish - dansk</option>
-            <option value="Dutch - Nederlands">Dutch - Nederlands</option>
-            <option value="English">English</option>
-            <option value="Filipino">Filipino</option>
-            <option value="Finnish - suomi">Finnish - suomi</option>
-            <option value="French - français">French - français</option>
-            <option value="Galician (beta) - galego">Galician (beta) - galego</option>
-            <option value="German - Deutsch">German - Deutsch</option>
-            <option value="Greek - Ελληνικά">Greek - Ελληνικά</option>
-            <option value="Gujarati - ગુજરાતી">Gujarati - ગુજરાતી</option>
-            <option value="Hebrew - עברית">Hebrew - עברית</option>
-            <option value="Hindi - हिन्दी">Hindi - हिन्दी</option>
-            <option value="Hungarian - magyar">Hungarian - magyar</option>
-            <option value="Indonesian - Indonesia">Indonesian - Indonesia</option>
-            <option value="Irish (beta) - Gaeilge">Irish (beta) - Gaeilge</option>
-            <option value="Italian - italiano">Italian - italiano</option>
-            <option value="Japanese - 日本語">Japanese - 日本語</option>
-            <option value="Kannada - ಕನ್ನಡ">Kannada - ಕನ್ನಡ</option>
-            <option value="Korean - 한국어">Korean - 한국어</option>
-            <option value="Malay - Melayu">Malay - Melayu</option>
-            <option value="Marathi - मराठी">Marathi - मराठी</option>
-            <option value="Norwegian - norsk">Norwegian - norsk</option>
-            <option value="Persian - فارسی">Persian - فارسی</option>
-            <option value="Polish - polski">Polish - polski</option>
-            <option value="Portuguese - português">Portuguese - português</option>
-            <option value="Romanian - română">Romanian - română</option>
-            <option value="Russian - русский">Russian - русский</option>
-            <option value="Serbian - српски">Serbian - српски</option>
-            <option value="Simplified Chinese - 简体中文">Simplified Chinese - 简体中文</option>
-            <option value="Slovak - slovenčina">Slovak - slovenčina</option>
-            <option value="Spanish - español">Spanish - español</option>
-            <option value="Swedish - svenska">Swedish - svenska</option>
-            <option value="Tamil - தமிழ்">Tamil - தமிழ்</option>
-            <option value="Thai - ไทย">Thai - ไทย</option>
-            <option value="Traditional Chinese - 繁體中文">Traditional Chinese - 繁體中文</option>
-            <option value="Turkish - Türkçe">Turkish - Türkçe</option>
-            <option value="Ukrainian - українська">Ukrainian - українська</option>
-            <option value="Urdu (beta) - اردو">Urdu (beta) - اردو</option>
-            <option value="Vietnamese - Tiếng Việt">Vietnamese - Tiếng Việt</option>
-        </>
-    );
-};
