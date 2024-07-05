@@ -4,7 +4,6 @@ import ChangePhone from "../ChangePhone";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../util/test-utils/test-helper";
 import { UserActionsType } from "../../../../../../store/ducks/user/contracts/actionTypes";
 import { ChangeInfoTextField } from "../../../../ChangeInfoTextField/ChangeInfoTextField";
-import { getPhoneCode } from "../../../../../../util/country-code-helper";
 import ChangePhoneModal from "../ChangePhoneModal/ChangePhoneModal";
 import { LoadingStatus } from "../../../../../../types/common";
 
@@ -21,7 +20,7 @@ describe("ChangePhone", () => {
 
         expect(wrapper.text().includes("Update phone number")).toBe(true);
         expect(wrapper.text().includes("Delete phone number")).toBe(true);
-        expect(wrapper.find(ChangeInfoTextField).prop("value")).toBe(`${getPhoneCode(mockStore.user.data?.countryCode)}${mockStore.user.data?.phone}`);
+        expect(wrapper.find(ChangeInfoTextField).prop("value")).toBe(`${mockStore.user.data?.phoneCode}${mockStore.user.data?.phone}`);
         expect(mockDispatchFn).nthCalledWith(1, {
             payload: LoadingStatus.NEVER,
             type: UserActionsType.SET_USER_LOADING_STATE

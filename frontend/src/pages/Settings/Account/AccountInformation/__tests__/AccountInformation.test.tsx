@@ -7,7 +7,6 @@ import {
     mountWithStore,
     testClickOnLink
 } from "../../../../../util/test-utils/test-helper";
-import { getCountry, getPhoneCode } from "../../../../../util/country-code-helper";
 import { formatScheduleDate } from "../../../../../util/format-date-helper";
 import {
     SETTINGS_ACCESSIBILITY_DISPLAY_AND_LANGUAGES_LANGUAGES,
@@ -38,7 +37,7 @@ describe("AccountInformation", () => {
         expect(wrapper.text().includes("Username")).toBe(true);
         expect(wrapper.text().includes(`@${mockUser.username}`)).toBe(true);
         expect(wrapper.text().includes("Phone")).toBe(true);
-        expect(wrapper.text().includes(`${getPhoneCode(mockUser.countryCode)}${mockUser.phone}`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUser.phoneCode}${mockUser.phone}`)).toBe(true);
         expect(wrapper.text().includes("Email")).toBe(true);
         expect(wrapper.text().includes(mockUser.email)).toBe(true);
         expect(wrapper.text().includes("Protected Tweets")).toBe(true);
@@ -46,7 +45,7 @@ describe("AccountInformation", () => {
         expect(wrapper.text().includes("Account creation")).toBe(true);
         expect(wrapper.text().includes(formatScheduleDate(new Date(mockUser.registrationDate)))).toBe(true);
         expect(wrapper.text().includes("Country")).toBe(true);
-        expect(wrapper.text().includes(getCountry(mockUser.countryCode))).toBe(true);
+        expect(wrapper.text().includes(mockUser.country)).toBe(true);
         expect(wrapper.text().includes("Languages")).toBe(true);
         expect(wrapper.text().includes(mockUser.language)).toBe(true);
         expect(wrapper.text().includes("Gender")).toBe(true);

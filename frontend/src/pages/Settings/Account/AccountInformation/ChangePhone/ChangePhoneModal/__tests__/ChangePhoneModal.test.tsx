@@ -4,11 +4,10 @@ import { setImmediate } from "timers";
 
 import ChangePhoneModal from "../ChangePhoneModal";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../../util/test-utils/test-helper";
-import { getCountryCode, getPhoneCode } from "../../../../../../../util/country-code-helper";
 import { FilledSelect } from "../../../../../../../components/FilledSelect/FilledSelect";
 import { ChangeInfoTextField } from "../../../../../ChangeInfoTextField/ChangeInfoTextField";
 import { LoadingStatus } from "../../../../../../../types/common";
-import { CountryCodesActionsType } from "../../../../../../../store/ducks/countryCode/contracts/actionTypes";
+import { LocalizationActionsType } from "../../../../../../../store/ducks/localization/contracts/actionTypes";
 
 describe("ChangePhoneModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -19,8 +18,8 @@ describe("ChangePhoneModal", () => {
     });
 
     it("should render correctly", () => {
-        mountWithStore(<ChangePhoneModal visible={false} onClose={jest.fn()} />, mockStore);
-        expect(mockDispatchFn).nthCalledWith(1, { type: CountryCodesActionsType.FETCH_COUNTRY_CODES });
+        mountWithStore(<ChangePhoneModal visible={true} onClose={jest.fn()} />, mockStore);
+        expect(mockDispatchFn).nthCalledWith(1, { type: LocalizationActionsType.FETCH_COUNTRY_CODES });
     });
 
     it("should render empty ChangePhoneModal window correctly", () => {
@@ -34,18 +33,18 @@ describe("ChangePhoneModal", () => {
 
         expect(wrapper.find(Dialog).exists()).toBeTruthy();
         expect(wrapper.text().includes("Change phone")).toBe(true);
-        expect(wrapper.text().includes(`Your current phone number is ${getPhoneCode(mockStore.user.data?.countryCode)}${mockStore.user.data?.phone}.`)).toBe(true);
+        expect(wrapper.text().includes(`Your current phone number is ${mockStore.user.data?.phoneCode}${mockStore.user.data?.phone}.`)).toBe(true);
         expect(wrapper.text().includes("Country code")).toBe(true);
-        expect(wrapper.find(FilledSelect).prop("value")).toBe(getCountryCode(mockStore.user.data?.countryCode));
+        expect(wrapper.find(FilledSelect).prop("value")).toBe(mockStore.user.data?.phoneCode);
 
-        wrapper.find(FilledSelect).find("select").simulate("change", { target: { value: "US" } });
+        wrapper.find(FilledSelect).find("select").simulate("change", { target: { value: "+1" } });
         wrapper.find(ChangeInfoTextField).find("input").simulate("change", { target: { value: 123456789 } });
 
         setImmediate(() => {
             wrapper.find(Button).simulate("submit");
             wrapper.update();
             done();
-            expect(wrapper.find(FilledSelect).prop("value")).toBe("US");
+            expect(wrapper.find(FilledSelect).prop("value")).toBe("+1");
             expect(wrapper.find(ChangeInfoTextField).prop("value")).toBe(123456789);
         });
     });
