@@ -6,6 +6,7 @@ import { createMockRootState, mockDispatch, mountWithStore } from "../../../../.
 import { FilledSelect } from "../../../../../../components/FilledSelect/FilledSelect";
 import { UserActionsType } from "../../../../../../store/ducks/user/contracts/actionTypes";
 import { LoadingStatus } from "../../../../../../types/common";
+import { LocalizationActionsType } from "../../../../../../store/ducks/localization/contracts/actionTypes";
 
 describe("ChangeLanguage", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
@@ -25,7 +26,8 @@ describe("ChangeLanguage", () => {
         wrapper.find(Button).simulate("click");
 
         expect(wrapper.find(FilledSelect).prop("value")).toBe("English");
-        expect(mockDispatchFn).nthCalledWith(1, {
+        expect(mockDispatchFn).nthCalledWith(1, { type: LocalizationActionsType.FETCH_LANGUAGES });
+        expect(mockDispatchFn).nthCalledWith(2, {
             payload: { language: "English" },
             type: UserActionsType.UPDATE_LANGUAGE
         });
@@ -35,7 +37,8 @@ describe("ChangeLanguage", () => {
         const wrapper = mountWithStore(<ChangeLanguage />, mockStore);
         wrapper.unmount();
 
-        expect(mockDispatchFn).nthCalledWith(1, {
+        expect(mockDispatchFn).nthCalledWith(1, { type: LocalizationActionsType.FETCH_LANGUAGES });
+        expect(mockDispatchFn).nthCalledWith(2, {
             payload: LoadingStatus.NEVER,
             type: UserActionsType.SET_USER_LOADING_STATE
         });

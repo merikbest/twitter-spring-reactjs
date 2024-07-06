@@ -49,7 +49,6 @@ import {
     setUserFollowing,
     setUserLoadingStatus,
     setUsername,
-    startUseTwitter,
     updateBackgroundColor,
     updateColorScheme,
     updateCountry,
@@ -234,7 +233,7 @@ describe("userSaga:", () => {
     });
 
     describe("updatePhoneRequest:", () => {
-        const mockPhoneSettings = { countryCode: "US", phone: 12345 };
+        const mockPhoneSettings = { countryCode: "US", phoneNumber: 12345 };
         const mockResponse = { data: mockPhoneSettings } as AxiosResponse<any>;
         const worker = updatePhoneRequest(updatePhone(mockPhoneSettings));
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);

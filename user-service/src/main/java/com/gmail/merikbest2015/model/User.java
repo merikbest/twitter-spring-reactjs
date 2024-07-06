@@ -58,8 +58,8 @@ public class User {
     @Column(name = "phone_code")
     private String phoneCode;
 
-    @Column(name = "phone")
-    private Long phone;
+    @Column(name = "phone_number")
+    private Long phoneNumber;
 
     @Column(name = "gender")
     private String gender;

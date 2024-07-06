@@ -22,7 +22,7 @@ export const selectUserProfileUsername = (state: RootState) => selectUserData(st
 export const selectUserProfileCountryCode = (state: RootState) => selectUserData(state)?.countryCode;
 export const selectUserProfileCountry = (state: RootState) => selectUserData(state)?.country;
 export const selectUserProfilePhoneCode = (state: RootState) => selectUserData(state)?.phoneCode;
-export const selectUserProfilePhone = (state: RootState) => selectUserData(state)?.phone;
+export const selectUserProfilePhoneNumber = (state: RootState) => selectUserData(state)?.phoneNumber;
 export const selectUserProfileLanguage = (state: RootState) => selectUserData(state)?.language;
 export const selectUserProfileGender = (state: RootState) => selectUserData(state)?.gender;
 export const selectUserProfileLocation = (state: RootState) => selectUserData(state)?.location;

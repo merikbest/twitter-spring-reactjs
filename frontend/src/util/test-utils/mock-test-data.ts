@@ -142,7 +142,7 @@ export const mockUser = {
     "countryCode": "UA",
     "country": "Ukraine",
     "phoneCode": "+380",
-    "phone": 666966623,
+    "phoneNumber": 666966623,
     "gender": "Cat",
     "language": "Ukrainian - українська",
     "birthday": "Jan 15, 2005",

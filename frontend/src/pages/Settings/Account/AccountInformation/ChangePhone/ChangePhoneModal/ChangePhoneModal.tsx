@@ -20,7 +20,7 @@ import { ChangeInfoTextField } from "../../../../ChangeInfoTextField/ChangeInfoT
 import { FilledSelect } from "../../../../../../components/FilledSelect/FilledSelect";
 import {
     selectUserIsLoading,
-    selectUserProfilePhone,
+    selectUserProfilePhoneNumber,
     selectUserProfilePhoneCode
 } from "../../../../../../store/ducks/user/selectors";
 import { updatePhone } from "../../../../../../store/ducks/user/actionCreators";
@@ -34,11 +34,11 @@ interface ChangePhoneModalProps {
 }
 
 interface PhoneFormProps {
-    phone: string;
+    phoneNumber: string;
 }
 
 const SetPhoneFormSchema = yup.object().shape({
-    phone: yup.string().matches(/^[0-9]\d{8}$/, "Please enter a valid phone number.").required()
+    phoneNumber: yup.string().matches(/^[0-9]\d{8}$/, "Please enter a valid phone number.").required()
 });
 
 const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }): ReactElement | null => {
@@ -47,7 +47,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
     const countryCodes = useSelector(selectCountryCodes);
     const isCountryCodesLoading = useSelector(selectIsLocalizationLoading);
     const profilePhoneCode = useSelector(selectUserProfilePhoneCode);
-    const profilePhone = useSelector(selectUserProfilePhone);
+    const profilePhoneNumber = useSelector(selectUserProfilePhoneNumber);
     const isLoading = useSelector(selectUserIsLoading);
     const [phoneCode, setPhoneCode] = useState<string>("");
     const { control, handleSubmit, formState: { errors }, getValues } = useForm<PhoneFormProps>({
@@ -65,7 +65,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
     }, [visible, profilePhoneCode]);
 
     const onSubmit = (data: PhoneFormProps): void => {
-        dispatch(updatePhone({ phoneCode, phone: parseInt(data.phone) }));
+        dispatch(updatePhone({ phoneCode, phoneNumber: parseInt(data.phoneNumber) }));
     };
 
     const changeCountryCode = (event: ChangeEvent<{ value: unknown }>): void => {
@@ -87,10 +87,10 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                         Change phone
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        {`Your current phone number is ${profilePhoneCode ? `${profilePhoneCode}${profilePhone}` : "none"}. What would you like to update it to?`}
+                        {`Your current phone number is ${profilePhoneCode ? `${profilePhoneCode}${profilePhoneNumber}` : "none"}. What would you like to update it to?`}
                     </Typography>
                 </div>
-                <form onSubmit={(!getValues("phone") || !!errors.phone) ? onClose : handleSubmit(onSubmit)}>
+                <form onSubmit={(!getValues("phoneNumber") || !!errors.phoneNumber) ? onClose : handleSubmit(onSubmit)}>
                     <div className={classes.selectWrapper}>
                         <FormControl variant="filled">
                             <InputLabel htmlFor="select-country-code">
@@ -118,21 +118,21 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                         </FormControl>
                     </div>
                     <Controller
-                        name="phone"
+                        name="phoneNumber"
                         control={control}
                         defaultValue=""
                         render={({ field: { onChange, value } }) => (
                             <ChangeInfoTextField
                                 inputMode="tel"
-                                id="phone"
-                                name="phone"
+                                id="phoneNumber"
+                                name="phoneNumber"
                                 label="Your phone number"
                                 variant="filled"
                                 onChange={onChange}
                                 value={value}
                                 disabled={isLoading}
-                                helperText={errors.phone?.message}
-                                error={!!errors.phone}
+                                helperText={errors.phoneNumber?.message}
+                                error={!!errors.phoneNumber}
                                 fullWidth
                             />
                         )}
@@ -150,12 +150,12 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                     <div className={classes.footer}>
                         <Button
                             color="primary"
-                            variant={((!getValues("phone") || errors.phone || !phoneCode)) ? "outlined" : "contained"}
+                            variant={((!getValues("phoneNumber") || errors.phoneNumber || !phoneCode)) ? "outlined" : "contained"}
                             type="submit"
                             size="small"
                             fullWidth
                         >
-                            {((!getValues("phone") || errors.phone || !phoneCode)) ? "Cancel" : "Next"}
+                            {((!getValues("phoneNumber") || errors.phoneNumber || !phoneCode)) ? "Cancel" : "Next"}
                         </Button>
                     </div>
                 </form>

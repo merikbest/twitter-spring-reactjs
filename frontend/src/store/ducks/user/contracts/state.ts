@@ -12,7 +12,7 @@ export interface SettingsRequest {
     countryCode?: string;
     country?: string;
     phoneCode?: string;
-    phone?: number;
+    phoneNumber?: number;
     gender?: string;
     language?: string;
     mutedDirectMessages?: boolean;
@@ -37,5 +37,5 @@ export interface UserActionRequest {
 
 export interface UserPhoneResponse {
     phoneCode: string;
-    phone: number;
+    phoneNumber: number;
 }

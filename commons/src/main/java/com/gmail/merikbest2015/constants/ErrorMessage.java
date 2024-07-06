@@ -53,4 +53,5 @@ public class ErrorMessage {
     public static final String INCORRECT_LIST_NAME_LENGTH = "Incorrect list name length";
     public static final String LIST_OWNER_NOT_FOUND = "List owner not found";
     public static final String USER_ID_BLOCKED = "User with ID:%s is blocked";
+    public static final String PHONE_CODE_NOT_FOUND = "Phone code not found";
 }

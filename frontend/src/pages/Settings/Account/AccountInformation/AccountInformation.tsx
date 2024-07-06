@@ -10,7 +10,7 @@ import {
     selectUserProfileEmail,
     selectUserProfileGender,
     selectUserProfileLanguage,
-    selectUserProfilePhone,
+    selectUserProfilePhoneNumber,
     selectUserProfilePhoneCode,
     selectUserProfileRegistrationDate,
     selectUserProfileUsername
@@ -35,7 +35,7 @@ const AccountInformation: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const username = useSelector(selectUserProfileUsername);
     const phoneCode = useSelector(selectUserProfilePhoneCode);
-    const phone = useSelector(selectUserProfilePhone);
+    const phoneNumber = useSelector(selectUserProfilePhoneNumber);
     const country = useSelector(selectUserProfileCountry);
     const email = useSelector(selectUserProfileEmail);
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
@@ -72,7 +72,7 @@ const AccountInformation: FC = (): ReactElement => {
                                 Phone
                             </Typography>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                {(phone && phoneCode) && `${phoneCode}${phone}`}
+                                {(phoneCode && phoneNumber) && `${phoneCode}${phoneNumber}`}
                             </Typography>
                         </div>
                         <div className={globalClasses.arrowIcon}>

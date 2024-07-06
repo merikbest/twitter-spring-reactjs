@@ -24,8 +24,8 @@ public interface UserSettingsRepository extends JpaRepository<User, Long> {
     void updateEmail(@Param("email") String email, @Param("userId") Long userId);
 
     @Modifying
-    @Query("UPDATE User user SET user.countryCode = :countryCode, user.phone = :phone WHERE user.id = :userId")
-    void updatePhone(@Param("countryCode") String countryCode, @Param("phone") Long phone, @Param("userId") Long userId);
+    @Query("UPDATE User user SET user.phoneCode = :phoneCode, user.phoneNumber = :phoneNumber WHERE user.id = :userId")
+    void updatePhoneNumber(@Param("phoneCode") String phoneCode, @Param("phoneNumber") Long phoneNumber, @Param("userId") Long userId);
 
     @Modifying
     @Query("UPDATE User user SET user.country = :country WHERE user.id = :userId")

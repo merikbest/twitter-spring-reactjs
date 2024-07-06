@@ -101,16 +101,16 @@ describe("userReducer:", () => {
             userReducer(
                 {
                     ...initialUserState,
-                    data: { id: 1, countryCode: "US", phone: 12345 } as AuthUserResponse
+                    data: { id: 1, phoneCode: "US", phoneNumber: 12345 } as AuthUserResponse
                 },
                 {
                     type: UserActionsType.SET_PHONE,
-                    payload: { countryCode: "FR", phone: 54321 }
+                    payload: { phoneCode: "FR", phoneNumber: 54321 }
                 }
             ),
             {
                 ...initialUserState,
-                data: { id: 1, countryCode: "FR", phone: 54321 } as AuthUserResponse,
+                data: { id: 1, phoneCode: "FR", phoneNumber: 54321 } as AuthUserResponse,
                 status: LoadingStatus.LOADED
             }
         );

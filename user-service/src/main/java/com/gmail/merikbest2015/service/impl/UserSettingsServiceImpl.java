@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.model.UserRole;
+import com.gmail.merikbest2015.repository.CountryCodeRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.UserSettingsRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -28,6 +29,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
     private final UserSettingsRepository userSettingsRepository;
+    private final CountryCodeRepository countryCodeRepository;
     private final JwtProvider jwtProvider;
     private final UpdateUserProducer updateUserProducer;
 
@@ -59,15 +61,17 @@ public class UserSettingsServiceImpl implements UserSettingsService {
 
     @Override
     @Transactional
-    public Map<String, Object> updatePhone(String phoneCode, Long phone) {
-        int phoneLength = String.valueOf(phone).length();
+    public Map<String, Object> updatePhoneNumber(String phoneCode, Long phoneNumber) {
+        int phoneLength = String.valueOf(phoneNumber).length();
 
         if (phoneLength < 6 || phoneLength > 10) {
             throw new ApiRequestException(INVALID_PHONE_NUMBER, HttpStatus.BAD_REQUEST);
         }
+        countryCodeRepository.findByPhoneCode(phoneCode)
+                .orElseThrow(() -> new ApiRequestException(PHONE_CODE_NOT_FOUND, HttpStatus.NOT_FOUND));
         Long authUserId = authenticationService.getAuthenticatedUserId();
-        userSettingsRepository.updatePhone(phoneCode, phone, authUserId);
-        return Map.of("phoneCode", phoneCode, "phone", phone);
+        userSettingsRepository.updatePhoneNumber(phoneCode, phoneNumber, authUserId);
+        return Map.of("phoneCode", phoneCode, "phoneNumber", phoneNumber);
     }
 
     @Override

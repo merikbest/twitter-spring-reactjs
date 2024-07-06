@@ -75,7 +75,7 @@ export interface AuthUserResponse {
     countryCode: string;
     country: string;
     phoneCode: string;
-    phone: number;
+    phoneNumber: number;
     gender: string;
     language: string;
     birthday: string;

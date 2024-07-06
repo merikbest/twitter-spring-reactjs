@@ -11,7 +11,7 @@ public class SettingsRequest {
     private String countryCode;
     private String country;
     private String phoneCode;
-    private Long phone;
+    private Long phoneNumber;
     private String gender;
     private String language;
     private boolean mutedDirectMessages;

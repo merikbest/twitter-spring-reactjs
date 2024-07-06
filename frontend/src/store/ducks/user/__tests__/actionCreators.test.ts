@@ -181,9 +181,9 @@ describe("user actions", () => {
         payload: { email: "test@test.test" } as SettingsRequest
     });
 
-    testAction(updatePhone, updatePhone({ phone: 12345 } as SettingsRequest), {
+    testAction(updatePhone, updatePhone({ phoneNumber: 12345 } as SettingsRequest), {
         type: UserActionsType.UPDATE_PHONE,
-        payload: { phone: 12345 } as SettingsRequest
+        payload: { phoneNumber: 12345 } as SettingsRequest
     });
 
     testAction(updateCountry, updateCountry({ country: "test" } as SettingsRequest), {
@@ -226,9 +226,9 @@ describe("user actions", () => {
         payload: "test"
     });
 
-    testAction(setPhone, setPhone({ phoneCode: "+1", phone: 12345 }), {
+    testAction(setPhone, setPhone({ phoneCode: "+1", phoneNumber: 12345 }), {
         type: UserActionsType.SET_PHONE,
-        payload: { countryCode: "text", phone: 12345 }
+        payload: { countryCode: "text", phoneNumber: 12345 }
     });
 
     testAction(setCountry, setCountry("test"), {

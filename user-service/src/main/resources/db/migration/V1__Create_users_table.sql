@@ -13,7 +13,7 @@ CREATE TABLE users
     country_code             VARCHAR(255),
     country                  VARCHAR(255),
     phone_code               VARCHAR(255),
-    phone                    INT8,
+    phone_number             INT8,
     email                    VARCHAR(255) NOT NULL UNIQUE,
     full_name                VARCHAR(255) NOT NULL,
     gender                   VARCHAR(255),

@@ -8,10 +8,7 @@ import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.mapper.UserSettingsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.gmail.merikbest2015.constants.PathConstants.*;
 
@@ -33,8 +30,8 @@ public class UserSettingsController {
     }
 
     @PutMapping(PHONE)
-    public ResponseEntity<UserPhoneResponse> updatePhone(@RequestBody SettingsRequest request) {
-        return ResponseEntity.ok(userSettingsMapper.updatePhone(request));
+    public ResponseEntity<UserPhoneResponse> updatePhoneNumber(@RequestBody SettingsRequest request) {
+        return ResponseEntity.ok(userSettingsMapper.updatePhoneNumber(request));
     }
 
     @PutMapping(COUNTRY)

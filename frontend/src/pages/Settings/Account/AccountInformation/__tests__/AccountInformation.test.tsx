@@ -37,7 +37,7 @@ describe("AccountInformation", () => {
         expect(wrapper.text().includes("Username")).toBe(true);
         expect(wrapper.text().includes(`@${mockUser.username}`)).toBe(true);
         expect(wrapper.text().includes("Phone")).toBe(true);
-        expect(wrapper.text().includes(`${mockUser.phoneCode}${mockUser.phone}`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUser.phoneCode}${mockUser.phoneNumber}`)).toBe(true);
         expect(wrapper.text().includes("Email")).toBe(true);
         expect(wrapper.text().includes(mockUser.email)).toBe(true);
         expect(wrapper.text().includes("Protected Tweets")).toBe(true);

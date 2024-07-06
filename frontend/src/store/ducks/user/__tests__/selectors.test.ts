@@ -24,7 +24,7 @@ import {
     selectUserProfileGender,
     selectUserProfileLanguage,
     selectUserProfileLocation,
-    selectUserProfilePhone,
+    selectUserProfilePhoneNumber,
     selectUserProfileRegistrationDate,
     selectUserProfileUsername,
     selectUserProfileWebsite,
@@ -110,7 +110,7 @@ describe("user selectors:", () => {
 
     describe("selectUserProfilePhone", () => {
         it("should return phone number", () => {
-            expect(selectUserProfilePhone(createMockRootState())).toBe(666966623);
+            expect(selectUserProfilePhoneNumber(createMockRootState())).toBe(666966623);
         });
     });
 

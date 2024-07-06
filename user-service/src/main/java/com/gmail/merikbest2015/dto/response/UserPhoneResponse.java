@@ -7,5 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserPhoneResponse {
     private String phoneCode;
-    private Long phone;
+    private Long phoneNumber;
 }
