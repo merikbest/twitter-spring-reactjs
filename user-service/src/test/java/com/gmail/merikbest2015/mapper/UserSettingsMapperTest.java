@@ -40,17 +40,17 @@ public class UserSettingsMapperTest {
     }
 
     @Test
-    public void updatePhone() {
+    public void updatePhoneNumber() {
         SettingsRequest request = new SettingsRequest();
         request.setPhoneCode(TestConstants.PHONE_CODE);
-        request.setPhone(TestConstants.PHONE);
+        request.setPhoneNumber(TestConstants.PHONE_NUMBER);
         Map<String, Object> phoneParams = new HashMap<>();
         phoneParams.put("phoneCode", TestConstants.PHONE_CODE);
-        phoneParams.put("phone", TestConstants.PHONE);
-        UserPhoneResponse userPhoneResponse = new UserPhoneResponse(TestConstants.PHONE_CODE, TestConstants.PHONE);
-        when(userSettingsService.updatePhone(TestConstants.PHONE_CODE, TestConstants.PHONE)).thenReturn(phoneParams);
-        assertEquals(userPhoneResponse, userSettingsMapper.updatePhone(request));
-        verify(userSettingsService, times(1)).updatePhone(TestConstants.PHONE_CODE, TestConstants.PHONE);
+        phoneParams.put("phoneNumber", TestConstants.PHONE_NUMBER);
+        UserPhoneResponse userPhoneResponse = new UserPhoneResponse(TestConstants.PHONE_CODE, TestConstants.PHONE_NUMBER);
+        when(userSettingsService.updatePhoneNumber(TestConstants.PHONE_CODE, TestConstants.PHONE_NUMBER)).thenReturn(phoneParams);
+        assertEquals(userPhoneResponse, userSettingsMapper.updatePhoneNumber(request));
+        verify(userSettingsService, times(1)).updatePhoneNumber(TestConstants.PHONE_CODE, TestConstants.PHONE_NUMBER);
     }
 
     @Test

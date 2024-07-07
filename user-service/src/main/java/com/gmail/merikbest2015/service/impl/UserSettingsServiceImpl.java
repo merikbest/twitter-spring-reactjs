@@ -67,8 +67,9 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         if (phoneLength < 6 || phoneLength > 10) {
             throw new ApiRequestException(INVALID_PHONE_NUMBER, HttpStatus.BAD_REQUEST);
         }
-        countryCodeRepository.findByPhoneCode(phoneCode)
-                .orElseThrow(() -> new ApiRequestException(PHONE_CODE_NOT_FOUND, HttpStatus.NOT_FOUND));
+        if (!countryCodeRepository.isPhoneCodeExists(phoneCode)) {
+            throw new ApiRequestException(PHONE_CODE_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
         Long authUserId = authenticationService.getAuthenticatedUserId();
         userSettingsRepository.updatePhoneNumber(phoneCode, phoneNumber, authUserId);
         return Map.of("phoneCode", phoneCode, "phoneNumber", phoneNumber);

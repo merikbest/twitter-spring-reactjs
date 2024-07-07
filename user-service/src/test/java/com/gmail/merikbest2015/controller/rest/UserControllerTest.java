@@ -230,7 +230,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.countryCode").value(TestConstants.COUNTRY_CODE))
                 .andExpect(jsonPath("$.country").value(TestConstants.COUNTRY))
                 .andExpect(jsonPath("$.phoneCode").value(TestConstants.PHONE_CODE))
-                .andExpect(jsonPath("$.phone").value(TestConstants.PHONE))
+                .andExpect(jsonPath("$.phoneNumber").value(TestConstants.PHONE_NUMBER))
                 .andExpect(jsonPath("$.gender").value(TestConstants.GENDER))
                 .andExpect(jsonPath("$.birthday").value(TestConstants.BIRTHDAY))
                 .andExpect(jsonPath("$.registrationDate").value(TestConstants.REGISTRATION_DATE))

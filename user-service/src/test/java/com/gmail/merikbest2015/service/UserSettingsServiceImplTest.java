@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.enums.BackgroundColorType;
 import com.gmail.merikbest2015.enums.ColorSchemeType;
 import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.model.CountryCode;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -75,17 +76,27 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
     }
 
     @Test
-    public void updatePhone_ShouldReturnUpdatedPhone() {
-        assertEquals(Map.of("phoneCode", TestConstants.PHONE_CODE, "phone", TestConstants.PHONE),
-                userSettingsService.updatePhone(TestConstants.PHONE_CODE, TestConstants.PHONE));
+    public void updatePhoneNumber_ShouldReturnUpdatedPhone() {
+        when(countryCodeRepository.isPhoneCodeExists(TestConstants.PHONE_CODE)).thenReturn(true);
+        assertEquals(Map.of("phoneCode", TestConstants.PHONE_CODE, "phoneNumber", TestConstants.PHONE_NUMBER),
+                userSettingsService.updatePhoneNumber(TestConstants.PHONE_CODE, TestConstants.PHONE_NUMBER));
         verify(userSettingsRepository, times(1))
-                .updatePhone(TestConstants.PHONE_CODE, TestConstants.PHONE, TestConstants.USER_ID);
+                .updatePhoneNumber(TestConstants.PHONE_CODE, TestConstants.PHONE_NUMBER, TestConstants.USER_ID);
     }
 
     @Test
-    public void updatePhone_ShouldThrowInvalidPhoneNumberException() {
+    public void updatePhoneNumber_ShouldPhoneCodeNotFound() {
+        when(countryCodeRepository.isPhoneCodeExists(TestConstants.PHONE_CODE)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
-                () -> userSettingsService.updatePhone(TestConstants.COUNTRY_CODE, 1L));
+                () -> userSettingsService.updatePhoneNumber(TestConstants.COUNTRY_CODE, TestConstants.PHONE_NUMBER));
+        assertEquals(PHONE_CODE_NOT_FOUND, exception.getMessage());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+    }
+
+    @Test
+    public void updatePhoneNumber_ShouldThrowInvalidPhoneNumberException() {
+        ApiRequestException exception = assertThrows(ApiRequestException.class,
+                () -> userSettingsService.updatePhoneNumber(TestConstants.COUNTRY_CODE, 1L));
         assertEquals(INVALID_PHONE_NUMBER, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }

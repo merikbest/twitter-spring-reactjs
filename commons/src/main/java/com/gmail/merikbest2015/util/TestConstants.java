@@ -29,7 +29,7 @@ public class TestConstants {
     public static final String COUNTRY_CODE = "UA";
     public static final String COUNTRY = "Ukraine";
     public static final String PHONE_CODE = "+380";
-    public static final Long PHONE = 666966623L;
+    public static final Long PHONE_NUMBER = 666966623L;
     public static final String GENDER = "Cat";
     public static final String LANGUAGE = "Ukrainian - українська";
     public static final String BACKGROUND_COLOR = "DEFAULT";

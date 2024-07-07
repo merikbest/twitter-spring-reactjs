@@ -96,7 +96,7 @@ public class UserSettingsControllerTest {
                 .andExpect(jsonPath("$.user.countryCode").value(TestConstants.COUNTRY_CODE))
                 .andExpect(jsonPath("$.user.country").value(TestConstants.COUNTRY))
                 .andExpect(jsonPath("$.user.phoneCode").value(TestConstants.PHONE_CODE))
-                .andExpect(jsonPath("$.user.phone").value(TestConstants.PHONE))
+                .andExpect(jsonPath("$.user.phoneNumber").value(TestConstants.PHONE_NUMBER))
                 .andExpect(jsonPath("$.user.gender").value(TestConstants.GENDER))
                 .andExpect(jsonPath("$.user.birthday").value(TestConstants.BIRTHDAY))
                 .andExpect(jsonPath("$.user.registrationDate").value(TestConstants.REGISTRATION_DATE))
@@ -135,25 +135,25 @@ public class UserSettingsControllerTest {
 
     @Test
     @DisplayName("[200] PUT /ui/v1/settings/update/phone - Update phone")
-    public void updatePhone() throws Exception {
+    public void updatePhoneNumber() throws Exception {
         SettingsRequest request = new SettingsRequest();
-        request.setPhoneCode("+44");
-        request.setPhone(123456789L);
+        request.setPhoneCode("+1");
+        request.setPhoneNumber(123456789L);
         mockMvc.perform(put(UI_V1_USER_SETTINGS_UPDATE + PHONE)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.phoneCode").value("+44"))
-                .andExpect(jsonPath("$.phone").value(123456789L));
+                .andExpect(jsonPath("$.phoneCode").value("+1"))
+                .andExpect(jsonPath("$.phoneNumber").value(123456789L));
     }
 
     @Test
     @DisplayName("[400] PUT /ui/v1/settings/update/phone - Should phone number length lower than 6 digits")
-    public void updatePhone_ShouldPhoneNumberLengthLowerThan6Digits() throws Exception {
+    public void updatePhoneNumber_ShouldPhoneNumberLengthLowerThan6Digits() throws Exception {
         SettingsRequest request = new SettingsRequest();
-        request.setPhoneCode("+44");
-        request.setPhone(123L);
+        request.setPhoneCode("+1");
+        request.setPhoneNumber(123L);
         mockMvc.perform(put(UI_V1_USER_SETTINGS_UPDATE + PHONE)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -164,16 +164,30 @@ public class UserSettingsControllerTest {
 
     @Test
     @DisplayName("[400] PUT /ui/v1/settings/update/phone - Should phone number length more than 10 digits")
-    public void updatePhone_ShouldPhoneNumberLengthMoreThan10Digits() throws Exception {
+    public void updatePhoneNumber_ShouldPhoneNumberLengthMoreThan10Digits() throws Exception {
         SettingsRequest request = new SettingsRequest();
-        request.setPhoneCode("+44");
-        request.setPhone(12345678900L);
+        request.setPhoneCode("+1");
+        request.setPhoneNumber(12345678900L);
         mockMvc.perform(put(UI_V1_USER_SETTINGS_UPDATE + PHONE)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(INVALID_PHONE_NUMBER)));
+    }
+
+    @Test
+    @DisplayName("[404] PUT /ui/v1/settings/update/phone - Should phone code not found")
+    public void updatePhoneNumber_ShouldPhoneCodeNotFound() throws Exception {
+        SettingsRequest request = new SettingsRequest();
+        request.setPhoneCode("+123");
+        request.setPhoneNumber(123456789L);
+        mockMvc.perform(put(UI_V1_USER_SETTINGS_UPDATE + PHONE)
+                        .content(mapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$", is(PHONE_CODE_NOT_FOUND)));
     }
 
     @Test
