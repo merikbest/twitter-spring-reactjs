@@ -13,6 +13,8 @@ public interface UserSettingsService {
 
     Map<String, Object> updatePhoneNumber(String phoneCode, Long phoneNumber);
 
+    String deletePhoneNumber();
+
     String updateCountry(String country);
 
     String updateGender(String gender);

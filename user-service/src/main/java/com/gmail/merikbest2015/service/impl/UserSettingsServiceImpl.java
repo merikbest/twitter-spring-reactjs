@@ -77,6 +77,14 @@ public class UserSettingsServiceImpl implements UserSettingsService {
 
     @Override
     @Transactional
+    public String deletePhoneNumber() {
+        Long authUserId = authenticationService.getAuthenticatedUserId();
+        userSettingsRepository.updatePhoneNumber(null, null, authUserId);
+        return "Phone number deleted";
+    }
+
+    @Override
+    @Transactional
     public String updateCountry(String country) {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         userSettingsRepository.updateCountry(country, authUserId);

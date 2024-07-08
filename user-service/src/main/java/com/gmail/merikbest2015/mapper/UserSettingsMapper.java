@@ -34,6 +34,10 @@ public class UserSettingsMapper {
         return new UserPhoneResponse((String) phoneParams.get("phoneCode"), (Long) phoneParams.get("phoneNumber"));
     }
 
+    public String deletePhoneNumber() {
+        return userSettingsService.deletePhoneNumber();
+    }
+
     public String updateCountry(SettingsRequest request) {
         return userSettingsService.updateCountry(request.getCountry());
     }

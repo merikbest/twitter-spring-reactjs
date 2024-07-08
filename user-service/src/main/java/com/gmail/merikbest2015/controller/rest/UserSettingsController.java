@@ -34,6 +34,11 @@ public class UserSettingsController {
         return ResponseEntity.ok(userSettingsMapper.updatePhoneNumber(request));
     }
 
+    @DeleteMapping(PHONE)
+    public ResponseEntity<String> deletePhoneNumber() {
+        return ResponseEntity.ok(userSettingsMapper.deletePhoneNumber());
+    }
+
     @PutMapping(COUNTRY)
     public ResponseEntity<String> updateCountry(@RequestBody SettingsRequest request) {
         return ResponseEntity.ok(userSettingsMapper.updateCountry(request));
