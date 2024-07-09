@@ -20,6 +20,7 @@ import static com.gmail.merikbest2015.constants.PathConstants.*;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -188,6 +189,16 @@ public class UserSettingsControllerTest {
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(PHONE_CODE_NOT_FOUND)));
+    }
+
+    @Test
+    @DisplayName("[200] DELETE /ui/v1/settings/update/phone - Should delete phone number")
+    public void deletePhoneNumber() throws Exception {
+        mockMvc.perform(delete(UI_V1_USER_SETTINGS_UPDATE + PHONE)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("Phone number deleted")));
     }
 
     @Test
