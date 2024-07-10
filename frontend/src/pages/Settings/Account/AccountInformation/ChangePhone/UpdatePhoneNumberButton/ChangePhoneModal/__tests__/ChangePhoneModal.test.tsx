@@ -1,13 +1,12 @@
-import React from "react";
 import { Button, Dialog } from "@material-ui/core";
 import { setImmediate } from "timers";
 
 import ChangePhoneModal from "../ChangePhoneModal";
-import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../../util/test-utils/test-helper";
-import { FilledSelect } from "../../../../../../../components/FilledSelect/FilledSelect";
-import { ChangeInfoTextField } from "../../../../../ChangeInfoTextField/ChangeInfoTextField";
-import { LoadingStatus } from "../../../../../../../types/common";
-import { LocalizationActionsType } from "../../../../../../../store/ducks/localization/contracts/actionTypes";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../../../util/test-utils/test-helper";
+import { FilledSelect } from "../../../../../../../../components/FilledSelect/FilledSelect";
+import { ChangeInfoTextField } from "../../../../../../ChangeInfoTextField/ChangeInfoTextField";
+import { LoadingStatus } from "../../../../../../../../types/common";
+import { LocalizationActionsType } from "../../../../../../../../store/ducks/localization/contracts/actionTypes";
 
 describe("ChangePhoneModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

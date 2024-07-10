@@ -1,32 +1,18 @@
-import React, { FC, ReactElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Divider, Typography } from "@material-ui/core";
+import React, { FC, ReactElement } from "react";
+import { useSelector } from "react-redux";
+import { Divider } from "@material-ui/core";
 
 import { useChangePhoneStyles } from "./ChangePhoneStyles";
 import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
-import ChangePhoneModal from "./ChangePhoneModal/ChangePhoneModal";
-import {
-    selectUserIsSuccess,
-    selectUserProfilePhoneCode,
-    selectUserProfilePhoneNumber
-} from "../../../../../store/ducks/user/selectors";
-import { setUserLoadingStatus } from "../../../../../store/ducks/user/actionCreators";
+import { selectUserProfilePhoneCode, selectUserProfilePhoneNumber } from "../../../../../store/ducks/user/selectors";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
-import { LoadingStatus } from "../../../../../types/common";
-import { useModalWindow } from "../../../../../hook/useModalWindow";
+import DeletePhoneNumberButton from "./DeletePhoneNumberButton/DeletePhoneNumberButton";
+import UpdatePhoneNumberButton from "./UpdatePhoneNumberButton/UpdatePhoneNumberButton";
 
 const ChangePhone: FC = (): ReactElement => {
     const classes = useChangePhoneStyles();
-    const dispatch = useDispatch();
     const phoneCode = useSelector(selectUserProfilePhoneCode);
     const phoneNumber = useSelector(selectUserProfilePhoneNumber);
-    const isUpdatedSuccess = useSelector(selectUserIsSuccess);
-    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
-
-    useEffect(() => {
-        onCloseModalWindow();
-        dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
-    }, [isUpdatedSuccess]);
 
     return (
         <>
@@ -41,21 +27,8 @@ const ChangePhone: FC = (): ReactElement => {
                 />
             </div>
             <Divider />
-            <div
-                id={"openChangePhoneModal"}
-                className={classes.updatePhoneNumber}
-                onClick={onOpenModalWindow}
-            >
-                <Typography variant={"body1"} component={"span"}>
-                    Update phone number
-                </Typography>
-            </div>
-            <div className={classes.deletePhoneNumber}>
-                <Typography variant={"body1"} component={"span"}>
-                    Delete phone number
-                </Typography>
-            </div>
-            <ChangePhoneModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
+            <UpdatePhoneNumberButton />
+            <DeletePhoneNumberButton />
         </>
     );
 };

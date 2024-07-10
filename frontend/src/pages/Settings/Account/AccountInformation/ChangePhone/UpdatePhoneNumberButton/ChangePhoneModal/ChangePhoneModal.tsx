@@ -15,18 +15,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import { useChangePhoneModalStyles } from "./ChangePhoneModalStyles";
-import { TweetIcon } from "../../../../../../icons";
-import { ChangeInfoTextField } from "../../../../ChangeInfoTextField/ChangeInfoTextField";
-import { FilledSelect } from "../../../../../../components/FilledSelect/FilledSelect";
+import { TweetIcon } from "../../../../../../../icons";
+import { ChangeInfoTextField } from "../../../../../ChangeInfoTextField/ChangeInfoTextField";
+import { FilledSelect } from "../../../../../../../components/FilledSelect/FilledSelect";
 import {
     selectUserIsLoading,
     selectUserProfilePhoneNumber,
     selectUserProfilePhoneCode
-} from "../../../../../../store/ducks/user/selectors";
-import { updatePhone } from "../../../../../../store/ducks/user/actionCreators";
-import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../../../constants/url-constants";
-import { fetchCountryCodes } from "../../../../../../store/ducks/localization/actionCreators";
-import { selectCountryCodes, selectIsLocalizationLoading } from "../../../../../../store/ducks/localization/selectors";
+} from "../../../../../../../store/ducks/user/selectors";
+import { updatePhone } from "../../../../../../../store/ducks/user/actionCreators";
+import { EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS } from "../../../../../../../constants/url-constants";
+import { fetchCountryCodes } from "../../../../../../../store/ducks/localization/actionCreators";
+import { selectCountryCodes, selectIsLocalizationLoading } from "../../../../../../../store/ducks/localization/selectors";
 
 interface ChangePhoneModalProps {
     visible?: boolean;
