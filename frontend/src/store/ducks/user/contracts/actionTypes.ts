@@ -35,6 +35,8 @@ export enum UserActionsType {
     UPDATE_PRIVATE_PROFILE = "user/UPDATE_PRIVATE_PROFILE",
     UPDATE_COLOR_SCHEME = "user/UPDATE_COLOR_SCHEME",
     UPDATE_BACKGROUND_COLOR = "user/UPDATE_BACKGROUND_COLOR",
+    DELETE_PHONE_NUMBER = "user/DELETE_PHONE_NUMBER",
+    RESET_PHONE_NUMBER = "user/RESET_PHONE_NUMBER",
     SET_USERNAME = "user/SET_USERNAME",
     SET_EMAIL = "user/SET_EMAIL",
     SET_PHONE = "user/SET_PHONE",
@@ -191,6 +193,14 @@ export interface UpdateBackgroundColorActionInterface extends Action<UserActions
     payload: SettingsRequest;
 }
 
+export interface DeletePhoneNumberActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.DELETE_PHONE_NUMBER;
+}
+
+export interface ResetPhoneNumberActionInterface extends Action<UserActionsType> {
+    type: UserActionsType.RESET_PHONE_NUMBER;
+}
+
 export interface StartUseTwitterActionInterface extends Action<UserActionsType> {
     type: UserActionsType.START_USE_TWITTER;
 }
@@ -283,6 +293,7 @@ export type UserActions =
     | SetUsernameActionInterface
     | SetEmailActionInterface
     | SetPhoneActionInterface
+    | ResetPhoneNumberActionInterface
     | SetCountryActionInterface
     | SetGenderActionInterface
     | SetLanguageActionInterface

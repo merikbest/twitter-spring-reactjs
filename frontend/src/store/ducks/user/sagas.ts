@@ -2,6 +2,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 
 import {
+    resetPhoneNumber,
     setBackgroundColor,
     setColorScheme,
     setCountry,
@@ -214,11 +215,21 @@ export function* updateEmailRequest({ payload }: UpdateEmailActionInterface) {
     }
 }
 
-export function* updatePhoneRequest({ payload }: UpdatePhoneActionInterface) {
+export function* updatePhoneNumberRequest({ payload }: UpdatePhoneActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const { data }: AxiosResponse<UserPhoneResponse> = yield call(UserSettingsApi.updatePhone, payload);
+        const { data }: AxiosResponse<UserPhoneResponse> = yield call(UserSettingsApi.updatePhoneNumber, payload);
         yield put(setPhone(data));
+    } catch (e) {
+        yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* deletePhoneNumberRequest() {
+    try {
+        yield put(setUserLoadingStatus(LoadingStatus.LOADING));
+        yield call(UserSettingsApi.deletePhoneNumber);
+        yield put(resetPhoneNumber());
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
@@ -320,7 +331,7 @@ export function* processUserToMuteListRequest({ payload }: ProcessUserToMuteList
         yield put(setMutedToListTweetsState({ userId: payload.userId, tweetId: payload.tweetId!, isUserMuted: data }));
         yield put(setMuted(data));
         yield put(setMutedUser({ userId: payload.userId, isUserMuted: data }));
-        yield put(setMutedUsersState({ userId: payload.userId, isUserMuted: data })); // TODO NOT NEEDED ???
+        yield put(setMutedUsersState({ userId: payload.userId, isUserMuted: data }));
         yield put(setMutedToTweetState(data));
         yield put(setMutedTweetAdditionalInfo(data));
     } catch (e) {
@@ -356,7 +367,8 @@ export function* userSaga() {
     yield takeLatest(UserActionsType.FETCH_READ_MESSAGES, fetchReadMessagesRequest);
     yield takeLatest(UserActionsType.UPDATE_USERNAME, updateUsernameRequest);
     yield takeLatest(UserActionsType.UPDATE_EMAIL, updateEmailRequest);
-    yield takeLatest(UserActionsType.UPDATE_PHONE, updatePhoneRequest);
+    yield takeLatest(UserActionsType.UPDATE_PHONE, updatePhoneNumberRequest);
+    yield takeLatest(UserActionsType.DELETE_PHONE_NUMBER, deletePhoneNumberRequest);
     yield takeLatest(UserActionsType.UPDATE_COUNTRY, updateCountryRequest);
     yield takeLatest(UserActionsType.UPDATE_GENDER, updateGenderRequest);
     yield takeLatest(UserActionsType.UPDATE_LANGUAGE, updateLanguageRequest);

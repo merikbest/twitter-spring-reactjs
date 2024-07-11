@@ -23,8 +23,11 @@ export const UserSettingsApi = {
     async updateEmail(settings: SettingsRequest): Promise<AxiosResponse<AuthenticationResponse>> {
         return await axios.put<AuthenticationResponse>(UI_V1_USER_SETTINGS_UPDATE_EMAIL, settings);
     },
-    async updatePhone(settings: SettingsRequest): Promise<AxiosResponse<UserPhoneResponse>> {
+    async updatePhoneNumber(settings: SettingsRequest): Promise<AxiosResponse<UserPhoneResponse>> {
         return await axios.put<UserPhoneResponse>(UI_V1_USER_SETTINGS_UPDATE_PHONE, settings);
+    },
+    async deletePhoneNumber(): Promise<AxiosResponse<string>> {
+        return await axios.delete<string>(UI_V1_USER_SETTINGS_UPDATE_PHONE);
     },
     async updateCountry(settings: SettingsRequest): Promise<AxiosResponse<string>> {
         return await axios.put<string>(UI_V1_USER_SETTINGS_UPDATE_COUNTRY, settings);

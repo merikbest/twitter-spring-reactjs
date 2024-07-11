@@ -1,5 +1,6 @@
 import { UserPhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./contracts/state";
 import {
+    DeletePhoneNumberActionInterface,
     FetchPinTweetActionInterface,
     FetchReadMessagesActionInterface,
     FetchSignInActionInterface,
@@ -11,6 +12,7 @@ import {
     ProcessUserToMuteListActionInterface,
     ResetMentionsActionInterface,
     ResetNotificationsActionInterface,
+    ResetPhoneNumberActionInterface,
     SetBackgroundColorActionInterface,
     SetColorSchemeActionInterface,
     SetCountryActionInterface,
@@ -136,6 +138,14 @@ export const processUserToBlocklist = (payload: UserActionRequest): ProcessUserT
 export const processUserToMuteList = (payload: UserActionRequest): ProcessUserToMuteListActionInterface => ({
     type: UserActionsType.PROCESS_USER_TO_MUTELIST,
     payload
+});
+
+export const deletePhoneNumber = (): DeletePhoneNumberActionInterface => ({
+    type: UserActionsType.DELETE_PHONE_NUMBER,
+});
+
+export const resetPhoneNumber = (): ResetPhoneNumberActionInterface => ({
+    type: UserActionsType.RESET_PHONE_NUMBER,
 });
 
 export const startUseTwitter = (): StartUseTwitterActionInterface => ({

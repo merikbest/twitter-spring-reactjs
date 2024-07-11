@@ -160,9 +160,9 @@ export const mockUser = {
     "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
     "wallpaper": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg",
     "pinnedTweetId": 102,
-    "followersSize": 1,
-    "followingSize": 1,
-    "followerRequestsSize": null,
+    "followersCount": 1,
+    "followingCount": 1,
+    "followerRequestsCount": null,
     "unreadMessagesCount": 0,
     "isMutedDirectMessages": false,
     "isPrivateProfile": false
