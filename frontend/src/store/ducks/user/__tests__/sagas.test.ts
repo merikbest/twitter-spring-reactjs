@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 
 import {
+    deletePhoneNumberRequest,
     fetchPinTweetRequest,
     fetchReadMessagesRequest,
     fetchSignInRequest,
@@ -18,7 +19,7 @@ import {
     updateEmailRequest,
     updateGenderRequest,
     updateLanguageRequest,
-    updatePhoneRequest,
+    updatePhoneNumberRequest,
     updatePrivateProfileRequest,
     updateUserDataRequest,
     updateUsernameRequest,
@@ -33,6 +34,7 @@ import {
     processFollowRequest,
     processUserToBlocklist,
     processUserToMuteList,
+    resetPhoneNumber,
     setBackgroundColor,
     setColorScheme,
     setCountry,
@@ -113,6 +115,16 @@ import { BlockUserApi } from "../../../../services/api/user-service/blockUserApi
 import { FollowerUserApi } from "../../../../services/api/user-service/followerUserApi";
 import { MuteUserApi } from "../../../../services/api/user-service/muteUserApi";
 import { RegistrationApi } from "../../../../services/api/user-service/registrationApi";
+import {
+    setBlockedTweetAdditionalInfo,
+    setFollowedTweetAdditionalInfo,
+    setMutedTweetAdditionalInfo
+} from "../../tweetAdditionalInfo/actionCreators";
+import {
+    setBlockedToListTweetsState,
+    setFollowToListTweetsState,
+    setMutedToListTweetsState
+} from "../../list/actionCreators";
 
 describe("userSaga:", () => {
     const mockAuthUser = { id: 1, email: "test@test.test" } as AuthUserResponse;
@@ -167,12 +179,15 @@ describe("userSaga:", () => {
         const mockNotificationUserResponse = { data: true } as AxiosResponse<boolean>;
         const mockPayload = { userId: 1, tweetId: 1, isFollower: true };
         const worker = processFollowUserRequest(followUser({ userId: 1, tweetId: 1 }));
-
         testCall(worker, FollowerUserApi.processFollow, 1);
         testSetResponse(worker, mockNotificationUserResponse, setFollowToTweetsState, mockPayload, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToUsersTweetState, mockPayload, "NotificationUserResponse");
+        testSetResponse(worker, mockNotificationUserResponse, setFollowToListTweetsState, mockPayload, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setUserFollowing, true, "NotificationUserResponse");
-        testSetResponse(worker, mockNotificationUserResponse, setFollowToUserProfile, { userId: 1, isFollower: true }, "NotificationUserResponse");
+        testSetResponse(worker, mockNotificationUserResponse, setFollowToUserProfile, {
+            userId: 1,
+            isFollower: true
+        }, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToUserDetail, true, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToUsersState, {
             userId: 1,
@@ -184,6 +199,7 @@ describe("userSaga:", () => {
         }, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToTweetState, true, "NotificationUserResponse");
         testSetResponse(worker, mockNotificationUserResponse, setFollowToNotificationInfo, true, "NotificationUserResponse");
+        testSetResponse(worker, mockNotificationUserResponse, setFollowedTweetAdditionalInfo, true, "NotificationUserResponse");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -224,21 +240,37 @@ describe("userSaga:", () => {
     });
 
     describe("updateEmailRequest:", () => {
+        const mockResponse = {
+            data: {
+                user: { email: "test@test.test" },
+                token: "1"
+            }
+        } as AxiosResponse<AuthenticationResponse>;
         const worker = updateEmailRequest(updateEmail({ email: "test@test.test" }));
-
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserSettingsApi.updateEmail, { email: "test@test.test" }, "test@test.test");
-        testSetResponse(worker, mockAuthentication, setEmail, "test@test.test", "string");
+        testCall(worker, UserSettingsApi.updateEmail, { email: "test@test.test" }, {
+            email: "test@test.test",
+            token: "1"
+        });
+        testSetResponse(worker, mockResponse, setEmail, "test@test.test", "string");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
-    describe("updatePhoneRequest:", () => {
-        const mockPhoneSettings = { countryCode: "US", phoneNumber: 12345 };
+    describe("updatePhoneNumberRequest:", () => {
+        const mockPhoneSettings = { phoneCode: "US", phoneNumber: 12345 };
         const mockResponse = { data: mockPhoneSettings } as AxiosResponse<any>;
-        const worker = updatePhoneRequest(updatePhone(mockPhoneSettings));
+        const worker = updatePhoneNumberRequest(updatePhone(mockPhoneSettings));
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
-        testCall(worker, UserSettingsApi.updatePhone, mockPhoneSettings, mockPhoneSettings);
+        testCall(worker, UserSettingsApi.updatePhoneNumber, mockPhoneSettings, mockPhoneSettings);
         testSetResponse(worker, mockResponse, setPhone, mockPhoneSettings, "string");
+        testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
+    });
+
+    describe("deletePhoneNumberRequest:", () => {
+        const worker = deletePhoneNumberRequest();
+        testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.LOADING);
+        testCall(worker, UserSettingsApi.deletePhoneNumber);
+        testSetResponse(worker, mockAxiosAuthentication, resetPhoneNumber, {}, "empty");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -300,10 +332,10 @@ describe("userSaga:", () => {
     describe("processUserToBlocklistRequest:", () => {
         const mockPayload = { userId: 1, tweetId: 1, isUserBlocked: true };
         const worker = processUserToBlocklistRequest(processUserToBlocklist({ userId: 1, tweetId: 1 }));
-
         testCall(worker, BlockUserApi.processBlockList, 1, true);
         testSetResponse(worker, { data: true }, setBlockedToTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setBlockedUsersTweetState, mockPayload, "boolean");
+        testSetResponse(worker, true, setBlockedToListTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setBlocked, true, "boolean");
         testSetResponse(worker, true, setBlockUserDetail, true, "boolean");
         testSetResponse(worker, true, setBlockedUser, { userId: 1, isUserBlocked: true }, "boolean");
@@ -311,20 +343,22 @@ describe("userSaga:", () => {
         testSetResponse(worker, true, setBlockUsersSearchState, { userId: 1, isUserBlocked: true }, "boolean");
         testSetResponse(worker, true, setBlockedToTweetState, true, "boolean");
         testSetResponse(worker, true, setBlockedNotificationInfo, true, "boolean");
+        testSetResponse(worker, true, setBlockedTweetAdditionalInfo, true, "boolean");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
     describe("processUserToMuteListRequest:", () => {
         const mockPayload = { userId: 1, tweetId: 1, isUserMuted: true };
         const worker = processUserToMuteListRequest(processUserToMuteList({ userId: 1, tweetId: 1 }));
-
         testCall(worker, MuteUserApi.processMutedList, 1, true);
         testSetResponse(worker, { data: true }, setMutedToTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setMutedUsersTweetState, mockPayload, "boolean");
+        testSetResponse(worker, true, setMutedToListTweetsState, mockPayload, "boolean");
         testSetResponse(worker, true, setMuted, true, "boolean");
         testSetResponse(worker, true, setMutedUser, { userId: 1, isUserMuted: true }, "boolean");
         testSetResponse(worker, true, setMutedUsersState, { userId: 1, isUserMuted: true }, "boolean");
         testSetResponse(worker, true, setMutedToTweetState, true, "boolean");
+        testSetResponse(worker, true, setMutedTweetAdditionalInfo, true, "boolean");
         testLoadingStatus(worker, setUserLoadingStatus, LoadingStatus.ERROR);
     });
 
@@ -359,7 +393,8 @@ describe("userSaga:", () => {
         { actionType: UserActionsType.FETCH_READ_MESSAGES, workSaga: fetchReadMessagesRequest },
         { actionType: UserActionsType.UPDATE_USERNAME, workSaga: updateUsernameRequest },
         { actionType: UserActionsType.UPDATE_EMAIL, workSaga: updateEmailRequest },
-        { actionType: UserActionsType.UPDATE_PHONE, workSaga: updatePhoneRequest },
+        { actionType: UserActionsType.UPDATE_PHONE, workSaga: updatePhoneNumberRequest },
+        { actionType: UserActionsType.DELETE_PHONE_NUMBER, workSaga: deletePhoneNumberRequest },
         { actionType: UserActionsType.UPDATE_COUNTRY, workSaga: updateCountryRequest },
         { actionType: UserActionsType.UPDATE_GENDER, workSaga: updateGenderRequest },
         { actionType: UserActionsType.UPDATE_LANGUAGE, workSaga: updateLanguageRequest },

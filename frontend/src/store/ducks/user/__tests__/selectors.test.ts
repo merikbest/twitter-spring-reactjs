@@ -122,7 +122,7 @@ describe("user selectors:", () => {
 
     describe("selectUserProfileCountry", () => {
         it("should return country string", () => {
-            expect(selectUserProfileCountry(createMockRootState())).toBe("UA");
+            expect(selectUserProfileCountry(createMockRootState())).toBe("Ukraine");
         });
     });
 

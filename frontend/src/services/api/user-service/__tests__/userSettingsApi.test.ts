@@ -59,15 +59,21 @@ describe("UserSettingsApi", () => {
         });
     });
 
-    describe("should call UserSettingsApi.updatePhone", () => {
+    describe("should call UserSettingsApi.updatePhoneNumber", () => {
         const mockChangePhoneResponse = { countryCode: "test", phone: 123456789 };
 
         it("[200] should update phone Success", () => {
-            testApiCall(mockAdapter, "onPut", UI_V1_USER_SETTINGS_UPDATE_PHONE, 200, mockChangePhoneResponse, UserSettingsApi.updatePhone, mockRequest);
+            testApiCall(mockAdapter, "onPut", UI_V1_USER_SETTINGS_UPDATE_PHONE, 200, mockChangePhoneResponse, UserSettingsApi.updatePhoneNumber, mockRequest);
         });
 
         it("[400] should return Not valid phone number error", () => {
-            testApiCall(mockAdapter, "onPut", UI_V1_USER_SETTINGS_UPDATE_PHONE, 400, "Not valid phone number", UserSettingsApi.updatePhone, mockRequest);
+            testApiCall(mockAdapter, "onPut", UI_V1_USER_SETTINGS_UPDATE_PHONE, 400, "Not valid phone number", UserSettingsApi.updatePhoneNumber, mockRequest);
+        });
+    });
+
+    describe("should call UserSettingsApi.deletePhoneNumber", () => {
+        it("[200] should delete phone number Success", () => {
+            testApiCall(mockAdapter, "onDelete", UI_V1_USER_SETTINGS_UPDATE_PHONE, 200, "Phone number deleted", UserSettingsApi.deletePhoneNumber);
         });
     });
 

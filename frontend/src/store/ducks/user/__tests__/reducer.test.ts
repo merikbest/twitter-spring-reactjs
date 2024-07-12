@@ -321,6 +321,24 @@ describe("userReducer:", () => {
         );
 
         testActionDispatch(
+            UserActionsType.RESET_PHONE_NUMBER,
+            userReducer(
+                {
+                    ...initialUserState,
+                    data: { phoneCode: "+1", phoneNumber: 111 } as AuthUserResponse
+                },
+                {
+                    type: UserActionsType.RESET_PHONE_NUMBER
+                }
+            ),
+            {
+                ...initialUserState,
+                data: { phoneCode: null, phoneNumber: null } as AuthUserResponse,
+                status: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
             UserActionsType.SET_FOLLOWERS_SIZE,
             userReducer(
                 {
