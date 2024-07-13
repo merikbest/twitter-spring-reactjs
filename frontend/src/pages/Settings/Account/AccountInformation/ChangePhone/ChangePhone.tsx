@@ -16,19 +16,21 @@ const ChangePhone: FC = (): ReactElement => {
 
     return (
         <>
-            <div className={classes.textFieldWrapper}>
-                <ChangeInfoTextField
-                    label="Current"
-                    type="text"
-                    variant="filled"
-                    value={`${phoneCode}${phoneNumber}`}
-                    fullWidth
-                    disabled
-                />
-            </div>
-            <Divider />
+            {phoneCode &&
+                <div className={classes.textFieldWrapper}>
+                    <ChangeInfoTextField
+                        label="Current"
+                        type="text"
+                        variant="filled"
+                        value={`${phoneCode}${phoneNumber}`}
+                        fullWidth
+                        disabled
+                    />
+                    <Divider />
+                </div>
+            }
             <UpdatePhoneNumberButton />
-            <DeletePhoneNumberButton />
+            {phoneCode && <DeletePhoneNumberButton />}
         </>
     );
 };
