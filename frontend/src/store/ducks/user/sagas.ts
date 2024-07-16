@@ -97,6 +97,7 @@ import {
     setFollowToListTweetsState,
     setMutedToListTweetsState
 } from "../list/actionCreators";
+import { setOpenSnackBar } from "../actionSnackbar/actionCreators";
 
 export function* updateUserDataRequest({ payload }: UpdateUserDataActionInterface) {
     try {
@@ -230,6 +231,7 @@ export function* deletePhoneNumberRequest() {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         yield call(UserSettingsApi.deletePhoneNumber);
         yield put(resetPhoneNumber());
+        yield put(setOpenSnackBar("Phone removed"));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
