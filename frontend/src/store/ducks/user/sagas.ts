@@ -200,6 +200,7 @@ export function* updateUsernameRequest({ payload }: UpdateUsernameActionInterfac
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<string> = yield call(UserSettingsApi.updateUsername, payload);
         yield put(setUsername(response.data));
+        yield put(setOpenSnackBar("Username updated"));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
