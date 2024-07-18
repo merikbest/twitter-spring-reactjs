@@ -212,6 +212,7 @@ export function* updateEmailRequest({ payload }: UpdateEmailActionInterface) {
         const item: AxiosResponse<AuthenticationResponse> = yield call(UserSettingsApi.updateEmail, payload);
         localStorage.setItem(TOKEN, item.data.token);
         yield put(setEmail(item.data.user.email));
+        yield put(setOpenSnackBar("Email updated"));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
