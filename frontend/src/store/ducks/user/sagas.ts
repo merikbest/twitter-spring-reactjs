@@ -244,6 +244,7 @@ export function* updateCountryRequest({ payload }: UpdateCountryActionInterface)
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<string> = yield call(UserSettingsApi.updateCountry, payload);
         yield put(setCountry(response.data));
+        yield put(setOpenSnackBar("Country updated"));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
