@@ -255,6 +255,7 @@ export function* updateGenderRequest({ payload }: UpdateGenderActionInterface) {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<string> = yield call(UserSettingsApi.updateGender, payload);
         yield put(setGender(response.data));
+        yield put(setOpenSnackBar("Gender updated"));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
