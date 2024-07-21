@@ -266,6 +266,7 @@ export function* updateLanguageRequest({ payload }: UpdateLanguageActionInterfac
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
         const response: AxiosResponse<string> = yield call(UserSettingsApi.updateLanguage, payload);
         yield put(setLanguage(response.data));
+        yield put(setOpenSnackBar("Display language updated"));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }
