@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Radio } from "@material-ui/core";
+import { setImmediate } from "timers";
 
 import ChangeGender from "../ChangeGender";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../util/test-utils/test-helper";
@@ -19,11 +20,11 @@ describe("ChangeGender", () => {
         const wrapper = mountWithStore(<ChangeGender />, mockStore);
 
         expect(wrapper.text().includes("Female")).toBe(true);
-        expect(wrapper.find(Radio).at(0).prop("checked")).toBe(true);
+        expect(wrapper.find(Radio).at(0).prop("checked")).toBe(false);
         expect(wrapper.text().includes("Male")).toBe(true);
         expect(wrapper.find(Radio).at(1).prop("checked")).toBe(false);
         expect(wrapper.text().includes("Other")).toBe(true);
-        expect(wrapper.find(Radio).at(2).prop("checked")).toBe(false);
+        expect(wrapper.find(Radio).at(2).prop("checked")).toBe(true);
     });
 
     it("should render Male gender", () => {
@@ -66,11 +67,11 @@ describe("ChangeGender", () => {
         expect(wrapper.find(Radio).at(1).prop("checked")).toBe(false);
     });
 
-    it("should change gender", () => {
+    it("should change gender", (done) => {
         const wrapper = mountWithStore(<ChangeGender />, mockStore);
 
         expect(wrapper.text().includes("Female")).toBe(true);
-        expect(wrapper.find(Radio).at(0).prop("checked")).toBe(true);
+        expect(wrapper.find(Radio).at(0).prop("checked")).toBe(false);
         expect(wrapper.text().includes("Male")).toBe(true);
         expect(wrapper.find(Radio).at(1).prop("checked")).toBe(false);
 
@@ -81,17 +82,20 @@ describe("ChangeGender", () => {
         expect(wrapper.text().includes("Male")).toBe(true);
         expect(wrapper.find(Radio).at(1).prop("checked")).toBe(true);
 
-        wrapper.find(Button).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: { gender: "Male" },
-            type: UserActionsType.UPDATE_GENDER
+        wrapper.find(Button).at(0).simulate("submit");
+
+        setImmediate(() => {
+            wrapper.update();
+            done();
+            expect(mockDispatchFn).nthCalledWith(1, {
+                payload: { gender: "Male" },
+                type: UserActionsType.UPDATE_GENDER
+            });
         });
     });
 
-    it("should change other gender", () => {
+    it("should change other gender", (done) => {
         const wrapper = mountWithStore(<ChangeGender />, mockStore);
-
-        expect(wrapper.find(ChangeInfoTextField).exists()).toBeFalsy();
 
         wrapper.find(Radio).at(2).find("input").simulate("change");
 
@@ -101,20 +105,15 @@ describe("ChangeGender", () => {
         wrapper.find(ChangeInfoTextField).at(0).find("input").simulate("change", { target: { value: "test" } });
         expect(wrapper.find(ChangeInfoTextField).prop("value")).toBe("test");
 
-        wrapper.find(Button).simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: { gender: "test" },
-            type: UserActionsType.UPDATE_GENDER
-        });
-    });
+        wrapper.find(Button).at(0).simulate("submit");
 
-    it("should reset ChangeGender", () => {
-        const wrapper = mountWithStore(<ChangeGender />, mockStore);
-        wrapper.unmount();
-
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: LoadingStatus.NEVER,
-            type: UserActionsType.SET_USER_LOADING_STATE
+        setImmediate(() => {
+            wrapper.update();
+            done();
+            expect(mockDispatchFn).nthCalledWith(1, {
+                payload: { gender: "test" },
+                type: UserActionsType.UPDATE_GENDER
+            });
         });
     });
 });

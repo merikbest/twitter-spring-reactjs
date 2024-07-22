@@ -8,11 +8,10 @@ import * as yup from "yup";
 
 import { useChangeGenderStyles } from "./ChangeGenderStyles";
 import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
-import { setUserLoadingStatus, updateGender } from "../../../../../store/ducks/user/actionCreators";
+import { updateGender } from "../../../../../store/ducks/user/actionCreators";
 import { selectUserIsLoading, selectUserProfileGender } from "../../../../../store/ducks/user/selectors";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
-import { LoadingStatus } from "../../../../../types/common";
 
 interface ChangeGenderFormProps {
     gender: string;
@@ -46,10 +45,6 @@ const ChangeGender: FC = (): ReactElement => {
             const isKnownGender = gender === Gender.FEMALE || gender === Gender.MALE;
             setSelectedGender(isKnownGender ? gender : Gender.OTHER);
         }
-
-        return () => {
-            dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
-        };
     }, []);
 
     const { control, handleSubmit, formState: { errors } } = useForm<ChangeGenderFormProps>({
@@ -69,96 +64,94 @@ const ChangeGender: FC = (): ReactElement => {
     };
 
     return (
-        <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Typography variant={"subtitle1"} component={"div"} className={globalClasses.itemInfoWrapper}>
-                    If you haven’t already specified a gender, this is the one associated with your account based on
-                    your profile and activity. This information won’t be displayed publicly.
-                </Typography>
-                <Divider />
-                <div className={globalClasses.itemInfoWrapper}>
-                    <div className={globalClasses.infoItemRadioCheckbox}>
-                        <Typography variant={"body1"} component={"span"}>
-                            Female
-                        </Typography>
-                            <Radio
-                                checked={selectedGender === Gender.FEMALE}
-                                onChange={handleSelectedGender}
-                                value={Gender.FEMALE}
-                                name="radio-buttons"
-                                inputProps={{ "aria-label": "Female" }}
-                                icon={<RadioButtonUnchecked color={"primary"} />}
-                                checkedIcon={<CheckCircle color={"primary"} />}
-                                size="small"
-                            />
-                    </div>
-                    <div className={globalClasses.infoItemRadioCheckbox}>
-                        <Typography variant={"body1"} component={"span"}>
-                            Male
-                        </Typography>
-                            <Radio
-                                checked={selectedGender === Gender.MALE}
-                                onChange={handleSelectedGender}
-                                value={Gender.MALE}
-                                name="radio-buttons"
-                                inputProps={{ "aria-label": "Male" }}
-                                icon={<RadioButtonUnchecked color={"primary"} />}
-                                checkedIcon={<CheckCircle color={"primary"} />}
-                                size="small"
-                            />
-                    </div>
-                    <div className={globalClasses.infoItemRadioCheckbox}>
-                        <Typography variant={"body1"} component={"span"}>
-                            Other
-                        </Typography>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Typography variant={"subtitle1"} component={"div"} className={globalClasses.itemInfoWrapper}>
+                If you haven’t already specified a gender, this is the one associated with your account based on
+                your profile and activity. This information won’t be displayed publicly.
+            </Typography>
+            <Divider />
+            <div className={globalClasses.itemInfoWrapper}>
+                <div className={globalClasses.infoItemRadioCheckbox}>
+                    <Typography variant={"body1"} component={"span"}>
+                        Female
+                    </Typography>
                         <Radio
-                            checked={selectedGender === Gender.OTHER}
+                            checked={selectedGender === Gender.FEMALE}
                             onChange={handleSelectedGender}
-                            value={Gender.OTHER}
+                            value={Gender.FEMALE}
                             name="radio-buttons"
-                            inputProps={{ "aria-label": "Other" }}
+                            inputProps={{ "aria-label": "Female" }}
                             icon={<RadioButtonUnchecked color={"primary"} />}
                             checkedIcon={<CheckCircle color={"primary"} />}
                             size="small"
                         />
-                    </div>
-                    {(selectedGender === Gender.OTHER) && (
-                        <Controller
-                            name="gender"
-                            control={control}
-                            defaultValue=""
-                            render={({ field: { onChange, value } }) => (
-                                <div className={classes.textFieldWrapper}>
-                                    <ChangeInfoTextField
-                                        name="gender"
-                                        onChange={onChange}
-                                        helperText={errors.gender?.message}
-                                        error={!!errors.gender}
-                                        label="Gender"
-                                        type="text"
-                                        variant="filled"
-                                        value={value}
-                                        fullWidth
-                                    />
-                                </div>
-                            )}
+                </div>
+                <div className={globalClasses.infoItemRadioCheckbox}>
+                    <Typography variant={"body1"} component={"span"}>
+                        Male
+                    </Typography>
+                        <Radio
+                            checked={selectedGender === Gender.MALE}
+                            onChange={handleSelectedGender}
+                            value={Gender.MALE}
+                            name="radio-buttons"
+                            inputProps={{ "aria-label": "Male" }}
+                            icon={<RadioButtonUnchecked color={"primary"} />}
+                            checkedIcon={<CheckCircle color={"primary"} />}
+                            size="small"
                         />
-                    )}
                 </div>
-                <Divider />
-                <div className={classes.buttonWrapper}>
-                    <Button
-                        disabled={isLoading}
-                        type="submit"
-                        variant="contained"
-                        color="primary"
+                <div className={globalClasses.infoItemRadioCheckbox}>
+                    <Typography variant={"body1"} component={"span"}>
+                        Other
+                    </Typography>
+                    <Radio
+                        checked={selectedGender === Gender.OTHER}
+                        onChange={handleSelectedGender}
+                        value={Gender.OTHER}
+                        name="radio-buttons"
+                        inputProps={{ "aria-label": "Other" }}
+                        icon={<RadioButtonUnchecked color={"primary"} />}
+                        checkedIcon={<CheckCircle color={"primary"} />}
                         size="small"
-                    >
-                        Save
-                    </Button>
+                    />
                 </div>
-            </form>
-        </>
+                {(selectedGender === Gender.OTHER) && (
+                    <Controller
+                        name="gender"
+                        control={control}
+                        defaultValue=""
+                        render={({ field: { onChange, value } }) => (
+                            <div className={classes.textFieldWrapper}>
+                                <ChangeInfoTextField
+                                    name="gender"
+                                    onChange={onChange}
+                                    helperText={errors.gender?.message}
+                                    error={!!errors.gender}
+                                    label="Gender"
+                                    type="text"
+                                    variant="filled"
+                                    value={value}
+                                    fullWidth
+                                />
+                            </div>
+                        )}
+                    />
+                )}
+            </div>
+            <Divider />
+            <div className={classes.buttonWrapper}>
+                <Button
+                    disabled={isLoading}
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                >
+                    Save
+                </Button>
+            </div>
+        </form>
     );
 };
 
