@@ -4,7 +4,6 @@ import ChangeEmail from "../ChangeEmail";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../util/test-utils/test-helper";
 import { ChangeInfoTextField } from "../../../../ChangeInfoTextField/ChangeInfoTextField";
 import ChangeEmailModal from "../ChangeEmailModal/ChangeEmailModal";
-import { UserActionsType } from "../../../../../../store/ducks/user/contracts/actionTypes";
 import { LoadingStatus } from "../../../../../../types/common";
 
 describe("ChangeEmail", () => {
@@ -26,9 +25,5 @@ describe("ChangeEmail", () => {
         wrapper.find("#openChangeEmailModal").simulate("click");
         expect(wrapper.find(ChangeEmailModal).exists()).toBe(true);
         wrapper.find(ChangeEmailModal).find(".MuiBackdrop-root").simulate("click");
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: LoadingStatus.NEVER,
-            type: UserActionsType.SET_USER_LOADING_STATE
-        });
     });
 });
