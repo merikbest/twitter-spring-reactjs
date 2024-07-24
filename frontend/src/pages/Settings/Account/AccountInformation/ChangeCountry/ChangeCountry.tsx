@@ -6,11 +6,10 @@ import classnames from "classnames";
 import { useChangeCountryStyles } from "./ChangeCountryStyles";
 import { FilledSelect } from "../../../../../components/FilledSelect/FilledSelect";
 import { selectUserDataId, selectUserProfileCountry } from "../../../../../store/ducks/user/selectors";
-import { setUserLoadingStatus, updateCountry } from "../../../../../store/ducks/user/actionCreators";
+import { updateCountry } from "../../../../../store/ducks/user/actionCreators";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { HOW_TO_CHANGE_COUNTRY_SETTINGS } from "../../../../../constants/url-constants";
-import { LoadingStatus } from "../../../../../types/common";
 import { fetchCountryCodes } from "../../../../../store/ducks/localization/actionCreators";
 import { selectCountryCodes, selectIsLocalizationLoading } from "../../../../../store/ducks/localization/selectors";
 
@@ -30,10 +29,6 @@ const ChangeCountry: FC = (): ReactElement => {
         if (myProfileId) {
             setCountry(myProfileCountry!);
         }
-
-        return () => {
-            dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
-        };
     }, []);
 
     const onChangeCountry = (event: ChangeEvent<{ value: unknown }>): void => {
