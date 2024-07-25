@@ -5,9 +5,8 @@ import { Button, Divider, FormControl, InputLabel, Typography } from "@material-
 import { useChangeLanguageStyles } from "./ChangeLanguageStyles";
 import { FilledSelect } from "../../../../../components/FilledSelect/FilledSelect";
 import { selectUserIsLoading, selectUserProfileLanguage } from "../../../../../store/ducks/user/selectors";
-import { setUserLoadingStatus, updateLanguage } from "../../../../../store/ducks/user/actionCreators";
+import { updateLanguage } from "../../../../../store/ducks/user/actionCreators";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
-import { LoadingStatus } from "../../../../../types/common";
 import { fetchLanguages } from "../../../../../store/ducks/localization/actionCreators";
 import { selectIsLocalizationLoading, selectLanguages } from "../../../../../store/ducks/localization/selectors";
 
@@ -26,10 +25,6 @@ const ChangeLanguage: FC = (): ReactElement => {
         if (profileLanguage) {
             setLanguage(profileLanguage);
         }
-
-        return () => {
-            dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
-        };
     }, []);
 
     const changeLanguage = (event: ChangeEvent<{ value: unknown }>): void => {

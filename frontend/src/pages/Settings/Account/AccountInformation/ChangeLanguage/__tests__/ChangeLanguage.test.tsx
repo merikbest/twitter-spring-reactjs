@@ -38,9 +38,5 @@ describe("ChangeLanguage", () => {
         wrapper.unmount();
 
         expect(mockDispatchFn).nthCalledWith(1, { type: LocalizationActionsType.FETCH_LANGUAGES });
-        expect(mockDispatchFn).nthCalledWith(2, {
-            payload: LoadingStatus.NEVER,
-            type: UserActionsType.SET_USER_LOADING_STATE
-        });
     });
 });
