@@ -7,12 +7,11 @@ import classnames from "classnames";
 import { useAudienceAndTaggingStyles } from "./AudienceAndTaggingStyles";
 import { ArrowRightIcon } from "../../../../icons";
 import { selectUserDataIsPrivateProfile } from "../../../../store/ducks/user/selectors";
-import { setUserLoadingStatus, updatePrivateProfile } from "../../../../store/ducks/user/actionCreators";
+import { updatePrivateProfile } from "../../../../store/ducks/user/actionCreators";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { SETTINGS_PRIVACY_AND_SAFETY_TAGGING } from "../../../../constants/path-constants";
 import { PUBLIC_AND_PROTECTED_TWEETS } from "../../../../constants/url-constants";
-import { LoadingStatus } from "../../../../types/common";
 
 const AudienceAndTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
@@ -25,10 +24,6 @@ const AudienceAndTagging: FC = (): ReactElement => {
         if (isPrivateProfile) {
             setChecked(isPrivateProfile);
         }
-
-        return () => {
-            dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
-        };
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

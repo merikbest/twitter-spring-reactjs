@@ -54,14 +54,4 @@ describe("AudienceAndTagging", () => {
     it("should navigate to Photo tagging", () => {
         testClickOnLink(<AudienceAndTagging />, SETTINGS_PRIVACY_AND_SAFETY_TAGGING, 0);
     });
-
-    it("should reset AudienceAndTagging", () => {
-        const wrapper = mountWithStore(<AudienceAndTagging />, mockStore);
-        wrapper.unmount();
-
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: LoadingStatus.NEVER,
-            type: UserActionsType.SET_USER_LOADING_STATE
-        });
-    });
 });
