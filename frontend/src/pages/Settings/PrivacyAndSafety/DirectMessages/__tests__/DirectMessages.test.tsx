@@ -52,14 +52,4 @@ describe("DirectMessages", () => {
         });
         expect(wrapper.find(Checkbox).at(0).prop("checked")).toBe(true);
     });
-
-    it("should reset DirectMessages", () => {
-        const wrapper = mountWithStore(<DirectMessages />, mockStore);
-        wrapper.unmount();
-
-        expect(mockDispatchFn).nthCalledWith(1, {
-            payload: LoadingStatus.NEVER,
-            type: UserActionsType.SET_USER_LOADING_STATE
-        });
-    });
 });

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 
 import { selectUserDataId, selectUserDataIsMutedDirectMessages } from "../../../../store/ducks/user/selectors";
-import { setUserLoadingStatus, updateDirect } from "../../../../store/ducks/user/actionCreators";
+import { updateDirect } from "../../../../store/ducks/user/actionCreators";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import {
@@ -11,7 +11,6 @@ import {
     DIRECT_MESSAGES_RECEIPTS,
     DIRECT_MESSAGES_RECEIVE
 } from "../../../../constants/url-constants";
-import { LoadingStatus } from "../../../../types/common";
 
 const DirectMessages: FC = memo((): ReactElement => {
     const globalClasses = useGlobalStyles({});
@@ -24,10 +23,6 @@ const DirectMessages: FC = memo((): ReactElement => {
         if (myProfileId) {
             setChecked(isMutedDirectMessages!);
         }
-
-        return () => {
-            dispatch(setUserLoadingStatus(LoadingStatus.NEVER));
-        };
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
