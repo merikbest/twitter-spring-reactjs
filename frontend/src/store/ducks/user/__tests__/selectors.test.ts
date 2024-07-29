@@ -13,7 +13,6 @@ import {
     selectUserIsError,
     selectUserIsLoaded,
     selectUserIsLoading,
-    selectUserIsSuccess,
     selectUserPinnedTweetId,
     selectUserProfileAvatar,
     selectUserProfileCountry,
@@ -189,12 +188,6 @@ describe("user selectors:", () => {
     describe("selectUserStatus", () => {
         it("should return correct result", () => {
             expect(selectUserStatus(createMockRootState())).toBe(LoadingStatus.LOADING);
-        });
-    });
-
-    describe("selectUserIsSuccess", () => {
-        it("should return correct result", () => {
-            expect(selectUserIsSuccess(createMockRootState(LoadingStatus.SUCCESS))).toBe(true);
         });
     });
 
