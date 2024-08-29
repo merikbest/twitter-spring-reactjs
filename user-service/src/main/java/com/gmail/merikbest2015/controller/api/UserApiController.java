@@ -2,12 +2,10 @@ package com.gmail.merikbest2015.controller.api;
 
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.event.UpdateUserEvent;
 import com.gmail.merikbest2015.service.UserClientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +31,12 @@ public class UserApiController {
     @GetMapping(SUBSCRIBERS_IDS)
     public List<Long> getUserIdsWhichUserSubscribed() {
         return userService.getUserIdsWhichUserSubscribed();
+    }
+
+    @GetMapping(BATCH_USERS)
+    public List<UpdateUserEvent> getBatchUsers(@RequestParam("period") Integer period,
+                                               @RequestParam("page") Integer page,
+                                               @RequestParam("limit") Integer limit) {
+        return userService.getBatchUsers(period, page, limit);
     }
 }

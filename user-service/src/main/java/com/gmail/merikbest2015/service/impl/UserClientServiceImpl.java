@@ -2,15 +2,19 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.event.UpdateUserEvent;
 import com.gmail.merikbest2015.mapper.BasicMapper;
+import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.NotificationUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.UserClientService;
 import com.gmail.merikbest2015.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -37,5 +41,13 @@ public class UserClientServiceImpl implements UserClientService {
     public List<Long> getUserIdsWhichUserSubscribed() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return userRepository.getUserIdsWhichUserSubscribed(authUserId);
+    }
+
+    @Override
+    public List<UpdateUserEvent> getBatchUsers(Integer period, Integer page, Integer limit) {
+        LocalDateTime sinceDate = LocalDateTime.now().minusDays(period);
+        PageRequest pageable = PageRequest.of(page, limit);
+        List<User> users = userRepository.findByRegistrationAndUpdatedDate(sinceDate, pageable);
+        return basicMapper.convertToResponseList(users, UpdateUserEvent.class);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +57,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Page<UserProjection> findByActiveTrueAndIdNot(Long id, Pageable pageable);
 
     List<UserProjection> findTop5ByActiveTrue();
+
+    @Query("""
+            SELECT user FROM User user
+            WHERE user.registrationDate >= :sinceDate
+            OR user.updatedAt >= :sinceDate
+            """)
+    List<User> findByRegistrationAndUpdatedDate(LocalDateTime sinceDate, Pageable pageable);
 
     @Query("""
             SELECT user FROM User user
