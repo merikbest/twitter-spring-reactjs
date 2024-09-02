@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.dto.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.Email;
+import jakarta.validation.constraints.Email;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.EMAIL_NOT_VALID;
 

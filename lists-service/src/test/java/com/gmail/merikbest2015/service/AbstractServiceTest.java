@@ -5,7 +5,6 @@ import com.gmail.merikbest2015.constants.PathConstants;
 import com.gmail.merikbest2015.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
-import com.gmail.merikbest2015.service.ListsService;
 import com.gmail.merikbest2015.util.TestConstants;
 import org.junit.Before;
 import org.junit.runner.RunWith;

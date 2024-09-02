@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 

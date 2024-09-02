@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +42,7 @@ public class User {
     @Column(name = "muted_direct_messages", nullable = false, columnDefinition = "boolean default false")
     private boolean mutedDirectMessages;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pinned_tweet_id")
     private Tweet pinnedTweet;
 

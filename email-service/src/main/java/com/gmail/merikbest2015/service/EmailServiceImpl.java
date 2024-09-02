@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +34,6 @@ public class EmailServiceImpl implements EmailService {
         helper.setTo(emailEvent.getToEmail());
         helper.setSubject(emailEvent.getSubject());
         helper.setText(htmlBody, true);
-        System.out.println(emailEvent.getToEmail());
         mailSender.send(message);
     }
 }

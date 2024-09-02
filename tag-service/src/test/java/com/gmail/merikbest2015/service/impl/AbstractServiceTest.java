@@ -29,8 +29,8 @@ public abstract class AbstractServiceTest {
 
     @Before
     public void setUp() {
-        MockHttpServletRequest mockRequest = new MockHttpServletRequest();
-        mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID);
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockRequest));
+//        MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+//        mockRequest.addHeader(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID);
+//        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(mockRequest));
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.USER_NOT_FOUND;
 import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;

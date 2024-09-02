@@ -2,8 +2,8 @@ package com.gmail.merikbest2015.dto.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import static com.gmail.merikbest2015.constants.ErrorMessage.*;
 

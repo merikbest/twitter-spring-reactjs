@@ -22,7 +22,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.id = :tweetId
             """)
     <T> Optional<T> getTweetById(@Param("tweetId") Long tweetId, Class<T> type);
@@ -78,8 +78,8 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet FROM Tweet tweet
             WHERE tweet.author = :user
-            AND tweet.tweetType != 'REPLY'
-            AND (tweet != :pinnedTweet OR tweet.author.pinnedTweet = NULL)
+            AND tweet.tweetType <> 'REPLY'
+            AND (tweet <> :pinnedTweet OR tweet.author.pinnedTweet IS NULL)
             AND tweet.addressedUser IS NULL
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = FALSE
@@ -92,7 +92,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet FROM Tweet tweet
             LEFT JOIN tweet.images image
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.scheduledDate IS NULL AND tweet.deleted = false
             AND (tweet.author.id = :userId AND image.id IS NOT NULL)
             OR tweet.scheduledDate IS NULL AND tweet.deleted = false
@@ -103,7 +103,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'TWEET'
+            WHERE tweet.tweetType <> 'TWEET'
             AND tweet.author.id = :userId
             AND tweet.addressedUser IS NOT NULL
             AND tweet.scheduledDate IS NULL
@@ -124,7 +124,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet FROM Tweet tweet
             LEFT JOIN tweet.quoteTweet quoteTweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.author.id NOT IN (
                     SELECT user.id FROM User user
                     JOIN user.userBlockedList blockedUser
@@ -144,7 +144,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.author.id NOT IN (
                     SELECT user.id FROM User user
                     JOIN user.userBlockedList blockedUser
@@ -158,7 +158,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
                 AND user.active = true)
             )
             AND tweet.scheduledDate IS NULL
-            AND tweet.images.size <> 0
+            AND SIZE(tweet.images) <> 0
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
             """)
@@ -166,7 +166,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.author.id NOT IN (
                     SELECT user.id FROM User user
                     JOIN user.userBlockedList blockedUser
@@ -187,7 +187,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.author.id IN (
                 SELECT follower.id FROM User user
                 JOIN user.followers follower
@@ -201,7 +201,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.author.id = :userId
             AND tweet.scheduledDate IS NOT NULL
             AND tweet.deleted = false
@@ -211,7 +211,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.author.id = :userId
             AND tweet.id = :tweetId
             """)
@@ -219,7 +219,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             AND tweet.text LIKE CONCAT('%',:text,'%')
@@ -249,7 +249,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.id = :tweetId
             AND tweet.author.id = :userId
             """)
@@ -257,7 +257,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.id = :tweetId
             AND tweet.poll.id = :pollId
             """)
@@ -265,14 +265,14 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT CASE WHEN count(tweet) > 0 THEN true ELSE false END FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.id = :tweetId
             """)
     boolean isTweetExists(@Param("tweetId") Long tweetId);
 
     @Query("""
             SELECT tweet FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.id IN :tweetIds
             AND tweet.deleted = false
             ORDER BY tweet.createdAt DESC
@@ -282,7 +282,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Query("""
             SELECT tweet.id AS tweetId, image.id AS imageId, image.src AS src FROM Tweet tweet
             LEFT JOIN tweet.images image
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.scheduledDate IS NULL
             AND tweet.author.id = :userId
             AND image.id IS NOT NULL
@@ -293,7 +293,7 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     @Query("""
             SELECT COUNT(tweet) FROM Tweet tweet
-            WHERE tweet.tweetType != 'RETWEET'
+            WHERE tweet.tweetType <> 'RETWEET'
             AND tweet.scheduledDate IS NULL
             AND tweet.deleted = false
             AND UPPER(tweet.text) LIKE UPPER(CONCAT('%',:text,'%'))
