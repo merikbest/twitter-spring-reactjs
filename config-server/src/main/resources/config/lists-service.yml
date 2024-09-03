@@ -15,7 +15,9 @@ spring:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
     batch:
-        initialize-schema: always
+        jdbc:
+            schema: classpath:db/create_spring_batch_tables.sql
+            initialize-schema: always
         job:
            enabled: false
     flyway:
