@@ -28,6 +28,9 @@ spring:
         bootstrap-servers: localhost:9092
         consumer:
             group-id: lists
+batch:
+    chunkSize: 100
+    periodOfDays: 1
 resilience4j:
     circuitbreaker:
         instances:
