@@ -3,10 +3,12 @@ package com.gmail.merikbest2015.client;
 import com.gmail.merikbest2015.configuration.FeignConfiguration;
 import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.event.UpdateUserEvent;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -25,4 +27,9 @@ public interface UserClient {
 
     @GetMapping(SUBSCRIBERS_IDS)
     List<Long> getUserIdsWhichUserSubscribed();
+
+    @GetMapping(BATCH_USERS)
+    List<UpdateUserEvent> getBatchUsers(@RequestParam("period") Integer period,
+                                        @RequestParam("page") Integer page,
+                                        @RequestParam("limit") Integer limit);
 }

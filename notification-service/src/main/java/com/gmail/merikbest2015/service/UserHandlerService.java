@@ -6,7 +6,7 @@ import com.gmail.merikbest2015.model.User;
 
 public interface UserHandlerService {
 
-    void handleUpdateUser(UpdateUserEvent userEvent);
+    User handleNewOrUpdateUser(UpdateUserEvent userEvent);
 
     User getOrCreateUser(UserNotificationDto user);
 }

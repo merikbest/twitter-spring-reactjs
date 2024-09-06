@@ -16,6 +16,6 @@ public class UserConsumer {
 
     @KafkaListener(topics = UPDATE_USER_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
     public void userUpdateListener(UpdateUserEvent userEvent) {
-        userHandlerService.handleUpdateUser(userEvent);
+        userHandlerService.handleNewOrUpdateUser(userEvent);
     }
 }

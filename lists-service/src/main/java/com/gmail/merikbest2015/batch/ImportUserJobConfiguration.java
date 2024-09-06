@@ -22,9 +22,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @RequiredArgsConstructor
-public class ImportUserDataJobConfiguration {
+public class ImportUserJobConfiguration {
 
-    private static final String JOB_NOME = "importUserData";
+    private static final String JOB_NOME = "importUserJob";
 
     @Value("${batch.chunkSize}")
     private int chunkSize;
