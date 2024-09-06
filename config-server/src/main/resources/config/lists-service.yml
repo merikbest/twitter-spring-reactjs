@@ -36,6 +36,8 @@ resilience4j:
         instances:
             tweet-service:
                 minimum-number-of-calls: 5
+            user-service:
+                minimum-number-of-calls: 5
 feign:
     circuitbreaker:
         enabled: true

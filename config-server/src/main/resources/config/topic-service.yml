@@ -22,6 +22,14 @@ spring:
         bootstrap-servers: localhost:9092
         consumer:
             group-id: topic
+batch:
+    chunkSize: 100
+    periodOfDays: 1
+resilience4j:
+    circuitbreaker:
+        instances:
+            user-service:
+                minimum-number-of-calls: 5
 feign:
     circuitbreaker:
         enabled: true

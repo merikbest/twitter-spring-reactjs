@@ -30,7 +30,7 @@ public class UserHandlerServiceImplTest extends AbstractServiceTest {
         User authUser = TopicTestHelper.mockAuthUser();
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
         assertFalse(authUser.isPrivateProfile());
-        userHandlerService.handleUpdateUser(mockUpdateUserEvent());
+        userHandlerService.handleNewOrUpdateUser(mockUpdateUserEvent());
         assertTrue(authUser.isPrivateProfile());
     }
 
@@ -39,7 +39,7 @@ public class UserHandlerServiceImplTest extends AbstractServiceTest {
         UpdateUserEvent updateUserEvent = mockUpdateUserEvent();
         User user = mockCreateUser(updateUserEvent);
         when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
-        userHandlerService.handleUpdateUser(updateUserEvent);
+        userHandlerService.handleNewOrUpdateUser(updateUserEvent);
         verify(userRepository, times(1)).save(user);
     }
 
