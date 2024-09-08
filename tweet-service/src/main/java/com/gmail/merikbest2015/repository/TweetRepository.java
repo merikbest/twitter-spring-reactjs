@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.repository.projection.ProfileTweetImageProjection
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetUserProjection;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -338,4 +339,11 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
     @Modifying
     @Query("UPDATE Tweet tweet SET tweet.quotesCount = tweet.quotesCount + 1 WHERE tweet = :tweet")
     void updateQuotesCount(@Param("tweet") Tweet tweet);
+
+    @Query("""
+            SELECT tweet FROM Tweet tweet
+            WHERE tweet.createdAt >= :sinceDate
+            OR tweet.updatedAt >= :sinceDate
+            """)
+    List<Tweet> findByCreationAndUpdatedDate(LocalDateTime sinceDate, PageRequest pageable);
 }

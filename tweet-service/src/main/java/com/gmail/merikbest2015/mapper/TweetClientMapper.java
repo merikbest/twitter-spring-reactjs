@@ -4,6 +4,8 @@ import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.event.UpdateTweetEvent;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.TweetClientService;
@@ -47,5 +49,10 @@ public class TweetClientMapper {
     public ChatTweetResponse getChatTweet(Long tweetId) {
         ChatTweetProjection tweet = tweetClientService.getChatTweet(tweetId);
         return basicMapper.convertToResponse(tweet, ChatTweetResponse.class);
+    }
+
+    public List<UpdateTweetEvent> getBatchTweets(Integer period, Integer page, Integer limit) {
+        List<Tweet> users = tweetClientService.getBatchTweets(period, page, limit);
+        return basicMapper.convertToResponseList(users, UpdateTweetEvent.class);
     }
 }

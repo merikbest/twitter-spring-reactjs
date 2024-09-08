@@ -109,6 +109,7 @@ public class PathConstants {
     public static final String REPLY_USER_ID_TWEET_ID = "/reply/{userId}/{tweetId}";
     public static final String QUOTE_USER_ID_TWEET_ID = "/quote/{userId}/{tweetId}";
     public static final String REPLY_CHANGE_USER_ID_TWEET_ID = "/reply/change/{userId}/{tweetId}";
+    public static final String BATCH_TWEETS = "/batch/tweets";
 
     public static final String API_V1_IMAGE = API_V1 + "/image";
     public static final String UPLOAD = "/upload";

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import org.springframework.data.domain.Page;
@@ -21,4 +22,6 @@ public interface TweetClientService {
     Long getTweetCountByText(String text);
 
     ChatTweetProjection getChatTweet(Long tweetId);
+
+    List<Tweet> getBatchTweets(Integer period, Integer page, Integer limit);
 }
