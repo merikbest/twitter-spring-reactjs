@@ -25,7 +25,7 @@ public class UserHandlerServiceImplTest extends AbstractServiceTest {
     public void handleUpdateUser_shouldUpdateUser() {
         UpdateUserEvent updateUserEvent = mockUpdateUserEvent();
         when(userRepository.findById(updateUserEvent.getId())).thenReturn(Optional.of(new User()));
-        userHandlerService.handleUpdateUser(updateUserEvent);
+        userHandlerService.handleNewOrUpdateUser(updateUserEvent);
         verify(userRepository, times(1)).findById(updateUserEvent.getId());
     }
 
@@ -33,7 +33,7 @@ public class UserHandlerServiceImplTest extends AbstractServiceTest {
     public void handleUpdateUser_shouldCreateUser() {
         UpdateUserEvent updateUserEvent = mockUpdateUserEvent();
         when(userRepository.findById(updateUserEvent.getId())).thenReturn(Optional.empty());
-        userHandlerService.handleUpdateUser(updateUserEvent);
+        userHandlerService.handleNewOrUpdateUser(updateUserEvent);
         verify(userRepository, times(1)).findById(updateUserEvent.getId());
         verify(userRepository, times(1)).save(any());
     }
