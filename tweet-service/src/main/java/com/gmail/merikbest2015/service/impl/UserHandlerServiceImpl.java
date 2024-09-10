@@ -18,8 +18,8 @@ public class UserHandlerServiceImpl implements UserHandlerService {
 
     @Override
     @Transactional
-    public void handleUpdateUser(UpdateUserEvent updateUserEvent) {
-        userRepository.findById(updateUserEvent.getId())
+    public User handleNewOrUpdateUser(UpdateUserEvent updateUserEvent) {
+        return userRepository.findById(updateUserEvent.getId())
                 .map(user -> {
                     user.setUsername(updateUserEvent.getUsername());
                     user.setFullName(updateUserEvent.getFullName());

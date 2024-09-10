@@ -1,10 +1,11 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.event.*;
+import com.gmail.merikbest2015.model.User;
 
 public interface UserHandlerService {
 
-    void handleUpdateUser(UpdateUserEvent userEvent);
+    User handleNewOrUpdateUser(UpdateUserEvent userEvent);
 
     void handleBlockUser(BlockUserEvent userEvent, String authId);
 
