@@ -1,20 +1,21 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.ProfileTweetImageResponse;
 import com.gmail.merikbest2015.dto.response.TweetAdditionalInfoResponse;
 import com.gmail.merikbest2015.dto.response.TweetUserResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
+import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.*;
 import com.gmail.merikbest2015.service.TweetService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

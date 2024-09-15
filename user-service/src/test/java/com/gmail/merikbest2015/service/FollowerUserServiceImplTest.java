@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.BaseUserProjection;
 import com.gmail.merikbest2015.repository.projection.FollowerUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserProfileProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import lombok.SneakyThrows;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

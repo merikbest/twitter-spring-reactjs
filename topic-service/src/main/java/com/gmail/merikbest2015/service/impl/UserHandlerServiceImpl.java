@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.BlockUserEvent;
-import com.gmail.merikbest2015.event.FollowUserEvent;
-import com.gmail.merikbest2015.event.UpdateUserEvent;
-import com.gmail.merikbest2015.event.UserEvent;
+import com.gmail.merikbest2015.commons.event.BlockUserEvent;
+import com.gmail.merikbest2015.commons.event.FollowUserEvent;
+import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
+import com.gmail.merikbest2015.commons.event.UserEvent;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserHandlerService;

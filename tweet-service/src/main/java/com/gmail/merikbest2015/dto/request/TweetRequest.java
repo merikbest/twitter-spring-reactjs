@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.dto.request;
 
 import com.gmail.merikbest2015.dto.response.TweetImageResponse;
-import com.gmail.merikbest2015.enums.LinkCoverSize;
-import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.commons.enums.LinkCoverSize;
+import com.gmail.merikbest2015.commons.enums.ReplyType;
 import lombok.Data;
 
 import java.time.LocalDateTime;

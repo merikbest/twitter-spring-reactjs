@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.broker.producer.*;
-import com.gmail.merikbest2015.constants.PathConstants;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.client.TagClient;
 import com.gmail.merikbest2015.client.TweetClient;
-import com.gmail.merikbest2015.mapper.BasicMapper;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.*;
-import com.gmail.merikbest2015.security.JwtProvider;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.security.JwtProvider;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

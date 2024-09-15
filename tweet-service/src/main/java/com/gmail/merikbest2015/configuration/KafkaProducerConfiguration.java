@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.configuration;
 
-import com.gmail.merikbest2015.event.*;
+import com.gmail.merikbest2015.commons.event.*;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;

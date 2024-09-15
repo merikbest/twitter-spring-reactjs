@@ -1,15 +1,15 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
-import com.gmail.merikbest2015.event.SendEmailEvent;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.event.SendEmailEvent;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.broker.producer.SendEmailProducer;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
-import com.gmail.merikbest2015.security.JwtProvider;
+import com.gmail.merikbest2015.commons.security.JwtProvider;
 import com.gmail.merikbest2015.service.RegistrationService;
 import com.gmail.merikbest2015.service.util.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.broker.producer.SendEmailProducer.toSendRegistrationEmailEvent;
 
 @Service

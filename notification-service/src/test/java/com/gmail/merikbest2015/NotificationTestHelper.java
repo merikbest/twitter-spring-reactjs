@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationListResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
 import com.gmail.merikbest2015.repository.projection.NotificationInfoProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationProjection;
 import org.springframework.data.projection.ProjectionFactory;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
+import static com.gmail.merikbest2015.commons.util.TestConstants.USER_ID;
 
 public class NotificationTestHelper {
 

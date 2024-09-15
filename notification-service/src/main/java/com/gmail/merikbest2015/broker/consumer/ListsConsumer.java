@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.broker.consumer;
 
-import com.gmail.merikbest2015.event.UpdateListsEvent;
+import com.gmail.merikbest2015.commons.event.UpdateListsEvent;
 import com.gmail.merikbest2015.service.ListsHandlerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.UPDATE_LISTS_TOPIC;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.UPDATE_LISTS_TOPIC;
 
 @Component
 @RequiredArgsConstructor

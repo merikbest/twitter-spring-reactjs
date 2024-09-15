@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.broker.producer;
 
-import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.event.TweetMentionNotificationEvent;
-import com.gmail.merikbest2015.event.TweetNotificationEvent;
-import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
+import com.gmail.merikbest2015.commons.event.TweetMentionNotificationEvent;
+import com.gmail.merikbest2015.commons.event.TweetNotificationEvent;
+import com.gmail.merikbest2015.commons.event.TweetSubscriberNotificationEvent;
 import com.gmail.merikbest2015.mapper.TweetNotificationMapper;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.*;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.*;
 
 @Component
 @RequiredArgsConstructor

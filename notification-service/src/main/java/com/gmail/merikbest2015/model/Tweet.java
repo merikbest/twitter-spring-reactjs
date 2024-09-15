@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.model;
 
-import com.gmail.merikbest2015.enums.TweetType;
+import com.gmail.merikbest2015.commons.enums.TweetType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

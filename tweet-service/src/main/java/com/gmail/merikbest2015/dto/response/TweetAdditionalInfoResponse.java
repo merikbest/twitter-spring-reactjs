@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.dto.response.tweet.TweetAdditionalInfoUserResponse;
-import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetAdditionalInfoUserResponse;
+import com.gmail.merikbest2015.commons.enums.ReplyType;
 import lombok.Data;
 
 @Data

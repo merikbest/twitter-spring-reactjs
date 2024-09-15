@@ -7,7 +7,7 @@ import com.gmail.merikbest2015.dto.request.PasswordResetRequest;
 import com.gmail.merikbest2015.dto.response.AuthUserResponse;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.service.AuthenticationService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

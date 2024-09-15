@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.batch;
 
-import com.gmail.merikbest2015.event.UpdateUserEvent;
+import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
 import org.springframework.batch.item.data.AbstractPaginatedDataItemReader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.service.BookmarkService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

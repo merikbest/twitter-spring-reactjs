@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.TagClient;
 import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.model.User;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor

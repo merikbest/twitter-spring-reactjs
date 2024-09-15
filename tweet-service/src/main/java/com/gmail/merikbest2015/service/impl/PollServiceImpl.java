@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Poll;
 import com.gmail.merikbest2015.model.PollChoice;
 import com.gmail.merikbest2015.model.PollChoiceVoted;
@@ -14,7 +14,7 @@ import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.PollService;
 import com.gmail.merikbest2015.service.TweetService;
 import com.gmail.merikbest2015.service.util.TweetValidationHelper;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor

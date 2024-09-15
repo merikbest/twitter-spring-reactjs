@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.configuration;
 
-import com.gmail.merikbest2015.event.BlockUserEvent;
-import com.gmail.merikbest2015.event.FollowRequestUserEvent;
-import com.gmail.merikbest2015.event.FollowUserEvent;
-import com.gmail.merikbest2015.event.UpdateUserEvent;
+import com.gmail.merikbest2015.commons.event.BlockUserEvent;
+import com.gmail.merikbest2015.commons.event.FollowRequestUserEvent;
+import com.gmail.merikbest2015.commons.event.FollowUserEvent;
+import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;

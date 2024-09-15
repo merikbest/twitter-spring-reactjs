@@ -1,11 +1,11 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetListResponse;
 import com.gmail.merikbest2015.client.ListsClient;
 import com.gmail.merikbest2015.repository.BookmarkRepository;
 import com.gmail.merikbest2015.repository.LikeTweetRepository;
 import com.gmail.merikbest2015.repository.RetweetRepository;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

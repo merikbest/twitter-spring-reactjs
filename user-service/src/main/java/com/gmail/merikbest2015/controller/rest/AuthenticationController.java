@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
-import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor

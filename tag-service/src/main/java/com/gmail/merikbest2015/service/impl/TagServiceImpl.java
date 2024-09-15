@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.request.IdsRequest;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.model.Tag;
 import com.gmail.merikbest2015.repository.TagRepository;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.TAG_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TAG_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

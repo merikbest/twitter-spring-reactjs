@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
-import com.gmail.merikbest2015.mapper.BasicMapper;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetListResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.repository.projection.TweetListProjection;
 import com.gmail.merikbest2015.service.ListsClientService;
 import com.gmail.merikbest2015.service.UserService;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

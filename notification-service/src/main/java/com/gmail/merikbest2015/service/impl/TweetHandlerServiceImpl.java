@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.TweetNotificationDto;
-import com.gmail.merikbest2015.event.UpdateTweetEvent;
+import com.gmail.merikbest2015.commons.event.TweetNotificationDto;
+import com.gmail.merikbest2015.commons.event.UpdateTweetEvent;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.TweetRepository;

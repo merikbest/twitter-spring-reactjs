@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.client;
 
-import com.gmail.merikbest2015.configuration.FeignConfiguration;
-import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.event.UpdateUserEvent;
+import com.gmail.merikbest2015.commons.configuration.FeignConfiguration;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.FeignConstants.USER_SERVICE;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 
 @CircuitBreaker(name = USER_SERVICE)
 @FeignClient(name = USER_SERVICE, path = API_V1_USER, contextId = "UserClient", configuration = FeignConfiguration.class)

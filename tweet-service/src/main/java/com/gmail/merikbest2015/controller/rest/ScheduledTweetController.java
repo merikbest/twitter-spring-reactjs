@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.mapper.ScheduledTweetMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.SCHEDULE;
-import static com.gmail.merikbest2015.constants.PathConstants.UI_V1_TWEETS;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.SCHEDULE;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.UI_V1_TWEETS;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.response.BlockedUserResponse;
 import com.gmail.merikbest2015.repository.projection.BlockedUserProjection;
 import com.gmail.merikbest2015.service.BlockUserService;

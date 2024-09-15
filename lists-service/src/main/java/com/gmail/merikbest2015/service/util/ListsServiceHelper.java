@@ -1,15 +1,15 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.repository.ListsRepository;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_LIST_NAME_LENGTH;
-import static com.gmail.merikbest2015.constants.ErrorMessage.LIST_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.INCORRECT_LIST_NAME_LENGTH;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.LIST_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

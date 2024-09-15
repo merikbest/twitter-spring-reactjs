@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.ListsNotificationDto;
+import com.gmail.merikbest2015.commons.event.ListsNotificationDto;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.ListsHandlerService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

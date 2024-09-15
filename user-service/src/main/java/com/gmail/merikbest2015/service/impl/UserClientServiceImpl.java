@@ -1,15 +1,15 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.event.UpdateUserEvent;
-import com.gmail.merikbest2015.mapper.BasicMapper;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.NotificationUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.UserClientService;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.request.VoteRequest;
 import com.gmail.merikbest2015.client.WebSocketClient;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.gmail.merikbest2015.constants.PathConstants.*;
-import static com.gmail.merikbest2015.constants.WebsocketConstants.*;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.WebsocketConstants.*;
 
 @RestController
 @RequiredArgsConstructor

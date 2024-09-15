@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.TopicTestHelper;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.service.UserService;
 import org.junit.Test;
@@ -11,8 +11,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.util.TestConstants.USER_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;

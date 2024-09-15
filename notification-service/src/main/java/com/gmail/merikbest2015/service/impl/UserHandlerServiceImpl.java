@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.UpdateUserEvent;
-import com.gmail.merikbest2015.event.UserNotificationDto;
+import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
+import com.gmail.merikbest2015.commons.event.UserNotificationDto;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserHandlerService;

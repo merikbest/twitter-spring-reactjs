@@ -1,9 +1,10 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.event.TweetNotificationEvent;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.commons.event.TweetNotificationEvent;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Notification;
 import org.junit.Test;
 import org.junit.runner.RunWith;

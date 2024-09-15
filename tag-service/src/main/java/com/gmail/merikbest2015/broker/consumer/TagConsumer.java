@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.broker.consumer;
 
-import com.gmail.merikbest2015.event.TweetTagEvent;
+import com.gmail.merikbest2015.commons.event.TweetTagEvent;
 import com.gmail.merikbest2015.service.TagHandlerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.DELETE_TWEETS_HASHTAG_TOPIC;
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.PARSE_TWEETS_HASHTAG_TOPIC;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.DELETE_TWEETS_HASHTAG_TOPIC;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.PARSE_TWEETS_HASHTAG_TOPIC;
 
 @Component
 @RequiredArgsConstructor

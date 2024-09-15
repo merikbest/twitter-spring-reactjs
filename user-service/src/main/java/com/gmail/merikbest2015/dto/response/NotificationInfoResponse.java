@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.dto.response;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
 import lombok.Data;
 
 import java.time.LocalDateTime;

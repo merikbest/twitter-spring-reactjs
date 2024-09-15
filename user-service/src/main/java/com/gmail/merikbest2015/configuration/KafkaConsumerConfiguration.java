@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.configuration;
 
-import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
-import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
+import com.gmail.merikbest2015.commons.event.TweetSubscriberNotificationEvent;
+import com.gmail.merikbest2015.commons.event.UpdateTweetCountEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
+import com.gmail.merikbest2015.commons.event.UpdateTweetCountEvent;
 
 public interface UserUpdateTweetCountService {
 

@@ -1,11 +1,11 @@
 package com.gmail.merikbest2015;
 
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
-import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.commons.dto.response.lists.ListMemberResponse;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.gmail.merikbest2015.util.TestConstants.*;
+import static com.gmail.merikbest2015.commons.util.TestConstants.*;
 
 public class ListsServiceTestHelper {
 

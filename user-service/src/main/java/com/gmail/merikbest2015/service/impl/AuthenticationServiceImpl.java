@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
-import com.gmail.merikbest2015.event.SendEmailEvent;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.event.SendEmailEvent;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.exception.InputFieldException;
 import com.gmail.merikbest2015.broker.producer.SendEmailProducer;
 import com.gmail.merikbest2015.model.User;
@@ -11,7 +11,7 @@ import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
 import com.gmail.merikbest2015.repository.projection.UserCommonProjection;
 import com.gmail.merikbest2015.repository.projection.UserPrincipalProjection;
-import com.gmail.merikbest2015.security.JwtProvider;
+import com.gmail.merikbest2015.commons.security.JwtProvider;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.util.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.AUTH_USER_ID_HEADER;
 import static com.gmail.merikbest2015.broker.producer.SendEmailProducer.toSendPasswordResetEmailEvent;
 
 @Service

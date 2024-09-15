@@ -1,11 +1,12 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.response.MutedUserResponse;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.service.MuteUserService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -1,11 +1,11 @@
 package com.gmail.merikbest2015.broker.producer;
 
-import com.gmail.merikbest2015.event.TweetTagEvent;
+import com.gmail.merikbest2015.commons.event.TweetTagEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.*;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.*;
 
 @Component
 @RequiredArgsConstructor

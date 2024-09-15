@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.broker.producer;
 
-import com.gmail.merikbest2015.event.SendEmailEvent;
+import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.SEND_EMAIL_TOPIC;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.SEND_EMAIL_TOPIC;
 
 @Component
 @RequiredArgsConstructor

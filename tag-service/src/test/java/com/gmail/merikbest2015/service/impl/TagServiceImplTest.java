@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.request.IdsRequest;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Tag;
 import com.gmail.merikbest2015.service.TagService;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.TAG_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TAG_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 

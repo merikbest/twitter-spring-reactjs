@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015;
 
-import com.gmail.merikbest2015.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.enums.TopicCategory;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static com.gmail.merikbest2015.util.TestConstants.*;
+import static com.gmail.merikbest2015.commons.util.TestConstants.*;
 
 public class TopicTestHelper {
 

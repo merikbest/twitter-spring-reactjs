@@ -1,14 +1,14 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.dto.response.chat.ChatTweetResponse;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.TweetClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.INCORRECT_CHAT_MESSAGE_LENGTH;
-import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.INCORRECT_CHAT_MESSAGE_LENGTH;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TWEET_NOT_FOUND;
 
 @Component
 @RequiredArgsConstructor

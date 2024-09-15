@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.gmail.merikbest2015.enums.BackgroundColorType;
-import com.gmail.merikbest2015.enums.ColorSchemeType;
+import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
+import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import lombok.Data;
 
 import java.time.LocalDateTime;

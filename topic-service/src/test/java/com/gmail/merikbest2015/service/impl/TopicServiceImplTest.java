@@ -3,8 +3,8 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.TopicTestHelper;
 import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
-import com.gmail.merikbest2015.enums.TopicCategory;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Topic;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
@@ -17,8 +17,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.*;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.util.TestConstants.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

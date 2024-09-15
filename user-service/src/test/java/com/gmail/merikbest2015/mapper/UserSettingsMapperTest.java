@@ -2,10 +2,10 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.dto.response.UserPhoneResponse;
-import com.gmail.merikbest2015.enums.BackgroundColorType;
-import com.gmail.merikbest2015.enums.ColorSchemeType;
+import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
+import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.service.UserSettingsService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -1,12 +1,13 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.*;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
+import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.repository.projection.*;

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.batch;
 
 import com.gmail.merikbest2015.client.UserClient;
-import com.gmail.merikbest2015.event.UpdateUserEvent;
+import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.service.UserHandlerService;
 import jakarta.persistence.EntityManagerFactory;

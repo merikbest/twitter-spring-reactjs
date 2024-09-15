@@ -3,14 +3,14 @@ package com.gmail.merikbest2015.controller.rest;
 import com.gmail.merikbest2015.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
 import com.gmail.merikbest2015.dto.response.UserPhoneResponse;
-import com.gmail.merikbest2015.enums.BackgroundColorType;
-import com.gmail.merikbest2015.enums.ColorSchemeType;
+import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
+import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.mapper.UserSettingsMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor

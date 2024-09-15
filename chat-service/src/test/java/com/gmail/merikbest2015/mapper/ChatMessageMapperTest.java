@@ -1,14 +1,15 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.ChatServiceTestHelper;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
 import com.gmail.merikbest2015.dto.response.ChatMessageResponse;
-import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.chat.ChatTweetResponse;
 import com.gmail.merikbest2015.model.ChatMessage;
 import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import com.gmail.merikbest2015.service.ChatMessageService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

@@ -1,25 +1,25 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationListResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationTweetResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.event.*;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationListResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationTweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
+import com.gmail.merikbest2015.commons.event.*;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.Notification;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.NotificationHandlerService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.WebsocketConstants.*;
+import static com.gmail.merikbest2015.commons.constants.WebsocketConstants.*;
 import static org.mockito.Mockito.*;
 
 public class NotificationHandlerServiceImplTest extends AbstractServiceTest {

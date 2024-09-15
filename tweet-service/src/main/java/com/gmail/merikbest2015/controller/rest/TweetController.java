@@ -1,11 +1,11 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.*;
-import com.gmail.merikbest2015.dto.response.user.UserResponse;
-import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
+import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.client.WebSocketClient;
 import com.gmail.merikbest2015.mapper.TweetMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.*;
-import static com.gmail.merikbest2015.constants.WebsocketConstants.*;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.WebsocketConstants.*;
 
 @RestController
 @RequiredArgsConstructor

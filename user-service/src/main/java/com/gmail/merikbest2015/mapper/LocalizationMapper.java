@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.mapper;
 
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.response.CountryCodeResponse;
 import com.gmail.merikbest2015.dto.response.LanguagesResponse;
 import com.gmail.merikbest2015.model.CountryCode;

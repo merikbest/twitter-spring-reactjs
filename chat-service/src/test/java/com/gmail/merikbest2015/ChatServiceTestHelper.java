@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015;
 
-import com.gmail.merikbest2015.dto.response.chat.ChatTweetResponse;
-import com.gmail.merikbest2015.dto.response.chat.ChatUserParticipantResponse;
+import com.gmail.merikbest2015.commons.dto.response.chat.ChatTweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.chat.ChatUserParticipantResponse;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatMessage;
 import com.gmail.merikbest2015.model.ChatParticipant;
@@ -10,7 +10,7 @@ import com.gmail.merikbest2015.repository.projection.ChatMessageProjection;
 import com.gmail.merikbest2015.repository.projection.ChatProjection;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 

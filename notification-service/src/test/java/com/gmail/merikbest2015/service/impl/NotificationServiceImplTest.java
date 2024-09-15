@@ -1,14 +1,14 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.NotificationTestHelper;
-import com.gmail.merikbest2015.dto.request.IdsRequest;
-import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.repository.projection.NotificationProjection;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.NotificationService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.NOTIFICATION_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.NOTIFICATION_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;

@@ -3,8 +3,8 @@ package com.gmail.merikbest2015.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.dto.request.SuggestedTopicsRequest;
 import com.gmail.merikbest2015.dto.request.TopicsCategoriesRequest;
-import com.gmail.merikbest2015.enums.TopicCategory;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;

@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.configuration;
 
-import com.gmail.merikbest2015.event.TweetTagEvent;
+import com.gmail.merikbest2015.commons.event.TweetTagEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;

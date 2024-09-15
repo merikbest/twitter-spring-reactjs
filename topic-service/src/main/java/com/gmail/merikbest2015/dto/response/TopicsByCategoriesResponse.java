@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.dto.response;
 
-import com.gmail.merikbest2015.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.enums.TopicCategory;
 import com.gmail.merikbest2015.repository.projection.TopicProjection;
 import lombok.AllArgsConstructor;
 import lombok.Data;

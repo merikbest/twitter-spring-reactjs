@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.enums.TopicCategory;
 import com.gmail.merikbest2015.model.Topic;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.TopicProjection;

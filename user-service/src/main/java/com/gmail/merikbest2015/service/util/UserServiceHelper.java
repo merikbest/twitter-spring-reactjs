@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.util;
 
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.exception.InputFieldException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
@@ -17,7 +17,7 @@ import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 
 @Component
 @RequiredArgsConstructor

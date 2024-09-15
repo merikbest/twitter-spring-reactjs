@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.UserService;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.CHAT_PARTICIPANT_BLOCKED;
-import static com.gmail.merikbest2015.constants.ErrorMessage.USER_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_PARTICIPANT_BLOCKED;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

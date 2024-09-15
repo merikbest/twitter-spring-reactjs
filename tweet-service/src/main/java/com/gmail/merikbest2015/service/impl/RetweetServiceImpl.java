@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.TweetNotificationProducer;
-import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.enums.TweetType;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
+import com.gmail.merikbest2015.commons.enums.TweetType;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.broker.producer.UpdateTweetCountProducer;

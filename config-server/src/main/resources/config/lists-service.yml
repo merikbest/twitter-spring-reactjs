@@ -14,14 +14,14 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
+    flyway:
+        locations: classpath:db/migration
     batch:
         jdbc:
             schema: classpath:db/create_spring_batch_tables.sql
             initialize-schema: always
         job:
-           enabled: false
-    flyway:
-        locations: classpath:db/migration
+            enabled: false
     zipkin:
         base-url: http://${ZIPKIN_HOST:localhost}:9411
     kafka:

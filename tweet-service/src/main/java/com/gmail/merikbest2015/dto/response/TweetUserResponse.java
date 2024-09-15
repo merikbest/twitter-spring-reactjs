@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.dto.response;
 
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import lombok.Getter;
 import lombok.Setter;
 

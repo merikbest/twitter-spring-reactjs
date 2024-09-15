@@ -1,9 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.UserNotificationProducer;
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.enums.NotificationType;
-import com.gmail.merikbest2015.event.*;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
+import com.gmail.merikbest2015.commons.event.*;
 import com.gmail.merikbest2015.client.WebSocketClient;
 import com.gmail.merikbest2015.mapper.NotificationHandlerMapper;
 import com.gmail.merikbest2015.model.Lists;
@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.gmail.merikbest2015.constants.WebsocketConstants.*;
+import static com.gmail.merikbest2015.commons.constants.WebsocketConstants.*;
 
 @Service
 @RequiredArgsConstructor

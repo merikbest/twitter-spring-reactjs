@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.ChatTweetProjection;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;

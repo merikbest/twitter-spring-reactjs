@@ -1,11 +1,12 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.*;
-import com.gmail.merikbest2015.dto.response.lists.ListMemberResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.lists.ListMemberResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.BaseListProjection;
 import com.gmail.merikbest2015.repository.projection.ListProjection;

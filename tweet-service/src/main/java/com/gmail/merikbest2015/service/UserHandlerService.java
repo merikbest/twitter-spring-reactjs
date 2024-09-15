@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.event.*;
+import com.gmail.merikbest2015.commons.event.*;
 import com.gmail.merikbest2015.model.User;
 
 public interface UserHandlerService {

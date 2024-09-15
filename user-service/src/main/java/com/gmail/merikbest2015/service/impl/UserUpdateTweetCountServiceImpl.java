@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.UpdateTweetCountEvent;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.event.UpdateTweetCountEvent;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserUpdateTweetCountService;
@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.USER_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_NOT_FOUND;
 import static java.lang.Long.parseLong;
 
 @Service

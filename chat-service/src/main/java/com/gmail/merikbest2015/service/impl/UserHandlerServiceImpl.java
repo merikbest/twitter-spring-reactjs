@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.*;
+import com.gmail.merikbest2015.commons.event.*;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserHandlerService;

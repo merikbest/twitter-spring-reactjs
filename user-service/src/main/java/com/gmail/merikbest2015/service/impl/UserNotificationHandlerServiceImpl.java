@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.TweetSubscriberNotificationProducer;
-import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
+import com.gmail.merikbest2015.commons.event.TweetSubscriberNotificationEvent;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserNotificationHandlerService;

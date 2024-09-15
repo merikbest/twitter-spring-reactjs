@@ -1,8 +1,9 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.event.ListsNotificationDto;
-import com.gmail.merikbest2015.event.ListsNotificationEvent;
-import com.gmail.merikbest2015.event.UserNotificationDto;
+import com.gmail.merikbest2015.commons.event.ListsNotificationDto;
+import com.gmail.merikbest2015.commons.event.ListsNotificationEvent;
+import com.gmail.merikbest2015.commons.event.UserNotificationDto;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.User;
 import lombok.RequiredArgsConstructor;

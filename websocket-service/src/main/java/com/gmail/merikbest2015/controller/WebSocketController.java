@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_WEBSOCKET;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.API_V1_WEBSOCKET;
 
 @RestController
 @RequiredArgsConstructor

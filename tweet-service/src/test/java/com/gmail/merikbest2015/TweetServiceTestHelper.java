@@ -1,14 +1,14 @@
 package com.gmail.merikbest2015;
 
-import com.gmail.merikbest2015.constants.PathConstants;
-import com.gmail.merikbest2015.dto.response.tweet.TweetListResponse;
-import com.gmail.merikbest2015.enums.LinkCoverSize;
-import com.gmail.merikbest2015.enums.ReplyType;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetListResponse;
+import com.gmail.merikbest2015.commons.enums.LinkCoverSize;
+import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.model.GifImage;
 import com.gmail.merikbest2015.model.Poll;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.repository.projection.*;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;

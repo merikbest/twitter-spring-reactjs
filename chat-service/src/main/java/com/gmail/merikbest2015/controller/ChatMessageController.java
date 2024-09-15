@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.*;
-import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC_CHAT;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.WebsocketConstants.TOPIC_CHAT;
 
 @RestController
 @RequiredArgsConstructor

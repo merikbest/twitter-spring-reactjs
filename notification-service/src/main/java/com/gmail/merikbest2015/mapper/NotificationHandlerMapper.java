@@ -1,7 +1,8 @@
 package com.gmail.merikbest2015.mapper;
 
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.event.TweetNotificationEvent;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.commons.event.TweetNotificationEvent;
+import com.gmail.merikbest2015.commons.mapper.BasicMapper;
 import com.gmail.merikbest2015.model.Notification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

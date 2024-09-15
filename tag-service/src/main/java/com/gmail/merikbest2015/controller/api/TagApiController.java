@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.API_V1_TAGS;
-import static com.gmail.merikbest2015.constants.PathConstants.SEARCH_TEXT;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.API_V1_TAGS;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.SEARCH_TEXT;
 
 @RestController
 @RequiredArgsConstructor

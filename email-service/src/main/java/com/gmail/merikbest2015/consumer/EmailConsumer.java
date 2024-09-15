@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.consumer;
 
-import com.gmail.merikbest2015.event.SendEmailEvent;
+import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import com.gmail.merikbest2015.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.SEND_EMAIL_TOPIC;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.SEND_EMAIL_TOPIC;
 
 @Component
 @RequiredArgsConstructor

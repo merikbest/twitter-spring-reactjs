@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.event.TweetNotificationDto;
-import com.gmail.merikbest2015.event.UserNotificationDto;
+import com.gmail.merikbest2015.commons.event.TweetNotificationDto;
+import com.gmail.merikbest2015.commons.event.UserNotificationDto;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.TweetHandlerService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

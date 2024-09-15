@@ -1,16 +1,16 @@
 package com.gmail.merikbest2015.filter;
 
-import com.gmail.merikbest2015.dto.response.user.UserPrincipalResponse;
-import com.gmail.merikbest2015.security.JwtAuthenticationException;
-import com.gmail.merikbest2015.security.JwtProvider;
+import com.gmail.merikbest2015.commons.dto.response.user.UserPrincipalResponse;
+import com.gmail.merikbest2015.commons.security.JwtAuthenticationException;
+import com.gmail.merikbest2015.commons.security.JwtProvider;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.JWT_TOKEN_EXPIRED;
-import static com.gmail.merikbest2015.constants.FeignConstants.USER_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.JWT_TOKEN_EXPIRED;
+import static com.gmail.merikbest2015.commons.constants.FeignConstants.USER_SERVICE;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 
 @Component
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {

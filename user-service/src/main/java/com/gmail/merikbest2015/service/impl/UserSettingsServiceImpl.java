@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
-import com.gmail.merikbest2015.enums.BackgroundColorType;
-import com.gmail.merikbest2015.enums.ColorSchemeType;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
+import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.model.UserRole;
@@ -10,7 +10,7 @@ import com.gmail.merikbest2015.repository.CountryCodeRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.UserSettingsRepository;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
-import com.gmail.merikbest2015.security.JwtProvider;
+import com.gmail.merikbest2015.commons.security.JwtProvider;
 import com.gmail.merikbest2015.service.AuthenticationService;
 import com.gmail.merikbest2015.service.UserSettingsService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor

@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.repository.TopicRepository;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

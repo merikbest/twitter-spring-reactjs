@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015;
 
 import com.gmail.merikbest2015.repository.projection.*;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;

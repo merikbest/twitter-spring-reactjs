@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.model;
 
-import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

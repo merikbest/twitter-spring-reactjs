@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.client;
 
-import com.gmail.merikbest2015.configuration.FeignConfiguration;
+import com.gmail.merikbest2015.commons.configuration.FeignConfiguration;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import static com.gmail.merikbest2015.constants.FeignConstants.TWEET_SERVICE;
-import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.FeignConstants.TWEET_SERVICE;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 
 @FeignClient(value = TWEET_SERVICE, path = API_V1_TWEETS, configuration = FeignConfiguration.class)
 public interface TweetClient {

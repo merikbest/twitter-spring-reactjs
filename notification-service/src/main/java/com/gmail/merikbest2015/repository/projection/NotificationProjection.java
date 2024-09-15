@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository.projection;
 
-import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
 
 import java.time.LocalDateTime;
 

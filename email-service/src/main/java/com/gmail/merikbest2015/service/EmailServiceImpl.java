@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.event.SendEmailEvent;
+import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;

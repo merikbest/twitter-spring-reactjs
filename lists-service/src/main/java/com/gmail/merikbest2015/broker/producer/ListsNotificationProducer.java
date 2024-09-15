@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.broker.producer;
 
-import com.gmail.merikbest2015.event.ListsNotificationEvent;
+import com.gmail.merikbest2015.commons.event.ListsNotificationEvent;
 import com.gmail.merikbest2015.mapper.ListsProducerMapper;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.User;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.SEND_LISTS_NOTIFICATION_TOPIC;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.SEND_LISTS_NOTIFICATION_TOPIC;
 
 @Component
 @RequiredArgsConstructor

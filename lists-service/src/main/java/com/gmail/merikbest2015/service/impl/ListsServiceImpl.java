@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.ListsNotificationProducer;
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.PinnedList;
@@ -19,7 +19,7 @@ import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
 import com.gmail.merikbest2015.service.ListsService;
 import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.service.util.ListsServiceHelper;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.LIST_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.LIST_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

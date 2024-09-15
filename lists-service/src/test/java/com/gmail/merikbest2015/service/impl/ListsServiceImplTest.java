@@ -1,12 +1,12 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ListsServiceTestHelper;
-import com.gmail.merikbest2015.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.request.IdsRequest;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Lists;
 import com.gmail.merikbest2015.model.PinnedList;
 import com.gmail.merikbest2015.model.User;
@@ -16,7 +16,7 @@ import com.gmail.merikbest2015.repository.projection.ListUserProjection;
 import com.gmail.merikbest2015.repository.projection.PinnedListProjection;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.ListsService;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -29,10 +29,10 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.gmail.merikbest2015.ListsServiceTestHelper.mockUser;
-import static com.gmail.merikbest2015.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.constants.PathConstants.USERNAME;
-import static com.gmail.merikbest2015.util.TestConstants.LIST_USER_ID;
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.USERNAME;
+import static com.gmail.merikbest2015.commons.util.TestConstants.LIST_USER_ID;
+import static com.gmail.merikbest2015.commons.util.TestConstants.USER_ID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

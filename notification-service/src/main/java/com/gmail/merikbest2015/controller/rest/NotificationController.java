@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.controller.rest;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.NotificationInfoResponse;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationResponse;
-import com.gmail.merikbest2015.dto.response.notification.NotificationUserResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationResponse;
+import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.mapper.NotificationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.constants.PathConstants.*;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 
 @RestController
 @RequiredArgsConstructor

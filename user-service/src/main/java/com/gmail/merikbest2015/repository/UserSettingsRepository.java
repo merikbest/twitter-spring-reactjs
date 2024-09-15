@@ -1,7 +1,7 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.enums.BackgroundColorType;
-import com.gmail.merikbest2015.enums.ColorSchemeType;
+import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
+import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

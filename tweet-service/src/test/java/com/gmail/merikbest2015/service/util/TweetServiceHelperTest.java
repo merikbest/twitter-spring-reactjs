@@ -1,13 +1,13 @@
 package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
-import com.gmail.merikbest2015.util.TestConstants;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

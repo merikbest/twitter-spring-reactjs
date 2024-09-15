@@ -1,10 +1,10 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.TagProducer;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
-import com.gmail.merikbest2015.enums.ReplyType;
-import com.gmail.merikbest2015.enums.TweetType;
-import com.gmail.merikbest2015.exception.ApiRequestException;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.enums.ReplyType;
+import com.gmail.merikbest2015.commons.enums.TweetType;
+import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.ImageClient;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
@@ -16,7 +16,7 @@ import com.gmail.merikbest2015.service.TweetService;
 import com.gmail.merikbest2015.service.UserService;
 import com.gmail.merikbest2015.service.util.TweetServiceHelper;
 import com.gmail.merikbest2015.service.util.TweetValidationHelper;
-import com.gmail.merikbest2015.util.AuthUtil;
+import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.constants.ErrorMessage.TWEET_NOT_FOUND;
+import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TWEET_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

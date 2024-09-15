@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.event.TweetSubscriberNotificationEvent;
+import com.gmail.merikbest2015.commons.event.TweetSubscriberNotificationEvent;
 
 public interface UserNotificationHandlerService {
 

@@ -3,7 +3,7 @@ package com.gmail.merikbest2015.broker.util;
 import lombok.experimental.UtilityClass;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import static com.gmail.merikbest2015.constants.PathConstants.AUTH_USER_ID_HEADER;
+import static com.gmail.merikbest2015.commons.constants.PathConstants.AUTH_USER_ID_HEADER;
 
 @UtilityClass
 public class ProducerUtil {

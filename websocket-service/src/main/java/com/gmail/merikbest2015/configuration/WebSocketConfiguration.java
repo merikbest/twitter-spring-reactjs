@@ -6,7 +6,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-import static com.gmail.merikbest2015.constants.WebsocketConstants.TOPIC;
+import static com.gmail.merikbest2015.commons.constants.WebsocketConstants.TOPIC;
 
 @Configuration
 @EnableWebSocketMessageBroker

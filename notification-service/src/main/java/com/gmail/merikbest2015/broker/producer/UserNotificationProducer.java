@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import static com.gmail.merikbest2015.constants.KafkaTopicConstants.*;
+import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.*;
 
 @Component
 @RequiredArgsConstructor

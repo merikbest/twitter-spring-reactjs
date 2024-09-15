@@ -1,8 +1,8 @@
 package com.gmail.merikbest2015.service;
 
-import com.gmail.merikbest2015.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
-import com.gmail.merikbest2015.dto.response.tweet.TweetResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;

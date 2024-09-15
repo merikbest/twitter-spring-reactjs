@@ -4,7 +4,7 @@ import com.gmail.merikbest2015.service.AbstractServiceTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.gmail.merikbest2015.util.TestConstants.USER_ID;
+import static com.gmail.merikbest2015.commons.util.TestConstants.USER_ID;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 

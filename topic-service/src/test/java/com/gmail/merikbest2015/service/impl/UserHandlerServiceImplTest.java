@@ -2,10 +2,10 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.TopicTestHelper;
-import com.gmail.merikbest2015.event.BlockUserEvent;
-import com.gmail.merikbest2015.event.FollowUserEvent;
-import com.gmail.merikbest2015.event.UpdateUserEvent;
-import com.gmail.merikbest2015.event.UserEvent;
+import com.gmail.merikbest2015.commons.event.BlockUserEvent;
+import com.gmail.merikbest2015.commons.event.FollowUserEvent;
+import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
+import com.gmail.merikbest2015.commons.event.UserEvent;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.service.UserHandlerService;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.gmail.merikbest2015.util.TestConstants.*;
+import static com.gmail.merikbest2015.commons.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;

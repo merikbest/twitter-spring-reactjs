@@ -1,6 +1,6 @@
 package com.gmail.merikbest2015.repository;
 
-import com.gmail.merikbest2015.enums.NotificationType;
+import com.gmail.merikbest2015.commons.enums.NotificationType;
 import com.gmail.merikbest2015.model.Notification;
 import com.gmail.merikbest2015.repository.projection.NotificationInfoProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationProjection;
