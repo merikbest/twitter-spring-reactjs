@@ -1,15 +1,13 @@
 package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.ListsErrorMessage;
 import com.gmail.merikbest2015.repository.ListsRepository;
 import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.INCORRECT_LIST_NAME_LENGTH;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.LIST_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -26,19 +24,19 @@ public class ListsServiceHelper {
     public void checkIsListPrivate(Long listId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         if (listsRepository.isListPrivate(listId, authUserId) && !isMyProfileFollowList(listId)) {
-            throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(ListsErrorMessage.LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
     public void checkIsListExist(Long listId, Long listOwnerId) {
         if (!listsRepository.isListExist(listId, listOwnerId)) {
-            throw new ApiRequestException(LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(ListsErrorMessage.LIST_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
     public void validateListNameLength(String listName) {
         if (listName.length() == 0 || listName.length() > 25) {
-            throw new ApiRequestException(INCORRECT_LIST_NAME_LENGTH, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(ListsErrorMessage.INCORRECT_LIST_NAME_LENGTH, HttpStatus.BAD_REQUEST);
         }
     }
 

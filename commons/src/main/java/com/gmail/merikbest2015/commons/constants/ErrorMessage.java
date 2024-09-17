@@ -6,6 +6,7 @@ public class ErrorMessage {
     public static final String USER_NOT_FOUND = "User not found";
     public static final String USER_PROFILE_BLOCKED = "User profile blocked";
     public static final String USER_ID_NOT_FOUND = "User (id:%s) not found";
+    public static final String PHONE_CODE_NOT_FOUND = "Phone code not found";
 
     public static final String EMAIL_NOT_FOUND = "Email not found";
     public static final String EMAIL_NOT_VALID = "Please enter a valid email address.";
@@ -48,10 +49,4 @@ public class ErrorMessage {
     public static final String CHAT_PARTICIPANT_NOT_FOUND = "Participant not found";
     public static final String CHAT_PARTICIPANT_BLOCKED = "Participant is blocked";
     public static final String INCORRECT_CHAT_MESSAGE_LENGTH = "Incorrect chat message length";
-
-    public static final String LIST_NOT_FOUND = "List not found";
-    public static final String INCORRECT_LIST_NAME_LENGTH = "Incorrect list name length";
-    public static final String LIST_OWNER_NOT_FOUND = "List owner not found";
-    public static final String USER_ID_BLOCKED = "User with ID:%s is blocked";
-    public static final String PHONE_CODE_NOT_FOUND = "Phone code not found";
 }

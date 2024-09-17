@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.ListsErrorMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.UserService;
@@ -12,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_ID_BLOCKED;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +34,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.getAuthUser());
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.UNAUTHORIZED, exception.getStatus());
     }
 
@@ -50,7 +50,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.getUserById(TestConstants.USER_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -66,7 +66,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 3L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.checkUserIsBlocked(TestConstants.USER_ID, 3L));
-        assertEquals(String.format(USER_ID_BLOCKED, 3L), exception.getMessage());
+        assertEquals(String.format(ListsErrorMessage.USER_ID_BLOCKED, 3L), exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -75,7 +75,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(3L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.checkIsPrivateUserProfile(3L, TestConstants.USER_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 

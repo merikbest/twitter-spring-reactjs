@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
+import com.gmail.merikbest2015.constants.ListsErrorMessage;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
@@ -18,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -190,7 +191,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID, 8)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -199,7 +200,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + "/99")
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -208,7 +209,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID, 10)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_BLOCKED, 2))));
+                .andExpect(jsonPath("$", is(String.format(ListsErrorMessage.USER_ID_BLOCKED, 2))));
     }
 
     @Test
@@ -217,7 +218,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID, 11)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -256,7 +257,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(listsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_LIST_NAME_LENGTH)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.INCORRECT_LIST_NAME_LENGTH)));
     }
 
     @Test
@@ -273,7 +274,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(listsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_LIST_NAME_LENGTH)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.INCORRECT_LIST_NAME_LENGTH)));
     }
 
 //    @Test
@@ -332,7 +333,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(listsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_LIST_NAME_LENGTH)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.INCORRECT_LIST_NAME_LENGTH)));
     }
 
     @Test
@@ -349,7 +350,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(listsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_LIST_NAME_LENGTH)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.INCORRECT_LIST_NAME_LENGTH)));
     }
 
     @Test
@@ -366,7 +367,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(listsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
 //    @Test
@@ -401,7 +402,7 @@ public class ListsControllerTest {
         mockMvc.perform(delete(UI_V1_LISTS + "/99")
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
 //    @Test
@@ -434,7 +435,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + FOLLOW_LIST_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -443,7 +444,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + FOLLOW_LIST_ID, 8)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -493,7 +494,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + PIN_LIST_ID, 8)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -534,7 +535,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(userToListsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_BLOCKED, 4))));
+                .andExpect(jsonPath("$", is(String.format(ListsErrorMessage.USER_ID_BLOCKED, 4))));
     }
 
     @Test
@@ -547,7 +548,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(userToListsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -560,7 +561,7 @@ public class ListsControllerTest {
                         .content(mapper.writeValueAsString(userToListsRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_BLOCKED, 2))));
+                .andExpect(jsonPath("$", is(String.format(ListsErrorMessage.USER_ID_BLOCKED, 2))));
     }
 
     @Test
@@ -578,7 +579,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + ADD_USER_LIST_ID, 4, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_BLOCKED, 4))));
+                .andExpect(jsonPath("$", is(String.format(ListsErrorMessage.USER_ID_BLOCKED, 4))));
     }
 
     @Test
@@ -587,7 +588,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + ADD_USER_LIST_ID, 3, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -596,7 +597,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + ADD_USER_LIST_ID, 6, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_BLOCKED, 2))));
+                .andExpect(jsonPath("$", is(String.format(ListsErrorMessage.USER_ID_BLOCKED, 2))));
     }
 
     @Test
@@ -605,7 +606,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + ADD_USER_LIST_ID, 7, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -657,7 +658,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID_TWEETS, 5)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -684,7 +685,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID_DETAILS, 5)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -708,7 +709,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID_FOLLOWERS, 99, 2)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -717,7 +718,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID_FOLLOWERS, 5, 1)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -726,7 +727,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID_FOLLOWERS, 10, 5)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_BLOCKED, 2))));
+                .andExpect(jsonPath("$", is(String.format(ListsErrorMessage.USER_ID_BLOCKED, 2))));
     }
 
     @Test
@@ -766,7 +767,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID_MEMBERS, 99, 2)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -775,7 +776,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID_MEMBERS, 5, 1)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(LIST_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ListsErrorMessage.LIST_NOT_FOUND)));
     }
 
     @Test
@@ -784,7 +785,7 @@ public class ListsControllerTest {
         mockMvc.perform(get(UI_V1_LISTS + LIST_ID_MEMBERS, 10, 5)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_BLOCKED, 2))));
+                .andExpect(jsonPath("$", is(String.format(ListsErrorMessage.USER_ID_BLOCKED, 2))));
     }
 
     @Test
