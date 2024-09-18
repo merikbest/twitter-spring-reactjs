@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.constants.ListsErrorMessage;
+import com.gmail.merikbest2015.constants.ListsSuccessMessage;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
@@ -254,7 +255,7 @@ public class ListsServiceImplTest extends AbstractServiceTest {
     public void deleteList() {
         Lists list = ListsServiceTestHelper.createMockLists();
         when(listsRepository.getListByIdAndUserId(TestConstants.LIST_ID, TestConstants.USER_ID)).thenReturn(Optional.of(list));
-        assertEquals(String.format("List id:%s deleted.", TestConstants.LIST_ID), listsService.deleteList(TestConstants.LIST_ID));
+        assertEquals(String.format(ListsSuccessMessage.LIST_DELETED, TestConstants.LIST_ID), listsService.deleteList(TestConstants.LIST_ID));
         verify(listsRepository, times(1)).getListByIdAndUserId(TestConstants.LIST_ID, TestConstants.USER_ID);
         verify(listsRepository, times(1)).delete(list);
     }
@@ -365,7 +366,7 @@ public class ListsServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(true);
         when(listsRepository.getListWhereUserConsist(listsRequest.getLists().get(0).getListId(), TestConstants.USER_ID)).thenReturn(Optional.of(mockLists1));
         when(listsRepository.getListWhereUserConsist(listsRequest.getLists().get(1).getListId(), TestConstants.USER_ID)).thenReturn(Optional.of(mockLists2));
-        assertEquals("User added to lists success.", listsService.addUserToLists(listsRequest));
+        assertEquals(ListsSuccessMessage.USER_ADDED_TO_LISTS, listsService.addUserToLists(listsRequest));
         verify(listsRepository, times(1)).getListWhereUserConsist(listsRequest.getLists().get(0).getListId(), TestConstants.USER_ID);
         verify(listsRepository, times(1)).getListWhereUserConsist(listsRequest.getLists().get(1).getListId(), TestConstants.USER_ID);
         assertEquals(1, mockLists1.getListsMembers().size());

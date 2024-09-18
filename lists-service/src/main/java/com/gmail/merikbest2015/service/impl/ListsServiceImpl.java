@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.broker.producer.ListsNotificationProducer;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.constants.ListsErrorMessage;
+import com.gmail.merikbest2015.constants.ListsSuccessMessage;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
@@ -134,7 +135,7 @@ public class ListsServiceImpl implements ListsService {
         Lists list = listsRepository.getListByIdAndUserId(listId, authUserId)
                 .orElseThrow(() -> new ApiRequestException(ListsErrorMessage.LIST_NOT_FOUND, HttpStatus.NOT_FOUND));
         listsRepository.delete(list);
-        return String.format("List id:%s deleted.", listId);
+        return String.format(ListsSuccessMessage.LIST_DELETED, listId);
     }
 
     @Override
@@ -204,7 +205,7 @@ public class ListsServiceImpl implements ListsService {
                 }
             }
         });
-        return "User added to lists success.";
+        return ListsSuccessMessage.USER_ADDED_TO_LISTS;
     }
 
     @Override

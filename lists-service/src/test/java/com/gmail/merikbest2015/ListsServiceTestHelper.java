@@ -14,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.gmail.merikbest2015.commons.util.TestConstants.*;
-
 public class ListsServiceTestHelper {
 
     private static final ProjectionFactory factory = new SpelAwareProxyProjectionFactory();
@@ -29,7 +27,7 @@ public class ListsServiceTestHelper {
                         "description", TestConstants.LIST_DESCRIPTION,
                         "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
                         "wallpaper", "",
-                        "listOwner", mockUser(USER_ID),
+                        "listOwner", mockUser(TestConstants.USER_ID),
                         "isFollower", false,
                         "isListPinned", false));
         ListProjection list2 = factory.createProjection(
@@ -40,7 +38,7 @@ public class ListsServiceTestHelper {
                         "description", TestConstants.LIST_DESCRIPTION,
                         "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
                         "wallpaper", "",
-                        "listOwner", mockUser(USER_ID),
+                        "listOwner", mockUser(TestConstants.USER_ID),
                         "isFollower", false,
                         "isListPinned", false));
         return Arrays.asList(list1, list2);
@@ -55,7 +53,7 @@ public class ListsServiceTestHelper {
                         "description", TestConstants.LIST_DESCRIPTION,
                         "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
                         "wallpaper", "",
-                        "listOwner", mockUser(USER_ID),
+                        "listOwner", mockUser(TestConstants.USER_ID),
                         "isListPinned", false,
                         "isPrivate", false));
         ListUserProjection listUser2 = factory.createProjection(
@@ -66,7 +64,7 @@ public class ListsServiceTestHelper {
                         "description", TestConstants.LIST_DESCRIPTION,
                         "altWallpaper", TestConstants.LIST_ALT_WALLPAPER,
                         "wallpaper", "",
-                        "listOwner", mockUser(USER_ID),
+                        "listOwner", mockUser(TestConstants.USER_ID),
                         "isListPinned", false,
                         "isPrivate", false));
         return Arrays.asList(listUser1, listUser2);
@@ -157,7 +155,7 @@ public class ListsServiceTestHelper {
         lists.setAltWallpaper(TestConstants.LIST_ALT_WALLPAPER);
         lists.setPrivate(false);
         lists.setWallpaper("");
-        lists.setListOwner(mockUser(USER_ID));
+        lists.setListOwner(mockUser(TestConstants.USER_ID));
         return lists;
     }
 
@@ -188,10 +186,10 @@ public class ListsServiceTestHelper {
     public static User mockUser(Long userId) {
         User user = new User();
         user.setId(userId);
-        user.setFullName(FULL_NAME);
-        user.setUsername(USERNAME);
-        user.setAbout(ABOUT);
-        user.setAvatar(AVATAR_SRC_1);
+        user.setFullName(TestConstants.FULL_NAME);
+        user.setUsername(TestConstants.USERNAME);
+        user.setAbout(TestConstants.ABOUT);
+        user.setAvatar(TestConstants.AVATAR_SRC_1);
         user.setPrivateProfile(false);
         user.setActive(true);
         return user;

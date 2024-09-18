@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.client;
 
 import com.gmail.merikbest2015.commons.configuration.FeignConfiguration;
+import com.gmail.merikbest2015.commons.constants.FeignConstants;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
@@ -11,15 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.API_V1_TWEETS;
-import static com.gmail.merikbest2015.commons.constants.FeignConstants.TWEET_SERVICE;
-import static com.gmail.merikbest2015.commons.constants.PathConstants.USER_IDS;
-
-@CircuitBreaker(name = TWEET_SERVICE)
-@FeignClient(value = TWEET_SERVICE, path = API_V1_TWEETS, configuration = FeignConfiguration.class)
+@CircuitBreaker(name = FeignConstants.TWEET_SERVICE)
+@FeignClient(value = FeignConstants.TWEET_SERVICE, path = PathConstants.API_V1_TWEETS, configuration = FeignConfiguration.class)
 public interface TweetClient {
 
-    @PostMapping(USER_IDS)
+    @PostMapping(PathConstants.USER_IDS)
     HeaderResponse<TweetResponse> getTweetsByUserIds(@RequestBody IdsRequest request,
                                                      @SpringQueryMap Pageable pageable);
 }

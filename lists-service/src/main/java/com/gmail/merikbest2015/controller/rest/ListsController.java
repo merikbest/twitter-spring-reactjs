@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.dto.response.lists.ListMemberResponse;
@@ -15,11 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(UI_V1_LISTS)
+@RequestMapping(PathConstants.UI_V1_LISTS)
 public class ListsController {
 
     private final ListsMapper listsMapper;
@@ -29,27 +28,27 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.getAllTweetLists());
     }
 
-    @GetMapping(USER)
+    @GetMapping(PathConstants.USER)
     public ResponseEntity<List<ListUserResponse>> getUserTweetLists() {
         return ResponseEntity.ok(listsMapper.getUserTweetLists());
     }
 
-    @GetMapping(USER_USER_ID)
+    @GetMapping(PathConstants.USER_USER_ID)
     public ResponseEntity<List<ListResponse>> getUserTweetListsById(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(listsMapper.getUserTweetListsById(userId));
     }
 
-    @GetMapping(USER_CONSIST)
+    @GetMapping(PathConstants.USER_CONSIST)
     public ResponseEntity<List<ListResponse>> getTweetListsWhichUserIn() {
         return ResponseEntity.ok(listsMapper.getTweetListsWhichUserIn());
     }
 
-    @GetMapping(PINED)
+    @GetMapping(PathConstants.PINED)
     public ResponseEntity<List<PinnedListResponse>> getUserPinnedLists() {
         return ResponseEntity.ok(listsMapper.getUserPinnedLists());
     }
 
-    @GetMapping(LIST_ID)
+    @GetMapping(PathConstants.LIST_ID)
     public ResponseEntity<BaseListResponse> getListById(@PathVariable("listId") Long listId) {
         return ResponseEntity.ok(listsMapper.getListById(listId));
     }
@@ -64,61 +63,61 @@ public class ListsController {
         return ResponseEntity.ok(listsMapper.editTweetList(listsRequest));
     }
 
-    @DeleteMapping(LIST_ID)
+    @DeleteMapping(PathConstants.LIST_ID)
     public ResponseEntity<String> deleteList(@PathVariable("listId") Long listId) {
         return ResponseEntity.ok(listsMapper.deleteList(listId));
     }
 
-    @GetMapping(FOLLOW_LIST_ID)
+    @GetMapping(PathConstants.FOLLOW_LIST_ID)
     public ResponseEntity<ListUserResponse> followList(@PathVariable("listId") Long listId) {
         return ResponseEntity.ok(listsMapper.followList(listId));
     }
 
-    @GetMapping(PIN_LIST_ID)
+    @GetMapping(PathConstants.PIN_LIST_ID)
     public ResponseEntity<PinnedListResponse> pinList(@PathVariable("listId") Long listId) {
         return ResponseEntity.ok(listsMapper.pinList(listId));
     }
 
-    @GetMapping(ADD_USER_USER_ID)
+    @GetMapping(PathConstants.ADD_USER_USER_ID)
     public ResponseEntity<List<SimpleListResponse>> getListsToAddUser(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(listsMapper.getListsToAddUser(userId));
     }
 
-    @PostMapping(ADD_USER)
+    @PostMapping(PathConstants.ADD_USER)
     public ResponseEntity<String> addUserToLists(@RequestBody UserToListsRequest userToListsRequest) {
         return ResponseEntity.ok(listsMapper.addUserToLists(userToListsRequest));
     }
 
-    @GetMapping(ADD_USER_LIST_ID)
+    @GetMapping(PathConstants.ADD_USER_LIST_ID)
     public ResponseEntity<Boolean> addUserToList(@PathVariable("userId") Long userId, @PathVariable("listId") Long listId) {
         return ResponseEntity.ok(listsMapper.addUserToList(userId, listId));
     }
 
-    @GetMapping(LIST_ID_TWEETS)
+    @GetMapping(PathConstants.LIST_ID_TWEETS)
     public ResponseEntity<List<TweetResponse>> getTweetsByListId(@PathVariable("listId") Long listId,
                                                                  @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetResponse> response = listsMapper.getTweetsByListId(listId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(LIST_ID_DETAILS)
+    @GetMapping(PathConstants.LIST_ID_DETAILS)
     public ResponseEntity<BaseListResponse> getListDetails(@PathVariable("listId") Long listId) {
         return ResponseEntity.ok(listsMapper.getListDetails(listId));
     }
 
-    @GetMapping(LIST_ID_FOLLOWERS)
+    @GetMapping(PathConstants.LIST_ID_FOLLOWERS)
     public ResponseEntity<List<ListMemberResponse>> getListFollowers(@PathVariable("listId") Long listId,
                                                                      @PathVariable("listOwnerId") Long listOwnerId) {
         return ResponseEntity.ok(listsMapper.getListFollowers(listId, listOwnerId));
     }
 
-    @GetMapping(LIST_ID_MEMBERS)
+    @GetMapping(PathConstants.LIST_ID_MEMBERS)
     public ResponseEntity<List<ListMemberResponse>> getListMembers(@PathVariable("listId") Long listId,
                                                                    @PathVariable("listOwnerId") Long listOwnerId) {
         return ResponseEntity.ok(listsMapper.getListMembers(listId, listOwnerId));
     }
 
-    @GetMapping(SEARCH_LIST_ID)
+    @GetMapping(PathConstants.SEARCH_LIST_ID)
     public ResponseEntity<List<ListMemberResponse>> searchListMembersByUsername(@PathVariable("listId") Long listId,
                                                                                 @PathVariable("username") String username) {
         return ResponseEntity.ok(listsMapper.searchListMembersByUsername(listId, username));

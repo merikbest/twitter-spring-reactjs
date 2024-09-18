@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.ListsServiceTestHelper;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
+import com.gmail.merikbest2015.constants.ListsSuccessMessage;
 import com.gmail.merikbest2015.dto.request.ListsRequest;
 import com.gmail.merikbest2015.dto.request.UserToListsRequest;
 import com.gmail.merikbest2015.dto.response.BaseListResponse;
@@ -173,7 +174,7 @@ public class ListsMapperTest {
 
     @Test
     public void addUserToLists() {
-        String mockMessageResponse = "User added to lists success.";
+        String mockMessageResponse = ListsSuccessMessage.USER_ADDED_TO_LISTS;
         UserToListsRequest listsRequest = ListsServiceTestHelper.mockUserToListsRequest();
         when(listsService.addUserToLists(listsRequest)).thenReturn(mockMessageResponse);
         assertEquals(mockMessageResponse, listsMapper.addUserToLists(listsRequest));
