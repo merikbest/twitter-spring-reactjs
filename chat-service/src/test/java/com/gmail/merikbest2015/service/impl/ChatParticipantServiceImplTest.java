@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.ChatServiceTestHelper;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.constants.ChatErrorMessage;
+import com.gmail.merikbest2015.constants.ChatSuccessMessage;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatParticipant;
 import com.gmail.merikbest2015.model.User;
@@ -68,7 +69,7 @@ public class ChatParticipantServiceImplTest extends AbstractServiceTest {
         ChatParticipant mockChatParticipant = ChatServiceTestHelper.createMockChatParticipant(mockAuthUser, new Chat());
         when(chatRepository.findById(TestConstants.CHAT_ID)).thenReturn(Optional.of(ChatServiceTestHelper.createMockChat(false)));
         when(chatParticipantRepository.getChatParticipant(1L, TestConstants.CHAT_ID)).thenReturn(Optional.of(mockChatParticipant));
-        assertEquals("Successfully left the chat", chatParticipantService.leaveFromConversation(1L, TestConstants.CHAT_ID));
+        assertEquals(ChatSuccessMessage.SUCCESSFULLY_LEFT_THE_CHAT, chatParticipantService.leaveFromConversation(1L, TestConstants.CHAT_ID));
         verify(chatRepository, times(1)).findById(TestConstants.CHAT_ID);
         verify(chatParticipantRepository, times(1)).getChatParticipant(1L, TestConstants.CHAT_ID);
     }
@@ -80,7 +81,7 @@ public class ChatParticipantServiceImplTest extends AbstractServiceTest {
         ChatParticipant mockChatParticipant = ChatServiceTestHelper.createMockChatParticipant(mockAuthUser, new Chat());
         when(chatRepository.findById(TestConstants.CHAT_ID)).thenReturn(Optional.of(mockChat));
         when(chatParticipantRepository.getChatParticipant(1L, TestConstants.CHAT_ID)).thenReturn(Optional.of(mockChatParticipant));
-        assertEquals("Chat successfully deleted", chatParticipantService.leaveFromConversation(1L, TestConstants.CHAT_ID));
+        assertEquals(ChatSuccessMessage.CHAT_SUCCESSFULLY_DELETED, chatParticipantService.leaveFromConversation(1L, TestConstants.CHAT_ID));
         verify(chatRepository, times(1)).findById(TestConstants.CHAT_ID);
         verify(chatParticipantRepository, times(1)).getChatParticipant(1L, TestConstants.CHAT_ID);
     }

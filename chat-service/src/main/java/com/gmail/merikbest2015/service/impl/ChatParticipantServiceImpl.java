@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.constants.ChatErrorMessage;
+import com.gmail.merikbest2015.constants.ChatSuccessMessage;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatParticipant;
 import com.gmail.merikbest2015.model.User;
@@ -50,9 +51,9 @@ public class ChatParticipantServiceImpl implements ChatParticipantService {
 
         if (chat.getParticipants().stream().allMatch(ChatParticipant::isLeftChat)) {
             chatRepository.delete(chat);
-            return "Chat successfully deleted";
+            return ChatSuccessMessage.CHAT_SUCCESSFULLY_DELETED;
         }
-        return "Successfully left the chat";
+        return ChatSuccessMessage.SUCCESSFULLY_LEFT_THE_CHAT;
     }
 
     @Override

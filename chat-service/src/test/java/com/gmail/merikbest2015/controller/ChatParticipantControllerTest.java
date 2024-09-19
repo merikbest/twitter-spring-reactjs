@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller;
 
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import com.gmail.merikbest2015.constants.ChatErrorMessage;
+import com.gmail.merikbest2015.constants.ChatSuccessMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,7 @@ public class ChatParticipantControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + LEAVE_CHAT_ID, 2, 8)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Successfully left the chat")));
+                .andExpect(jsonPath("$", is(ChatSuccessMessage.SUCCESSFULLY_LEFT_THE_CHAT)));
     }
 
     @Test
@@ -80,7 +81,7 @@ public class ChatParticipantControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + LEAVE_CHAT_ID, 2, 10)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Chat successfully deleted")));
+                .andExpect(jsonPath("$", is(ChatSuccessMessage.CHAT_SUCCESSFULLY_DELETED)));
     }
 
     @Test

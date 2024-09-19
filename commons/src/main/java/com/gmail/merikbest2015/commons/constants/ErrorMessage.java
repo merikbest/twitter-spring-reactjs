@@ -44,9 +44,4 @@ public class ErrorMessage {
     public static final String TAG_NOT_FOUND = "Tag not found";
 
     public static final String NOTIFICATION_NOT_FOUND = "Notification not found";
-
-    public static final String CHAT_NOT_FOUND = "Chat not found";
-    public static final String CHAT_PARTICIPANT_NOT_FOUND = "Participant not found";
-    public static final String CHAT_PARTICIPANT_BLOCKED = "Participant is blocked";
-    public static final String INCORRECT_CHAT_MESSAGE_LENGTH = "Incorrect chat message length";
 }
