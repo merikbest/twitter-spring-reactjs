@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ChatServiceTestHelper;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatParticipant;
 import com.gmail.merikbest2015.model.User;
@@ -19,8 +20,6 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_NOT_FOUND;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_PARTICIPANT_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -49,7 +48,7 @@ public class ChatParticipantServiceImplTest extends AbstractServiceTest {
         when(chatRepository.isChatExists(TestConstants.CHAT_ID, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatParticipantService.getParticipant(1L, TestConstants.CHAT_ID));
-        assertEquals(CHAT_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -59,7 +58,7 @@ public class ChatParticipantServiceImplTest extends AbstractServiceTest {
         when(chatParticipantRepository.getChatParticipant(1L, TestConstants.CHAT_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatParticipantService.getParticipant(1L, TestConstants.CHAT_ID));
-        assertEquals(CHAT_PARTICIPANT_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_PARTICIPANT_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -91,7 +90,7 @@ public class ChatParticipantServiceImplTest extends AbstractServiceTest {
         when(chatRepository.findById(TestConstants.CHAT_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatParticipantService.leaveFromConversation(1L, TestConstants.CHAT_ID));
-        assertEquals(CHAT_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -101,7 +100,7 @@ public class ChatParticipantServiceImplTest extends AbstractServiceTest {
         when(chatParticipantRepository.getChatParticipant(1L, TestConstants.CHAT_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatParticipantService.leaveFromConversation(1L, TestConstants.CHAT_ID));
-        assertEquals(CHAT_PARTICIPANT_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_PARTICIPANT_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 

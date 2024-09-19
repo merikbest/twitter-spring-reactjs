@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
@@ -15,9 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_PARTICIPANT_BLOCKED;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_NOT_FOUND;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -28,19 +27,19 @@ public class UserServiceImpl implements UserService {
     public User getAuthUser() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return userRepository.findById(authUserId)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.UNAUTHORIZED));
+                .orElseThrow(() -> new ApiRequestException(ErrorMessage.USER_NOT_FOUND, HttpStatus.UNAUTHORIZED));
     }
 
     @Override
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(ErrorMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 
     @Override
     public UserProjection getUserProjectionById(Long userId) {
         return userRepository.getUserById(userId)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(ErrorMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 
     @Override
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void isParticipantBlocked(Long authUserId, Long userId) {
         if (isUserBlockedByMyProfile(authUserId) || isMyProfileBlockedByUser(userId)) {
-            throw new ApiRequestException(CHAT_PARTICIPANT_BLOCKED, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(ChatErrorMessage.CHAT_PARTICIPANT_BLOCKED, HttpStatus.BAD_REQUEST);
         }
     }
 

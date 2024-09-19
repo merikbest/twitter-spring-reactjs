@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.controller;
 
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.util.TestConstants;
+import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -50,7 +51,7 @@ public class ChatControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + CHAT_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(CHAT_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_NOT_FOUND)));
     }
 
     @Test
@@ -85,7 +86,7 @@ public class ChatControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + CREATE_USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -94,6 +95,6 @@ public class ChatControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + CREATE_USER_ID, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(CHAT_PARTICIPANT_BLOCKED)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_PARTICIPANT_BLOCKED)));
     }
 }

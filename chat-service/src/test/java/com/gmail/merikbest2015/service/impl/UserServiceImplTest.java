@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ChatServiceTestHelper;
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.UserChatProjection;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
@@ -17,8 +19,6 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_PARTICIPANT_BLOCKED;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -40,7 +40,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.getAuthUser());
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.UNAUTHORIZED, exception.getStatus());
     }
 
@@ -57,7 +57,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.getUserById(TestConstants.USER_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -74,7 +74,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.getUserById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.getUserProjectionById(TestConstants.USER_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -103,7 +103,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.isParticipantBlocked(TestConstants.USER_ID, TestConstants.USER_ID));
-        assertEquals(CHAT_PARTICIPANT_BLOCKED, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_PARTICIPANT_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 

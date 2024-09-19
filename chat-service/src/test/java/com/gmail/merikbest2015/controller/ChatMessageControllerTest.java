@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import com.gmail.merikbest2015.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
 import com.gmail.merikbest2015.commons.util.TestConstants;
@@ -16,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -60,7 +60,7 @@ public class ChatMessageControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + CHAT_ID_MESSAGES, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(CHAT_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_NOT_FOUND)));
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ChatMessageControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(CHAT_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_NOT_FOUND)));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class ChatMessageControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(CHAT_PARTICIPANT_BLOCKED)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_PARTICIPANT_BLOCKED)));
     }
 
     @Test
@@ -127,6 +127,6 @@ public class ChatMessageControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TWEET_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.TWEET_NOT_FOUND)));
     }
 }

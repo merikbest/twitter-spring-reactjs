@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller;
 
 import com.gmail.merikbest2015.commons.util.TestConstants;
+import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_NOT_FOUND;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_PARTICIPANT_NOT_FOUND;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -54,7 +53,7 @@ public class ChatParticipantControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + PARTICIPANT_CHAT_ID, 4, 11)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(CHAT_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_NOT_FOUND)));
     }
 
     @Test
@@ -63,7 +62,7 @@ public class ChatParticipantControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + PARTICIPANT_CHAT_ID, 5, 8)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(CHAT_PARTICIPANT_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_PARTICIPANT_NOT_FOUND)));
     }
 
     @Test
@@ -90,7 +89,7 @@ public class ChatParticipantControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + LEAVE_CHAT_ID, 10, 10)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(CHAT_PARTICIPANT_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_PARTICIPANT_NOT_FOUND)));
     }
 
     @Test
@@ -99,6 +98,6 @@ public class ChatParticipantControllerTest {
         mockMvc.perform(get(UI_V1_CHAT + LEAVE_CHAT_ID, 2, 9)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(CHAT_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_NOT_FOUND)));
     }
 }

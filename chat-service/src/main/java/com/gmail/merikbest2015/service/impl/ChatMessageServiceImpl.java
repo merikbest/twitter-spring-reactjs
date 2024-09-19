@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatMessage;
 import com.gmail.merikbest2015.model.ChatParticipant;
@@ -24,9 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_NOT_FOUND;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.CHAT_PARTICIPANT_NOT_FOUND;
-
 @Service
 @RequiredArgsConstructor
 public class ChatMessageServiceImpl implements ChatMessageService {
@@ -42,7 +40,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     public List<ChatMessageProjection> getChatMessages(Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         chatRepository.getChatById(chatId, authUserId, ChatProjection.class)
-                .orElseThrow(() -> new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(ChatErrorMessage.CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
         return chatMessageRepository.getChatMessages(chatId);
     }
 
@@ -51,7 +49,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     public Long readChatMessages(Long chatId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         chatRepository.getChatById(chatId, authUserId, ChatProjection.class)
-                .orElseThrow(() -> new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(ChatErrorMessage.CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
         chatMessageRepository.readChatMessages(chatId, authUserId);
         return chatMessageRepository.getUnreadMessagesCount(authUserId);
     }
@@ -62,9 +60,9 @@ public class ChatMessageServiceImpl implements ChatMessageService {
         chatServiceHelper.checkChatMessageLength(chatMessage.getText());
         User authUser = userService.getAuthUser();
         Chat chat = chatRepository.getChatById(chatId, authUser.getId(), Chat.class)
-                .orElseThrow(() -> new ApiRequestException(CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(ChatErrorMessage.CHAT_NOT_FOUND, HttpStatus.NOT_FOUND));
         ChatParticipant chatParticipant = chatParticipantRepository.getChatParticipantExcludeUserId(authUser.getId(), chatId)
-                .orElseThrow(() -> new ApiRequestException(CHAT_PARTICIPANT_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(ChatErrorMessage.CHAT_PARTICIPANT_NOT_FOUND, HttpStatus.NOT_FOUND));
         userService.isParticipantBlocked(authUser.getId(), chatParticipant.getUser().getId());
         chatMessage.setAuthor(authUser);
         chatMessage.setChat(chat);

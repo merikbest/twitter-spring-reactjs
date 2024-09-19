@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.ChatServiceTestHelper;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import com.gmail.merikbest2015.model.Chat;
 import com.gmail.merikbest2015.model.ChatMessage;
 import com.gmail.merikbest2015.model.ChatParticipant;
@@ -20,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -66,7 +66,7 @@ public class ChatMessageServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatMessageService.getChatMessages(TestConstants.CHAT_ID));
-        assertEquals(CHAT_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -87,7 +87,7 @@ public class ChatMessageServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatMessageService.readChatMessages(TestConstants.CHAT_ID));
-        assertEquals(CHAT_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -114,7 +114,7 @@ public class ChatMessageServiceImplTest extends AbstractServiceTest {
         chatMessage.setText("");
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
-        assertEquals(INCORRECT_CHAT_MESSAGE_LENGTH, exception.getMessage());
+        assertEquals(ChatErrorMessage.INCORRECT_CHAT_MESSAGE_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -126,7 +126,7 @@ public class ChatMessageServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
-        assertEquals(CHAT_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -140,7 +140,7 @@ public class ChatMessageServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatMessageService.addMessage(chatMessage, TestConstants.CHAT_ID));
-        assertEquals(CHAT_PARTICIPANT_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.CHAT_PARTICIPANT_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -195,7 +195,7 @@ public class ChatMessageServiceImplTest extends AbstractServiceTest {
         when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> chatMessageService.addMessageWithTweet("test text", TestConstants.TWEET_ID, usersIds));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(ChatErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }
