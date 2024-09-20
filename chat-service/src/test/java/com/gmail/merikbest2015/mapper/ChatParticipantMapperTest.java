@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.ChatServiceTestHelper;
 import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
+import com.gmail.merikbest2015.constants.ChatSuccessMessage;
 import com.gmail.merikbest2015.repository.projection.UserProjection;
 import com.gmail.merikbest2015.service.ChatParticipantService;
 import com.gmail.merikbest2015.commons.util.TestConstants;
@@ -41,8 +42,9 @@ public class ChatParticipantMapperTest {
 
     @Test
     public void leaveFromConversation() {
-        when(chatParticipantService.leaveFromConversation(TestConstants.CHAT_ID, TestConstants.CHAT_ID)).thenReturn("Successfully left the chat");
-        assertEquals("Successfully left the chat", chatParticipantMapper.leaveFromConversation(TestConstants.CHAT_ID, TestConstants.CHAT_ID));
+        when(chatParticipantService.leaveFromConversation(TestConstants.CHAT_ID, TestConstants.CHAT_ID))
+                .thenReturn(ChatSuccessMessage.SUCCESSFULLY_LEFT_THE_CHAT);
+        assertEquals(ChatSuccessMessage.SUCCESSFULLY_LEFT_THE_CHAT, chatParticipantMapper.leaveFromConversation(TestConstants.CHAT_ID, TestConstants.CHAT_ID));
         verify(chatParticipantService, times(1)).leaveFromConversation(TestConstants.CHAT_ID, TestConstants.CHAT_ID);
     }
 }

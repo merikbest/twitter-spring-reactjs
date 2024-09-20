@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.constants.ChatErrorMessage;
 import com.gmail.merikbest2015.dto.request.ChatMessageRequest;
 import com.gmail.merikbest2015.dto.request.MessageWithTweetRequest;
@@ -17,11 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,8 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-chat-db.sql", "/sql-test/populate-chat-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-chat-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-chat-db.sql", "/sql-test/populate-chat-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-chat-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class ChatMessageControllerTest {
 
     @Autowired
@@ -43,8 +41,8 @@ public class ChatMessageControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/chat/8/messages - Get chat messages by chat id")
     public void getChatMessages() throws Exception {
-        mockMvc.perform(get(UI_V1_CHAT + CHAT_ID_MESSAGES, 8)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.CHAT_ID_MESSAGES, 8)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(3)))
                 .andExpect(jsonPath("$[0].id").value(5L))
@@ -57,8 +55,8 @@ public class ChatMessageControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/chat/99/messages - Should chat not found")
     public void getChatMessages_ShouldChatNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_CHAT + CHAT_ID_MESSAGES, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.CHAT_ID_MESSAGES, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ChatErrorMessage.CHAT_NOT_FOUND)));
     }
@@ -66,8 +64,8 @@ public class ChatMessageControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/chat/8/read/messages - Read chat messages by chat id")
     public void readChatMessages() throws Exception {
-        mockMvc.perform(get(UI_V1_CHAT + CHAT_ID_READ_MESSAGES, 8)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_CHAT + PathConstants.CHAT_ID_READ_MESSAGES, 8)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(0));
     }
@@ -76,8 +74,8 @@ public class ChatMessageControllerTest {
     @DisplayName("[200] POST /ui/v1/chat/add/message - Add chat message")
     public void addMessage() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest(8L, TestConstants.TEST_TWEET_TEXT);
-        mockMvc.perform(post(UI_V1_CHAT + ADD_MESSAGE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_CHAT + PathConstants.ADD_MESSAGE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -87,8 +85,8 @@ public class ChatMessageControllerTest {
     @DisplayName("[404] POST /ui/v1/chat/add/message - Chat Not Found")
     public void addMessage_ChatNotFound() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest(9L, TestConstants.TEST_TWEET_TEXT);
-        mockMvc.perform(post(UI_V1_CHAT + ADD_MESSAGE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_CHAT + PathConstants.ADD_MESSAGE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -99,8 +97,8 @@ public class ChatMessageControllerTest {
     @DisplayName("[400] POST /ui/v1/chat/add/message - Chat Participant Is Blocked")
     public void addMessage_ChatParticipantIsBlocked() throws Exception {
         ChatMessageRequest request = new ChatMessageRequest(10L, TestConstants.TEST_TWEET_TEXT);
-        mockMvc.perform(post(UI_V1_CHAT + ADD_MESSAGE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_CHAT + PathConstants.ADD_MESSAGE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -111,8 +109,8 @@ public class ChatMessageControllerTest {
     @DisplayName("[200] POST /ui/v1/chat/add/message/tweet - Add message with Tweet")
     public void addMessageWithTweet() throws Exception {
         MessageWithTweetRequest request = new MessageWithTweetRequest(TestConstants.TEST_TWEET_TEXT, 40L, Collections.singletonList(2L));
-        mockMvc.perform(post(UI_V1_CHAT + ADD_MESSAGE_TWEET)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_CHAT + PathConstants.ADD_MESSAGE_TWEET)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -122,8 +120,8 @@ public class ChatMessageControllerTest {
     @DisplayName("[404] POST /ui/v1/chat/add/message/tweet - Should tweet not found")
     public void addMessageWithTweet_ShouldTweetNotFound() throws Exception {
         MessageWithTweetRequest request = new MessageWithTweetRequest(TestConstants.TEST_TWEET_TEXT, 99L, Collections.singletonList(2L));
-        mockMvc.perform(post(UI_V1_CHAT + ADD_MESSAGE_TWEET)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_CHAT + PathConstants.ADD_MESSAGE_TWEET)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())

@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.UserChatResponse;
 import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
@@ -15,29 +16,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-import static com.gmail.merikbest2015.commons.constants.PathConstants.SEARCH_USERNAME;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(UI_V1_CHAT)
+@RequestMapping(PathConstants.UI_V1_CHAT)
 public class ChatParticipantController {
 
     private final ChatParticipantMapper chatParticipantMapper;
 
-    @GetMapping(PARTICIPANT_CHAT_ID)
+    @GetMapping(PathConstants.PARTICIPANT_CHAT_ID)
     public ResponseEntity<UserResponse> getParticipant(@PathVariable("participantId") Long participantId,
                                                        @PathVariable("chatId") Long chatId) {
         return ResponseEntity.ok(chatParticipantMapper.getParticipant(participantId, chatId));
     }
 
-    @GetMapping(LEAVE_CHAT_ID)
+    @GetMapping(PathConstants.LEAVE_CHAT_ID)
     public ResponseEntity<String> leaveFromConversation(@PathVariable("participantId") Long participantId,
                                                         @PathVariable("chatId") Long chatId) {
         return ResponseEntity.ok(chatParticipantMapper.leaveFromConversation(participantId, chatId));
     }
 
-    @GetMapping(SEARCH_USERNAME)
+    @GetMapping(PathConstants.SEARCH_USERNAME)
     public ResponseEntity<List<UserChatResponse>> searchParticipantsByUsername(@PathVariable("username") String username,
                                                                                @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserChatResponse> response = chatParticipantMapper.searchParticipantsByUsername(username, pageable);
