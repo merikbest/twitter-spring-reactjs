@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.TagErrorMessage;
 import com.gmail.merikbest2015.model.Tag;
 import com.gmail.merikbest2015.service.TagService;
 import org.junit.Test;
@@ -17,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TAG_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -70,7 +70,7 @@ public class TagServiceImplTest extends AbstractServiceTest {
         try {
             tagService.getTweetsByTag(mockTagName);
         } catch (ApiRequestException exception) {
-            assertEquals(TAG_NOT_FOUND, exception.getMessage());
+            assertEquals(TagErrorMessage.TAG_NOT_FOUND, exception.getMessage());
             assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         }
         verify(tagRepository, times(1)).findByTagName(mockTagName);

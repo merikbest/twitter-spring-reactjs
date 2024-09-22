@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.TweetClient;
+import com.gmail.merikbest2015.constants.TagErrorMessage;
 import com.gmail.merikbest2015.model.Tag;
 import com.gmail.merikbest2015.repository.TagRepository;
 import com.gmail.merikbest2015.repository.TweetTagRepository;
@@ -15,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TAG_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +38,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<TweetResponse> getTweetsByTag(String tagName) {
         Tag tag = tagRepository.findByTagName(tagName)
-                .orElseThrow(() -> new ApiRequestException(TAG_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TagErrorMessage.TAG_NOT_FOUND, HttpStatus.NOT_FOUND));
         List<Long> tweetIds = tweetTagRepository.getTweetIdsByTagId(tag.getId());
         return tweetClient.getTweetsByIds(new IdsRequest(tweetIds));
     }

@@ -41,7 +41,5 @@ public class ErrorMessage {
 
     public static final String TOPIC_NOT_FOUND = "Topic not found";
 
-    public static final String TAG_NOT_FOUND = "Tag not found";
-
     public static final String NOTIFICATION_NOT_FOUND = "Notification not found";
 }

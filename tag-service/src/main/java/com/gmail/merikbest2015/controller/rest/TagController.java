@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.TagResponse;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
@@ -15,11 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(UI_V1_TAGS)
+@RequestMapping(PathConstants.UI_V1_TAGS)
 public class TagController {
 
     private final TagMapper tagMapper;
@@ -29,13 +28,13 @@ public class TagController {
         return ResponseEntity.ok(tagMapper.getTags());
     }
 
-    @GetMapping(TRENDS)
+    @GetMapping(PathConstants.TRENDS)
     public ResponseEntity<List<TagResponse>> getTrends(@PageableDefault(size = 20) Pageable pageable) {
         HeaderResponse<TagResponse> response = tagMapper.getTrends(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(SEARCH)
+    @GetMapping(PathConstants.SEARCH)
     public ResponseEntity<List<TweetResponse>> getTweetsByTag(@RequestParam("tagName") String tagName) {
         return ResponseEntity.ok(tagMapper.getTweetsByTag(tagName));
     }
