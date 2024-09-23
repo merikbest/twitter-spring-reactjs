@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.constants.TopicErrorMessage;
 import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
 import com.gmail.merikbest2015.commons.enums.TopicCategory;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -18,8 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TOPIC_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -95,6 +94,6 @@ public class TopicServiceImpl implements TopicService {
 
     private Topic getTopicById(Long topicId) {
         return topicRepository.findById(topicId)
-                .orElseThrow(() -> new ApiRequestException(TOPIC_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TopicErrorMessage.TOPIC_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 }
