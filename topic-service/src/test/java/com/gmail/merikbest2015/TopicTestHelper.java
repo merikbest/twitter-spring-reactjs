@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015;
 
 import com.gmail.merikbest2015.commons.enums.TopicCategory;
+import com.gmail.merikbest2015.commons.util.TestConstants;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.FollowedTopicProjection;
 import com.gmail.merikbest2015.repository.projection.NotInterestedTopicProjection;
@@ -11,8 +12,6 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
-import static com.gmail.merikbest2015.commons.util.TestConstants.*;
 
 public class TopicTestHelper {
 
@@ -72,9 +71,9 @@ public class TopicTestHelper {
 
     public static User mockAuthUser() {
         User authUser = new User();
-        authUser.setId(USER_ID);
-        authUser.setUsername(USERNAME);
-        authUser.setFullName(FULL_NAME);
+        authUser.setId(TestConstants.USER_ID);
+        authUser.setUsername(TestConstants.USERNAME);
+        authUser.setFullName(TestConstants.FULL_NAME);
         authUser.setPrivateProfile(false);
         return authUser;
     }

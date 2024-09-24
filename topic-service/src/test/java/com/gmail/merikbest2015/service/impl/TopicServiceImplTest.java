@@ -1,5 +1,8 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
+import com.gmail.merikbest2015.commons.util.TestConstants;
+import com.gmail.merikbest2015.constants.TopicErrorMessage;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.TopicTestHelper;
 import com.gmail.merikbest2015.dto.response.TopicsByCategoriesResponse;
@@ -17,8 +20,6 @@ import org.springframework.http.HttpStatus;
 
 import java.util.*;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.commons.util.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +52,7 @@ public class TopicServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void getFollowedTopics() {
-        when(topicRepository.getTopicsByTopicFollowerId(USER_ID, FollowedTopicProjection.class))
+        when(topicRepository.getTopicsByTopicFollowerId(TestConstants.USER_ID, FollowedTopicProjection.class))
                 .thenReturn(TopicTestHelper.getMockFollowedTopicProjectionList());
         List<FollowedTopicProjection> topics = topicService.getFollowedTopics();
         assertEquals(2, topics.size());
@@ -59,43 +60,43 @@ public class TopicServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void getFollowedTopicsByUserId() {
-        when(userRepository.isUserExists(USER_ID)).thenReturn(true);
-        when(topicRepository.getTopicsByTopicFollowerId(USER_ID, TopicProjection.class))
+        when(userRepository.isUserExists(TestConstants.USER_ID)).thenReturn(true);
+        when(topicRepository.getTopicsByTopicFollowerId(TestConstants.USER_ID, TopicProjection.class))
                 .thenReturn(TopicTestHelper.getMockTopicProjectionList());
-        List<TopicProjection> topics = topicService.getFollowedTopicsByUserId(USER_ID);
+        List<TopicProjection> topics = topicService.getFollowedTopicsByUserId(TestConstants.USER_ID);
         assertEquals(2, topics.size());
-        verify(topicRepository, times(1)).getTopicsByTopicFollowerId(USER_ID, TopicProjection.class);
-        verify(userRepository, times(1)).isUserExists(USER_ID);
+        verify(topicRepository, times(1)).getTopicsByTopicFollowerId(TestConstants.USER_ID, TopicProjection.class);
+        verify(userRepository, times(1)).isUserExists(TestConstants.USER_ID);
     }
 
     @Test
     public void getFollowedTopicsByUserId_shouldUserIdNotFound() {
-        when(userRepository.isUserExists(USER_ID)).thenReturn(false);
-        validateProfileTest(USER_ID, String.format(USER_ID_NOT_FOUND, USER_ID), HttpStatus.NOT_FOUND);
+        when(userRepository.isUserExists(TestConstants.USER_ID)).thenReturn(false);
+        validateProfileTest(TestConstants.USER_ID, String.format(ErrorMessage.USER_ID_NOT_FOUND, TestConstants.USER_ID), HttpStatus.NOT_FOUND);
     }
 
     @Test
     public void getFollowedTopicsByUserId_shouldUserProfileBlocked() {
         when(userRepository.isUserExists(1L)).thenReturn(true);
-        when(userRepository.isUserBlocked(1L, USER_ID)).thenReturn(true);
-        validateProfileTest(1L, USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
+        when(userRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
+        validateProfileTest(1L, ErrorMessage.USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
     }
 
     @Test
     public void getFollowedTopicsByUserId_shouldUserHavePrivateProfile() {
         when(userRepository.isUserExists(1L)).thenReturn(true);
-        when(userRepository.isUserBlocked(1L, USER_ID)).thenReturn(false);
-        when(userRepository.isUserHavePrivateProfile(1L, USER_ID)).thenReturn(false);
-        validateProfileTest(1L, USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+        when(userRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
+        when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
+        validateProfileTest(1L, ErrorMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @Test
     public void getNotInterestedTopics() {
-        when(topicRepository.getTopicsByNotInterestedUserId(USER_ID))
+        when(topicRepository.getTopicsByNotInterestedUserId(TestConstants.USER_ID))
                 .thenReturn(TopicTestHelper.getMockNotInterestedTopicProjectionList());
         List<NotInterestedTopicProjection> topics = topicService.getNotInterestedTopics();
         assertEquals(2, topics.size());
-        verify(topicRepository, times(1)).getTopicsByNotInterestedUserId(USER_ID);
+        verify(topicRepository, times(1)).getTopicsByNotInterestedUserId(TestConstants.USER_ID);
     }
 
     @Test
@@ -103,11 +104,11 @@ public class TopicServiceImplTest extends AbstractServiceTest {
         User authUser = TopicTestHelper.mockAuthUser();
         Topic topic = mockTopic();
         topic.setTopicNotInterested(new HashSet<>(Set.of(authUser)));
-        when(topicRepository.findById(TOPIC_ID)).thenReturn(Optional.of(topic));
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
-        assertFalse(topicService.processNotInterestedTopic(TOPIC_ID));
-        verify(topicRepository, times(1)).findById(TOPIC_ID);
-        verify(userRepository, times(1)).findById(USER_ID);
+        when(topicRepository.findById(TestConstants.TOPIC_ID)).thenReturn(Optional.of(topic));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
+        assertFalse(topicService.processNotInterestedTopic(TestConstants.TOPIC_ID));
+        verify(topicRepository, times(1)).findById(TestConstants.TOPIC_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
     }
 
     @Test
@@ -115,11 +116,11 @@ public class TopicServiceImplTest extends AbstractServiceTest {
         User authUser = TopicTestHelper.mockAuthUser();
         Topic topic = mockTopic();
         topic.setTopicNotInterested(new HashSet<>());
-        when(topicRepository.findById(TOPIC_ID)).thenReturn(Optional.of(topic));
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
-        assertTrue(topicService.processNotInterestedTopic(TOPIC_ID));
-        verify(topicRepository, times(1)).findById(TOPIC_ID);
-        verify(userRepository, times(1)).findById(USER_ID);
+        when(topicRepository.findById(TestConstants.TOPIC_ID)).thenReturn(Optional.of(topic));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
+        assertTrue(topicService.processNotInterestedTopic(TestConstants.TOPIC_ID));
+        verify(topicRepository, times(1)).findById(TestConstants.TOPIC_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
     }
 
     @Test
@@ -128,7 +129,7 @@ public class TopicServiceImplTest extends AbstractServiceTest {
         try {
             topicService.processNotInterestedTopic(3L);
         } catch (ApiRequestException exception) {
-            assertEquals(TOPIC_NOT_FOUND, exception.getMessage());
+            assertEquals(TopicErrorMessage.TOPIC_NOT_FOUND, exception.getMessage());
             assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         }
     }
@@ -138,11 +139,11 @@ public class TopicServiceImplTest extends AbstractServiceTest {
         User authUser = TopicTestHelper.mockAuthUser();
         Topic topic = mockTopic();
         topic.setTopicFollowers(new HashSet<>(Set.of(authUser)));
-        when(topicRepository.findById(TOPIC_ID)).thenReturn(Optional.of(topic));
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
-        assertFalse(topicService.processFollowTopic(TOPIC_ID));
-        verify(topicRepository, times(1)).findById(TOPIC_ID);
-        verify(userRepository, times(1)).findById(USER_ID);
+        when(topicRepository.findById(TestConstants.TOPIC_ID)).thenReturn(Optional.of(topic));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
+        assertFalse(topicService.processFollowTopic(TestConstants.TOPIC_ID));
+        verify(topicRepository, times(1)).findById(TestConstants.TOPIC_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
     }
 
     @Test
@@ -150,11 +151,11 @@ public class TopicServiceImplTest extends AbstractServiceTest {
         User authUser = TopicTestHelper.mockAuthUser();
         Topic topic = mockTopic();
         topic.setTopicFollowers(new HashSet<>());
-        when(topicRepository.findById(TOPIC_ID)).thenReturn(Optional.of(topic));
-        when(userRepository.findById(USER_ID)).thenReturn(Optional.of(authUser));
-        assertTrue(topicService.processFollowTopic(TOPIC_ID));
-        verify(topicRepository, times(1)).findById(TOPIC_ID);
-        verify(userRepository, times(1)).findById(USER_ID);
+        when(topicRepository.findById(TestConstants.TOPIC_ID)).thenReturn(Optional.of(topic));
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
+        assertTrue(topicService.processFollowTopic(TestConstants.TOPIC_ID));
+        verify(topicRepository, times(1)).findById(TestConstants.TOPIC_ID);
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
     }
 
     @Test
@@ -163,7 +164,7 @@ public class TopicServiceImplTest extends AbstractServiceTest {
         try {
             topicService.processFollowTopic(3L);
         } catch (ApiRequestException exception) {
-            assertEquals(TOPIC_NOT_FOUND, exception.getMessage());
+            assertEquals(TopicErrorMessage.TOPIC_NOT_FOUND, exception.getMessage());
             assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         }
     }
@@ -179,8 +180,8 @@ public class TopicServiceImplTest extends AbstractServiceTest {
 
     private Topic mockTopic() {
         Topic topic = new Topic();
-        topic.setId(TOPIC_ID);
-        topic.setTopicName(TOPIC_NAME);
+        topic.setId(TestConstants.TOPIC_ID);
+        topic.setTopicName(TestConstants.TOPIC_NAME);
         topic.setTopicCategory(TopicCategory.GAMING);
         return topic;
     }
