@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.constants.PathConstants;
+import com.gmail.merikbest2015.constants.TopicErrorMessage;
 import com.gmail.merikbest2015.dto.request.SuggestedTopicsRequest;
 import com.gmail.merikbest2015.dto.request.TopicsCategoriesRequest;
 import com.gmail.merikbest2015.commons.enums.TopicCategory;
@@ -18,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -95,7 +96,7 @@ public class TopicControllerTest {
         mockMvc.perform(get(PathConstants.UI_V1_TOPICS + PathConstants.FOLLOWED_USER_ID, 3)
                         .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -104,7 +105,7 @@ public class TopicControllerTest {
         mockMvc.perform(get(PathConstants.UI_V1_TOPICS + PathConstants.FOLLOWED_USER_ID, 99)
                         .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(ErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -113,7 +114,7 @@ public class TopicControllerTest {
         mockMvc.perform(get(PathConstants.UI_V1_TOPICS + PathConstants.FOLLOWED_USER_ID, 5)
                         .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
 
     @Test
@@ -149,7 +150,7 @@ public class TopicControllerTest {
         mockMvc.perform(get(PathConstants.UI_V1_TOPICS + PathConstants.NOT_INTERESTED_TOPIC_ID, 1)
                         .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TOPIC_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TopicErrorMessage.TOPIC_NOT_FOUND)));
     }
 
     @Test
@@ -176,6 +177,6 @@ public class TopicControllerTest {
         mockMvc.perform(get(PathConstants.UI_V1_TOPICS + PathConstants.FOLLOW_TOPIC_ID, 1)
                         .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TOPIC_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TopicErrorMessage.TOPIC_NOT_FOUND)));
     }
 }
