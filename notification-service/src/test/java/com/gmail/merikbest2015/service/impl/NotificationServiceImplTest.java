@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.NotificationErrorMessage;
 import com.gmail.merikbest2015.repository.projection.NotificationProjection;
 import com.gmail.merikbest2015.service.AbstractServiceTest;
 import com.gmail.merikbest2015.service.NotificationService;
@@ -21,7 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.NOTIFICATION_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -82,7 +82,7 @@ public class NotificationServiceImplTest extends AbstractServiceTest {
         try {
             notificationService.getUserNotificationById(1L);
         } catch (ApiRequestException exception) {
-            assertEquals(NOTIFICATION_NOT_FOUND, exception.getMessage());
+            assertEquals(NotificationErrorMessage.NOTIFICATION_NOT_FOUND, exception.getMessage());
             assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         }
         verify(notificationRepository, times(1)).getUserNotificationById(TestConstants.USER_ID, 1L);

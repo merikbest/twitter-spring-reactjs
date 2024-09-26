@@ -38,6 +38,4 @@ public class ErrorMessage {
     public static final String POLL_CHOICE_NOT_FOUND = "Poll choice not found";
     public static final String POLL_IS_NOT_AVAILABLE = "Poll is not available";
     public static final String USER_VOTED_IN_POLL = "User voted in poll";
-
-    public static final String NOTIFICATION_NOT_FOUND = "Notification not found";
 }

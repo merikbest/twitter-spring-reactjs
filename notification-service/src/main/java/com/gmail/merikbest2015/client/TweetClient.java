@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.client;
 
 import com.gmail.merikbest2015.commons.configuration.FeignConfiguration;
+import com.gmail.merikbest2015.commons.constants.FeignConstants;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -12,16 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.FeignConstants.TWEET_SERVICE;
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-
-@CircuitBreaker(name = TWEET_SERVICE)
-@FeignClient(name = TWEET_SERVICE, path = API_V1_TWEETS, configuration = FeignConfiguration.class)
+@CircuitBreaker(name = FeignConstants.TWEET_SERVICE)
+@FeignClient(name = FeignConstants.TWEET_SERVICE, path = PathConstants.API_V1_TWEETS, configuration = FeignConfiguration.class)
 public interface TweetClient {
 
-    @GetMapping(TWEET_ID)
+    @GetMapping(PathConstants.TWEET_ID)
     TweetResponse getTweetById(@PathVariable("tweetId") Long tweetId);
 
-    @PostMapping(IDS)
+    @PostMapping(PathConstants.IDS)
     List<TweetResponse> getTweetsByIds(@RequestBody IdsRequest idsRequest);
 }

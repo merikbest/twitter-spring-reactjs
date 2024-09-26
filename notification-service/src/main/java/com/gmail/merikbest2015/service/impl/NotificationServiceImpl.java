@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.TweetClient;
 import com.gmail.merikbest2015.client.UserClient;
+import com.gmail.merikbest2015.constants.NotificationErrorMessage;
 import com.gmail.merikbest2015.repository.NotificationRepository;
 import com.gmail.merikbest2015.repository.projection.NotificationInfoProjection;
 import com.gmail.merikbest2015.repository.projection.NotificationProjection;
@@ -22,8 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.NOTIFICATION_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +62,7 @@ public class NotificationServiceImpl implements NotificationService {
     public NotificationInfoProjection getUserNotificationById(Long notificationId) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return notificationRepository.getUserNotificationById(authUserId, notificationId)
-                .orElseThrow(() -> new ApiRequestException(NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(NotificationErrorMessage.NOTIFICATION_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 
     @Override
