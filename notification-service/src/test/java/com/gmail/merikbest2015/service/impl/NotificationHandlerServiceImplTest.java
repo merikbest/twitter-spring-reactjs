@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.commons.constants.WebsocketConstants;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationListResponse;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationTweetResponse;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.WebsocketConstants.*;
 import static org.mockito.Mockito.*;
 
 public class NotificationHandlerServiceImplTest extends AbstractServiceTest {
@@ -54,7 +54,7 @@ public class NotificationHandlerServiceImplTest extends AbstractServiceTest {
         verify(userNotificationProducer, times(1)).increaseNotificationsCount(notification.getNotifiedUser().getId());
         verify(notificationHandlerMapper, times(1)).convertToNotificationListResponse(
                 notification, event.isNotificationCondition());
-        verify(webSocketClient, times(1)).send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class NotificationHandlerServiceImplTest extends AbstractServiceTest {
         verify(userNotificationProducer, times(1)).increaseNotificationsCount(notification.getNotifiedUser().getId());
         verify(notificationHandlerMapper, times(1)).convertToNotificationUserResponse(
                 notification, event.isNotificationCondition());
-        verify(webSocketClient, times(1)).send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
     }
 
     @Test
@@ -112,10 +112,10 @@ public class NotificationHandlerServiceImplTest extends AbstractServiceTest {
         verify(userNotificationProducer, times(1)).increaseNotificationsCount(notification.getNotifiedUser().getId());
         verify(notificationHandlerMapper, times(1)).convertToNotificationTweetResponse(
                 notification, event.isNotificationCondition());
-        verify(webSocketClient, times(1)).send(TOPIC_FEED, response);
-        verify(webSocketClient, times(1)).send(TOPIC_USER_UPDATE_TWEET, response);
-        verify(webSocketClient, times(1)).send(TOPIC_TWEET + response.getTweet().getId(), response);
-        verify(webSocketClient, times(1)).send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_FEED, response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_USER_UPDATE_TWEET, response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_TWEET + response.getTweet().getId(), response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
     }
 
     @Test
@@ -133,9 +133,9 @@ public class NotificationHandlerServiceImplTest extends AbstractServiceTest {
         NotificationResponse response = mockNotificationTweetResponse();
         when(notificationHandlerMapper.convertToNotificationTweetResponse(event)).thenReturn(response);
         notificationHandlerService.handleTweetNotification(event);
-        verify(webSocketClient, times(1)).send(TOPIC_FEED, response);
-        verify(webSocketClient, times(1)).send(TOPIC_USER_UPDATE_TWEET, response);
-        verify(webSocketClient, times(1)).send(TOPIC_TWEET + response.getTweet().getId(), response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_FEED, response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_USER_UPDATE_TWEET, response);
+        verify(webSocketClient, times(1)).send(WebsocketConstants.TOPIC_TWEET + response.getTweet().getId(), response);
     }
 
     @Test

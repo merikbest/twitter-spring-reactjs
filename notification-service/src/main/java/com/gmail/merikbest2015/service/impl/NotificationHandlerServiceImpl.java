@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.UserNotificationProducer;
+import com.gmail.merikbest2015.commons.constants.WebsocketConstants;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationResponse;
 import com.gmail.merikbest2015.commons.enums.NotificationType;
 import com.gmail.merikbest2015.commons.event.*;
@@ -18,8 +19,6 @@ import com.gmail.merikbest2015.service.UserHandlerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static com.gmail.merikbest2015.commons.constants.WebsocketConstants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +53,7 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
                 userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
                 NotificationResponse response = notificationHandlerMapper.convertToNotificationListResponse(
                         notification, event.isNotificationCondition());
-                webSocketClient.send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
+                webSocketClient.send(WebsocketConstants.TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
             }
         }
     }
@@ -80,7 +79,7 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
                 userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
                 NotificationResponse response = notificationHandlerMapper.convertToNotificationUserResponse(
                         notification, event.isNotificationCondition());
-                webSocketClient.send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
+                webSocketClient.send(WebsocketConstants.TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
             }
         }
     }
@@ -107,17 +106,17 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
                 userNotificationProducer.increaseNotificationsCount(notification.getNotifiedUser().getId());
                 NotificationResponse response = notificationHandlerMapper.convertToNotificationTweetResponse(
                         notification, event.isNotificationCondition());
-                webSocketClient.send(TOPIC_FEED, response);
-                webSocketClient.send(TOPIC_USER_UPDATE_TWEET, response);
-                webSocketClient.send(TOPIC_TWEET + response.getTweet().getId(), response);
-                webSocketClient.send(TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
+                webSocketClient.send(WebsocketConstants.TOPIC_FEED, response);
+                webSocketClient.send(WebsocketConstants.TOPIC_USER_UPDATE_TWEET, response);
+                webSocketClient.send(WebsocketConstants.TOPIC_TWEET + response.getTweet().getId(), response);
+                webSocketClient.send(WebsocketConstants.TOPIC_NOTIFICATIONS + response.getNotifiedUser().getId(), response);
                 return;
             }
         }
         NotificationResponse response = notificationHandlerMapper.convertToNotificationTweetResponse(event);
-        webSocketClient.send(TOPIC_FEED, response);
-        webSocketClient.send(TOPIC_USER_UPDATE_TWEET, response);
-        webSocketClient.send(TOPIC_TWEET + response.getTweet().getId(), response);
+        webSocketClient.send(WebsocketConstants.TOPIC_FEED, response);
+        webSocketClient.send(WebsocketConstants.TOPIC_USER_UPDATE_TWEET, response);
+        webSocketClient.send(WebsocketConstants.TOPIC_TWEET + response.getTweet().getId(), response);
     }
 
     @Override
@@ -152,6 +151,6 @@ public class NotificationHandlerServiceImpl implements NotificationHandlerServic
         notification.setTweet(tweet);
         notificationRepository.save(notification);
         userNotificationProducer.increaseMentionsCount(notifiedUser.getId());
-        webSocketClient.send(TOPIC_MENTIONS + notifiedUser.getId(), notificationEvent.getTweetResponse());
+        webSocketClient.send(WebsocketConstants.TOPIC_MENTIONS + notifiedUser.getId(), notificationEvent.getTweetResponse());
     }
 }
