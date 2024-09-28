@@ -1,9 +1,11 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
@@ -22,7 +24,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -63,7 +64,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetById(TestConstants.TWEET_ID));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -73,7 +74,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetProjection.class)).thenReturn(Optional.of(tweetProjection));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetById(TestConstants.TWEET_ID));
-        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_DELETED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -84,7 +85,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetById(TestConstants.TWEET_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -96,7 +97,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetById(TestConstants.TWEET_ID));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -121,7 +122,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getPinnedTweetByUserId(TestConstants.USER_ID));
-        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(String.format(ErrorMessage.USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -134,7 +135,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getPinnedTweetByUserId(TestConstants.USER_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -148,7 +149,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getPinnedTweetByUserId(TestConstants.USER_ID));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -173,7 +174,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
-        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(String.format(ErrorMessage.USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -186,7 +187,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -200,7 +201,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweets(TestConstants.USER_ID, pageable));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -220,7 +221,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
-        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(String.format(ErrorMessage.USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -233,7 +234,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -247,7 +248,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserMediaTweets(TestConstants.USER_ID, pageable));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -269,7 +270,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
-        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(String.format(ErrorMessage.USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -282,7 +283,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -296,7 +297,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getUserTweetImages(TestConstants.USER_ID));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -313,7 +314,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, TweetAdditionalInfoProjection.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetAdditionalInfoById(TestConstants.TWEET_ID));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -324,7 +325,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetAdditionalInfoById(TestConstants.TWEET_ID));
-        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_DELETED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -336,7 +337,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetAdditionalInfoById(TestConstants.TWEET_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -352,7 +353,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTweetAdditionalInfoById(TestConstants.TWEET_ID));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -374,7 +375,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getRepliesByTweetId(TestConstants.TWEET_ID));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -388,7 +389,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getRepliesByTweetId(TestConstants.TWEET_ID));
-        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_DELETED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -403,7 +404,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getRepliesByTweetId(TestConstants.TWEET_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -420,7 +421,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getRepliesByTweetId(TestConstants.TWEET_ID));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -442,7 +443,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getQuotesByTweetId(TestConstants.TWEET_ID, pageable));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -456,7 +457,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getQuotesByTweetId(TestConstants.TWEET_ID, pageable));
-        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_DELETED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -471,7 +472,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getQuotesByTweetId(TestConstants.TWEET_ID, pageable));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -487,7 +488,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getQuotesByTweetId(TestConstants.TWEET_ID, pageable));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -531,7 +532,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -545,7 +546,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
-        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_DELETED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -560,7 +561,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -576,7 +577,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.getTaggedImageUsers(TestConstants.TWEET_ID, pageable));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -634,7 +635,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.deleteTweet(TestConstants.TWEET_ID));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -675,7 +676,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.replyTweet(TestConstants.USER_ID, TestConstants.TWEET_ID, new Tweet()));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -691,7 +692,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.replyTweet(TestConstants.USER_ID, TestConstants.TWEET_ID, tweet));
-        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_DELETED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -708,7 +709,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.replyTweet(TestConstants.USER_ID, TestConstants.TWEET_ID, tweet));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -726,7 +727,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.replyTweet(TestConstants.USER_ID, TestConstants.TWEET_ID, tweet));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -756,7 +757,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.quoteTweet(TestConstants.TWEET_ID, new Tweet()));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -771,7 +772,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetById(TestConstants.TWEET_ID, Tweet.class)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.quoteTweet(TestConstants.TWEET_ID, new Tweet()));
-        assertEquals(TWEET_DELETED, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_DELETED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -787,7 +788,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.quoteTweet(TestConstants.TWEET_ID, new Tweet()));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -804,7 +805,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(TestConstants.USER_ID, 1L)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.quoteTweet(TestConstants.TWEET_ID, new Tweet()));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -830,7 +831,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.changeTweetReplyType(TestConstants.TWEET_ID, ReplyType.MENTION));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -846,7 +847,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> tweetService.changeTweetReplyType(TestConstants.TWEET_ID, ReplyType.MENTION));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }

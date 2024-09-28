@@ -1,6 +1,8 @@
 package com.gmail.merikbest2015.service.util;
 
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.TweetRepository;
@@ -9,8 +11,6 @@ import com.gmail.merikbest2015.commons.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 
 @Component
 @RequiredArgsConstructor
@@ -21,21 +21,21 @@ public class TweetValidationHelper {
 
     public Tweet checkValidTweet(Long tweetId) {
         Tweet tweet = tweetRepository.getTweetById(tweetId, Tweet.class)
-                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TweetErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         validateTweet(tweet.isDeleted(), tweet.getAuthor().getId());
         return tweet;
     }
 
     public void validateTweet(boolean isDeleted, Long tweetAuthorId) {
         if (isDeleted) {
-            throw new ApiRequestException(TWEET_DELETED, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(TweetErrorMessage.TWEET_DELETED, HttpStatus.BAD_REQUEST);
         }
         checkIsValidUserProfile(tweetAuthorId);
     }
 
     public User validateUserProfile(Long userId) {
         User user = userService.getUserById(userId)
-                .orElseThrow(() -> new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(String.format(ErrorMessage.USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND));
         checkIsValidUserProfile(userId);
         return user;
     }
@@ -45,17 +45,17 @@ public class TweetValidationHelper {
 
         if (!userId.equals(authUserId)) {
             if (userService.isUserHavePrivateProfile(userId)) {
-                throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+                throw new ApiRequestException(ErrorMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
             }
             if (userService.isMyProfileBlockedByUser(userId)) {
-                throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
+                throw new ApiRequestException(ErrorMessage.USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
             }
         }
     }
 
     public void checkTweetTextLength(String text) {
         if (text.length() == 0 || text.length() > 280) {
-            throw new ApiRequestException(INCORRECT_TWEET_TEXT_LENGTH, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(TweetErrorMessage.INCORRECT_TWEET_TEXT_LENGTH, HttpStatus.BAD_REQUEST);
         }
     }
 }

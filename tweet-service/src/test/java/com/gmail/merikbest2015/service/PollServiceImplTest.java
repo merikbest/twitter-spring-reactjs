@@ -1,8 +1,10 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.model.*;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
 import com.gmail.merikbest2015.service.impl.PollServiceImpl;
@@ -17,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -60,7 +61,7 @@ public class PollServiceImplTest extends AbstractServiceTest {
     public void createPoll_ShouldIncorrectPollChoices() {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> pollService.createPoll(123L, List.of(TestConstants.POLL_CHOICE_1), new Tweet()));
-        assertEquals(INCORRECT_POLL_CHOICES, exception.getMessage());
+        assertEquals(TweetErrorMessage.INCORRECT_POLL_CHOICES, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -68,7 +69,7 @@ public class PollServiceImplTest extends AbstractServiceTest {
     public void createPoll_ShouldIncorrectPollChoiceTextLength() {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> pollService.createPoll(123L, Arrays.asList("", TestConstants.POLL_CHOICE_2), new Tweet()));
-        assertEquals(INCORRECT_CHOICE_TEXT_LENGTH, exception.getMessage());
+        assertEquals(TweetErrorMessage.INCORRECT_CHOICE_TEXT_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -94,7 +95,7 @@ public class PollServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.getTweetByPollIdAndTweetId(TestConstants.TWEET_ID, TestConstants.POLL_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
-        assertEquals(POLL_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.POLL_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -107,7 +108,7 @@ public class PollServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(ErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -121,7 +122,7 @@ public class PollServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(ErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -133,7 +134,7 @@ public class PollServiceImplTest extends AbstractServiceTest {
         when(pollRepository.getPollByPollChoiceId(TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID)).thenReturn(Optional.of(poll));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
-        assertEquals(POLL_IS_NOT_AVAILABLE, exception.getMessage());
+        assertEquals(TweetErrorMessage.POLL_IS_NOT_AVAILABLE, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -146,7 +147,7 @@ public class PollServiceImplTest extends AbstractServiceTest {
         when(pollChoiceVotedRepository.ifUserVoted(TestConstants.USER_ID, TestConstants.POLL_CHOICE_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> pollService.voteInPoll(TestConstants.TWEET_ID, TestConstants.POLL_ID, TestConstants.POLL_CHOICE_ID));
-        assertEquals(USER_VOTED_IN_POLL, exception.getMessage());
+        assertEquals(TweetErrorMessage.USER_VOTED_IN_POLL, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 }

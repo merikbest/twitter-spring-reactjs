@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -18,8 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.INCORRECT_TWEET_TEXT_LENGTH;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TWEET_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -64,7 +63,7 @@ public class ScheduledTweetServiceImplTest extends AbstractServiceTest {
         tweet.setText("");
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> scheduledTweetService.createScheduledTweet(tweet));
-        assertEquals(INCORRECT_TWEET_TEXT_LENGTH, exception.getMessage());
+        assertEquals(TweetErrorMessage.INCORRECT_TWEET_TEXT_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -84,7 +83,7 @@ public class ScheduledTweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> scheduledTweetService.updateScheduledTweet(tweet));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(TweetErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -95,7 +94,7 @@ public class ScheduledTweetServiceImplTest extends AbstractServiceTest {
         when(tweetRepository.findById(TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> scheduledTweetService.updateScheduledTweet(tweet));
-        assertEquals(INCORRECT_TWEET_TEXT_LENGTH, exception.getMessage());
+        assertEquals(TweetErrorMessage.INCORRECT_TWEET_TEXT_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 

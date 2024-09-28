@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.util.TestConstants;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TWEET_DELETED;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TWEET_NOT_FOUND;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -90,7 +89,7 @@ public class BookmarkControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + USER_BOOKMARKS_TWEET_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TWEET_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
 
     @Test
@@ -99,7 +98,7 @@ public class BookmarkControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + USER_BOOKMARKS_TWEET_ID, 49)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(TWEET_DELETED)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }
 
     @Test

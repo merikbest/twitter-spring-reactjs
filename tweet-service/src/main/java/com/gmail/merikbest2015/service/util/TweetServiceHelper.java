@@ -51,6 +51,11 @@ public class TweetServiceHelper {
     @Value("${google.api.key}")
     private String googleApiKey;
 
+    private static final String URL_REGEX = "https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+";
+    private static final String IMG_REGEX = "\\.(jpeg|jpg|gif|png)$";
+    private static final String YOUTUBE_URL_REGEX = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*";
+    private static final String USER_MENTION_REGEX = "(@\\w+)\\b";
+
     @Transactional
     public TweetResponse createTweet(Tweet tweet) {
         tweetValidationHelper.checkTweetTextLength(tweet.getText());
@@ -71,9 +76,9 @@ public class TweetServiceHelper {
 
     @SneakyThrows
     public boolean parseMetadataFromURL(Tweet tweet) {
-        Pattern urlRegex = Pattern.compile("https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+", Pattern.CASE_INSENSITIVE);
-        Pattern imgRegex = Pattern.compile("\\.(jpeg|jpg|gif|png)$", Pattern.CASE_INSENSITIVE);
-        Pattern youTubeUrlRegex = Pattern.compile("(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*", Pattern.CASE_INSENSITIVE);
+        Pattern urlRegex = Pattern.compile(URL_REGEX, Pattern.CASE_INSENSITIVE);
+        Pattern imgRegex = Pattern.compile(IMG_REGEX, Pattern.CASE_INSENSITIVE);
+        Pattern youTubeUrlRegex = Pattern.compile(YOUTUBE_URL_REGEX, Pattern.CASE_INSENSITIVE);
         String text = tweet.getText();
         Matcher matcher = urlRegex.matcher(text);
 
@@ -159,7 +164,7 @@ public class TweetServiceHelper {
     }
 
     private List<String> parseUserMentionFromText(String tweetText) {
-        Pattern pattern = Pattern.compile("(@\\w+)\\b");
+        Pattern pattern = Pattern.compile(USER_MENTION_REGEX);
         Matcher match = pattern.matcher(tweetText);
         List<String> usernames = new ArrayList<>();
         while (match.find()) {

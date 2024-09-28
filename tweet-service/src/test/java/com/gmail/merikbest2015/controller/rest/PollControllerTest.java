@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.request.VoteRequest;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
@@ -18,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -102,7 +102,7 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_POLL_CHOICES)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.INCORRECT_POLL_CHOICES)));
     }
 
     @Test
@@ -125,7 +125,7 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_POLL_CHOICES)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.INCORRECT_POLL_CHOICES)));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_CHOICE_TEXT_LENGTH)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.INCORRECT_CHOICE_TEXT_LENGTH)));
     }
 
     @Test
@@ -165,7 +165,7 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_CHOICE_TEXT_LENGTH)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.INCORRECT_CHOICE_TEXT_LENGTH)));
     }
 
     @Test
@@ -224,7 +224,7 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(POLL_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.POLL_NOT_FOUND)));
     }
 
     @Test
@@ -240,7 +240,7 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(POLL_CHOICE_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.POLL_CHOICE_NOT_FOUND)));
     }
 
     @Test
@@ -256,7 +256,7 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(POLL_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.POLL_NOT_FOUND)));
     }
 
     @Test
@@ -272,6 +272,6 @@ public class PollControllerTest {
                         .content(mapper.writeValueAsString(voteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(POLL_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.POLL_NOT_FOUND)));
     }
 }

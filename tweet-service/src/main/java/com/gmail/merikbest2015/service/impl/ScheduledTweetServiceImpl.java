@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.TweetRepository;
@@ -19,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TWEET_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +53,7 @@ public class ScheduledTweetServiceImpl implements ScheduledTweetService {
     @Transactional
     public TweetProjection updateScheduledTweet(Tweet tweetInfo) {
         Tweet tweet = tweetRepository.findById(tweetInfo.getId())
-                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TweetErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         tweetValidationHelper.checkTweetTextLength(tweetInfo.getText());
         tweet.setText(tweetInfo.getText());
         tweet.setImages(tweetInfo.getImages());

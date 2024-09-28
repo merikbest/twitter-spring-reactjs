@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
@@ -18,8 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.INCORRECT_TWEET_TEXT_LENGTH;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TWEET_NOT_FOUND;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -169,7 +168,7 @@ public class ScheduledTweetControllerTest {
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_TWEET_TEXT_LENGTH)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.INCORRECT_TWEET_TEXT_LENGTH)));
     }
 
     @Test
@@ -185,7 +184,7 @@ public class ScheduledTweetControllerTest {
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_TWEET_TEXT_LENGTH)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.INCORRECT_TWEET_TEXT_LENGTH)));
     }
 
     @Test
@@ -201,7 +200,7 @@ public class ScheduledTweetControllerTest {
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TWEET_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
 
     @Test

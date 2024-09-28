@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.util.TestConstants;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -70,7 +71,7 @@ public class RetweetControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + REPLIES_USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(ErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -79,7 +80,7 @@ public class RetweetControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + REPLIES_USER_ID, 3)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -88,7 +89,7 @@ public class RetweetControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + REPLIES_USER_ID, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
 
     @Test
@@ -116,7 +117,7 @@ public class RetweetControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + TWEET_ID_RETWEETED_USERS, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TWEET_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
 
     @Test
@@ -125,7 +126,7 @@ public class RetweetControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + TWEET_ID_RETWEETED_USERS, 49)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(TWEET_DELETED)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }
 
     @Test
@@ -156,7 +157,7 @@ public class RetweetControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + RETWEET_USER_ID_TWEET_ID, 2, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TWEET_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
 
     @Test
@@ -165,6 +166,6 @@ public class RetweetControllerTest {
         mockMvc.perform(get(UI_V1_TWEETS + RETWEET_USER_ID_TWEET_ID, 2, 49)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(TWEET_DELETED)));
+                .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }
 }

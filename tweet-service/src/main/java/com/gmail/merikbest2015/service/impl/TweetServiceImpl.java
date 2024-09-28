@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.enums.TweetType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.ImageClient;
+import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.model.User;
@@ -28,8 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.TWEET_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -54,7 +53,7 @@ public class TweetServiceImpl implements TweetService {
     @Transactional(readOnly = true)
     public TweetProjection getTweetById(Long tweetId) {
         TweetProjection tweet = tweetRepository.getTweetById(tweetId, TweetProjection.class)
-                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TweetErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         tweetValidationHelper.validateTweet(tweet.isDeleted(), tweet.getAuthor().getId());
         return tweet;
     }
@@ -91,7 +90,7 @@ public class TweetServiceImpl implements TweetService {
     @Transactional(readOnly = true)
     public TweetAdditionalInfoProjection getTweetAdditionalInfoById(Long tweetId) {
         TweetAdditionalInfoProjection additionalInfo = tweetRepository.getTweetById(tweetId, TweetAdditionalInfoProjection.class)
-                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TweetErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         tweetValidationHelper.validateTweet(additionalInfo.isDeleted(), additionalInfo.getAuthor().getId());
         return additionalInfo;
     }
@@ -157,7 +156,7 @@ public class TweetServiceImpl implements TweetService {
     public String deleteTweet(Long tweetId) {
         User authUser = userService.getAuthUser();
         Tweet tweet = tweetRepository.getTweetByUserId(authUser.getId(), tweetId)
-                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TweetErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
         if (authUser.getPinnedTweet() != null && authUser.getPinnedTweet().equals(tweet)) {
             authUser.setPinnedTweet(null);
         }
@@ -203,10 +202,10 @@ public class TweetServiceImpl implements TweetService {
     public TweetProjection changeTweetReplyType(Long tweetId, ReplyType replyType) {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         Tweet tweet = tweetRepository.getTweetByAuthorIdAndTweetId(tweetId, authUserId)
-                .orElseThrow(() -> new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(TweetErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND));
 
         if (!tweet.getAuthor().getId().equals(authUserId)) {
-            throw new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(TweetErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         tweet.setReplyType(replyType);
         return getTweetById(tweet.getId());
