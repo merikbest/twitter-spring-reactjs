@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
+import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
@@ -214,6 +215,6 @@ public class ScheduledTweetControllerTest {
                         .content(mapper.writeValueAsString(tweetDeleteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Scheduled tweets deleted.")));
+                .andExpect(jsonPath("$", is(TweetSuccessMessage.SCHEDULED_TWEETS_DELETED)));
     }
 }

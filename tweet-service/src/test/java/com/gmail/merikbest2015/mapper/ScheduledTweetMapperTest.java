@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
+import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
@@ -84,8 +85,8 @@ public class ScheduledTweetMapperTest {
     @Test
     public void deleteScheduledTweets() {
         TweetDeleteRequest tweetRequest = new TweetDeleteRequest();
-        when(scheduledTweetService.deleteScheduledTweets(tweetRequest.getTweetsIds())).thenReturn("Scheduled tweets deleted.");
-        assertEquals("Scheduled tweets deleted.", scheduledTweetMapper.deleteScheduledTweets(tweetRequest));
+        when(scheduledTweetService.deleteScheduledTweets(tweetRequest.getTweetsIds())).thenReturn(TweetSuccessMessage.SCHEDULED_TWEETS_DELETED);
+        assertEquals(TweetSuccessMessage.SCHEDULED_TWEETS_DELETED, scheduledTweetMapper.deleteScheduledTweets(tweetRequest));
         verify(scheduledTweetService, times(1)).deleteScheduledTweets(tweetRequest.getTweetsIds());
     }
 }

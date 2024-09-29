@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
+import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.TweetProjection;
@@ -101,7 +102,7 @@ public class ScheduledTweetServiceImplTest extends AbstractServiceTest {
     @Test
     public void deleteScheduledTweets() {
         when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        assertEquals("Scheduled tweets deleted.", scheduledTweetService.deleteScheduledTweets(List.of(TestConstants.TWEET_ID)));
+        assertEquals(TweetSuccessMessage.SCHEDULED_TWEETS_DELETED, scheduledTweetService.deleteScheduledTweets(List.of(TestConstants.TWEET_ID)));
         assertTrue(tweet.isDeleted());
     }
 }

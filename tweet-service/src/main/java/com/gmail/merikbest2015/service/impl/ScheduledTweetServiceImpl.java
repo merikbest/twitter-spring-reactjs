@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
+import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.TweetRepository;
@@ -64,6 +65,6 @@ public class ScheduledTweetServiceImpl implements ScheduledTweetService {
     @Transactional
     public String deleteScheduledTweets(List<Long> tweetsIds) {
         tweetsIds.forEach(tweetService::deleteTweet);
-        return "Scheduled tweets deleted.";
+        return TweetSuccessMessage.SCHEDULED_TWEETS_DELETED;
     }
 }

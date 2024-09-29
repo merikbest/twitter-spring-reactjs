@@ -6,6 +6,7 @@ import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
+import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.*;
@@ -606,7 +607,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         user.setId(TestConstants.USER_ID);
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        assertEquals("Your Tweet was deleted", tweetService.deleteTweet(TestConstants.TWEET_ID));
+        assertEquals(TweetSuccessMessage.YOUR_TWEET_WAS_DELETED, tweetService.deleteTweet(TestConstants.TWEET_ID));
         verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetRepository, times(1)).getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID);
     }
@@ -621,7 +622,7 @@ public class TweetServiceImplTest extends AbstractServiceTest {
         user.setPinnedTweet(tweet);
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetRepository.getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID)).thenReturn(Optional.of(tweet));
-        assertEquals("Your Tweet was deleted", tweetService.deleteTweet(TestConstants.TWEET_ID));
+        assertEquals(TweetSuccessMessage.YOUR_TWEET_WAS_DELETED, tweetService.deleteTweet(TestConstants.TWEET_ID));
         assertNull(user.getPinnedTweet());
         verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetRepository, times(1)).getTweetByUserId(TestConstants.USER_ID, TestConstants.TWEET_ID);

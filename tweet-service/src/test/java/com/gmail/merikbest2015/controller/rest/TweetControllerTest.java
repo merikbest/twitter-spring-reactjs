@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.controller.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
+import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.util.TestConstants;
@@ -867,7 +868,7 @@ public class TweetControllerTest {
         mockMvc.perform(delete(UI_V1_TWEETS + TWEET_ID, 40)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Your Tweet was deleted")));
+                .andExpect(jsonPath("$", is(TweetSuccessMessage.YOUR_TWEET_WAS_DELETED)));
     }
 
     @Test

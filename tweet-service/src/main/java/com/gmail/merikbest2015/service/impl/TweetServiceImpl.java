@@ -7,6 +7,7 @@ import com.gmail.merikbest2015.commons.enums.TweetType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.ImageClient;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
+import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.TweetImage;
 import com.gmail.merikbest2015.model.User;
@@ -162,7 +163,7 @@ public class TweetServiceImpl implements TweetService {
         }
         tagProducer.deleteTag(tweetId);
         tweet.setDeleted(true);
-        return "Your Tweet was deleted";
+        return TweetSuccessMessage.YOUR_TWEET_WAS_DELETED;
     }
 
     @Override

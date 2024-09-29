@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
+import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.dto.request.TweetRequest;
 import com.gmail.merikbest2015.dto.response.NotificationReplyResponse;
 import com.gmail.merikbest2015.dto.response.ProfileTweetImageResponse;
@@ -197,8 +198,8 @@ public class TweetMapperTest {
 
     @Test
     public void deleteTweet() {
-        when(tweetService.deleteTweet(TestConstants.TWEET_ID)).thenReturn("Your Tweet was deleted");
-        assertEquals("Your Tweet was deleted", tweetMapper.deleteTweet(TestConstants.TWEET_ID));
+        when(tweetService.deleteTweet(TestConstants.TWEET_ID)).thenReturn(TweetSuccessMessage.YOUR_TWEET_WAS_DELETED);
+        assertEquals(TweetSuccessMessage.YOUR_TWEET_WAS_DELETED, tweetMapper.deleteTweet(TestConstants.TWEET_ID));
         verify(tweetService, times(1)).deleteTweet(TestConstants.TWEET_ID);
     }
 
