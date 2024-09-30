@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.commons.constants.ErrorMessage;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
@@ -13,11 +14,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,8 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-tweet-db.sql", "/sql-test/populate-tweet-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-tweet-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-tweet-db.sql", "/sql-test/populate-tweet-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-tweet-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class LikeTweetControllerTest {
 
     @Autowired
@@ -35,8 +33,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/liked/user/2 - Get user liked tweets by id")
     public void getUserLikedTweets() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + LIKED_USER_USER_ID,  TestConstants.USER_ID)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.LIKED_USER_USER_ID,  TestConstants.USER_ID)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(45L))
@@ -69,8 +67,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/tweets/liked/user/99 - Should user Not Found by id")
     public void getUserLikedTweets_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + LIKED_USER_USER_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.LIKED_USER_USER_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(ErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -78,8 +76,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/tweets/liked/user/3 - Should user have private profile")
     public void getUserLikedTweets_ShouldUseHavePrivateProfile() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + LIKED_USER_USER_ID, 3)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.LIKED_USER_USER_ID, 3)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_NOT_FOUND)));
     }
@@ -87,8 +85,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/tweets/liked/user/6 - Should user profile blocked")
     public void getUserLikedTweets_ShouldUseProfileBlocked() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + LIKED_USER_USER_ID, 6)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.LIKED_USER_USER_ID, 6)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(ErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -96,8 +94,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/40/liked-users - Get Liked Users By Tweet Id")
     public void getLikedUsersByTweetId() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + TWEET_ID_LIKED_USERS, 40)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_LIKED_USERS, 40)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(1L))
@@ -115,8 +113,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/tweets/99/liked-users - Should Tweet Not Found by id")
     public void getLikedUsersByTweetId_ShouldTweetNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + TWEET_ID_LIKED_USERS, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_LIKED_USERS, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
@@ -124,8 +122,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/tweets/49/liked-users - Should Tweet deleted")
     public void getLikedUsersByTweetId_ShouldTweetDeleted() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + TWEET_ID_LIKED_USERS, 49)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.TWEET_ID_LIKED_USERS, 49)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }
@@ -133,8 +131,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/like/2/43 - Like tweet by id")
     public void likeTweet() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + LIKE_USER_ID_TWEET_ID, 2, 43)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.LIKE_USER_ID_TWEET_ID, 2, 43)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43))
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))
@@ -144,8 +142,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/like/2/45 - Unlike tweet by id")
     public void unlikeTweet() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + LIKE_USER_ID_TWEET_ID, 2, 45)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.LIKE_USER_ID_TWEET_ID, 2, 45)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(45))
                 .andExpect(jsonPath("$.text").value("media tweet test"))
@@ -155,8 +153,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/tweets/like/2/99 - Should Tweet Not Found by id")
     public void likeTweet_ShouldTweetNotFoundById() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + LIKE_USER_ID_TWEET_ID, 2, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.LIKE_USER_ID_TWEET_ID, 2, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_NOT_FOUND)));
     }
@@ -164,8 +162,8 @@ public class LikeTweetControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/tweets/like/2/49 - Should Tweet deleted")
     public void likeTweet_ShouldTweetDeleted() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + LIKE_USER_ID_TWEET_ID, 2, 49)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.LIKE_USER_ID_TWEET_ID, 2, 49)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(TweetErrorMessage.TWEET_DELETED)));
     }

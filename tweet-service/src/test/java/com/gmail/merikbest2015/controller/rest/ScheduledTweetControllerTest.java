@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.constants.TweetErrorMessage;
 import com.gmail.merikbest2015.constants.TweetSuccessMessage;
 import com.gmail.merikbest2015.dto.request.TweetDeleteRequest;
@@ -20,11 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,8 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-tweet-db.sql", "/sql-test/populate-tweet-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-tweet-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-tweet-db.sql", "/sql-test/populate-tweet-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-tweet-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class ScheduledTweetControllerTest {
 
     @Autowired
@@ -45,8 +43,8 @@ public class ScheduledTweetControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/tweets/schedule - Get scheduled tweets")
     public void getScheduledTweets() throws Exception {
-        mockMvc.perform(get(UI_V1_TWEETS + SCHEDULE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_TWEETS + PathConstants.SCHEDULE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(39L))
@@ -84,8 +82,8 @@ public class ScheduledTweetControllerTest {
         tweetRequest.setReplyType(ReplyType.EVERYONE);
         tweetRequest.setScheduledDate(LocalDateTime.parse(TestConstants.TWEET_SCHEDULED_DATETIME));
 
-        mockMvc.perform(post(UI_V1_TWEETS + SCHEDULE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_TWEETS + PathConstants.SCHEDULE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -124,8 +122,8 @@ public class ScheduledTweetControllerTest {
         tweetRequest.setText("test tweet2");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
-        mockMvc.perform(put(UI_V1_TWEETS + SCHEDULE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(put(PathConstants.UI_V1_TWEETS + PathConstants.SCHEDULE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -164,8 +162,8 @@ public class ScheduledTweetControllerTest {
         tweetRequest.setText("");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
-        mockMvc.perform(put(UI_V1_TWEETS + SCHEDULE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(put(PathConstants.UI_V1_TWEETS + PathConstants.SCHEDULE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -180,8 +178,8 @@ public class ScheduledTweetControllerTest {
         tweetRequest.setText(TestConstants.LINK_DESCRIPTION + TestConstants.LINK_DESCRIPTION);
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
-        mockMvc.perform(put(UI_V1_TWEETS + SCHEDULE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(put(PathConstants.UI_V1_TWEETS + PathConstants.SCHEDULE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -196,8 +194,8 @@ public class ScheduledTweetControllerTest {
         tweetRequest.setText("test tweet99");
         tweetRequest.setReplyType(ReplyType.EVERYONE);
 
-        mockMvc.perform(put(UI_V1_TWEETS + SCHEDULE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(put(PathConstants.UI_V1_TWEETS + PathConstants.SCHEDULE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -210,8 +208,8 @@ public class ScheduledTweetControllerTest {
         TweetDeleteRequest tweetDeleteRequest = new TweetDeleteRequest();
         tweetDeleteRequest.setTweetsIds(List.of(42L));
 
-        mockMvc.perform(delete(UI_V1_TWEETS + SCHEDULE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(delete(PathConstants.UI_V1_TWEETS + PathConstants.SCHEDULE)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(tweetDeleteRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())

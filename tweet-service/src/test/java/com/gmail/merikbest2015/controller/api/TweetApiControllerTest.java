@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.request.IdsRequest;
 import com.gmail.merikbest2015.commons.enums.ReplyType;
 import com.gmail.merikbest2015.commons.util.TestConstants;
@@ -16,10 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -28,8 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-tweet-db.sql", "/sql-test/populate-tweet-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-tweet-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-tweet-db.sql", "/sql-test/populate-tweet-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-tweet-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class TweetApiControllerTest {
 
     @Autowired
@@ -41,10 +39,10 @@ public class TweetApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/tweets/ids - Get tweets by ids")
     public void getTweetsByIds() throws Exception {
-        mockMvc.perform(post(API_V1_TWEETS + IDS)
+        mockMvc.perform(post(PathConstants.API_V1_TWEETS + PathConstants.IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(40L, 41L, 42L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(3)));
     }
@@ -52,10 +50,10 @@ public class TweetApiControllerTest {
     @Test
     @DisplayName("[200] POST /api/v1/tweets/user/ids - Get tweets by user ids")
     public void getTweetsByUserIds() throws Exception {
-        mockMvc.perform(post(API_V1_TWEETS + USER_IDS)
+        mockMvc.perform(post(PathConstants.API_V1_TWEETS + PathConstants.USER_IDS)
                         .content(mapper.writeValueAsString(new IdsRequest(List.of(2L))))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.items[*]", hasSize(7)));
     }
@@ -63,8 +61,8 @@ public class TweetApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/tweets/43 - Get tweet by id")
     public void getTweetById() throws Exception {
-        mockMvc.perform(get(API_V1_TWEETS + TWEET_ID, 43)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.API_V1_TWEETS + PathConstants.TWEET_ID, 43)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43L))
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))
@@ -96,8 +94,8 @@ public class TweetApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/tweets/id/43 - Is tweet exists")
     public void isTweetExists() throws Exception {
-        mockMvc.perform(get(API_V1_TWEETS + ID_TWEET_ID, 43)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.API_V1_TWEETS + PathConstants.ID_TWEET_ID, 43)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(true));
     }
@@ -105,8 +103,8 @@ public class TweetApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/tweets/count/test - Get tweet count by text")
     public void getTweetCountByText() throws Exception {
-        mockMvc.perform(get(API_V1_TWEETS + COUNT_TEXT, "test")
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.API_V1_TWEETS + PathConstants.COUNT_TEXT, "test")
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(4));
     }
@@ -114,8 +112,8 @@ public class TweetApiControllerTest {
     @Test
     @DisplayName("[200] GET /api/v1/tweets/chat/43 - Get chat tweet")
     public void getChatTweet() throws Exception {
-        mockMvc.perform(get(API_V1_TWEETS + CHAT_TWEET_ID, 43)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.API_V1_TWEETS + PathConstants.CHAT_TWEET_ID, 43)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(43L))
                 .andExpect(jsonPath("$.text").value(TestConstants.TWEET_TEXT))

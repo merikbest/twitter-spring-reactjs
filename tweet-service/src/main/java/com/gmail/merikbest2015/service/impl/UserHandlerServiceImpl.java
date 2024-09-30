@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static java.lang.Long.parseLong;
-
 @Service
 @RequiredArgsConstructor
 public class UserHandlerServiceImpl implements UserHandlerService {
@@ -38,7 +36,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     public void handleBlockUser(BlockUserEvent blockUserEvent, String authId) {
         User user = userRepository.findById(blockUserEvent.getId())
                 .orElseGet(() -> createUser(blockUserEvent));
-        User authUser = userRepository.findById(parseLong(authId)).get();
+        User authUser = userRepository.findById(Long.parseLong(authId)).get();
 
         if (blockUserEvent.isUserBlocked()) {
             authUser.getUserBlockedList().add(user);
@@ -54,7 +52,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     public void handleMuteUser(MuteUserEvent muteUserEvent, String authId) {
         User user = userRepository.findById(muteUserEvent.getId())
                 .orElseGet(() -> createUser(muteUserEvent));
-        User authUser = userRepository.findById(parseLong(authId)).get();
+        User authUser = userRepository.findById(Long.parseLong(authId)).get();
 
         if (muteUserEvent.isUserMuted()) {
             authUser.getUserMutedList().add(user);
@@ -68,7 +66,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     public void handleFollowUser(FollowUserEvent followUserEvent, String authId) {
         User user = userRepository.findById(followUserEvent.getId())
                 .orElseGet(() -> createUser(followUserEvent));
-        User authUser = userRepository.findById(parseLong(authId)).get();
+        User authUser = userRepository.findById(Long.parseLong(authId)).get();
 
         if (followUserEvent.isUserFollow()) {
             authUser.getFollowers().add(user);
@@ -82,7 +80,7 @@ public class UserHandlerServiceImpl implements UserHandlerService {
     public void handleFollowUserRequest(FollowRequestUserEvent followRequestUserEvent, String authId) {
         User user = userRepository.findById(followRequestUserEvent.getId())
                 .orElseGet(() -> createUser(followRequestUserEvent));
-        User authUser = userRepository.findById(parseLong(authId)).get();
+        User authUser = userRepository.findById(Long.parseLong(authId)).get();
 
         if (followRequestUserEvent.isUserFollowRequest()) {
             user.getFollowerRequests().add(authUser);

@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.commons.constants.ErrorMessage;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_NOT_FOUND;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService {
     public User getAuthUser() {
         Long authUserId = AuthUtil.getAuthenticatedUserId();
         return userRepository.findById(authUserId)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.UNAUTHORIZED));
+                .orElseThrow(() -> new ApiRequestException(ErrorMessage.USER_NOT_FOUND, HttpStatus.UNAUTHORIZED));
     }
 
     @Override

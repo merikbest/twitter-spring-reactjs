@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationTweetResponse;
@@ -16,30 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(UI_V1_TWEETS)
+@RequestMapping(PathConstants.UI_V1_TWEETS)
 public class RetweetController {
 
     private final RetweetMapper retweetMapper;
 
-    @GetMapping(REPLIES_USER_ID)
+    @GetMapping(PathConstants.REPLIES_USER_ID)
     public ResponseEntity<List<TweetUserResponse>> getUserRetweetsAndReplies(@PathVariable("userId") Long userId,
                                                                              @PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<TweetUserResponse> response = retweetMapper.getUserRetweetsAndReplies(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(TWEET_ID_RETWEETED_USERS)
+    @GetMapping(PathConstants.TWEET_ID_RETWEETED_USERS)
     public ResponseEntity<List<UserResponse>> getRetweetedUsersByTweetId(@PathVariable("tweetId") Long tweetId,
                                                                          @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = retweetMapper.getRetweetedUsersByTweetId(tweetId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(RETWEET_USER_ID_TWEET_ID)
+    @GetMapping(PathConstants.RETWEET_USER_ID_TWEET_ID)
     public ResponseEntity<NotificationTweetResponse> retweet(@PathVariable("userId") Long userId,
                                                              @PathVariable("tweetId") Long tweetId) {
         return ResponseEntity.ok(retweetMapper.retweet(tweetId));
