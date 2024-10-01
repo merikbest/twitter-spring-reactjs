@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
 import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.model.UserRole;
@@ -20,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
-
 @Service
 @RequiredArgsConstructor
 public class UserSettingsServiceImpl implements UserSettingsService {
@@ -37,7 +36,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Transactional
     public String updateUsername(String username) {
         if (username.length() == 0 || username.length() > 50) {
-            throw new ApiRequestException(INCORRECT_USERNAME_LENGTH, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(UserErrorMessage.INCORRECT_USERNAME_LENGTH, HttpStatus.BAD_REQUEST);
         }
         User user = authenticationService.getAuthenticatedUser();
         user.setUsername(username);
@@ -56,7 +55,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
             AuthUserProjection user = userRepository.getUserById(authUserId, AuthUserProjection.class).get();
             return Map.of("user", user, "token", token);
         }
-        throw new ApiRequestException(EMAIL_HAS_ALREADY_BEEN_TAKEN, HttpStatus.FORBIDDEN);
+        throw new ApiRequestException(UserErrorMessage.EMAIL_HAS_ALREADY_BEEN_TAKEN, HttpStatus.FORBIDDEN);
     }
 
     @Override
@@ -65,10 +64,10 @@ public class UserSettingsServiceImpl implements UserSettingsService {
         int phoneLength = String.valueOf(phoneNumber).length();
 
         if (phoneLength < 6 || phoneLength > 10) {
-            throw new ApiRequestException(INVALID_PHONE_NUMBER, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(UserErrorMessage.INVALID_PHONE_NUMBER, HttpStatus.BAD_REQUEST);
         }
         if (!countryCodeRepository.isPhoneCodeExists(phoneCode)) {
-            throw new ApiRequestException(PHONE_CODE_NOT_FOUND, HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(UserErrorMessage.PHONE_CODE_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         Long authUserId = authenticationService.getAuthenticatedUserId();
         userSettingsRepository.updatePhoneNumber(phoneCode, phoneNumber, authUserId);
@@ -95,7 +94,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     @Transactional
     public String updateGender(String gender) {
         if (gender.length() == 0 || gender.length() > 30) {
-            throw new ApiRequestException(INVALID_GENDER_LENGTH, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(UserErrorMessage.INVALID_GENDER_LENGTH, HttpStatus.BAD_REQUEST);
         }
         Long authUserId = authenticationService.getAuthenticatedUserId();
         userSettingsRepository.updateGender(gender, authUserId);

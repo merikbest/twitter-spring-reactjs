@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -18,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.broker.producer.SendEmailProducer.toSendPasswordResetEmailEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,7 +46,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> authenticationService.getAuthenticatedUser());
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -72,7 +72,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> authenticationService.login(request, bindingResult));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -93,7 +93,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> authenticationService.getUserByToken());
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -112,7 +112,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> authenticationService.getExistingEmail(TestConstants.USER_EMAIL, bindingResult));
-        assertEquals(EMAIL_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.EMAIL_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -138,7 +138,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> authenticationService.sendPasswordResetCode(TestConstants.USER_EMAIL, bindingResult));
-        assertEquals(EMAIL_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.EMAIL_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -156,7 +156,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> authenticationService.getUserByPasswordResetCode(TestConstants.PASSWORD_RESET_CODE));
-        assertEquals(INVALID_PASSWORD_RESET_CODE, exception.getMessage());
+        assertEquals(UserErrorMessage.INVALID_PASSWORD_RESET_CODE, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -176,7 +176,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
     public void passwordReset_ShouldThrowInputFieldException() {
         InputFieldException exception = assertThrows(InputFieldException.class,
                 () -> authenticationService.passwordReset(TestConstants.USER_EMAIL, null, "test", bindingResult));
-        assertEquals(Map.of("password", PASSWORDS_NOT_MATCH), exception.getErrorsMap());
+        assertEquals(Map.of("password", UserErrorMessage.PASSWORDS_NOT_MATCH), exception.getErrorsMap());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -186,7 +186,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         InputFieldException exception = assertThrows(InputFieldException.class,
                 () -> authenticationService.passwordReset(TestConstants.USER_EMAIL, TestConstants.PASSWORD, TestConstants.PASSWORD, bindingResult));
-        assertEquals(Map.of("email", EMAIL_NOT_FOUND), exception.getErrorsMap());
+        assertEquals(Map.of("email", UserErrorMessage.EMAIL_NOT_FOUND), exception.getErrorsMap());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -209,7 +209,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
         when(passwordEncoder.matches(TestConstants.PASSWORD, "test")).thenReturn(false);
         InputFieldException exception = assertThrows(InputFieldException.class,
                 () -> authenticationService.currentPasswordReset(TestConstants.PASSWORD, TestConstants.PASSWORD, "test", bindingResult));
-        assertEquals(Map.of("currentPassword", INCORRECT_PASSWORD), exception.getErrorsMap());
+        assertEquals(Map.of("currentPassword", UserErrorMessage.INCORRECT_PASSWORD), exception.getErrorsMap());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -219,7 +219,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
         when(passwordEncoder.matches(TestConstants.PASSWORD, TestConstants.PASSWORD)).thenReturn(true);
         InputFieldException exception = assertThrows(InputFieldException.class,
                 () -> authenticationService.currentPasswordReset(TestConstants.PASSWORD, "", "test", bindingResult));
-        assertEquals(Map.of("password", PASSWORDS_NOT_MATCH), exception.getErrorsMap());
+        assertEquals(Map.of("password", UserErrorMessage.PASSWORDS_NOT_MATCH), exception.getErrorsMap());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 }

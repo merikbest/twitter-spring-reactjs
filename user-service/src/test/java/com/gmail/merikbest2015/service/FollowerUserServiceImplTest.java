@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.BaseUserProjection;
 import com.gmail.merikbest2015.repository.projection.FollowerUserProjection;
@@ -19,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -145,7 +145,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> followerUserService.processFollow(1L));
-        assertEquals(String.format(USER_ID_NOT_FOUND, 1L), exception.getMessage());
+        assertEquals(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 1L), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         verify(userRepository, times(1)).findById(1L);
     }
@@ -157,7 +157,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> followerUserService.processFollow(1L));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -219,7 +219,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> followerUserService.processFollowRequestToPrivateProfile(1L));
-        assertEquals(String.format(USER_ID_NOT_FOUND, 1L), exception.getMessage());
+        assertEquals(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 1L), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         verify(userRepository, times(1)).findById(1L);
     }
@@ -230,7 +230,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> followerUserService.processFollowRequestToPrivateProfile(1L));
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -270,7 +270,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
     private void testThrowUserNotFound(Executable executable) {
         when(userRepository.isUserExist(1L)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class, executable);
-        assertEquals(String.format(USER_ID_NOT_FOUND, 1L), exception.getMessage());
+        assertEquals(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 1L), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         verify(userRepository, times(1)).isUserExist(1L);
     }
@@ -279,7 +279,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserExist(1L)).thenReturn(true);
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class, executable);
-        assertEquals(USER_PROFILE_BLOCKED, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_PROFILE_BLOCKED, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -288,7 +288,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         when(blockUserRepository.isUserBlocked(1L, TestConstants.USER_ID)).thenReturn(false);
         when(userRepository.isUserHavePrivateProfile(1L, TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class, executable);
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }

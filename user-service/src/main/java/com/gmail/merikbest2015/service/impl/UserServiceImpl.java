@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.client.TagClient;
@@ -20,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor
@@ -80,7 +79,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public AuthUserProjection updateUserProfile(User userInfo) {
         if (userInfo.getFullName().length() == 0 || userInfo.getFullName().length() > 50) {
-            throw new ApiRequestException(INCORRECT_USERNAME_LENGTH, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(UserErrorMessage.INCORRECT_USERNAME_LENGTH, HttpStatus.BAD_REQUEST);
         }
         User user = authenticationService.getAuthenticatedUser();
 
@@ -118,7 +117,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Long processPinTweet(Long tweetId) {
         if (!tweetClient.isTweetExists(tweetId)) {
-            throw new ApiRequestException(TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(UserErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         Long authUserId = authenticationService.getAuthenticatedUserId();
         Long pinnedTweetId = userRepository.getPinnedTweetId(authUserId);
@@ -140,6 +139,6 @@ public class UserServiceImpl implements UserService {
 
     private <T> T getUserById(Long userId, Class<T> type) {
         return userRepository.getUserById(userId, type)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(UserErrorMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
     }
 }

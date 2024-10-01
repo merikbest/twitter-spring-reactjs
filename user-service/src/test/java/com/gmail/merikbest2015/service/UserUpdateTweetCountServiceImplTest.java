@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.commons.event.UpdateTweetCountEvent;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.Before;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -49,7 +49,7 @@ public class UserUpdateTweetCountServiceImplTest extends AbstractServiceTest {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userUpdateTweetCountService.handleUpdateTweetCount(new UpdateTweetCountEvent(false), "2"));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -72,7 +72,7 @@ public class UserUpdateTweetCountServiceImplTest extends AbstractServiceTest {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userUpdateTweetCountService.handleUpdateLikeTweetCount(new UpdateTweetCountEvent(false), "2"));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -96,7 +96,7 @@ public class UserUpdateTweetCountServiceImplTest extends AbstractServiceTest {
         when(userRepository.getUserById(TestConstants.USER_ID, User.class)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userUpdateTweetCountService.handleUpdateMediaTweetCount(new UpdateTweetCountEvent(false), "2"));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.dto.request.UserRequest;
 import com.gmail.merikbest2015.commons.util.TestConstants;
@@ -16,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -100,7 +100,7 @@ public class UserControllerTest {
         mockMvc.perform(get(UI_V1_USER + USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -264,7 +264,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_USERNAME_LENGTH)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INCORRECT_USERNAME_LENGTH)));
     }
 
     @Test
@@ -277,7 +277,7 @@ public class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_USERNAME_LENGTH)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INCORRECT_USERNAME_LENGTH)));
     }
 
     @Test
@@ -304,7 +304,7 @@ public class UserControllerTest {
         mockMvc.perform(get(UI_V1_USER + SUBSCRIBE_USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -313,7 +313,7 @@ public class UserControllerTest {
         mockMvc.perform(get(UI_V1_USER + SUBSCRIBE_USER_ID, 5)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
 
     @Test
@@ -340,7 +340,7 @@ public class UserControllerTest {
         mockMvc.perform(get(UI_V1_USER + PIN_TWEET_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(TWEET_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.TWEET_NOT_FOUND)));
     }
 
     @Test
@@ -370,7 +370,7 @@ public class UserControllerTest {
         mockMvc.perform(get(UI_V1_USER + DETAILS_USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -379,6 +379,6 @@ public class UserControllerTest {
         mockMvc.perform(get(UI_V1_USER + DETAILS_USER_ID, 5)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
 }

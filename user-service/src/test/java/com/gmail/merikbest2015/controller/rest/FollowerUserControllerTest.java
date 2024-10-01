@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.commons.util.TestConstants;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -55,7 +55,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOWERS_USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOWERS_USER_ID, 3)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOWERS_USER_ID, 5)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
 
     @Test
@@ -101,7 +101,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOWING_USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOWING_USER_ID, 3)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOWING_USER_ID, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
 
     @Test
@@ -169,7 +169,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_USER_ID, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -178,7 +178,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_USER_ID, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
 
     @Test
@@ -215,7 +215,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_OVERALL, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -224,7 +224,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_OVERALL, 3)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -233,7 +233,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_OVERALL, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
 
     @Test
@@ -310,7 +310,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_PRIVATE, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -319,7 +319,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_PRIVATE, 6)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(USER_PROFILE_BLOCKED)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
 
     @Test
@@ -337,7 +337,7 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_ACCEPT, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 
     @Test
@@ -355,6 +355,6 @@ public class FollowerUserControllerTest {
         mockMvc.perform(get(UI_V1_USER + FOLLOW_DECLINE, 99)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(String.format(USER_ID_NOT_FOUND, 99))));
+                .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
 }

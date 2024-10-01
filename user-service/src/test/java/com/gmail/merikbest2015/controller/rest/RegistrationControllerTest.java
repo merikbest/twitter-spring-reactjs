@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.dto.request.ProcessEmailRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
@@ -16,8 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_NOT_FOUND;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static com.gmail.merikbest2015.commons.util.TestConstants.REGISTRATION_DATE;
 import static org.hamcrest.Matchers.is;
@@ -73,7 +72,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(registrationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$", is(EMAIL_HAS_ALREADY_BEEN_TAKEN)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.EMAIL_HAS_ALREADY_BEEN_TAKEN)));
     }
 
     @Test
@@ -84,7 +83,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(registrationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.email", is(EMAIL_NOT_VALID)));
+                .andExpect(jsonPath("$.email", is(UserErrorMessage.EMAIL_NOT_VALID)));
     }
 
     @Test
@@ -95,7 +94,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(registrationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.username", is(BLANK_NAME)));
+                .andExpect(jsonPath("$.username", is(UserErrorMessage.BLANK_NAME)));
     }
 
     @Test
@@ -106,7 +105,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(registrationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.username", is(NAME_NOT_VALID)));
+                .andExpect(jsonPath("$.username", is(UserErrorMessage.NAME_NOT_VALID)));
     }
 
     @Test
@@ -130,7 +129,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.email", is(EMAIL_NOT_VALID)));
+                .andExpect(jsonPath("$.email", is(UserErrorMessage.EMAIL_NOT_VALID)));
     }
 
     @Test
@@ -142,7 +141,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
 
     @Test
@@ -158,7 +157,7 @@ public class RegistrationControllerTest {
     public void checkRegistrationCode_NotFound() throws Exception {
         mockMvc.perform(get(UI_V1_AUTH + REGISTRATION_ACTIVATE_CODE, "test"))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(ACTIVATION_CODE_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.ACTIVATION_CODE_NOT_FOUND)));
     }
 
     @Test
@@ -193,7 +192,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.email", is(EMAIL_NOT_VALID)));
+                .andExpect(jsonPath("$.email", is(UserErrorMessage.EMAIL_NOT_VALID)));
     }
 
     @Test
@@ -204,7 +203,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(SHORT_PASSWORD)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.SHORT_PASSWORD)));
     }
 
     @Test
@@ -216,6 +215,6 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(USER_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
 }

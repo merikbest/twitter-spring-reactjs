@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
 import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
@@ -15,7 +16,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
@@ -61,7 +61,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_USERNAME_LENGTH)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INCORRECT_USERNAME_LENGTH)));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INCORRECT_USERNAME_LENGTH)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INCORRECT_USERNAME_LENGTH)));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$", is(EMAIL_HAS_ALREADY_BEEN_TAKEN)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.EMAIL_HAS_ALREADY_BEEN_TAKEN)));
     }
 
     @Test
@@ -160,7 +160,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INVALID_PHONE_NUMBER)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INVALID_PHONE_NUMBER)));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INVALID_PHONE_NUMBER)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INVALID_PHONE_NUMBER)));
     }
 
     @Test
@@ -188,7 +188,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(PHONE_CODE_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.PHONE_CODE_NOT_FOUND)));
     }
 
     @Test
@@ -237,7 +237,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INVALID_GENDER_LENGTH)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INVALID_GENDER_LENGTH)));
     }
 
     @Test
@@ -250,7 +250,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INVALID_GENDER_LENGTH)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INVALID_GENDER_LENGTH)));
     }
 
     @Test

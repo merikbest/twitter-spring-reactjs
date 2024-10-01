@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.broker.producer.SendEmailProducer.toSendRegistrationEmailEvent;
 
 @Service
@@ -62,7 +62,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             updateUserProducer.sendUpdateUserEvent(existingUser.get());
             return "User data checked.";
         }
-        throw new ApiRequestException(EMAIL_HAS_ALREADY_BEEN_TAKEN, HttpStatus.FORBIDDEN);
+        throw new ApiRequestException(UserErrorMessage.EMAIL_HAS_ALREADY_BEEN_TAKEN, HttpStatus.FORBIDDEN);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     public String sendRegistrationCode(String email, BindingResult bindingResult) {
         userServiceHelper.processInputErrors(bindingResult);
         UserCommonProjection user = userRepository.getUserByEmail(email, UserCommonProjection.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(UserErrorMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updateActivationCode(UUID.randomUUID().toString().substring(0, 7), user.getId());
         String activationCode = userRepository.getActivationCode(user.getId());
         SendEmailEvent sendEmailEvent = toSendRegistrationEmailEvent(user.getEmail(), user.getFullName(), activationCode);
@@ -82,7 +82,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Transactional
     public String checkRegistrationCode(String code) {
         UserCommonProjection user = userRepository.getCommonUserByActivationCode(code)
-                .orElseThrow(() -> new ApiRequestException(ACTIVATION_CODE_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(UserErrorMessage.ACTIVATION_CODE_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updateActivationCode(null, user.getId());
         return "User successfully activated.";
     }
@@ -92,10 +92,10 @@ public class RegistrationServiceImpl implements RegistrationService {
     public Map<String, Object> endRegistration(String email, String password, BindingResult bindingResult) {
         userServiceHelper.processInputErrors(bindingResult);
         if (password.length() < 8) {
-            throw new ApiRequestException(PASSWORD_LENGTH_ERROR, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(UserErrorMessage.PASSWORD_LENGTH_ERROR, HttpStatus.BAD_REQUEST);
         }
         User user = userRepository.getUserByEmail(email, User.class)
-                .orElseThrow(() -> new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(UserErrorMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
         userRepository.updateActiveUserProfile(user.getId());
         updateUserProducer.sendUpdateUserEvent(user);

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -16,7 +17,6 @@ import org.springframework.validation.BindingResult;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -78,7 +78,7 @@ public class RegistrationServiceImplTest extends AbstractServiceTest {
         when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, User.class)).thenReturn(Optional.of(user));
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> registrationService.registration(request, bindingResult));
-        assertEquals(EMAIL_HAS_ALREADY_BEEN_TAKEN, exception.getMessage());
+        assertEquals(UserErrorMessage.EMAIL_HAS_ALREADY_BEEN_TAKEN, exception.getMessage());
         assertEquals(HttpStatus.FORBIDDEN, exception.getStatus());
     }
 
@@ -110,7 +110,7 @@ public class RegistrationServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> registrationService.sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -129,7 +129,7 @@ public class RegistrationServiceImplTest extends AbstractServiceTest {
     public void checkRegistrationCode_ShouldThrowActivationCodeNotFound() {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> registrationService.checkRegistrationCode(TestConstants.ACTIVATION_CODE));
-        assertEquals(ACTIVATION_CODE_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.ACTIVATION_CODE_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -154,7 +154,7 @@ public class RegistrationServiceImplTest extends AbstractServiceTest {
     public void endRegistration_ShouldThrowPasswordLengthException() {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> registrationService.endRegistration(TestConstants.USER_EMAIL, "", bindingResult));
-        assertEquals(PASSWORD_LENGTH_ERROR, exception.getMessage());
+        assertEquals(UserErrorMessage.PASSWORD_LENGTH_ERROR, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 }

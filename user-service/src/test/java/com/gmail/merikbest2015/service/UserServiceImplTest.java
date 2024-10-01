@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.model.User;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -37,7 +37,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
     public void getUserById_ShouldThrowUserNotFoundException() {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.getUserById(TestConstants.USER_ID));
-        assertEquals(USER_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.USER_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -121,7 +121,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         userInfo.setFullName("");
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.updateUserProfile(userInfo));
-        assertEquals(INCORRECT_USERNAME_LENGTH, exception.getMessage());
+        assertEquals(UserErrorMessage.INCORRECT_USERNAME_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -168,7 +168,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.processPinTweet(TestConstants.TWEET_ID));
-        assertEquals(TWEET_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.TWEET_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -187,7 +187,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
         when(userRepository.isUserExist(TestConstants.USER_ID)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userService.getUserDetails(TestConstants.USER_ID));
-        assertEquals(String.format(USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
+        assertEquals(String.format(UserErrorMessage.USER_ID_NOT_FOUND, TestConstants.USER_ID), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }

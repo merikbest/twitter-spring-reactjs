@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.*;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static com.gmail.merikbest2015.commons.util.TestConstants.*;
 import static org.hamcrest.Matchers.is;
@@ -65,7 +65,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.email", is(EMAIL_NOT_VALID)));
+                .andExpect(jsonPath("$.email", is(UserErrorMessage.EMAIL_NOT_VALID)));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(EMPTY_PASSWORD)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.EMPTY_PASSWORD)));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(SHORT_PASSWORD)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.SHORT_PASSWORD)));
     }
 
     @Test
@@ -111,7 +111,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.email", is(EMAIL_NOT_VALID)));
+                .andExpect(jsonPath("$.email", is(UserErrorMessage.EMAIL_NOT_VALID)));
     }
 
     @Test
@@ -123,7 +123,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(EMAIL_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.EMAIL_NOT_FOUND)));
     }
 
     @Test
@@ -147,7 +147,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.email", is(EMAIL_NOT_VALID)));
+                .andExpect(jsonPath("$.email", is(UserErrorMessage.EMAIL_NOT_VALID)));
     }
 
     @Test
@@ -159,7 +159,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$", is(EMAIL_NOT_FOUND)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.EMAIL_NOT_FOUND)));
     }
 
     @Test
@@ -188,7 +188,7 @@ public class AuthenticationControllerTest {
     public void getUserByPasswordResetCode_BadRequest() throws Exception {
         mockMvc.perform(get(UI_V1_AUTH + RESET_CODE, "test123"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", is(INVALID_PASSWORD_RESET_CODE)));
+                .andExpect(jsonPath("$", is(UserErrorMessage.INVALID_PASSWORD_RESET_CODE)));
     }
 
     @Test
@@ -216,7 +216,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.email", is(EMAIL_NOT_FOUND)));
+                .andExpect(jsonPath("$.email", is(UserErrorMessage.EMAIL_NOT_FOUND)));
     }
 
     @Test
@@ -230,7 +230,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.email", is(EMAIL_NOT_VALID)));
+                .andExpect(jsonPath("$.email", is(UserErrorMessage.EMAIL_NOT_VALID)));
     }
 
     @Test
@@ -243,7 +243,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(EMPTY_PASSWORD)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.EMPTY_PASSWORD)));
     }
 
     @Test
@@ -256,7 +256,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password2", is(EMPTY_PASSWORD)));
+                .andExpect(jsonPath("$.password2", is(UserErrorMessage.EMPTY_PASSWORD)));
     }
 
     @Test
@@ -270,7 +270,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(SHORT_PASSWORD)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.SHORT_PASSWORD)));
     }
 
     @Test
@@ -284,7 +284,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password2", is(SHORT_PASSWORD)));
+                .andExpect(jsonPath("$.password2", is(UserErrorMessage.SHORT_PASSWORD)));
     }
 
     @Test
@@ -298,7 +298,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(PASSWORDS_NOT_MATCH)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.PASSWORDS_NOT_MATCH)));
     }
 
     @Test
@@ -329,7 +329,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.currentPassword", is(EMPTY_CURRENT_PASSWORD)));
+                .andExpect(jsonPath("$.currentPassword", is(UserErrorMessage.EMPTY_CURRENT_PASSWORD)));
     }
 
     @Test
@@ -344,7 +344,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(EMPTY_PASSWORD)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.EMPTY_PASSWORD)));
     }
 
     @Test
@@ -359,7 +359,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password2", is(EMPTY_PASSWORD_CONFIRMATION)));
+                .andExpect(jsonPath("$.password2", is(UserErrorMessage.EMPTY_PASSWORD_CONFIRMATION)));
     }
 
     @Test
@@ -374,7 +374,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(SHORT_PASSWORD)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.SHORT_PASSWORD)));
     }
 
     @Test
@@ -389,7 +389,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password2", is(SHORT_PASSWORD)));
+                .andExpect(jsonPath("$.password2", is(UserErrorMessage.SHORT_PASSWORD)));
     }
 
     @Test
@@ -404,7 +404,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.currentPassword", is(INCORRECT_PASSWORD)));
+                .andExpect(jsonPath("$.currentPassword", is(UserErrorMessage.INCORRECT_PASSWORD)));
     }
 
     @Test
@@ -419,6 +419,6 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.password", is(PASSWORDS_NOT_MATCH)));
+                .andExpect(jsonPath("$.password", is(UserErrorMessage.PASSWORDS_NOT_MATCH)));
     }
 }

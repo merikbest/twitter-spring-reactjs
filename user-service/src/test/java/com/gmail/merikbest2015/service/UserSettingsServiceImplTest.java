@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
 import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -16,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -47,7 +47,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
     public void updateUsername_ShouldThrowUsernameLengthException() {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userSettingsService.updateUsername(""));
-        assertEquals(INCORRECT_USERNAME_LENGTH, exception.getMessage());
+        assertEquals(UserErrorMessage.INCORRECT_USERNAME_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -70,7 +70,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
         when(userSettingsRepository.isEmailExist(TestConstants.USER_ID, TestConstants.USER_EMAIL)).thenReturn(true);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userSettingsService.updateEmail(TestConstants.USER_EMAIL));
-        assertEquals(EMAIL_HAS_ALREADY_BEEN_TAKEN, exception.getMessage());
+        assertEquals(UserErrorMessage.EMAIL_HAS_ALREADY_BEEN_TAKEN, exception.getMessage());
         assertEquals(HttpStatus.FORBIDDEN, exception.getStatus());
     }
 
@@ -88,7 +88,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
         when(countryCodeRepository.isPhoneCodeExists(TestConstants.PHONE_CODE)).thenReturn(false);
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userSettingsService.updatePhoneNumber(TestConstants.COUNTRY_CODE, TestConstants.PHONE_NUMBER));
-        assertEquals(PHONE_CODE_NOT_FOUND, exception.getMessage());
+        assertEquals(UserErrorMessage.PHONE_CODE_NOT_FOUND, exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
@@ -96,7 +96,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
     public void updatePhoneNumber_ShouldThrowInvalidPhoneNumberException() {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userSettingsService.updatePhoneNumber(TestConstants.COUNTRY_CODE, 1L));
-        assertEquals(INVALID_PHONE_NUMBER, exception.getMessage());
+        assertEquals(UserErrorMessage.INVALID_PHONE_NUMBER, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 
@@ -122,7 +122,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
     public void updateGender_ShouldThrowInvalidGenderLengthException() {
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> userSettingsService.updateGender(""));
-        assertEquals(INVALID_GENDER_LENGTH, exception.getMessage());
+        assertEquals(UserErrorMessage.INVALID_GENDER_LENGTH, exception.getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
 

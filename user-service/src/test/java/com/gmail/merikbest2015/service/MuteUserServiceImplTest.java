@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.MutedUserProjection;
 import com.gmail.merikbest2015.commons.util.TestConstants;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.USER_ID_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -66,7 +66,7 @@ public class MuteUserServiceImplTest extends AbstractServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
         ApiRequestException exception = assertThrows(ApiRequestException.class,
                 () -> muteUserService.processMutedList(1L));
-        assertEquals(String.format(USER_ID_NOT_FOUND, 1L), exception.getMessage());
+        assertEquals(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 1L), exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         verify(userRepository, times(1)).findById(1L);
     }

@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.util;
 
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
+import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.exception.InputFieldException;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.BlockUserRepository;
@@ -16,8 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
-
-import static com.gmail.merikbest2015.commons.constants.ErrorMessage.*;
 
 @Component
 @RequiredArgsConstructor
@@ -53,18 +52,18 @@ public class UserServiceHelper {
 
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(String.format(UserErrorMessage.USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND));
     }
 
     public void checkIsUserExist(Long userId) {
         if (!userRepository.isUserExist(userId)) {
-            throw new ApiRequestException(String.format(USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(String.format(UserErrorMessage.USER_ID_NOT_FOUND, userId), HttpStatus.NOT_FOUND);
         }
     }
 
     public void checkIsUserBlocked(Long userId, Long authUserId) {
         if (blockUserRepository.isUserBlocked(userId, authUserId)) {
-            throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(UserErrorMessage.USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -72,7 +71,7 @@ public class UserServiceHelper {
         Long authUserId = authenticationService.getAuthenticatedUserId();
 
         if (blockUserRepository.isUserBlocked(userId, authUserId)) {
-            throw new ApiRequestException(USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
+            throw new ApiRequestException(UserErrorMessage.USER_PROFILE_BLOCKED, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -80,7 +79,7 @@ public class UserServiceHelper {
         Long authUserId = authenticationService.getAuthenticatedUserId();
 
         if (!userRepository.isUserHavePrivateProfile(userId, authUserId)) {
-            throw new ApiRequestException(USER_NOT_FOUND, HttpStatus.NOT_FOUND);
+            throw new ApiRequestException(UserErrorMessage.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
     }
 
