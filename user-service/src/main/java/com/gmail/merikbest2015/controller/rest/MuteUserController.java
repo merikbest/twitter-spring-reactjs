@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.dto.response.MutedUserResponse;
 import com.gmail.merikbest2015.mapper.MuteUserMapper;
@@ -14,22 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(UI_V1_USER)
+@RequestMapping(PathConstants.UI_V1_USER)
 public class MuteUserController {
 
     private final MuteUserMapper muteUserMapper;
 
-    @GetMapping(MUTED)
+    @GetMapping(PathConstants.MUTED)
     public ResponseEntity<List<MutedUserResponse>> getMutedList(@PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<MutedUserResponse> response = muteUserMapper.getMutedList(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(MUTED_USER_ID)
+    @GetMapping(PathConstants.MUTED_USER_ID)
     public ResponseEntity<Boolean> processMutedList(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(muteUserMapper.processMutedList(userId));
     }

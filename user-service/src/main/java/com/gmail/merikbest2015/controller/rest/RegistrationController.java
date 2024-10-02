@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.dto.request.EndRegistrationRequest;
 import com.gmail.merikbest2015.dto.request.ProcessEmailRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
@@ -12,31 +13,29 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(UI_V1_AUTH)
+@RequestMapping(PathConstants.UI_V1_AUTH)
 public class RegistrationController {
 
     private final RegistrationMapper registrationMapper;
 
-    @PostMapping(REGISTRATION_CHECK)
+    @PostMapping(PathConstants.REGISTRATION_CHECK)
     public ResponseEntity<String> registration(@Valid @RequestBody RegistrationRequest request, BindingResult bindingResult) {
         return ResponseEntity.ok(registrationMapper.registration(request, bindingResult));
     }
 
-    @PostMapping(REGISTRATION_CODE)
+    @PostMapping(PathConstants.REGISTRATION_CODE)
     public ResponseEntity<String> sendRegistrationCode(@Valid @RequestBody ProcessEmailRequest request, BindingResult bindingResult) {
         return ResponseEntity.ok(registrationMapper.sendRegistrationCode(request.getEmail(), bindingResult));
     }
 
-    @GetMapping(REGISTRATION_ACTIVATE_CODE)
+    @GetMapping(PathConstants.REGISTRATION_ACTIVATE_CODE)
     public ResponseEntity<String> checkRegistrationCode(@PathVariable("code") String code) {
         return ResponseEntity.ok(registrationMapper.checkRegistrationCode(code));
     }
 
-    @PostMapping(REGISTRATION_CONFIRM)
+    @PostMapping(PathConstants.REGISTRATION_CONFIRM)
     public ResponseEntity<AuthenticationResponse> endRegistration(@Valid @RequestBody EndRegistrationRequest request, BindingResult bindingResult) {
         return ResponseEntity.ok(registrationMapper.endRegistration(request, bindingResult));
     }

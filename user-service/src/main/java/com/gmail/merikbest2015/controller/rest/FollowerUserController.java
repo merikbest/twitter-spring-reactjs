@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.dto.response.FollowerUserResponse;
@@ -16,56 +17,54 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(UI_V1_USER)
+@RequestMapping(PathConstants.UI_V1_USER)
 public class FollowerUserController {
 
     private final FollowerUserMapper followerUserMapper;
 
-    @GetMapping(FOLLOWERS_USER_ID)
+    @GetMapping(PathConstants.FOLLOWERS_USER_ID)
     public ResponseEntity<List<UserResponse>> getFollowers(@PathVariable("userId") Long userId,
                                                            @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = followerUserMapper.getFollowers(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(FOLLOWING_USER_ID)
+    @GetMapping(PathConstants.FOLLOWING_USER_ID)
     public ResponseEntity<List<UserResponse>> getFollowing(@PathVariable("userId") Long userId,
                                                            @PageableDefault(size = 15) Pageable pageable) {
         HeaderResponse<UserResponse> response = followerUserMapper.getFollowing(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(FOLLOWER_REQUESTS)
+    @GetMapping(PathConstants.FOLLOWER_REQUESTS)
     public ResponseEntity<List<FollowerUserResponse>> getFollowerRequests(@PageableDefault(size = 10) Pageable pageable) {
         HeaderResponse<FollowerUserResponse> response = followerUserMapper.getFollowerRequests(pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 
-    @GetMapping(FOLLOW_USER_ID)
+    @GetMapping(PathConstants.FOLLOW_USER_ID)
     public ResponseEntity<Boolean> processFollow(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.processFollow(userId));
     }
 
-    @GetMapping(FOLLOW_OVERALL) // TODO add pagination
+    @GetMapping(PathConstants.FOLLOW_OVERALL) // TODO add pagination
     public ResponseEntity<List<UserResponse>> overallFollowers(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.overallFollowers(userId));
     }
 
-    @GetMapping(FOLLOW_PRIVATE)
+    @GetMapping(PathConstants.FOLLOW_PRIVATE)
     public ResponseEntity<UserProfileResponse> processFollowRequestToPrivateProfile(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.processFollowRequestToPrivateProfile(userId));
     }
 
-    @GetMapping(FOLLOW_ACCEPT)
+    @GetMapping(PathConstants.FOLLOW_ACCEPT)
     public ResponseEntity<String> acceptFollowRequest(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.acceptFollowRequest(userId));
     }
 
-    @GetMapping(FOLLOW_DECLINE)
+    @GetMapping(PathConstants.FOLLOW_DECLINE)
     public ResponseEntity<String> declineFollowRequest(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(followerUserMapper.declineFollowRequest(userId));
     }

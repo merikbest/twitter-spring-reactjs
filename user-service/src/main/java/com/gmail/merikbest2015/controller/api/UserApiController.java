@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.api;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationUserResponse;
 import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.commons.event.UpdateUserEvent;
@@ -9,31 +10,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(API_V1_USER)
+@RequestMapping(PathConstants.API_V1_USER)
 public class UserApiController {
 
     private final UserClientService userService;
 
-    @GetMapping(USER_ID)
+    @GetMapping(PathConstants.USER_ID)
     public UserResponse getUserById(@PathVariable("userId") Long userId) {
         return userService.getUserResponseById(userId);
     }
 
-    @GetMapping(SUBSCRIBERS)
+    @GetMapping(PathConstants.SUBSCRIBERS)
     public List<NotificationUserResponse> getUsersWhichUserSubscribed() {
         return userService.getUsersWhichUserSubscribed();
     }
 
-    @GetMapping(SUBSCRIBERS_IDS)
+    @GetMapping(PathConstants.SUBSCRIBERS_IDS)
     public List<Long> getUserIdsWhichUserSubscribed() {
         return userService.getUserIdsWhichUserSubscribed();
     }
 
-    @GetMapping(BATCH_USERS)
+    @GetMapping(PathConstants.BATCH_USERS)
     public List<UpdateUserEvent> getBatchUsers(@RequestParam("period") Integer period,
                                                @RequestParam("page") Integer page,
                                                @RequestParam("limit") Integer limit) {

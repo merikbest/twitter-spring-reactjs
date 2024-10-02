@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.broker.producer;
 
+import com.gmail.merikbest2015.commons.constants.KafkaTopicConstants;
 import com.gmail.merikbest2015.commons.event.TweetSubscriberNotificationEvent;
 import com.gmail.merikbest2015.mapper.ProducerMapper;
 import com.gmail.merikbest2015.model.User;
@@ -8,8 +9,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static com.gmail.merikbest2015.commons.constants.KafkaTopicConstants.SEND_TWEET_SUBSCRIBER_NOTIFICATION_TOPIC;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +19,6 @@ public class TweetSubscriberNotificationProducer {
 
     public void sendTweetSubscriberNotificationEvent(TweetSubscriberNotificationEvent notificationEvent, List<User> subscribers) {
         TweetSubscriberNotificationEvent event = producerMapper.toTweetSubscriberNotificationEvent(notificationEvent, subscribers);
-        kafkaTemplate.send(SEND_TWEET_SUBSCRIBER_NOTIFICATION_TOPIC, event);
+        kafkaTemplate.send(KafkaTopicConstants.SEND_TWEET_SUBSCRIBER_NOTIFICATION_TOPIC, event);
     }
 }
