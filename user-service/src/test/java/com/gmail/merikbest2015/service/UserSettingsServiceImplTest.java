@@ -5,6 +5,7 @@ import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
 import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.model.UserRole;
 import com.gmail.merikbest2015.repository.projection.AuthUserProjection;
@@ -102,7 +103,7 @@ public class UserSettingsServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void deletePhoneNumber_ShouldDeletePhoneNumber() {
-        assertEquals("Phone number deleted", userSettingsService.deletePhoneNumber());
+        assertEquals(UserSuccessMessage.PHONE_NUMBER_DELETED, userSettingsService.deletePhoneNumber());
         verify(userSettingsRepository, times(1)).updatePhoneNumber(null, null, TestConstants.USER_ID);
     }
 

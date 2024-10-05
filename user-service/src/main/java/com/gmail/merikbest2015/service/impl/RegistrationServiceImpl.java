@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -52,7 +53,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             user.setRole(UserRole.USER);
             userRepository.save(user);
             updateUserProducer.sendUpdateUserEvent(user);
-            return "User data checked.";
+            return UserSuccessMessage.USER_DATA_CHECKED;
         }
         if (!existingUser.get().isActive()) {
             existingUser.get().setUsername(request.getUsername());
@@ -60,7 +61,7 @@ public class RegistrationServiceImpl implements RegistrationService {
             existingUser.get().setBirthday(request.getBirthday());
             userRepository.save(existingUser.get());
             updateUserProducer.sendUpdateUserEvent(existingUser.get());
-            return "User data checked.";
+            return UserSuccessMessage.USER_DATA_CHECKED;
         }
         throw new ApiRequestException(UserErrorMessage.EMAIL_HAS_ALREADY_BEEN_TAKEN, HttpStatus.FORBIDDEN);
     }
@@ -75,7 +76,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         String activationCode = userRepository.getActivationCode(user.getId());
         SendEmailEvent sendEmailEvent = toSendRegistrationEmailEvent(user.getEmail(), user.getFullName(), activationCode);
         sendEmailProducer.sendEmail(sendEmailEvent);
-        return "Registration code sent successfully";
+        return UserSuccessMessage.REGISTRATION_CODE_SENT;
     }
 
     @Override
@@ -84,7 +85,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         UserCommonProjection user = userRepository.getCommonUserByActivationCode(code)
                 .orElseThrow(() -> new ApiRequestException(UserErrorMessage.ACTIVATION_CODE_NOT_FOUND, HttpStatus.NOT_FOUND));
         userRepository.updateActivationCode(null, user.getId());
-        return "User successfully activated.";
+        return UserSuccessMessage.USER_SUCCESSFULLY_ACTIVATED;
     }
 
     @Override

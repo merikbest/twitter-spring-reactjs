@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -81,7 +82,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userServiceHelper.processInputErrors(bindingResult);
         userRepository.getUserByEmail(email, UserCommonProjection.class)
                 .orElseThrow(() -> new ApiRequestException(UserErrorMessage.EMAIL_NOT_FOUND, HttpStatus.NOT_FOUND));
-        return "Reset password code is send to your E-mail";
+        return UserSuccessMessage.RESET_PASSWORD_CODE_IS_SEND;
     }
 
     @Override
@@ -94,7 +95,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String passwordResetCode = userRepository.getPasswordResetCode(user.getId());
         SendEmailEvent sendEmailEvent = toSendPasswordResetEmailEvent(user.getEmail(), user.getFullName(), passwordResetCode);
         sendEmailProducer.sendEmail(sendEmailEvent);
-        return "Reset password code is send to your E-mail";
+        return UserSuccessMessage.RESET_PASSWORD_CODE_IS_SEND;
     }
 
     @Override
@@ -112,7 +113,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(() -> new InputFieldException(HttpStatus.NOT_FOUND, Map.of("email", UserErrorMessage.EMAIL_NOT_FOUND)));
         userRepository.updatePassword(passwordEncoder.encode(password), user.getId());
         userRepository.updatePasswordResetCode(null, user.getId());
-        return "Password successfully changed!";
+        return UserSuccessMessage.PASSWORD_SUCCESSFULLY_CHANGED;
     }
 
     @Override
@@ -127,7 +128,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         checkMatchPasswords(password, password2);
         userRepository.updatePassword(passwordEncoder.encode(password), authUserId);
-        return "Your password has been successfully updated.";
+        return UserSuccessMessage.PASSWORD_SUCCESSFULLY_UPDATED;
     }
 
     private Long getUserId() {

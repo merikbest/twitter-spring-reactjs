@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.dto.request.ProcessEmailRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
@@ -61,7 +62,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(registrationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("User data checked.")));
+                .andExpect(jsonPath("$", is(UserSuccessMessage.USER_DATA_CHECKED)));
     }
 
     @Test
@@ -117,7 +118,7 @@ public class RegistrationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Registration code sent successfully")));
+                .andExpect(jsonPath("$", is(UserSuccessMessage.REGISTRATION_CODE_SENT)));
     }
 
     @Test
@@ -149,7 +150,7 @@ public class RegistrationControllerTest {
     public void checkRegistrationCode() throws Exception {
         mockMvc.perform(get(UI_V1_AUTH + REGISTRATION_ACTIVATE_CODE, 1234567890))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("User successfully activated.")));
+                .andExpect(jsonPath("$", is(UserSuccessMessage.USER_SUCCESSFULLY_ACTIVATED)));
     }
 
     @Test

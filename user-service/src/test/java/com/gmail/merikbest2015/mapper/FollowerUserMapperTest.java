@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.mapper;
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.response.FollowerUserResponse;
 import com.gmail.merikbest2015.dto.response.UserProfileResponse;
 import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
@@ -105,7 +106,7 @@ public class FollowerUserMapperTest {
 
     @Test
     public void acceptFollowRequest() {
-        String message = String.format("User (id:%s) accepted.", TestConstants.USER_ID);
+        String message = String.format(UserSuccessMessage.USER_ACCEPTED, TestConstants.USER_ID);
         when(followerUserService.acceptFollowRequest(TestConstants.USER_ID)).thenReturn(message);
         assertEquals(message, followerUserMapper.acceptFollowRequest(TestConstants.USER_ID));
         verify(followerUserService, times(1)).acceptFollowRequest(TestConstants.USER_ID);
@@ -113,7 +114,7 @@ public class FollowerUserMapperTest {
 
     @Test
     public void declineFollowRequest() {
-        String message = String.format("User (id:%s) declined.", TestConstants.USER_ID);
+        String message = String.format(UserSuccessMessage.USER_DECLINED, TestConstants.USER_ID);
         when(followerUserService.declineFollowRequest(TestConstants.USER_ID)).thenReturn(message);
         assertEquals(message, followerUserMapper.declineFollowRequest(TestConstants.USER_ID));
         verify(followerUserService, times(1)).declineFollowRequest(TestConstants.USER_ID);

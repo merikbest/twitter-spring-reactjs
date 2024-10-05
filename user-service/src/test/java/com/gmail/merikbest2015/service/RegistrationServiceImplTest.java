@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -40,7 +41,7 @@ public class RegistrationServiceImplTest extends AbstractServiceTest {
         request.setUsername(TestConstants.USERNAME);
         request.setBirthday(TestConstants.BIRTHDAY);
         when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, User.class)).thenReturn(Optional.empty());
-        assertEquals("User data checked.", registrationService.registration(request, bindingResult));
+        assertEquals(UserSuccessMessage.USER_DATA_CHECKED, registrationService.registration(request, bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, User.class);
         verify(userRepository, times(1)).save(user);
     }
@@ -58,7 +59,7 @@ public class RegistrationServiceImplTest extends AbstractServiceTest {
         request.setUsername(TestConstants.USERNAME);
         request.setBirthday(TestConstants.BIRTHDAY);
         when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, User.class)).thenReturn(Optional.of(user));
-        assertEquals("User data checked.", registrationService.registration(request, bindingResult));
+        assertEquals(UserSuccessMessage.USER_DATA_CHECKED, registrationService.registration(request, bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, User.class);
         verify(userRepository, times(1)).save(user);
     }
@@ -97,7 +98,7 @@ public class RegistrationServiceImplTest extends AbstractServiceTest {
                 .thenReturn(Optional.of(userCommonProjection));
         when(userRepository.getActivationCode(userCommonProjection.getId()))
                 .thenReturn(TestConstants.ACTIVATION_CODE);
-        assertEquals("Registration code sent successfully",
+        assertEquals(UserSuccessMessage.REGISTRATION_CODE_SENT,
                 registrationService.sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class);
         verify(userRepository, times(1)).getActivationCode(userCommonProjection.getId());
@@ -119,7 +120,7 @@ public class RegistrationServiceImplTest extends AbstractServiceTest {
         UserCommonProjection userCommonProjection = UserServiceTestHelper.createUserCommonProjection();
         when(userRepository.getCommonUserByActivationCode(TestConstants.ACTIVATION_CODE))
                 .thenReturn(Optional.of(userCommonProjection));
-        assertEquals("User successfully activated.",
+        assertEquals(UserSuccessMessage.USER_SUCCESSFULLY_ACTIVATED,
                 registrationService.checkRegistrationCode(TestConstants.ACTIVATION_CODE));
         verify(userRepository, times(1)).getCommonUserByActivationCode(TestConstants.ACTIVATION_CODE);
         verify(userRepository, times(1)).updateActivationCode(null, userCommonProjection.getId());

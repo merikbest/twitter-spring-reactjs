@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.dto.request.CurrentPasswordResetRequest;
 import com.gmail.merikbest2015.dto.request.PasswordResetRequest;
@@ -67,7 +68,7 @@ public class AuthenticationMapperTest {
     @Test
     public void getExistingEmail() {
         when(authenticationService.getExistingEmail(TestConstants.USER_EMAIL, bindingResult))
-                .thenReturn("Reset password code is send to your E-mail");
+                .thenReturn(UserSuccessMessage.RESET_PASSWORD_CODE_IS_SEND);
         authenticationMapper.getExistingEmail(TestConstants.USER_EMAIL, bindingResult);
         verify(authenticationService, times(1)).getExistingEmail(TestConstants.USER_EMAIL, bindingResult);
     }
@@ -75,7 +76,7 @@ public class AuthenticationMapperTest {
     @Test
     public void sendPasswordResetCode() {
         when(authenticationService.sendPasswordResetCode(TestConstants.USER_EMAIL, bindingResult))
-                .thenReturn("Reset password code is send to your E-mail");
+                .thenReturn(UserSuccessMessage.RESET_PASSWORD_CODE_IS_SEND);
         authenticationMapper.sendPasswordResetCode(TestConstants.USER_EMAIL, bindingResult);
         verify(authenticationService, times(1)).sendPasswordResetCode(TestConstants.USER_EMAIL, bindingResult);
     }
@@ -101,7 +102,7 @@ public class AuthenticationMapperTest {
                 TestConstants.PASSWORD,
                 TestConstants.PASSWORD,
                 bindingResult
-        )).thenReturn("Password successfully changed!");
+        )).thenReturn(UserSuccessMessage.PASSWORD_SUCCESSFULLY_CHANGED);
         authenticationMapper.passwordReset(request, bindingResult);
         verify(authenticationService, times(1)).passwordReset(
                 TestConstants.USER_EMAIL,
@@ -122,7 +123,7 @@ public class AuthenticationMapperTest {
                 TestConstants.PASSWORD,
                 TestConstants.PASSWORD,
                 bindingResult
-        )).thenReturn("Your password has been successfully updated.");
+        )).thenReturn(UserSuccessMessage.PASSWORD_SUCCESSFULLY_UPDATED);
         authenticationMapper.currentPasswordReset(request, bindingResult);
         verify(authenticationService, times(1)).currentPasswordReset(
                 TestConstants.PASSWORD,

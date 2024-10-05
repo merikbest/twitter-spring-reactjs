@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.EndRegistrationRequest;
 import com.gmail.merikbest2015.dto.request.RegistrationRequest;
 import com.gmail.merikbest2015.dto.response.AuthenticationResponse;
@@ -41,22 +42,22 @@ public class RegistrationMapperTest {
         request.setBirthday(TestConstants.BIRTHDAY);
         request.setEmail(TestConstants.USER_EMAIL);
         request.setUsername(TestConstants.USERNAME);
-        when(registrationService.registration(request, bindingResult)).thenReturn("User data checked.");
-        assertEquals("User data checked.", registrationMapper.registration(request, bindingResult));
+        when(registrationService.registration(request, bindingResult)).thenReturn(UserSuccessMessage.USER_DATA_CHECKED);
+        assertEquals(UserSuccessMessage.USER_DATA_CHECKED, registrationMapper.registration(request, bindingResult));
         verify(registrationService, times(1)).registration(request, bindingResult);
     }
 
     @Test
     public void sendRegistrationCode() {
-        when(registrationService.sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult)).thenReturn("Registration code sent successfully");
-        assertEquals("Registration code sent successfully", registrationMapper.sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult));
+        when(registrationService.sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult)).thenReturn(UserSuccessMessage.REGISTRATION_CODE_SENT);
+        assertEquals(UserSuccessMessage.REGISTRATION_CODE_SENT, registrationMapper.sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult));
         verify(registrationService, times(1)).sendRegistrationCode(TestConstants.USER_EMAIL, bindingResult);
     }
 
     @Test
     public void checkRegistrationCode() {
-        when(registrationService.checkRegistrationCode(TestConstants.ACTIVATION_CODE)).thenReturn("User successfully activated.");
-        assertEquals("User successfully activated.", registrationMapper.checkRegistrationCode(TestConstants.ACTIVATION_CODE));
+        when(registrationService.checkRegistrationCode(TestConstants.ACTIVATION_CODE)).thenReturn(UserSuccessMessage.USER_SUCCESSFULLY_ACTIVATED);
+        assertEquals(UserSuccessMessage.USER_SUCCESSFULLY_ACTIVATED, registrationMapper.checkRegistrationCode(TestConstants.ACTIVATION_CODE));
         verify(registrationService, times(1)).checkRegistrationCode(TestConstants.ACTIVATION_CODE);
     }
 

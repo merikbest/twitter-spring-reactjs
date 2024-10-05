@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.service;
 
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.AuthenticationRequest;
 import com.gmail.merikbest2015.commons.event.SendEmailEvent;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
@@ -101,7 +102,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
     public void getExistingEmail_ShouldReturnSuccessMessage() {
         when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class))
                 .thenReturn(Optional.of(userCommonProjection));
-        assertEquals("Reset password code is send to your E-mail",
+        assertEquals(UserSuccessMessage.RESET_PASSWORD_CODE_IS_SEND,
                 authenticationService.getExistingEmail(TestConstants.USER_EMAIL, bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class);
     }
@@ -125,7 +126,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
         when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class))
                 .thenReturn(Optional.of(userCommonProjection));
         when(userRepository.getPasswordResetCode(TestConstants.USER_ID)).thenReturn(TestConstants.PASSWORD_RESET_CODE);
-        assertEquals("Reset password code is send to your E-mail",
+        assertEquals(UserSuccessMessage.RESET_PASSWORD_CODE_IS_SEND,
                 authenticationService.sendPasswordResetCode(TestConstants.USER_EMAIL, bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class);
         verify(userRepository, times(1)).getPasswordResetCode(TestConstants.USER_ID);
@@ -165,7 +166,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
         when(userRepository.getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class))
                 .thenReturn(Optional.of(userCommonProjection));
         when(passwordEncoder.encode(TestConstants.PASSWORD)).thenReturn(TestConstants.PASSWORD);
-        assertEquals("Password successfully changed!", authenticationService.passwordReset(
+        assertEquals(UserSuccessMessage.PASSWORD_SUCCESSFULLY_CHANGED, authenticationService.passwordReset(
                 TestConstants.USER_EMAIL, TestConstants.PASSWORD, TestConstants.PASSWORD, bindingResult));
         verify(userRepository, times(1)).getUserByEmail(TestConstants.USER_EMAIL, UserCommonProjection.class);
         verify(userRepository, times(1)).updatePassword(TestConstants.PASSWORD, userCommonProjection.getId());
@@ -195,7 +196,7 @@ public class AuthenticationServiceImplTest extends AbstractServiceTest {
         when(userRepository.getUserPasswordById(TestConstants.USER_ID)).thenReturn(TestConstants.PASSWORD);
         when(passwordEncoder.matches(TestConstants.PASSWORD, TestConstants.PASSWORD)).thenReturn(true);
         when(passwordEncoder.encode(TestConstants.PASSWORD)).thenReturn(TestConstants.PASSWORD);
-        assertEquals("Your password has been successfully updated.", authenticationService.currentPasswordReset(
+        assertEquals(UserSuccessMessage.PASSWORD_SUCCESSFULLY_UPDATED, authenticationService.currentPasswordReset(
                 TestConstants.PASSWORD, TestConstants.PASSWORD, TestConstants.PASSWORD, bindingResult));
         verify(userRepository, times(1)).getUserPasswordById(TestConstants.USER_ID);
         verify(passwordEncoder, times(1)).matches(TestConstants.PASSWORD, TestConstants.PASSWORD);

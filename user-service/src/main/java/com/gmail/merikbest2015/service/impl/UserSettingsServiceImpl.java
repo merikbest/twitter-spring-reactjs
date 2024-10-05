@@ -4,6 +4,7 @@ import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
 import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.model.UserRole;
@@ -79,7 +80,7 @@ public class UserSettingsServiceImpl implements UserSettingsService {
     public String deletePhoneNumber() {
         Long authUserId = authenticationService.getAuthenticatedUserId();
         userSettingsRepository.updatePhoneNumber(null, null, authUserId);
-        return "Phone number deleted";
+        return UserSuccessMessage.PHONE_NUMBER_DELETED;
     }
 
     @Override

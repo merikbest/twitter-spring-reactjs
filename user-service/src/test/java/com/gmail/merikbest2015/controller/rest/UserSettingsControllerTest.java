@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.SettingsRequest;
 import com.gmail.merikbest2015.commons.enums.BackgroundColorType;
 import com.gmail.merikbest2015.commons.enums.ColorSchemeType;
@@ -198,7 +199,7 @@ public class UserSettingsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Phone number deleted")));
+                .andExpect(jsonPath("$", is(UserSuccessMessage.PHONE_NUMBER_DELETED)));
     }
 
     @Test

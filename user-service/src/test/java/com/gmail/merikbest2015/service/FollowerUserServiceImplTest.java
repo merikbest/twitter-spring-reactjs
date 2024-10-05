@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service;
 import com.gmail.merikbest2015.UserServiceTestHelper;
 import com.gmail.merikbest2015.commons.exception.ApiRequestException;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.projection.BaseUserProjection;
 import com.gmail.merikbest2015.repository.projection.FollowerUserProjection;
@@ -240,7 +241,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         authUser.setId(TestConstants.USER_ID);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
-        assertEquals(String.format("User (id:%s) accepted.", 1L), followerUserService.acceptFollowRequest(1L));
+        assertEquals(String.format(UserSuccessMessage.USER_ACCEPTED, 1L), followerUserService.acceptFollowRequest(1L));
         verify(userRepository, times(1)).findById(1L);
         verify(followerUserRepository, times(1)).removeFollowerRequest(1L, TestConstants.USER_ID);
         verify(followerUserRepository, times(1)).follow(1L, TestConstants.USER_ID);
@@ -254,7 +255,7 @@ public class FollowerUserServiceImplTest extends AbstractServiceTest {
         authUser.setId(TestConstants.USER_ID);
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(authUser));
-        assertEquals(String.format("User (id:%s) declined.", 1L), followerUserService.declineFollowRequest(1L));
+        assertEquals(String.format(UserSuccessMessage.USER_DECLINED, 1L), followerUserService.declineFollowRequest(1L));
         verify(userRepository, times(1)).findById(1L);
         verify(followerUserRepository, times(1)).removeFollowerRequest(1L, TestConstants.USER_ID);
         verify(followRequestUserProducer, times(1)).sendFollowRequestUserEvent(user, TestConstants.USER_ID, false);

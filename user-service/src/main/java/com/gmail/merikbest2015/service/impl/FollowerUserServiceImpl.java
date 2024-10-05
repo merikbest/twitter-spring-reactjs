@@ -3,6 +3,7 @@ package com.gmail.merikbest2015.service.impl;
 import com.gmail.merikbest2015.broker.producer.FollowRequestUserProducer;
 import com.gmail.merikbest2015.broker.producer.FollowUserNotificationProducer;
 import com.gmail.merikbest2015.broker.producer.FollowUserProducer;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.model.User;
 import com.gmail.merikbest2015.repository.FollowerUserRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
@@ -120,7 +121,7 @@ public class FollowerUserServiceImpl implements FollowerUserService {
         followerUserRepository.updateFollowersCount(true, authUser.getId());
         followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), false);
         followUserProducer.sendFollowUserEvent(user, authUser.getId(), true);
-        return String.format("User (id:%s) accepted.", userId);
+        return String.format(UserSuccessMessage.USER_ACCEPTED, userId);
     }
 
     @Override
@@ -131,6 +132,6 @@ public class FollowerUserServiceImpl implements FollowerUserService {
         followerUserRepository.removeFollowerRequest(user.getId(), authUser.getId());
         followerUserRepository.updateFollowerRequestsCount(false, user.getId());
         followRequestUserProducer.sendFollowRequestUserEvent(user, authUser.getId(), false);
-        return String.format("User (id:%s) declined.", userId);
+        return String.format(UserSuccessMessage.USER_DECLINED, userId);
     }
 }

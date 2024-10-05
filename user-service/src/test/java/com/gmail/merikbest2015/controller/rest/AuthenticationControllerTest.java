@@ -2,6 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
+import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.*;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import org.junit.jupiter.api.BeforeEach;
@@ -99,7 +100,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Reset password code is send to your E-mail")));
+                .andExpect(jsonPath("$", is(UserSuccessMessage.RESET_PASSWORD_CODE_IS_SEND)));
     }
 
     @Test
@@ -135,7 +136,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Reset password code is send to your E-mail")));
+                .andExpect(jsonPath("$", is(UserSuccessMessage.RESET_PASSWORD_CODE_IS_SEND)));
     }
 
     @Test
@@ -202,7 +203,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Password successfully changed!")));
+                .andExpect(jsonPath("$", is(UserSuccessMessage.PASSWORD_SUCCESSFULLY_CHANGED)));
     }
 
     @Test
@@ -314,7 +315,7 @@ public class AuthenticationControllerTest {
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Your password has been successfully updated.")));
+                .andExpect(jsonPath("$", is(UserSuccessMessage.PASSWORD_SUCCESSFULLY_UPDATED)));
     }
 
     @Test
