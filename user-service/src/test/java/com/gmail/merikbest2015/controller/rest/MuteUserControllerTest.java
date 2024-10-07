@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
 import org.junit.jupiter.api.DisplayName;
@@ -11,11 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,8 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class MuteUserControllerTest {
 
     @Autowired
@@ -33,8 +31,8 @@ public class MuteUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/muted - Get muted list")
     public void getMutedList() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + MUTED)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.MUTED)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(1L))
@@ -49,8 +47,8 @@ public class MuteUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/muted/3 - Mute user by id")
     public void addToMutedList() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + MUTED_USER_ID, 3)
-                    .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.MUTED_USER_ID, 3)
+                    .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(true)));
     }
@@ -58,8 +56,8 @@ public class MuteUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/muted/1 - Unmute user by id")
     public void removeFromMutedList() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + MUTED_USER_ID, 1)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.MUTED_USER_ID, 1)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
     }
@@ -67,8 +65,8 @@ public class MuteUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/muted/99 - Should user Not Found by id")
     public void addToMutedList_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + MUTED_USER_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.MUTED_USER_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }

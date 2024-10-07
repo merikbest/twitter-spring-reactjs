@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
 import com.gmail.merikbest2015.dto.request.UserRequest;
@@ -17,11 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,8 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class UserControllerTest {
 
     @Autowired
@@ -42,8 +40,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/token - Get user by token")
     public void getUserByToken() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + TOKEN)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.TOKEN)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.user.id").value(TestConstants.USER_ID))
                 .andExpect(jsonPath("$.user.email").value(TestConstants.USER_EMAIL))
@@ -64,8 +62,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/1 - Get user by id")
     public void getUserById() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + USER_ID, 1)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.USER_ID, 1)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.fullName").value(TestConstants.USERNAME2))
@@ -97,8 +95,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/99 - Should user Not Found by id")
     public void getUserById_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + USER_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.USER_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
@@ -106,8 +104,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/all - Get users")
     public void getUsers() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + ALL)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.ALL)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(6)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -125,8 +123,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/relevant - Get relevant users")
     public void getRelevantUsers() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + RELEVANT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.RELEVANT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(5)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -144,8 +142,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/search/MrCat - Search users by username")
     public void searchUsersByUsername() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + SEARCH_USERNAME, TestConstants.USERNAME)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.SEARCH_USERNAME, TestConstants.USERNAME)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(6)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -163,8 +161,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/items/search/test - Search users by username Not Found")
     public void searchUsersByUsername_NotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + SEARCH_USERNAME, "test")
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.SEARCH_USERNAME, "test")
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(0)));
     }
@@ -172,8 +170,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/search/MrCat - Search by text")
     public void searchByText() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + SEARCH_TEXT, TestConstants.USERNAME)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.SEARCH_TEXT, TestConstants.USERNAME)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.tweetCount").value(0L))
                 .andExpect(jsonPath("$.tags[*]", hasSize(0)))
@@ -185,10 +183,10 @@ public class UserControllerTest {
     public void getSearchResults() throws Exception {
         SearchTermsRequest request = new SearchTermsRequest();
         request.setUsers(List.of(1L, 2L));
-        mockMvc.perform(post(UI_V1_USER + SEARCH_RESULTS)
+        mockMvc.perform(post(PathConstants.UI_V1_USER + PathConstants.SEARCH_RESULTS)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[1].id").value(TestConstants.USER_ID))
@@ -201,8 +199,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/start - Start use twitter")
     public void startUseTwitter() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + START)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.START)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(true));
     }
@@ -215,10 +213,10 @@ public class UserControllerTest {
         userRequest.setAbout("test");
         userRequest.setLocation("test");
         userRequest.setWebsite("test");
-        mockMvc.perform(put(UI_V1_USER)
+        mockMvc.perform(put(PathConstants.UI_V1_USER)
                         .content(mapper.writeValueAsString(userRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(TestConstants.USER_ID))
                 .andExpect(jsonPath("$.email").value(TestConstants.USER_EMAIL))
@@ -259,10 +257,10 @@ public class UserControllerTest {
     public void updateUserProfile_ShouldUsernameLengthIs0() throws Exception {
         UserRequest userRequest = new UserRequest();
         userRequest.setFullName("");
-        mockMvc.perform(put(UI_V1_USER)
+        mockMvc.perform(put(PathConstants.UI_V1_USER)
                         .content(mapper.writeValueAsString(userRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.INCORRECT_USERNAME_LENGTH)));
     }
@@ -272,10 +270,10 @@ public class UserControllerTest {
     public void updateUserProfile_ShouldUsernameLengthMoreThan50() throws Exception {
         UserRequest userRequest = new UserRequest();
         userRequest.setFullName(TestConstants.LINK_DESCRIPTION);
-        mockMvc.perform(put(UI_V1_USER)
+        mockMvc.perform(put(PathConstants.UI_V1_USER)
                         .content(mapper.writeValueAsString(userRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.INCORRECT_USERNAME_LENGTH)));
     }
@@ -283,8 +281,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/subscribe/1 - Subscribe to notifications")
     public void subscribeToNotifications() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + SUBSCRIBE_USER_ID, 1)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.SUBSCRIBE_USER_ID, 1)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(true)));
     }
@@ -292,8 +290,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/subscribe/1 - Unsubscribe from notifications")
     public void unsubscribeToNotifications() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + "/subscribe/2")
-                        .header(AUTH_USER_ID_HEADER, 1L))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + "/subscribe/2")
+                        .header(PathConstants.AUTH_USER_ID_HEADER, 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(false)));
     }
@@ -301,8 +299,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/subscribe/99 - Should user Not Found by id")
     public void processSubscribeToNotifications_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + SUBSCRIBE_USER_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.SUBSCRIBE_USER_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -310,8 +308,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/user/subscribe/5 - Should user blocked by other user")
     public void processSubscribeToNotifications_ShouldUserBlockedByOtherUser() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + SUBSCRIBE_USER_ID, 5)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.SUBSCRIBE_USER_ID, 5)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -319,8 +317,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/pin/tweet/43 - Pin tweet to profile by id")
     public void processPinTweet() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + PIN_TWEET_ID, 43)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.PIN_TWEET_ID, 43)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(43)));
     }
@@ -328,8 +326,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/pin/tweet/40 - Unpin tweet from profile by id")
     public void processUnpinTweet() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + PIN_TWEET_ID, 40)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.PIN_TWEET_ID, 40)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(0)));
     }
@@ -337,8 +335,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/pin/tweet/99 - Should tweet Not Found by id")
     public void processPinTweet_ShouldTweetNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + PIN_TWEET_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.PIN_TWEET_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(UserErrorMessage.TWEET_NOT_FOUND)));
     }
@@ -346,8 +344,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/details/1 - Get user details by id")
     public void getUserDetails() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + DETAILS_USER_ID, 3)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.DETAILS_USER_ID, 3)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(3L))
                 .andExpect(jsonPath("$.fullName").value(TestConstants.USERNAME))
@@ -367,8 +365,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/details/99 - Should user details Not Found by id")
     public void getUserDetails_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + DETAILS_USER_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.DETAILS_USER_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -376,8 +374,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/user/details/5 - Should user blocked by other user")
     public void getUserDetails_ShouldUserBlockedByOtherUser() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + DETAILS_USER_ID, 5)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.DETAILS_USER_ID, 5)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }

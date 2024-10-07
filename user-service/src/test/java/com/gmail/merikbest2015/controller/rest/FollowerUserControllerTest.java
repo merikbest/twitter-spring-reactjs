@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.util.TestConstants;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
 import org.junit.jupiter.api.DisplayName;
@@ -11,11 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,8 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class FollowerUserControllerTest {
 
     @Autowired
@@ -33,8 +31,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/followers/1 - Get followers by user id")
     public void getFollowers() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWERS_USER_ID, 1)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWERS_USER_ID, 1)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -52,8 +50,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/followers/99 - Should user Not Found by id")
     public void getFollowers_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWERS_USER_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWERS_USER_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -61,8 +59,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/followers/3 - Should user have private profile")
     public void getFollowers_ShouldUserHavePrivateProfile() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWERS_USER_ID, 3)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWERS_USER_ID, 3)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
@@ -70,8 +68,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/user/followers/5 - Should user blocked by other user")
     public void getFollowers_ShouldUserBlockedByOtherUser() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWERS_USER_ID, 5)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWERS_USER_ID, 5)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -79,8 +77,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/following/4 - Get following by user id")
     public void getFollowing() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWING_USER_ID, 4)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWING_USER_ID, 4)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(2)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -98,8 +96,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/following/99 - Should user Not Found by id")
     public void getFollowing_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWING_USER_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWING_USER_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -107,8 +105,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/following/3 -  Should user have private profile")
     public void getFollowing_ShouldUserHavePrivateProfile() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWING_USER_ID, 3)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWING_USER_ID, 3)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
@@ -116,8 +114,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/user/following/6 - Should user blocked by other user")
     public void getFollowing_ShouldUserBlockedByOtherUser() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWING_USER_ID, 6)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWING_USER_ID, 6)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -125,8 +123,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follower-requests - Follow user by id")
     public void getFollowerRequests() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOWER_REQUESTS)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOWER_REQUESTS)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(7L))
@@ -139,8 +137,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/7 - Follow user by id")
     public void processFollow() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_USER_ID, 7)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_USER_ID, 7)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(true));
     }
@@ -148,8 +146,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/1 - Unfollow user by id")
     public void processUnfollow() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_USER_ID, 1)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_USER_ID, 1)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(false));
     }
@@ -157,8 +155,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/3 - Follow to user private profile by id")
     public void processFollowToPrivateProfile() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_USER_ID, 3)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_USER_ID, 3)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value(false));
     }
@@ -166,8 +164,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/follow/99 - Should user Not Found by id")
     public void processFollow_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_USER_ID, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_USER_ID, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -175,8 +173,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/user/follow/6 - Should user blocked by other user")
     public void processFollow_ShouldUserBlockedByOtherUser() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_USER_ID, 6)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_USER_ID, 6)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -184,8 +182,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/overall/1 - Get overall followers if exist")
     public void overallFollowers_exist() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_OVERALL, 1)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_OVERALL, 1)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[*].id").isNotEmpty())
@@ -203,8 +201,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/overall/7 - Get overall followers if not exist")
     public void overallFollowers_NotExist() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_OVERALL, 7)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_OVERALL, 7)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(0)));
     }
@@ -212,8 +210,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/follow/overall/99 - Should user Not Found by id")
     public void overallFollowers_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_OVERALL, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_OVERALL, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -221,8 +219,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/follow/overall/3 - Should user have private profile")
     public void overallFollowers_ShouldUserHavePrivateProfile() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_OVERALL, 3)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_OVERALL, 3)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_NOT_FOUND)));
     }
@@ -230,8 +228,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/user/follow/overall/6 - Should user blocked by other user")
     public void overallFollowers_ShouldUserBlockedByOtherUser() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_OVERALL, 6)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_OVERALL, 6)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -239,8 +237,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/private/4 - Follow request from private profile")
     public void followRequestToPrivateProfile() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_PRIVATE, 4)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_PRIVATE, 4)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(4L))
                 .andExpect(jsonPath("$.fullName").value(TestConstants.FULL_NAME))
@@ -273,8 +271,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/private/7 - Unfollow request to private profile")
     public void unfollowRequestToPrivateProfile() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_PRIVATE, 7)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_PRIVATE, 7)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(7L))
                 .andExpect(jsonPath("$.fullName").value(TestConstants.FULL_NAME))
@@ -307,8 +305,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/follow/private/99 - Should user Not Found by id")
     public void processFollowRequestToPrivateProfile_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_PRIVATE, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_PRIVATE, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -316,8 +314,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/user/follow/private/6 -  Should user blocked by other user")
     public void processFollowRequestToPrivateProfile_ShouldUserBlockedByOtherUser() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_PRIVATE, 6)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_PRIVATE, 6)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.USER_PROFILE_BLOCKED)));
     }
@@ -325,8 +323,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/accept/2 - Accept follow request")
     public void acceptFollowRequest() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_ACCEPT, 2)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_ACCEPT, 2)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value("User (id:2) accepted."));
     }
@@ -334,8 +332,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/follow/accept/99 - Should user Not Found by id")
     public void acceptFollowRequest_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_ACCEPT, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_ACCEPT, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }
@@ -343,8 +341,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/follow/decline/2 - Decline follow request")
     public void declineFollowRequest() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_DECLINE, 2)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_DECLINE, 2)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value("User (id:2) declined."));
     }
@@ -352,8 +350,8 @@ public class FollowerUserControllerTest {
     @Test
     @DisplayName("[404] GET /ui/v1/user/follow/decline/99 - Should user Not Found by id")
     public void declineFollowRequest_ShouldUserNotFound() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + FOLLOW_DECLINE, 99)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.FOLLOW_DECLINE, 99)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$", is(String.format(UserErrorMessage.USER_ID_NOT_FOUND, 99))));
     }

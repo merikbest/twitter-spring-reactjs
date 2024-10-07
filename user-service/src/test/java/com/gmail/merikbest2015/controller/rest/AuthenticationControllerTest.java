@@ -1,6 +1,7 @@
 package com.gmail.merikbest2015.controller.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.constants.UserSuccessMessage;
 import com.gmail.merikbest2015.dto.request.*;
@@ -16,11 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
-import static com.gmail.merikbest2015.commons.util.TestConstants.*;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -29,8 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class AuthenticationControllerTest {
 
     @Autowired
@@ -51,7 +48,7 @@ public class AuthenticationControllerTest {
     @DisplayName("[200] POST /ui/v1/auth/login - Login")
     public void login() throws Exception {
         authenticationRequest.setPassword(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + LOGIN)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.LOGIN)
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -62,7 +59,7 @@ public class AuthenticationControllerTest {
     public void login_ShouldEmailNotValid() throws Exception {
         authenticationRequest.setEmail("notvalidemail@test");
         authenticationRequest.setPassword(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + LOGIN)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.LOGIN)
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -73,7 +70,7 @@ public class AuthenticationControllerTest {
     @DisplayName("[400] POST /ui/v1/auth/login - Should password is empty")
     public void login_ShouldPasswordIsEmpty() throws Exception {
         authenticationRequest.setPassword(null);
-        mockMvc.perform(post(UI_V1_AUTH + LOGIN)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.LOGIN)
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -84,7 +81,7 @@ public class AuthenticationControllerTest {
     @DisplayName("[400] POST /ui/v1/auth/login - Should password less then 8 characters")
     public void login_ShouldPasswordLessThen8Characters() throws Exception {
         authenticationRequest.setPassword("test123");
-        mockMvc.perform(post(UI_V1_AUTH + LOGIN)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.LOGIN)
                         .content(mapper.writeValueAsString(authenticationRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -96,7 +93,7 @@ public class AuthenticationControllerTest {
     public void getExistingEmail() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail(TestConstants.USER_EMAIL);
-        mockMvc.perform(post(UI_V1_AUTH + FORGOT_EMAIL)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.FORGOT_EMAIL)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -108,7 +105,7 @@ public class AuthenticationControllerTest {
     public void getExistingEmail_ShouldEmailNotValid() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail("test2015@test");
-        mockMvc.perform(post(UI_V1_AUTH + FORGOT_EMAIL)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.FORGOT_EMAIL)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -120,7 +117,7 @@ public class AuthenticationControllerTest {
     public void getExistingEmail_EmailNotFound() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail(TestConstants.NOT_VALID_EMAIL);
-        mockMvc.perform(post(UI_V1_AUTH + FORGOT_EMAIL)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.FORGOT_EMAIL)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -132,7 +129,7 @@ public class AuthenticationControllerTest {
     public void sendPasswordResetCode() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail(TestConstants.USER_EMAIL);
-        mockMvc.perform(post(UI_V1_AUTH + FORGOT)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.FORGOT)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -144,7 +141,7 @@ public class AuthenticationControllerTest {
     public void sendPasswordResetCode_ShouldEmailNotValid() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail("test2015@test");
-        mockMvc.perform(post(UI_V1_AUTH + FORGOT)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.FORGOT)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -156,7 +153,7 @@ public class AuthenticationControllerTest {
     public void sendPasswordResetCode_ShouldEmailNotFound() throws Exception {
         ProcessEmailRequest request = new ProcessEmailRequest();
         request.setEmail(TestConstants.NOT_VALID_EMAIL);
-        mockMvc.perform(post(UI_V1_AUTH + FORGOT)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.FORGOT)
                         .content(mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -166,7 +163,7 @@ public class AuthenticationControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/auth/reset/1234567890 - Get user by reset code")
     public void getUserByPasswordResetCode() throws Exception {
-        mockMvc.perform(get(UI_V1_AUTH + RESET_CODE, 1234567890))
+        mockMvc.perform(get(PathConstants.UI_V1_AUTH + PathConstants.RESET_CODE, 1234567890))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.email").value("test2016@test.test"))
@@ -176,7 +173,7 @@ public class AuthenticationControllerTest {
                 .andExpect(jsonPath("$.about").value(TestConstants.ABOUT))
                 .andExpect(jsonPath("$.website").value(TestConstants.WEBSITE))
                 .andExpect(jsonPath("$.birthday").value(TestConstants.BIRTHDAY))
-                .andExpect(jsonPath("$.registrationDate").value(REGISTRATION_DATE))
+                .andExpect(jsonPath("$.registrationDate").value(TestConstants.REGISTRATION_DATE))
                 .andExpect(jsonPath("$.tweetCount").value(TestConstants.TWEET_COUNT))
                 .andExpect(jsonPath("$.avatar").value(TestConstants.AVATAR_SRC_1))
                 .andExpect(jsonPath("$.wallpaper").value(TestConstants.WALLPAPER_SRC))
@@ -187,7 +184,7 @@ public class AuthenticationControllerTest {
     @Test
     @DisplayName("[400] GET /ui/v1/auth/reset/test123 - Get user by reset code bad request")
     public void getUserByPasswordResetCode_BadRequest() throws Exception {
-        mockMvc.perform(get(UI_V1_AUTH + RESET_CODE, "test123"))
+        mockMvc.perform(get(PathConstants.UI_V1_AUTH + PathConstants.RESET_CODE, "test123"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", is(UserErrorMessage.INVALID_PASSWORD_RESET_CODE)));
     }
@@ -199,7 +196,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setEmail(TestConstants.USER_EMAIL);
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -213,7 +210,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setEmail(TestConstants.NOT_VALID_EMAIL);
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -227,7 +224,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setEmail("notvalidemail@test");
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -240,7 +237,7 @@ public class AuthenticationControllerTest {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(TestConstants.USER_EMAIL);
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -253,7 +250,7 @@ public class AuthenticationControllerTest {
         PasswordResetRequest passwordResetRequest = new PasswordResetRequest();
         passwordResetRequest.setEmail(TestConstants.USER_EMAIL);
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -267,7 +264,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setEmail(TestConstants.USER_EMAIL);
         passwordResetRequest.setPassword("qwerty");
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -281,7 +278,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setEmail(TestConstants.USER_EMAIL);
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2("qwerty");
-        mockMvc.perform(post(UI_V1_AUTH + RESET)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -295,7 +292,7 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setEmail(TestConstants.USER_EMAIL);
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2("test1234");
-        mockMvc.perform(post(UI_V1_AUTH + RESET)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -310,8 +307,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
 
-        mockMvc.perform(post(UI_V1_AUTH + RESET_CURRENT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET_CURRENT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
@@ -325,8 +322,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setCurrentPassword("");
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET_CURRENT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET_CURRENT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -340,8 +337,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setCurrentPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword(null);
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET_CURRENT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET_CURRENT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -355,8 +352,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setCurrentPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2(null);
-        mockMvc.perform(post(UI_V1_AUTH + RESET_CURRENT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET_CURRENT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -370,8 +367,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setCurrentPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword("test");
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET_CURRENT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET_CURRENT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -385,8 +382,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setCurrentPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2("test");
-        mockMvc.perform(post(UI_V1_AUTH + RESET_CURRENT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET_CURRENT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
@@ -400,8 +397,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setCurrentPassword("qwerty123456");
         passwordResetRequest.setPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET_CURRENT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET_CURRENT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
@@ -415,8 +412,8 @@ public class AuthenticationControllerTest {
         passwordResetRequest.setCurrentPassword(TestConstants.PASSWORD);
         passwordResetRequest.setPassword("qwerty123456");
         passwordResetRequest.setPassword2(TestConstants.PASSWORD);
-        mockMvc.perform(post(UI_V1_AUTH + RESET_CURRENT)
-                        .header(AUTH_USER_ID_HEADER, TestConstants.USER_ID)
+        mockMvc.perform(post(PathConstants.UI_V1_AUTH + PathConstants.RESET_CURRENT)
+                        .header(PathConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID)
                         .content(mapper.writeValueAsString(passwordResetRequest))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())

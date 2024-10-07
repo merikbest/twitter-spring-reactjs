@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.controller.rest;
 
+import com.gmail.merikbest2015.commons.constants.PathConstants;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.gmail.merikbest2015.commons.constants.PathConstants.*;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.AFTER_TEST_METHOD;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,8 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = BEFORE_TEST_METHOD)
-@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = AFTER_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql", "/sql-test/populate-user-db.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(value = {"/sql-test/clear-user-db.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class LocalizationControllerTest {
 
     @Autowired
@@ -30,7 +28,7 @@ public class LocalizationControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/country/codes - Get country codes")
     public void getCountryCodes() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + COUNTRY_CODES))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.COUNTRY_CODES))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(10)))
                 .andExpect(jsonPath("$[9].id").value(10L))
@@ -42,7 +40,7 @@ public class LocalizationControllerTest {
     @Test
     @DisplayName("[200] GET /ui/v1/user/languages - Get languages")
     public void getLanguages() throws Exception {
-        mockMvc.perform(get(UI_V1_USER + LANGUAGES))
+        mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.LANGUAGES))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[*]", hasSize(10)))
                 .andExpect(jsonPath("$[9].id").value(10L))
