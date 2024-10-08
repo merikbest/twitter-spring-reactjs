@@ -31,6 +31,7 @@
         <module>chat-service</module>
         <module>notification-service</module>
         <module>websocket-service</module>
+        <module>localization-service</module>
     </modules>
 
     <properties>
