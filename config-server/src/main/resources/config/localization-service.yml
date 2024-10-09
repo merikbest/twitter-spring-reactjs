@@ -1,0 +1,42 @@
+server:
+    port: 8008
+spring:
+    application:
+        name: localization-service
+    datasource:
+        url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:5432/localization
+        username: postgres
+        password: root
+        driverClassName: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: validate
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+    flyway:
+        locations: classpath:db/migration
+    zipkin:
+        base-url: http://${ZIPKIN_HOST:localhost}:9411
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://${EUREKA_HOST:localhost}:8761/eureka
+        fetch-registry: true
+        register-with-eureka: true
+    instance:
+        hostname: ${EUREKA_HOST:localhost}
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: 'prometheus, health'
+    metrics:
+        export:
+            prometheus:
+                enabled: true
+        distribution:
+            percentiles-histogram:
+                "[http.server.requests]": true

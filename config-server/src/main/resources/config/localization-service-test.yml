@@ -1,0 +1,28 @@
+server:
+    port: 8008
+spring:
+    application:
+        name: localization-service
+    datasource:
+        url: jdbc:postgresql://localhost:5432/localization-test
+        username: postgres
+        password: root
+        driverClassName: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: none
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+    sql:
+        init:
+            mode: always
+            data-locations: classpath:sql-test/clear-localization-db.sql, classpath:sql-test/populate-localization-db.sql
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka
+        fetch-registry: true
+        register-with-eureka: true
+    instance:
+        hostname: localhost
