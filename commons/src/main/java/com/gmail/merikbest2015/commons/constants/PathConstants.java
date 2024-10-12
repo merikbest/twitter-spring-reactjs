@@ -58,8 +58,6 @@ public class PathConstants {
     public static final String PRIVATE = "/private";
     public static final String COLOR_SCHEME = "/color_scheme";
     public static final String BACKGROUND_COLOR = "/background_color";
-    public static final String COUNTRY_CODES = "/country/codes";
-    public static final String LANGUAGES = "/languages";
 
     public static final String API_V1_AUTH = API_V1 + AUTH;
     public static final String USER_EMAIL = "/user/{email}";
@@ -161,6 +159,13 @@ public class PathConstants {
     public static final String MENTIONS = "/mentions";
     public static final String NOTIFICATION_ID = "/{notificationId}";
     public static final String TIMELINE = "/timeline";
+
+    public static final String LOCALIZATION = "/localization";
+    public static final String UI_V1_LOCALIZATION = UI_V1 + LOCALIZATION;
+    public static final String COUNTRY_CODES = "/country/codes";
+    public static final String GIF_IMAGES = "/gif/images";
+    public static final String LANGUAGES = "/languages";
+    public static final String WALLPAPERS = "/wallpapers";
 
     public static final String API_V1_WEBSOCKET = API_V1 + "/websocket";
 }
