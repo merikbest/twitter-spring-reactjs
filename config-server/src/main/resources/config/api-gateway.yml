@@ -96,6 +96,11 @@ spring:
                     predicates:
                         - Path=/api/v1/email/suggested
 
+                -   id: localization-service
+                    uri: lb://localization-service
+                    predicates:
+                        - Path=/ui/v1/localization/**
+
     zipkin:
         base-url: http://${ZIPKIN_HOST:localhost}:9411
 
