@@ -134,3 +134,10 @@ export const UI_V1_NOTIFICATION_USER = `${UI_V1_NOTIFICATION}/user`;
 export const UI_V1_NOTIFICATION_MENTIONS = `${UI_V1_NOTIFICATION}/mentions`;
 export const UI_V1_NOTIFICATION_SUBSCRIBES = `${UI_V1_NOTIFICATION}/subscribes`;
 export const UI_V1_NOTIFICATION_TIMELINE = `${UI_V1_NOTIFICATION}/timeline`;
+
+// localization-service
+export const UI_V1_LOCALIZATION = `${UI_V1}/localization`;
+export const UI_V1_LOCALIZATION_COUNTRY_CODES = `${UI_V1_LOCALIZATION}/country/codes`;
+export const UI_V1_LOCALIZATION_GIF_IMAGES = `${UI_V1_LOCALIZATION}/gif/images`;
+export const UI_V1_LOCALIZATION_LANGUAGES = `${UI_V1_LOCALIZATION}/languages`;
+export const UI_V1_LOCALIZATION_WALLPAPERS = `${UI_V1_LOCALIZATION}/wallpapers`;
