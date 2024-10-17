@@ -1308,6 +1308,34 @@ export const countryCodes = [
     }
 ];
 
+export const gifImage = [
+    {
+        "id": 1,
+        "title": "Cats",
+        "src": "https://media4.giphy.com/media/3o85xoi6nNqJQJ95Qc/giphy_s.gif",
+    },
+    {
+        "id": 2,
+        "title": "Dogs",
+        "src": "https://media2.giphy.com/media/V6vNqIGP1RiMEwmMGV/giphy-downsized_s.gif",
+    },
+    {
+        "id": 3,
+        "title": "Hug",
+        "src": "https://media4.giphy.com/media/EvYHHSntaIl5m/480w_s.jpg",
+    },
+    {
+        "id": 4,
+        "title": "Facepalm",
+        "src": "https://media.tenor.com/images/1b58b8869489f53b36407f357faf0168/raw",
+    },
+    {
+        "id": 5,
+        "title": "OMG",
+        "src": "https://media0.giphy.com/media/tkApIfibjeWt1ufWwj/480w_s.jpg",
+    }
+];
+
 export const languages = [
     {
         "id": 1,
@@ -1348,5 +1376,28 @@ export const languages = [
     {
         "id": 10,
         "language": "Danish - dansk",
+    }
+];
+
+export const wallpaper = [
+    {
+        "id": 1,
+        "src": "https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small"
+    },
+    {
+        "id": 2,
+        "src": "https://pbs.twimg.com/media/EXZ22fjU8AAau2G?format=png&name=small"
+    },
+    {
+        "id": 3,
+        "src": "https://pbs.twimg.com/media/EXZ2fFgVAAAnpYk?format=png&name=small"
+    },
+    {
+        "id": 4,
+        "src": "https://pbs.twimg.com/media/EXZ27UwVcAIcDfd?format=png&name=small"
+    },
+    {
+        "id": 5,
+        "src": "https://pbs.twimg.com/media/EXZ1_hkUYAA56JA?format=png&name=small"
     }
 ];
