@@ -6,7 +6,9 @@ import { LocalizationActions, LocalizationActionsType } from "./contracts/action
 
 export const initialLocalizationState: LocalizationState = {
     countryCodes: [],
+    gifImages: [],
     languages: [],
+    wallpapers: [],
     loadingState: LoadingStatus.LOADING
 };
 
@@ -17,8 +19,18 @@ export const localizationReducer = produce((draft: Draft<LocalizationState>, act
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case LocalizationActionsType.SET_GIF_IMAGES:
+            draft.gifImages = action.payload;
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
         case LocalizationActionsType.SET_LANGUAGES:
             draft.languages = action.payload;
+            draft.loadingState = LoadingStatus.LOADED;
+            break;
+
+        case LocalizationActionsType.SET_WALLPAPERS:
+            draft.wallpapers = action.payload;
             draft.loadingState = LoadingStatus.LOADED;
             break;
 

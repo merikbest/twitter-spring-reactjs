@@ -1379,7 +1379,7 @@ export const languages = [
     }
 ];
 
-export const wallpaper = [
+export const wallpapers = [
     {
         "id": 1,
         "src": "https://pbs.twimg.com/media/EXZ2rMvVAAAAfrN?format=png&name=small"
