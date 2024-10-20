@@ -3,6 +3,7 @@ import { LocalizationActions, LocalizationActionsType } from "../contracts/actio
 import { testActionDispatch } from "../../../../util/test-utils/test-helper";
 import { CountryCodeResponse, LanguagesResponse } from "../../../../types/user";
 import { LoadingStatus } from "../../../../types/common";
+import { GifImageResponse, WallpaperResponse } from "../../../../types/localization";
 
 describe("localizationReducer:", () => {
     describe("initial state:", () => {
@@ -26,6 +27,19 @@ describe("localizationReducer:", () => {
         );
 
         testActionDispatch(
+            LocalizationActionsType.SET_GIF_IMAGES,
+            localizationReducer(initialLocalizationState, {
+                type: LocalizationActionsType.SET_GIF_IMAGES,
+                payload: [{ id: 1 }] as GifImageResponse[]
+            }),
+            {
+                ...initialLocalizationState,
+                gifImages: [{ id: 1 }] as GifImageResponse[],
+                loadingState: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
             LocalizationActionsType.SET_LANGUAGES,
             localizationReducer(initialLocalizationState, {
                 type: LocalizationActionsType.SET_LANGUAGES,
@@ -35,6 +49,30 @@ describe("localizationReducer:", () => {
                 ...initialLocalizationState,
                 languages: [{ id: 1 }] as LanguagesResponse[],
                 loadingState: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
+            LocalizationActionsType.SET_WALLPAPERS,
+            localizationReducer(initialLocalizationState, {
+                type: LocalizationActionsType.SET_WALLPAPERS,
+                payload: [{ id: 1 }] as WallpaperResponse[]
+            }),
+            {
+                ...initialLocalizationState,
+                wallpapers: [{ id: 1 }] as WallpaperResponse[],
+                loadingState: LoadingStatus.LOADED
+            }
+        );
+
+        testActionDispatch(
+            LocalizationActionsType.RESET_LOCALIZATION_STATE,
+            localizationReducer(initialLocalizationState, {
+                type: LocalizationActionsType.RESET_LOCALIZATION_STATE
+            }),
+            {
+                ...initialLocalizationState,
+                loadingState: LoadingStatus.LOADING
             }
         );
 

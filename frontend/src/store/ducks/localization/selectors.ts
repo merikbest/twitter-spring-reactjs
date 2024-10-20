@@ -10,3 +10,4 @@ export const selectWallpapers = (state: RootState) => selectLocalization(state).
 export const selectLoadingState = (state: RootState): LoadingStatus => selectLocalization(state).loadingState;
 export const selectIsLocalizationLoading = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADING;
 export const selectIsLocalizationLoaded = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.LOADED;
+export const selectIsLocalizationError = (state: RootState): boolean => selectLoadingState(state) === LoadingStatus.ERROR;

@@ -1,11 +1,14 @@
 import {
-    selectLanguages,
+    selectCountryCodes,
+    selectGifImages,
+    selectIsLocalizationError,
     selectIsLocalizationLoaded,
     selectIsLocalizationLoading,
-    selectCountryCodes
+    selectLanguages,
+    selectWallpapers
 } from "../selectors";
 import { createMockRootState } from "../../../../util/test-utils/test-helper";
-import { countryCodes, languages } from "../../../../util/test-utils/mock-test-data";
+import { countryCodes, gifImage, languages, wallpapers } from "../../../../util/test-utils/mock-test-data";
 import { LoadingStatus } from "../../../../types/common";
 
 describe("localization selectors:", () => {
@@ -20,12 +23,36 @@ describe("localization selectors:", () => {
         });
     });
 
+    describe("selectGifImages", () => {
+        it("should return GifImageResponse array", () => {
+            expect(selectGifImages({
+                ...mockState,
+                localization: { ...mockState.localization, gifImages: gifImage }
+            })).toBe(gifImage);
+        });
+    });
+
     describe("selectLanguages", () => {
         it("should return LanguagesResponse array", () => {
             expect(selectLanguages({
                 ...mockState,
                 localization: { ...mockState.localization, languages: languages }
             })).toBe(languages);
+        });
+    });
+
+    describe("selectWallpapers", () => {
+        it("should return WallpaperResponse array", () => {
+            expect(selectWallpapers({
+                ...mockState,
+                localization: { ...mockState.localization, wallpapers: wallpapers }
+            })).toBe(wallpapers);
+        });
+    });
+
+    describe("selectIsLocalizationError", () => {
+        it("should return correct result", () => {
+            expect(selectIsLocalizationError(createMockRootState(LoadingStatus.ERROR))).toBe(true);
         });
     });
 

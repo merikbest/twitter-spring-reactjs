@@ -12,6 +12,7 @@ export enum LocalizationActionsType {
     SET_GIF_IMAGES = "localization/SET_GIF_IMAGES",
     SET_LANGUAGES = "localization/SET_LANGUAGES",
     SET_WALLPAPERS = "localization/SET_WALLPAPERS",
+    RESET_LOCALIZATION_STATE = "localization/RESET_LOCALIZATION_STATE",
     SET_LOADING_STATE = "localization/SET_LOADING_STATE",
 }
 
@@ -51,6 +52,10 @@ export interface SetWallpapersActionInterface extends Action<LocalizationActions
     payload: LocalizationState["wallpapers"];
 }
 
+export interface ResetLocalizationStateActionInterface extends Action<LocalizationActionsType> {
+    type: LocalizationActionsType.RESET_LOCALIZATION_STATE;
+}
+
 export interface SetLocalizationLoadingStateActionInterface extends Action<LocalizationActionsType> {
     type: LocalizationActionsType.SET_LOADING_STATE;
     payload: LoadingStatus;
@@ -61,4 +66,5 @@ export type LocalizationActions =
     | SetGifImagesActionInterface
     | SetLanguagesActionInterface
     | SetWallpapersActionInterface
+    | ResetLocalizationStateActionInterface
     | SetLocalizationLoadingStateActionInterface;

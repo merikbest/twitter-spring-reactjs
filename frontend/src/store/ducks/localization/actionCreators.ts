@@ -4,6 +4,7 @@ import {
     FetchLanguagesActionInterface,
     FetchWallpapersActionInterface,
     LocalizationActionsType,
+    ResetLocalizationStateActionInterface,
     SetCountryCodesActionInterface,
     SetGifImagesActionInterface,
     SetLanguagesActionInterface,
@@ -47,6 +48,10 @@ export const setLanguages = (payload: LocalizationState["languages"]): SetLangua
 export const setWallpapers = (payload: LocalizationState["wallpapers"]): SetWallpapersActionInterface => ({
     type: LocalizationActionsType.SET_WALLPAPERS,
     payload
+});
+
+export const resetLocalizationState = (): ResetLocalizationStateActionInterface => ({
+    type: LocalizationActionsType.RESET_LOCALIZATION_STATE
 });
 
 export const setLocalizationLoadingState = (payload: LoadingStatus): SetLocalizationLoadingStateActionInterface => ({

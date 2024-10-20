@@ -34,6 +34,14 @@ export const localizationReducer = produce((draft: Draft<LocalizationState>, act
             draft.loadingState = LoadingStatus.LOADED;
             break;
 
+        case LocalizationActionsType.RESET_LOCALIZATION_STATE:
+            draft.countryCodes = [];
+            draft.gifImages = [];
+            draft.languages = [];
+            draft.wallpapers = [];
+            draft.loadingState = LoadingStatus.LOADING;
+            break;
+
         case LocalizationActionsType.SET_LOADING_STATE:
             draft.loadingState = action.payload;
             break;
