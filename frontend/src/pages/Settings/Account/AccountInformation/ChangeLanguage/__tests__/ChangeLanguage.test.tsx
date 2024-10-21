@@ -37,6 +37,6 @@ describe("ChangeLanguage", () => {
         const wrapper = mountWithStore(<ChangeLanguage />, mockStore);
         wrapper.unmount();
 
-        expect(mockDispatchFn).nthCalledWith(1, { type: LocalizationActionsType.FETCH_LANGUAGES });
+        expect(mockDispatchFn).nthCalledWith(2, { type: LocalizationActionsType.RESET_LOCALIZATION_STATE });
     });
 });

@@ -7,14 +7,19 @@ import { FilledSelect } from "../../../../../components/FilledSelect/FilledSelec
 import { selectUserIsLoading, selectUserProfileLanguage } from "../../../../../store/ducks/user/selectors";
 import { updateLanguage } from "../../../../../store/ducks/user/actionCreators";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
-import { fetchLanguages } from "../../../../../store/ducks/localization/actionCreators";
-import { selectIsLocalizationLoading, selectLanguages } from "../../../../../store/ducks/localization/selectors";
+import { fetchLanguages, resetLocalizationState } from "../../../../../store/ducks/localization/actionCreators";
+import {
+    selectIsLocalizationError,
+    selectIsLocalizationLoading,
+    selectLanguages
+} from "../../../../../store/ducks/localization/selectors";
 
 const ChangeLanguage: FC = (): ReactElement => {
     const classes = useChangeLanguageStyles();
     const dispatch = useDispatch();
     const languages = useSelector(selectLanguages);
     const languagesLoading = useSelector(selectIsLocalizationLoading);
+    const languagesError = useSelector(selectIsLocalizationError);
     const profileLanguage = useSelector(selectUserProfileLanguage);
     const isLoading = useSelector(selectUserIsLoading);
     const [language, setLanguage] = useState<string>("");
@@ -25,6 +30,10 @@ const ChangeLanguage: FC = (): ReactElement => {
         if (profileLanguage) {
             setLanguage(profileLanguage);
         }
+
+        return () => {
+            dispatch(resetLocalizationState());
+        };
     }, []);
 
     const changeLanguage = (event: ChangeEvent<{ value: unknown }>): void => {
@@ -39,7 +48,7 @@ const ChangeLanguage: FC = (): ReactElement => {
         <>
             <div className={classes.selectWrapper}>
                 <FormControl variant="filled">
-                    <InputLabel htmlFor="select-language">
+                    <InputLabel id="select-language" shrink>
                         Display Language
                     </InputLabel>
                     <FilledSelect
@@ -50,6 +59,7 @@ const ChangeLanguage: FC = (): ReactElement => {
                         value={language}
                         onChange={changeLanguage}
                         disabled={languagesLoading}
+                        error={languagesError}
                         label="Display Language"
                         fullWidth
                     >

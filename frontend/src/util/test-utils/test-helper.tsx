@@ -325,7 +325,9 @@ export const createMockRootState = (loadingStatus = LoadingStatus.LOADING): Root
         },
         localization: {
             countryCodes: [],
+            gifImages: [],
             languages: [],
+            wallpapers: [],
             loadingState: loadingStatus
         },
     } as RootState;
