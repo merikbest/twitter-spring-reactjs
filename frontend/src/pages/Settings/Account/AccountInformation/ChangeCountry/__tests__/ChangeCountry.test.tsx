@@ -35,4 +35,10 @@ describe("ChangeCountry", () => {
         expect(wrapper.find(FilledSelect).prop("value")).toBe("US");
         expect(mockDispatchFn).nthCalledWith(2, { payload: { country: "US" }, type: UserActionsType.UPDATE_COUNTRY });
     });
+
+    it("should reset ChangeCountry page", () => {
+        const wrapper = mountWithStore(<ChangeCountry />, mockStore);
+        wrapper.unmount();
+        expect(mockDispatchFn).nthCalledWith(2, { type: LocalizationActionsType.RESET_LOCALIZATION_STATE });
+    });
 });

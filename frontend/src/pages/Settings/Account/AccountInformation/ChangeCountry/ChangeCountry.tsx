@@ -10,15 +10,20 @@ import { updateCountry } from "../../../../../store/ducks/user/actionCreators";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { HOW_TO_CHANGE_COUNTRY_SETTINGS } from "../../../../../constants/url-constants";
-import { fetchCountryCodes } from "../../../../../store/ducks/localization/actionCreators";
-import { selectCountryCodes, selectIsLocalizationLoading } from "../../../../../store/ducks/localization/selectors";
+import { fetchCountryCodes, resetLocalizationState } from "../../../../../store/ducks/localization/actionCreators";
+import {
+    selectCountryCodes,
+    selectIsLocalizationError,
+    selectIsLocalizationLoading
+} from "../../../../../store/ducks/localization/selectors";
 
 const ChangeCountry: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useChangeCountryStyles();
     const dispatch = useDispatch();
     const countryCodes = useSelector(selectCountryCodes);
-    const isCountryCodesLoading = useSelector(selectIsLocalizationLoading);
+    const countryCodesLoading = useSelector(selectIsLocalizationLoading);
+    const countryCodesError = useSelector(selectIsLocalizationError);
     const myProfileId = useSelector(selectUserDataId);
     const myProfileCountry = useSelector(selectUserProfileCountry);
     const [country, setCountry] = useState<string>("");
@@ -29,6 +34,10 @@ const ChangeCountry: FC = (): ReactElement => {
         if (myProfileId) {
             setCountry(myProfileCountry!);
         }
+
+        return () => {
+            dispatch(resetLocalizationState());
+        };
     }, []);
 
     const onChangeCountry = (event: ChangeEvent<{ value: unknown }>): void => {
@@ -39,7 +48,7 @@ const ChangeCountry: FC = (): ReactElement => {
     return (
         <div className={classnames(classes.selectWrapper, globalClasses.itemInfoWrapper)}>
             <FormControl variant="filled">
-                <InputLabel htmlFor="select-country">
+                <InputLabel id="select-language" shrink>
                     Country
                 </InputLabel>
                 <FilledSelect
@@ -49,7 +58,8 @@ const ChangeCountry: FC = (): ReactElement => {
                     native
                     value={country}
                     onChange={onChangeCountry}
-                    disabled={isCountryCodesLoading}
+                    disabled={countryCodesLoading}
+                    error={countryCodesError}
                     label="Country"
                     fullWidth
                 >
