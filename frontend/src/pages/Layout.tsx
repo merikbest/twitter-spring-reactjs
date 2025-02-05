@@ -3,6 +3,7 @@ import { Container, Grid, Typography } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 import { getYear } from "date-fns";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import SideMenu from "../components/SideMenu/SideMenu";
 import Tags from "../components/Tags/Tags";
@@ -30,6 +31,7 @@ export const Layout: FC<Layout & DisplayProps> = (
     const classes = useLayoutStyles();
     const location = useLocation();
     const tweetImages = useSelector(selectImages);
+    const { t } = useTranslation();
 
     if (location.pathname.includes(ACCOUNT)) {
         return <div>{children}</div>;
@@ -52,7 +54,7 @@ export const Layout: FC<Layout & DisplayProps> = (
                         <Grid sm={8} md={6} item>
                             {children}
                         </Grid>
-                        <div>
+                        <div className={classes.rightSideMenu}>
                             <SideSearch />
                             {tweetImages.length !== 0 && <ProfileImages />}
                             <div className={classes.rightSide}>
@@ -62,28 +64,29 @@ export const Layout: FC<Layout & DisplayProps> = (
                                     <div>
                                         <a href={TWITTER_TOS} target={"_blank"}>
                                             <Typography component={"span"}>
-                                                Terms of Service
+                                                {t("TERMS_OF_SERVICE", { defaultValue: "Terms of Service" })}
                                             </Typography>
                                         </a>
                                         <a href={TWITTER_PRIVACY} target={"_blank"}>
                                             <Typography component={"span"}>
-                                                Privacy Policy
+                                                {t("PRIVACY_POLICY", { defaultValue: "Privacy Policy" })}
                                             </Typography>
                                         </a>
                                         <a href={TWITTER_COOKIES} target={"_blank"}>
                                             <Typography component={"span"}>
-                                                Cookie Policy
+                                                {t("COOKIE_POLICY", { defaultValue: "Cookie Policy" })}
                                             </Typography>
                                         </a>
                                     </div>
                                     <div>
                                         <a href={TWITTER_ADS_WORK} target={"_blank"}>
                                             <Typography component={"span"}>
-                                                Ads info
+                                                {t("ADS_INFO", { defaultValue: "Ads info" })}
                                             </Typography>
                                         </a>
                                         <Typography component={"span"}>
-                                            More {EditIcon}
+                                            {t("MORE", { defaultValue: "More" })}
+                                            {EditIcon}
                                         </Typography>
                                         <Typography component={"span"}>
                                             {`© ${getYear(Date.now())} Twitter, Inc.`}

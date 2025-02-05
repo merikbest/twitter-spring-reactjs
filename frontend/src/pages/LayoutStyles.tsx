@@ -10,6 +10,9 @@ export const useLayoutStyles = makeStyles((theme) => ({
             padding: "12px 0px"
         }
     },
+    rightSideMenu: {
+        width: 370
+    },
     rightSide: {
         position: "sticky",
         top: 61,
