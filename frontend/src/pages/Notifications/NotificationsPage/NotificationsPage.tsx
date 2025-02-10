@@ -24,14 +24,17 @@ import NotificationItem from "./NotificationItem/NotificationItem";
 import { useNotificationsPageStyles } from "./NotificationsPageStyles";
 import EmptyNotifications from "../EmptyNotifications/EmptyNotifications";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import { useTranslation } from "react-i18next";
 
 const NotificationsPage: FC = (): ReactElement => {
     const classes = useNotificationsPageStyles();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const notifications = useSelector(selectNotificationsList);
     const pagesCount = useSelector(selectPagesCount);
     const tweetAuthors = useSelector(selectNotificationsTweetAuthors);
     const isNotificationLoading = useSelector(selectIsNotificationsLoading);
+    const numberOfPeople = tweetAuthors.length - 1;
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -74,12 +77,16 @@ const NotificationsPage: FC = (): ReactElement => {
                                             component={"div"}
                                             className={classes.notificationInfoText}
                                         >
-                                            {"New Tweet notifications for "}
+                                            {t("NEW_TWEET_NOTIFICATIONS",
+                                                { defaultValue: "New Tweet notifications for" })}{" "}
                                             <Typography variant={"h6"} component={"span"}>
                                                 {tweetAuthors[0].fullName}
                                             </Typography>
                                             {(tweetAuthors.length > 2) ? (
-                                                ` and ${tweetAuthors.length - 1} others`
+                                                ` ${t("AND_OTHERS", {
+                                                    numberOfPeople,
+                                                    defaultValue: ` and ${numberOfPeople} others` })
+                                                }`
                                             ) : (
                                                 (tweetAuthors.length === 2) && (
                                                     <>
@@ -88,7 +95,7 @@ const NotificationsPage: FC = (): ReactElement => {
                                                             component={"span"}
                                                             className={classes.notificationInfoText}
                                                         >
-                                                            {" and "}
+                                                            {` ${t("AND", { defaultValue: "and" })} `}
                                                         </Typography>
                                                         <Typography variant={"h6"} component={"span"}>
                                                             {tweetAuthors[1].fullName}

@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Paper, Typography } from "@material-ui/core";
+
 import { fetchNotificationsFromTweetAuthors } from "../../../../store/ducks/notifications/actionCreators";
 import { selectIsTweetsLoading, selectPagesCount, selectTweetsItems } from "../../../../store/ducks/tweets/selectors";
 import TweetComponent from "../../../../components/TweetComponent/TweetComponent";

@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Avatar, Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
+import { useTranslation } from "react-i18next";
 
 import { useNotificationItemStyles } from "./NotificationItemStyles";
 import { NotificationResponse } from "../../../../types/notification";
@@ -20,6 +21,7 @@ export interface NotificationItemProps {
 
 const NotificationItem: FC<NotificationItemProps> = memo(({ notification }): ReactElement => {
     const classes = useNotificationItemStyles();
+    const { t } = useTranslation();
     const { visiblePopperWindow, handleHoverPopper, handleLeavePopper } = useHoverItem(fetchUserDetail);
     const avatar = notification.user.avatar ?? DEFAULT_PROFILE_IMG;
 
@@ -71,11 +73,11 @@ const NotificationItem: FC<NotificationItemProps> = memo(({ notification }): Rea
                         </Typography>
                         <Typography variant={"body1"} component={"span"}>
                             {(notification.notificationType === NotificationType.FOLLOW) ? (
-                                <>followed you</>
+                                <>{t("FOLLOWED_YOU", { defaultValue: "followed you" })}</>
                             ) : (
                                 (notification.notificationType === NotificationType.LISTS) ? (
                                     <>
-                                        {"added you to their List "}
+                                        {t("ADDED_TO_LIST", { defaultValue: "added you to their List" })}{" "}
                                         <Typography variant={"h6"} component={"span"}>
                                             {notification.list.name}
                                         </Typography>
@@ -83,10 +85,10 @@ const NotificationItem: FC<NotificationItemProps> = memo(({ notification }): Rea
                                 ) : (
                                     <>
                                         {(notification.notificationType === NotificationType.LIKE) ? (
-                                            "liked"
+                                            t("LIKED_YOUR_TWEET", { defaultValue: "liked your Tweet" })
                                         ) : (
-                                            "Retweeted"
-                                        )} your Tweet
+                                            t("RETWEETED_YOUR_TWEET", { defaultValue: "Retweeted your Tweet" })
+                                        )}
                                     </>
                                 )
                             )}
