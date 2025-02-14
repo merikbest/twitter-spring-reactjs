@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { IconButton, InputAdornment, Paper } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { MainSearchTextField } from "../../components/SearchTextField/MainSearchTextField";
 import {
@@ -44,6 +45,7 @@ const Explore: FC = (): ReactElement => {
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const location = useLocation<{ tag: string | undefined; text: string | undefined; }>();
     const history = useHistory();
+    const { t } = useTranslation();
     const [searchText, setSearchText] = useState<string>("");
     const [activeTab, setActiveTab] = useState<number>(0);
     const [pageNumber, setPageNumber] = useState<number>(0);
@@ -162,7 +164,7 @@ const Explore: FC = (): ReactElement => {
                         </div>
                         <MainSearchTextField
                             variant="outlined"
-                            placeholder="Explore Twitter"
+                            placeholder={t("EXPLORE_TWITTER", { defaultValue: "Explore Twitter" })}
                             onChange={handleSearchText}
                             value={searchText}
                             InputProps={{
@@ -179,11 +181,26 @@ const Explore: FC = (): ReactElement => {
                     </form>
                     <div className={classes.tabs}>
                         <Tabs value={activeTab} onChange={handleChangeTab} indicatorColor="primary" textColor="primary">
-                            <Tab onClick={() => handleShowItems(showTopTweets)} label="Top" />
-                            <Tab onClick={() => handleShowItems(showTopTweets)} label="Latest" />
-                            <Tab onClick={() => handleShowItems(showUsers)} label="People" />
-                            <Tab onClick={() => handleShowItems(showMediaTweets)} label="Photos" />
-                            <Tab onClick={() => handleShowItems(showTweetsWithVideos)} label="Videos" />
+                            <Tab
+                                onClick={() => handleShowItems(showTopTweets)}
+                                label={t("TOP", { defaultValue: "Top" })}
+                            />
+                            <Tab
+                                onClick={() => handleShowItems(showTopTweets)}
+                                label={t("LATEST", { defaultValue: "Latest" })}
+                            />
+                            <Tab
+                                onClick={() => handleShowItems(showUsers)}
+                                label={t("PEOPLE", { defaultValue: "People" })}
+                            />
+                            <Tab
+                                onClick={() => handleShowItems(showMediaTweets)}
+                                label={t("PHOTOS", { defaultValue: "Photos" })}
+                            />
+                            <Tab
+                                onClick={() => handleShowItems(showTweetsWithVideos)}
+                                label={t("VIDEOS", { defaultValue: "Videos" })}
+                            />
                         </Tabs>
                     </div>
                 </div>
