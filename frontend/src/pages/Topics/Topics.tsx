@@ -2,6 +2,7 @@ import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import { Route, useHistory, useParams } from "react-router-dom";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { useTranslation } from "react-i18next";
 
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import { useTopicsStyles } from "./TopicsStyles";
@@ -15,6 +16,7 @@ const Topics = (): ReactElement => {
     const history = useHistory();
     const params = useParams<{ topics: string }>();
     const [activeTab, setActiveTab] = useState<number>(0);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (params.topics === "not_interested") {
@@ -38,12 +40,12 @@ const Topics = (): ReactElement => {
     };
 
     return (
-        <PageWrapper title={"Topics"}>
+        <PageWrapper translationKey={"TOPICS"} defaultValue={"Topics"}>
             <div className={classes.tabs}>
                 <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleTabChange}>
-                    <Tab label="Followed" />
-                    <Tab label="Suggested" />
-                    <Tab label="Not Interested" />
+                    <Tab label={t("FOLLOWED", { defaultValue: "Followed" })} />
+                    <Tab label={t("SUGGESTED", { defaultValue: "Suggested" })} />
+                    <Tab label={t("NOT_INTERESTED", { defaultValue: "Not Interested" })} />
                 </Tabs>
             </div>
             <Route exact path={TOPICS_FOLLOWED} component={Followed} />

@@ -43,7 +43,7 @@ const UserTopics = (): ReactElement => {
     }, [isUserProfileLoaded]);
 
     return (
-        <PageWrapper title={"Topics"}>
+        <PageWrapper translationKey={"TOPICS"} defaultValue={"Topics"}>
             <div className={globalClasses.contentWrapper}>
                 {(isFollowedTopicsLoading && !followedTopics.length) ? (
                     <Spinner />

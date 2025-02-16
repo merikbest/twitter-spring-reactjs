@@ -35,6 +35,6 @@ export const TopicApi = {
         return await axios.get<boolean>(UI_V1_TOPICS_NOT_INTERESTED_TOPIC_ID(topicId));
     },
     async processFollowTopic(topicId: number): Promise<AxiosResponse<boolean>> {
-        return await axios.get<boolean>(`${UI_V1_TOPICS_FOLLOW_TOPIC_ID}/${topicId}`);
+        return await axios.get<boolean>(UI_V1_TOPICS_FOLLOW_TOPIC_ID(topicId));
     }
 };

@@ -13,7 +13,8 @@ describe("ConnectToUsers", () => {
     it("should render loading spinner", () => {
         const wrapper = mountWithStore(
             <ConnectToUsers
-                title={"Followers you know"}
+                translationKey={"FOLLOWERS_YOU_KNOW"}
+                defaultValue={"Followers you know"}
                 isUsersLoading={true}
                 users={[]}
             />, mockRootState);
@@ -24,7 +25,8 @@ describe("ConnectToUsers", () => {
     it("should render UsersItem list", () => {
         const wrapper = mountWithStore(
             <ConnectToUsers
-                title={"Followers you know"}
+                translationKey={"FOLLOWERS_YOU_KNOW"}
+                defaultValue={"Followers you know"}
                 isUsersLoading={true}
                 users={mockUsers}
             />, mockRootState);

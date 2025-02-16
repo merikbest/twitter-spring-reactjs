@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useState } from "react";
 import Button from "@material-ui/core/Button/Button";
+import { useTranslation } from "react-i18next";
 
 import { useUnfollowTopicButtonStyles } from "./UnfollowTopicButtonStyles";
 import UnfollowModal from "../../../../components/UnfollowModal/UnfollowModal";
@@ -12,9 +13,9 @@ interface UnfollowTopicButtonProps {
 
 const UnfollowTopicButton: FC<UnfollowTopicButtonProps> = ({ topicName, onClickFollowTopic }): ReactElement => {
     const classes = useUnfollowTopicButtonStyles();
-    const [btnText, setBtnText] = useState<string>("Following");
+    const { t } = useTranslation();
+    const [btnText, setBtnText] = useState<string>(t("FOLLOWING", { defaultValue: "Following" }));
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
-    const infoText = "Even if you unfollow this Topic, you could still see Tweets about it depending on which accounts you’re following.";
 
     const handleClickOpenUnfollowModal = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
@@ -26,8 +27,8 @@ const UnfollowTopicButton: FC<UnfollowTopicButtonProps> = ({ topicName, onClickF
             <Button
                 className={classes.containedButton}
                 onClick={handleClickOpenUnfollowModal}
-                onMouseOver={() => setBtnText("Unfollow")}
-                onMouseLeave={() => setBtnText("Following")}
+                onMouseOver={() => setBtnText(t("UNFOLLOW", { defaultValue: "Unfollow" }))}
+                onMouseLeave={() => setBtnText(t("FOLLOWING", { defaultValue: "Following" }))}
                 color="primary"
                 variant="contained"
                 size="small"
@@ -36,7 +37,7 @@ const UnfollowTopicButton: FC<UnfollowTopicButtonProps> = ({ topicName, onClickF
             </Button>
             <UnfollowModal
                 fullName={topicName}
-                infoText={infoText}
+                unfollowTopic
                 visible={visibleModalWindow}
                 onClose={onCloseModalWindow}
                 handleUnfollow={onClickFollowTopic}

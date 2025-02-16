@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Paper } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import ConnectToUsers from "../../components/ConnectToUsers/ConnectToUsers";
 import { fetchUserProfile } from "../../store/ducks/userProfile/actionCreators";
@@ -25,6 +26,7 @@ const FollowersYouKnow: FC = (): ReactElement => {
     const myProfileId = useSelector(selectUserDataId);
     const [overallFollowers, setOverallFollowers] = useState<UserResponse[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { t } = useTranslation();
 
     useEffect(() => {
         dispatch(fetchUserProfile(parseInt(params.id)));
@@ -65,13 +67,19 @@ const FollowersYouKnow: FC = (): ReactElement => {
                 (!isLoading && (overallFollowers.length === 0)) ? (
                     <div className={globalClasses.contentWrapper}>
                         <EmptyPageDescription
-                            title={`@${userProfile?.username} doesn’t have any followers you know yet`}
-                            subtitle={"When someone you know follows them, they’ll be listed here."}
+                            title={t("EMPTY_FOLLOWERS_YOU_KNOW_TITLE", {
+                                username: userProfile?.username,
+                                defaultValue: `@${userProfile?.username} doesn’t have any followers you know yet`
+                            })}
+                            subtitle={t("EMPTY_FOLLOWERS_YOU_KNOW_DESCRIPTION", {
+                                defaultValue: "When someone you know follows them, they’ll be listed here."
+                            })}
                         />
                     </div>
                 ) : (
                     <ConnectToUsers
-                        title={"Followers you know"}
+                        translationKey={"FOLLOWERS_YOU_KNOW"}
+                        defaultValue={"Followers you know"}
                         isUsersLoading={isLoading}
                         users={overallFollowers}
                     />

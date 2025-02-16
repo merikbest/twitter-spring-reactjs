@@ -105,7 +105,7 @@ const FullTweet = (): ReactElement | null => {
         return <Spinner paddingTop={200} />;
     } else if (tweetId && isTweetLoadedSuccess) {
         return (
-            <PageWrapper title={"Tweet"}>
+            <PageWrapper translationKey={"TWEET"} defaultValue={"Tweet"}>
                 <div className={globalClasses.contentWrapper}>
                     <Paper className={classes.container}>
                         <TweetActions />

@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import Button from "@material-ui/core/Button/Button";
+import { useTranslation } from "react-i18next";
 
 import { useFollowTopicButtonStyles } from "./FollowTopicButtonStyles";
 
@@ -9,6 +10,7 @@ interface FollowTopicButtonProps {
 
 const FollowTopicButton: FC<FollowTopicButtonProps> = ({ onClickButton }): ReactElement => {
     const classes = useFollowTopicButtonStyles();
+    const { t } = useTranslation();
 
     return (
         <Button
@@ -18,7 +20,7 @@ const FollowTopicButton: FC<FollowTopicButtonProps> = ({ onClickButton }): React
             variant="outlined"
             size="small"
         >
-            Follow
+            {t("FOLLOW", { defaultValue: "Follow" })}
         </Button>
     );
 };

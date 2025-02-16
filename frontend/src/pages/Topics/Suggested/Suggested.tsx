@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider, Typography } from "@material-ui/core";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { useSuggestedStyles } from "./SuggestedStyles";
@@ -32,6 +33,7 @@ const Suggested = (): ReactElement => {
     const topicsByCategories = useSelector(selectTopicsByCategories);
     const isTopicsLoading = useSelector(selectIsTopicsLoading);
     const isTopicsByCategoriesLoading = useSelector(selectIsTopicsByCategoriesLoading);
+    const { t } = useTranslation();
     const [showMoreCategories, setShowMoreCategories] = useState(false);
 
     useEffect(() => {
@@ -51,7 +53,7 @@ const Suggested = (): ReactElement => {
         <>
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
-                    Categories
+                    {t("CATEGORIES", { defaultValue: "Categories" })}
                 </Typography>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -80,13 +82,13 @@ const Suggested = (): ReactElement => {
                     component={"div"}
                     onClick={onClickShowMoreCategories}
                 >
-                    Show more
+                    {t("SHOW_MORE", { defaultValue: "Show more" })}
                 </Typography>
             )}
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
-                    For you
+                    {t("FOR_YOU", { defaultValue: "For you" })}
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
@@ -111,7 +113,7 @@ const Suggested = (): ReactElement => {
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
-                    Gaming
+                    {t("GAMING", { defaultValue: "Gaming" })}
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
@@ -120,29 +122,44 @@ const Suggested = (): ReactElement => {
                 ) : (
                     <TopicsCarousel>
                         <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={0}
-                                        endTopicValue={2} />
-                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={2}
-                                        endTopicValue={4} />
-                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={4}
-                                        endTopicValue={6} />
-                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={6}
-                                        endTopicValue={8} />
+                            <TopicBlock
+                                topics={topicsByCategories[0].topicsByCategories}
+                                startTopicValue={0}
+                                endTopicValue={2}
+                            />
+                            <TopicBlock
+                                topics={topicsByCategories[0].topicsByCategories}
+                                startTopicValue={2}
+                                endTopicValue={4}
+                            />
+                            <TopicBlock
+                                topics={topicsByCategories[0].topicsByCategories}
+                                startTopicValue={4}
+                                endTopicValue={6}
+                            />
+                            <TopicBlock
+                                topics={topicsByCategories[0].topicsByCategories}
+                                startTopicValue={6}
+                                endTopicValue={8}
+                            />
                         </div>
                         <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                            <TopicBlock topics={topicsByCategories[0].topicsByCategories} startTopicValue={6}
-                                        endTopicValue={8} />
+                            <TopicBlock
+                                topics={topicsByCategories[0].topicsByCategories}
+                                startTopicValue={6}
+                                endTopicValue={8}
+                            />
                         </div>
                     </TopicsCarousel>
                 )}
             </div>
             <Typography variant={"body1"} component={"div"} className={topicClasses.moreTopics}>
-                View all
+                {t("VIEW_ALL", { defaultValue: "View all" })}
             </Typography>
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
-                    Only on Twitter
+                    {t("ONLY_ON_TWITTER", { defaultValue: "Only on Twitter" })}
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
@@ -151,20 +168,38 @@ const Suggested = (): ReactElement => {
                 ) : (
                     <TopicsCarousel>
                         <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={0}
-                                        endTopicValue={2} />
-                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={2}
-                                        endTopicValue={4} />
-                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={4}
-                                        endTopicValue={6} />
-                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={6}
-                                        endTopicValue={8} />
+                            <TopicBlock
+                                topics={topicsByCategories[1].topicsByCategories}
+                                startTopicValue={0}
+                                endTopicValue={2}
+                            />
+                            <TopicBlock
+                                topics={topicsByCategories[1].topicsByCategories}
+                                startTopicValue={2}
+                                endTopicValue={4}
+                            />
+                            <TopicBlock
+                                topics={topicsByCategories[1].topicsByCategories}
+                                startTopicValue={4}
+                                endTopicValue={6}
+                            />
+                            <TopicBlock
+                                topics={topicsByCategories[1].topicsByCategories}
+                                startTopicValue={6}
+                                endTopicValue={8}
+                            />
                         </div>
                         <div className={classnames(globalClasses.itemInfoWrapper, topicClasses.topicsInfo)}>
-                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={4}
-                                        endTopicValue={6} />
-                            <TopicBlock topics={topicsByCategories[1].topicsByCategories} startTopicValue={6}
-                                        endTopicValue={8} />
+                            <TopicBlock
+                                topics={topicsByCategories[1].topicsByCategories}
+                                startTopicValue={4}
+                                endTopicValue={6}
+                            />
+                            <TopicBlock
+                                topics={topicsByCategories[1].topicsByCategories}
+                                startTopicValue={6}
+                                endTopicValue={8}
+                            />
                         </div>
                     </TopicsCarousel>
                 )}

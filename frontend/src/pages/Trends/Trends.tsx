@@ -30,7 +30,7 @@ const Trends: FC = (): ReactElement => {
     };
 
     return (
-        <PageWrapper title={"Trends"}>
+        <PageWrapper translationKey={"TRENDS"} defaultValue={"Trends"}>
             <InfiniteScrollWrapper dataLength={trends.length} pagesCount={pagesCount} loadItems={loadTrends}>
                 {isLoading && !trends.length ? (
                     <Spinner paddingTop={80} />

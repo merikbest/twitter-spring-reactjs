@@ -29,9 +29,14 @@ const Connect: FC = (): ReactElement => {
     };
 
     return (
-        <PageWrapper title={"Connect"}>
+        <PageWrapper translationKey={"CONNECT"} defaultValue={"Connect"}>
             <InfiniteScrollWrapper dataLength={users.length} pagesCount={pagesCount} loadItems={loadUsers}>
-                <ConnectToUsers title={"Suggested for you"} isUsersLoading={isUsersLoading} users={users} />
+                <ConnectToUsers
+                    translationKey={"SUGGESTED_FOR_YOU"}
+                    defaultValue={"Suggested for you"}
+                    isUsersLoading={isUsersLoading}
+                    users={users}
+                />
             </InfiniteScrollWrapper>
         </PageWrapper>
     );

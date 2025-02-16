@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 import classnames from "classnames";
+import { Trans, useTranslation } from "react-i18next";
 
 import { ACCESSING_YOUR_TWITTER_DATA } from "../../../constants/url-constants";
 import { FOLLOW_AND_UNFOLLOW_TOPICS } from "../../../constants/path-constants";
@@ -29,6 +30,7 @@ const Followed = (): ReactElement => {
     const followedTopics = useSelector(selectFollowedTopicsItems);
     const isTopicsLoading = useSelector(selectIsTopicsLoading);
     const isFollowedTopicsLoading = useSelector(selectIsFollowedTopicsLoading);
+    const { t } = useTranslation();
 
     useEffect(() => {
         dispatch(fetchTopicsByIds({ topicsIds }));
@@ -42,8 +44,8 @@ const Followed = (): ReactElement => {
     return (
         <>
             <Typography variant={"subtitle1"} component={"div"} className={globalClasses.itemInfoWrapper}>
-                The Topics you follow are used to personalize the Tweets, events, and ads that you see, and show up
-                publicly on your profile
+                {t("FOLLOWED_DESCRIPTION", { defaultValue: "The Topics you follow are used to personalize the Tweets, " +
+                        "events, and ads that you see, and show up publicly on your profile" })}
             </Typography>
             <Divider />
             {isFollowedTopicsLoading ? (
@@ -53,10 +55,10 @@ const Followed = (): ReactElement => {
             )}
             <div className={globalClasses.itemInfoWrapper}>
                 <Typography variant={"h5"} component={"div"}>
-                    Suggested Topics
+                    {t("SUGGESTED_TOPICS", { defaultValue: "Suggested Topics" })}
                 </Typography>
                 <Typography variant={"subtitle2"} component={"div"}>
-                    You'll see top Tweets about these right in your Home timeline
+                    {t("SUGGESTED_TOPICS_DESCRIPTION", { defaultValue: "You'll see top Tweets about these right in your Home timeline" })}
                 </Typography>
             </div>
             <div className={topicClasses.topicsItems}>
@@ -77,18 +79,17 @@ const Followed = (): ReactElement => {
                 )}
             </div>
             <Typography variant={"body1"} component={"div"} className={topicClasses.moreTopics}>
-                More Topics
+                {t("MORE_TOPICS", { defaultValue: "More Topics" })}
             </Typography>
             <Divider />
             <Typography variant={"subtitle1"} component={"div"} className={globalClasses.itemInfoWrapper}>
-                Topics that you follow are shown here. To see all the things that Twitter thinks you’re interested in,
-                check out{" "}
-                <MuiLink href={ACCESSING_YOUR_TWITTER_DATA} variant="subtitle1" target="_blank" rel="noopener">
-                    Your Twitter data.
-                </MuiLink>{" You can also "}
-                <MuiLink href={FOLLOW_AND_UNFOLLOW_TOPICS} variant="subtitle1" target="_blank" rel="noopener">
-                    learn more
-                </MuiLink> about following Topics.
+                <Trans
+                    i18nKey={t("MORE_TOPICS_DESCRIPTION", { defaultValue: "More Topics Description" })}
+                    components={{
+                        yourTwitterData: <MuiLink href={ACCESSING_YOUR_TWITTER_DATA} variant="subtitle1" target="_blank" rel="noopener" />,
+                        learnMore: <MuiLink href={FOLLOW_AND_UNFOLLOW_TOPICS} variant="subtitle1" target="_blank" rel="noopener" />
+                    }}
+                />
             </Typography>
         </>
     );
