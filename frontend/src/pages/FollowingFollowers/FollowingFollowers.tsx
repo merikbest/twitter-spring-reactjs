@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { List } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { selectUserDataId } from "../../store/ducks/user/selectors";
 import {
@@ -44,6 +45,7 @@ const FollowingFollowers: FC = (): ReactElement => {
     const isUsersLoading = useSelector(selectUsersSearchIsLoading);
     const users = useSelector(selectFollowers);
     const [activeTab, setActiveTab] = useState<number>(0);
+    const { t } = useTranslation();
 
     useEffect(() => {
         dispatch(fetchUserProfile(parseInt(params.id)));
@@ -92,8 +94,8 @@ const FollowingFollowers: FC = (): ReactElement => {
             <div className={globalClasses.contentWrapper}>
                 <div className={classes.tabs}>
                     <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                        <Tab className={classes.tab} label="Following" />
-                        <Tab className={classes.tab} label="Followers" />
+                        <Tab className={classes.tab} label={t("FOLLOWING", { defaultValue: "Following" })} />
+                        <Tab className={classes.tab} label={t("FOLLOWERS", { defaultValue: "Followers" })} />
                     </Tabs>
                 </div>
                 {(isUsersLoading && !users.length) ? (

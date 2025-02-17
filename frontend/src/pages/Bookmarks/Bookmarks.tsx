@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Paper } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { selectIsTweetsLoading, selectPagesCount, selectTweetsItems } from "../../store/ducks/tweets/selectors";
 import { fetchUserBookmarks, resetTweets } from "../../store/ducks/tweets/actionCreators";
@@ -18,6 +19,7 @@ const Bookmarks: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
+    const { t } = useTranslation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -42,8 +44,8 @@ const Bookmarks: FC = (): ReactElement => {
                     ) : (
                         (!isLoading && !tweets.length) ? (
                             <EmptyPageDescription
-                                title={"You haven’t added any Tweets to your Bookmarks yet"}
-                                subtitle={"When you do, they’ll show up here."}
+                                title={t("EMPTY_BOOKMARKS_TITLE", { defaultValue: "You haven’t added any Tweets to your Bookmarks yet" })}
+                                subtitle={t("EMPTY_BOOKMARKS_SUBTITLE", { defaultValue: "When you do, they’ll show up here." })}
                             />
                         ) : (
                             <>

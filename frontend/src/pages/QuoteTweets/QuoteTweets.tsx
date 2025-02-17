@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Paper, Typography } from "@material-ui/core";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useGlobalStyles } from "../../util/globalClasses";
 import { selectIsTweetsLoading, selectPagesCount, selectTweetsItems } from "../../store/ducks/tweets/selectors";
@@ -19,6 +20,7 @@ const QuoteTweets: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
+    const { t } = useTranslation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -38,7 +40,7 @@ const QuoteTweets: FC = (): ReactElement => {
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <PageHeaderWrapper backButton>
                     <Typography variant={"h5"} component={"div"}>
-                        Quote Tweets
+                        {t("QUOTES_TWEETS", { defaultValue: "Quote Tweets" })}
                     </Typography>
                 </PageHeaderWrapper>
                 <div className={globalClasses.contentWrapper}>
