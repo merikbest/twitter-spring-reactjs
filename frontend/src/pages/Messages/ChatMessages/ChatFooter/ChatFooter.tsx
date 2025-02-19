@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from "react";
 import { Paper, Popover } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { Picker } from "emoji-mart";
+import { useTranslation } from "react-i18next";
 
 import { EmojiIcon, GifIcon, MediaIcon, SendMessageIcon } from "../../../../icons";
 import { MessageInput } from "../../MessageInput/MessageInput";
@@ -18,6 +19,7 @@ interface ChatFooterProps {
 const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
     const classes = useChatFooterStyles();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const { text, setText, handleChangeText, addEmoji, textConverter } = useInputText();
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
 
@@ -32,12 +34,14 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
         <Paper className={classes.chatFooter}>
             <ActionIcon
                 actionText={"Media"}
+                translationKey={"MEDIA"}
                 className={"chatIcon"}
                 icon={MediaIcon}
                 positionTop
             />
             <ActionIcon
                 actionText={"GIF"}
+                translationKey={"GIF"}
                 className={"chatIcon"}
                 icon={GifIcon}
                 positionTop
@@ -47,11 +51,12 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
                 value={text}
                 onChange={handleChangeText}
                 variant="outlined"
-                placeholder="Start a new message"
+                placeholder={t("START_A_NEW_MESSAGE", { defaultValue: "Start a new message" })}
             />
             <div id={"handleOpenPopup"} onClick={handleOpenPopup}>
                 <ActionIcon
                     actionText={"Emoji"}
+                    translationKey={"EMOJI"}
                     className={"emojiIcon"}
                     icon={EmojiIcon}
                     positionTop
@@ -61,6 +66,7 @@ const ChatFooter: FC<ChatFooterProps> = ({ chatId }): ReactElement => {
                 <ActionIcon
                     onClick={onSendMessage}
                     actionText={"Send"}
+                    translationKey={"SEND"}
                     className={"chatIcon"}
                     icon={SendMessageIcon}
                     disabled={text.length === 0}

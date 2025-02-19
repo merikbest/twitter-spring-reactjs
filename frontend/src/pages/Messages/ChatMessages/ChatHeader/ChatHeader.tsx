@@ -31,6 +31,7 @@ const ChatHeader = memo((): ReactElement => {
                 <ActionIcon
                     path={`${MESSAGES}/${chatParticipant?.id}/info`}
                     actionText={"Details"}
+                    translationKey={"DETAILS"}
                     className={"icon"}
                     icon={DetailsIcon}
                 />
