@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { Button, Dialog, DialogContent, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useLeaveFromConversationModalStyles } from "./LeaveFromConversationModalStyles";
 
@@ -16,6 +17,7 @@ const LeaveFromConversationModal: FC<LeaveFromConversationModalProps> = (
         onClose
     }
 ): ReactElement | null => {
+    const { t } = useTranslation();
     const classes = useLeaveFromConversationModalStyles();
 
     if (!visible) {
@@ -27,11 +29,10 @@ const LeaveFromConversationModal: FC<LeaveFromConversationModalProps> = (
             <DialogContent style={{ padding: 0 }}>
                 <div className={classes.modalWrapper}>
                     <Typography variant={"h5"} component={"div"}>
-                        Leave conversation?
+                        {t("LEAVE_CONVERSATION_QUESTION", { defaultValue: "Leave conversation?" })}
                     </Typography>
                     <Typography variant={"subtitle1"} component={"div"}>
-                        This conversation will be deleted from your inbox. Other people in the conversation will still
-                        be able to see it.
+                        {t("LEAVE_CONVERSATION_DESCRIPTION", { defaultValue: "This conversation will be deleted from your inbox. Other people in the conversation will still be able to see it." })}
                     </Typography>
                     <Button
                         className={classes.blockButton}
@@ -41,7 +42,7 @@ const LeaveFromConversationModal: FC<LeaveFromConversationModalProps> = (
                         size="large"
                         fullWidth
                     >
-                        Leave
+                        {t("LEAVE", { defaultValue: "Leave" })}
                     </Button>
                     <Button
                         onClick={onClose}
@@ -50,7 +51,7 @@ const LeaveFromConversationModal: FC<LeaveFromConversationModalProps> = (
                         size="large"
                         fullWidth
                     >
-                        Cancel
+                        {t("CANCEL", { defaultValue: "Cancel" })}
                     </Button>
                 </div>
             </DialogContent>

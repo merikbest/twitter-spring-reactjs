@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import classnames from "classnames";
 import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useConversationInfoStyles } from "../ConversationInfoStyles";
 
@@ -17,6 +18,7 @@ const BlockUserComponent: FC<BlockUserComponentProps> = memo((
         username
     }
 ): ReactElement => {
+    const { t } = useTranslation();
     const classes = useConversationInfoStyles();
 
     return (
@@ -26,7 +28,10 @@ const BlockUserComponent: FC<BlockUserComponentProps> = memo((
             onClick={onOpenBlockUserModal}
         >
             <Typography variant={"body1"} component={"span"}>
-                {isUserBlocked ? "Unblock " : "Block "} @{username}
+                {isUserBlocked
+                    ? t("UNBLOCK", { defaultValue: "Unblock" })
+                    : t("BLOCK", { defaultValue: "Block" })}
+                {` @${username}`}
             </Typography>
         </div>
     );
