@@ -1,4 +1,5 @@
 import React, { FC, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useCloseButtonStyles } from "./CloseButtonStyles";
 import { CloseIcon } from "../../icons";
@@ -10,10 +11,15 @@ interface CloseButtonProps {
 
 const CloseButton: FC<CloseButtonProps> = ({ onClose }): ReactElement => {
     const classes = useCloseButtonStyles();
+    const { t } = useTranslation();
 
     return (
         <div className={classes.close}>
-            <ActionIconButton actionText={"Close"} onClick={onClose} icon={CloseIcon} />
+            <ActionIconButton
+                actionText={t("CLOSE", { defaultValue: "Close" })}
+                onClick={onClose}
+                icon={CloseIcon}
+            />
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Paper, Typography } from "@material-ui/core";
 import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
+import { useTranslation } from "react-i18next";
 
 import { selectUsers, selectUsersIsLoading } from "../../store/ducks/users/selectors";
 import UsersItem, { UserItemSize } from "../UsersItem/UsersItem";
@@ -18,6 +19,7 @@ const Users: FC = (): ReactElement => {
     const history = useHistory();
     const users = useSelector(selectUsers);
     const isUsersLoading = useSelector(selectUsersIsLoading);
+    const { t } = useTranslation();
 
     const clickToConnect = () => {
         dispatch(resetUsersState());
@@ -30,7 +32,7 @@ const Users: FC = (): ReactElement => {
                 <Paper className={classes.container}>
                     <Paper className={classes.header} variant="outlined">
                         <Typography variant={"h5"} component={"div"}>
-                            Who to follow
+                            {t("WHO_TO_FOLLOW", { defaultValue: "Who to follow" })}
                         </Typography>
                     </Paper>
                     {isUsersLoading ? (
@@ -42,9 +44,9 @@ const Users: FC = (): ReactElement => {
                             ))}
                             <ListItem id={"clickToConnect"} onClick={clickToConnect} className={classes.footer}>
                                 <Typography variant={"body1"} component={"div"}>
-                                    Show more
+                                    {t("SHOW_MORE", { defaultValue: "Show more" })}
                                 </Typography>
-                            </ListItem>
+                            </ListItem>`
                         </List>
                     )}
                 </Paper>

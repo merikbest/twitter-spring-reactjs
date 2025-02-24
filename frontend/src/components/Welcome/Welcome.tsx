@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useWelcomeStyles } from "./WelcomeStyles";
 import { startUseTwitter } from "../../store/ducks/user/actionCreators";
@@ -9,6 +10,7 @@ import { startUseTwitter } from "../../store/ducks/user/actionCreators";
 const Welcome: FC = (): ReactElement => {
     const classes = useWelcomeStyles();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const onHandleClick = () => {
         dispatch(startUseTwitter());
@@ -17,11 +19,13 @@ const Welcome: FC = (): ReactElement => {
     return (
         <div className={classes.info}>
             <Typography variant={"h5"} component={"div"}>
-                Welcome to Twitter!
+                {t("WELCOME_TO_TWITTER", { defaultValue: "Welcome to Twitter!" })}
             </Typography>
             <Typography variant={"subtitle1"} component={"div"}>
-                This is the best place to see what’s happening in your world.
-                Find some people and topics to follow now.
+                {t("WELCOME_TO_TWITTER_DESCRIPTION", {
+                    defaultValue: `This is the best place to see what’s happening in your world. 
+                    Find some people and topics to follow now.`
+                })}
             </Typography>
             <div className={classes.infoButtonContainer}>
                 <Button
@@ -30,7 +34,7 @@ const Welcome: FC = (): ReactElement => {
                     variant="contained"
                     size="small"
                 >
-                    Let's go
+                    {t("LETS_GO", { defaultValue: "Let's go" })}
                 </Button>
             </div>
         </div>
