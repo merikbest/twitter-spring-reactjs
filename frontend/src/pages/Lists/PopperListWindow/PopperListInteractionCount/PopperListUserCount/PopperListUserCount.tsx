@@ -1,33 +1,37 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { usePopperListUserCountStyles } from "./PopperListUserCountStyles";
-import { capitalize } from "../../../../../util/text-formatter";
+import { MembersAndFollowersEnum } from "../../../../../hook/useListModal";
 
 interface PopperListUserCountProps {
     id: string;
     userCount?: number;
-    title: string;
-    onOpenModalWindow: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>, title: string) => void;
+    titleKey: MembersAndFollowersEnum;
+    titleDefaultValue: string;
+    onOpenModalWindow: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>, modalType: MembersAndFollowersEnum) => void;
 }
 
 const PopperListUserCount: FC<PopperListUserCountProps> = memo((
     {
         id,
         userCount,
-        title,
+        titleKey,
+        titleDefaultValue,
         onOpenModalWindow
     }
 ): ReactElement => {
     const classes = usePopperListUserCountStyles();
+    const { t } = useTranslation();
 
     return (
-        <span id={id} className={classes.popperListMembers} onClick={(event) => onOpenModalWindow(event, title)}>
+        <span id={id} className={classes.popperListMembers} onClick={(event) => onOpenModalWindow(event, titleKey)}>
             <Typography variant={"h6"} component={"span"}>
                 {userCount}
             </Typography>
             <Typography variant={"subtitle1"} component={"span"}>
-                {" "}{capitalize(title)}
+                {" "}{t(titleKey, { defaultValue: titleDefaultValue })}
             </Typography>
         </span>
     );
