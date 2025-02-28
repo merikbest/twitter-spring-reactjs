@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Avatar, Typography } from "@material-ui/core";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useChatMessageStyles } from "./ChatMessageStyles";
 import { HOME_TWEET } from "../../../../constants/path-constants";
@@ -25,6 +26,7 @@ interface ChatMessageProps {
 
 const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage }): ReactElement => {
     const classes = useChatMessageStyles({ isParticipantMessage });
+    const { t } = useTranslation();
     const myProfileId = useSelector(selectUserDataId);
     const chatSecondParticipantId = useSelector(selectChatSecondParticipantId);
     const chatFirstParticipantAvatar = useSelector(selectChatFirstParticipantAvatar);
@@ -46,7 +48,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
                 <div>
                     {message.tweet && (
                         message.tweet.isDeleted ? (
-                            <div>Tweet deleted</div>
+                            <div>{t("TWEET_DELETED", { defaultValue: "Tweet deleted" })}</div>
                         ) : (
                             <div className={classes.tweetContainer}>
                                 <Link to={`${HOME_TWEET}/${message.tweet.id}`}>

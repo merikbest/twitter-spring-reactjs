@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Dialog, Divider, List, ListItem } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useMessagesModalStyles } from "./MessagesModalStyles";
 import {
@@ -35,6 +36,7 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
     const [text, setText] = useState<string>("");
     const [selectedIndex, setSelectedIndex] = useState<number>();
     const [selectedUser, setSelectedUser] = useState<UserResponse>();
+    const { t } = useTranslation();
 
     const handleSubmitSearch = (event: FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -80,7 +82,11 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
 
     return (
         <Dialog open={visible} onClose={onClose}>
-            <DialogTitleComponent title={"New message"} onClose={onClose} borderBottom>
+            <DialogTitleComponent
+                title={t("NEW_MESSAGE", { defaultValue: "New message" })}
+                onClose={onClose}
+                borderBottom
+            >
                 <Button
                     onClick={handleClickAddUserToChat}
                     type="submit"
@@ -89,7 +95,7 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
                     size="small"
                     disabled={!selectedIndex}
                 >
-                    Next
+                    {t("NEXT", { defaultValue: "Next" })}
                 </Button>
             </DialogTitleComponent>
             <DialogContent id="scrollableDiv" className={classnames(globalClasses.dialogContent, classes.content)}>
@@ -99,7 +105,11 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
                     loadItems={loadParticipants}
                 >
                     <form onSubmit={handleSubmitSearch}>
-                        <ModalInput placeholder={"Explore people"} searchText={text} onSearch={onSearch} />
+                        <ModalInput
+                            placeholder={t("SEARCH_PEOPLE", { defaultValue: "Explore people" })}
+                            searchText={text}
+                            onSearch={onSearch}
+                        />
                     </form>
                     <Divider />
                     <List component="nav">
