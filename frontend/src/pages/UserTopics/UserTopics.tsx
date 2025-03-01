@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
 import { fetchFollowedTopicsByUserId, resetTopicsState } from "../../store/ducks/topics/actionCreators";
@@ -22,6 +23,7 @@ const UserTopics = (): ReactElement => {
     const isUserProfileLoaded = useSelector(selectUsersIsSuccessLoaded);
     const followedTopics = useSelector(selectFollowedTopicsItems);
     const isFollowedTopicsLoading = useSelector(selectIsFollowedTopicsLoading);
+    const { t } = useTranslation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -50,8 +52,8 @@ const UserTopics = (): ReactElement => {
                 ) : (
                     (!isFollowedTopicsLoading && !followedTopics.length) ? (
                         <EmptyPageDescription
-                            title={"User isn’t following any Topics."}
-                            subtitle={"When they do, it will be listed here."}
+                            title={t("EMPTY_USER_TOPIC_TITLE", { defaultValue: "User isn’t following any Topics." })}
+                            subtitle={t("EMPTY_USER_TOPIC_DESCRIPTION", { defaultValue: "When they do, it will be listed here." })}
                         />
                     ) : (
                         followedTopics.map((topic) => <TopicItem key={topic.id} topic={topic} />)

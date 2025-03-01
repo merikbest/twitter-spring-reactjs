@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { ClickAwayListener, Divider, List, ListItem, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useTopTweetActionsStyles } from "./TopTweetActionsStyles";
 import { SeeLatestIcon, SettingsIcon, ShowLatestTweets, ShowTopTweets, TopTweets } from "../../../icons";
@@ -24,13 +25,18 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
 ): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useTopTweetActionsStyles();
+    const { t } = useTranslation();
     const { open, onClickOpen, onClickClose } = useClickAway();
 
     return (
         <ClickAwayListener onClickAway={onClickClose}>
             <div>
                 <div className={classes.headerIcon}>
-                    <ActionIconButton actionText={"Top Tweets"} icon={TopTweets} onClick={onClickOpen} />
+                    <ActionIconButton
+                        actionText={t("TOP_TWEETS", { defaultValue: "Top Tweets" })}
+                        icon={TopTweets}
+                        onClick={onClickOpen}
+                    />
                 </div>
                 {open && (
                     <div className={classes.dropdown}>
@@ -39,7 +45,10 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
                                 {switchTweets ? ShowLatestTweets : ShowTopTweets}
                             </div>
                             <Typography variant={"h5"} component={"div"}>
-                                {switchTweets ? "Latest Tweets show up as they happen" : "Home shows you top Tweets first"}
+                                {switchTweets
+                                    ? t("LATEST_TWEETS", { defaultValue: "Latest Tweets show up as they happen" })
+                                    : t("TOP_TWEETS_FIRST", { defaultValue: "Home shows you top Tweets first" })
+                                }
                             </Typography>
                         </div>
                         <Divider />
@@ -51,10 +60,16 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
                                     </span>
                                     <div>
                                         <Typography variant={"body1"} component={"div"}>
-                                            {switchTweets ? "Go back Home" : "See latest Tweets instead"}
+                                            {switchTweets
+                                                ? t("GO_BACK_HOME", { defaultValue: "Go back Home" })
+                                                : t("SEE_LATEST_TWEETS", { defaultValue: "See latest Tweets instead" })
+                                            }
                                         </Typography>
                                         <Typography variant={"subtitle2"} component={"div"}>
-                                            {switchTweets ? "You’ll see top Tweets first." : "You’ll see Tweets show up as they happen."}
+                                            {switchTweets
+                                                ? t("SEE_TOP_TWEETS_FIRST_DESCRIPTION", { defaultValue: "You’ll see top Tweets first." })
+                                                : t("LATEST_TWEETS_DESCRIPTION", { defaultValue: "You’ll see Tweets show up as they happen." })
+                                            }
                                         </Typography>
                                     </div>
                                 </div>
@@ -67,7 +82,7 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
                                     </span>
                                         <div>
                                             <Typography variant={"body1"} component={"div"}>
-                                                View content preferences
+                                                {t("VIEW_CONTENT_PREFERENCES", { defaultValue: "View content preferences" })}
                                             </Typography>
                                         </div>
                                     </div>

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Divider, Paper, Typography } from "@material-ui/core";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import { useHomeStyles } from "./HomeStyles";
@@ -34,6 +35,7 @@ const Home: FC = (): ReactElement => {
     const tweets = useSelector(selectTweetsItems);
     const isLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
+    const { t } = useTranslation();
     const [switchTweets, setSwitchTweets] = React.useState<boolean>(false);
     const [page, setPage] = React.useState<number>(0);
 
@@ -89,7 +91,7 @@ const Home: FC = (): ReactElement => {
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <Paper className={classnames(globalClasses.pageHeader, classes.header)} variant="outlined">
                     <Typography variant="h5">
-                        Home
+                        {t("HOME", { defaultValue: "Home" })}
                     </Typography>
                     <TopTweetActions
                         switchTweets={switchTweets}
@@ -98,7 +100,10 @@ const Home: FC = (): ReactElement => {
                     />
                 </Paper>
                 <div className={classes.addForm}>
-                    <AddTweetForm title={"What's happening?"} buttonName={"Tweet"} />
+                    <AddTweetForm
+                        title={t("WHATS_HAPPENING", { defaultValue: "What's happening?" })}
+                        buttonName={"Tweet"}
+                    />
                 </div>
                 <Divider />
                 {!isProfileStarted ? (
