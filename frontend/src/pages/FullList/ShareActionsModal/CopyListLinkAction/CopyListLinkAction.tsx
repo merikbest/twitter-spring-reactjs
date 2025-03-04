@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import CopyToClipboard from "react-copy-to-clipboard";
+import { useTranslation } from "react-i18next";
 
 import { LinkIcon } from "../../../../icons";
 import ShareActionsItem from "../ShareActionsItem/ShareActionsItem";
@@ -15,15 +16,20 @@ interface CopyListLinkActionProps {
 const CopyListLinkAction: FC<CopyListLinkActionProps> = ({ onClickClose }): ReactElement => {
     const dispatch = useDispatch();
     const location = useLocation();
+    const { t } = useTranslation();
 
     const onCopyLinkToList = (): void => {
-        dispatch(setOpenSnackBar("Copied to clipboard"));
+        dispatch(setOpenSnackBar(t("COPIED_TO_CLIPBOARD", { defaultValue: "Copied to clipboard" })));
         onClickClose();
     };
 
     return (
         <CopyToClipboard text={`${CLIENT_URL}${location.pathname}`}>
-            <ShareActionsItem title={"Copy link to List"} icon={LinkIcon} onClick={onCopyLinkToList} />
+            <ShareActionsItem
+                title={t("COPY_LINK_TO_LIST", { defaultValue: "Copy link to List" })}
+                icon={LinkIcon}
+                onClick={onCopyLinkToList}
+            />
         </CopyToClipboard>
     );
 };

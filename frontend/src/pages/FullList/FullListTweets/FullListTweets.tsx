@@ -1,6 +1,7 @@
 import React, { memo, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import EmptyPageDescription from "../../../components/EmptyPageDescription/EmptyPageDescription";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
@@ -22,6 +23,7 @@ const FullListTweets = memo((): ReactElement => {
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const isTweetsLoaded = useSelector(selectIsTweetsLoaded);
     const pagesCount = useSelector(selectListTweetsPagesCount);
+    const { t } = useTranslation();
 
     useEffect(() => {
         loadTweets(0);
@@ -39,8 +41,8 @@ const FullListTweets = memo((): ReactElement => {
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>
             {(tweets.length === 0 && isTweetsLoaded) ? (
                 <EmptyPageDescription
-                    title={"There aren’t any Tweets in this List"}
-                    subtitle={"When anyone in this List Tweets, they’ll show up here."}
+                    title={t("EMPTY_LIST_TWEETS_TITLE", { defaultValue: "There aren’t any Tweets in this List" })}
+                    subtitle={t("EMPTY_LIST_TWEETS_DESCRIPTION", { defaultValue: "When anyone in this List Tweets, they’ll show up here." })}
                 />
             ) : (
                 <>
