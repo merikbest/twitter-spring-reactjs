@@ -13,6 +13,7 @@ interface CreateListsModalInputProps {
     maxTextLength: number;
     helperText?: string;
     error?: boolean;
+    hasDescription?: boolean;
 }
 
 const CreateListsModalInput: FC<CreateListsModalInputProps> = (
@@ -23,7 +24,8 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = (
         label,
         maxTextLength,
         helperText,
-        error
+        error,
+        hasDescription
     }
 ): ReactElement => {
     const classes = useCreateListsModalInputStyles();
@@ -52,8 +54,8 @@ const CreateListsModalInput: FC<CreateListsModalInputProps> = (
                 }}
                 onFocus={onFocus}
                 onBlur={onBlur}
-                multiline={label === "Description"}
-                rows={label === "Description" ? 3 : 1}
+                multiline={hasDescription}
+                rows={hasDescription ? 3 : 1}
                 fullWidth
             />
         </div>

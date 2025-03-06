@@ -4,6 +4,8 @@ import { Button, Checkbox, Dialog, DialogContent, Typography } from "@material-u
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 import { useEditListModalStyles } from "./EditListModalStyles";
 import UploadProfileImage from "../../../../components/UploadProfileImage/UploadProfileImage";
@@ -31,8 +33,8 @@ export interface EditListModalFormProps {
     wallpaper: string;
 }
 
-export const EditListModalFormSchema = yup.object().shape({
-    listName: yup.string().min(1, "Name can’t be blank").required()
+const editListModalFormSchema = (t: TFunction<"translation", undefined>) => yup.object().shape({
+    listName: yup.string().min(1, t("LIST_NAME_ERROR", { defaultValue: "List Name can’t be blank" })).required()
 });
 
 const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactElement | null => {
@@ -40,7 +42,7 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
     const classes = useEditListModalStyles();
     const dispatch = useDispatch();
     const list = useSelector(selectListItem);
-
+    const { t } = useTranslation();
     const [wallpaper, setWallpaper] = useState<ImageObj>();
     const [isListPrivate, setIsListPrivate] = useState<boolean>(false);
     const listWrapperSrc = list?.wallpaper ?? list?.altWallpaper;
@@ -53,7 +55,7 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
             isPrivate: list?.isPrivate,
             wallpaper: list?.wallpaper
         },
-        resolver: yupResolver(EditListModalFormSchema),
+        resolver: yupResolver(editListModalFormSchema(t)),
         mode: "onChange"
     });
 
@@ -86,9 +88,12 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
     return (
         <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitleComponent title={"Edit List"} onClose={onClose}>
+                <DialogTitleComponent
+                    title={t("EDIT_LIST", { defaultValue: "Edit List" })}
+                    onClose={onClose}
+                >
                     <Button type="submit" variant="contained" color="primary" size="small">
-                        Done
+                        {t("DONE", { defaultValue: "Done" })}
                     </Button>
                 </DialogTitleComponent>
                 <DialogContent className={globalClasses.dialogContent}>
@@ -110,7 +115,7 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
                             defaultValue=""
                             render={({ field: { onChange, value } }) => (
                                 <CreateListsModalInput
-                                    label={"Name"}
+                                    label={t("NAME", { defaultValue: "Name" })}
                                     name="name"
                                     helperText={errors.listName?.message}
                                     error={!!errors.listName}
@@ -126,18 +131,19 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
                             defaultValue=""
                             render={({ field: { onChange, value } }) => (
                                 <CreateListsModalInput
-                                    label={"Description"}
+                                    label={t("DESCRIPTION", { defaultValue: "Description" })}
                                     name={"description"}
                                     onChange={onChange}
                                     value={value}
                                     maxTextLength={50}
+                                    hasDescription
                                 />
                             )}
                         />
                         <div className={globalClasses.itemInfoWrapper}>
                             <div className={classes.footerWrapper}>
                                 <Typography variant={"body1"} component={"div"}>
-                                    Make private
+                                    {t("MAKE_PRIVATE", { defaultValue: "Make private" })}
                                 </Typography>
                                 <Checkbox
                                     checked={isListPrivate}
@@ -147,7 +153,7 @@ const EditListModal: FC<EditListModalProps> = ({ visible, onClose }): ReactEleme
                                 />
                             </div>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                When you make a List private, only you can see it.
+                                {t("MAKE_PRIVATE_DESCRIPTION", { defaultValue: "When you make a List private, only you can see it." })}
                             </Typography>
                         </div>
                         <ManageMembersModal />

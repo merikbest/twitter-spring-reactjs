@@ -4,6 +4,8 @@ import { Button, Checkbox, Dialog, DialogContent, Typography } from "@material-u
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 import { useCreateListsModalStyles } from "./CreateListsModalStyles";
 import UploadProfileImage from "../../../../components/UploadProfileImage/UploadProfileImage";
@@ -27,17 +29,18 @@ interface CreateListsModalFormProps {
     wallpaper: string;
 }
 
-const CreateListsModalFormSchema = yup.object().shape({
-    listName: yup.string().min(1, "List Name can’t be blank").required()
+const createListsModalFormSchema = (t: TFunction<"translation", undefined>) => yup.object().shape({
+    listName: yup.string().min(1, t("LIST_NAME_ERROR", { defaultValue: "List Name can’t be blank" })).required()
 });
 
 const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles({ dialogContentHeight: 650 });
     const classes = useCreateListsModalStyles();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const [wallpaper, setWallpaper] = useState<ImageObj>();
     const { control, watch, handleSubmit, formState: { errors } } = useForm<CreateListsModalFormProps>({
-        resolver: yupResolver(CreateListsModalFormSchema),
+        resolver: yupResolver(createListsModalFormSchema(t)),
         mode: "onChange"
     });
 
@@ -64,7 +67,10 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
     return (
         <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitleComponent title={"Create a new List"} onClose={onClose}>
+                <DialogTitleComponent
+                    title={t("CREATE_A_NEW_LIST", { defaultValue: "Create a new List" })}
+                    onClose={onClose}
+                >
                     <Button
                         disabled={!watch("listName")}
                         type="submit"
@@ -72,7 +78,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                         color="primary"
                         size="small"
                     >
-                        Next
+                        {t("NEXT", { defaultValue: "Next" })}
                     </Button>
                 </DialogTitleComponent>
                 <DialogContent className={globalClasses.dialogContent}>
@@ -89,7 +95,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                             defaultValue=""
                             render={({ field: { onChange, value } }) => (
                                 <CreateListsModalInput
-                                    label={"Name"}
+                                    label={t("NAME", { defaultValue: "Name" })}
                                     name={"name"}
                                     helperText={errors.listName?.message}
                                     error={!!errors.listName}
@@ -105,18 +111,19 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                             defaultValue=""
                             render={({ field: { onChange, value } }) => (
                                 <CreateListsModalInput
-                                    label={"Description"}
+                                    label={t("DESCRIPTION", { defaultValue: "Description" })}
                                     name={"description"}
                                     onChange={onChange}
                                     value={value}
                                     maxTextLength={50}
+                                    hasDescription
                                 />
                             )}
                         />
                         <div className={globalClasses.itemInfoWrapper}>
                             <div className={classes.footerWrapper}>
                                 <Typography variant={"body1"} component={"div"}>
-                                    Make private
+                                    {t("MAKE_PRIVATE", { defaultValue: "Make private" })}
                                 </Typography>
                                 <Controller
                                     name="isPrivate"
@@ -133,7 +140,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                                 />
                             </div>
                             <Typography variant={"subtitle2"} component={"div"}>
-                                When you make a List private, only you can see it.
+                                {t("MAKE_PRIVATE_DESCRIPTION", { defaultValue: "When you make a List private, only you can see it." })}
                             </Typography>
                         </div>
                     </div>

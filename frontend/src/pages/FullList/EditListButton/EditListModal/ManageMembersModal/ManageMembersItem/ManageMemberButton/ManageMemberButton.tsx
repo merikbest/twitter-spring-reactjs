@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useManageMembersItemStyles } from "../ManageMembersItemStyles";
 import { processUserToListMembers } from "../../../../../../../store/ducks/listMembers/actionCreators";
@@ -22,6 +23,7 @@ const ManageMemberButton: FC<ManageMemberButtonProps> = memo((
 ): ReactElement => {
     const dispatch = useDispatch();
     const classes = useManageMembersItemStyles();
+    const { t } = useTranslation();
 
     const onClickAddUserToList = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
@@ -36,7 +38,7 @@ const ManageMemberButton: FC<ManageMemberButtonProps> = memo((
             color="primary"
             size="small"
         >
-            {isMemberInList ? "Remove" : "Add"}
+            {isMemberInList ? t("REMOVE", { defaultValue: "Remove" }) : t("ADD", { defaultValue: "Add" })}
         </Button>
     );
 });

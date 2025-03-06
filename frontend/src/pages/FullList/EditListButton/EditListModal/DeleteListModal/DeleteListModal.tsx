@@ -5,6 +5,7 @@ import { Button } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useDeleteListModalStyles } from "./DeleteListModalStyles";
 import { deleteList } from "../../../../../store/ducks/list/actionCreators";
@@ -17,6 +18,7 @@ const DeleteListModal = (): ReactElement => {
     const history = useHistory();
     const { listId } = useParams<{ listId: string }>();
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     const onDeleteList = (): void => {
         onCloseModalWindow();
@@ -33,16 +35,17 @@ const DeleteListModal = (): ReactElement => {
                 variant={"body1"}
                 component={"div"}
             >
-                Delete List
+                {t("DELETE_LIST", { defaultValue: "Delete List" })}
             </Typography>
             <Dialog open={visibleModalWindow} onClose={onCloseModalWindow}>
                 <DialogContent style={{ padding: 0 }}>
                     <div className={classes.modalWrapper}>
                         <Typography variant={"h5"} component={"div"}>
-                            Delete List?
+                            {t("DELETE_LIST_TITLE", { defaultValue: "Delete List?" })}
                         </Typography>
                         <Typography variant={"subtitle1"} component={"div"}>
-                            This can’t be undone and you’ll lose your List.
+                            {t("DELETE_LIST_DESCRIPTION", {
+                                defaultValue: "This can’t be undone and you’ll lose your List." })}
                         </Typography>
                         <div className={classes.modalButtonWrapper}>
                             <Button
@@ -51,7 +54,7 @@ const DeleteListModal = (): ReactElement => {
                                 variant="contained"
                                 size="large"
                             >
-                                Cancel
+                                {t("CANCEL", { defaultValue: "Cancel" })}
                             </Button>
                             <Button
                                 className={classes.modalDeleteButton}
@@ -59,7 +62,7 @@ const DeleteListModal = (): ReactElement => {
                                 variant="contained"
                                 size="large"
                             >
-                                Delete
+                                {t("DELETE", { defaultValue: "Delete" })}
                             </Button>
                         </div>
                     </div>

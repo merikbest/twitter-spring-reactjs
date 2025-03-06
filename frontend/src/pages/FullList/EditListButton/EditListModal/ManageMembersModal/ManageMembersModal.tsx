@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTitle, InputAdornment, Typography } from "
 import IconButton from "@material-ui/core/IconButton";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import { useTranslation } from "react-i18next";
 
 import { useManageMembersModalStyles } from "./ManageMembersModalStyles";
 import ManageMembersItem from "./ManageMembersItem/ManageMembersItem";
@@ -34,6 +35,7 @@ const ManageMembersModal = (): ReactElement => {
     const members = useSelector(selectListMembersItems);
     const suggested = useSelector(selectListSuggestedItems);
     const isMembersLoading = useSelector(selectIsListMembersLoading);
+    const { t } = useTranslation();
     const [activeTab, setActiveTab] = React.useState<number>(0);
     const [searchText, setSearchText] = React.useState<string>("");
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
@@ -78,7 +80,7 @@ const ManageMembersModal = (): ReactElement => {
                 variant={"body1"}
                 component={"div"}
             >
-                Manage members
+                {t("MANAGE_MEMBERS", { defaultValue: "Manage members" })}
                 <>{ForwardArrowIcon}</>
             </Typography>
             <Dialog
@@ -91,13 +93,22 @@ const ManageMembersModal = (): ReactElement => {
                     <IconButton onClick={onCloseModalWindow} color="primary" size="small">
                         <>{ArrowIcon}</>
                     </IconButton>
-                    Manage members
+                    {t("MANAGE_MEMBERS", { defaultValue: "Manage members" })}
                 </DialogTitle>
                 <DialogContent className={globalClasses.dialogContent}>
                     <div className={classes.tabs}>
                         <Tabs value={activeTab} indicatorColor="primary" textColor="primary" onChange={handleChangeTab}>
-                            <Tab className={classes.tab} label={`Members (${list?.membersSize})`} />
-                            <Tab className={classes.tab} label="Suggested" />
+                            <Tab
+                                className={classes.tab}
+                                label={t("MEMBERS_SIZE", {
+                                    membersSize: list?.membersSize,
+                                    defaultValue: `Members (${list?.membersSize})`
+                                })}
+                            />
+                            <Tab
+                                className={classes.tab}
+                                label={t("SUGGESTED", { defaultValue: "Suggested" })}
+                            />
                         </Tabs>
                     </div>
                     {(activeTab === 0) ? (
@@ -115,8 +126,10 @@ const ManageMembersModal = (): ReactElement => {
                                 ))
                             ) : (
                                 <EmptyPageDescription
-                                    title={"There isn’t anyone in this List"}
-                                    subtitle={"When people get added, they’ll show up here."}
+                                    title={t("EMPTY_MEMBERS_IN_LIST_TITLE", {
+                                        defaultValue: "There isn’t anyone in this List" })}
+                                    subtitle={t("EMPTY_MEMBERS_IN_LIST_DESCRIPTION", {
+                                        defaultValue: "When people get added, they’ll show up here." })}
                                 />
                             )
                         )
@@ -124,7 +137,7 @@ const ManageMembersModal = (): ReactElement => {
                         <div className={classes.container}>
                             <ManageMembersInput
                                 fullWidth
-                                placeholder="Search people"
+                                placeholder={t("SEARCH_PEOPLE", { defaultValue: "Search people" })}
                                 variant="outlined"
                                 onChange={(event) => onSearch(event.target.value)}
                                 value={searchText}
@@ -148,8 +161,10 @@ const ManageMembersModal = (): ReactElement => {
                                 ))
                             ) : (
                                 <EmptyPageDescription
-                                    title={"There aren’t any suggested members"}
-                                    subtitle={"To see suggestions to add to this List, try searching for accounts."}
+                                    title={t("EMPTY_SUGGESTED_MEMBERS_TITLE", {
+                                        defaultValue: "There aren’t any suggested members" })}
+                                    subtitle={t("EMPTY_SUGGESTED_MEMBERS_DESCRIPTION", {
+                                        defaultValue: "To see suggestions to add to this List, try searching for accounts." })}
                                 />
                             )}
                         </div>
