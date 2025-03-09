@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { Button, Dialog, DialogContent, Typography } from "@material-ui/core";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useBlockUserModalStyles } from "./BlockUserModalStyles";
 
@@ -22,6 +23,7 @@ const BlockUserModal: FC<BlockUserModalProps> = (
     }
 ): ReactElement | null => {
     const classes = useBlockUserModalStyles();
+    const { t } = useTranslation();
 
     if (!visible) {
         return null;
@@ -36,14 +38,14 @@ const BlockUserModal: FC<BlockUserModalProps> = (
         >
             <DialogContent>
                 <Typography variant={"h5"} component={"div"}>
-                    {isUserBlocked ? "Unblock" : "Block"} @{username}
+                    {isUserBlocked
+                        ? t("UNBLOCK_USER", { username, defaultValue: `Unblock @${username}` })
+                        : t("BLOCK_USER", { username, defaultValue: `Block @${username}` })}
                 </Typography>
                 <Typography variant={"subtitle1"} component={"div"} className={classes.text}>
-                    {isUserBlocked ? (
-                        "They will be able to follow you and view your Tweets."
-                    ) : (
-                        `They will not be able to follow you or view your Tweets, and you will not see Tweets or notifications from @${username}.`
-                    )}
+                    {isUserBlocked
+                        ? t("UNBLOCK_USER_DESCRIPTION", { defaultValue: "They will be able to follow you and view your Tweets." })
+                        : t("BLOCK_USER_DESCRIPTION", { username, defaultValue: `They will not be able to follow you or view your Tweets, and you will not see Tweets or notifications from @${username}.` })}
                 </Typography>
                 <Button
                     className={
@@ -58,7 +60,9 @@ const BlockUserModal: FC<BlockUserModalProps> = (
                     size="large"
                     fullWidth
                 >
-                    {isUserBlocked ? "Unblock" : "Block"}
+                    {isUserBlocked
+                        ? t("UNBLOCK", { defaultValue: "Unblock" })
+                        : t("BLOCK", { defaultValue: "Block" })}
                 </Button>
                 <Button
                     onClick={onClose}
@@ -67,7 +71,7 @@ const BlockUserModal: FC<BlockUserModalProps> = (
                     size="large"
                     fullWidth
                 >
-                    Cancel
+                    {t("CANCEL", { defaultValue: "Cancel" })}
                 </Button>
             </DialogContent>
         </Dialog>

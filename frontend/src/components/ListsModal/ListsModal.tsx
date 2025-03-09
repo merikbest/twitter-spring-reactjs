@@ -1,6 +1,7 @@
 import React, { FC, FormEvent, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Dialog, DialogContent, List, ListItem, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useListsModalStyles } from "./ListsModalStyles";
 import {
@@ -28,6 +29,7 @@ const ListsModal: FC<ListsModalProps> = ({ userId, visible, onClose }): ReactEle
     const simpleLists = useSelector(selectSimpleListsItems);
     const isSimpleListsLoading = useSelector(selectIsSimpleListsLoading);
     const isSimpleListsLoaded = useSelector(selectIsSimpleListsLoaded);
+    const { t } = useTranslation();
     const [lists, setLists] = useState<SimpleListResponse[]>([]);
 
     useEffect(() => {
@@ -66,16 +68,16 @@ const ListsModal: FC<ListsModalProps> = ({ userId, visible, onClose }): ReactEle
     }
 
     return (
-        <Dialog open={visible} onClose={onClose} >
+        <Dialog open={visible} onClose={onClose}>
             <form onSubmit={onSubmit}>
-                <DialogTitleComponent title={"Pick a List"} onClose={onClose}>
+                <DialogTitleComponent title={t("PICK_A_LIST", { defaultValue: "Pick a List" })} onClose={onClose}>
                     <Button type="submit" variant="contained" color="primary" size="small">
-                        Save
+                        {t("SAVE", { defaultValue: "Save" })}
                     </Button>
                 </DialogTitleComponent>
                 <DialogContent className={globalClasses.dialogContent}>
                     <Typography variant={"body1"} component={"div"} className={classes.createList}>
-                        Create a new List
+                        {t("CREATE_A_NEW_LIST", { defaultValue: "Create a new List" })}
                     </Typography>
                     <div className={classes.list}>
                         {isSimpleListsLoading ? (

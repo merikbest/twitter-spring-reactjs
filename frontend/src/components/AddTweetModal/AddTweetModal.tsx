@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useEffect } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useAddTweetModalStyles } from "./AddTweetModalStyles";
 import AddTweetForm from "../AddTweetForm/AddTweetForm";
@@ -17,6 +18,7 @@ interface AddTweetModalProps {
 const AddTweetModal: FC<AddTweetModalProps> = ({ title, visible, onClose }): ReactElement | null => {
     const classes = useAddTweetModalStyles();
     const isTweetAdded = useSelector(selectIsTweetsLoaded);
+    const { t } = useTranslation();
 
     useEffect(() => {
         onClose();
@@ -30,7 +32,12 @@ const AddTweetModal: FC<AddTweetModalProps> = ({ title, visible, onClose }): Rea
         <Dialog className={classes.content} open={visible} onClose={onClose}>
             <DialogTitleComponent title={title} onClose={onClose}/>
             <DialogContent className={classes.dialogContent}>
-                <AddTweetForm maxRows={6} minRows={6} title={"What's happening?"} buttonName={"Tweet"} />
+                <AddTweetForm
+                    maxRows={6}
+                    minRows={6}
+                    title={t("WHATS_HAPPENING", { defaultValue: "What's happening?" })}
+                    buttonName="Tweet"
+                />
             </DialogContent>
         </Dialog>
     );

@@ -23,6 +23,10 @@ export const formatScheduleDate = (date: Date): string => {
     return format(date, "EEE, MMM d, yyyy 'at' hh:mm a");
 };
 
+export const formatRegistrationDate = (registrationDate: string): string => {
+    return format(new Date(registrationDate), "MMMM yyyy");
+};
+
 export const formatChatMessageDate = (date: Date): string => {
     const datePattern = format(date, HOUR_MINUTE_AMPM, { locale: usLang });
 
