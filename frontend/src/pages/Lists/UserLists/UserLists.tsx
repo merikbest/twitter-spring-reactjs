@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Paper, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useUserListsStyles } from "./UserListsStyles";
 import Spinner from "../../../components/Spinner/Spinner";
@@ -13,11 +14,12 @@ const UserLists = (): ReactElement => {
     const classes = useUserListsStyles();
     const userLists = useSelector(selectUserListsItems);
     const isUserListsLoading = useSelector(selectIsUserListsLoading);
+    const { t } = useTranslation();
 
     return (
-        <Paper id={"userLists"} className={classes.myLists} variant="outlined">
+        <Paper id="userLists" className={classes.myLists} variant="outlined">
             <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
-                Your Lists
+                {t("YOUR_LISTS", { defaultValue: "Your Lists" })}
             </Typography>
             {isUserListsLoading ? (
                 <Spinner />

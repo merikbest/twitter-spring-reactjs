@@ -25,20 +25,20 @@ const PopperListDescription = memo((): ReactElement => {
 
     return (
         <>
-            <Typography variant={"h5"} component={"div"} className={classes.popperListTitle}>
+            <Typography variant="h5" component="div" className={classes.popperListTitle}>
                 {listName}
             </Typography>
-            <Typography variant={"body1"} component={"div"} className={classes.popperListDescription}>
+            <Typography variant="body1" component="div" className={classes.popperListDescription}>
                 {listDescription}
             </Typography>
             <Link to={`${PROFILE}/${listOwnerId}`} className={classes.popperListOwnerLink}>
                 <div className={classes.popperListOwnerWrapper}>
                     <Avatar className={classes.popperListOwnerAvatar} src={listOwnerAvatar} />
                 </div>
-                <Typography variant={"h6"} component={"span"} className={classes.popperListOwnerFullName}>
+                <Typography variant="h6" component="span" className={classes.popperListOwnerFullName}>
                     {listOwnerFullName}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"span"} className={classes.popperListOwnerUsername}>
+                <Typography variant="subtitle1" component="span" className={classes.popperListOwnerUsername}>
                     @{listOwnerUsername}
                 </Typography>
             </Link>

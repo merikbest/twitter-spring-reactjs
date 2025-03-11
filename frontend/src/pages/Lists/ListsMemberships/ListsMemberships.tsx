@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { Paper } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { fetchUserProfile } from "../../../store/ducks/userProfile/actionCreators";
 import { selectUserProfile, selectUsersIsSuccessLoaded } from "../../../store/ducks/userProfile/selectors";
@@ -27,6 +28,7 @@ const ListsMemberships: FC = (): ReactElement => {
     const isUserProfileLoaded = useSelector(selectUsersIsSuccessLoaded);
     const lists = useSelector(selectUserListsItems);
     const isListsLoading = useSelector(selectIsLoading);
+    const { t } = useTranslation();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -51,7 +53,10 @@ const ListsMemberships: FC = (): ReactElement => {
         <Paper className={globalClasses.pageContainer} variant="outlined">
             <PageHeaderWrapper backButton>
                 <PageHeaderTitle
-                    title={`Lists ${(myProfileId === userProfile?.id) ? "you’re on" : ""}`}
+                    title={(myProfileId === userProfile?.id)
+                        ? t("LISTS_YOU_ARE_ON", { defaultValue: "Lists you’re on" })
+                        : t("LISTS_THEY_ARE_ON", { defaultValue: "Lists they’re on" })
+                    }
                     subtitle={`@${userProfile?.username}`}
                 />
             </PageHeaderWrapper>
@@ -62,14 +67,23 @@ const ListsMemberships: FC = (): ReactElement => {
                     (!isListsLoading && !lists.length) ? (
                         <EmptyPageDescription
                             title={(myProfileId === userProfile?.id) ? (
-                                "You haven’t been added to any Lists yet"
+                                t("EMPTY_USER_LISTS_MEMBERS_TITLE", {
+                                    defaultValue: "You haven’t been added to any Lists yet"
+                                })
                             ) : (
-                                `@${userProfile?.username} hasn’t created any Lists`
+                                t("EMPTY_LISTS_MEMBERS_TITLE", {
+                                    username: userProfile?.username,
+                                    defaultValue: `@${userProfile?.username} hasn’t created any Lists`
+                                })
                             )}
                             subtitle={(myProfileId === userProfile?.id) ? (
-                                "When someone adds you to a List, it’ll show up here."
+                                t("EMPTY_USER_LISTS_MEMBERS_DESCRIPTION", {
+                                    defaultValue: "When someone adds you to a List, it’ll show up here."
+                                })
                             ) : (
-                                "When they do, they’ll show up here."
+                                t("EMPTY_LISTS_MEMBERS_DESCRIPTION", {
+                                    defaultValue: "When they do, they’ll show up here."
+                                })
                             )}
                         />
                     ) : (

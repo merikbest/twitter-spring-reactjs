@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Paper, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import Spinner from "../../../components/Spinner/Spinner";
 import ListsItem from "../ListsItem/ListsItem";
@@ -15,11 +16,12 @@ const DiscoverLists = (): ReactElement => {
     const classes = useDiscoverListsStyles();
     const lists = useSelector(selectListsItems);
     const isListsLoading = useSelector(selectIsListsLoading);
+    const { t } = useTranslation();
 
     return (
-        <Paper id={"list"} className={classes.newLists} variant="outlined">
+        <Paper id="list" className={classes.newLists} variant="outlined">
             <Typography variant="h5" className={globalClasses.itemInfoWrapper}>
-                Discover new Lists
+                {t("DISCOVER_NEW_LISTS", { defaultValue: "Discover new Lists" })}
             </Typography>
             {isListsLoading ? (
                 <div style={{ padding: "59px 0px" }}>
@@ -31,8 +33,8 @@ const DiscoverLists = (): ReactElement => {
                 ))
             )}
             <Link to={SUGGESTED} className={globalClasses.link}>
-                <Typography variant={"body1"} component={"div"} className={classes.showMore}>
-                    Show more
+                <Typography variant="body1" component="div" className={classes.showMore}>
+                    {t("SHOW_MORE", { defaultValue: "Show more" })}
                 </Typography>
             </Link>
         </Paper>

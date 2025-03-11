@@ -23,14 +23,17 @@ const PinnedListsItem: FC<PinnedListsItemProps> = memo(({ pinnedList }): ReactEl
     return (
         <Link to={`${LISTS}/${pinnedList?.id}`} className={globalClasses.link}>
             <div
-                id={"pinnedListWrapper"}
+                id="pinnedListWrapper"
                 className={classes.pinnedListWrapper}
                 onMouseEnter={() => handleHoverPopper({ listId: pinnedList?.id } as HoverItemDetail)}
                 onMouseLeave={handleLeavePopper}
             >
-                <Avatar variant="square" className={classes.listAvatar}
-                        src={pinnedList?.wallpaper ?? pinnedList?.altWallpaper} />
-                <Typography component={"div"} className={classes.pinnedListName}>
+                <Avatar
+                    variant="square"
+                    className={classes.listAvatar}
+                    src={pinnedList?.wallpaper ?? pinnedList?.altWallpaper}
+                />
+                <Typography component="div" className={classes.pinnedListName}>
                     {pinnedList?.isPrivate && <LockIcon />}
                     {" "}{pinnedList?.listName}
                 </Typography>

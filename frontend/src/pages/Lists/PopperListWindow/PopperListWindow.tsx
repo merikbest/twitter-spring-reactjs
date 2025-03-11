@@ -25,7 +25,7 @@ const PopperListWindow: FC<PopperListWindowProps> = ({ visible }): ReactElement 
     }
 
     return (
-        <div id={"popperListWindow"} className={classes.popperListWindow}>
+        <div id="popperListWindow" className={classes.popperListWindow}>
             <PopperListWallpaper />
             <div className={classes.popperListInfo}>
                 <PopperListDescription />

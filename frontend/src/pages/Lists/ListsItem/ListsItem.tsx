@@ -2,6 +2,7 @@ import React, { FC, memo, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Paper } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useListsItemStyles } from "./ListsItemStyles";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
@@ -26,6 +27,7 @@ const ListsItem: FC<ListsItemProps> = memo(({ list, listIndex, isMyList }): Reac
     const classes = useListsItemStyles();
     const dispatch = useDispatch();
     const myProfileId = useSelector(selectUserDataId);
+    const { t } = useTranslation();
 
     const onClickPinList = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
@@ -55,7 +57,10 @@ const ListsItem: FC<ListsItemProps> = memo(({ list, listIndex, isMyList }): Reac
                     {isMyList && (
                         <ActionIconButton
                             onClick={onClickPinList}
-                            actionText={list?.isListPinned ? "Unpin" : "Pin"}
+                            actionText={list?.isListPinned
+                                ? t("UNPIN", { defaultValue: "Unpin" })
+                                : t("PIN", { defaultValue: "Pin" })
+                            }
                             icon={list?.isListPinned ? PinIconFilled : PinIcon}
                         />
                     )}

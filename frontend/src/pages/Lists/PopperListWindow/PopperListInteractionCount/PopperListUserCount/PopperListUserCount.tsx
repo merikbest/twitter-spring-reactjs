@@ -27,10 +27,10 @@ const PopperListUserCount: FC<PopperListUserCountProps> = memo((
 
     return (
         <span id={id} className={classes.popperListMembers} onClick={(event) => onOpenModalWindow(event, titleKey)}>
-            <Typography variant={"h6"} component={"span"}>
+            <Typography variant="h6" component="span">
                 {userCount}
             </Typography>
-            <Typography variant={"subtitle1"} component={"span"}>
+            <Typography variant="subtitle1" component="span">
                 {" "}{t(titleKey, { defaultValue: titleDefaultValue })}
             </Typography>
         </span>

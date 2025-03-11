@@ -86,7 +86,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                         <div className={classes.wallpaperWrapper}>
                             <img className={classes.wallpaperImg} key={wallpaper?.src} src={wallpaper?.src} />
                             <div className={classes.wallpaperEditImg}>
-                                <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={setWallpaper} />
+                                <UploadProfileImage name="wallpaper" image={wallpaper} onChangeImage={setWallpaper} />
                             </div>
                         </div>
                         <Controller
@@ -96,7 +96,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                             render={({ field: { onChange, value } }) => (
                                 <CreateListsModalInput
                                     label={t("NAME", { defaultValue: "Name" })}
-                                    name={"name"}
+                                    name="name"
                                     helperText={errors.listName?.message}
                                     error={!!errors.listName}
                                     onChange={onChange}
@@ -112,7 +112,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                             render={({ field: { onChange, value } }) => (
                                 <CreateListsModalInput
                                     label={t("DESCRIPTION", { defaultValue: "Description" })}
-                                    name={"description"}
+                                    name="description"
                                     onChange={onChange}
                                     value={value}
                                     maxTextLength={50}
@@ -122,7 +122,7 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                         />
                         <div className={globalClasses.itemInfoWrapper}>
                             <div className={classes.footerWrapper}>
-                                <Typography variant={"body1"} component={"div"}>
+                                <Typography variant="body1" component="div">
                                     {t("MAKE_PRIVATE", { defaultValue: "Make private" })}
                                 </Typography>
                                 <Controller
@@ -139,8 +139,9 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                                     )}
                                 />
                             </div>
-                            <Typography variant={"subtitle2"} component={"div"}>
-                                {t("MAKE_PRIVATE_DESCRIPTION", { defaultValue: "When you make a List private, only you can see it." })}
+                            <Typography variant="subtitle2" component="div">
+                                {t("MAKE_PRIVATE_DESCRIPTION", {
+                                    defaultValue: "When you make a List private, only you can see it." })}
                             </Typography>
                         </div>
                     </div>

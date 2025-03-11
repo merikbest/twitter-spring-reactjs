@@ -1,6 +1,7 @@
 import React, { memo, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { usePopperListWindowStyles } from "../PopperListWindowStyles";
 import { unfollowList } from "../../../../store/ducks/lists/actionCreators";
@@ -10,7 +11,8 @@ const UnfollowListButton = memo((): ReactElement => {
     const classes = usePopperListWindowStyles();
     const dispatch = useDispatch();
     const listId = useSelector(selectListDetailItemId);
-    const [btnText, setBtnText] = useState<string>("Following");
+    const { t } = useTranslation();
+    const [btnText, setBtnText] = useState<string>(t("FOLLOWING", { defaultValue: "Following" }));
 
     const handleUnfollow = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         event.preventDefault();
@@ -21,8 +23,8 @@ const UnfollowListButton = memo((): ReactElement => {
     return (
         <Button
             className={classes.primaryButton}
-            onMouseOver={() => setBtnText("Unfollow")}
-            onMouseLeave={() => setBtnText("Following")}
+            onMouseOver={() => setBtnText(t("UNFOLLOW", { defaultValue: "Unfollow" }))}
+            onMouseLeave={() => setBtnText(t("FOLLOWING", { defaultValue: "Following" }))}
             onClick={handleUnfollow}
             variant="contained"
             color="primary"

@@ -22,17 +22,17 @@ const PopperListInteractionCount = memo((): ReactElement => {
     return (
         <div>
             <PopperListUserCount
-                id={"openMembersModalWindow"}
+                id="openMembersModalWindow"
                 userCount={membersSize}
                 titleKey={MembersAndFollowersEnum.MEMBERS}
-                titleDefaultValue={"List members"}
+                titleDefaultValue="List members"
                 onOpenModalWindow={onOpenModalWindow}
             />
             <PopperListUserCount
-                id={"openFollowersModalWindow"}
+                id="openFollowersModalWindow"
                 userCount={followersSize}
                 titleKey={MembersAndFollowersEnum.FOLLOWERS}
-                titleDefaultValue={"List followers"}
+                titleDefaultValue="List followers"
                 onOpenModalWindow={onOpenModalWindow}
             />
             <MembersAndFollowersModal
