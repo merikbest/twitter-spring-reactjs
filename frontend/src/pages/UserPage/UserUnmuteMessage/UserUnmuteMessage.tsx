@@ -1,6 +1,7 @@
 import React, { memo, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { processUserToMuteList } from "../../../store/ducks/user/actionCreators";
 import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
@@ -17,26 +18,31 @@ const UserUnmuteMessage = memo((): ReactElement => {
     const userProfileId = useSelector(selectUserProfileId);
     const username = useSelector(selectUserProfileUsername);
     const isUserMuted = useSelector(selectUserProfileIsUserMuted);
+    const { t } = useTranslation();
 
     const onMuteUser = (): void => {
         dispatch(processUserToMuteList({ userId: userProfileId! }));
-        dispatch(setOpenSnackBar(`@${username} has been ${isUserMuted ? "unmuted" : "muted"}.`));
+        dispatch(setOpenSnackBar(isUserMuted
+            ? t("UNMUTE_USER_POPUP_MESSAGE", { username, defaultValue: `@${username} has been unmuted` })
+            : t("MUTE_USER_POPUP_MESSAGE", { username, defaultValue: `@${username} has been muted` })
+        ));
     };
 
     return (
         <>
             {userProfileId && (
                 isUserMuted && (
-                    <Typography variant={"subtitle1"} component={"div"} className={classes.description}>
-                        {"You have muted Tweets from this account. "}
+                    <Typography variant="subtitle1" component="div" className={classes.description}>
+                        {t("USER_MUTE_DESCRIPTION", { defaultValue: "You have muted Tweets from this account." })}
+                        {" "}
                         <Typography
-                            id={"unmuteUser"}
+                            id="unmuteUser"
                             className={classes.unfollowLink}
                             onClick={onMuteUser}
-                            variant={"subtitle1"}
-                            component={"span"}
+                            variant="subtitle1"
+                            component="span"
                         >
-                            Unmute
+                            {t("UNMUTE", { defaultValue: "Unmute" })}
                         </Typography>
                     </Typography>
                 )

@@ -85,7 +85,12 @@ const FollowingFollowers: FC = (): ReactElement => {
         setActiveTab(activeTabIndex);
         const user = { userId: params.id, page: 0 };
         dispatch(resetUsersState());
-        dispatch(activeTabIndex ? fetchFollowings(user) : fetchFollowers(user));
+        if (activeTabIndex === 0) {
+            dispatch(fetchFollowings(user));
+        }
+        if (activeTabIndex === 1) {
+            dispatch(fetchFollowers(user));
+        }
     };
 
     return (
