@@ -9,6 +9,7 @@ public class TweetAuthorResponse {
     private String fullName;
     private String username;
     private String avatar;
+    private Long pinnedTweetId;
 
     @JsonProperty("isPrivateProfile")
     private boolean isPrivateProfile;

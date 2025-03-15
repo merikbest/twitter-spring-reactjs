@@ -128,13 +128,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT user FROM User user WHERE user.id IN :userIds")
     <T> List<T> getUsersByIds(@Param("userIds") List<Long> userIds, Class<T> type);
 
-    @Query("SELECT user.pinnedTweetId FROM User user WHERE user.id = :userId")
-    Long getPinnedTweetId(@Param("userId") Long userId);
-
-    @Modifying
-    @Query("UPDATE User user SET user.pinnedTweetId = :tweetId WHERE user.id = :userId")
-    void updatePinnedTweetId(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
-
     @Query("""
             SELECT user FROM User user
             LEFT JOIN user.subscribers subscriber

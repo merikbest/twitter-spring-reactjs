@@ -1,21 +1,34 @@
-import React, { ChangeEvent, FC, memo, ReactElement, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, memo, ReactElement } from "react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Divider } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-import UserPageTweets from "../UserPageTweets";
 import { useUserPageStyles } from "../UserPageStyles";
 import {
     fetchUserLikedTweets,
     fetchUserMediaTweets,
+    fetchUserPinnedTweet,
     fetchUserRetweetsAndReplies,
-    fetchUserTweets,
-    resetUserTweets
+    fetchUserTweets
 } from "../../../store/ducks/userTweets/actionCreators";
-import { selectIsUserTweetsLoaded } from "../../../store/ducks/userTweets/selectors";
-import { selectUsersIsSuccessLoaded } from "../../../store/ducks/userProfile/selectors";
+import {
+    selectIsPinnedTweetLoading,
+    selectIsUserTweetsLoaded,
+    selectIsUserTweetsLoading,
+    selectPagesCount,
+    selectUserTweetsItems
+} from "../../../store/ducks/userTweets/selectors";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Spinner from "../../../components/Spinner/Spinner";
+import TweetComponent from "../../../components/TweetComponent/TweetComponent";
+import EmptyTweetsTab from "./EmptyTweetsTab/EmptyTweetsTab";
+import EmptyRepliesTab from "./EmptyRepliesTab/EmptyRepliesTab";
+import EmptyMediaTab from "./EmptyMediaTab/EmptyMediaTab";
+import EmptyLikesTab from "./EmptyLikesTab/EmptyLikesTab";
+import { useUserTweets } from "./useUserTweets";
 
 interface UserTweetsProps {
     userTweetsActiveTab: number;
@@ -25,77 +38,89 @@ interface UserTweetsProps {
 const UserTweets: FC<UserTweetsProps> = memo(({ userTweetsActiveTab, handleChangeUserTweetsTab }): ReactElement => {
     const classes = useUserPageStyles();
     const dispatch = useDispatch();
-    const params = useParams<{ userId: string }>();
-    const isUserProfileSuccessLoaded = useSelector(selectUsersIsSuccessLoaded);
+    const { userId } = useParams<{ userId: string }>();
+    const tweets = useSelector(selectUserTweetsItems);
     const isTweetsLoaded = useSelector(selectIsUserTweetsLoaded);
-    const [page, setPage] = useState<number>(0);
-
-    useEffect(() => {
-        if (isUserProfileSuccessLoaded) {
-            setPage(prevState => prevState + 1);
-        }
-    }, [isUserProfileSuccessLoaded]);
-
-    const loadUserTweets = (): void => {
-        if (userTweetsActiveTab === 1) {
-            dispatch(fetchUserRetweetsAndReplies({ userId: params.userId, page }));
-        } else if (userTweetsActiveTab === 2) {
-            dispatch(fetchUserMediaTweets({ userId: params.userId, page }));
-        } else if (userTweetsActiveTab === 3) {
-            dispatch(fetchUserLikedTweets({ userId: params.userId, page }));
-        } else {
-            dispatch(fetchUserTweets({ userId: params.userId, page, activeTab: userTweetsActiveTab }));
-        }
-
-        if (isTweetsLoaded) {
-            setPage(prevState => prevState + 1);
-        }
-    };
+    const isTweetsLoading = useSelector(selectIsUserTweetsLoading);
+    const isPinnedTweetLoading = useSelector(selectIsPinnedTweetLoading);
+    const pagesCount = useSelector(selectPagesCount);
+    const { t } = useTranslation();
+    const { page, setPage, handleShowTweets } = useUserTweets();
 
     const handleChangeActiveTab = (event: ChangeEvent<{}>, newValue: number): void => {
         handleChangeUserTweetsTab(newValue);
     };
 
-    const handleShowTweets = (callback: () => void): void => {
-        window.scrollTo(0, 0);
-        setPage(0);
-        dispatch(resetUserTweets());
-        callback();
-    };
-
-    const handleShowUserTweets = (): void => {
-        dispatch(fetchUserTweets({ userId: params.userId, page: 0 }));
-        setPage(prevState => prevState + 1);
-    };
-
-    const handleShowUserRetweetsAndReplies = (): void => {
-        dispatch(fetchUserRetweetsAndReplies({ userId: params.userId, page: 0 }));
-        setPage(prevState => prevState + 1);
-    };
-
-    const handleShowMediaTweets = (): void => {
-        dispatch(fetchUserMediaTweets({ userId: params.userId, page: 0 }));
-        setPage(prevState => prevState + 1);
-    };
-
-    const handleShowLikedTweets = (): void => {
-        dispatch(fetchUserLikedTweets({ userId: params.userId, page: 0 }));
-        setPage(prevState => prevState + 1);
+    const loadUserTweets = (): void => {
+        if (userTweetsActiveTab === 0) {
+            dispatch(fetchUserTweets({ userId, page }));
+        }
+        if (userTweetsActiveTab === 1) {
+            dispatch(fetchUserRetweetsAndReplies({ userId, page }));
+        }
+        if (userTweetsActiveTab === 2) {
+            dispatch(fetchUserMediaTweets({ userId, page }));
+        }
+        if (userTweetsActiveTab === 3) {
+            dispatch(fetchUserLikedTweets({ userId, page }));
+        }
+        if (isTweetsLoaded) {
+            setPage(prevState => prevState + 1);
+        }
     };
 
     return (
         <>
             <div className={classes.tabs}>
-                <Tabs value={userTweetsActiveTab} indicatorColor="primary" textColor="primary" onChange={handleChangeActiveTab}>
-                    <Tab onClick={() => handleShowTweets(handleShowUserTweets)} label="Tweets" />
-                    <Tab onClick={() => handleShowTweets(handleShowUserRetweetsAndReplies)} label="Tweets & replies" />
-                    <Tab onClick={() => handleShowTweets(handleShowMediaTweets)} label="Media" />
-                    <Tab onClick={() => handleShowTweets(handleShowLikedTweets)} label="Likes" />
+                <Tabs
+                    value={userTweetsActiveTab}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    onChange={handleChangeActiveTab}
+                >
+                    <Tab
+                        label={t("TWEETS", { defaultValue: "Tweets" })}
+                        onClick={() => {
+                            dispatch(fetchUserPinnedTweet({ userId }))
+                            handleShowTweets(fetchUserTweets);
+                        }}
+                    />
+                    <Tab
+                        label={t("TWEETS_AND_REPLIES", { defaultValue: "Tweets & replies" })}
+                        onClick={() => handleShowTweets(fetchUserRetweetsAndReplies)}
+                    />
+                    <Tab
+                        label={t("MEDIA", { defaultValue: "Media" })}
+                        onClick={() => handleShowTweets(fetchUserMediaTweets)}
+                    />
+                    <Tab
+                        label={t("LIKES", { defaultValue: "Likes" })}
+                        onClick={() => handleShowTweets(fetchUserLikedTweets)}
+                    />
                 </Tabs>
             </div>
             <Divider />
             <div className={classes.tweets}>
-                <UserPageTweets userTweetsActiveTab={userTweetsActiveTab} page={page} loadUserTweets={loadUserTweets} />
+                <InfiniteScroll
+                    style={{ overflow: "unset" }}
+                    dataLength={tweets.length}
+                    next={loadUserTweets}
+                    hasMore={page < pagesCount}
+                    loader={null}
+                >
+                    {(isTweetsLoading && isPinnedTweetLoading)
+                        ? <Spinner />
+                        : <>
+                            {isTweetsLoading && <Spinner />}
+                            {tweets?.map((tweet) =>
+                                <TweetComponent key={tweet.id} tweet={tweet} activeTab={userTweetsActiveTab} />)}
+                            {userTweetsActiveTab === 0 && <EmptyTweetsTab />}
+                            {userTweetsActiveTab === 1 && <EmptyRepliesTab />}
+                            {userTweetsActiveTab === 2 && <EmptyMediaTab />}
+                            {userTweetsActiveTab === 3 && <EmptyLikesTab />}
+                        </>
+                    }
+                </InfiniteScroll>
             </div>
         </>
     );

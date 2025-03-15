@@ -62,6 +62,13 @@ export const userProfileReducer = produce((draft: Draft<UserProfileState>, actio
             }
             break;
 
+        case UserProfileActionsType.SET_USER_PINED_TWEET:
+            if (draft.user && draft.user.id === action.payload.userId) {
+                draft.user.pinnedTweetId = action.payload.pinnedTweetId;
+                draft.loadingState = LoadingStatus.SUCCESS;
+            }
+            break;
+
         case UserProfileActionsType.RESET_USER_PROFILE_STATE:
             draft.user = undefined;
             draft.loadingState = LoadingStatus.LOADING;

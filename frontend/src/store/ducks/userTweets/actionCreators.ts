@@ -1,8 +1,9 @@
-import { BookmarkedTweetPayload, UserTweetRequest, UserTweetsState } from "./contracts/state";
+import { BookmarkedTweetPayload, UserPinnedTweetRequest, UserTweetRequest, UserTweetsState } from "./contracts/state";
 import {
     DeleteUserTweetActionInterface,
     FetchUserLikedTweetsActionInterface,
     FetchUserMediaTweetsActionInterface,
+    FetchUserPinnedTweetsActionInterface,
     FetchUserRetweetsAndRepliesActionInterface,
     FetchUserTweetsActionInterface,
     ResetUserTweetsActionInterface,
@@ -10,6 +11,8 @@ import {
     SetBlockedUsersTweetStateActionInterface,
     SetFollowToUsersTweetStateActionInterface,
     SetMutedUsersTweetStateActionInterface,
+    SetPinnedTweetActionInterface,
+    SetPinnedTweetLoadingStatusInterface,
     SetUpdatedBookmarkedTweetActionInterface,
     SetUpdatedUserTweetActionInterface,
     SetUserTweetsActionInterface,
@@ -28,6 +31,11 @@ import { LoadingStatus, PageableResponse } from "../../../types/common";
 
 export const setUserTweets = (payload: PageableResponse<UserTweetsState["items"]>): SetUserTweetsActionInterface => ({
     type: UserTweetsActionType.SET_TWEETS,
+    payload
+});
+
+export const setPinnedTweet = (payload: TweetResponse): SetPinnedTweetActionInterface => ({
+    type: UserTweetsActionType.SET_PINNED_TWEET,
     payload
 });
 
@@ -80,6 +88,11 @@ export const fetchUserTweets = (payload: UserTweetRequest): FetchUserTweetsActio
     payload
 });
 
+export const fetchUserPinnedTweet = (payload: UserPinnedTweetRequest): FetchUserPinnedTweetsActionInterface => ({
+    type: UserTweetsActionType.FETCH_PINNED_TWEET,
+    payload
+});
+
 export const fetchUserLikedTweets = (payload: UserTweetRequest): FetchUserLikedTweetsActionInterface => ({
     type: UserTweetsActionType.FETCH_LIKED_TWEETS,
     payload
@@ -97,5 +110,10 @@ export const fetchUserRetweetsAndReplies = (payload: UserTweetRequest): FetchUse
 
 export const setUserTweetsLoadingStatus = (payload: LoadingStatus): SetUserTweetsLoadingStatusInterface => ({
     type: UserTweetsActionType.SET_LOADING_STATUS,
+    payload
+});
+
+export const setPinnedTweetLoadingStatus = (payload: LoadingStatus): SetPinnedTweetLoadingStatusInterface => ({
+    type: UserTweetsActionType.SET_PINNED_TWEET_LOADING_STATUS,
     payload
 });

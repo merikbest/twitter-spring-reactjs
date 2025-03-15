@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { UserProfileResponse } from "../../../../types/user";
+import { UserPintTweetResponse, UserProfileResponse } from "../../../../types/user";
 import { ChatParticipantRequest, UserProfileState } from "./state";
 import { LoadingStatus } from "../../../../types/common";
 import { FollowUsersPayload } from "../../users/contracts/state";
@@ -9,6 +9,7 @@ export enum UserProfileActionsType {
     SET_USER = "userProfile/SET_USER",
     SET_BLOCKED = "userProfile/SET_BLOCKED",
     SET_MUTED = "userProfile/SET_MUTED",
+    SET_USER_PINED_TWEET = "userProfile/SET_USER_PINED_TWEET",
     SET_FOLLOW_TO_USER_PROFILE = "userProfile/SET_FOLLOW_TO_USER_PROFILE",
     SET_SUBSCRIBE_TO_USER_PROFILE = "userProfile/SET_SUBSCRIBE_TO_USER_PROFILE",
     PROCESS_SUBSCRIBE = "userProfile/PROCESS_SUBSCRIBE",
@@ -41,6 +42,11 @@ export interface SetBlockedActionInterface extends Action<UserProfileActionsType
 export interface SetMutedActionInterface extends Action<UserProfileActionsType> {
     type: UserProfileActionsType.SET_MUTED;
     payload: boolean;
+}
+
+export interface SetUserPinnedTweetActionInterface extends Action<UserProfileActionsType> {
+    type: UserProfileActionsType.SET_USER_PINED_TWEET;
+    payload: UserPintTweetResponse;
 }
 
 export interface SetFollowToUserProfileActionInterface extends Action<UserProfileActionsType> {
@@ -103,6 +109,7 @@ export type UserProfileActions =
     | SetUserProfileLoadingStatusActionInterface
     | SetBlockedActionInterface
     | SetMutedActionInterface
+    | SetUserPinnedTweetActionInterface
     | SetFollowToUserProfileActionInterface
     | SetSubscribeToUserProfileActionInterface
     | SetFollowRequestToUserProfileActionInterface

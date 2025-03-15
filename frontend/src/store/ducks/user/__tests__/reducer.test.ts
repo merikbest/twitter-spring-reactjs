@@ -1,7 +1,7 @@
 import { initialUserState, userReducer } from "../reducer";
 import { UserActions, UserActionsType } from "../contracts/actionTypes";
 import { testActionDispatch } from "../../../../util/test-utils/test-helper";
-import { AuthUserResponse } from "../../../../types/user";
+import { AuthUserResponse, UserPintTweetResponse } from "../../../../types/user";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
 import { mockUser } from "../../../../util/test-utils/mock-test-data";
@@ -384,7 +384,7 @@ describe("userReducer:", () => {
                 },
                 {
                     type: UserActionsType.SET_PIN_TWEET_ID,
-                    payload: 2
+                    payload: { userId: 1, pinnedTweetId: 2 } as UserPintTweetResponse
                 }
             ),
             {

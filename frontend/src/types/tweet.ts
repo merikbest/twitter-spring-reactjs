@@ -59,6 +59,7 @@ export interface UserTweetResponse {
     fullName: string;
     username: string;
     avatar: string;
+    pinnedTweetId: number;
     isPrivateProfile: boolean;
     isFollower: boolean;
     isMyProfileBlocked: boolean;

@@ -17,7 +17,7 @@ export interface UserProfileResponse {
     isPrivateProfile: boolean;
     avatar: string;
     wallpaper: string;
-    pinnedTweetId: number;
+    pinnedTweetId: number | null;
     followersCount: number;
     followingCount: number;
     isUserMuted: boolean;
@@ -94,7 +94,7 @@ export interface AuthUserResponse {
     colorScheme: string;
     avatar: string;
     wallpaper: string;
-    pinnedTweetId: number;
+    pinnedTweetId: number | null;
     followersCount: number;
     followingCount: number;
     followerRequestsCount: number;
@@ -155,4 +155,9 @@ export interface CountryCodeResponse {
 export interface LanguagesResponse {
     id: number;
     language: string;
+}
+
+export interface UserPintTweetResponse {
+    userId: number;
+    pinnedTweetId: number | null;
 }

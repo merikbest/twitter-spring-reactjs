@@ -39,4 +39,9 @@ public class UserConsumer {
     public void userFollowRequestListener(FollowRequestUserEvent userEvent, @Header(HeaderConstants.AUTH_USER_ID_HEADER) String authId) {
         userHandlerService.handleFollowUserRequest(userEvent, authId);
     }
+
+    @KafkaListener(topics = KafkaTopicConstants.PIN_TWEET_USER_TOPIC, groupId = "${spring.kafka.consumer.group-id}")
+    public void userPinTweetListener(PinTweetEvent pinTweetEvent, @Header(HeaderConstants.AUTH_USER_ID_HEADER) String authId) {
+        userHandlerService.handlePinTweet(pinTweetEvent, authId);
+    }
 }

@@ -76,8 +76,9 @@ public class UserMapper {
         return userService.processSubscribeToNotifications(userId);
     }
 
-    public Long processPinTweet(Long tweetId) {
-        return userService.processPinTweet(tweetId);
+    public UserPintTweetResponse processPinTweet(Long tweetId) {
+        User user = userService.processPinTweet(tweetId);
+        return new UserPintTweetResponse(user.getId(), user.getPinnedTweetId());
     }
 
     public UserDetailResponse getUserDetails(Long userId) {

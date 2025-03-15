@@ -1,7 +1,7 @@
 import { initialUserProfileState, userProfileReducer } from "../reducer";
 import { UserProfileActions, UserProfileActionsType } from "../contracts/actionTypes";
 import { testActionDispatch } from "../../../../util/test-utils/test-helper";
-import { UserProfileResponse } from "../../../../types/user";
+import { UserPintTweetResponse, UserProfileResponse } from "../../../../types/user";
 import { TweetImageResponse } from "../../../../types/tweet";
 import { LoadingStatus } from "../../../../types/common";
 
@@ -130,6 +130,25 @@ describe("userProfileReducer:", () => {
             {
                 ...initialUserProfileState,
                 user: { id: 1, isUserMuted: true } as UserProfileResponse,
+                loadingState: LoadingStatus.SUCCESS
+            }
+        );
+
+        testActionDispatch(
+            UserProfileActionsType.SET_USER_PINED_TWEET,
+            userProfileReducer(
+                {
+                    ...initialUserProfileState,
+                    user: { id: 1, pinnedTweetId: 1 } as UserProfileResponse
+                },
+                {
+                    type: UserProfileActionsType.SET_USER_PINED_TWEET,
+                    payload: { userId: 1, pinnedTweetId: 2 } as UserPintTweetResponse
+                }
+            ),
+            {
+                ...initialUserProfileState,
+                user: { id: 1, pinnedTweetId: 2 } as UserProfileResponse,
                 loadingState: LoadingStatus.SUCCESS
             }
         );

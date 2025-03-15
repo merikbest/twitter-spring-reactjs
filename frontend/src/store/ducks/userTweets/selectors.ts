@@ -4,6 +4,8 @@ import { LoadingStatus } from "../../../types/common";
 
 export const selectUserTweetsState = (state: RootState): UserTweetsState => state.userTweets;
 export const selectUserTweetsLoadingStatus = (state: RootState): LoadingStatus => selectUserTweetsState(state).loadingState;
+export const selectUserPinnedTweetLoadingStatus = (state: RootState): LoadingStatus => selectUserTweetsState(state).pinnedTweetLoadingState;
+export const selectIsPinnedTweetLoading = (state: RootState): boolean => selectUserPinnedTweetLoadingStatus(state) === LoadingStatus.LOADING;
 export const selectIsUserTweetsLoading = (state: RootState): boolean => selectUserTweetsLoadingStatus(state) === LoadingStatus.LOADING;
 export const selectIsUserTweetsLoaded = (state: RootState): boolean => selectUserTweetsLoadingStatus(state) === LoadingStatus.LOADED;
 export const selectUserTweetsItems = (state: RootState) => selectUserTweetsState(state).items;

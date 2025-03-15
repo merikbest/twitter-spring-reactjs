@@ -1,10 +1,16 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 
-import { setUserTweets, setUserTweetsLoadingStatus } from "./actionCreators";
+import {
+    setPinnedTweet,
+    setPinnedTweetLoadingStatus,
+    setUserTweets,
+    setUserTweetsLoadingStatus
+} from "./actionCreators";
 import {
     FetchUserLikedTweetsActionInterface,
     FetchUserMediaTweetsActionInterface,
+    FetchUserPinnedTweetsActionInterface,
     FetchUserRetweetsAndRepliesActionInterface,
     FetchUserTweetsActionInterface,
     UserTweetsActionType
@@ -19,13 +25,18 @@ import { TweetApi } from "../../../services/api/tweet-service/tweetApi";
 export function* fetchUserTweetsRequest({ payload }: FetchUserTweetsActionInterface) {
     try {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.LOADING));
-        let pinnedTweet: AxiosResponse<TweetResponse> | null = null;
-        if (payload.activeTab === 0) {
-            pinnedTweet = yield call(TweetApi.getPinnedTweetByUserId, payload.userId);
-        }
         const response: AxiosResponse<TweetResponse[]> = yield call(TweetApi.getUserTweets, payload);
-        const items = pinnedTweet?.data ? [pinnedTweet.data, ...response.data] : response.data;
-        yield put(setUserTweets({ items: items, pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT]) }));
+        yield put(setUserTweets({ items: response.data, pagesCount: parseInt(response.headers[PAGE_TOTAL_COUNT]) }));
+    } catch (e) {
+        yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));
+    }
+}
+
+export function* fetchUserPinnedTweetsRequest({ payload }: FetchUserPinnedTweetsActionInterface) {
+    try {
+        yield put(setPinnedTweetLoadingStatus(LoadingStatus.LOADING));
+        const response: AxiosResponse<TweetResponse> = yield call(TweetApi.getPinnedTweetByUserId, payload.userId);
+        yield put(setPinnedTweet(response.data));
     } catch (e) {
         yield put(setUserTweetsLoadingStatus(LoadingStatus.ERROR));
     }
@@ -63,6 +74,7 @@ export function* fetchUserRetweetsAndRepliesRequest({ payload }: FetchUserRetwee
 
 export function* userTweetsSaga() {
     yield takeLatest(UserTweetsActionType.FETCH_TWEETS, fetchUserTweetsRequest);
+    yield takeLatest(UserTweetsActionType.FETCH_PINNED_TWEET, fetchUserPinnedTweetsRequest);
     yield takeLatest(UserTweetsActionType.FETCH_LIKED_TWEETS, fetchUserLikedTweetsRequest);
     yield takeLatest(UserTweetsActionType.FETCH_MEDIA_TWEETS, fetchUserMediaTweetsRequest);
     yield takeLatest(UserTweetsActionType.FETCH_RETWEETS_AND_REPLIES, fetchUserRetweetsAndRepliesRequest);

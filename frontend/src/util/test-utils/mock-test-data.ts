@@ -214,7 +214,7 @@ export const createMockMyProfile = (followersSize: number = 1, followingSize: nu
         "notificationsCount": 0,
         "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
         "wallpaper": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg",
-        "pinnedTweetId": 0,
+        "pinnedTweetId": null,
         "followersSize": followersSize,
         "followingSize": followingSize,
         "sameFollowers": [{
@@ -250,7 +250,7 @@ export const mockMyProfile = {
     "notificationsCount": 0,
     "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/348b7dbe-3ac5-477f-8483-edc24f53091b_814370.jpg",
     "wallpaper": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/d0e5b95f-acc0-47ef-b499-477f7e5a1a06_PrMnWa2z.jpg",
-    "pinnedTweetId": 0,
+    "pinnedTweetId": null,
     "followersSize": 1,
     "followingSize": 1,
     "sameFollowers": [{
@@ -347,7 +347,7 @@ export const mockUserPrivateProfile = {
     "notificationsCount": 2,
     "avatar": "https://twitterclonestorage.s3.eu-central-1.amazonaws.com/a7e03e7c-c05f-4e30-ba8c-2271fd0b4b43_779301.jpg",
     "wallpaper": null,
-    "pinnedTweetId": 0,
+    "pinnedTweetId": null,
     "followersSize": 1,
     "followingSize": 0,
     "sameFollowers": [{

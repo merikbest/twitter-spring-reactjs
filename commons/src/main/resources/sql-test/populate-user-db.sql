@@ -29,27 +29,3 @@ INSERT INTO "user-test".public.user_muted (user_id, muted_user_id) VALUES (2, 1)
 
 -- subscribers
 INSERT INTO "user-test".public.subscribers (user_id, subscriber_id) VALUES (2, 1);
-
--- country_codes
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (1, 'AF', '+93', 'Afghanistan');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (2, 'AL', '+355', 'Albania');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (3, 'DZ', '+213', 'Algeria');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (4, 'AS', '+1', 'American Samoa');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (5, 'AD', '+376', 'Andorra');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (6, 'AO', '+244', 'Angola');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (7, 'AI', '+1', 'Anguilla');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (8, 'AG', '+1', 'Antigua and Barbuda');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (9, 'AR', '+54', 'Argentina');
-INSERT INTO "user-test".public.country_codes (id, country_code, phone_code, country) VALUES (10, 'AM', '+374', 'Armenia');
-
--- languages
-INSERT INTO "user-test".public.languages (id, language) VALUES (1, 'Arabic - العربية');
-INSERT INTO "user-test".public.languages (id, language) VALUES (2, 'Arabic (Feminine) - العربية (مؤنث)');
-INSERT INTO "user-test".public.languages (id, language) VALUES (3, 'Bangla - বাংলা');
-INSERT INTO "user-test".public.languages (id, language) VALUES (4, 'Basque (beta) - euskara');
-INSERT INTO "user-test".public.languages (id, language) VALUES (5, 'British English');
-INSERT INTO "user-test".public.languages (id, language) VALUES (6, 'Bulgarian - български');
-INSERT INTO "user-test".public.languages (id, language) VALUES (7, 'Catalan - català');
-INSERT INTO "user-test".public.languages (id, language) VALUES (8, 'Croatian - hrvatski');
-INSERT INTO "user-test".public.languages (id, language) VALUES (9, 'Czech - čeština');
-INSERT INTO "user-test".public.languages (id, language) VALUES (10, 'Danish - dansk');

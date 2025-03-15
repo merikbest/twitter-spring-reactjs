@@ -1,6 +1,6 @@
 import { Action } from "redux";
 
-import { BookmarkedTweetPayload, UserTweetRequest, UserTweetsState } from "./state";
+import { BookmarkedTweetPayload, UserPinnedTweetRequest, UserTweetRequest, UserTweetsState } from "./state";
 import {
     BlockedToTweetsPayload,
     FollowToTweetsPayload,
@@ -12,6 +12,7 @@ import { LoadingStatus, PageableResponse } from "../../../../types/common";
 
 export enum UserTweetsActionType {
     SET_TWEETS = "userTweets/SET_TWEETS",
+    SET_PINNED_TWEET = "userTweets/SET_PINNED_TWEET",
     SET_FOLLOW_TO_USERS_TWEETS_STATE = "userTweets/SET_FOLLOW_TO_USERS_TWEETS_STATE",
     SET_BLOCKED_USERS_TWEETS_STATE = "userTweets/SET_BLOCKED_USERS_TWEETS_STATE",
     SET_MUTED_USERS_TWEETS_STATE = "userTweets/SET_MUTED_USERS_TWEETS_STATE",
@@ -22,15 +23,22 @@ export enum UserTweetsActionType {
     SET_UPDATED_BOOKMARKED_TWEET = "userTweets/SET_UPDATED_BOOKMARKED_TWEET",
     DELETE_TWEET = "userTweets/DELETE_TWEET",
     FETCH_TWEETS = "userTweets/FETCH_TWEETS",
+    FETCH_PINNED_TWEET = "userTweets/FETCH_PINNED_TWEET",
     FETCH_LIKED_TWEETS = "userTweets/FETCH_LIKED_TWEETS",
     FETCH_MEDIA_TWEETS = "userTweets/FETCH_MEDIA_TWEETS",
     FETCH_RETWEETS_AND_REPLIES = "userTweets/FETCH_RETWEETS_AND_REPLIES",
     SET_LOADING_STATUS = "userTweets/SET_LOADING_STATUS",
+    SET_PINNED_TWEET_LOADING_STATUS = "userTweets/SET_PINNED_TWEET_LOADING_STATUS",
 }
 
 export interface SetUserTweetsActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.SET_TWEETS;
     payload: PageableResponse<UserTweetsState["items"]>;
+}
+
+export interface SetPinnedTweetActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.SET_PINNED_TWEET;
+    payload: TweetResponse;
 }
 
 export interface SetFollowToUsersTweetStateActionInterface extends Action<UserTweetsActionType> {
@@ -82,6 +90,11 @@ export interface FetchUserTweetsActionInterface extends Action<UserTweetsActionT
     payload: UserTweetRequest;
 }
 
+export interface FetchUserPinnedTweetsActionInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.FETCH_PINNED_TWEET;
+    payload: UserPinnedTweetRequest;
+}
+
 export interface FetchUserLikedTweetsActionInterface extends Action<UserTweetsActionType> {
     type: UserTweetsActionType.FETCH_LIKED_TWEETS;
     payload: UserTweetRequest;
@@ -102,8 +115,14 @@ export interface SetUserTweetsLoadingStatusInterface extends Action<UserTweetsAc
     payload: LoadingStatus;
 }
 
+export interface SetPinnedTweetLoadingStatusInterface extends Action<UserTweetsActionType> {
+    type: UserTweetsActionType.SET_PINNED_TWEET_LOADING_STATUS;
+    payload: LoadingStatus;
+}
+
 export type UserTweetsActions =
     | SetUserTweetsActionInterface
+    | SetPinnedTweetActionInterface
     | SetFollowToUsersTweetStateActionInterface
     | SetBlockedUsersTweetStateActionInterface
     | SetMutedUsersTweetStateActionInterface
@@ -113,4 +132,5 @@ export type UserTweetsActions =
     | SetUserVoteActionInterface
     | SetUpdatedBookmarkedTweetActionInterface
     | DeleteUserTweetActionInterface
-    | SetUserTweetsLoadingStatusInterface;
+    | SetUserTweetsLoadingStatusInterface
+    | SetPinnedTweetLoadingStatusInterface;

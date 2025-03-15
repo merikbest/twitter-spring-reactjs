@@ -321,7 +321,8 @@ public class UserControllerTest {
         mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.PIN_TWEET_ID, 43)
                         .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(43)));
+                .andExpect(jsonPath("$.userId").value(TestConstants.USER_ID))
+                .andExpect(jsonPath("$.pinnedTweetId").value(43));
     }
 
     @Test
@@ -330,7 +331,8 @@ public class UserControllerTest {
         mockMvc.perform(get(PathConstants.UI_V1_USER + PathConstants.PIN_TWEET_ID, 40)
                         .header(HeaderConstants.AUTH_USER_ID_HEADER, TestConstants.USER_ID))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(0)));
+                .andExpect(jsonPath("$.userId").value(TestConstants.USER_ID))
+                .andExpect(jsonPath("$.pinnedTweetId").isEmpty());
     }
 
     @Test

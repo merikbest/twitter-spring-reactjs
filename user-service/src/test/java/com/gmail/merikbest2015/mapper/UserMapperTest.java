@@ -129,8 +129,11 @@ public class UserMapperTest {
 
     @Test
     public void processPinTweet() {
-        when(userService.processPinTweet(TestConstants.TWEET_ID)).thenReturn(TestConstants.TWEET_ID);
-        assertEquals(TestConstants.TWEET_ID, userService.processPinTweet(TestConstants.TWEET_ID));
+        User user = new User();
+        user.setId(TestConstants.USER_ID);
+        user.setPinnedTweetId(TestConstants.TWEET_ID);
+        when(userService.processPinTweet(TestConstants.TWEET_ID)).thenReturn(user);
+        assertEquals(user, userService.processPinTweet(TestConstants.TWEET_ID));
         verify(userService, times(1)).processPinTweet(TestConstants.TWEET_ID);
     }
 

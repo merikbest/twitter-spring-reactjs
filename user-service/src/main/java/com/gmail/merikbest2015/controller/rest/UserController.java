@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @GetMapping(PathConstants.PIN_TWEET_ID)
-    public ResponseEntity<Long> processPinTweet(@PathVariable("tweetId") Long tweetId) {
+    public ResponseEntity<UserPintTweetResponse> processPinTweet(@PathVariable("tweetId") Long tweetId) {
         return ResponseEntity.ok(userMapper.processPinTweet(tweetId));
     }
 

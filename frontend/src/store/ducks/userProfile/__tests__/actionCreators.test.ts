@@ -13,6 +13,7 @@ import {
     setImagesLoadingStatus,
     setMuted,
     setSubscribeToUserProfile,
+    setUserPinnedTweet,
     setUserProfile,
     setUserProfileLoadingState
 } from "../actionCreators";
@@ -40,6 +41,11 @@ describe("userProfile actions", () => {
     testAction(setSubscribeToUserProfile, setSubscribeToUserProfile(true), {
         type: UserProfileActionsType.SET_SUBSCRIBE_TO_USER_PROFILE,
         payload: true
+    });
+
+    testAction(setUserPinnedTweet, setUserPinnedTweet({ userId: 1, pinnedTweetId: 1 }), {
+        type: UserProfileActionsType.SET_USER_PINED_TWEET,
+        payload: { userId: 1, pinnedTweetId: 1 }
     });
 
     testAction(setUserProfile, setUserProfile({ id: 1 } as UserProfileResponse), {

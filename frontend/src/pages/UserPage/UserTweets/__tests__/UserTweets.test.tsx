@@ -7,9 +7,18 @@ import { createMockRootState, mockDispatch, mountWithStore } from "../../../../u
 import { LoadingStatus } from "../../../../types/common";
 import { UserTweetsActionType } from "../../../../store/ducks/userTweets/contracts/actionTypes";
 import UserTweets from "../UserTweets";
+import { mockTweets } from "../../../../util/test-utils/mock-test-data";
+import Spinner from "../../../../components/Spinner/Spinner";
+import TweetComponent from "../../../../components/TweetComponent/TweetComponent";
+
+window.scrollTo = jest.fn();
 
 describe("UserTweets", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
+    const mockWithTweets = {
+        ...mockRootState,
+        userTweets: { ...mockRootState.userTweets, items: mockTweets, pagesCount: 10 }
+    };
     let mockDispatchFn: jest.Mock;
 
     beforeEach(() => {
@@ -47,6 +56,20 @@ describe("UserTweets", () => {
 
     it("should scroll and fetch User Liked Tweets", () => {
         testLoadUserTweets(3, UserTweetsActionType.FETCH_LIKED_TWEETS);
+    });
+
+    it("should render Loading Spinner", () => {
+        const wrapper = mountWithStore(
+            <UserTweets userTweetsActiveTab={0} handleChangeUserTweetsTab={jest.fn()} />,
+            createMockRootState(LoadingStatus.LOADING));
+        expect(wrapper.find(Spinner).exists()).toBe(true);
+    });
+
+    it("should render Tweet Components", () => {
+        const wrapper = mountWithStore(
+            <UserTweets userTweetsActiveTab={0} handleChangeUserTweetsTab={jest.fn()} />,
+            mockWithTweets);
+        expect(wrapper.find(TweetComponent).length).toEqual(2);
     });
 
     const testClickTab = (tabIndex: number, tabText: string, typeAction: UserTweetsActionType): void => {

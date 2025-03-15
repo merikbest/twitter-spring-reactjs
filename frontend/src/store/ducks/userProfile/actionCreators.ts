@@ -12,12 +12,13 @@ import {
     SetImagesLoadingStatusActionInterface,
     SetMutedActionInterface,
     SetSubscribeToUserProfileActionInterface,
+    SetUserPinnedTweetActionInterface,
     SetUserProfileActionInterface,
     SetUserProfileLoadingStatusActionInterface,
     UserProfileActionsType
 } from "./contracts/actionTypes";
 import { ChatParticipantRequest, UserProfileState } from "./contracts/state";
-import { UserProfileResponse } from "../../../types/user";
+import { UserPintTweetResponse, UserProfileResponse } from "../../../types/user";
 import { FollowUsersPayload } from "../users/contracts/state";
 
 export const setBlocked = (payload: boolean): SetBlockedActionInterface => ({
@@ -27,6 +28,11 @@ export const setBlocked = (payload: boolean): SetBlockedActionInterface => ({
 
 export const setMuted = (payload: boolean): SetMutedActionInterface => ({
     type: UserProfileActionsType.SET_MUTED,
+    payload
+});
+
+export const setUserPinnedTweet = (payload: UserPintTweetResponse): SetUserPinnedTweetActionInterface => ({
+    type: UserProfileActionsType.SET_USER_PINED_TWEET,
     payload
 });
 

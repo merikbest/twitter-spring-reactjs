@@ -1,7 +1,9 @@
 package com.gmail.merikbest2015.service.impl;
 
 import com.gmail.merikbest2015.commons.event.*;
+import com.gmail.merikbest2015.model.Tweet;
 import com.gmail.merikbest2015.model.User;
+import com.gmail.merikbest2015.repository.TweetRepository;
 import com.gmail.merikbest2015.repository.UserRepository;
 import com.gmail.merikbest2015.service.UserHandlerService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserHandlerServiceImpl implements UserHandlerService {
 
     private final UserRepository userRepository;
+    private final TweetRepository tweetRepository;
 
     @Override
     @Transactional
@@ -86,6 +89,18 @@ public class UserHandlerServiceImpl implements UserHandlerService {
             user.getFollowerRequests().add(authUser);
         } else {
             user.getFollowerRequests().remove(authUser);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void handlePinTweet(PinTweetEvent pinTweetEvent, String authId) {
+        User authUser = userRepository.findById(Long.parseLong(authId)).get();
+        if (pinTweetEvent.getTweetId() == null) {
+            authUser.setPinnedTweet(null);
+        } else {
+            Tweet pinnedTweet = tweetRepository.findById(pinTweetEvent.getTweetId()).orElse(null);
+            authUser.setPinnedTweet(pinnedTweet);
         }
     }
 

@@ -24,7 +24,7 @@ import {
     SetNewMentionActionInterface,
     SetNewNotificationActionInterface,
     SetPhoneActionInterface,
-    SetPinTweetIdActionInterface,
+    SetPinTweetActionInterface,
     SetPrivateProfileActionInterface,
     SetProfileStartedActionInterface,
     SetReadMessageActionInterface,
@@ -52,6 +52,7 @@ import {
 import { EndRegistrationRequest } from "../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../types/chat";
 import { LoginRequest } from "../../../types/auth";
+import { UserPintTweetResponse } from "../../../types/user";
 
 export const updatedUserData = (payload: UserRequest): UpdateUserDataActionInterface => ({
     type: UserActionsType.UPDATE_USER_DATA,
@@ -67,7 +68,7 @@ export const setProfileStarted = (payload: boolean): SetProfileStartedActionInte
     payload
 });
 
-export const setPinTweetId = (payload: number): SetPinTweetIdActionInterface => ({
+export const setPinTweet = (payload: UserPintTweetResponse): SetPinTweetActionInterface => ({
     type: UserActionsType.SET_PIN_TWEET_ID,
     payload
 });

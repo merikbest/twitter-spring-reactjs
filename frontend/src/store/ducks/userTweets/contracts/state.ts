@@ -5,8 +5,8 @@ export interface UserTweetsState {
     items: TweetResponse[];
     pagesCount: number;
     loadingState: LoadingStatus;
+    pinnedTweetLoadingState: LoadingStatus;
 }
-
 
 export interface BookmarkedTweetPayload {
     tweetId: number;
@@ -16,5 +16,8 @@ export interface BookmarkedTweetPayload {
 export interface UserTweetRequest {
     userId: string;
     page: number;
-    activeTab?: number;
+}
+
+export interface UserPinnedTweetRequest {
+    userId: string;
 }

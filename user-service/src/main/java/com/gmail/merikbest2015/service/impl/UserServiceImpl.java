@@ -1,5 +1,6 @@
 package com.gmail.merikbest2015.service.impl;
 
+import com.gmail.merikbest2015.broker.producer.PinTweetProducer;
 import com.gmail.merikbest2015.broker.producer.UpdateUserProducer;
 import com.gmail.merikbest2015.constants.UserErrorMessage;
 import com.gmail.merikbest2015.dto.request.SearchTermsRequest;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserServiceHelper userServiceHelper;
     private final UpdateUserProducer updateUserProducer;
+    private final PinTweetProducer pinTweetProducer;
     private final TweetClient tweetClient;
     private final TagClient tagClient;
 
@@ -115,20 +117,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public Long processPinTweet(Long tweetId) {
+    public User processPinTweet(Long tweetId) {
         if (!tweetClient.isTweetExists(tweetId)) {
             throw new ApiRequestException(UserErrorMessage.TWEET_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
-        Long authUserId = authenticationService.getAuthenticatedUserId();
-        Long pinnedTweetId = userRepository.getPinnedTweetId(authUserId);
-
-        if (pinnedTweetId == null || !pinnedTweetId.equals(tweetId)) {
-            userRepository.updatePinnedTweetId(tweetId, authUserId);
-            return tweetId;
+        User authUser = authenticationService.getAuthenticatedUser();
+        Long pinnedTweetId;
+        if (authUser.getPinnedTweetId() == null || !authUser.getPinnedTweetId().equals(tweetId)) {
+            authUser.setPinnedTweetId(tweetId);
+            pinnedTweetId = tweetId;
         } else {
-            userRepository.updatePinnedTweetId(null, authUserId);
-            return 0L;
+            authUser.setPinnedTweetId(null);
+            pinnedTweetId = null;
         }
+        pinTweetProducer.sendPinTweetEvent(pinnedTweetId, authUser.getId());
+        return authUser;
     }
 
     @Override

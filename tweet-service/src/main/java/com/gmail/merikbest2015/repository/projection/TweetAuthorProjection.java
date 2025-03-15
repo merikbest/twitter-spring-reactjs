@@ -9,6 +9,9 @@ public interface TweetAuthorProjection {
     String getAvatar();
     boolean getPrivateProfile();
 
+    @Value("#{target.pinnedTweet?.id}")
+    Long getPinnedTweetId();
+
     @Value("#{@userServiceImpl.isUserMutedByMyProfile(target.id)}")
     boolean getIsUserMuted();
 

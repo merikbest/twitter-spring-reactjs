@@ -85,6 +85,15 @@ public class KafkaConsumerConfiguration {
     }
 
     @Bean
+    public ConsumerFactory<String, PinTweetEvent> pinTweetConsumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(
+                consumerConfigs(),
+                new StringDeserializer(),
+                new JsonDeserializer<>(PinTweetEvent.class)
+        );
+    }
+
+    @Bean
     public RecordMessageConverter typeConverter() {
         StringJsonMessageConverter converter = new StringJsonMessageConverter();
         DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
@@ -97,6 +106,7 @@ public class KafkaConsumerConfiguration {
         mappings.put("muteUser", MuteUserEvent.class);
         mappings.put("followUser", FollowUserEvent.class);
         mappings.put("followUserRequest", FollowRequestUserEvent.class);
+        mappings.put("pinTweet", PinTweetEvent.class);
         typeMapper.setIdClassMapping(mappings);
         headerMapper.setEncodeStrings(true);
         converter.setTypeMapper(typeMapper);

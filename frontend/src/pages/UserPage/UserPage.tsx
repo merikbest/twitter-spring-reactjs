@@ -9,6 +9,7 @@ import classnames from "classnames";
 import { useUserPageStyles } from "./UserPageStyles";
 import { selectUserDataId, selectUserIsLoaded } from "../../store/ducks/user/selectors";
 import {
+    fetchUserPinnedTweet,
     fetchUserTweets,
     resetUserTweets,
     setAddedUserTweet,
@@ -80,27 +81,27 @@ const UserPage = (): ReactElement => {
     const isUserProfileLoading = useSelector(selectUsersIsLoading);
     const isUserProfileSuccessLoaded = useSelector(selectUsersIsSuccessLoaded);
     const isUserProfileNotLoaded = useSelector(selectUsersIsErrorLoaded);
-    const params = useParams<{ userId: string }>();
+    const { userId } = useParams<{ userId: string }>();
     const [userTweetsActiveTab, setUserTweetsActiveTab] = useState<number>(0);
 
     useEffect(() => {
         window.scrollTo(0, 0);
 
-        if (params.userId) {
-            dispatch(fetchUserProfile(parseInt(params.userId)));
-            dispatch(fetchImages(parseInt(params.userId)));
+        if (userId) {
+            dispatch(fetchUserProfile(parseInt(userId)));
+            dispatch(fetchImages(parseInt(userId)));
         }
         document.body.style.overflow = "unset";
 
         stompClient = Stomp.over(() => new SockJS(WS_URL));
         stompClient.connect({}, () => {
-            stompClient?.subscribe(TOPIC_USER_ADD_TWEET(params.userId), (response) => {
+            stompClient?.subscribe(TOPIC_USER_ADD_TWEET(userId), (response) => {
                 dispatch(setAddedUserTweet(JSON.parse(response.body)));
             });
             stompClient?.subscribe(TOPIC_USER_UPDATE_TWEET, (response) => {
                 dispatch(setUpdatedUserTweet(JSON.parse(response.body)));
             });
-            stompClient?.subscribe(TOPIC_USER_VOTE_TWEET(params.userId), (response) => {
+            stompClient?.subscribe(TOPIC_USER_VOTE_TWEET(userId), (response) => {
                 dispatch(setUserVote(JSON.parse(response.body)));
             });
         });
@@ -112,12 +113,13 @@ const UserPage = (): ReactElement => {
             dispatch(resetImagesState());
             stompClient?.disconnect();
         };
-    }, [params.userId]);
+    }, [userId]);
 
     useEffect(() => {
         if (isUserProfileSuccessLoaded) {
             document.title = `${fullName} (@${username}) / Twitter`;
-            dispatch(fetchUserTweets({ userId: params.userId, page: 0, activeTab: userTweetsActiveTab }));
+            dispatch(fetchUserPinnedTweet({ userId }));
+            dispatch(fetchUserTweets({ userId, page: 0 }));
         }
 
         return () => {

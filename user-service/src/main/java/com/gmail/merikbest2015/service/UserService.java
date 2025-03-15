@@ -29,7 +29,7 @@ public interface UserService {
 
     Boolean processSubscribeToNotifications(Long userId);
 
-    Long processPinTweet(Long tweetId);
+    User processPinTweet(Long tweetId);
 
     UserDetailProjection getUserDetails(Long userId);
 }

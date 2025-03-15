@@ -11,7 +11,7 @@ import {
     setGender,
     setLanguage,
     setPhone,
-    setPinTweetId,
+    setPinTweet,
     setPrivateProfile,
     setProfileStarted,
     setReadMessage,
@@ -46,12 +46,13 @@ import { UserApi } from "../../../services/api/user-service/userApi";
 import { ChatMessageApi } from "../../../services/api/chat-service/chatMessageApi";
 import { UserSettingsApi } from "../../../services/api/user-service/userSettingsApi";
 import { AuthenticationResponse } from "../../../types/auth";
-import { AuthUserResponse, UserProfileResponse } from "../../../types/user";
+import { AuthUserResponse, UserPintTweetResponse, UserProfileResponse } from "../../../types/user";
 import {
     setBlocked,
     setFollowRequestToUserProfile,
     setFollowToUserProfile,
-    setMuted
+    setMuted,
+    setUserPinnedTweet
 } from "../userProfile/actionCreators";
 import {
     setBlockedUsersState,
@@ -178,8 +179,9 @@ export function* startUseTwitterRequest() {
 export function* fetchPinTweetRequest({ payload }: FetchPinTweetActionInterface) {
     try {
         yield put(setUserLoadingStatus(LoadingStatus.LOADING));
-        const response: AxiosResponse<number> = yield call(UserApi.processPinTweet, payload);
-        yield put(setPinTweetId(response.data));
+        const response: AxiosResponse<UserPintTweetResponse> = yield call(UserApi.processPinTweet, payload);
+        yield put(setPinTweet(response.data));
+        yield put(setUserPinnedTweet(response.data));
     } catch (e) {
         yield put(setUserLoadingStatus(LoadingStatus.ERROR));
     }

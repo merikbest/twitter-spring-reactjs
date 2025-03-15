@@ -152,7 +152,7 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserActions
 
         case UserActionsType.SET_PIN_TWEET_ID:
             if (draft.data) {
-                draft.data.pinnedTweetId = action.payload;
+                draft.data.pinnedTweetId = action.payload.pinnedTweetId;
                 draft.status = LoadingStatus.LOADED;
             }
             break;

@@ -6,6 +6,7 @@ import {
     CommonUserResponse,
     SearchResultResponse,
     UserDetailResponse,
+    UserPintTweetResponse,
     UserProfileResponse,
     UserResponse
 } from "../../../types/user";
@@ -59,8 +60,8 @@ export const UserApi = {
     async processSubscribeToNotifications(userId: number): Promise<AxiosResponse<boolean>> {
         return await axios.get<boolean>(UI_V1_USER_SUBSCRIBE_USER_ID(userId));
     },
-    async processPinTweet(tweetId: number): Promise<AxiosResponse<number>> {
-        return await axios.get<number>(UI_V1_USER_PIN_TWEET_ID(tweetId));
+    async processPinTweet(tweetId: number): Promise<AxiosResponse<UserPintTweetResponse>> {
+        return await axios.get<UserPintTweetResponse>(UI_V1_USER_PIN_TWEET_ID(tweetId));
     },
     async getUserDetails(userId: number, cancelTokenSource: CancelTokenSource): Promise<AxiosResponse<UserDetailResponse>> {
         return await axios.get<UserDetailResponse>(UI_V1_USER_DETAILS_USER_ID(userId), { cancelToken: cancelTokenSource.token });

@@ -14,4 +14,6 @@ public interface UserHandlerService {
     void handleFollowUser(FollowUserEvent userEvent, String authId);
 
     void handleFollowUserRequest(FollowRequestUserEvent userEvent, String authId);
+
+    void handlePinTweet(PinTweetEvent pinTweetEvent, String authId);
 }

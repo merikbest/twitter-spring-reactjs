@@ -6,6 +6,7 @@ public class KafkaTopicConstants {
     public static final String MUTE_USER_TOPIC = "user-service.user.mute";
     public static final String FOLLOW_USER_TOPIC = "user-service.user.follow";
     public static final String FOLLOW_REQUEST_USER_TOPIC = "user-service.user.follow-request";
+    public static final String PIN_TWEET_USER_TOPIC = "user-service.user.pin-tweet";
     public static final String SEND_EMAIL_TOPIC = "user-service.user.send-email";
     public static final String UPDATE_TWEET_TOPIC = "tweet-service.tweet.update";
     public static final String UPDATE_LISTS_TOPIC = "lists-service.lists.update";

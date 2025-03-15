@@ -60,6 +60,9 @@ public abstract class AbstractServiceTest {
     UpdateUserProducer updateUserProducer;
 
     @MockBean
+    PinTweetProducer pinTweetProducer;
+
+    @MockBean
     JwtProvider jwtProvider;
 
     @MockBean

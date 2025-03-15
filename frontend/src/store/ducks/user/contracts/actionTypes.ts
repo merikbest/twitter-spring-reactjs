@@ -5,6 +5,7 @@ import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPass
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
 import { LoginRequest } from "../../../../types/auth";
+import { UserPintTweetResponse } from "../../../../types/user";
 
 export enum UserActionsType {
     SIGN_OUT = "user/SIGN_OUT",
@@ -98,9 +99,9 @@ export interface SetProfileStartedActionInterface extends Action<UserActionsType
     payload: boolean;
 }
 
-export interface SetPinTweetIdActionInterface extends Action<UserActionsType> {
+export interface SetPinTweetActionInterface extends Action<UserActionsType> {
     type: UserActionsType.SET_PIN_TWEET_ID;
-    payload: number;
+    payload: UserPintTweetResponse;
 }
 
 export interface SetReadMessageActionInterface extends Action<UserActionsType> {
@@ -303,6 +304,6 @@ export type UserActions =
     | SetBackgroundColorActionInterface
     | SetFollowersSizeActionInterface
     | SetProfileStartedActionInterface
-    | SetPinTweetIdActionInterface
+    | SetPinTweetActionInterface
     | SetReadMessageActionInterface
     | SetUserFollowingActionInterface

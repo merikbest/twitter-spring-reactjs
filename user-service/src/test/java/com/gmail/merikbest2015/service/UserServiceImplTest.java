@@ -145,22 +145,28 @@ public class UserServiceImplTest extends AbstractServiceTest {
 
     @Test
     public void processPinTweet_ShouldPinTweet() {
+        User user = new User();
+        user.setId(TestConstants.USER_ID);
+        user.setPinnedTweetId(null);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(true);
-        when(userRepository.getPinnedTweetId(TestConstants.USER_ID)).thenReturn(TestConstants.PINNED_TWEET_ID);
-        assertEquals(TestConstants.TWEET_ID, userService.processPinTweet(TestConstants.TWEET_ID));
+        assertEquals(user, userService.processPinTweet(TestConstants.TWEET_ID));
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetClient, times(1)).isTweetExists(TestConstants.TWEET_ID);
-        verify(userRepository, times(1)).getPinnedTweetId(TestConstants.USER_ID);
-        verify(userRepository, times(1)).updatePinnedTweetId(TestConstants.TWEET_ID, TestConstants.USER_ID);
+        verify(pinTweetProducer, times(1)).sendPinTweetEvent(TestConstants.TWEET_ID, TestConstants.USER_ID);
     }
 
     @Test
     public void processPinTweet_ShouldUnpinTweet() {
+        User user = new User();
+        user.setId(TestConstants.USER_ID);
+        user.setPinnedTweetId(TestConstants.TWEET_ID);
+        when(userRepository.findById(TestConstants.USER_ID)).thenReturn(Optional.of(user));
         when(tweetClient.isTweetExists(TestConstants.TWEET_ID)).thenReturn(true);
-        when(userRepository.getPinnedTweetId(TestConstants.USER_ID)).thenReturn(TestConstants.TWEET_ID);
-        assertEquals(0L, userService.processPinTweet(TestConstants.TWEET_ID));
+        assertEquals(user, userService.processPinTweet(TestConstants.TWEET_ID));
+        verify(userRepository, times(1)).findById(TestConstants.USER_ID);
         verify(tweetClient, times(1)).isTweetExists(TestConstants.TWEET_ID);
-        verify(userRepository, times(1)).getPinnedTweetId(TestConstants.USER_ID);
-        verify(userRepository, times(1)).updatePinnedTweetId(null, TestConstants.USER_ID);
+        verify(pinTweetProducer, times(1)).sendPinTweetEvent(null, TestConstants.USER_ID);
     }
 
     @Test
