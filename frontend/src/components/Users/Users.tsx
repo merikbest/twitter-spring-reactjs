@@ -46,7 +46,7 @@ const Users: FC = (): ReactElement => {
                                 <Typography variant={"body1"} component={"div"}>
                                     {t("SHOW_MORE", { defaultValue: "Show more" })}
                                 </Typography>
-                            </ListItem>`
+                            </ListItem>
                         </List>
                     )}
                 </Paper>

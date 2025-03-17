@@ -2,7 +2,7 @@ package com.gmail.merikbest2015.controller.rest;
 
 import com.gmail.merikbest2015.commons.constants.PathConstants;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
-import com.gmail.merikbest2015.dto.response.TweetUserResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.mapper.RetweetMapper;
@@ -25,9 +25,9 @@ public class RetweetController {
     private final RetweetMapper retweetMapper;
 
     @GetMapping(PathConstants.REPLIES_USER_ID)
-    public ResponseEntity<List<TweetUserResponse>> getUserRetweetsAndReplies(@PathVariable("userId") Long userId,
-                                                                             @PageableDefault(size = 10) Pageable pageable) {
-        HeaderResponse<TweetUserResponse> response = retweetMapper.getUserRetweetsAndReplies(userId, pageable);
+    public ResponseEntity<List<TweetResponse>> getUserRetweetsAndReplies(@PathVariable("userId") Long userId,
+                                                                         @PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = retweetMapper.getUserRetweetsAndReplies(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 

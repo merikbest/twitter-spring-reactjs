@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface RetweetRepository extends JpaRepository<Tweet, Long> {
 
@@ -18,7 +16,4 @@ public interface RetweetRepository extends JpaRepository<Tweet, Long> {
             AND tweet.retweet.id = :tweetId
             """)
     boolean isUserRetweetedTweet(@Param("userId") Long userId, @Param("tweetId") Long tweetId);
-
-    @Query("SELECT tweet.author.id FROM Tweet tweet WHERE tweet.retweet.id = :tweetId")
-    List<Long> getRetweetsUserIds(@Param("tweetId") Long tweetId);
 }

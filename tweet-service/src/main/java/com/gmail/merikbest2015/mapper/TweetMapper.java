@@ -39,13 +39,13 @@ public class TweetMapper {
 
     public TweetResponse getPinnedTweetByUserId(Long userId) {
         return tweetService.getPinnedTweetByUserId(userId)
-                .map(tweet -> basicMapper.convertToResponse(tweet, TweetUserResponse.class))
+                .map(tweet -> basicMapper.convertToResponse(tweet, TweetResponse.class))
                 .orElse(null);
     }
 
-    public HeaderResponse<TweetUserResponse> getUserTweets(Long userId, Pageable pageable) {
+    public HeaderResponse<TweetResponse> getUserTweets(Long userId, Pageable pageable) {
         Page<TweetUserProjection> tweets = tweetService.getUserTweets(userId, pageable);
-        return basicMapper.getHeaderResponse(tweets, TweetUserResponse.class);
+        return basicMapper.getHeaderResponse(tweets, TweetResponse.class);
     }
 
     public HeaderResponse<TweetResponse> getUserMediaTweets(Long userId, Pageable pageable) {

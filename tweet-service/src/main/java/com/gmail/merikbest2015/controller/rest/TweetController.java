@@ -44,9 +44,9 @@ public class TweetController {
     }
 
     @GetMapping(PathConstants.USER_USER_ID)
-    public ResponseEntity<List<TweetUserResponse>> getUserTweets(@PathVariable("userId") Long userId,
-                                                                 @PageableDefault(size = 10) Pageable pageable) {
-        HeaderResponse<TweetUserResponse> response = tweetMapper.getUserTweets(userId, pageable);
+    public ResponseEntity<List<TweetResponse>> getUserTweets(@PathVariable("userId") Long userId,
+                                                             @PageableDefault(size = 10) Pageable pageable) {
+        HeaderResponse<TweetResponse> response = tweetMapper.getUserTweets(userId, pageable);
         return ResponseEntity.ok().headers(response.getHeaders()).body(response.getItems());
     }
 

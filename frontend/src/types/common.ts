@@ -37,6 +37,12 @@ export enum ReplyType {
     MENTION = "MENTION"
 }
 
+export enum TweetType {
+    TWEET = "TWEET",
+    RETWEET = "RETWEET",
+    REPLY = "REPLY"
+}
+
 export enum LinkCoverSize {
     SMALL = "SMALL",
     MEDIUM = "MEDIUM",

@@ -8,22 +8,19 @@ import {
     selectUserProfilePinnedTweetId
 } from "../../../store/ducks/userProfile/selectors";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
+import { TweetType } from "../../../types/common";
 
 interface TweetActionsProps {
-    retweetsUserIds?: number[];
     tweetId?: number;
+    tweetType?: TweetType;
     activeTab?: number;
 }
 
-const TweetActions: FC<TweetActionsProps> = memo(({ retweetsUserIds = [], tweetId, activeTab }): ReactElement | null => {
+const TweetActions: FC<TweetActionsProps> = memo(({ tweetId, tweetType, activeTab }): ReactElement | null => {
     const userProfileId = useSelector(selectUserProfileId);
-    const userProfilePinnedTweetId = useSelector(selectUserProfilePinnedTweetId);
+    const pinnedTweetId = useSelector(selectUserProfilePinnedTweetId);
     const fullName = useSelector(selectUserProfileFullName);
     const myProfileId = useSelector(selectUserDataId);
-
-    const isTweetRetweetedByUser = retweetsUserIds.includes(userProfileId!);
-    const isOwnProfile = myProfileId === userProfileId;
-    const isPinnedTweet = userProfilePinnedTweetId === tweetId;
 
     if (activeTab !== 0) {
         return null;
@@ -31,13 +28,13 @@ const TweetActions: FC<TweetActionsProps> = memo(({ retweetsUserIds = [], tweetI
 
     return (
         <>
-            {(isTweetRetweetedByUser && userProfileId) && (
+            {(tweetType === TweetType.RETWEET) && (
                 <TweetActionResult
                     action={TweetActionResults.RETWEET}
-                    text={`${isOwnProfile ? "You" : fullName} Retweeted`}
+                    text={`${(myProfileId === userProfileId) ? "You" : fullName} Retweeted`}
                 />
             )}
-            {isPinnedTweet && <TweetActionResult action={TweetActionResults.PIN} text="Pinned Tweet" />}
+            {(pinnedTweetId === tweetId) && <TweetActionResult action={TweetActionResults.PIN} text="Pinned Tweet" />}
         </>
     );
 });

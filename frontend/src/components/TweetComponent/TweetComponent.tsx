@@ -40,7 +40,7 @@ const TweetComponent: FC<TweetComponentProps> = memo(({ tweet, activeTab, isTwee
 
     return (
         <Paper className={classes.container} variant="outlined">
-            <TweetActions tweetId={tweet?.id} retweetsUserIds={tweet?.retweetsUserIds} activeTab={activeTab} />
+            <TweetActions tweetId={tweet?.id} tweetType={tweet?.tweetType} activeTab={activeTab} />
             <div className={classes.tweetWrapper}>
                 <TweetAvatar userId={tweet?.author.id} src={tweet?.author.avatar ?? DEFAULT_PROFILE_IMG} />
                 <div className={classes.tweetContainer}>

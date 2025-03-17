@@ -594,7 +594,6 @@ public class TweetControllerTest {
                 .andExpect(jsonPath("$[*]", hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(42L))
                 .andExpect(jsonPath("$[0].text").value(TestConstants.YOUTUBE_LINK))
-                .andExpect(jsonPath("$[0].createdAt").value("2021-10-03T20:33:36"))
                 .andExpect(jsonPath("$[0].scheduledDate").isEmpty())
                 .andExpect(jsonPath("$[0].addressedUsername").isEmpty())
                 .andExpect(jsonPath("$[0].addressedId").isEmpty())

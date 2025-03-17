@@ -1,10 +1,11 @@
-import { Image, LinkCoverSize, ReplyType } from "./common";
+import { Image, LinkCoverSize, ReplyType, TweetType } from "./common";
 import { TaggedUserResponse } from "./user";
 import { TweetListResponse } from "./lists";
 
 export interface TweetResponse {
     id: number;
     text: string;
+    tweetType: TweetType;
     createdAt: string;
     scheduledDate: string;
     addressedUsername: string;
@@ -22,7 +23,6 @@ export interface TweetResponse {
     imageDescription: string;
     taggedImageUsers: TaggedUserResponse[];
     quoteTweet: QuoteTweetResponse;
-    retweet: TweetResponse;
     tweetList: TweetListResponse;
     poll: PollResponse;
     retweetsCount: number;
@@ -35,7 +35,6 @@ export interface TweetResponse {
     isUserFollowByOtherUser: boolean;
     isTweetDeleted: boolean;
     isTweetBookmarked: boolean;
-    retweetsUserIds?: number[];
 }
 
 export interface TweetAdditionalInfoResponse {

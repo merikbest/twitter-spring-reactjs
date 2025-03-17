@@ -16,8 +16,7 @@ export const userTweetsReducer = produce((draft: Draft<UserTweetsState>, action:
 
     switch (action.type) {
         case UserTweetsActionType.SET_TWEETS:
-            const replaceTweets = action.payload.items.map(tweet => tweet.retweet ? tweet.retweet : tweet);
-            draft.items = [...draft.items, ...replaceTweets];
+            draft.items = [...draft.items, ...action.payload.items];
             draft.pagesCount = action.payload.pagesCount;
             draft.loadingState = LoadingStatus.LOADED;
             break;

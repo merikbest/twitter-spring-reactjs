@@ -21,8 +21,12 @@ public interface TweetProjection {
     List<TweetImageProjection> getImages();
     String getImageDescription();
     QuoteTweetProjection getQuoteTweet();
-    TweetProjection getRetweet();
     PollProjection getPoll();
+    String getLink();
+    String getLinkTitle();
+    String getLinkDescription();
+    String getLinkCover();
+    LinkCoverSize getLinkCoverSize();
     boolean isDeleted();
     TweetAuthorProjection getAuthor();
     Long getRetweetsCount();
@@ -30,16 +34,16 @@ public interface TweetProjection {
     Long getRepliesCount();
     Long getQuotesCount();
 
-    @Value("#{target.addressedUser == null ? null : target.addressedUser.id}")
+    @Value("#{target.addressedUser?.id}")
     Long getAddressedId();
 
-    @Value("#{target.addressedUser == null ? null : target.addressedUser.username}")
+    @Value("#{target.addressedUser?.username}")
     String getAddressedUsername();
 
-    @Value("#{target.addressedTweet == null ? null : target.addressedTweet.id}")
+    @Value("#{target.addressedTweet?.id}")
     Long getAddressedTweetId();
 
-    @Value("#{target.listId == null ? null : @tweetProjectionHelper.getTweetList(target.listId)}")
+    @Value("#{@tweetProjectionHelper.getTweetList(target.listId)}")
     TweetListResponse getTweetList();
 
     List<TaggedUserProjection> getTaggedImageUsers();

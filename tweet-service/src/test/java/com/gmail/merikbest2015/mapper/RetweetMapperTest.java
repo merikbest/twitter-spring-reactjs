@@ -2,8 +2,8 @@ package com.gmail.merikbest2015.mapper;
 
 import com.gmail.merikbest2015.TweetServiceTestHelper;
 import com.gmail.merikbest2015.commons.dto.HeaderResponse;
+import com.gmail.merikbest2015.commons.dto.response.tweet.TweetResponse;
 import com.gmail.merikbest2015.commons.mapper.BasicMapper;
-import com.gmail.merikbest2015.dto.response.TweetUserResponse;
 import com.gmail.merikbest2015.commons.dto.response.notification.NotificationTweetResponse;
 import com.gmail.merikbest2015.commons.dto.response.user.UserResponse;
 import com.gmail.merikbest2015.model.Tweet;
@@ -46,13 +46,13 @@ public class RetweetMapperTest {
     public void getUserRetweetsAndReplies() {
         List<TweetUserProjection> tweetUserProjections = TweetServiceTestHelper.createMockTweetUserProjectionList();
         Page<TweetUserProjection> pageableTweetUserProjections = new PageImpl<>(tweetUserProjections, pageable, 20);
-        HeaderResponse<TweetUserResponse> headerResponse = new HeaderResponse<>(
-                List.of(new TweetUserResponse(), new TweetUserResponse()), new HttpHeaders());
+        HeaderResponse<TweetResponse> headerResponse = new HeaderResponse<>(
+                List.of(new TweetResponse(), new TweetResponse()), new HttpHeaders());
         when(retweetService.getUserRetweetsAndReplies(TestConstants.USER_ID, pageable)).thenReturn(pageableTweetUserProjections);
-        when(basicMapper.getHeaderResponse(pageableTweetUserProjections, TweetUserResponse.class)).thenReturn(headerResponse);
+        when(basicMapper.getHeaderResponse(pageableTweetUserProjections, TweetResponse.class)).thenReturn(headerResponse);
         assertEquals(headerResponse, retweetMapper.getUserRetweetsAndReplies(TestConstants.USER_ID, pageable));
         verify(retweetService, times(1)).getUserRetweetsAndReplies(TestConstants.USER_ID, pageable);
-        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetUserProjections, TweetUserResponse.class);
+        verify(basicMapper, times(1)).getHeaderResponse(pageableTweetUserProjections, TweetResponse.class);
     }
 
     @Test
