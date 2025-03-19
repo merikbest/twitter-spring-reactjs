@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { ListItem, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { CLIENT_URL } from "../../../../constants/url-constants";
 import { LinkIcon } from "../../../../icons";
@@ -15,9 +16,10 @@ interface CopyProfileLinkButtonProps {
 const CopyProfileLinkButton: FC<CopyProfileLinkButtonProps> = memo(({ onCloseUserPageActions }): ReactElement => {
     const dispatch = useDispatch();
     const location = useLocation();
+    const { t } = useTranslation();
 
     const onCopyLinkToProfile = (): void => {
-        dispatch(setOpenSnackBar("Copied to clipboard"));
+        dispatch(setOpenSnackBar(t("COPIED_TO_CLIPBOARD", { defaultValue: "Copied to clipboard" })));
         onCloseUserPageActions();
     };
 
@@ -26,7 +28,7 @@ const CopyProfileLinkButton: FC<CopyProfileLinkButtonProps> = memo(({ onCloseUse
             <ListItem id={"copyLinkToProfile"} onClick={onCopyLinkToProfile}>
                 <>{LinkIcon}</>
                 <Typography component={"span"}>
-                    Copy link to profile
+                    {t("COPY_LINK_TO_PROFILE", { defaultValue: "Copy link to profile" })}
                 </Typography>
             </ListItem>
         </CopyToClipboard>
