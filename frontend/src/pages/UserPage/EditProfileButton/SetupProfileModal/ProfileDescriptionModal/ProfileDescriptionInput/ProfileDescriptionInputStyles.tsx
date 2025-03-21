@@ -1,6 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useProfileDescriptionInputStyles = makeStyles(() => ({
+    wrapper: {
+        marginTop: 15,
+    },
     content: {
         position: "absolute",
         zIndex: 2,

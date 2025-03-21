@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Avatar, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useProfileHeaderModalStyles } from "./ProfileHeaderModalStyles";
 import UploadProfileImage from "../../../../../components/UploadProfileImage/UploadProfileImage";
@@ -31,13 +32,14 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
     const classes = useProfileHeaderModalStyles();
     const myProfileFullName = useSelector(selectUserProfileFullName);
     const myProfileUsername = useSelector(selectUserProfileUsername);
+    const { t } = useTranslation();
 
     return (
         <ProfileModal
             isOpen={isOpen}
             onClose={onClose}
-            title={"Pick a header"}
-            subtitle={"People who visit your profile will see it. Show your style."}
+            title={t("PICK_A_HEADER", { defaultValue: "Pick a header" })}
+            subtitle={t("SHOW_YOUR_STYLE", { defaultValue: "People who visit your profile will see it. Show your style." })}
             onClick={onOpenProfileDescriptionModal}
             isComponentSelected={wallpaper?.src !== undefined}
             hideBackdrop
@@ -46,11 +48,11 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                 <img
                     className={classes.wallpaperImg}
                     key={wallpaper?.src}
-                    alt={"default-wallpaper"}
+                    alt="default-wallpaper"
                     src={wallpaper ? wallpaper?.src : ""}
                 />
                 <div className={classes.wallpaperEditImg}>
-                    <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={onChangeWallpaper} />
+                    <UploadProfileImage name="wallpaper" image={wallpaper} onChangeImage={onChangeWallpaper} />
                 </div>
             </div>
             <div className={classes.avatarWrapper}>
@@ -58,10 +60,10 @@ const ProfileHeaderModal: FC<ProfileHeaderModalProps> = (
                     <img alt="default-avatar" src={DEFAULT_PROFILE_IMG} />
                 </Avatar>
             </div>
-            <Typography variant={"h3"} component={"div"}>
+            <Typography variant="h3" component="div">
                 {myProfileFullName}
             </Typography>
-            <Typography variant={"subtitle1"} component={"div"}>
+            <Typography variant="subtitle1" component="div">
                 @{myProfileUsername}
             </Typography>
         </ProfileModal>

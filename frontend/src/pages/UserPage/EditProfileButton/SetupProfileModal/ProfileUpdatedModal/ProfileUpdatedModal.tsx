@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { Button } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useProfileUpdatedModalStyles } from "./ProfileUpdatedModalStyles";
 import ProfileModal from "../ProfileModal/ProfileModal";
@@ -12,12 +13,13 @@ interface ProfileUpdatedModalProps {
 
 const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({ isOpen, onClose, onSubmit }): ReactElement => {
     const classes = useProfileUpdatedModalStyles();
+    const { t } = useTranslation();
 
     return (
         <ProfileModal
             isOpen={isOpen}
             onClose={onClose}
-            title={"Your profile is updated"}
+            title={t("YOUR_PROFILE_IS_UPDATED", { defaultValue: "Your profile is updated" })}
             isComponentSelected
             isProfileUpdated
             hideBackdrop
@@ -30,7 +32,7 @@ const ProfileUpdatedModal: FC<ProfileUpdatedModalProps> = ({ isOpen, onClose, on
                     color="primary"
                     size="medium"
                 >
-                    See profile
+                    {t("SEE_PROFILE", { defaultValue: "See profile" })}
                 </Button>
             </div>
         </ProfileModal>

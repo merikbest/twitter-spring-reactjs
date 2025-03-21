@@ -10,7 +10,6 @@ interface ProfileDescriptionInputProps {
     value: string;
     helperText?: string;
     error?: boolean;
-    name: string;
     label: string;
     maxTextLength: number;
 }
@@ -21,7 +20,6 @@ const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = (
         value,
         helperText,
         error,
-        name,
         label,
         maxTextLength
     }
@@ -30,7 +28,7 @@ const ProfileDescriptionInput: FC<ProfileDescriptionInputProps> = (
     const { focused, onFocus, onBlur } = useFocus();
 
     return (
-        <div>
+        <div className={classes.wrapper}>
             <div className={classes.content}>
                 {focused && (
                     <div className={classes.inputCount}>

@@ -8,6 +8,8 @@ import Dialog from "@material-ui/core/Dialog";
 import { Avatar, Button } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
+import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 import TweetInput from "../../../../components/TweetInput/TweetInput";
 import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";
@@ -32,8 +34,8 @@ export interface EditProfileFormProps {
     website: string;
 }
 
-export const EditProfileFormSchema = yup.object().shape({
-    fullName: yup.string().min(1, "Name can’t be blank").required()
+const editProfileModalFormSchema = (t: TFunction<"translation", undefined>) => yup.object().shape({
+    listName: yup.string().min(1, t("NAME_ERROR", { defaultValue: "Name can’t be blank" })).required()
 });
 
 const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): ReactElement | null => {
@@ -41,6 +43,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
     const classes = useEditProfileModalStyles();
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
+    const { t } = useTranslation();
     const [avatar, setAvatar] = useState<ImageObj>();
     const [wallpaper, setWallpaper] = useState<ImageObj>();
 
@@ -51,7 +54,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
             location: userData?.location,
             website: userData?.website
         },
-        resolver: yupResolver(EditProfileFormSchema)
+        resolver: yupResolver(editProfileModalFormSchema(t))
     });
 
     const onSubmit = async (data: EditProfileFormProps): Promise<void> => {
@@ -74,9 +77,12 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
     return (
         <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitleComponent title={"Edit Profile"} onClose={onClose}>
+                <DialogTitleComponent
+                    title={t("EDIT_PROFILE", { defaultValue: "Edit Profile" })}
+                    onClose={onClose}
+                >
                     <Button type="submit" variant="contained" color="primary">
-                        Save
+                        {t("SAVE", { defaultValue: "Save" })}
                     </Button>
                 </DialogTitleComponent>
                 <DialogContent className={globalClasses.dialogContent}>
@@ -85,16 +91,15 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                             <img
                                 className={classes.wallpaperImg}
                                 key={wallpaper?.src}
-                                alt={"wallpaper"}
-                                src={(userData?.wallpaper && !wallpaper?.src) ?
-                                    userData?.wallpaper : wallpaper?.src}
+                                alt="wallpaper"
+                                src={(userData?.wallpaper && !wallpaper?.src) ? userData?.wallpaper : wallpaper?.src}
                             />
                             <div className={classes.wallpaperEditImg}>
-                                <UploadProfileImage name={"wallpaper"} image={wallpaper} onChangeImage={setWallpaper} />
+                                <UploadProfileImage name="wallpaper" image={wallpaper} onChangeImage={setWallpaper} />
                             </div>
                         </div>
                         <div className={classes.avatarWrapper}>
-                            <UploadProfileImage name={"avatar"} image={avatar} onChangeImage={setAvatar} />
+                            <UploadProfileImage name="avatar" image={avatar} onChangeImage={setAvatar} />
                             <Avatar
                                 key={avatar?.src}
                                 src={(userData?.avatar && !avatar?.src) ? userData?.avatar : avatar?.src}
@@ -113,7 +118,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                             name="fullName"
                                             helperText={errors.fullName?.message}
                                             error={!!errors.fullName}
-                                            label={"Name"}
+                                            label={t("NAME", { defaultValue: "Name" })}
                                             maxTextLength={50}
                                             onChange={onChange}
                                             value={value}
@@ -127,7 +132,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                     render={({ field: { onChange, value } }) => (
                                         <TweetInput
                                             name="about"
-                                            label={"Bio"}
+                                            label={t("BIO", { defaultValue: "Bio" })}
                                             maxTextLength={160}
                                             onChange={onChange}
                                             value={value}
@@ -143,7 +148,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                     render={({ field: { onChange, value } }) => (
                                         <TweetInput
                                             name="location"
-                                            label={"Location"}
+                                            label={t("LOCATION", { defaultValue: "Location" })}
                                             maxTextLength={30}
                                             onChange={onChange}
                                             value={value}
@@ -157,7 +162,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                     render={({ field: { onChange, value } }) => (
                                         <TweetInput
                                             name="website"
-                                            label={"Website"}
+                                            label={t("WEBSITE", { defaultValue: "Website" })}
                                             maxTextLength={100}
                                             onChange={onChange}
                                             value={value}

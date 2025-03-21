@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { Avatar } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useProfilePictureModalStyles } from "./ProfilePictureModalStyles";
 import { DEFAULT_PROFILE_IMG } from "../../../../../constants/url-constants";
@@ -25,13 +26,14 @@ const ProfilePictureModal: FC<ProfilePictureModalProps> = (
     }
 ): ReactElement => {
     const classes = useProfilePictureModalStyles();
+    const { t } = useTranslation();
 
     return (
         <ProfileModal
             isOpen={isOpen}
             onClose={onClose}
-            title={"Pick a profile picture"}
-            subtitle={"Have a favorite selfie? Upload it now."}
+            title={t("PICK_A_PROFILE_PICTURE", { defaultValue: "Pick a profile picture" })}
+            subtitle={t("UPLOAD_IT_NOW", { defaultValue: "Have a favorite selfie? Upload it now." })}
             onClick={onOpenProfileHeaderModal}
             isComponentSelected={avatar?.src !== undefined}
         >

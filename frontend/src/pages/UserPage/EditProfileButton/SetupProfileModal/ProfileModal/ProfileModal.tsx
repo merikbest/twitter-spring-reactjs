@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, ReactNode } from "react";
 import { Dialog, DialogContent, Typography } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
+import { useTranslation } from "react-i18next";
 
 import { useProfileModalStyles } from "./ProfileModalStyles";
 import FullWidthButton from "../../../../../components/Buttons/FullWidthButton/FullWidthButton";
@@ -31,6 +32,7 @@ const ProfileModal: FC<ProfileModalProps> = (
     }
 ): ReactElement => {
     const classes = useProfileModalStyles({ isProfileUpdated });
+    const { t } = useTranslation();
 
     return (
         <Dialog transitionDuration={0} open={isOpen} onClose={onClose} hideBackdrop={hideBackdrop}>
@@ -38,10 +40,10 @@ const ProfileModal: FC<ProfileModalProps> = (
                 <div className={classes.logoIcon}>
                     <TwitterIcon />
                 </div>
-                <Typography variant={"h3"} component={"div"} className={classes.title}>
+                <Typography variant="h3" component="div" className={classes.title}>
                     {title}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"div"}>
+                <Typography variant="subtitle1" component="div">
                     {subtitle}
                 </Typography>
                 {children}
@@ -49,8 +51,10 @@ const ProfileModal: FC<ProfileModalProps> = (
                     <FullWidthButton
                         onClick={onClick}
                         variant={isComponentSelected ? "contained" : "text"}
-                        title={isComponentSelected ? "Next" : "Skip for now"}
-                        size={"medium"}
+                        title={isComponentSelected
+                            ? t("NEXT", { defaultValue: "Next" })
+                            : t("SKIP_FOR_NOW", { defaultValue: "Skip for now" })}
+                        size="medium"
                     />
                 )}
             </DialogContent>
