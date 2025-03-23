@@ -2,6 +2,7 @@ import React, { memo, ReactElement, useState } from "react";
 import classnames from "classnames";
 import { Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
 import {
@@ -20,14 +21,19 @@ const BlockUserButton = memo((): ReactElement => {
     const userProfileId = useSelector(selectUserProfileId);
     const username = useSelector(selectUserProfileUsername);
     const isUserBlocked = useSelector(selectUserProfileIsUserBlocked);
-    const [btnText, setBtnText] = useState<string>("Blocked");
+    const { t } = useTranslation();
+    const [btnText, setBtnText] = useState<string>(t("BLOCKED", { defaultValue: "Blocked" }));
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({ userId: userProfileId! }));
         onCloseModalWindow();
-        setBtnText(isUserBlocked ? "Following" : "Blocked");
-        dispatch(setOpenSnackBar(`@${username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`));
+        setBtnText(isUserBlocked
+            ? t("FOLLOWING", { defaultValue: "Following" })
+            : t("BLOCKED", { defaultValue: "Blocked" }));
+        dispatch(setOpenSnackBar(isUserBlocked
+            ? t("UNBLOCK_USER_POPUP_MESSAGE", { username, defaultValue: `@${username} has been unblocked` })
+            : t("BLOCK_USER_POPUP_MESSAGE", { username, defaultValue: `@${username} has been blocked` })));
     };
 
     return (
@@ -35,8 +41,8 @@ const BlockUserButton = memo((): ReactElement => {
             <Button
                 className={classnames(classes.primaryButton, classes.blockButton)}
                 onClick={onOpenModalWindow}
-                onMouseOver={() => setBtnText("Unblock")}
-                onMouseLeave={() => setBtnText("Blocked")}
+                onMouseOver={() => setBtnText(t("UNBLOCK", { defaultValue: "Unblock" }))}
+                onMouseLeave={() => setBtnText(t("BLOCKED", { defaultValue: "Blocked" }))}
                 color="primary"
                 variant="contained"
                 size="large"

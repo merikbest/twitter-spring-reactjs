@@ -32,9 +32,9 @@ const BlockUserButton = memo((): ReactElement => {
 
     return (
         <>
-            <ListItem id={"openBlockUserModal"} onClick={onOpenModalWindow}>
+            <ListItem id="openBlockUserModal" onClick={onOpenModalWindow}>
                 <>{isUserBlocked ? UnblockIcon : BlockIcon}</>
-                <Typography component={"span"}>
+                <Typography component="span">
                     {isUserBlocked
                         ? t("UNBLOCK_USER", { username, defaultValue: `Unblock @${username}` })
                         : t("BLOCK_USER", { username, defaultValue: `Block @${username}` })}

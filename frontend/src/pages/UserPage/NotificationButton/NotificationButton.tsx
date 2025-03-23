@@ -1,5 +1,6 @@
 import React, { memo, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import { NotificationsAddFilledIcon, NotificationsAddIcon } from "../../../icons";
@@ -12,6 +13,7 @@ const NotificationButton = memo((): ReactElement => {
     const dispatch = useDispatch();
     const userProfileId = useSelector(selectUserProfileId);
     const isSubscriber = useSelector(selectUserProfileIsSubscriber);
+    const { t } = useTranslation();
 
     const handleSubscribeToNotifications = (): void => {
         dispatch(processSubscribe(userProfileId!));
@@ -20,7 +22,9 @@ const NotificationButton = memo((): ReactElement => {
     return (
         <span className={globalClasses.userPageIconButton}>
             <ActionIconButton
-                actionText={isSubscriber ? "Turn off notifications" : "Notify"}
+                actionText={isSubscriber
+                    ? t("TURN_OFF_NOTIFICATIONS", { defaultValue: "Turn off notifications" })
+                    : t("NOTIFY", { defaultValue: "Notify" })}
                 icon={isSubscriber ? NotificationsAddFilledIcon : NotificationsAddIcon}
                 onClick={handleSubscribeToNotifications}
             />

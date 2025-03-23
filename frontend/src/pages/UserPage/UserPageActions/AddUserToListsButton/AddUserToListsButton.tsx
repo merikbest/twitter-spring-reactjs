@@ -16,9 +16,9 @@ const AddUserToListsButton = memo((): ReactElement => {
 
     return (
         <>
-            <ListItem id={"openListsModal"} onClick={onOpenModalWindow}>
+            <ListItem id="openListsModal" onClick={onOpenModalWindow}>
                 <>{AddListsIcon}</>
-                <Typography component={"span"}>
+                <Typography component="span">
                     {t("ADD_OR_REMOVE_FROM_LIST", { username, defaultValue: `Add/remove @${username} from Lists` })}
                 </Typography>
             </ListItem>

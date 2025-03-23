@@ -21,7 +21,7 @@ const ViewUserTopicsButton: FC = memo((): ReactElement => {
     };
 
     return (
-        <div id={"viewUserTopics"} onClick={onClickViewUserTopics}>
+        <div id="viewUserTopics" onClick={onClickViewUserTopics}>
             <UserItemAction title={t("VIEW_TOPICS", { defaultValue: "View Topics" })} icon={TopicIcon} />
         </div>
     );

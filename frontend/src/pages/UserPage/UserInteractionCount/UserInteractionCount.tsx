@@ -41,16 +41,16 @@ const UserInteractionCount = memo((): ReactElement => {
         <>
             {!userProfileId && (
                 <div className={classes.skeletonDetails}>
-                    <Skeleton component={"span"} variant="text" width={80} />
-                    <Skeleton component={"span"} variant="text" width={80} />
+                    <Skeleton component="span" variant="text" width={80} />
+                    <Skeleton component="span" variant="text" width={80} />
                 </div>
             )}
             {!isMyProfileBlocked && (
                 <List className={classes.details}>
-                    <LinkToFollowers linkTo={"following"}>
+                    <LinkToFollowers linkTo="following">
                         <UserFollowersCount />
                     </LinkToFollowers>
-                    <LinkToFollowers linkTo={"followers"}>
+                    <LinkToFollowers linkTo="followers">
                         <UserFollowingCount />
                     </LinkToFollowers>
                 </List>

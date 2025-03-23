@@ -1,6 +1,7 @@
 import React, { memo, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { followUser, processFollowRequest } from "../../../store/ducks/user/actionCreators";
 import { selectUserProfileId, selectUserProfileIsPrivateProfile } from "../../../store/ducks/userProfile/selectors";
@@ -11,6 +12,7 @@ const FollowUserButton = memo((): ReactElement => {
     const dispatch = useDispatch();
     const userProfileId = useSelector(selectUserProfileId);
     const isPrivateProfile = useSelector(selectUserProfileIsPrivateProfile);
+    const { t } = useTranslation();
 
     const handleFollow = (): void => {
         if (isPrivateProfile) {
@@ -28,7 +30,7 @@ const FollowUserButton = memo((): ReactElement => {
             variant="outlined"
             size="large"
         >
-            Follow
+            {t("FOLLOW", { defaultValue: "Follow" })}
         </Button>
     );
 });

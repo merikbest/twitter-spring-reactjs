@@ -2,7 +2,7 @@ import React, { memo, ReactElement } from "react";
 import { useSelector } from "react-redux";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { Link as MuiLink, List, ListItem, Typography } from "@material-ui/core";
-import format from "date-fns/format";
+import { useTranslation } from "react-i18next";
 
 import { CalendarIcon, LinkIcon, LocationIcon } from "../../../icons";
 import {
@@ -14,6 +14,7 @@ import {
     selectUserProfileWebsite
 } from "../../../store/ducks/userProfile/selectors";
 import { useUserPageStyles } from "../UserPageStyles";
+import { formatRegistrationDate } from "../../../util/format-date-helper";
 
 const UserDetails = memo((): ReactElement => {
     const classes = useUserPageStyles();
@@ -23,14 +24,15 @@ const UserDetails = memo((): ReactElement => {
     const website = useSelector(selectUserProfileWebsite);
     const birthday = useSelector(selectUserProfileBirthday);
     const registrationDate = useSelector(selectUserProfileRegistrationDate);
+    const { t } = useTranslation();
 
     return (
         <>
             {!userProfileId && (
                 <div className={classes.skeletonDetails}>
-                    <Skeleton component={"span"} variant="text" width={80} />
-                    <Skeleton component={"span"} variant="text" width={150} />
-                    <Skeleton component={"span"} variant="text" width={150} />
+                    <Skeleton component="span" variant="text" width={80} />
+                    <Skeleton component="span" variant="text" width={150} />
+                    <Skeleton component="span" variant="text" width={150} />
                 </div>
             )}
             {!isMyProfileBlocked && (
@@ -38,7 +40,7 @@ const UserDetails = memo((): ReactElement => {
                     {location && (
                         <ListItem>
                             <>{LocationIcon}</>
-                            <Typography variant={"subtitle1"} component={"span"}>
+                            <Typography variant="subtitle1" component="span">
                                 {location}
                             </Typography>
                         </ListItem>
@@ -54,16 +56,18 @@ const UserDetails = memo((): ReactElement => {
                     )}
                     {birthday && (
                         <ListItem>
-                            <Typography variant={"subtitle1"} component={"span"}>
-                                Date of Birth: {birthday}
+                            <Typography variant="subtitle1" component="span">
+                                {t("DATE_OF_BIRTH", { birthday, defaultValue: `Date of Birth: ${birthday}`})}
                             </Typography>
                         </ListItem>
                     )}
                     {registrationDate && (
                         <ListItem>
                             <>{CalendarIcon}</>
-                            <Typography variant={"subtitle1"} component={"span"}>
-                                Joined: {format(new Date(registrationDate!), "MMMM yyyy")}
+                            <Typography variant="subtitle1" component="span">
+                                {t("JOINED", {
+                                    registrationDate: formatRegistrationDate(registrationDate),
+                                    defaultValue: `Joined: ${formatRegistrationDate(registrationDate)}`})}
                             </Typography>
                         </ListItem>
                     )}

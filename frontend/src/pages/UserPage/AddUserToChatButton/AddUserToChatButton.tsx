@@ -1,6 +1,7 @@
 import React, { memo, ReactElement } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import { MessagesIcon } from "../../../icons";
@@ -14,6 +15,7 @@ const AddUserToChatButton = memo((): ReactElement => {
     const dispatch = useDispatch();
     const history = useHistory();
     const userProfileId = useSelector(selectUserProfileId);
+    const { t } = useTranslation();
 
     const handleClickAddUserToChat = (): void => {
         dispatch(createChat(userProfileId!));
@@ -22,7 +24,11 @@ const AddUserToChatButton = memo((): ReactElement => {
 
     return (
         <span className={globalClasses.userPageIconButton}>
-            <ActionIconButton actionText={"Message"} icon={MessagesIcon} onClick={handleClickAddUserToChat} />
+            <ActionIconButton
+                actionText={t("MESSAGE", { defaultValue: "Message" })}
+                icon={MessagesIcon}
+                onClick={handleClickAddUserToChat}
+            />
         </span>
     );
 });

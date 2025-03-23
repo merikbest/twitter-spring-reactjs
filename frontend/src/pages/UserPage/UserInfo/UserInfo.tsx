@@ -29,7 +29,7 @@ const UserInfo = memo((): ReactElement => {
                 <Skeleton variant="text" width={250} height={30} />
             ) : (
                 <div>
-                    <Typography variant={"h5"} component={"span"}>
+                    <Typography variant="h5" component="span">
                         {fullName}
                     </Typography>
                     {isPrivateProfile && <span className={classes.lockIcon}>{LockIcon}</span>}
@@ -38,12 +38,12 @@ const UserInfo = memo((): ReactElement => {
             {!userProfileId ? (
                 <Skeleton variant="text" width={60} />
             ) : (
-                <Typography variant={"subtitle1"} component={"div"}>
+                <Typography variant="subtitle1" component="div">
                     @{username}
                 </Typography>
             )}
             {!isMyProfileBlocked && (
-                <Typography variant={"body1"} component={"div"} className={classes.description}>
+                <Typography variant="body1" component="div" className={classes.description}>
                     {about}
                 </Typography>
             )}

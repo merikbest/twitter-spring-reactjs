@@ -1,6 +1,7 @@
 import React, { memo, ReactElement, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { processFollowRequest } from "../../../store/ducks/user/actionCreators";
 import { selectUserProfileId } from "../../../store/ducks/userProfile/selectors";
@@ -10,7 +11,8 @@ const CancelUserButton = memo((): ReactElement => {
     const classes = useUserPageStyles();
     const dispatch = useDispatch();
     const userProfileId = useSelector(selectUserProfileId);
-    const [btnText, setBtnText] = useState<string>("Pending");
+    const { t } = useTranslation();
+    const [btnText, setBtnText] = useState<string>(t("PENDING", { defaultValue: "Pending" }));
 
     const cancelFollow = (): void => {
         dispatch(processFollowRequest(userProfileId!));
@@ -20,8 +22,8 @@ const CancelUserButton = memo((): ReactElement => {
         <Button
             className={classes.outlinedButton}
             onClick={cancelFollow}
-            onMouseOver={() => setBtnText("Cancel")}
-            onMouseLeave={() => setBtnText("Pending")}
+            onMouseOver={() => setBtnText(t("CANCEL", { defaultValue: "Cancel" }))}
+            onMouseLeave={() => setBtnText(t("PENDING", { defaultValue: "Pending" }))}
             color="primary"
             variant="outlined"
             size="large"

@@ -32,9 +32,9 @@ const MuteUserButton: FC<MuteUserButtonProps> = memo(({ onCloseUserPageActions }
     };
 
     return (
-        <ListItem id={"handleMuteUser"} onClick={handleMuteUser}>
+        <ListItem id="handleMuteUser" onClick={handleMuteUser}>
             <>{isUserMuted ? UnmuteIcon : MuteIcon}</>
-            <Typography component={"span"}>
+            <Typography component="span">
                 {isUserMuted
                     ? t("UNMUTE_USER", { username, defaultValue: `Unmute @${username}` })
                     : t("MUTE_USER", { username, defaultValue: `Mute @${username}` })}
