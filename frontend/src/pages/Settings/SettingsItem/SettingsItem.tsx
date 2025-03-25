@@ -24,7 +24,7 @@ const SettingsItem: FC<SettingsItemProps> = (
     return (
         <NavLink to={linkTo}>
             <ListItem selected={selectedIndex === index} onClick={() => handleListItemClick(index)}>
-                <Typography variant={"body1"} component={"span"}>
+                <Typography variant="body1" component="span">
                     {title}
                 </Typography>
                 {ArrowRightIcon}
