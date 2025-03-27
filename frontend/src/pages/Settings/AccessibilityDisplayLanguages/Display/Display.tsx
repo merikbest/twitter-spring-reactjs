@@ -1,7 +1,8 @@
-import React, { FC, ReactElement, useEffect } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Divider, Radio, Typography } from "@material-ui/core";
+import { Divider, Link as MuiLink, Radio, Typography } from "@material-ui/core";
 import { CheckCircle, RadioButtonUnchecked } from "@material-ui/icons";
+import { Trans, useTranslation } from "react-i18next";
 
 import { useDisplayStyles } from "./DisplayStyles";
 import { CheckIcon, TweetIcon, VerifiedIcon } from "../../../../icons";
@@ -20,8 +21,9 @@ const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme })
     const globalClasses = useGlobalStyles({});
     const classes = useDisplayStyles();
     const dispatch = useDispatch();
-    const [selectedBackgroundColor, setSelectedBackgroundColor] = React.useState<BackgroundTheme>(BackgroundTheme.DEFAULT);
-    const [selectedColor, setSelectedColor] = React.useState<ColorScheme>(ColorScheme.BLUE);
+    const { t } = useTranslation();
+    const [selectedBackgroundColor, setSelectedBackgroundColor] = useState<BackgroundTheme>(BackgroundTheme.DEFAULT);
+    const [selectedColor, setSelectedColor] = useState<ColorScheme>(ColorScheme.BLUE);
 
     useEffect(() => {
         const background = localStorage.getItem(BACKGROUND);
@@ -68,9 +70,11 @@ const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme })
     return (
         <>
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"subtitle2"} component={"div"}>
-                    Manage your font size, color, and background. These settings affect all the Twitter accounts on this
-                    browser.
+                <Typography variant="subtitle2" component="div">
+                    {t("DISPLAY_DESCRIPTION", {
+                        defaultValue: `Manage your font size, color, and background. 
+                        These settings affect all the Twitter accounts on this browser.`
+                    })}
                 </Typography>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
@@ -84,49 +88,54 @@ const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme })
                     </div>
                     <div>
                         <div>
-                            <Typography variant={"h6"} component={"span"} className={classes.tweetTitle}>
-                                Twitter
+                            <Typography variant="h6" component="span" className={classes.tweetTitle}>
+                                {t("TWITTER", { defaultValue: "Twitter" })}
                             </Typography>
                             <span className={classes.tweetVerifiedIcon}>
                                 {VerifiedIcon}
                             </span>
-                            <Typography variant={"subtitle1"} component={"span"}>
+                            <Typography variant="subtitle1" component="span">
                                 @Twitter · 31m
                             </Typography>
                         </div>
-                        <Typography variant={"body1"} component={"div"} className={classes.tweetText}>
-                            At the heart of Twitter are short messages called Tweets — just like this one — which can
-                            include photos, videos, links, text, hashtags, and mentions like <span
-                            className={classes.tweetLink}>@Twitter</span>
+                        <Typography variant="body1" component="div" className={classes.tweetText}>
+                            <Trans
+                                i18nKey={t("TWITTER_DISPLAY_DESCRIPTION", {
+                                    defaultValue: `At the heart of Twitter are short messages called Tweets — just like 
+                                    this one — which can include photos, videos, links, text, hashtags, and mentions 
+                                    like @Twitter`
+                                })}
+                                components={{ tweetLink: <span className={classes.tweetLink} /> }}
+                            />
                         </Typography>
                     </div>
                 </div>
             </div>
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
-                    Font size
+                <Typography variant="h5" component="div">
+                    {t("FONT_SIZE", { defaultValue: "Font size" })}
                 </Typography>
                 <div className={classes.stepperWrapper}>
-                    <Typography variant={"body1"} id={"xs"} component={"span"} className={classes.tweetText}>
+                    <Typography variant="body1" id="xs" component="span" className={classes.tweetText}>
                         Aa
                     </Typography>
                     <span className={classes.stepper}>
-                        <div id={"xs"} className={classes.stepperPoint} />
-                        <div id={"sm"} className={classes.stepperPoint} />
-                        <div id={"md"} className={classes.stepperPoint} />
-                        <div id={"lg"} className={classes.stepperPoint} />
-                        <div id={"xl"} className={classes.stepperPoint} />
+                        <div id="xs" className={classes.stepperPoint} />
+                        <div id="sm" className={classes.stepperPoint} />
+                        <div id="md" className={classes.stepperPoint} />
+                        <div id="lg" className={classes.stepperPoint} />
+                        <div id="xl" className={classes.stepperPoint} />
                     </span>
-                    <Typography variant={"body1"} id={"xl"} component={"span"} className={classes.tweetText}>
+                    <Typography variant="body1" id="xl" component="span" className={classes.tweetText}>
                         Aa
                     </Typography>
                 </div>
             </div>
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
-                    Color
+                <Typography variant="h5" component="div">
+                    {t("COLOR", { defaultValue: "Color" })}
                 </Typography>
             </div>
             <div className={classes.colorWrapper}>
@@ -139,13 +148,13 @@ const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme })
             </div>
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
-                    Background
+                <Typography variant="h5" component="div">
+                    {t("BACKGROUND", { defaultValue: "Background" })}
                 </Typography>
             </div>
             <div className={classes.backgroundContainer}>
                 <div className={classes.backgroundWrapper}>
-                    <div id={"default"} className={classes.backgroundItem}
+                    <div id="default" className={classes.backgroundItem}
                          onClick={() => onClickBackgroundColor(BackgroundTheme.DEFAULT)}
                     >
                         <div className={classes.backgroundItemWrapper}>
@@ -155,18 +164,18 @@ const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme })
                                 value={BackgroundTheme.DEFAULT}
                                 name="radio-buttons"
                                 inputProps={{ "aria-label": "Default" }}
-                                icon={<RadioButtonUnchecked color={"primary"} />}
-                                checkedIcon={<CheckCircle color={"primary"} />}
+                                icon={<RadioButtonUnchecked color="primary" />}
+                                checkedIcon={<CheckCircle color="primary" />}
                                 size="small"
                             />
                         </div>
-                        <Typography variant={"h6"} component={"span"}>
-                            Default
+                        <Typography variant="h6" component="span">
+                            {t("DEFAULT", { defaultValue: "Default" })}
                         </Typography>
                     </div>
                 </div>
                 <div className={classes.backgroundWrapper}>
-                    <div id={"dim"} className={classes.backgroundItem}
+                    <div id="dim" className={classes.backgroundItem}
                          onClick={() => onClickBackgroundColor(BackgroundTheme.DIM)}
                     >
                         <div className={classes.backgroundItemWrapper}>
@@ -176,18 +185,18 @@ const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme })
                                 value={BackgroundTheme.DIM}
                                 name="radio-buttons"
                                 inputProps={{ "aria-label": "Dim" }}
-                                icon={<RadioButtonUnchecked color={"primary"} />}
-                                checkedIcon={<CheckCircle color={"primary"} />}
+                                icon={<RadioButtonUnchecked color="primary" />}
+                                checkedIcon={<CheckCircle color="primary" />}
                                 size="small"
                             />
                         </div>
-                        <Typography variant={"h6"} component={"span"}>
-                            Dim
+                        <Typography variant="h6" component="span">
+                            {t("DIM", { defaultValue: "Dim" })}
                         </Typography>
                     </div>
                 </div>
                 <div className={classes.backgroundWrapper}>
-                    <div id={"lights_out"} className={classes.backgroundItem}
+                    <div id="lights_out" className={classes.backgroundItem}
                          onClick={() => onClickBackgroundColor(BackgroundTheme.LIGHTS_OUT)}
                     >
                         <div className={classes.backgroundItemWrapper}>
@@ -197,13 +206,13 @@ const Display: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme })
                                 value={BackgroundTheme.LIGHTS_OUT}
                                 name="radio-buttons"
                                 inputProps={{ "aria-label": "Lights-out" }}
-                                icon={<RadioButtonUnchecked color={"primary"} />}
-                                checkedIcon={<CheckCircle color={"primary"} />}
+                                icon={<RadioButtonUnchecked color="primary" />}
+                                checkedIcon={<CheckCircle color="primary" />}
                                 size="small"
                             />
                         </div>
-                        <Typography variant={"h6"} component={"span"}>
-                            Lights out
+                        <Typography variant="h6" component="span">
+                            {t("LIGHTS_OUT", { defaultValue: "Lights out" })}
                         </Typography>
                     </div>
                 </div>
