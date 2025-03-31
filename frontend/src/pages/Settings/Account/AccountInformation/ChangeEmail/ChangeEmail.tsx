@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Divider, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useChangeEmailStyles } from "./ChangeEmailStyles";
 import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
@@ -13,6 +14,7 @@ const ChangeEmail: FC = (): ReactElement => {
     const classes = useChangeEmailStyles();
     const myProfileEmail = useSelector(selectUserProfileEmail);
     const isUpdatedSuccess = useSelector(selectUserIsLoaded);
+    const { t } = useTranslation();
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     useEffect(() => {
@@ -23,7 +25,7 @@ const ChangeEmail: FC = (): ReactElement => {
         <>
             <div className={classes.textFieldWrapper}>
                 <ChangeInfoTextField
-                    label="Current"
+                    label={t("CURRENT", { defaultValue: "Current" })}
                     type="text"
                     variant="filled"
                     value={myProfileEmail}
@@ -33,12 +35,12 @@ const ChangeEmail: FC = (): ReactElement => {
             </div>
             <Divider />
             <div
-                id={"openChangeEmailModal"}
+                id="openChangeEmailModal"
                 className={classes.updateEmailAddress}
                 onClick={onOpenModalWindow}
             >
-                <Typography variant={"body1"} component={"span"}>
-                    Update email address
+                <Typography variant="body1" component="span">
+                    {t("UPDATE_EMAIL_ADDRESS", { defaultValue: "Update email address" })}
                 </Typography>
             </div>
             <ChangeEmailModal visible={visibleModalWindow} onClose={onCloseModalWindow} />

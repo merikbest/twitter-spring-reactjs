@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react
 import { Button, Divider, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useChangeUsernameStyles } from "./ChangeUsernameStyles";
 import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
@@ -16,6 +17,7 @@ const ChangeUsername: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const myProfileUsername = useSelector(selectUserProfileUsername);
     const isLoading = useSelector(selectUserIsLoading);
+    const { t } = useTranslation();
     const [username, setUsername] = useState<string>("");
 
     useEffect(() => {
@@ -41,7 +43,7 @@ const ChangeUsername: FC = (): ReactElement => {
             <div>
                 <div className={globalClasses.itemInfoWrapper}>
                     <ChangeInfoTextField
-                        label="Username"
+                        label={t("USERNAME", { defaultValue: "Username" })}
                         variant="filled"
                         onChange={handleChangeUsername}
                         value={username}
@@ -51,14 +53,14 @@ const ChangeUsername: FC = (): ReactElement => {
                 </div>
                 <Divider />
                 <div className={classnames(classes.suggestionsWrapper, globalClasses.itemInfoWrapper)}>
-                    <Typography variant={"h5"} component={"div"}>
-                        Suggestions
+                    <Typography variant="h5" component="div">
+                        {t("SUGGESTIONS", { defaultValue: "Suggestions" })}
                     </Typography>
                     <Typography
-                        id={"suggestedUsername"}
+                        id="suggestedUsername"
                         onClick={setSuggestedUsername}
-                        variant={"body1"}
-                        component={"span"}
+                        variant="body1"
+                        component="span"
                     >
                         {`${myProfileUsername}123`}
                     </Typography>
@@ -74,7 +76,7 @@ const ChangeUsername: FC = (): ReactElement => {
                     size="small"
                     disabled={!username || isLoading}
                 >
-                    Save
+                    {t("SAVE", { defaultValue: "Save" })}
                 </Button>
             </div>
         </>

@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Checkbox, Dialog, DialogContent, Link as MuiLink, Typography } from "@material-ui/core";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 import { useChangeEmailModalStyles } from "./ChangeEmailModalStyles";
 import { TweetIcon } from "../../../../../../icons";
@@ -36,6 +37,7 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({ visible, onClose }): Reac
     const myProfileEmail = useSelector(selectUserProfileEmail);
     const isLoading = useSelector(selectUserIsLoading);
     const isError = useSelector(selectUserIsError);
+    const { t } = useTranslation();
     const { control, handleSubmit, formState: { errors }, getValues } = useForm<EmailFormProps>({
         resolver: yupResolver(SetEmailFormSchema),
         mode: "onChange"
@@ -56,12 +58,15 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({ visible, onClose }): Reac
                     {TweetIcon}
                 </div>
                 <div>
-                    <Typography variant={"h3"} component={"div"}>
-                        Change email
+                    <Typography variant="h3" component="div">
+                        {t("CHANGE_EMAIL", { defaultValue: "Change email" })}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
-                        {`Your current email is ${myProfileEmail}. What would you like to update it to? Your email
-                        is not displayed in your public profile on Twitter.`}
+                    <Typography variant="subtitle1" component="div">
+                        {t("CHANGE_EMAIL_DESCRIPTION", {
+                            email: myProfileEmail,
+                            defaultValue: `Your current email is ${myProfileEmail}. 
+                            What would you like to update it to? Your email is not displayed in your public profile on Twitter.`
+                        })}
                     </Typography>
                 </div>
                 <form onSubmit={(!getValues("email") || errors.email) ? onClose : handleSubmit(onSubmit)}>
@@ -74,23 +79,26 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({ visible, onClose }): Reac
                                 inputMode="email"
                                 id="email"
                                 name="email"
-                                label="Your email"
+                                label={t("YOUR_EMAIL", { defaultValue: "Your email" })}
                                 variant="filled"
                                 onChange={onChange}
                                 value={value}
                                 disabled={isLoading}
-                                helperText={errors.email?.message || isError && "Please enter a valid email address."}
+                                helperText={(errors.email?.message || isError) &&
+                                    t("EMAIL_INPUT_ERROR", { defaultValue: "Please enter a valid email address." })}
                                 error={!!errors.email || isError}
                                 fullWidth
                             />
                         )}
                     />
                     <div className={classes.infoWrapper}>
-                        <Typography variant={"body1"} component={"span"}>
-                            {"Let people who have your email address find and connect with you on Twitter. "}
-                            <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="body1" target="_blank"
-                                     rel="noopener">
-                                Learn more
+                        <Typography variant="body1" component="span">
+                            {t("CHANGE_EMAIL_INPUT_DESCRIPTION", {
+                                defaultValue: "Let people who have your email address find and connect with you on Twitter."
+                            })}
+                            {" "}
+                            <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="body1" target="_blank" rel="noopener">
+                                {t("LEARN_MORE", { defaultValue: "Learn more" })}
                             </MuiLink>
                         </Typography>
                         <span><Checkbox /></span>
@@ -103,7 +111,9 @@ const ChangeEmailModal: FC<ChangeEmailModalProps> = ({ visible, onClose }): Reac
                             size="small"
                             fullWidth
                         >
-                            {(!getValues("email") || errors.email) ? "Cancel" : "Next"}
+                            {(!getValues("email") || errors.email)
+                                ? t("CANCEL", { defaultValue: "Cancel" })
+                                : t("NEXT", { defaultValue: "Next" })}
                         </Button>
                     </div>
                 </form>

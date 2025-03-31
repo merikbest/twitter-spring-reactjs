@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react
 import { useDispatch, useSelector } from "react-redux";
 import { FormControl, InputLabel, Link as MuiLink, Typography } from "@material-ui/core";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useChangeCountryStyles } from "./ChangeCountryStyles";
 import { FilledSelect } from "../../../../../components/FilledSelect/FilledSelect";
@@ -26,6 +27,7 @@ const ChangeCountry: FC = (): ReactElement => {
     const countryCodesError = useSelector(selectIsLocalizationError);
     const myProfileId = useSelector(selectUserDataId);
     const myProfileCountry = useSelector(selectUserProfileCountry);
+    const { t } = useTranslation();
     const [country, setCountry] = useState<string>("");
 
     useEffect(() => {
@@ -49,7 +51,7 @@ const ChangeCountry: FC = (): ReactElement => {
         <div className={classnames(classes.selectWrapper, globalClasses.itemInfoWrapper)}>
             <FormControl variant="filled">
                 <InputLabel id="select-language" shrink>
-                    Country
+                    {t("COUNTRY", { defaultValue: "Country" })}
                 </InputLabel>
                 <FilledSelect
                     variant="filled"
@@ -60,7 +62,7 @@ const ChangeCountry: FC = (): ReactElement => {
                     onChange={onChangeCountry}
                     disabled={countryCodesLoading}
                     error={countryCodesError}
-                    label="Country"
+                    label={t("COUNTRY", { defaultValue: "Country" })}
                     fullWidth
                 >
                     <option aria-label="None" />
@@ -72,11 +74,14 @@ const ChangeCountry: FC = (): ReactElement => {
                     )}
                 </FilledSelect>
             </FormControl>
-            <Typography variant={"subtitle2"} component={"div"}>
-                {"This is the primary country associated with your account. Your country helps us to customize " +
-                    "your Twitter experience. "}
+            <Typography variant="subtitle2" component="div">
+                {t("CHANGE_COUNTRY_DESCRIPTION", {
+                    defaultValue: `This is the primary country associated with your account. 
+                    Your country helps us to customize your Twitter experience.`
+                })}
+                {" "}
                 <MuiLink href={HOW_TO_CHANGE_COUNTRY_SETTINGS} variant="subtitle2" target="_blank" rel="noopener">
-                    Learn more
+                    {t("LEARN_MORE", { defaultValue: "Learn more" })}
                 </MuiLink>
             </Typography>
         </div>

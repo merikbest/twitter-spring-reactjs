@@ -13,6 +13,8 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 
 import { useChangePhoneModalStyles } from "./ChangePhoneModalStyles";
 import { TweetIcon } from "../../../../../../../icons";
@@ -37,8 +39,8 @@ interface PhoneFormProps {
     phoneNumber: string;
 }
 
-const SetPhoneFormSchema = yup.object().shape({
-    phoneNumber: yup.string().matches(/^[0-9]\d{8}$/, "Please enter a valid phone number.").required()
+const editPhoneFormSchema = (t: TFunction<"translation", undefined>) => yup.object().shape({
+    phoneNumber: yup.string().matches(/^[0-9]\d{8}$/, t("PHONE_NUMBER_INPUT_ERROR", { defaultValue: "Please enter a valid phone number." })).required()
 });
 
 const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }): ReactElement | null => {
@@ -49,9 +51,10 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
     const profilePhoneCode = useSelector(selectUserProfilePhoneCode);
     const profilePhoneNumber = useSelector(selectUserProfilePhoneNumber);
     const isLoading = useSelector(selectUserIsLoading);
+    const { t } = useTranslation();
     const [phoneCode, setPhoneCode] = useState<string>("");
     const { control, handleSubmit, formState: { errors }, getValues } = useForm<PhoneFormProps>({
-        resolver: yupResolver(SetPhoneFormSchema),
+        resolver: yupResolver(editPhoneFormSchema(t)),
         mode: "onChange"
     });
 
@@ -83,18 +86,23 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                     {TweetIcon}
                 </div>
                 <div>
-                    <Typography variant={"h3"} component={"div"}>
-                        Change phone
+                    <Typography variant="h3" component="div">
+                        {t("CHANGE_PHONE", { defaultValue: "Change phone" })}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
-                        {`Your current phone number is ${profilePhoneCode ? `${profilePhoneCode}${profilePhoneNumber}` : "none"}. What would you like to update it to?`}
+                    <Typography variant="subtitle1" component="div">
+                        {(profilePhoneCode && profilePhoneNumber)
+                            ? t("PHONE_NUMBER_DESCRIPTION", {
+                                phoneNumber: `${profilePhoneCode}${profilePhoneNumber}`,
+                                defaultValue: `Your current phone number is ${profilePhoneCode}${profilePhoneNumber}. What would you like to update it to?` })
+                            : t("EMPTY_PHONE_NUMBER_DESCRIPTION", {
+                                defaultValue: "Your current phone number is none. What would you like to update it to?" })}
                     </Typography>
                 </div>
                 <form onSubmit={(!getValues("phoneNumber") || !!errors.phoneNumber) ? onClose : handleSubmit(onSubmit)}>
                     <div className={classes.selectWrapper}>
                         <FormControl variant="filled">
                             <InputLabel htmlFor="select-country-code">
-                                Country code
+                                {t("COUNTRY_CODE", { defaultValue: "Country code" })}
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
@@ -104,7 +112,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                                 value={phoneCode}
                                 onChange={changeCountryCode}
                                 disabled={isCountryCodesLoading}
-                                label="Country code"
+                                label={t("COUNTRY_CODE", { defaultValue: "Country code" })}
                                 fullWidth
                             >
                                 <option aria-label="None" />
@@ -126,7 +134,7 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                                 inputMode="tel"
                                 id="phoneNumber"
                                 name="phoneNumber"
-                                label="Your phone number"
+                                label={t("YOUR_PHONE_NUMBER", { defaultValue: "Your phone number" })}
                                 variant="filled"
                                 onChange={onChange}
                                 value={value}
@@ -138,11 +146,13 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                         )}
                     />
                     <div className={classes.infoWrapper}>
-                        <Typography variant={"body1"} component={"span"}>
-                            {"Let people who have your phone number find and connect with you on Twitter. "}
-                            <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="body1" target="_blank"
-                                     rel="noopener">
-                                Learn more
+                        <Typography variant="body1" component="span">
+                            {t("CHANGE_PHONE_DESCRIPTION", {
+                                defaultValue: "Let people who have your phone number find and connect with you on Twitter."
+                            })}
+                            {" "}
+                            <MuiLink href={EMAIL_AND_PHONE_DISCOVERABILITY_SETTINGS} variant="body1" target="_blank" rel="noopener">
+                                {t("LEARN_MORE", { defaultValue: "Learn more" })}
                             </MuiLink>
                         </Typography>
                         <span><Checkbox /></span>
@@ -155,7 +165,9 @@ const ChangePhoneModal: FC<ChangePhoneModalProps> = memo(({ visible, onClose }):
                             size="small"
                             fullWidth
                         >
-                            {((!getValues("phoneNumber") || errors.phoneNumber || !phoneCode)) ? "Cancel" : "Next"}
+                            {((!getValues("phoneNumber") || errors.phoneNumber || !phoneCode))
+                                ? t("CANCEL", { defaultValue: "Cancel" })
+                                : t("NEXT", { defaultValue: "Next" })}
                         </Button>
                     </div>
                 </form>

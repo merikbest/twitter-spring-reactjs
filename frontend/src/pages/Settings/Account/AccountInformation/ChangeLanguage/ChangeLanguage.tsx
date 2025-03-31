@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Divider, FormControl, InputLabel, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useChangeLanguageStyles } from "./ChangeLanguageStyles";
 import { FilledSelect } from "../../../../../components/FilledSelect/FilledSelect";
@@ -22,6 +23,7 @@ const ChangeLanguage: FC = (): ReactElement => {
     const languagesError = useSelector(selectIsLocalizationError);
     const profileLanguage = useSelector(selectUserProfileLanguage);
     const isLoading = useSelector(selectUserIsLoading);
+    const { t } = useTranslation();
     const [language, setLanguage] = useState<string>("");
 
     useEffect(() => {
@@ -49,7 +51,7 @@ const ChangeLanguage: FC = (): ReactElement => {
             <div className={classes.selectWrapper}>
                 <FormControl variant="filled">
                     <InputLabel id="select-language" shrink>
-                        Display Language
+                        {t("DISPLAY_LANGUAGE", { defaultValue: "Display Language" })}
                     </InputLabel>
                     <FilledSelect
                         variant="filled"
@@ -60,7 +62,7 @@ const ChangeLanguage: FC = (): ReactElement => {
                         onChange={changeLanguage}
                         disabled={languagesLoading}
                         error={languagesError}
-                        label="Display Language"
+                        label={t("DISPLAY_LANGUAGE", { defaultValue: "Display Language" })}
                         fullWidth
                     >
                         <option aria-label="None" />
@@ -72,9 +74,12 @@ const ChangeLanguage: FC = (): ReactElement => {
                         )}
                     </FilledSelect>
                 </FormControl>
-                <Typography variant={"subtitle2"} component={"div"} className={classes.languageInfo}>
-                    Select your preferred language for headlines, buttons, and other text from Twitter on this account.
-                    This does not change the language of the content you see in your timeline.
+                <Typography variant="subtitle2" component="div" className={classes.languageInfo}>
+                    {t("DISPLAY_LANGUAGE_DESCRIPTION", {
+                        defaultValue: `Select your preferred language for headlines, 
+                        buttons, and other text from Twitter on this account. 
+                        This does not change the language of the content you see in your timeline.`
+                    })}
                 </Typography>
             </div>
             <Divider />
@@ -87,7 +92,7 @@ const ChangeLanguage: FC = (): ReactElement => {
                     color="primary"
                     size="small"
                 >
-                    Save
+                    {t("SAVE", { defaultValue: "Save" })}
                 </Button>
             </div>
         </>

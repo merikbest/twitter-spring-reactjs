@@ -5,6 +5,7 @@ import { CheckCircle, RadioButtonUnchecked } from "@material-ui/icons";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
+import { useTranslation } from "react-i18next";
 
 import { useChangeGenderStyles } from "./ChangeGenderStyles";
 import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
@@ -38,6 +39,7 @@ const ChangeGender: FC = (): ReactElement => {
     const dispatch = useDispatch();
     const gender = useSelector(selectUserProfileGender);
     const isLoading = useSelector(selectUserIsLoading);
+    const { t } = useTranslation();
     const [selectedGender, setSelectedGender] = useState<Gender>(Gender.FEMALE);
 
     useEffect(() => {
@@ -65,15 +67,17 @@ const ChangeGender: FC = (): ReactElement => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography variant={"subtitle1"} component={"div"} className={globalClasses.itemInfoWrapper}>
-                If you haven’t already specified a gender, this is the one associated with your account based on
-                your profile and activity. This information won’t be displayed publicly.
+            <Typography variant="subtitle1" component="div" className={globalClasses.itemInfoWrapper}>
+                {t("CHANGE_GENDER_DESCRIPTION", {
+                    defaultValue: `If you haven’t already specified a gender, 
+                    this is the one associated with your account based on your profile and activity. 
+                    This information won’t be displayed publicly.` })}
             </Typography>
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
                 <div className={globalClasses.infoItemRadioCheckbox}>
-                    <Typography variant={"body1"} component={"span"}>
-                        Female
+                    <Typography variant="body1" component="span">
+                        {t("FEMALE", { defaultValue: "Female" })}
                     </Typography>
                         <Radio
                             checked={selectedGender === Gender.FEMALE}
@@ -81,14 +85,14 @@ const ChangeGender: FC = (): ReactElement => {
                             value={Gender.FEMALE}
                             name="radio-buttons"
                             inputProps={{ "aria-label": "Female" }}
-                            icon={<RadioButtonUnchecked color={"primary"} />}
-                            checkedIcon={<CheckCircle color={"primary"} />}
+                            icon={<RadioButtonUnchecked color="primary" />}
+                            checkedIcon={<CheckCircle color="primary" />}
                             size="small"
                         />
                 </div>
                 <div className={globalClasses.infoItemRadioCheckbox}>
-                    <Typography variant={"body1"} component={"span"}>
-                        Male
+                    <Typography variant="body1" component="span">
+                        {t("MALE", { defaultValue: "Male" })}
                     </Typography>
                         <Radio
                             checked={selectedGender === Gender.MALE}
@@ -96,14 +100,14 @@ const ChangeGender: FC = (): ReactElement => {
                             value={Gender.MALE}
                             name="radio-buttons"
                             inputProps={{ "aria-label": "Male" }}
-                            icon={<RadioButtonUnchecked color={"primary"} />}
-                            checkedIcon={<CheckCircle color={"primary"} />}
+                            icon={<RadioButtonUnchecked color="primary" />}
+                            checkedIcon={<CheckCircle color="primary" />}
                             size="small"
                         />
                 </div>
                 <div className={globalClasses.infoItemRadioCheckbox}>
-                    <Typography variant={"body1"} component={"span"}>
-                        Other
+                    <Typography variant="body1" component="span">
+                        {t("OTHER", { defaultValue: "Other" })}
                     </Typography>
                     <Radio
                         checked={selectedGender === Gender.OTHER}
@@ -111,8 +115,8 @@ const ChangeGender: FC = (): ReactElement => {
                         value={Gender.OTHER}
                         name="radio-buttons"
                         inputProps={{ "aria-label": "Other" }}
-                        icon={<RadioButtonUnchecked color={"primary"} />}
-                        checkedIcon={<CheckCircle color={"primary"} />}
+                        icon={<RadioButtonUnchecked color="primary" />}
+                        checkedIcon={<CheckCircle color="primary" />}
                         size="small"
                     />
                 </div>
@@ -128,7 +132,7 @@ const ChangeGender: FC = (): ReactElement => {
                                     onChange={onChange}
                                     helperText={errors.gender?.message}
                                     error={!!errors.gender}
-                                    label="Gender"
+                                    label={t("GENDER", { defaultValue: "Gender" })}
                                     type="text"
                                     variant="filled"
                                     value={value}
@@ -148,7 +152,7 @@ const ChangeGender: FC = (): ReactElement => {
                     color="primary"
                     size="small"
                 >
-                    Save
+                    {t("SAVE", { defaultValue: "Save" })}
                 </Button>
             </div>
         </form>
