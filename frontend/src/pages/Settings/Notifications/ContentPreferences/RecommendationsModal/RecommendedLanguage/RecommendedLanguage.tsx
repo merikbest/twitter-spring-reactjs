@@ -16,7 +16,7 @@ const RecommendedLanguage: FC<RecommendedLanguageProps> = ({ title }): ReactElem
     return (
         <>
             <div className={classnames(globalClasses.infoItemCheckbox, classes.checkboxWrapper)}>
-                <Typography variant={"body1"} component={"span"}>
+                <Typography variant="body1" component="span">
                     {title}
                 </Typography>
                 <Checkbox />

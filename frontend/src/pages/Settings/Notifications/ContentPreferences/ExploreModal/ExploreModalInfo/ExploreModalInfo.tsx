@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 import { Checkbox, Typography } from "@material-ui/core";
 
 import { useGlobalStyles } from "../../../../../../util/globalClasses";
@@ -24,19 +24,19 @@ const ExploreModalInfo: FC<ExploreModalInfoProps> = (
         <>
             {!isSearchModal && (
                 <div className={globalClasses.itemInfoWrapper}>
-                    <Typography variant={"h5"} component={"div"}>
+                    <Typography variant="h5" component="div">
                         {searchModalTitle}
                     </Typography>
                 </div>
             )}
             <div className={globalClasses.itemInfoWrapper}>
                 <div className={globalClasses.infoItemCheckbox}>
-                    <Typography variant={"body1"} component={"span"}>
+                    <Typography variant="body1" component="span">
                         {title}
                     </Typography>
                     <Checkbox />
                 </div>
-                <Typography variant={"subtitle2"} component={"div"}>
+                <Typography variant="subtitle2" component="div">
                     {subtitle}
                 </Typography>
             </div>
