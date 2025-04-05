@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { Divider, List, ListItem, Typography } from "@material-ui/core";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { usePrivacyAndSafetyStyles } from "./PrivacyAndSafetyStyles";
 import {
@@ -39,18 +40,21 @@ import { FORMS_PRIVACY, PRIVACY_TWITTER, TWITTER_PRIVACY } from "../../../consta
 const PrivacyAndSafety: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = usePrivacyAndSafetyStyles();
+    const { t } = useTranslation();
 
     return (
         <>
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"subtitle2"} component={"div"}>
-                    Manage what information you see and share on Twitter.
+                <Typography variant="subtitle2" component="div">
+                    {t("PRIVACY_AND_SAFETY_DESCRIPTION", {
+                        defaultValue: "Manage what information you see and share on Twitter."
+                    })}
                 </Typography>
             </div>
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
-                    Your Twitter activity
+                <Typography variant="h5" component="div">
+                    {t("YOUR_TWITTER_ACTIVITY", { defaultValue: "Your Twitter activity" })}
                 </Typography>
             </div>
             <div className={classnames(classes.listWrapper, globalClasses.listItemWrapper)}>
@@ -61,11 +65,13 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {AudienceIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Audience and tagging
+                                <Typography variant="body1" component="div">
+                                    {t("AUDIENCE_AND_TAGGING", { defaultValue: "Audience and tagging" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Manage what information you allow other people on Twitter to see.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("AUDIENCE_AND_TAGGING_DESCRIPTION", {
+                                        defaultValue: "Manage what information you allow other people on Twitter to see."
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -79,11 +85,13 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {QuoteTweetIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Your Tweets
+                                <Typography variant="body1" component="div">
+                                    {t("YOUR_TWEETS", { defaultValue: "Your Tweets" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Manage the information associated with your Tweets.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("YOUR_TWEETS_DESCRIPTION", {
+                                        defaultValue: "Manage the information associated with your Tweets."
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -97,12 +105,14 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {ContentIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Content you see
+                                <Typography variant="body1" component="div">
+                                    {t("CONTENT_YOU_SEE", { defaultValue: "Content you see" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Decide what you see on Twitter based on your preferences like Topics and
-                                    interests
+                                <Typography variant="subtitle2" component="div">
+                                    {t("CONTENT_YOU_SEE_DESCRIPTION", {
+                                        defaultValue: `Decide what you see on Twitter based on your preferences like 
+                                        Topics and interests`
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -116,11 +126,14 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {MuteIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Mute and block
+                                <Typography variant="body1" component="div">
+                                    {t("MUTE_AND_BLOCK", { defaultValue: "Mute and block" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Manage the accounts, words, and notifications that you’ve muted or blocked.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("MUTE_AND_BLOCK_DESCRIPTION", {
+                                        defaultValue: `Manage the accounts, words, and notifications that you’ve muted 
+                                        or blocked.`
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -134,11 +147,13 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {MessagesIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Direct Messages
+                                <Typography variant="body1" component="div">
+                                    {t("DIRECT_MESSAGES", { defaultValue: "Direct Messages" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Manage who can message you directly.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("DIRECT_MESSAGES_DESCRIPTION", {
+                                        defaultValue: "Manage who can message you directly."
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -152,11 +167,13 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {SpacesIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Spaces
+                                <Typography variant="body1" component="div">
+                                    {t("SPACES", { defaultValue: "Spaces" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Manage who can see your Spaces listening activity
+                                <Typography variant="subtitle2" component="div">
+                                    {t("SPACES_DESCRIPTION", {
+                                        defaultValue: "Manage who can see your Spaces listening activity"
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -170,11 +187,16 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {DiscoverIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Discoverability and contacts
+                                <Typography variant="body1" component="div">
+                                    {t("DISCOVERABILITY_AND_CONTACTS", {
+                                        defaultValue: "Discoverability and contacts"
+                                    })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Control your discoverability settings and manage contacts you’ve imported.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("DISCOVERABILITY_AND_CONTACTS_DESCRIPTION", {
+                                        defaultValue: `Control your discoverability settings and manage contacts you’ve 
+                                        imported.`
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -184,8 +206,10 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Divider />
                     <div className={globalClasses.itemInfoWrapper}>
-                        <Typography variant={"h5"} component={"div"}>
-                            Data sharing and off-Twitter activity
+                        <Typography variant="h5" component="div">
+                            {t("DATA_SHARING_AND_OFF_TWITTER_ACTIVITY", {
+                                defaultValue: "Data sharing and off-Twitter activity"
+                            })}
                         </Typography>
                     </div>
                     <Link to={SETTINGS_PRIVACY_AND_SAFETY_ADS_PREFERENCES}>
@@ -194,11 +218,13 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {AdsIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Ads preferences
+                                <Typography variant="body1" component="div">
+                                    {t("ADS_PREFERENCES", { defaultValue: "Ads preferences" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Manage your ads experience on Twitter.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("ADS_PREFERENCES_DESCRIPTION", {
+                                        defaultValue: "Manage your ads experience on Twitter."
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -212,12 +238,14 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {OffTwitterIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Off-Twitter activity
+                                <Typography variant="body1" component="div">
+                                    {t("OFF_TWITTER_ACTIVITY", { defaultValue: "Off-Twitter activity" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Manage how Twitter uses your online activity outside of Twitter, such as the
-                                    websites you visit, to personalize your experience.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("OFF_TWITTER_ACTIVITY_DESCRIPTION", {
+                                        defaultValue: `Manage how Twitter uses your online activity outside of Twitter, 
+                                        such as the websites you visit, to personalize your experience.`
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -231,11 +259,16 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {DataSharingIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Data sharing with business partners
+                                <Typography variant="body1" component="div">
+                                    {t("DATA_SHARING_WITH_BUSINESS_PARTNERS", {
+                                        defaultValue: "Data sharing with business partners"
+                                    })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Allow sharing of additional information with Twitter’s business partners.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("DATA_SHARING_WITH_BUSINESS_PARTNERS_DESCRIPTION", {
+                                        defaultValue: `Allow sharing of additional information with Twitter’s business 
+                                        partners.`
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -249,11 +282,14 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                                 {LocationIcon}
                             </div>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Location information
+                                <Typography variant="body1" component="div">
+                                    {t("LOCATION_INFORMATION", { defaultValue: "Location information" })}
                                 </Typography>
-                                <Typography variant={"subtitle2"} component={"div"}>
-                                    Manage the location information Twitter uses to personalize your experience.
+                                <Typography variant="subtitle2" component="div">
+                                    {t("LOCATION_INFORMATION_DESCRIPTION", {
+                                        defaultValue: `Manage the location information Twitter uses to personalize your 
+                                        experience.`
+                                    })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -263,15 +299,17 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                     </Link>
                     <Divider />
                     <div className={globalClasses.itemInfoWrapper}>
-                        <Typography variant={"h5"} component={"div"}>
-                            Learn more about privacy on Twitter
+                        <Typography variant="h5" component="div">
+                            {t("LEARN_MORE_ABOUT_PRIVACY", {
+                                defaultValue: "Learn more about privacy on Twitter"
+                            })}
                         </Typography>
                     </div>
-                    <a href={PRIVACY_TWITTER} target={"_blank"}>
+                    <a href={PRIVACY_TWITTER} target="_blank">
                         <ListItem>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Privacy center
+                                <Typography variant="body1" component="div">
+                                    {t("PRIVACY_CENTER", { defaultValue: "Privacy center" })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -279,11 +317,11 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href={TWITTER_PRIVACY} target={"_blank"}>
+                    <a href={TWITTER_PRIVACY} target="_blank">
                         <ListItem>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Privacy policy
+                                <Typography variant="body1" component="div">
+                                    {t("PRIVACY_POLICY", { defaultValue: "Privacy policy" })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
@@ -291,11 +329,11 @@ const PrivacyAndSafety: FC = (): ReactElement => {
                             </div>
                         </ListItem>
                     </a>
-                    <a href={FORMS_PRIVACY} target={"_blank"}>
+                    <a href={FORMS_PRIVACY} target="_blank">
                         <ListItem>
                             <div>
-                                <Typography variant={"body1"} component={"div"}>
-                                    Contact us
+                                <Typography variant="body1" component="div">
+                                    {t("CONTACT_US", { defaultValue: "Contact us" })}
                                 </Typography>
                             </div>
                             <div className={globalClasses.arrowIcon}>
