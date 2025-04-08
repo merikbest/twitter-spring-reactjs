@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { Divider, Typography } from "@material-ui/core";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 import { useLocationStyles } from "./PlacesStyles";
 import { LocationIconFilled } from "../../../../../icons";
@@ -11,6 +12,7 @@ import { FIND_USER_LOCATION } from "../../../../../constants/url-constants";
 const Places: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useLocationStyles();
+    const { t } = useTranslation();
     const [countryName, setCountryName] = useState<string>("Unknown");
 
     useEffect(() => {
@@ -23,9 +25,11 @@ const Places: FC = (): ReactElement => {
     return (
         <>
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"subtitle2"} component={"div"}>
-                    These are the places Twitter uses to show you more relevant content. You won’t see places listed
-                    here if you turned off “Personalize based on places you’ve been”.
+                <Typography variant="subtitle2" component="div">
+                    {t("PLACES_DESCRIPTION", {
+                        defaultValue: `These are the places Twitter uses to show you more relevant content. 
+                        You won’t see places listed here if you turned off “Personalize based on places you’ve been”.`
+                    })}
                 </Typography>
             </div>
             <Divider />
@@ -36,15 +40,15 @@ const Places: FC = (): ReactElement => {
                             {LocationIconFilled}
                         </span>
                     </div>
-                    <Typography variant={"body1"} component={"span"}>
+                    <Typography variant="body1" component="span">
                         {countryName}
                     </Typography>
                 </div>
             </div>
             <Divider />
             <div className={classes.deleteUser}>
-                <Typography variant={"body1"} component={"span"}>
-                    Remove
+                <Typography variant="body1" component="span">
+                    {t("REMOVE", { defaultValue: "Remove" })}
                 </Typography>
             </div>
         </>
