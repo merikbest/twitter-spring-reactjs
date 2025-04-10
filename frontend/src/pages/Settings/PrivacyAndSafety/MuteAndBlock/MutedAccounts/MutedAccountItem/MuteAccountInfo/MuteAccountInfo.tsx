@@ -28,14 +28,14 @@ const MuteAccountInfo: FC<MuteAccountInfoProps> = memo((
         <Link to={`${PROFILE}/${userId}`} className={globalClasses.link}>
             <div className={classes.userInfo}>
                 <div>
-                    <Typography variant={"h6"} component={"span"}>
+                    <Typography variant="h6" component="span">
                         {fullName}
                     </Typography>
                 </div>
-                <Typography variant={"subtitle1"} component={"div"}>
+                <Typography variant="subtitle1" component="div">
                     @{username}
                 </Typography>
-                <Typography variant={"body1"} component={"div"}>
+                <Typography variant="body1" component="div">
                     {about}
                 </Typography>
             </div>

@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import MutedAccountItem from "./MutedAccountItem/MutedAccountItem";
 import Spinner from "../../../../../components/Spinner/Spinner";
@@ -26,6 +27,7 @@ const MutedAccounts: FC = (): ReactElement => {
     const isMutedUsersLoading = useSelector(selectIsBlockedAndMutedUsersLoading);
     const isMutedUsersLoaded = useSelector(selectIsBlockedAndMutedUsersLoaded);
     const mutedUsersPagesCount = useSelector(selectUsersPagesCount);
+    const { t } = useTranslation();
 
     useEffect(() => {
         loadMutedUsers(0);
@@ -46,10 +48,13 @@ const MutedAccounts: FC = (): ReactElement => {
             loadItems={loadMutedUsers}
         >
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"subtitle2"} component={"div"}>
-                    {`Here’s everyone you muted. You can add or remove them from this list. `}
+                <Typography variant="subtitle2" component="div">
+                    {t("MUTED_ACCOUNTS_DESCRIPTION", {
+                        defaultValue: "Here’s everyone you muted. You can add or remove them from this list."
+                    })}
+                    {" "}
                     <MuiLink href={TWITTER_MUTE} variant="subtitle2" target="_blank" rel="noopener">
-                        Learn more
+                        {t("LEARN_MORE", { defaultValue: "Learn more" })}
                     </MuiLink>
                 </Typography>
             </div>
@@ -59,13 +64,16 @@ const MutedAccounts: FC = (): ReactElement => {
             ) : (
                 (isMutedUsersLoaded && !mutedUsers.length) ? (
                     <div className={globalClasses.infoText}>
-                        <Typography variant={"h4"} component={"div"}>
-                            You aren’t muting anyone
+                        <Typography variant="h4" component="div">
+                            {t("YOU_ARENT_MUTING_ANYONE", { defaultValue: "You aren’t muting anyone" })}
                         </Typography>
-                        <Typography variant={"subtitle1"} component={"div"}>
-                            {`When you mute accounts, you won’t see their Tweets in your timeline. `}
+                        <Typography variant="subtitle1" component="div">
+                            {t("WHEN_YOU_MUTE_ACCOUNTS", {
+                                defaultValue: "When you mute accounts, you won’t see their Tweets in your timeline."
+                            })}
+                            {" "}
                             <MuiLink href={TWITTER_MUTE} variant="subtitle2" target="_blank" rel="noopener">
-                                Learn more
+                                {t("LEARN_MORE", { defaultValue: "Learn more" })}
                             </MuiLink>
                         </Typography>
                     </div>
