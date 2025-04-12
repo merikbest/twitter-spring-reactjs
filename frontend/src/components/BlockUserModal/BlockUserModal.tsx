@@ -37,12 +37,12 @@ const BlockUserModal: FC<BlockUserModalProps> = (
             onClose={onClose}
         >
             <DialogContent>
-                <Typography variant={"h5"} component={"div"}>
+                <Typography variant="h5" component="div">
                     {isUserBlocked
                         ? t("UNBLOCK_USER", { username, defaultValue: `Unblock @${username}` })
                         : t("BLOCK_USER", { username, defaultValue: `Block @${username}` })}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"div"} className={classes.text}>
+                <Typography variant="subtitle1" component="div" className={classes.text}>
                     {isUserBlocked
                         ? t("UNBLOCK_USER_DESCRIPTION", { defaultValue: "They will be able to follow you and view your Tweets." })
                         : t("BLOCK_USER_DESCRIPTION", { username, defaultValue: `They will not be able to follow you or view your Tweets, and you will not see Tweets or notifications from @${username}.` })}

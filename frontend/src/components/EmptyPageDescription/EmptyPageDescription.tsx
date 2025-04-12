@@ -13,10 +13,10 @@ const EmptyPageDescription: FC<DescriptionProps> = ({ title, subtitle }): ReactE
 
     return (
         <div className={globalClasses.infoText}>
-            <Typography variant={"h4"} component={"div"}>
+            <Typography variant="h4" component="div">
                 {title}
             </Typography>
-            <Typography variant={"subtitle1"} component={"div"}>
+            <Typography variant="subtitle1" component="div">
                 {subtitle}
             </Typography>
         </div>

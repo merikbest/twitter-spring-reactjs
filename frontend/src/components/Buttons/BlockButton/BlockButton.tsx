@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button/Button";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useBlockButtonStyles } from "./BlockButtonStyles";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
@@ -28,7 +29,8 @@ const BlockButton: FC<BlockButtonProps> = (
 ): ReactElement => {
     const classes = useBlockButtonStyles();
     const dispatch = useDispatch();
-    const [btnText, setBtnText] = useState<string>("Blocked");
+    const { t } = useTranslation();
+    const [btnText, setBtnText] = useState<string>(t("BLOCKED", { defaultValue: "Blocked" }));
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
     const onOpenBlockUserModal = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -38,7 +40,9 @@ const BlockButton: FC<BlockButtonProps> = (
 
     const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({ userId }));
-        dispatch(setOpenSnackBar(`@${username} has been ${isUserBlocked ? "unblocked" : "blocked"}.`));
+        dispatch(setOpenSnackBar(isUserBlocked
+            ? t("UNBLOCK_USER_POPUP_MESSAGE", { username, defaultValue: `@${username} has been unblocked.` })
+            : t("BLOCK_USER_POPUP_MESSAGE", { username, defaultValue: `@${username} has been blocked.` })));
         onCloseModalWindow();
     };
 
@@ -47,8 +51,8 @@ const BlockButton: FC<BlockButtonProps> = (
             <Button
                 className={classNames(classes.containedButton, classes.blockButton)}
                 onClick={isOpenBlockModal ? onOpenBlockUserModal : onBlockUser}
-                onMouseOver={() => setBtnText("Unblock")}
-                onMouseLeave={() => setBtnText("Blocked")}
+                onMouseOver={() => setBtnText(t("UNBLOCK", { defaultValue: "Unblock" }))}
+                onMouseLeave={() => setBtnText(t("BLOCKED", { defaultValue: "Blocked" }))}
                 color="primary"
                 variant="contained"
                 size={size}

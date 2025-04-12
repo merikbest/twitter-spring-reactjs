@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import Button from "@material-ui/core/Button/Button";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useFollowButtonStyles } from "./FollowButtonStyles";
 import { followUser, processFollowRequest } from "../../../store/ducks/user/actionCreators";
@@ -14,6 +15,7 @@ interface FollowButtonProps {
 const FollowButton: FC<FollowButtonProps> = ({ userId, isPrivateProfile, size }): ReactElement => {
     const classes = useFollowButtonStyles();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const handleFollow = (event: React.MouseEvent<HTMLButtonElement>): void => {
         event.preventDefault();
@@ -33,7 +35,7 @@ const FollowButton: FC<FollowButtonProps> = ({ userId, isPrivateProfile, size })
             variant="outlined"
             size={size}
         >
-            Follow
+            {t("FOLLOW", { defaultValue: "Follow" })}
         </Button>
     );
 };

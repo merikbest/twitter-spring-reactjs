@@ -38,7 +38,7 @@ const ChangeReplyWindowComponent: FC<ChangeReplyWindowComponentProps> = (
                     {replyTypeIcon}
                 </span>
             </div>
-            <Typography variant={"body1"} component={"span"}>
+            <Typography variant="body1" component="span">
                 {replyTypeTitle}
             </Typography>
             {(replyType === currentReplyType) && (

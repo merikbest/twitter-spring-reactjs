@@ -17,7 +17,7 @@ const HoverAction: FC<HoverActionProps> = ({ visible, positionTop, actionText })
 
     return (
         <div className={classes.container}>
-            <span id={"action-text"}>
+            <span id="action-text">
                 {actionText}
             </span>
         </div>

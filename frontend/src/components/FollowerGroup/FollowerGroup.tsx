@@ -65,7 +65,7 @@ const FollowerGroup: FC<FollowerGroupProps> = ({ userId, sameFollowers = [] }): 
                         />
                     ))}
                 </AvatarGroup>
-                <Typography variant={"subtitle2"} component={"span"} className={classes.followedTextInfo}>
+                <Typography variant="subtitle2" component="span" className={classes.followedTextInfo}>
                     {t(getTranslationKey(), {
                         follower1: follower1?.username,
                         follower2: follower2?.username,
