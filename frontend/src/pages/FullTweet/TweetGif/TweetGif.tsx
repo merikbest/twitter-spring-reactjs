@@ -6,7 +6,12 @@ import GifImage from "../../../components/GifImage/GifImage";
 
 const TweetGif: FC = (): ReactElement | null => {
     const gifImage = useSelector(selectTweetGifImage);
-    return (gifImage ? <GifImage gifImage={gifImage} /> : null);
+
+    if (!gifImage) {
+        return null;
+    }
+
+    return <GifImage gifImage={gifImage} />;
 };
 
 export default TweetGif;

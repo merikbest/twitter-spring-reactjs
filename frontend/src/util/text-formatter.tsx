@@ -9,12 +9,22 @@ export const capitalize = (text: string): string => {
     return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
-export const getUsersInImage = (users: UserResponse[] | TaggedUserResponse[]): string => {
-    return (users.length === 0)
-        ? "Tag people"
-        : (users.length === 1)
-            ? users[0].fullName
-            : `${users[0].fullName} and ${(users.length === 2) ? users[1].fullName : `${users.length - 1} others`}`;
+export const getUsersInImageTranslationKey = (users: UserResponse[] | TaggedUserResponse[]): string => {
+    switch (users.length) {
+        case 0: return "TAG_PEOPLE";
+        case 1: return "TAGGED_USER";
+        case 2: return "TAGGED_TWO_USERS";
+        default: return "TAGGED_MORE_THEN_TWO_USERS";
+    }
+};
+
+export const getUsersInImageDefaultText = (users: UserResponse[] | TaggedUserResponse[]): string => {
+    switch (users.length) {
+        case 0: return "Tag people";
+        case 1: return users[0].fullName;
+        case 2: return `${users[0].fullName} and ${users[1].fullName}`;
+        default: return `${users[0].fullName}, ${users[1].fullName} and ${users.length - 1} others`;
+    }
 };
 
 export const textFormatter = (text: string): ReactNodeArray => {

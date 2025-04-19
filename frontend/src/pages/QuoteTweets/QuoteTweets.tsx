@@ -16,7 +16,7 @@ import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrap
 const QuoteTweets: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
-    const params = useParams<{ tweetId: string }>();
+    const { tweetId } = useParams<{ tweetId: string }>();
     const tweets = useSelector(selectTweetsItems);
     const isTweetsLoading = useSelector(selectIsTweetsLoading);
     const pagesCount = useSelector(selectPagesCount);
@@ -29,10 +29,10 @@ const QuoteTweets: FC = (): ReactElement => {
         return () => {
             dispatch(resetTweets());
         };
-    }, [params.tweetId]);
+    }, [tweetId]);
 
     const loadTweets = (page: number): void => {
-        dispatch(fetchQuotesByTweetId({ tweetId: parseInt(params.tweetId), pageNumber: page }));
+        dispatch(fetchQuotesByTweetId({ tweetId: parseInt(tweetId), pageNumber: page }));
     };
 
     return (

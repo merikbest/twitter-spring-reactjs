@@ -9,7 +9,7 @@ import QuotesCount from "../QuotesCount";
 
 describe("QuotesCount", () => {
     it("should render correctly", () => {
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: "9" });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ tweetId: "9" });
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
         const wrapper = mountWithStore(<QuotesCount />, createMockRootState(LoadingStatus.SUCCESS), history);

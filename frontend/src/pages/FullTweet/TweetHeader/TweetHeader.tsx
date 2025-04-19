@@ -30,18 +30,18 @@ const TweetHeader = memo((): ReactElement => {
         <div className={classes.headerWrapper}>
             <Avatar className={globalClasses.avatar} src={tweetAuthorAvatar} alt={`avatar ${tweetAuthorId!}`} />
             <div
-                id={"userInfo"}
+                id="userInfo"
                 className={classes.headerUserInfo}
                 onMouseEnter={() => handleHoverPopper({ userId: tweetAuthorId } as HoverItemDetail)}
                 onMouseLeave={handleLeavePopper}
             >
                 <Link to={`${PROFILE}/${tweetAuthorId}`}>
-                    <Typography variant={"h6"} component={"div"}>
+                    <Typography variant="h6" component="div">
                         {tweetAuthorFullName}
                     </Typography>
                 </Link>
                 <div>
-                    <Typography variant={"subtitle1"} component={"span"}>
+                    <Typography variant="subtitle1" component="span">
                         @{tweetAuthorUsername}
                     </Typography>
                 </div>

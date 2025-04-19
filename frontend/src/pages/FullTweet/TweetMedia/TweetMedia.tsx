@@ -13,7 +13,7 @@ import {
     selectTweetLink
 } from "../../../store/ducks/tweet/selectors";
 
-const TweetMedia = memo((): ReactElement => {
+const TweetMedia = memo((): ReactElement | null => {
     const link = useSelector(selectTweetLink);
     const linkCover = useSelector(selectLinkCover);
     const linkCoverSize = useSelector(selectLinkCoverSize);
@@ -26,43 +26,45 @@ const TweetMedia = memo((): ReactElement => {
         setOpenYouTubeVideo(true);
     };
 
+    if (!link) {
+        return null;
+    }
+
     return (
         <>
-            {link && (
-                isYouTubeLink ? (
-                    openYouTubeVideo ? (
-                        <YouTubeVideo
-                            link={link}
-                            linkTitle={linkTitle!}
-                            linkDescription={linkDescription!}
-                        />
-                    ) : (
-                        <SmallLinkPreview
-                            link={link}
-                            linkTitle={linkTitle!}
-                            linkDescription={linkDescription!}
-                            linkCover={linkCover!}
-                            onOpenYouTubeVideo={onOpenYouTubeVideo}
-                            isFullTweet
-                        />
-                    )
+            {isYouTubeLink ? (
+                openYouTubeVideo ? (
+                    <YouTubeVideo
+                        link={link}
+                        linkTitle={linkTitle!}
+                        linkDescription={linkDescription!}
+                    />
                 ) : (
-                    (linkCoverSize === LinkCoverSize.LARGE) ? (
-                        <LargeLinkPreview
-                            link={link}
-                            linkTitle={linkTitle!}
-                            linkDescription={linkDescription!}
-                            linkCover={linkCover!}
-                            isFullTweet
-                        />
-                    ) : (
-                        <SmallLinkPreview
-                            link={link}
-                            linkTitle={linkTitle!}
-                            linkDescription={linkDescription!}
-                            linkCover={linkCover!}
-                        />
-                    )
+                    <SmallLinkPreview
+                        link={link}
+                        linkTitle={linkTitle!}
+                        linkDescription={linkDescription!}
+                        linkCover={linkCover!}
+                        onOpenYouTubeVideo={onOpenYouTubeVideo}
+                        isFullTweet
+                    />
+                )
+            ) : (
+                (linkCoverSize === LinkCoverSize.LARGE) ? (
+                    <LargeLinkPreview
+                        link={link}
+                        linkTitle={linkTitle!}
+                        linkDescription={linkDescription!}
+                        linkCover={linkCover!}
+                        isFullTweet
+                    />
+                ) : (
+                    <SmallLinkPreview
+                        link={link}
+                        linkTitle={linkTitle!}
+                        linkDescription={linkDescription!}
+                        linkCover={linkCover!}
+                    />
                 )
             )}
         </>

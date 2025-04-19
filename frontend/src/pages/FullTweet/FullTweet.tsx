@@ -58,8 +58,8 @@ const FullTweet = (): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
     const classes = useFullTweetStyles();
     const dispatch = useDispatch();
-    const params = useParams<{ id: string }>();
-    const tweetId = useSelector(selectTweetId);
+    const { tweetId } = useParams<{ tweetId: string }>();
+    const tweetDetailId = useSelector(selectTweetId);
     const tweetText = useSelector(selectTweetText);
     const isTweetLoading = useSelector(selectIsTweetLoading);
     const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
@@ -70,30 +70,19 @@ const FullTweet = (): ReactElement | null => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        if (params.id) {
-            dispatch(fetchTweetData(parseInt(params.id)));
-
-            stompClient = Stomp.over(() => new SockJS(WS_URL));
-            stompClient.connect({}, () => {
-                stompClient?.subscribe(TOPIC_TWEET(params.id), (response) => {
-                    dispatch(updateTweetData(JSON.parse(response.body)));
-                });
-
-                stompClient?.subscribe(TOPIC_TWEET_VOTE(params.id), (response) => {
-                    dispatch(setVoteData(JSON.parse(response.body)));
-                });
-            });
+        if (tweetId) {
+            dispatch(fetchTweetData(parseInt(tweetId)));
+            setupWebSocket(tweetId);
         }
-
         return () => {
             stompClient?.disconnect();
             dispatch(resetTweetState());
         };
-    }, [params.id]);
+    }, [tweetId]);
 
     useEffect(() => {
         if (isTweetLoadedSuccess) {
-            dispatch(fetchReplies(parseInt(params.id)));
+            dispatch(fetchReplies(parseInt(tweetId)));
             document.title = `${tweetAuthorFullName} on Twitter: "${tweetText}"`;
         }
         return () => {
@@ -101,53 +90,65 @@ const FullTweet = (): ReactElement | null => {
         };
     }, [isTweetLoadedSuccess]);
 
+    const setupWebSocket = (tweetId: string): void => {
+        stompClient = Stomp.over(() => new SockJS(WS_URL));
+        stompClient.connect({}, () => {
+            stompClient?.subscribe(TOPIC_TWEET(tweetId), (response) => {
+                dispatch(updateTweetData(JSON.parse(response.body)));
+            });
+            stompClient?.subscribe(TOPIC_TWEET_VOTE(tweetId), (response) => {
+                dispatch(setVoteData(JSON.parse(response.body)));
+            });
+        });
+    };
+
+    if (isError) {
+        return <TweetErrorPage />;
+    }
+
     if (isTweetLoading) {
         return <Spinner paddingTop={200} />;
-    } else if (tweetId && isTweetLoadedSuccess) {
-        return (
-            <PageWrapper translationKey={"TWEET"} defaultValue={"Tweet"}>
-                <div className={globalClasses.contentWrapper}>
-                    <Paper className={classes.container}>
-                        <TweetActions />
-                        <div className={classes.tweetHeader}>
-                            <TweetHeader />
-                            <TweetComponentActions tweetId={tweetId} isFullTweet />
-                        </div>
-                        <Typography variant={"h3"} className={classes.textWrapper}>
-                            {textFormatter(tweetText!)}
-                            <TweetMedia />
-                            <TweetImage />
-                            <TweetGif />
-                            <TweetPoll />
-                            <TweetQuote />
-                            <TweetList />
-                        </Typography>
-                        <TweetDateTime />
-                        <TweetInteractionCount />
-                        <div className={classes.info}>
-                            <ReplyIconButton />
-                            <RetweetIconButton />
-                            <LikeIconButton />
-                            <ShareTweetIconButton tweetId={tweetId!} isFullTweet />
-                        </div>
-                        <Divider />
-                        <TweetReplyInfo />
-                        <AddReplyToTweet />
-                    </Paper>
-                    <div className={classes.divider} />
-                    {isRepliesLoading ? (
-                        <Spinner />
-                    ) : (
-                        replies.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)
-                    )}
-                </div>
-            </PageWrapper>
-        );
-    } else if (!tweetId && isError) {
-        return <TweetErrorPage />;
-    } else {
-        return null;
     }
+
+    return (
+        <PageWrapper translationKey="TWEET" defaultValue="Tweet">
+            <div className={globalClasses.contentWrapper}>
+                <Paper className={classes.container}>
+                    <TweetActions />
+                    <div className={classes.tweetHeader}>
+                        <TweetHeader />
+                        <TweetComponentActions tweetId={tweetDetailId!} isFullTweet />
+                    </div>
+                    <Typography variant="h3" className={classes.textWrapper}>
+                        {textFormatter(tweetText!)}
+                        <TweetMedia />
+                        <TweetImage />
+                        <TweetGif />
+                        <TweetPoll />
+                        <TweetQuote />
+                        <TweetList />
+                    </Typography>
+                    <TweetDateTime />
+                    <TweetInteractionCount />
+                    <div className={classes.info}>
+                        <ReplyIconButton />
+                        <RetweetIconButton />
+                        <LikeIconButton />
+                        <ShareTweetIconButton tweetId={tweetDetailId!} isFullTweet />
+                    </div>
+                    <Divider />
+                    <TweetReplyInfo />
+                    <AddReplyToTweet />
+                </Paper>
+                <div className={classes.divider} />
+                {isRepliesLoading ? (
+                    <Spinner />
+                ) : (
+                    replies.map((tweet) => <TweetComponent key={tweet.id} tweet={tweet} />)
+                )}
+            </div>
+        </PageWrapper>
+    );
 };
 
 export default FullTweet;

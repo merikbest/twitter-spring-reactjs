@@ -241,7 +241,7 @@ const App: FC = (): ReactElement => {
                                 <Route path={HOME} component={Home} exact />
                                 <Route path={HOME_CONNECT} component={Connect} exact />
                                 <Route path={HOME_TRENDS} component={Trends} exact />
-                                <Route path={`${HOME_TWEET}/:id`} component={FullTweet} exact />
+                                <Route path={`${HOME_TWEET}/:tweetId`} component={FullTweet} exact />
                                 <Route path={SEARCH} component={Explore} />
                                 <Route path={NOTIFICATIONS} component={Notifications} />
                                 <Route path={NOTIFICATIONS_TIMELINE} component={NotificationsTimeline} exact />

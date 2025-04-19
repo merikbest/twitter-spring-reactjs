@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
 interface LikeIconButtonStyles {
-    isTweetLiked: boolean;
+    isTweetLiked?: boolean;
 }
 
 export const useLikeIconButtonStyles = makeStyles<Theme, LikeIconButtonStyles>((theme) => createStyles({

@@ -1,7 +1,7 @@
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 
 interface RetweetIconButtonStyles {
-    isTweetRetweeted: boolean;
+    isTweetRetweeted?: boolean;
 }
 
 export const useRetweetIconButtonStyles = makeStyles<Theme, RetweetIconButtonStyles>((theme) => createStyles({

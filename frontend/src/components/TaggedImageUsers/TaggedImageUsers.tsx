@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { List, Typography } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
+import { useTranslation } from "react-i18next";
 
 import { useTaggedImageUsersStyles } from "./TaggedImageUsersStyles";
-import { getUsersInImage } from "../../util/text-formatter";
+import { getUsersInImageDefaultText, getUsersInImageTranslationKey } from "../../util/text-formatter";
 import { TaggedUserResponse } from "../../types/user";
 import { useModalWindow } from "../../hook/useModalWindow";
 import { fetchTaggedImageUsers, resetTaggedImageUsers } from "../../store/ducks/tweet/actionCreators";
@@ -35,6 +36,7 @@ const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers
     const isUsersLoading = useSelector(selectIsTaggedImageUsersLoading);
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     const onClickGetTaggedImageUsers = (): void => {
         onOpenModalWindow();
@@ -53,20 +55,28 @@ const TaggedImageUsers: FC<TaggedImageUsersProps> = ({ tweetId, taggedImageUsers
     return (
         <>
             <Typography
-                id={"onClickGetTaggedImageUsers"}
+                id="onClickGetTaggedImageUsers"
                 className={classes.taggedImageUsers}
                 onClick={onClickGetTaggedImageUsers}
                 variant={isFullTweet ? "subtitle1" : "subtitle2"}
-                component={"span"}
+                component="span"
             >
                 {isFullTweet && ProfileIconFilled}
-                {getUsersInImage(taggedImageUsers)}
+                {t(getUsersInImageTranslationKey(users), {
+                    user1: users[0].fullName,
+                    user2: users[1].fullName,
+                    usersSize: users.length - 1,
+                    defaultValue: getUsersInImageDefaultText(users)
+                })}
             </Typography>
             <Dialog open={visibleModalWindow} onClose={onCloseTaggedImageUsers}>
-                <DialogTitleComponent title={"In this photo"} onClose={onCloseTaggedImageUsers} />
+                <DialogTitleComponent
+                    title={t("IN_THIS_PHOTO", { defaultValue: "In this photo" })}
+                    onClose={onCloseTaggedImageUsers}
+                />
                 <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                     <InfiniteScrollWrapper dataLength={users.length} pagesCount={usersPagesCount} loadItems={loadUsers}>
-                        {isUsersLoading && !users.length ? (
+                        {isUsersLoading && users.length ? (
                             <Spinner paddingTop={250} />
                         ) : (
                             <List>

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button/Button";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useTweetErrorPageStyles } from "./TweetErrorPageStyles";
 import { selectErrorMessage } from "../../../store/ducks/tweet/selectors";
@@ -15,6 +16,7 @@ const TweetErrorPage = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
     const errorMessage = useSelector(selectErrorMessage);
+    const { t } = useTranslation();
 
     useEffect(() => {
         dispatch(setOpenSnackBar(errorMessage));
@@ -22,9 +24,10 @@ const TweetErrorPage = (): ReactElement => {
 
     return (
         <>
-            <Typography variant={"h5"} component={"div"} className={classes.error}>
-                Hmm...this page doesn’t exist. <br />
-                Try searching for something else.
+            <Typography variant="h5" component="div" className={classes.error}>
+                {t("THIS_PAGE_DOESNT_EXIST", { defaultValue: "Hmm...this page doesn’t exist." })}
+                <br />
+                {t("TRY_SEARCHING", { defaultValue: "Try searching for something else." })}
             </Typography>
             <Link to={SEARCH} className={globalClasses.link}>
                 <Button
@@ -33,7 +36,7 @@ const TweetErrorPage = (): ReactElement => {
                     variant="contained"
                     size="small"
                 >
-                    Search
+                    {t("SEARCH", { defaultValue: "Search" })}
                 </Button>
             </Link>
         </>

@@ -1,20 +1,31 @@
 import React, { FC, ReactElement } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ImageAction from "../ImageAction/ImageAction";
 import { ProfileIcon } from "../../../../icons";
 import { useModalWindow } from "../../../../hook/useModalWindow";
 import TagPeopleModal from "./TagPeopleModal/TagPeopleModal";
-import { getUsersInImage } from "../../../../util/text-formatter";
 import { selectSelectedUsers } from "../../../../store/ducks/addTweetForm/selector";
+import { getUsersInImageDefaultText, getUsersInImageTranslationKey } from "../../../../util/text-formatter";
 
 const TagPeople: FC = (): ReactElement => {
-    const selectedUsers = useSelector(selectSelectedUsers);
+    const users = useSelector(selectSelectedUsers);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     return (
         <>
-            <ImageAction subtitle={getUsersInImage(selectedUsers)} icon={ProfileIcon} onClick={onOpenModalWindow} />
+            <ImageAction
+                subtitle={t(getUsersInImageTranslationKey(users), {
+                    user1: users[0]?.fullName,
+                    user2: users[1]?.fullName,
+                    usersSize: users?.length - 1,
+                    defaultValue: getUsersInImageDefaultText(users)
+                })}
+                icon={ProfileIcon}
+                onClick={onOpenModalWindow}
+            />
             <TagPeopleModal visible={visibleModalWindow} onClose={onCloseModalWindow} />
         </>
     );

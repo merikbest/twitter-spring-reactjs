@@ -41,7 +41,7 @@ describe("FullTweet", () => {
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: "9" });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ tweetId: "9" });
         jest.spyOn(routeData, "useLocation").mockReturnValue({
             pathname: MODAL,
             hash: "",
