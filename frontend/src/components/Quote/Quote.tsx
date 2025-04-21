@@ -26,18 +26,18 @@ const Quote: FC<QuoteProps> = memo(({ quoteTweet }): ReactElement => {
                         alt={`avatar ${quoteTweet.author.avatar}`}
                         src={quoteTweet.author.avatar ?? DEFAULT_PROFILE_IMG}
                     />
-                    <Typography component={"span"} className={classes.quoteTweetFullName}>
+                    <Typography component="span" className={classes.quoteTweetFullName}>
                         {quoteTweet.author.fullName}
                     </Typography>
-                    <Typography component={"span"} className={classes.quoteTweetUsername}>
+                    <Typography component="span" className={classes.quoteTweetUsername}>
                         @{quoteTweet.author.username}
                     </Typography>&nbsp;
-                    <Typography component={"span"} className={classes.quoteTweetUsername}>·</Typography>&nbsp;
-                    <Typography component={"span"} className={classes.quoteTweetUsername}>
+                    <Typography component="span" className={classes.quoteTweetUsername}>·</Typography>&nbsp;
+                    <Typography component="span" className={classes.quoteTweetUsername}>
                         {formatDate(new Date(quoteTweet.createdAt))}
                     </Typography>
                 </div>
-                <Typography component={"div"} className={classes.quoteTweetText}>
+                <Typography component="div" className={classes.quoteTweetText}>
                     {textFormatter(quoteTweet.text)}
                 </Typography>
             </div>

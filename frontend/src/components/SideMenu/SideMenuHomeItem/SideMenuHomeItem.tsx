@@ -33,7 +33,7 @@ const SideMenuHomeItem: FC<SideMenuHomeItemProps> = ({ title, path, icon, filled
             icon={icon}
             filledIcon={filledIcon}
         >
-            {visibleHomeNotification && <span id={"homeNotification"} className={classes.homeNotification} />}
+            {visibleHomeNotification && <span id="homeNotification" className={classes.homeNotification} />}
         </SideMenuItem>
     );
 };

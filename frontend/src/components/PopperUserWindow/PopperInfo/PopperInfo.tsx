@@ -24,11 +24,11 @@ const PopperInfo = memo((): ReactElement => {
         <div className={classes.userInfoWrapper}>
             <Link to={`${PROFILE}/${userId}`}>
                 <div>
-                    <Typography variant={"h6"} component={"span"}>{fullName}</Typography>
+                    <Typography variant="h6" component="span">{fullName}</Typography>
                     {isPrivateProfile && <span className={classes.lockIcon}>{LockIcon}</span>}
                 </div>
             </Link>
-            <Typography variant={"subtitle1"} component={"div"}>@{username}</Typography>
+            <Typography variant="subtitle1" component="div">@{username}</Typography>
         </div>
     );
 });

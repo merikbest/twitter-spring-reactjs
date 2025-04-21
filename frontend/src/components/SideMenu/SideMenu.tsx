@@ -42,7 +42,7 @@ const SideMenu: FC<DisplayProps> = ({ changeBackgroundColor, changeColorScheme }
         <>
             <ul className={classes.container}>
                 <li>
-                    <NavLink to={HOME} activeClassName={"selected"}>
+                    <NavLink to={HOME} activeClassName="selected">
                         <div className={classes.logoIcon}>
                             <IconButton color="primary">
                                 {TweetIcon}

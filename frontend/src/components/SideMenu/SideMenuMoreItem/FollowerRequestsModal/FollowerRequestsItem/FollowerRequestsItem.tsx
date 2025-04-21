@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Button, Paper } from "@material-ui/core";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useFollowerRequestsItemStyles } from "./FollowerRequestsItemStyles";
 import { FollowerUserResponse } from "../../../../../types/user";
@@ -20,6 +21,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps> = memo(({ user, onClos
     const classes = useFollowerRequestsItemStyles();
     const dispatch = useDispatch();
     const history = useHistory();
+    const { t } = useTranslation();
 
     const onClickUser = () => {
         onClose();
@@ -52,7 +54,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps> = memo(({ user, onClos
                             size="small"
                             fullWidth
                         >
-                            Decline
+                            {t("DECLINE", { defaultValue: "Decline" })}
                         </Button>
                     </div>
                     <div className={classNames(classes.buttonItemWrapper, classes.acceptButton)}>
@@ -63,7 +65,7 @@ const FollowerRequestsItem: FC<FollowerRequestsItemProps> = memo(({ user, onClos
                             size="small"
                             fullWidth
                         >
-                            Accept
+                            {t("ACCEPT", { defaultValue: "Accept" })}
                         </Button>
                     </div>
                 </div>

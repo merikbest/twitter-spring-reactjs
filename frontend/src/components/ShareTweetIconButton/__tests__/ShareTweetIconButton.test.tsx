@@ -3,8 +3,6 @@ import routeData from "react-router";
 import { ClickAwayListener, IconButton } from "@material-ui/core";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../util/test-utils/test-helper";
-import SendDirectTweetModal from "../SendDirectTweetModal/SendDirectTweetModal";
-import CloseButton from "../../CloseButton/CloseButton";
 import { TweetActionType } from "../../../store/ducks/tweet/contracts/actionTypes";
 import { TweetsActionType } from "../../../store/ducks/tweets/contracts/actionTypes";
 import { BOOKMARKS } from "../../../constants/path-constants";
@@ -31,21 +29,6 @@ describe("ShareTweetIconButton", () => {
         expect(wrapper.text().includes("Copy link to Tweet")).toBe(true);
         expect(wrapper.text().includes("Share Tweet via ...")).toBe(true);
         expect(wrapper.find(IconButton).prop("size")).toBe("small");
-    });
-
-    it("should click open and close Send Via Direct Message modal", () => {
-        const wrapper = mountWithStore(<ShareTweetIconButton tweetId={1} isFullTweet={false} />, mockRootState);
-
-        expect(wrapper.find(SendDirectTweetModal).prop("visible")).toBe(false);
-
-        wrapper.find(IconButton).simulate("click");
-        wrapper.find("#clickSendViaDirectMessage").at(0).simulate("click");
-
-        expect(wrapper.find(SendDirectTweetModal).prop("visible")).toBe(true);
-
-        wrapper.find(SendDirectTweetModal).find(CloseButton).find(IconButton).simulate("click");
-
-        expect(wrapper.find(SendDirectTweetModal).prop("visible")).toBe(false);
     });
 
     it("should click Copy Link To Tweet", () => {

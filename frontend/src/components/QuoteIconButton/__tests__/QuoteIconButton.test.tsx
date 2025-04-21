@@ -83,7 +83,7 @@ describe("QuoteIconButton", () => {
         return mountWithStore(
             <QuoteIconButton
                 tweetId={mockFullTweet.id}
-                dateTime={mockFullTweet.createdAt}
+                createdAt={mockFullTweet.createdAt}
                 text={mockFullTweet.text}
                 author={mockFullTweet.author}
                 isTweetRetweeted={isTweetRetweetedByMe}

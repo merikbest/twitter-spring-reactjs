@@ -1,6 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
+import { useTranslation } from "react-i18next";
 
 import { useQuoteTweetModalStyles } from "./QuoteTweetModalStyles";
 import AddTweetForm from "../../AddTweetForm/AddTweetForm";
@@ -15,6 +16,7 @@ interface QuoteTweetModalProps {
 
 const QuoteTweetModal: FC<QuoteTweetModalProps> = ({ quoteTweet, visible, onClose }): ReactElement | null => {
     const classes = useQuoteTweetModalStyles();
+    const { t } = useTranslation();
 
     if (!visible) {
         return null;
@@ -27,8 +29,8 @@ const QuoteTweetModal: FC<QuoteTweetModalProps> = ({ quoteTweet, visible, onClos
                 <AddTweetForm
                     quoteTweet={quoteTweet}
                     minRows={1}
-                    title={"Add a comment"}
-                    buttonName={"Tweet"}
+                    title={t("ADD_A_COMMENT", { defaultValue: "Add a comment" })}
+                    buttonName={t("TWEET", { defaultValue: "Tweet" })}
                     onCloseModal={onClose}
                 />
             </DialogContent>

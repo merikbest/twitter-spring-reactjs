@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useSendDirectTweetModalStyles } from "../SendDirectTweetModalStyles";
 import { SendDirectMessageInput } from "../SendDirectMessageInput";
@@ -25,6 +26,7 @@ const SendDirectMessageFooter: FC<SendDirectMessageFooterProps> = memo((
     const classes = useSendDirectTweetModalStyles();
     const dispatch = useDispatch();
     const { text, setText, handleChangeText } = useInputText();
+    const { t } = useTranslation();
 
     const handleClickSendMessage = (): void => {
         dispatch(addChatMessageWithTweet({
@@ -43,7 +45,7 @@ const SendDirectMessageFooter: FC<SendDirectMessageFooterProps> = memo((
                 value={text}
                 onChange={handleChangeText}
                 variant="outlined"
-                placeholder="Add a comment"
+                placeholder={t("ADD_A_COMMENT", { defaultValue: "Add a comment" })}
             />
             <div className={classes.chatIcon}>
                 <IconButton

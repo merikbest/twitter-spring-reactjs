@@ -3,6 +3,7 @@ import { ListItem, Typography } from "@material-ui/core";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { CLIENT_URL } from "../../../constants/url-constants";
 import { LinkIcon } from "../../../icons";
@@ -15,23 +16,22 @@ interface CopyLinkToTweetButtonProps {
 const CopyLinkToTweetButton: FC<CopyLinkToTweetButtonProps> = ({ closeShareTweet }): ReactElement => {
     const dispatch = useDispatch();
     const location = useLocation();
+    const { t } = useTranslation();
 
     const onCopyLinkToTweet = (): void => {
-        dispatch(setOpenSnackBar("Copied to clipboard"));
+        dispatch(setOpenSnackBar(t("COPIED_TO_CLIPBOARD", { defaultValue: "Copied to clipboard" })));
         closeShareTweet();
     };
 
     return (
-        <>
-            <CopyToClipboard text={`${CLIENT_URL}${location.pathname}`}>
-                <ListItem id={"copyLinkToTweet"} onClick={onCopyLinkToTweet}>
-                    <>{LinkIcon}</>
-                    <Typography variant={"body1"} component={"span"}>
-                        Copy link to Tweet
-                    </Typography>
-                </ListItem>
-            </CopyToClipboard>
-        </>
+        <CopyToClipboard text={`${CLIENT_URL}${location.pathname}`}>
+            <ListItem id="copyLinkToTweet" onClick={onCopyLinkToTweet}>
+                <>{LinkIcon}</>
+                <Typography variant="body1" component="span">
+                    {t("COPY_LINK_TO_TWEET", { defaultValue: "Copy link to Tweet" })}
+                </Typography>
+            </ListItem>
+        </CopyToClipboard>
     );
 };
 

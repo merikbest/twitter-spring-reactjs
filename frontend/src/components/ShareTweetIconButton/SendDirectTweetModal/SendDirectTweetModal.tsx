@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dialog, Divider, List } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useSendDirectTweetModalStyles } from "./SendDirectTweetModalStyles";
 import { selectUsersPagesCount, selectUsersSearch } from "../../../store/ducks/usersSearch/selectors";
@@ -48,6 +49,7 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const [searchText, setSearchText] = useState<string>("");
     const { selectedIndexes, selectedUsers, handleDelete, handleListItemClick, resetSelectedUsers } = useSelectUsers();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (visible) {
@@ -71,12 +73,12 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
         }
     };
 
-    const loadParticipants = (page: number): void => {
-        dispatch(fetchParticipantsByUsername({ username: encodeURIComponent(searchText), pageNumber: page }));
+    const loadParticipants = (pageNumber: number): void => {
+        dispatch(fetchParticipantsByUsername({ username: encodeURIComponent(searchText), pageNumber }));
     };
 
     const onSendMessageFinish = (): void => {
-        dispatch(setOpenSnackBar("Your Tweet was sent"));
+        dispatch(setOpenSnackBar(t("YOUR_TWEET_WAS_SENT", { defaultValue: "Your Tweet was sent" })));
         setSearchText("");
         resetSelectedUsers();
         onClose();
@@ -96,9 +98,17 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
 
     return (
         <Dialog open={visible} onClose={onClose}>
-            <DialogTitleComponent title={"Send Tweet"} onClose={onClose} borderBottom />
+            <DialogTitleComponent
+                title={t("SEND_TWEET", { defaultValue: "Send Tweet" })}
+                onClose={onClose}
+                borderBottom
+            />
             <DialogContent id="scrollableDiv" className={classnames(globalClasses.dialogContent, classes.content)}>
-                <ModalInput placeholder={"Search people"} searchText={searchText} onSearch={onSearch} />
+                <ModalInput
+                    placeholder={t("SEARCH_PEOPLE", { defaultValue: "Search people" })}
+                    searchText={searchText}
+                    onSearch={onSearch}
+                />
                 {selectedUsers && (selectedUsers.map((selectedUser) => (
                         <UserChip key={selectedUser.id} selectedUser={selectedUser} onDeleteUser={handleDelete} />
                     ))
@@ -112,7 +122,6 @@ const SendDirectTweetModal: FC<SendDirectTweetModalProps> = (
                     <List component="nav">
                         {(searchText ? users : chats).map((item) => {
                             const user = searchText ? item as UserResponse : selectUserFromChat(item as ChatResponse);
-
                             return (
                                 <DirectUserItem
                                     key={item.id}

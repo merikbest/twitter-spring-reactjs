@@ -18,7 +18,7 @@ const SideMenuItem: FC<SideMenuItemProps> = ({ title, path, icon, filledIcon, ch
 
     return (
         <li className={classes.itemWrapper}>
-            <NavLink to={path} activeClassName={"selected"}>
+            <NavLink to={path} activeClassName="selected">
                 <div>
                     <Hidden smDown>
                         {children}
@@ -27,7 +27,7 @@ const SideMenuItem: FC<SideMenuItemProps> = ({ title, path, icon, filledIcon, ch
                         ) : (
                             <span>{icon}</span>
                         )}
-                        <Typography variant={"h5"}>
+                        <Typography variant="h5">
                             {title}
                         </Typography>
                     </Hidden>

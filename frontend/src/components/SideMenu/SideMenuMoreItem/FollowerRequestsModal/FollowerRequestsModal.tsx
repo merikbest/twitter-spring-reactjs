@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useFollowerRequestsModalStyles } from "./FollowerRequestsModalSyles";
 import { useGlobalStyles } from "../../../../util/globalClasses";
@@ -31,6 +32,7 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({ visible, onClos
     const isFollowerRequestsLoading = useSelector(selectIsFollowerRequestsLoading);
     const followerRequestsPagesCount = useSelector(selectFollowerRequestsPagesCount);
     const followerRequests = useSelector(selectFollowerRequestsItems);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (visible) {
@@ -51,7 +53,10 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({ visible, onClos
 
     return (
         <Dialog open={visible} onClose={onClose} className={classes.dialog}>
-            <DialogTitleComponent title={"Follower requests"} onClose={onClose} />
+            <DialogTitleComponent
+                title={t("FOLLOWER_REQUESTS", { defaultValue: "Follower requests" })}
+                onClose={onClose}
+            />
             <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                 <InfiniteScrollWrapper
                     dataLength={followerRequests.length}
@@ -64,8 +69,12 @@ const FollowerRequestsModal: FC<FollowerRequestsModalProps> = ({ visible, onClos
                         (!isFollowerRequestsLoading && !followerRequests.length) ? (
                             <div className={globalClasses.contentWrapper}>
                                 <EmptyPageDescription
-                                    title={"You don’t have any follower requests"}
-                                    subtitle={"When someone requests to follow you, it’ll show up here."}
+                                    title={t("FOLLOWER_REQUESTS_TITLE", {
+                                        defaultValue: "You don’t have any follower requests"
+                                    })}
+                                    subtitle={t("FOLLOWER_REQUESTS_SUBTITLE", {
+                                        defaultValue: "When someone requests to follow you, it’ll show up here."
+                                    })}
                                 />
                             </div>
                         ) : (

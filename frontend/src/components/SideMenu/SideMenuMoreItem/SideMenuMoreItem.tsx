@@ -3,6 +3,7 @@ import { Divider, Hidden, List, ListItem, Popover, Typography } from "@material-
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import {
     AnalyticsIcon,
@@ -39,6 +40,7 @@ const SideMenuMoreItem: FC<DisplayProps> = ({ changeBackgroundColor, changeColor
     const [visibleDisplayModal, setVisibleDisplayModal] = useState<boolean>(false);
     const [visibleFollowerRequestsModal, setVisibleFollowerRequestsModal] = useState<boolean>(false);
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
+    const { t } = useTranslation();
 
     const onOpenDisplayModal = (): void => {
         setVisibleDisplayModal(true);
@@ -62,14 +64,14 @@ const SideMenuMoreItem: FC<DisplayProps> = ({ changeBackgroundColor, changeColor
     return (
         <li className={classes.itemWrapper}>
             <div
-                id={"openPopup"}
+                id="openPopup"
                 aria-describedby={popoverId}
                 onClick={handleOpenPopup}
             >
                 <Hidden smDown>
                     <span>{MoreIcon}</span>
-                    <Typography variant={"h5"}>
-                        More
+                    <Typography variant="h5">
+                        {t("MORE", { defaultValue: "More" })}
                     </Typography>
                 </Hidden>
             </div>
@@ -85,10 +87,10 @@ const SideMenuMoreItem: FC<DisplayProps> = ({ changeBackgroundColor, changeColor
                 <div className={classnames(classes.listItemWrapper, globalClasses.svg)}>
                     <List>
                         {(isPrivateProfile) && (
-                            <ListItem id={"openFollowerRequestsModal"} onClick={onOpenFollowerRequestsModal}>
+                            <ListItem id="openFollowerRequestsModal" onClick={onOpenFollowerRequestsModal}>
                                 {FollowerRequestIcon}
-                                <Typography variant={"body1"} component={"span"}>
-                                    Follower requests
+                                <Typography variant="body1" component="span">
+                                    {t("FOLLOWER_REQUESTS", { defaultValue: "Follower requests" })}
                                     <span className={classes.followerRequestsCount}>
                                         {followerRequestsSize}
                                     </span>
@@ -96,62 +98,62 @@ const SideMenuMoreItem: FC<DisplayProps> = ({ changeBackgroundColor, changeColor
                             </ListItem>
                         )}
                         <Link to={TOPICS_FOLLOWED}>
-                            <ListItem id={"closePopup"} onClick={handleClosePopup}>
+                            <ListItem id="closePopup" onClick={handleClosePopup}>
                                 {TopicIcon}
-                                <Typography variant={"body1"} component={"span"}>
-                                    Topics
+                                <Typography variant="body1" component="span">
+                                    {t("TOPICS", { defaultValue: "Topics" })}
                                 </Typography>
                             </ListItem>
                         </Link>
                         <ListItem>
                             {NewslettersIcon}
-                            <Typography variant={"body1"} component={"span"}>
-                                Newsletters
+                            <Typography variant="body1" component="span">
+                                {t("NEWSLETTERS", { defaultValue: "Newsletters" })}
                             </Typography>
                         </ListItem>
                         <a href={TWITTER_LOGIN} target="_blank">
                             <ListItem>
                                 {TwitterAdsIcon}
-                                <Typography variant={"body1"} component={"span"}>
-                                    Twitter Ads
+                                <Typography variant="body1" component="span">
+                                    {t("TWITTER_ADS", { defaultValue: "Twitter Ads" })}
                                 </Typography>
                             </ListItem>
                         </a>
                         <a href={TWITTER_ABOUT} target="_blank">
                             <ListItem>
                                 {AnalyticsIcon}
-                                <Typography variant={"body1"} component={"span"}>
-                                    Analytics
+                                <Typography variant="body1" component="span">
+                                    {t("ANALYTICS", { defaultValue: "Analytics" })}
                                 </Typography>
                             </ListItem>
                         </a>
                         <Divider />
                         <Link to={SETTINGS}>
-                            <ListItem id={"closePopup"} onClick={handleClosePopup}>
+                            <ListItem id="closePopup" onClick={handleClosePopup}>
                                 {SettingsIcon}
-                                <Typography variant={"body1"} component={"span"}>
-                                    Settings and privacy
+                                <Typography variant="body1" component="span">
+                                    {t("SETTINGS_AND_PRIVACY", { defaultValue: "Settings and privacy" })}
                                 </Typography>
                             </ListItem>
                         </Link>
                         <a href={HELP_TWITTER} target="_blank">
                             <ListItem>
                                 {HelpCenterIcon}
-                                <Typography variant={"body1"} component={"span"}>
-                                    Help Center
+                                <Typography variant="body1" component="span">
+                                    {t("HELP_CENTER", { defaultValue: "Help Center" })}
                                 </Typography>
                             </ListItem>
                         </a>
-                        <ListItem id={"openDisplayModal"} onClick={onOpenDisplayModal}>
+                        <ListItem id="openDisplayModal" onClick={onOpenDisplayModal}>
                             {DisplayIcon}
-                            <Typography variant={"body1"} component={"span"}>
-                                Display
+                            <Typography variant="body1" component="span">
+                                {t("DISPLAY", { defaultValue: "Display" })}
                             </Typography>
                         </ListItem>
                         <ListItem>
                             {KeyboardShortcutsIcon}
-                            <Typography variant={"body1"} component={"span"}>
-                                Keyboard shortcuts
+                            <Typography variant="body1" component="span">
+                                {t("KEYBOARD_SHORTCUTS", { defaultValue: "Keyboard shortcuts" })}
                             </Typography>
                         </ListItem>
                     </List>

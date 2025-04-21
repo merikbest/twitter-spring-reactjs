@@ -4,6 +4,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Dialog from "@material-ui/core/Dialog";
 import { Avatar, Link as MuiLink, Typography } from "@material-ui/core";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useReplyModalStyles } from "./ReplyModalStyles";
 import { formatDate } from "../../util/format-date-helper";
@@ -39,6 +40,7 @@ const ReplyModal: FC<ReplyModalProps> = (
 ): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
     const classes = useReplyModalStyles();
+    const { t } = useTranslation();
 
     if (!visible) {
         return null;
@@ -58,19 +60,19 @@ const ReplyModal: FC<ReplyModalProps> = (
                     <div>
                         <div className={classes.header}>
                             <div>
-                                <Typography variant={"h6"} component={"span"}>
+                                <Typography variant="h6" component="span">
                                     {author.fullName}
                                 </Typography>&nbsp;
-                                <Typography variant={"subtitle1"} component={"span"}>
+                                <Typography variant="subtitle1" component="span">
                                     @{author.username}
                                 </Typography>&nbsp;
-                                <Typography variant={"subtitle1"} component={"span"}>·</Typography>&nbsp;
-                                <Typography variant={"subtitle1"} component={"span"}>
+                                <Typography variant="subtitle1" component="span">·</Typography>&nbsp;
+                                <Typography variant="subtitle1" component="span">
                                     {formatDate(new Date(createdAt))}
                                 </Typography>
                             </div>
                         </div>
-                        <Typography variant={"body1"} component={"div"} className={classes.text}>
+                        <Typography variant="body1" component="div" className={classes.text}>
                             {textFormatter(text)}
                         </Typography>
                         {image && (
@@ -79,8 +81,9 @@ const ReplyModal: FC<ReplyModalProps> = (
                             </div>
                         )}
                         <object>
-                            <Typography variant={"subtitle1"} component={"div"} className={classes.replyWrapper}>
-                                {"Replying to "}
+                            <Typography variant="subtitle1" component="div" className={classes.replyWrapper}>
+                                {t("REPLYING_TO", { defaultValue: "Replying to" })}
+                                {" "}
                                 <MuiLink variant="subtitle1" to={`${PROFILE}/${author.id}`} component={Link}>
                                     @{author.username}
                                 </MuiLink>
@@ -94,8 +97,8 @@ const ReplyModal: FC<ReplyModalProps> = (
                         tweetId={tweetId}
                         addressedUsername={author.username}
                         addressedId={author.id}
-                        title={"Tweet your reply"}
-                        buttonName={"Reply"}
+                        title={t("TWEET_YOUR_REPLY", { defaultValue: "Tweet your reply" })}
+                        buttonName={t("REPLY", { defaultValue: "Reply" })}
                         onCloseModal={onClose}
                     />
                 </div>

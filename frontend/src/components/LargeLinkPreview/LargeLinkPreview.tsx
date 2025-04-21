@@ -30,13 +30,13 @@ const LargeLinkPreview: FC<LargeLinkPreviewProps> = (
             <div className={classes.container}>
                 <img className={classes.linkCover} src={linkCover} alt={linkCover} />
                 <div className={classes.siteInfoWrapper}>
-                    <Typography variant={"body1"} component={"div"}>
+                    <Typography variant="body1" component="div">
                         {linkTitle}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
+                    <Typography variant="subtitle1" component="div">
                         {linkDescription}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
+                    <Typography variant="subtitle1" component="div">
                         {LinkIcon}{domain}
                     </Typography>
                 </div>

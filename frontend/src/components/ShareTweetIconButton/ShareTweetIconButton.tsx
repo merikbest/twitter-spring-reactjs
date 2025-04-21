@@ -1,7 +1,8 @@
 import React, { FC, memo, ReactElement, useEffect } from "react";
-import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
+import { ClickAwayListener, List } from "@material-ui/core";
 import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useShareTweetModalStyles } from "./ShareTweetStyles";
 import { ShareIcon } from "../../icons";
@@ -14,14 +15,10 @@ import {
     fetchIsTweetBookmarkedAdditionalInfo,
     resetTweetAdditionalInfo
 } from "../../store/ducks/tweetAdditionalInfo/actionCreators";
-import {
-    selectIsTweetAdditionalInfoLoading,
-    selectIsTweetBookmarkedAdditionalInfo
-} from "../../store/ducks/tweetAdditionalInfo/selectors";
+import { selectIsTweetAdditionalInfoLoading } from "../../store/ducks/tweetAdditionalInfo/selectors";
 import Spinner from "../Spinner/Spinner";
-import SendDirectTweetModal from "./SendDirectTweetModal/SendDirectTweetModal";
-import { useModalWindow } from "../../hook/useModalWindow";
 import { useClickAway } from "../../hook/useClickAway";
+import ShareTweet from "./ShareTweet/ShareTweet";
 
 interface ShareTweetProps {
     tweetId: number;
@@ -33,9 +30,8 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
     const classes = useShareTweetModalStyles({ isFullTweet });
     const dispatch = useDispatch();
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);
-    const isTweetBookmarked = useSelector(selectIsTweetBookmarkedAdditionalInfo);
     const { open, onClickOpen, onClickClose } = useClickAway();
-    const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (open) {
@@ -50,7 +46,7 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
         <ClickAwayListener onClickAway={onClickClose}>
             <div className={classes.root}>
                 <ActionIconButton
-                    actionText={"Share"}
+                    actionText={t("SHARE", { defaultValue: "Share" })}
                     onClick={onClickOpen}
                     size={isFullTweet ? "medium" : "small"}
                     icon={ShareIcon}
@@ -61,28 +57,14 @@ const ShareTweetIconButton: FC<ShareTweetProps> = memo(({ tweetId, isFullTweet }
                             <Spinner paddingTop={90} />
                         ) : (
                             <List>
-                                <SendViaDirectMessageButton onClickSendViaDirectMessage={onOpenModalWindow} />
-                                <AddTweetToBookmarksButton
-                                    tweetId={tweetId}
-                                    isTweetBookmarked={isTweetBookmarked}
-                                    closeShareTweet={onClickClose}
-                                />
+                                <SendViaDirectMessageButton tweetId={tweetId} />
+                                <AddTweetToBookmarksButton tweetId={tweetId} closeShareTweet={onClickClose} />
                                 <CopyLinkToTweetButton closeShareTweet={onClickClose} />
-                                <ListItem>
-                                    <>{ShareIcon}</>
-                                    <Typography variant={"body1"} component={"span"}>
-                                        Share Tweet via ...
-                                    </Typography>
-                                </ListItem>
+                                <ShareTweet />
                             </List>
                         )}
                     </div>
                 )}
-                <SendDirectTweetModal
-                    tweetId={tweetId}
-                    visible={visibleModalWindow}
-                    onClose={onCloseModalWindow}
-                />
             </div>
         </ClickAwayListener>
     );

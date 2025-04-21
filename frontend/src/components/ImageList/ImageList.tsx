@@ -11,29 +11,26 @@ interface ImageListProps {
     removeImage?: (url: string) => void;
 }
 
-const ImageList: FC<ImageListProps> = ({ images, removeImage }): ReactElement => {
+const ImageList: FC<ImageListProps> = ({ images, removeImage }): ReactElement | null => {
     const classes = useImageListStyles();
 
+    if (images.length === 0) {
+        return null;
+    }
+
     return (
-        <>
-            {(images.length !== 0) &&
-                <div className={classes.container}>
-                    {images.map((image, index) => (
-                        <div key={index} className={classes.item}>
-                            {removeImage && (
-                                <IconButton
-                                    className={classes.itemRemove}
-                                    onClick={(): void => removeImage(image.src)}
-                                >
-                                    <ClearIcon style={{ fontSize: 15 }} />
-                                </IconButton>
-                            )}
-                            <img key={image.src} src={image.src} />
-                        </div>
-                    ))}
+        <div className={classes.container}>
+            {images.map((image, index) => (
+                <div key={index} className={classes.item}>
+                    {removeImage && (
+                        <IconButton className={classes.itemRemove} onClick={(): void => removeImage(image.src)}>
+                            <ClearIcon style={{ fontSize: 15 }} />
+                        </IconButton>
+                    )}
+                    <img key={image.src} src={image.src} />
                 </div>
-            }
-        </>
+            ))}
+        </div>
     );
 };
 

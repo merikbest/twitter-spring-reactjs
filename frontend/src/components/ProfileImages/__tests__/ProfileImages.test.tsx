@@ -7,6 +7,7 @@ import { createMockRootState, mountWithStore } from "../../../util/test-utils/te
 import { MODAL } from "../../../constants/path-constants";
 import ProfileImages from "../ProfileImages";
 import { LoadingStatus } from "../../../types/common";
+import { TweetImageResponse } from "../../../types/tweet";
 
 describe("ProfileImages", () => {
     const mockState = createMockRootState(LoadingStatus.LOADED);
@@ -103,7 +104,7 @@ describe("ProfileImages", () => {
     };
 
     const createImagesArray = (arrayLength: number) => {
-        const imagesArray = [];
+        const imagesArray: TweetImageResponse[] = [];
 
         for (let i = 0; i < arrayLength; i++) {
             imagesArray.push({

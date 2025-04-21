@@ -31,7 +31,7 @@ const SideMenuNotificationItem: FC<SideMenuNotificationItemProps> = (
             filledIcon={filledIcon}
         >
             {(notificationsCount !== 0) && (
-                <span id={"notificationsCount"} className={classes.count}>
+                <span id="notificationsCount" className={classes.count}>
                     {notificationsCount}
                 </span>
             )}

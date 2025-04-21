@@ -22,7 +22,7 @@ const PopperFooter = memo((): ReactElement => {
 
     return (
         <>
-            <Typography variant={"body1"} component={"div"} className={classes.userInfo}>{about}</Typography>
+            <Typography variant="body1" component="div" className={classes.userInfo}>{about}</Typography>
             <div className={classes.userFollowersWrapper}>
                 <PopperFooterFollowing />
                 <PopperFooterFollowers />

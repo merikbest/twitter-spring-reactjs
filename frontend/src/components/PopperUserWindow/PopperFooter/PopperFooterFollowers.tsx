@@ -2,6 +2,7 @@ import React, { memo, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { USER } from "../../../constants/path-constants";
 import { selectUserDetailFollowingCount, selectUserDetailId } from "../../../store/ducks/userDetail/selectors";
@@ -11,11 +12,16 @@ const PopperFooterFollowers = memo((): ReactElement => {
     const classes = usePopperFooterStyles();
     const userId = useSelector(selectUserDetailId);
     const followingSize = useSelector(selectUserDetailFollowingCount);
+    const { t } = useTranslation();
 
     return (
         <Link to={`${USER}/${userId}/followers`} className={classes.followLink}>
-            <Typography variant={"h6"} component={"span"}>{followingSize}</Typography>
-            <Typography variant={"subtitle1"} component={"span"}>Followers</Typography>
+            <Typography variant="h6" component="span">
+                {followingSize}
+            </Typography>
+            <Typography variant="subtitle1" component="span">
+                {t("FOLLOWERS", { defaultValue: "Followers" })}
+            </Typography>
         </Link>
     );
 });

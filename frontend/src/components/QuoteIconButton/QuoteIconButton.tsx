@@ -2,6 +2,7 @@ import React, { FC, memo, ReactElement } from "react";
 import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import { useQuoteIconButtonStyles } from "./QuoteIconButtonSyles";
 import { QuoteTweetIcon, RetweetIcon, RetweetOutlinedIcon } from "../../icons";
@@ -41,6 +42,7 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
     const myProfileId = useSelector(selectUserDataId);
     const { open, onClickOpen, onClickClose } = useClickAway();
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     const onClickRetweet = (): void => {
         if (author?.id !== myProfileId) {
@@ -58,28 +60,32 @@ const QuoteIconButton: FC<QuoteTweetProps> = memo((
         <ClickAwayListener onClickAway={onClickClose}>
             <div className={classes.footerIcon}>
                 <ActionIconButton
-                    actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}
+                    actionText={isTweetRetweeted
+                        ? t("UNDO_RETWEET", { defaultValue: "Undo Retweet" })
+                        : t("RETWEET", { defaultValue: "Retweet" })}
                     icon={isTweetRetweeted ? RetweetIcon : RetweetOutlinedIcon}
                     onClick={onClickOpen}
                 />
                 {(retweetsCount !== 0) && (
-                    <span id={"retweets"} className={classes.retweetsCount}>
+                    <span id="retweets" className={classes.retweetsCount}>
                         {retweetsCount}
                     </span>
                 )}
                 {open && (
                     <div className={classnames(classes.dropdown, globalClasses.svg)}>
                         <List>
-                            <ListItem id={"clickRetweet"} onClick={onClickRetweet}>
+                            <ListItem id="clickRetweet" onClick={onClickRetweet}>
                                 <>{RetweetOutlinedIcon}</>
-                                <Typography variant={"body1"} component={"span"}>
-                                    {isTweetRetweeted ? ("Undo Retweet") : ("Retweet")}
+                                <Typography variant="body1" component="span">
+                                    {isTweetRetweeted
+                                        ? t("UNDO_RETWEET", { defaultValue: "Undo Retweet" })
+                                        : t("RETWEET", { defaultValue: "Retweet" })}
                                 </Typography>
                             </ListItem>
-                            <ListItem id={"clickOpenAddTweet"} onClick={handleClickOpenAddTweet}>
+                            <ListItem id="clickOpenAddTweet" onClick={handleClickOpenAddTweet}>
                                 <>{QuoteTweetIcon}</>
-                                <Typography variant={"body1"} component={"span"}>
-                                    Quote Tweet
+                                <Typography variant="body1" component="span">
+                                    {t("QUOTE_TWEET", { defaultValue: "Quote Tweet" })}
                                 </Typography>
                             </ListItem>
                         </List>
