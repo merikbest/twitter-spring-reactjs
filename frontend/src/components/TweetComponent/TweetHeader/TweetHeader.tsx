@@ -36,14 +36,14 @@ const TweetHeader: FC<TweetHeaderProps> = memo((
                 onMouseEnter={() => handleHoverPopper({ userId: userId! } as HoverItemDetail)}
                 onMouseLeave={handleLeavePopper}
             >
-                <Typography variant={"h6"} component={"span"}>
+                <Typography variant="h6" component="span">
                     {fullName}
                 </Typography>
                 {isPrivateProfile && <span className={classes.lockIcon}>{LockIcon}</span>}&nbsp;
-                <Typography variant={"subtitle1"} component={"span"}>
+                <Typography variant="subtitle1" component="span">
                     @{username}{" · "}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"span"}>
+                <Typography variant="subtitle1" component="span">
                     {formatDate(new Date(dateTime!))}
                 </Typography>
                 <PopperUserWindow visible={visiblePopperWindow} isTweetComponent />

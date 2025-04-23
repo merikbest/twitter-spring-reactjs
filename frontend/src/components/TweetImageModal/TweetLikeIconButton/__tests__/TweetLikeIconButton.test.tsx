@@ -15,7 +15,7 @@ describe("TweetLikeIconButton", () => {
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
-        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ id: "2" });
+        jest.spyOn(ReactRouter, "useParams").mockReturnValue({ tweetId: "2" });
     });
 
     it("should render unlike icon", () => {

@@ -1,27 +1,17 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, { FC, ReactElement, useCallback, useEffect, useState } from "react";
 import DialogContent from "@material-ui/core/DialogContent";
 import { List } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
-import {
-    fetchLikedUsers,
-    fetchRetweetedUsers,
-    resetLikedUsersState,
-    resetRetweetedUsersState
-} from "../../store/ducks/tweet/actionCreators";
-import {
-    selectIsLikedUsersLoading,
-    selectIsRetweetedUsersLoading,
-    selectLikedUsers,
-    selectRetweetedUsers,
-    selectUsersPagesCount
-} from "../../store/ducks/tweet/selectors";
+import { selectUsersPagesCount } from "../../store/ducks/tweet/selectors";
 import UsersItem, { UserItemSize } from "../UsersItem/UsersItem";
-import Spinner from "../Spinner/Spinner";
 import InfiniteScrollWrapper from "../InfiniteScrollWrapper/InfiniteScrollWrapper";
 import DialogTitleComponent from "../DialogTitleComponent/DialogTitleComponent";
 import { useGlobalStyles } from "../../util/globalClasses";
+import { useUsersListActions } from "./useUsersListActions";
+import Spinner from "../Spinner/Spinner";
 
 interface UsersListModalProps {
     tweetId: number;
@@ -32,8 +22,7 @@ interface UsersListModalProps {
 
 export enum UsersListModalAction {
     LIKED = "LIKED",
-    RETWEETED = "RETWEETED",
-    QUOTED = "QUOTED",
+    RETWEETED = "RETWEETED"
 }
 
 const UsersListModal: FC<UsersListModalProps> = (
@@ -46,32 +35,35 @@ const UsersListModal: FC<UsersListModalProps> = (
 ): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
     const dispatch = useDispatch();
-    const isLiked = usersListModalAction === UsersListModalAction.LIKED;
-    const isUsersLoading = useSelector(isLiked ? selectIsLikedUsersLoading : selectIsRetweetedUsersLoading);
-    const users = useSelector(isLiked ? selectLikedUsers : selectRetweetedUsers);
+    const { t } = useTranslation();
+    const {
+        translationKey,
+        defaultValue,
+        fetchAction,
+        resetAction,
+        isLoadingSelector,
+        usersSelector
+    } = useUsersListActions(usersListModalAction);
     const usersPagesCount = useSelector(selectUsersPagesCount);
+    const isUsersLoading = useSelector(isLoadingSelector);
+    const users = useSelector(usersSelector);
     const [title, setTitle] = useState<string>("");
 
     useEffect(() => {
         if (visible) {
-            setTitle(isLiked ? "Liked by" : "Retweeted by");
-            loadUsers(0);
+            setTitle(t(translationKey, { defaultValue }));
+            dispatch(fetchAction({ tweetId, pageNumber: 0 }));
         }
-    }, [visible]);
+    }, [visible, tweetId, translationKey, defaultValue, fetchAction, t]);
 
-    const loadUsers = (page: number): void => {
-        dispatch(isLiked ? fetchLikedUsers({ tweetId, pageNumber: page }) : fetchRetweetedUsers({
-            tweetId,
-            pageNumber: page
-        }));
-    };
+    const loadUsers = useCallback((pageNumber: number): void => {
+        dispatch(fetchAction({ tweetId, pageNumber }));
+    }, [dispatch, fetchAction, tweetId]);
 
-    const onCloseUsersListModal = (): void => {
+    const onCloseUsersListModal = useCallback((): void => {
         onClose();
-        setTitle("");
-        dispatch(resetLikedUsersState());
-        dispatch(resetRetweetedUsersState());
-    };
+        dispatch(resetAction());
+    }, [onClose, dispatch, resetAction]);
 
     if (!visible) {
         return null;
@@ -82,7 +74,7 @@ const UsersListModal: FC<UsersListModalProps> = (
             <DialogTitleComponent title={title} onClose={onCloseUsersListModal} />
             <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
                 <InfiniteScrollWrapper dataLength={users.length} pagesCount={usersPagesCount} loadItems={loadUsers}>
-                    {isUsersLoading && !users.length ? (
+                    {isUsersLoading && users.length ? (
                         <Spinner paddingTop={250} />
                     ) : (
                         <List>

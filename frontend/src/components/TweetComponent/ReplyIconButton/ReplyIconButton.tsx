@@ -1,4 +1,5 @@
 import React, { FC, memo, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 
 import { UserTweetResponse } from "../../../types/tweet";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
@@ -31,17 +32,18 @@ const ReplyIconButton: FC<TweetReplyIconButtonProps> = memo((
 ): ReactElement => {
     const classes = useReplyIconButtonStyles({ isUserCanReply });
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     return (
         <div className={classes.replyIcon}>
             <ActionIconButton
-                actionText={"Reply"}
+                actionText={t("REPLY", { defaultValue: "Reply" })}
                 icon={ReplyIcon}
                 onClick={onOpenModalWindow}
                 disabled={isUserCanReply}
             />
             {(repliesCount !== 0) && (
-                <span id={"repliesCount"} className={classes.repliesCount}>
+                <span id="repliesCount" className={classes.repliesCount}>
                     {repliesCount}
                 </span>
             )}

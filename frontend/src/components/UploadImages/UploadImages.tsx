@@ -1,5 +1,6 @@
 import React, { FC, memo, ReactElement, useCallback, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { MediaIcon } from "../../icons";
 import ActionIconButton from "../ActionIconButton/ActionIconButton";
@@ -8,6 +9,7 @@ import { setImages } from "../../store/ducks/addTweetForm/actionCreators";
 const UploadImages: FC = memo((): ReactElement => {
     const dispatch = useDispatch();
     const inputRef = useRef<HTMLInputElement>(null);
+    const { t } = useTranslation();
 
     const handleClickImage = () => {
         if (inputRef.current) {
@@ -40,10 +42,10 @@ const UploadImages: FC = memo((): ReactElement => {
     return (
         <>
             <ActionIconButton
-                actionText={"Media"}
+                actionText={t("MEDIA", { defaultValue: "Media" })}
                 icon={MediaIcon}
                 onClick={handleClickImage}
-                size={"medium"}
+                size="medium"
             />
             <input ref={inputRef} type="file" id="upload-input" hidden />
         </>

@@ -15,8 +15,8 @@ const TweetText: FC<TweetTextProps> = memo(({ text, tweetId }): ReactElement => 
     const classes = useTweetTextStyles();
 
     return (
-        <Typography variant={"body1"} className={classes.text}>
-            <Link id={"handleClickTweet"} to={`${HOME_TWEET}/${tweetId}`}>
+        <Typography variant="body1" className={classes.text}>
+            <Link id="handleClickTweet" to={`${HOME_TWEET}/${tweetId}`}>
                 {textFormatter(text!)}
             </Link>
         </Typography>

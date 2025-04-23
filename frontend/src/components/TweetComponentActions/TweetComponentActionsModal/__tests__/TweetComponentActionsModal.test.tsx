@@ -7,32 +7,32 @@ import { LoadingStatus } from "../../../../types/common";
 
 describe("TweetComponentActionsModal", () => {
     it("should render Delete Tweet Action Modal", () => {
-        const wrapper = createTweetComponentActionsModalWrapper("Delete", true);
+        const wrapper = createTweetComponentActionsModalWrapper(true, false);
         expect(wrapper.text().includes("Delete Tweet?")).toBe(true);
         expect(wrapper.text().includes("This can’t be undone and it will be removed from your profile")).toBe(true);
         expect(wrapper.find(Button).at(1).text().includes("Delete")).toBe(true);
     });
 
     it("should render Unpin Tweet Action Modal", () => {
-        const wrapper = createTweetComponentActionsModalWrapper("Pin", true);
+        const wrapper = createTweetComponentActionsModalWrapper(false, true);
         expect(wrapper.text().includes("Unpin Tweet from profile?")).toBe(true);
         expect(wrapper.text().includes("This will no longer appear automatically at the top of your profile.")).toBe(true);
         expect(wrapper.find(Button).at(1).text().includes("Unpin")).toBe(true);
     });
 
     it("should render Pin Tweet Action Modal", () => {
-        const wrapper = createTweetComponentActionsModalWrapper("Pin", false);
+        const wrapper = createTweetComponentActionsModalWrapper(false, false);
         expect(wrapper.text().includes("Pin Tweet to profile?")).toBe(true);
         expect(wrapper.text().includes("This will appear at the top of your profile and replace any previously pinned Tweet.")).toBe(true);
         expect(wrapper.find(Button).at(1).text().includes("Pin")).toBe(true);
     });
 
-    const createTweetComponentActionsModalWrapper = (modalTitle: string, isTweetPinned: boolean) => {
+    const createTweetComponentActionsModalWrapper = (isDeleteModal: boolean, isTweetPinned: boolean) => {
         const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
 
         return mountWithStore(
             <TweetComponentActionsModal
-                modalTitle={modalTitle}
+                isDeleteModal={isDeleteModal}
                 isTweetPinned={isTweetPinned}
                 visibleTweetComponentActionsModal={true}
                 onCloseTweetComponentActionsModal={jest.fn()}

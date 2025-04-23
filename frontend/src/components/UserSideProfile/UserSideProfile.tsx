@@ -4,6 +4,7 @@ import { Divider, List, ListItem, ListItemAvatar, Popover } from "@material-ui/c
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
+import { useTranslation } from "react-i18next";
 
 import {
     selectUserDataId,
@@ -26,6 +27,7 @@ const UserSideProfile: FC = (): ReactElement | null => {
     const username = useSelector(selectUserProfileUsername);
     const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
+    const { t } = useTranslation();
 
     if (!myProfileId) {
         return null;
@@ -36,11 +38,11 @@ const UserSideProfile: FC = (): ReactElement | null => {
             <div aria-describedby={popoverId} onClick={handleOpenPopup} className={classes.container}>
                 <Avatar alt={`avatar ${myProfileId}`} src={avatar} />
                 <div className={classes.info}>
-                    <Typography variant={"h6"}>
+                    <Typography variant="h6">
                         {fullName}
                         {isPrivateProfile && <LockIcon />}
                     </Typography>
-                    <Typography variant={"subtitle1"}>
+                    <Typography variant="subtitle1">
                         @{username}
                     </Typography>
                 </div>
@@ -64,7 +66,7 @@ const UserSideProfile: FC = (): ReactElement | null => {
                         </ListItemAvatar>
                         <ListItemText
                             primary={
-                                <Typography variant={"h6"} component="div">
+                                <Typography variant="h6" component="div">
                                     {fullName}
                                 </Typography>
                             }
@@ -80,7 +82,7 @@ const UserSideProfile: FC = (): ReactElement | null => {
                         <Divider component="li" />
                         <ListItem>
                             <Typography variant="body1" component="div">
-                                Add an existing account
+                                {t("ADD_AN_EXISTING_ACCOUNT", { defaultValue: "Add an existing account" })}
                             </Typography>
                         </ListItem>
                         <Divider component="li" />

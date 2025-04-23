@@ -29,17 +29,17 @@ const UserSearchResult: FC<UserSearchResultProps> = ({ user, recentSearch }): Re
     return (
         <ListItem className={classes.searchPersonResult} onClick={handleClickUserProfile}>
             <ListItemAvatar>
-                <Avatar className={globalClasses.avatar} alt={"avatar"} src={user.avatar} />
+                <Avatar className={globalClasses.avatar} alt="avatar" src={user.avatar} />
             </ListItemAvatar>
             <div className={classes.userInfo}>
-                <Typography variant={"h6"} display={"inline"}>
+                <Typography variant="h6" display="inline">
                     {user.fullName}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"div"}>
+                <Typography variant="subtitle1" component="div">
                     @{user.username}
                 </Typography>
             </div>
-            {recentSearch && <RemoveSearchResultButton stateItem={"users"} item={user.id} />}
+            {recentSearch && <RemoveSearchResultButton stateItem="users" item={user.id} />}
         </ListItem>
     );
 };

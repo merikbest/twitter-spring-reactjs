@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ListItem, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import TweetComponentActionsModal from "../TweetComponentActionsModal/TweetComponentActionsModal";
 import { selectUserPinnedTweetId } from "../../../store/ducks/user/selectors";
@@ -18,14 +19,19 @@ const PinTweetButton: FC<PinTweetButtonProps> = memo(({ tweetId, onCloseActionsD
     const dispatch = useDispatch();
     const pinnedTweetId = useSelector(selectUserPinnedTweetId);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
     const isTweetPinned = pinnedTweetId === tweetId;
 
     const onPinUserTweet = (): void => {
         dispatch(fetchPinTweet(tweetId));
         if (isTweetPinned) {
-            dispatch(setOpenSnackBar("Your Tweet was unpinned from your profile."));
+            dispatch(setOpenSnackBar(t("YOUR_TWEET_WAS_UNPINNED", {
+                defaultValue: "Your Tweet was unpinned from your profile."
+            })));
         } else {
-            dispatch(setOpenSnackBar("Your Tweet was pinned to your profile."));
+            dispatch(setOpenSnackBar(t("YOUR_TWEET_WAS_PINNED", {
+                defaultValue: "Your Tweet was pinned to your profile."
+            })));
         }
         onCloseModalWindow();
         onCloseActionsDropdown();
@@ -33,18 +39,15 @@ const PinTweetButton: FC<PinTweetButtonProps> = memo(({ tweetId, onCloseActionsD
 
     return (
         <>
-            <ListItem id={"pin"} onClick={onOpenModalWindow}>
+            <ListItem id="pin" onClick={onOpenModalWindow}>
                 <>{PinIcon}</>
-                <Typography variant={"body1"} component={"span"}>
-                    {(isTweetPinned) ? (
-                        "Unpin from profile"
-                    ) : (
-                        "Pin to your profile"
-                    )}
+                <Typography variant="body1" component="span">
+                    {isTweetPinned
+                        ? t("UNPIN_FROM_PROFILE", { defaultValue: "Unpin from profile" })
+                        : t("PIN_TO_YOUR_PROFILE", { defaultValue: "Pin to your profile" })}
                 </Typography>
             </ListItem>
             <TweetComponentActionsModal
-                modalTitle={"Pin"}
                 isTweetPinned={isTweetPinned}
                 visibleTweetComponentActionsModal={visibleModalWindow}
                 onCloseTweetComponentActionsModal={onCloseModalWindow}

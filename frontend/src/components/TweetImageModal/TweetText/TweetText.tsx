@@ -11,7 +11,7 @@ const TweetText = memo((): ReactElement => {
     const tweetText = useSelector(selectTweetText);
 
     return (
-        <Typography variant={"h3"} className={classes.text}>
+        <Typography variant="h3" className={classes.text}>
             {textFormatter(tweetText!)}
         </Typography>
     );

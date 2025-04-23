@@ -29,13 +29,13 @@ const YouTubeVideo: FC<YouTubeVideoProps> = ({ link, linkTitle, linkDescription 
             </iframe>
             <a className={classes.youtubeLink} target="_blank" href={link}>
                 <div className={classes.videoInfoWrapper}>
-                    <Typography variant={"body1"} component={"div"}>
+                    <Typography variant="body1" component="div">
                         {linkTitle}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
+                    <Typography variant="subtitle1" component="div">
                         {linkDescription}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
+                    <Typography variant="subtitle1" component="div">
                         {LinkIcon}youtube.com
                     </Typography>
                 </div>

@@ -31,7 +31,7 @@ const Users: FC = (): ReactElement => {
             {(history.location.pathname !== HOME_CONNECT) && (
                 <Paper className={classes.container}>
                     <Paper className={classes.header} variant="outlined">
-                        <Typography variant={"h5"} component={"div"}>
+                        <Typography variant="h5" component="div">
                             {t("WHO_TO_FOLLOW", { defaultValue: "Who to follow" })}
                         </Typography>
                     </Paper>
@@ -42,8 +42,8 @@ const Users: FC = (): ReactElement => {
                             {users.slice(0, 5).map((user) => (
                                 <UsersItem key={user.id} user={user} size={UserItemSize.SMALL} />
                             ))}
-                            <ListItem id={"clickToConnect"} onClick={clickToConnect} className={classes.footer}>
-                                <Typography variant={"body1"} component={"div"}>
+                            <ListItem id="clickToConnect" onClick={clickToConnect} className={classes.footer}>
+                                <Typography variant="body1" component="div">
                                     {t("SHOW_MORE", { defaultValue: "Show more" })}
                                 </Typography>
                             </ListItem>

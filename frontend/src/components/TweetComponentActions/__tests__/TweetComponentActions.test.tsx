@@ -42,9 +42,9 @@ describe("TweetComponentActions", () => {
         wrapper.find(IconButton).simulate("click");
         expect(wrapper.find(List).exists()).toBeTruthy();
         expect(wrapper.find("#muteIcon").exists()).toBeTruthy();
-        expect(wrapper.text().includes(`Mute @${mockUserTweetAdditionalInfo.user.username}`)).toBe(true);
+        expect(wrapper.text().includes(`Mute @${mockUserTweetAdditionalInfo.author.username}`)).toBe(true);
         expect(wrapper.find("#blockIcon").exists()).toBeTruthy();
-        expect(wrapper.text().includes(`Block @${mockUserTweetAdditionalInfo.user.username}`)).toBe(true);
+        expect(wrapper.text().includes(`Block @${mockUserTweetAdditionalInfo.author.username}`)).toBe(true);
         expect(wrapper.text().includes("Embed Tweet")).toBe(true);
         expect(wrapper.text().includes("Report Tweet")).toBe(true);
     });
@@ -56,7 +56,7 @@ describe("TweetComponentActions", () => {
         expect(wrapper.find(List).exists()).toBeTruthy();
         expect(wrapper.text().includes("Delete")).toBe(true);
         expect(wrapper.text().includes("Pin to your profile")).toBe(true);
-        expect(wrapper.text().includes(`Add/remove @${mockMyTweetAdditionalInfo.user.username} from Lists`)).toBe(true);
+        expect(wrapper.text().includes(`Add/remove @${mockMyTweetAdditionalInfo.author.username} from Lists`)).toBe(true);
         expect(wrapper.text().includes("Change who can reply")).toBe(true);
         expect(wrapper.text().includes("Embed Tweet")).toBe(true);
         expect(wrapper.text().includes("View Tweet activity")).toBe(true);
@@ -97,7 +97,6 @@ describe("TweetComponentActions", () => {
     });
 
     it("should click Delete Tweet", () => {
-        // const mockTweet = {...mockFullTweet, id: 102, user: {...mockFullTweet.user, id: 2}}
         testDeleteTweet(mockMyTweetState, TweetsActionType.FETCH_DELETE_TWEET);
     });
 
@@ -123,7 +122,7 @@ describe("TweetComponentActions", () => {
                 ...mockRootState.tweetAdditionalInfo,
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
-                    user: { ...mockUserTweetAdditionalInfo.user, isFollower: true }
+                    author: { ...mockUserTweetAdditionalInfo.author, isFollower: true }
                 }
             }
         };
@@ -136,7 +135,7 @@ describe("TweetComponentActions", () => {
         expect(wrapper.find(ListsModal).prop("visible")).toBe(false);
         wrapper.find("#openListsModal").at(0).simulate("click");
         expect(wrapper.find(ListsModal).prop("visible")).toBe(true);
-        expect(wrapper.text().includes(`Add/remove @${mockUserTweetAdditionalInfo.user.username} from Lists`)).toBe(true);
+        expect(wrapper.text().includes(`Add/remove @${mockUserTweetAdditionalInfo.author.username} from Lists`)).toBe(true);
         wrapper.find(ListsModal).find(CloseButton).find(IconButton).simulate("click");
         expect(wrapper.find(ListsModal).prop("visible")).toBe(false);
     });
@@ -152,7 +151,7 @@ describe("TweetComponentActions", () => {
                 ...mockRootState.tweetAdditionalInfo,
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
-                    user: { ...mockUserTweetAdditionalInfo.user, isUserMuted: true }
+                    author: { ...mockUserTweetAdditionalInfo.author, isUserMuted: true }
                 }
             }
         };
@@ -170,7 +169,7 @@ describe("TweetComponentActions", () => {
                 ...mockRootState.tweetAdditionalInfo,
                 tweetAdditionalInfo: {
                     ...mockUserTweetAdditionalInfo,
-                    user: { ...mockUserTweetAdditionalInfo.user, isUserBlocked: true }
+                    author: { ...mockUserTweetAdditionalInfo.author, isUserBlocked: true }
                 }
             }
         };
@@ -213,11 +212,12 @@ describe("TweetComponentActions", () => {
 
     const testTweetComponentActionsModal = (itemId: string, index: number, modalTitle: string): void => {
         const { wrapper } = createTweetComponentActionsWrapper(mockMyTweetState);
+
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         expect(wrapper.find(TweetComponentActionsModal).at(index).prop("visibleTweetComponentActionsModal")).toBe(false);
         wrapper.find(itemId).at(index).simulate("click");
         expect(wrapper.find(TweetComponentActionsModal).at(index).prop("visibleTweetComponentActionsModal")).toBe(true);
-        expect(wrapper.find(TweetComponentActionsModal).at(index).prop("modalTitle")).toBe(modalTitle);
+        expect(wrapper.find(TweetComponentActionsModal).at(index).text().includes(modalTitle)).toBe(true);
         wrapper.find(TweetComponentActionsModal).find(Button).at(index).simulate("click");
     };
 
@@ -252,7 +252,7 @@ describe("TweetComponentActions", () => {
         wrapper.find(ActionIconButton).find(IconButton).simulate("click");
         wrapper.find("#handleFollow").at(0).simulate("click");
         expect(wrapper.find(iconIndex).exists()).toBeTruthy();
-        expect(wrapper.text().includes(`${text} @${mockUserTweetAdditionalInfo.user.username}`)).toBe(true);
+        expect(wrapper.text().includes(`${text} @${mockUserTweetAdditionalInfo.author.username}`)).toBe(true);
         expect(mockDispatchFn).nthCalledWith(3, { payload: { userId: 1, tweetId: 9 }, type: actionType });
     };
 
@@ -261,13 +261,13 @@ describe("TweetComponentActions", () => {
         wrapper.find(IconButton).simulate("click");
         wrapper.find("#onMuteUser").at(0).simulate("click");
         expect(wrapper.find(iconIndex).exists()).toBeTruthy();
-        expect(wrapper.text().includes(`${text} @${mockUserTweetAdditionalInfo.user.username}`)).toBe(true);
+        expect(wrapper.text().includes(`${text} @${mockUserTweetAdditionalInfo.author.username}`)).toBe(true);
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: 1, tweetId: 9 },
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
         expect(mockDispatchFn).nthCalledWith(4, {
-            payload: `@${mockUserTweetAdditionalInfo.user.username} has been ${snackbarText}.`,
+            payload: `@${mockUserTweetAdditionalInfo.author.username} has been ${snackbarText}.`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     };
@@ -277,7 +277,7 @@ describe("TweetComponentActions", () => {
         wrapper.find(IconButton).simulate("click");
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
         expect(wrapper.find(iconIndex).exists()).toBeTruthy();
-        expect(wrapper.text().includes(`${text} @${mockUserTweetAdditionalInfo.user.username}`)).toBe(true);
+        expect(wrapper.text().includes(`${text} @${mockUserTweetAdditionalInfo.author.username}`)).toBe(true);
         wrapper.find("#onOpenBlockUserModal").at(0).simulate("click");
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(true);
         wrapper.find(BlockUserModal).find(Button).at(0).simulate("click");
@@ -286,7 +286,7 @@ describe("TweetComponentActions", () => {
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
         expect(mockDispatchFn).nthCalledWith(4, {
-            payload: `@${mockUserTweetAdditionalInfo.user.username} has been ${snackbarText}.`,
+            payload: `@${mockUserTweetAdditionalInfo.author.username} has been ${snackbarText}.`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     };

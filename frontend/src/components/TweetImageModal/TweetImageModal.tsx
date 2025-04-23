@@ -49,20 +49,20 @@ const TweetImageModal = (): ReactElement | null => {
     const replies = useSelector(selectReplies);
     const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
     const isRepliesLoading = useSelector(selectIsRepliesLoading);
-    const params = useParams<{ id: string }>();
+    const params = useParams<{ tweetId: string }>();
     const history = useHistory();
     const [visibleTweetImageModalWindow, setVisibleTweetImageModalWindow] = useState<boolean>(false);
     const image = images?.[0].src;
 
     useEffect(() => {
-        dispatch(fetchTweetData(parseInt(params.id)));
+        dispatch(fetchTweetData(parseInt(params.tweetId)));
         setVisibleTweetImageModalWindow(true);
         document.body.style.marginRight = "15px";
         document.body.style.overflow = "hidden";
 
         stompClient = Stomp.over(new SockJS(WS_URL));
         stompClient.connect({}, () => {
-            stompClient?.subscribe(TOPIC_TWEET(params.id), (response) => {
+            stompClient?.subscribe(TOPIC_TWEET(params.tweetId), (response) => {
                 dispatch(updateTweetData(JSON.parse(response.body)));
             });
         });
@@ -74,7 +74,7 @@ const TweetImageModal = (): ReactElement | null => {
     }, []);
 
     useEffect(() => {
-        dispatch(fetchReplies(parseInt(params.id)));
+        dispatch(fetchReplies(parseInt(params.tweetId)));
 
         return () => {
             dispatch(resetRepliesState());
@@ -115,7 +115,7 @@ const TweetImageModal = (): ReactElement | null => {
                         <TweetDate />
                         <Divider />
                         <TweetInteractionCount />
-                        <div id={"tweetFooter"} className={classes.tweetFooter}>
+                        <div id="tweetFooter" className={classes.tweetFooter}>
                             <TweetReplyIconButton />
                             <TweetRetweetedIconButton />
                             <TweetLikeIconButton />
@@ -133,7 +133,7 @@ const TweetImageModal = (): ReactElement | null => {
                         ))
                     )}
                 </div>
-                <div id={"imageFooter"} className={classes.imageFooterContainer}>
+                <div id="imageFooter" className={classes.imageFooterContainer}>
                     <div className={classNames(classes.imageFooterWrapper)}>
                         <ImageFooterReplyIconButton />
                         <ImageFooterRetweetButton />

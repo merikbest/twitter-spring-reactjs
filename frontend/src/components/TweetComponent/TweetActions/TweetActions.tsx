@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import TweetActionResult, { TweetActionResults } from "../../TweetActionResult/TweetActionResult";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import {
     selectUserProfileFullName,
@@ -21,6 +22,7 @@ const TweetActions: FC<TweetActionsProps> = memo(({ tweetId, tweetType, activeTa
     const pinnedTweetId = useSelector(selectUserProfilePinnedTweetId);
     const fullName = useSelector(selectUserProfileFullName);
     const myProfileId = useSelector(selectUserDataId);
+    const { t } = useTranslation();
 
     if (activeTab !== 0) {
         return null;
@@ -31,10 +33,17 @@ const TweetActions: FC<TweetActionsProps> = memo(({ tweetId, tweetType, activeTa
             {(tweetType === TweetType.RETWEET) && (
                 <TweetActionResult
                     action={TweetActionResults.RETWEET}
-                    text={`${(myProfileId === userProfileId) ? "You" : fullName} Retweeted`}
+                    text={myProfileId === userProfileId
+                        ? t("YOU_RETWEETED", { defaultValue: "You Retweeted" })
+                        : t("USER_RETWEETED", { fullName, defaultValue: `${fullName} Retweeted` })}
                 />
             )}
-            {(pinnedTweetId === tweetId) && <TweetActionResult action={TweetActionResults.PIN} text="Pinned Tweet" />}
+            {(pinnedTweetId === tweetId) && (
+                <TweetActionResult
+                    action={TweetActionResults.PIN}
+                    text={t("PINNED_TWEET", { defaultValue: "Pinned Tweet" })}
+                />
+            )}
         </>
     );
 });

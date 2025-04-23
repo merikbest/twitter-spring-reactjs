@@ -264,7 +264,7 @@ const App: FC = (): ReactElement => {
                                 <Route path={`${USER_FOLLOWERS_YOU_FOLLOW}/:id`} component={FollowersYouKnow} exact />
                                 <Route path={`${USER}/:id/:follow`} component={FollowingFollowers} exact />
                             </Switch>
-                            {background && <Route path={`${MODAL}/:id`} children={<TweetImageModal />} />}
+                            {background && <Route path={`${MODAL}/:tweetId`} children={<TweetImageModal />} />}
                             {background && <Route path={`${PROFILE_PHOTO}/:id`} children={<UserImageModal />} />}
                             {background && <Route path={`${PROFILE_HEADER_PHOTO}/:id`} children={<UserImageModal />} />}
                         </Layout>

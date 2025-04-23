@@ -9,17 +9,17 @@ import ImageFooterButton from "../ImageFooterButton/ImageFooterButton";
 
 const ImageFooterLikeButton = memo((): ReactElement => {
     const dispatch = useDispatch();
-    const params = useParams<{ id: string }>();
+    const { tweetId } = useParams<{ tweetId: string }>();
     const isTweetLiked = useSelector(selectIsTweetLiked);
     const likesCount = useSelector(selectLikesCount);
 
     const handleLike = (): void => {
-        dispatch(likeTweet({ tweetId: parseInt(params.id) }));
+        dispatch(likeTweet({ tweetId: parseInt(tweetId) }));
     };
 
     return (
         <ImageFooterButton
-            id={"likesCount"}
+            id="likesCount"
             icon={isTweetLiked ? LikeIcon : LikeOutlinedIcon}
             count={likesCount ?? 0}
             onClick={handleLike}

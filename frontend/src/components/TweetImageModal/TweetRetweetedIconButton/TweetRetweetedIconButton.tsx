@@ -1,6 +1,7 @@
 import React, { memo, ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { RetweetIcon, RetweetOutlinedIcon } from "../../../icons";
@@ -10,18 +11,21 @@ import { useTweetRetweetedIconButtonStyles } from "./TweetRetweetedIconButtonSty
 
 const TweetRetweetedIconButton = memo((): ReactElement => {
     const dispatch = useDispatch();
-    const params = useParams<{ id: string }>();
+    const { tweetId } = useParams<{ tweetId: string }>();
     const isTweetRetweeted = useSelector(selectIsTweetRetweeted);
     const classes = useTweetRetweetedIconButtonStyles({ isTweetRetweeted });
+    const { t } = useTranslation();
 
     const handleRetweet = (): void => {
-        dispatch(retweet({ tweetId: parseInt(params.id) }));
+        dispatch(retweet({ tweetId: parseInt(tweetId) }));
     };
 
     return (
         <div className={classes.retweetIcon}>
             <ActionIconButton
-                actionText={isTweetRetweeted ? "Undo Retweet" : "Retweet"}
+                actionText={isTweetRetweeted
+                    ? t("UNDO_RETWEET", { defaultValue: "Undo Retweet" })
+                    : t("RETWEET", { defaultValue: "Retweet" })}
                 icon={isTweetRetweeted ? RetweetIcon : RetweetOutlinedIcon}
                 onClick={handleRetweet}
             />

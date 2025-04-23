@@ -1,10 +1,12 @@
 import React, { FC, memo, ReactElement, useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ClickAwayListener, List, ListItem, Typography } from "@material-ui/core";
+import { ClickAwayListener, List } from "@material-ui/core";
 import classnames from "classnames";
+import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useTweetComponentMoreStyles } from "./TweetComponentActionsStyles";
-import { EditIcon, EmbedTweetIcon, ReportIcon } from "../../icons";
+import { EditIcon } from "../../icons";
 import { selectUserDataId } from "../../store/ducks/user/selectors";
 import { useGlobalStyles } from "../../util/globalClasses";
 import ChangeReplyWindow from "../ChangeReplyWindow/ChangeReplyWindow";
@@ -23,22 +25,16 @@ import {
 } from "../../store/ducks/tweetAdditionalInfo/actionCreators";
 import {
     selectIsTweetAdditionalInfoLoading,
-    selectTweetInfoAddressedTweetId,
     selectTweetInfoReplyType,
-    selectTweetInfoText,
-    selectTweetInfoUserFullName,
     selectTweetInfoUserId,
-    selectTweetInfoUserIsFollower,
-    selectTweetInfoUserIsMyProfileBlocked,
-    selectTweetInfoUserIsUserBlocked,
-    selectTweetInfoUserIsUserMuted,
-    selectTweetInfoUserUsername
+    selectTweetInfoUserIsMyProfileBlocked
 } from "../../store/ducks/tweetAdditionalInfo/selectors";
 import Spinner from "../Spinner/Spinner";
 import { ReplyType } from "../../types/common";
 import { changeReplyType } from "../../store/ducks/tweets/actionCreators";
 import { setOpenSnackBar } from "../../store/ducks/actionSnackbar/actionCreators";
-import { useParams } from "react-router-dom";
+import EmbedTweet from "./EmbedTweet/EmbedTweet";
+import ReportTweet from "./ReportTweet/ReportTweet";
 
 interface TweetComponentActionsProps {
     tweetId: number;
@@ -48,24 +44,18 @@ interface TweetComponentActionsProps {
 
 const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({ tweetId, isFullTweet }): ReactElement => {
     const globalClasses = useGlobalStyles({});
-    const classes = useTweetComponentMoreStyles({ isFullTweet: isFullTweet });
+    const classes = useTweetComponentMoreStyles({ isFullTweet });
     const dispatch = useDispatch();
-    const params = useParams<{ userId: string }>();
+    const { userId } = useParams<{ userId: string }>();
     const myProfileId = useSelector(selectUserDataId);
     const isTweetAdditionalInfoLoading = useSelector(selectIsTweetAdditionalInfoLoading);
-    const tweetText = useSelector(selectTweetInfoText);
     const tweetReplyType = useSelector(selectTweetInfoReplyType);
-    const addressedTweetId = useSelector(selectTweetInfoAddressedTweetId);
     const tweetUserId = useSelector(selectTweetInfoUserId);
-    const tweetUserFullName = useSelector(selectTweetInfoUserFullName);
-    const tweetUserUsername = useSelector(selectTweetInfoUserUsername);
-    const tweetUserIsFollower = useSelector(selectTweetInfoUserIsFollower);
-    const tweetUserIsUserMuted = useSelector(selectTweetInfoUserIsUserMuted);
-    const tweetUserIsUserBlocked = useSelector(selectTweetInfoUserIsUserBlocked);
     const tweetUserIsMyProfileBlocked = useSelector(selectTweetInfoUserIsMyProfileBlocked);
     const [openActionsDropdown, setOpenActionsDropdown] = useState<boolean>(false);
     const [openChangeReplyDropdown, setChangeReplyDropdown] = useState<boolean>(false);
     const ref = useRef<HTMLDivElement>(null);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (openActionsDropdown) {
@@ -101,15 +91,15 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({ tweetId, i
     }, []);
 
     const onChangeTweetReplyType = (replyType: ReplyType): void => {
-        dispatch(changeReplyType({ tweetId, userId: params.userId, replyType }));
+        dispatch(changeReplyType({ tweetId, userId, replyType }));
         let snackBarMessage;
 
         if (replyType === ReplyType.EVERYONE) {
-            snackBarMessage = "Everyone can reply now";
+            snackBarMessage = t("EVERYONE_CAN_REPLY_NOW", { defaultValue: "Everyone can reply now" });
         } else if (replyType === ReplyType.FOLLOW) {
-            snackBarMessage = "People you follow can reply now";
+            snackBarMessage = t("PEOPLE_YOU_FOLLOW_CAN_REPLY_NOW", { defaultValue: "People you follow can reply now" });
         } else {
-            snackBarMessage = "Only you can reply now";
+            snackBarMessage = t("ONLY_YOU_CAN_REPLY_NOW", { defaultValue: "Only you can reply now" });
         }
         dispatch(setOpenSnackBar(snackBarMessage));
         handleClickReplyDropdown();
@@ -120,7 +110,11 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({ tweetId, i
         <div ref={ref}>
             <ClickAwayListener onClickAway={handleClickAwayActionsDropdown}>
                 <div className={classes.root}>
-                    <ActionIconButton actionText={"More"} onClick={handleClickActionsDropdown} icon={EditIcon} />
+                    <ActionIconButton
+                        actionText={t("MORE", { defaultValue: "More" })}
+                        onClick={handleClickActionsDropdown}
+                        icon={EditIcon}
+                    />
                     {openActionsDropdown && (
                         <div className={classnames(classes.dropdown, globalClasses.svg)}>
                             {isTweetAdditionalInfoLoading ? (
@@ -131,67 +125,29 @@ const TweetComponentActions: FC<TweetComponentActionsProps> = memo(({ tweetId, i
                                         <>
                                             <DeleteTweetButton
                                                 tweetId={tweetId}
-                                                addressedTweetId={addressedTweetId!}
                                                 onCloseActionsDropdown={handleClickAwayActionsDropdown}
                                             />
                                             <PinTweetButton
                                                 tweetId={tweetId}
                                                 onCloseActionsDropdown={handleClickAwayActionsDropdown}
                                             />
-                                            <AddToListButton userId={tweetUserId!} username={tweetUserUsername!} />
+                                            <AddToListButton />
                                             <ChangeReplyButton handleClickReplyDropdown={handleClickReplyDropdown} />
-                                            <ListItem>
-                                                <>{EmbedTweetIcon}</>
-                                                <Typography variant={"body1"} component={"span"}>
-                                                    Embed Tweet
-                                                </Typography>
-                                            </ListItem>
-                                            <TweetActivityButton
-                                                fullName={tweetUserFullName!}
-                                                username={tweetUserUsername!}
-                                                text={tweetText!}
-                                            />
+                                            <EmbedTweet />
+                                            <TweetActivityButton />
                                         </>
                                     ) : (
                                         <>
                                             {!tweetUserIsMyProfileBlocked && (
                                                 <>
-                                                    <FollowUserButton
-                                                        tweetId={tweetId}
-                                                        userId={tweetUserId!}
-                                                        username={tweetUserUsername!}
-                                                        isFollower={tweetUserIsFollower!}
-                                                    />
-                                                    <AddToListButton
-                                                        userId={tweetUserId!}
-                                                        username={tweetUserUsername!}
-                                                    />
+                                                    <FollowUserButton tweetId={tweetId} />
+                                                    <AddToListButton />
                                                 </>
                                             )}
-                                            <MuteUserButton
-                                                tweetId={tweetId}
-                                                userId={tweetUserId!}
-                                                username={tweetUserUsername!}
-                                                isUserMuted={tweetUserIsUserMuted!}
-                                            />
-                                            <BlockUserButton
-                                                tweetId={tweetId}
-                                                userId={tweetUserId!}
-                                                username={tweetUserUsername!}
-                                                isUserBlocked={tweetUserIsUserBlocked!}
-                                            />
-                                            <ListItem>
-                                                <>{EmbedTweetIcon}</>
-                                                <Typography variant={"body1"} component={"span"}>
-                                                    Embed Tweet
-                                                </Typography>
-                                            </ListItem>
-                                            <ListItem>
-                                                <>{ReportIcon}</>
-                                                <Typography variant={"body1"} component={"span"}>
-                                                    Report Tweet
-                                                </Typography>
-                                            </ListItem>
+                                            <MuteUserButton tweetId={tweetId} />
+                                            <BlockUserButton tweetId={tweetId} />
+                                            <EmbedTweet />
+                                            <ReportTweet />
                                         </>
                                     )}
                                 </List>

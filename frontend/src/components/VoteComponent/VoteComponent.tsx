@@ -37,10 +37,10 @@ const VoteComponent: FC<VoteComponentProps> = memo(({ tweetId, poll }): ReactEle
                             return (
                                 <div key={pollChoice.id} id={`choice_${pollChoice.id}`} className={classes.container}>
                                     <div className={classes.voteOption}>
-                                        <Typography variant={"body1"} component={"div"} className={classes.voteChoice}>
+                                        <Typography variant="body1" component="div" className={classes.voteChoice}>
                                             {pollChoice.choice}
                                         </Typography>
-                                        <Typography variant={"body1"} component={"div"} className={classes.voteChoice}>
+                                        <Typography variant="body1" component="div" className={classes.voteChoice}>
                                             {`${(voteNumber === 0) ? 0 : Math.round(voteNumber)}%`}
                                         </Typography>
                                     </div>
@@ -52,7 +52,7 @@ const VoteComponent: FC<VoteComponentProps> = memo(({ tweetId, poll }): ReactEle
                             );
                         }
                     )}
-                    <Typography variant={"subtitle2"} component={"div"} className={classes.voteInfo}>
+                    <Typography variant="subtitle2" component="div" className={classes.voteInfo}>
                         {userVoteSum} votes · {isPollEnded ? ("Final results") : (`${voteFormatDate(poll!)} left`)}
                     </Typography>
                 </>
@@ -72,7 +72,7 @@ const VoteComponent: FC<VoteComponentProps> = memo(({ tweetId, poll }): ReactEle
                             </Button>
                         </div>)
                     )}
-                    <Typography variant={"subtitle2"} component={"div"} className={classes.voteInfo}>
+                    <Typography variant="subtitle2" component="div" className={classes.voteInfo}>
                         {userVoteSum} votes · {voteFormatDate(poll!)} left
                     </Typography>
                 </>

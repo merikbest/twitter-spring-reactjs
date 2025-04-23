@@ -12,10 +12,10 @@ const TweetDate = memo((): ReactElement => {
 
     return (
         <Typography style={{ marginBottom: 16 }}>
-            <Typography variant={"subtitle1"} component={"span"}>
+            <Typography variant="subtitle1" component="span">
                 {format(new Date(createdAt!), HOUR_MINUTE_AMPM, { locale: usLang })} ·
             </Typography>
-            <Typography variant={"subtitle1"} component={"span"}>
+            <Typography variant="subtitle1" component="span">
                 {format(new Date(createdAt!), MONTH_DAY_YEAR)} · Twitter Web App
             </Typography>
         </Typography>

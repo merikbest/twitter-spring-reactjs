@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import { Button, ListItem } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { useLogoutModalStyles } from "./LogoutModalStyles";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +21,7 @@ const LogoutModal = (): ReactElement => {
     const history = useHistory();
     const username = useSelector(selectUserProfileUsername);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     const handleSignOut = (): void => {
         window.localStorage.removeItem(TOKEN);
@@ -29,21 +31,23 @@ const LogoutModal = (): ReactElement => {
 
     return (
         <>
-            <ListItem id={"onOpenLogoutModal"} onClick={onOpenModalWindow}>
+            <ListItem id="onOpenLogoutModal" onClick={onOpenModalWindow}>
                 <Typography variant="body1" component="div">
-                    Log out @{username}
+                    {t("LOG_OUT_USER", { username, defaultValue: `Log out @${username}` })}
                 </Typography>
             </ListItem>
             <Dialog open={visibleModalWindow} onClose={onCloseModalWindow}>
                 <DialogContent style={{ padding: 0 }}>
                     <div className={classes.modalWrapper}>
                         <TwitterIcon />
-                        <Typography variant={"h5"} component={"div"}>
-                            Log out of Twitter?
+                        <Typography variant="h5" component="div">
+                            {t("LOG_OUT_TITLE", { defaultValue: "Log out of Twitter?" })}
                         </Typography>
-                        <Typography variant={"subtitle1"} component={"div"}>
-                            You can always log back in at any time. If you just want to switch accounts,
-                            you can do that by adding an existing account.
+                        <Typography variant="subtitle1" component="div">
+                            {t("LOG_OUT_DESCRIPTION", {
+                                defaultValue: `You can always log back in at any time. If you just want to switch 
+                                accounts, you can do that by adding an existing account.`
+                            })}
                         </Typography>
                         <div className={classes.modalButtonWrapper}>
                             <Button
@@ -52,7 +56,7 @@ const LogoutModal = (): ReactElement => {
                                 variant="contained"
                                 size="large"
                             >
-                                Cancel
+                                {t("CANCEL", { defaultValue: "Cancel" })}
                             </Button>
                             <Button
                                 onClick={handleSignOut}
@@ -60,7 +64,7 @@ const LogoutModal = (): ReactElement => {
                                 color="primary"
                                 size="large"
                             >
-                                Log out
+                                {t("LOG_OUT", { defaultValue: "Log out" })}
                             </Button>
                         </div>
                     </div>

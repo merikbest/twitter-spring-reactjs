@@ -13,7 +13,7 @@ const UserItemAvatar: FC<UserItemAvatarProps> = memo(({ avatar }): ReactElement 
 
     return (
         <ListItemAvatar>
-            <Avatar className={globalClasses.avatar} alt={"avatar"} src={avatar} />
+            <Avatar className={globalClasses.avatar} alt="avatar" src={avatar} />
         </ListItemAvatar>
     );
 });

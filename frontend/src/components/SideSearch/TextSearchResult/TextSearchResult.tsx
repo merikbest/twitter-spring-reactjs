@@ -33,11 +33,11 @@ const TextSearchResult: FC<TextSearchResultProps> = memo(({ text, tweetCount, re
                 {SearchIcon}
             </span>
             <div>
-                <Typography variant={"h6"} component={"div"}>
+                <Typography variant="h6" component="div">
                     {text}
                 </Typography>
                 {tweetCount && (
-                    <Typography variant={"subtitle1"} component={"div"}>
+                    <Typography variant="subtitle1" component="div">
                         {tweetCount} Tweets
                     </Typography>
                 )}

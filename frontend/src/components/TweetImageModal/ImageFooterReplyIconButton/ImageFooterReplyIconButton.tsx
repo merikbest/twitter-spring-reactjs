@@ -8,7 +8,7 @@ import ImageFooterButton from "../ImageFooterButton/ImageFooterButton";
 const ImageFooterReplyIconButton = memo((): ReactElement => {
     const repliesCount = useSelector(selectRepliesCount);
 
-    return <ImageFooterButton id={"repliesCount"} icon={ReplyIcon} count={repliesCount ?? 0} />;
+    return <ImageFooterButton id="repliesCount" icon={ReplyIcon} count={repliesCount ?? 0} />;
 });
 
 export default ImageFooterReplyIconButton;

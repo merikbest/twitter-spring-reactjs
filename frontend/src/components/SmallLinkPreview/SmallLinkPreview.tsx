@@ -23,14 +23,14 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = (
         isFullTweet
     }
 ): ReactElement => {
-    const classes = useSmallLinkPreviewStyles({ linkCover: linkCover, isFullTweet: isFullTweet });
+    const classes = useSmallLinkPreviewStyles({ linkCover, isFullTweet });
     const matches = link.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
     const domain = matches && matches[1];
 
     const LinkPreview = (): JSX.Element => {
         if (onOpenYouTubeVideo) {
             return (
-                <div id={"openYouTubeVideo"} className={classes.container} onClick={onOpenYouTubeVideo}>
+                <div id="openYouTubeVideo" className={classes.container} onClick={onOpenYouTubeVideo}>
                     <div className={classes.linkPreviewImage}>
                         <div className={classes.videoIcon}>
                             {PlayVideoIcon}
@@ -54,20 +54,20 @@ const SmallLinkPreview: FC<SmallLinkPreviewProps> = (
     const LinkPreviewInfo = (): JSX.Element => {
         return (
             <div className={classes.linkPreviewTitle}>
-                <Typography variant={"body1"} component={"div"}>
+                <Typography variant="body1" component="div">
                     {linkTitle}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"div"}>
+                <Typography variant="subtitle1" component="div">
                     {linkDescription}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"div"}>
+                <Typography variant="subtitle1" component="div">
                     {LinkIcon}{domain}
                 </Typography>
             </div>
         );
     };
 
-    return (<LinkPreview />);
+    return <LinkPreview />;
 };
 
 export default SmallLinkPreview;

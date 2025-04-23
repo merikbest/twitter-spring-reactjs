@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useTweetListComponentStyles } from "./TweetListComponentStyles";
 import { ListsIconFilled, LockIcon } from "../../icons";
@@ -16,6 +17,7 @@ const TweetListComponent: FC<TweetListComponentProps> = memo(({ tweetList }): Re
     const globalClasses = useGlobalStyles({});
     const classes = useTweetListComponentStyles();
     const listWallpaper = tweetList.wallpaper ?? tweetList.altWallpaper;
+    const { t } = useTranslation();
 
     return (
         <Link to={`${LISTS}/${tweetList.id}`} className={globalClasses.link}>
@@ -26,15 +28,17 @@ const TweetListComponent: FC<TweetListComponentProps> = memo(({ tweetList }): Re
                         <div className={classes.listIcon}>
                             {ListsIconFilled}
                         </div>
-                        <Typography className={classes.listName} variant={"subtitle2"} component={"span"}>
-                            List
+                        <Typography className={classes.listName} variant="subtitle2" component="span">
+                            {t("LIST", { defaultValue: "List" })}
                         </Typography>
                         {" · "}
-                        <Typography variant={"subtitle2"} component={"span"}>
-                            {`${tweetList.membersSize} Members`}
+                        <Typography variant="subtitle2" component="span">
+                            {tweetList.membersSize}
+                            {" "}
+                            {t("MEMBERS", { defaultValue: "Members" })}
                         </Typography>
                     </div>
-                    <Typography className={classes.listTitle} variant={"subtitle2"} component={"div"}>
+                    <Typography className={classes.listTitle} variant="subtitle2" component="div">
                         {tweetList.listName}
                     </Typography>
                     <div>
@@ -45,14 +49,14 @@ const TweetListComponent: FC<TweetListComponentProps> = memo(({ tweetList }): Re
                                 alt={`avatar ${tweetList.listOwner.avatar}`}
                             />
                         </Link>
-                        <Typography className={classes.listOwnerFullName} variant={"subtitle2"} component={"span"}>
+                        <Typography className={classes.listOwnerFullName} variant="subtitle2" component="span">
                             {tweetList.listOwner.fullName}
                         </Typography>
                         {tweetList.listOwner.isPrivateProfile && (
                             <span className={classes.lockIcon}>{LockIcon}</span>
                         )}
                         {" "}
-                        <Typography variant={"subtitle2"} component={"span"}>
+                        <Typography variant="subtitle2" component="span">
                             @{tweetList.listOwner.username}
                         </Typography>
                     </div>

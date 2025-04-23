@@ -9,17 +9,17 @@ import ImageFooterButton from "../ImageFooterButton/ImageFooterButton";
 
 const ImageFooterRetweetButton = memo((): ReactElement => {
     const dispatch = useDispatch();
-    const params = useParams<{ id: string }>();
+    const { tweetId } = useParams<{ tweetId: string }>();
     const isTweetRetweeted = useSelector(selectIsTweetRetweeted);
     const retweetsCount = useSelector(selectRetweetsCount);
 
     const handleRetweet = (): void => {
-        dispatch(retweet({ tweetId: parseInt(params.id) }));
+        dispatch(retweet({ tweetId: parseInt(tweetId) }));
     };
 
     return (
         <ImageFooterButton
-            id={"retweetsCount"}
+            id="retweetsCount"
             icon={isTweetRetweeted ? RetweetIcon : RetweetOutlinedIcon}
             count={retweetsCount ?? 0}
             onClick={handleRetweet}

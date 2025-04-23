@@ -25,16 +25,16 @@ const UserItemInfo: FC<UserItemInfoProps> = memo((
 ): ReactElement => {
     return (
         <>
-            <Typography variant={"h6"} display={"inline"}>
+            <Typography variant="h6" display="inline">
                 {fullName}
             </Typography>
             {isPrivateProfile && <LockIcon />}
-            <Typography variant={"subtitle1"} component={"div"}>
+            <Typography variant="subtitle1" component="div">
                 @{username}
             </Typography>
             {!isMyProfileBlocked && (
                 (size !== UserItemSize.SMALL) && (
-                    <Typography variant={"body1"} display="block">
+                    <Typography variant="body1" display="block">
                         {about}
                     </Typography>
                 )

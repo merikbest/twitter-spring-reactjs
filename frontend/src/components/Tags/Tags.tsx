@@ -20,7 +20,7 @@ const Tags = (): ReactElement => {
     return (
         <Paper className={classes.container}>
             <Paper className={classes.header} variant="outlined">
-                <Typography variant={"h5"} component={"div"}>
+                <Typography variant="h5" component="div">
                     {t("TRENDS_FOR_YOU", { defaultValue: "Trends for you" })}
                 </Typography>
                 <SettingsModal />
@@ -32,7 +32,7 @@ const Tags = (): ReactElement => {
                     {tags.slice(0, 3).map((tag) => (<TagItem key={tag.id} tag={tag} classes={classes} />))}
                     <Link to={HOME_TRENDS}>
                         <ListItem className={classes.footer}>
-                            <Typography variant={"body1"} component={"span"}>
+                            <Typography variant="body1" component="span">
                                 {t("SHOW_MORE", { defaultValue: "Show more" })}
                             </Typography>
                         </ListItem>

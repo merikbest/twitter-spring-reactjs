@@ -39,7 +39,7 @@ const UsersItem: FC<UsersItemProps> = memo(({ user, size }): ReactElement => {
             <ListItem className={classes.container}>
                 <UserItemAvatar avatar={user?.avatar ?? DEFAULT_PROFILE_IMG} />
                 <div
-                    id={"userInfo"}
+                    id="userInfo"
                     className={classes.userInfo}
                     onMouseEnter={() => handleHoverPopper({ userId: user?.id} as HoverItemDetail)}
                     onMouseLeave={handleLeavePopper}

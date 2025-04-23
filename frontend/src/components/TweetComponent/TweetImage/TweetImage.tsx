@@ -27,7 +27,7 @@ const TweetImage: FC<TweetImageProps> = memo((
     const isModal = location.pathname.includes(MODAL);
 
     return (
-        <div id={"tweetImage"} className={classes.image}>
+        <div id="tweetImage" className={classes.image}>
             <Link to={{ pathname: `${MODAL}/${tweetId}`, state: { background: location } }}>
                 <img className={isModal ? "small" : ""} src={imageSrc} alt={imageSrc} />
             </Link>

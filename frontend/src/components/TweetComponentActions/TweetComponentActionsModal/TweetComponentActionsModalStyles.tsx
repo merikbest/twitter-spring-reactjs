@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 export const useTweetComponentActionsModalStyles = makeStyles((theme) => ({
     modalWrapper: {
         width: 280,
-        height: (props: { modalTitle: string }) => props.modalTitle === "Delete" ? 190 : 150,
+        height: (props: { isDeleteModal?: boolean }) => props.isDeleteModal ? 190 : 150,
         textAlign: "center",
         margin: "32px 20px",
         "& svg": {

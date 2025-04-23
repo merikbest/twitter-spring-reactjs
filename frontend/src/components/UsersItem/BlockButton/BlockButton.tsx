@@ -2,6 +2,7 @@ import React, { FC, ReactElement, useState } from "react";
 import Button from "@material-ui/core/Button/Button";
 import classNames from "classnames";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useBlockButtonStyles } from "./BlockButtonStyles";
 import BlockUserModal from "../../BlockUserModal/BlockUserModal";
@@ -17,6 +18,7 @@ interface BlockButtonProps {
 const BlockButton: FC<BlockButtonProps> = ({ user }): ReactElement => {
     const classes = useBlockButtonStyles();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const [btnText, setBtnText] = useState<string>("Blocked");
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
 
@@ -28,7 +30,13 @@ const BlockButton: FC<BlockButtonProps> = ({ user }): ReactElement => {
     const onBlockUser = (): void => {
         dispatch(processUserToBlocklist({ userId: user?.id! }));
         onCloseModalWindow();
-        dispatch(setOpenSnackBar(`@${user?.username} has been ${user?.isUserBlocked ? "unblocked" : "blocked"}.`));
+        dispatch(setOpenSnackBar(user?.isUserBlocked
+            ? t("UNBLOCK_USER_POPUP_MESSAGE", {
+                username: user?.username,
+                defaultValue: `@${user?.username} has been unblocked.` })
+            : t("BLOCK_USER_POPUP_MESSAGE", {
+                username: user?.username,
+                defaultValue: `@${user?.username} has been blocked.` })));
     };
 
     return (
@@ -36,8 +44,8 @@ const BlockButton: FC<BlockButtonProps> = ({ user }): ReactElement => {
             <Button
                 className={classNames(classes.containedButton, classes.blockButton)}
                 onClick={onOpenBlockUserModal}
-                onMouseOver={() => setBtnText("Unblock")}
-                onMouseLeave={() => setBtnText("Blocked")}
+                onMouseOver={() => setBtnText(t("UNBLOCK", { defaultValue: "Unblock" }))}
+                onMouseLeave={() => setBtnText(t("BLOCKED", { defaultValue: "Blocked" }))}
                 color="primary"
                 variant="contained"
                 size="small"

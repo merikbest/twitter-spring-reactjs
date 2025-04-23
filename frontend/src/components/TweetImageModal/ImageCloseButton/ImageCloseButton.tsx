@@ -13,7 +13,7 @@ const ImageCloseButton: FC<ImageCloseButtonProps> = memo(({ onCloseModalWindow }
 
     return (
         <div className={classes.imageModalClose}>
-            <IconButton id={"closeModalWindow"} onClick={onCloseModalWindow} size="small">
+            <IconButton id="closeModalWindow" onClick={onCloseModalWindow} size="small">
                 {CloseIcon}
             </IconButton>
         </div>

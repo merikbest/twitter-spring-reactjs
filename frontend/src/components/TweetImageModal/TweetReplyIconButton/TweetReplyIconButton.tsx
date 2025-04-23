@@ -1,5 +1,6 @@
 import React, { memo, ReactElement } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { ReplyIcon } from "../../../icons";
@@ -30,11 +31,12 @@ const TweetReplyIconButton = memo((): ReactElement => {
     const isUserCanReply = (tweetReplyType === ReplyType.MENTION) && (myProfileId !== tweetAuthorId);
     const classes = useTweetReplyIconButtonStyles({ isUserCanReply });
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     return (
         <div className={classes.tweetIcon}>
             <ActionIconButton
-                actionText={"Reply"}
+                actionText={t("REPLY", { defaultValue: "Reply" })}
                 icon={ReplyIcon}
                 onClick={onOpenModalWindow}
                 disabled={isUserCanReply}

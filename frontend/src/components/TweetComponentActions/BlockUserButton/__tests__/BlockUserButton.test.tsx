@@ -7,6 +7,7 @@ import BlockUserButton from "../BlockUserButton";
 import BlockUserModal from "../../../BlockUserModal/BlockUserModal";
 import { UserActionsType } from "../../../../store/ducks/user/contracts/actionTypes";
 import { ActionSnackbarTypes } from "../../../../store/ducks/actionSnackbar/contracts/actionTypes";
+import { mockUserTweetAdditionalInfo } from "../../../../util/test-utils/mock-test-data";
 
 describe("BlockUserButton", () => {
     let mockDispatchFn: jest.Mock;
@@ -16,13 +17,7 @@ describe("BlockUserButton", () => {
     });
 
     it("should click open/close BlockUserModal", () => {
-        const wrapper = mountWithStore(
-            <BlockUserButton
-                tweetId={1}
-                userId={1}
-                username={"test_username"}
-                isUserBlocked
-            />, createMockRootState(LoadingStatus.SUCCESS));
+        const wrapper = mountWithStore(<BlockUserButton tweetId={1} />, createMockRootState(LoadingStatus.SUCCESS));
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(false);
         wrapper.find("#onOpenBlockUserModal").at(0).simulate("click");
         expect(wrapper.find(BlockUserModal).prop("visible")).toBe(true);
@@ -39,15 +34,23 @@ describe("BlockUserButton", () => {
     });
 
     const testClickButton = (isUserBlocked: boolean, iconId: string, blockMessage: string, snackbarMessage: string) => {
-        const wrapper = mountWithStore(
-            <BlockUserButton
-                tweetId={1}
-                userId={1}
-                username={"test_username"}
-                isUserBlocked={isUserBlocked}
-            />, createMockRootState(LoadingStatus.SUCCESS));
+        const mockRootState = createMockRootState(LoadingStatus.SUCCESS);
+        const mockState = {
+            ...mockRootState,
+            tweetAdditionalInfo: {
+                ...mockRootState.tweetAdditionalInfo,
+                tweetAdditionalInfo: {
+                    ...mockUserTweetAdditionalInfo,
+                    author: {
+                        ...mockUserTweetAdditionalInfo.author,
+                        isUserBlocked
+                    }
+                }
+            }
+        };
+        const wrapper = mountWithStore(<BlockUserButton tweetId={1} />, mockState);
         expect(wrapper.find(iconId).exists()).toBeTruthy();
-        expect(wrapper.text().includes(`${blockMessage} @test_username`)).toBe(true);
+        expect(wrapper.text().includes(`${blockMessage} @${mockUserTweetAdditionalInfo.author.username}`)).toBe(true);
         wrapper.find("#onOpenBlockUserModal").at(0).simulate("click");
         wrapper.find(BlockUserModal).find(Button).at(0).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, {
@@ -55,7 +58,7 @@ describe("BlockUserButton", () => {
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {
-            payload: `@test_username has been ${snackbarMessage}.`,
+            payload: `@${mockUserTweetAdditionalInfo.author.username} has been ${snackbarMessage}.`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     };

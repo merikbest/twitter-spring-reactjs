@@ -30,7 +30,7 @@ describe("VoteComponent", () => {
     it("should render empty voted poll and click vote", () => {
         const mockEmptyPollVotes = {
             ...mockPoll,
-            dateTime: "2222-04-11T16:53:49.696909",
+            createdAt: "2222-04-11T16:53:49.696909",
             pollChoices: [
                 { id: 100, choice: "test choice 1", votedUser: [] },
                 { id: 101, choice: "test choice 2", votedUser: [] },

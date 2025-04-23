@@ -1,4 +1,5 @@
 import React, { FC, memo, ReactElement } from "react";
+import { useTranslation } from "react-i18next";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { AnalyticsIcon } from "../../../icons";
@@ -23,11 +24,12 @@ const AnalyticsIconButton: FC<AnalyticsIconButtonProps> = memo((
 ): ReactElement => {
     const classes = useAnalyticsIconButtonStyles();
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     return (
-        <div id={"analytics"} className={classes.replyIcon}>
+        <div id="analytics" className={classes.replyIcon}>
             <ActionIconButton
-                actionText={"Analytics"}
+                actionText={t("ANALYTICS", { defaultValue: "Analytics" })}
                 icon={AnalyticsIcon}
                 onClick={onOpenModalWindow}
                 disabled={isUserCanReply}

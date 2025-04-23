@@ -35,14 +35,14 @@ const TweetHeader = memo((): ReactElement => {
             </Link>
             <LinkWrapper path={`${PROFILE}/${tweetAuthorId}`} visiblePopperWindow={visiblePopperWindow}>
                 <div
-                    id={"userInfo"}
+                    id="userInfo"
                     onMouseEnter={() => handleHoverPopper({ userId: tweetAuthorId } as HoverItemDetail)}
                     onMouseLeave={handleLeavePopper}
                 >
-                    <Typography variant={"h6"} component={"div"} id={"link"}>
+                    <Typography variant="h6" component="div" id="link">
                         {tweetAuthorFullName}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
+                    <Typography variant="subtitle1" component="div">
                         @{tweetAuthorUsername}
                     </Typography>
                     <PopperUserWindow visible={visiblePopperWindow} isTweetImageModal />

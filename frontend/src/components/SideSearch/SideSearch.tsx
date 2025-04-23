@@ -1,6 +1,7 @@
 import React, { FC, MouseEvent, ReactElement, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { ClickAwayListener, IconButton, InputAdornment } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { SideSearchTextField } from "../SearchTextField/SideSearchTextField";
 import { CloseIcon, SearchIcon } from "../../icons";
@@ -18,6 +19,7 @@ const SideSearch: FC = (): ReactElement => {
     const { open, onClickOpen, onClickClose } = useClickAway();
     const { text, setText, handleChangeText } = useInputText();
     const textToSearch = useDebounce(text, 300);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (textToSearch) {
@@ -49,10 +51,11 @@ const SideSearch: FC = (): ReactElement => {
             <div className={classes.content}>
                 <SideSearchTextField
                     variant="outlined"
-                    placeholder="Search Twitter"
+                    placeholder={t("SEARCH_TWITTER", { defaultValue: "Search Twitter" })}
                     onChange={handleChangeText}
                     onClick={handleClickOpenPopup}
                     value={text}
+                    fullWidth
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -62,14 +65,13 @@ const SideSearch: FC = (): ReactElement => {
                         endAdornment: (
                             text && (
                                 <InputAdornment position="end">
-                                    <IconButton id={"clearText"} color="primary" onClick={handleClearText}>
+                                    <IconButton id="clearText" color="primary" onClick={handleClearText}>
                                         {CloseIcon}
                                     </IconButton>
                                 </InputAdornment>
                             )
                         )
                     }}
-                    fullWidth
                 />
                 {open && (
                     <div className={classes.dropdown}>

@@ -31,7 +31,7 @@ const TweetActionResult: FC<TweetActionResultProps> = ({ action, text }): ReactE
     return (
         <div className={classes.container}>
             {showIcon()}
-            <Typography variant={"subtitle2"} component={"div"}>
+            <Typography variant="subtitle2" component="div">
                 {text}
             </Typography>
         </div>

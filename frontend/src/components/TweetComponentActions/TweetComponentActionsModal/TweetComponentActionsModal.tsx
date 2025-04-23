@@ -3,11 +3,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import { useTranslation } from "react-i18next";
 
 import { useTweetComponentActionsModalStyles } from "./TweetComponentActionsModalStyles";
 
 interface TweetComponentActionsModalProps {
-    modalTitle: string;
+    isDeleteModal?: boolean;
     isTweetPinned?: boolean;
     visibleTweetComponentActionsModal: boolean;
     onCloseTweetComponentActionsModal: () => void;
@@ -16,41 +17,37 @@ interface TweetComponentActionsModalProps {
 
 const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
     {
-        modalTitle,
+        isDeleteModal,
         isTweetPinned,
         visibleTweetComponentActionsModal,
         onCloseTweetComponentActionsModal,
         onClick
     }
 ): ReactElement => {
-    const classes = useTweetComponentActionsModalStyles({ modalTitle });
+    const classes = useTweetComponentActionsModalStyles({ isDeleteModal });
+    const { t } = useTranslation();
 
     return (
         <Dialog open={visibleTweetComponentActionsModal} onClose={onCloseTweetComponentActionsModal}>
             <DialogContent style={{ padding: 0 }}>
                 <div className={classes.modalWrapper}>
-                    <Typography variant={"h5"}>
-                        {(modalTitle === "Delete") ? (
-                            "Delete Tweet?"
-                        ) : (
-                            isTweetPinned ? (
-                                "Unpin Tweet from profile?"
-                            ) : (
-                                "Pin Tweet to profile?"
-                            )
-                        )}
+                    <Typography variant="h5">
+                        {isDeleteModal
+                            ? t("DELETE_TWEET", { defaultValue: "Delete Tweet?" })
+                            : isTweetPinned
+                                ? t("UNPIN_TWEET", { defaultValue: "Unpin Tweet from profile?" })
+                                : t("PIN_TWEET", { defaultValue: "Pin Tweet to profile?" })}
                     </Typography>
-                    <Typography variant={"subtitle1"}>
-                        {(modalTitle === "Delete") ? (
-                            "This can’t be undone and it will be removed from your profile, " +
-                            "the timeline of any accounts that follow you, and from Twitter search results."
-                        ) : (
-                            isTweetPinned ? (
-                                "This will no longer appear automatically at the top of your profile."
-                            ) : (
-                                "This will appear at the top of your profile and replace any previously pinned Tweet."
-                            )
-                        )}
+                    <Typography variant="subtitle1">
+                        {isDeleteModal
+                            ? t("DELETE_TWEET_DESCRIPTION", {
+                                defaultValue: `This can’t be undone and it will be removed from your profile, 
+                                the timeline of any accounts that follow you, and from Twitter search results.` })
+                            : isTweetPinned
+                                ? t("UNPIN_TWEET_DESCRIPTION", {
+                                    defaultValue: "This will no longer appear automatically at the top of your profile." })
+                                : t("PIN_TWEET_DESCRIPTION", {
+                                    defaultValue: "This will appear at the top of your profile and replace any previously pinned Tweet." })}
                     </Typography>
                     <div className={classes.modalButtonWrapper}>
                         <Button
@@ -59,23 +56,21 @@ const TweetComponentActionsModal: FC<TweetComponentActionsModalProps> = (
                             variant="contained"
                             size="large"
                         >
-                            Cancel
+                            {t("CANCEL", { defaultValue: "Cancel" })}
                         </Button>
                         <Button
-                            className={(modalTitle === "Delete") ? (
-                                classes.modalDeleteButton
-                            ) : (
-                                classes.modalPrimaryButton
-                            )}
+                            className={isDeleteModal
+                                ? classes.modalDeleteButton
+                                : classes.modalPrimaryButton}
                             onClick={onClick}
                             variant="contained"
                             size="large"
                         >
-                            {(modalTitle === "Delete") ? (
-                                "Delete"
-                            ) : (
-                                isTweetPinned ? ("Unpin") : ("Pin")
-                            )}
+                            {isDeleteModal
+                                ? t("DELETE", { defaultValue: "Delete" })
+                                : isTweetPinned
+                                        ? t("UNPIN", { defaultValue: "Unpin" })
+                                        : t("PIN", { defaultValue: "Pin" })}
                         </Button>
                     </div>
                 </div>
