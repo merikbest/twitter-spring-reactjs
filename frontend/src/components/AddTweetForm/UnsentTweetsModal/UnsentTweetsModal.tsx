@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, ReactElement, useCallback, useEffect, useState } from "react";
 import { Button, Dialog, DialogContent } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useUnsentTweetsModalStyles } from "./UnsentTweetsModalStyles";
 import AddTweetForm from "../AddTweetForm";
@@ -35,6 +36,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({ visible, onClose }): Re
     const [visibleEditListFooter, setVisibleEditListFooter] = useState<boolean>(false);
     const [checkboxIndexes, setCheckboxIndexes] = useState<number[]>([]);
     const classes = useUnsentTweetsModalStyles({ visibleEditTweetModal });
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (visible) {
@@ -131,13 +133,21 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({ visible, onClose }): Re
                             pagesCount={pagesCount}
                             loadItems={loadUnsentTweets}
                         >
-                            {isUnsentTweetsLoading && !unsentTweets.length ? (
+                            {(isUnsentTweetsLoading && !unsentTweets.length) ? (
                                 <Spinner />
                             ) : (
                                 (!isUnsentTweetsLoading && !unsentTweets.length) ? (
                                     <EmptyPageDescription
-                                        title={`You don’t have any ${activeTab === 0 ? "scheduled" : "unsent"} Tweets`}
-                                        subtitle={"When you do, you’ll find them here."}
+                                        title={(activeTab === 0)
+                                            ? t("EMPTY_SCHEDULED_TWEETS_TITLE", {
+                                                defaultValue: "You don’t have any scheduled Tweets"
+                                            })
+                                            : t("EMPTY_UNSENT_TWEETS_TITLE", {
+                                                defaultValue: "You don’t have any unsent Tweets"
+                                            })}
+                                        subtitle={t("EMPTY_UNSENT_TWEETS_DESCRIPTION", {
+                                            defaultValue: "When you do, you’ll find them here."
+                                        })}
                                     />
                                 ) : (
                                     <>
@@ -159,7 +169,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({ visible, onClose }): Re
                     </DialogContent>
                     <>
                         {visibleEditListFooter && (
-                            <div id={"editListFooter"} className={classes.footer}>
+                            <div id="editListFooter" className={classes.footer}>
                                 <Button
                                     onClick={(checkboxIndexes.length === 0) ? onSelectAllTweets : onDeselectAllTweets}
                                     type="submit"
@@ -167,7 +177,9 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({ visible, onClose }): Re
                                     color="primary"
                                     size="small"
                                 >
-                                    {(checkboxIndexes.length === 0) ? "Select All" : "Deselect All"}
+                                    {(checkboxIndexes.length === 0)
+                                        ? t("SELECT_ALL", { defaultValue: "Select All" })
+                                        : t("DESELECT_ALL", { defaultValue: "Deselect All" })}
                                 </Button>
                                 <Button
                                     className={classes.footerDeleteButton}
@@ -178,7 +190,7 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({ visible, onClose }): Re
                                     color="primary"
                                     size="small"
                                 >
-                                    Delete
+                                    {t("DELETE", { defaultValue: "Delete" })}
                                 </Button>
                             </div>
                         )}
@@ -190,8 +202,8 @@ const UnsentTweetsModal: FC<UnsentTweetsModalProps> = ({ visible, onClose }): Re
                         <AddTweetForm
                             unsentTweet={unsentTweet!}
                             minRows={3}
-                            title={"What's happening?"}
-                            buttonName={"Schedule"}
+                            title={t("WHATS_HAPPENING", { defaultValue: "What's happening?" })}
+                            buttonName={t("SCHEDULE", { defaultValue: "Schedule" })}
                             onCloseModal={onCloseEditTweetModal}
                         />
                     </div>

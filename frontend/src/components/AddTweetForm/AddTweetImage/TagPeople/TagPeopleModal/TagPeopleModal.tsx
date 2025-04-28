@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Dialog, DialogContent, Divider, List } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import {
     fetchUsersSearchByUsername,
@@ -30,6 +31,7 @@ const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactEle
     const usersPagesCount = useSelector(selectUsersPagesCount);
     const selectedUsers = useSelector(selectSelectedUsers);
     const [searchText, setSearchText] = useState<string>("");
+    const { t } = useTranslation();
 
     const onSearch = (text: string): void => {
         if (text) {
@@ -56,7 +58,11 @@ const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactEle
 
     return (
         <Dialog open={visible} onClose={onClose}>
-            <DialogTitleComponent title={"Tag people"} onClose={onClose} borderBottom>
+            <DialogTitleComponent
+                title={t("TAG_PEOPLE", { defaultValue: "Tag people" })}
+                onClose={onClose}
+                borderBottom
+            >
                 <Button
                     disabled={selectedUsers.length === 0}
                     onClick={onClose}
@@ -65,11 +71,15 @@ const TagPeopleModal: FC<TagPeopleModalProps> = ({ visible, onClose }): ReactEle
                     color="primary"
                     size="small"
                 >
-                    Done
+                    {t("DONE", { defaultValue: "Done" })}
                 </Button>
             </DialogTitleComponent>
             <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
-                <ModalInput placeholder={"Search people"} searchText={searchText} onSearch={onSearch} />
+                <ModalInput
+                    placeholder={t("SEARCH_PEOPLE", { defaultValue: "Search people" })}
+                    searchText={searchText}
+                    onSearch={onSearch}
+                />
                 {selectedUsers && (selectedUsers.map((selectedUser) => (
                         <UserChip key={selectedUser.id} selectedUser={selectedUser} onDeleteUser={onClickDeleteUser} />
                     ))

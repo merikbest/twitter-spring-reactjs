@@ -1,5 +1,6 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useUnsentTweetItemStyles } from "../UnsentTweetItemStyle";
 import { ScheduleIcon } from "../../../../../icons";
@@ -14,17 +15,19 @@ interface UnsentTweetItemInfoProps {
 
 const UnsentTweetItemInfo: FC<UnsentTweetItemInfoProps> = memo(({ scheduledDate, text, images }): ReactElement => {
     const classes = useUnsentTweetItemStyles();
+    const { t } = useTranslation();
+    const date = formatScheduleDate(new Date(scheduledDate));
 
     return (
         <div className={classes.tweetWrapper}>
             <div className={classes.scheduledDateWrapper}>
                 {ScheduleIcon}
-                <Typography variant={"subtitle2"} component={"span"}>
-                    {`Will send on ${formatScheduleDate(new Date(scheduledDate))}`}
+                <Typography variant="subtitle2" component="span">
+                    {t("WILL_SEND_ON", { date, defaultValue: `Will send on ${date}` })}
                 </Typography>
             </div>
             <div className={classes.tweetInfo}>
-                <Typography variant={"body1"} component={"span"}>
+                <Typography variant="body1" component="span">
                     {text}
                 </Typography>
                 {(images?.length !== 0) && (

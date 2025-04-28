@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, ReactElement, ReactNode, useEffect, useState } 
 import { addDays, getDate, getDaysInMonth, getMonth, getYear, isBefore } from "date-fns";
 import { Dialog, DialogContent, FormControl, InputLabel, Typography } from "@material-ui/core";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useScheduleModalStyles } from "./ScheduleModalStyles";
 import { ScheduleIcon } from "../../../icons";
@@ -30,6 +31,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentT
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [dateFormat, setDateFormat] = useState<string>("");
     const [isValidSelectedDate, setIsValidSelectedDate] = useState<boolean>(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (visible) {
@@ -167,18 +169,21 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentT
                     {!isValidSelectedDate && (
                         <div className={classes.infoWrapper}>
                             {ScheduleIcon}
-                            <Typography variant={"subtitle2"} component={"span"}>
-                                {`Will send on ${dateFormat}`}
+                            <Typography variant="subtitle2" component="span">
+                                {t("WILL_SEND_ON", {
+                                    date: dateFormat,
+                                    defaultValue: `Will send on ${dateFormat}`
+                                })}
                             </Typography>
                         </div>
                     )}
                     <div className={classes.dateWrapper}>
-                        <Typography variant={"subtitle1"} component={"div"} className={classes.subtitle}>
-                            Date
+                        <Typography variant="subtitle1" component="div" className={classes.subtitle}>
+                            {t("DATE", { defaultValue: "Date" })}
                         </Typography>
                         <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-month">
-                                Month
+                                {t("MONTH", { defaultValue: "Month" })}
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
@@ -188,25 +193,25 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentT
                                 native
                                 value={month}
                                 onChange={changeMonth}
-                                label="Month"
+                                label={t("MONTH", { defaultValue: "Month" })}
                             >
-                                <option value={"01"}>January</option>
-                                <option value={"02"}>February</option>
-                                <option value={"03"}>March</option>
-                                <option value={"04"}>April</option>
-                                <option value={"05"}>May</option>
-                                <option value={"06"}>June</option>
-                                <option value={"07"}>July</option>
-                                <option value={"08"}>August</option>
-                                <option value={"09"}>September</option>
-                                <option value={"10"}>October</option>
-                                <option value={"11"}>November</option>
-                                <option value={"12"}>December</option>
+                                <option value="01">{t("JANUARY", { defaultValue: "January" })}</option>
+                                <option value="02">{t("FEBRUARY", { defaultValue: "February" })}</option>
+                                <option value="03">{t("MARCH", { defaultValue: "March" })}</option>
+                                <option value="04">{t("APRIL", { defaultValue: "April" })}</option>
+                                <option value="05">{t("MAY", { defaultValue: "May" })}</option>
+                                <option value="06">{t("JUNE", { defaultValue: "June" })}</option>
+                                <option value="07">{t("JULY", { defaultValue: "July" })}</option>
+                                <option value="08">{t("AUGUST", { defaultValue: "August" })}</option>
+                                <option value="09">{t("SEPTEMBER", { defaultValue: "September" })}</option>
+                                <option value="10">{t("OCTOBER", { defaultValue: "October" })}</option>
+                                <option value="11">{t("NOVEMBER", { defaultValue: "November" })}</option>
+                                <option value="12">{t("DECEMBER", { defaultValue: "December" })}</option>
                             </FilledSelect>
                         </FormControl>
                         <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-day">
-                                Day
+                                {t("DAY", { defaultValue: "Day" })}
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
@@ -216,27 +221,27 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentT
                                 native
                                 value={day}
                                 onChange={changeDay}
-                                label="Day"
+                                label={t("DAY", { defaultValue: "Day" })}
                             >
                                 {showDays()}
                                 {(daysCount === 30) && (
                                     <>
-                                        <option value={"29"}>29</option>
-                                        <option value={"30"}>30</option>
+                                        <option value="29">29</option>
+                                        <option value="30">30</option>
                                     </>
                                 )}
                                 {(daysCount === 31) && (
                                     <>
-                                        <option value={"29"}>29</option>
-                                        <option value={"30"}>30</option>
-                                        <option value={"31"}>31</option>
+                                        <option value="29">29</option>
+                                        <option value="30">30</option>
+                                        <option value="31">31</option>
                                     </>
                                 )}
                             </FilledSelect>
                         </FormControl>
                         <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-year">
-                                Year
+                                {t("YEAR", { defaultValue: "Year" })}
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
@@ -246,7 +251,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentT
                                 native
                                 value={year}
                                 onChange={changeYear}
-                                label="Year"
+                                label={t("YEAR", { defaultValue: "Year" })}
                             >
                                 <option value={showYear(0)}>
                                     {showYear(0)}
@@ -260,18 +265,20 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentT
                             </FilledSelect>
                         </FormControl>
                         {isValidSelectedDate && (
-                            <Typography variant="subtitle1" component={"div"} className={classes.errorText}>
-                                You can’t schedule a Tweet to send in the past.
+                            <Typography variant="subtitle1" component="div" className={classes.errorText}>
+                                {t("NOT_VALID_SELECTED_DATE", {
+                                    defaultValue: "You can’t schedule a Tweet to send in the past."
+                                })}
                             </Typography>
                         )}
                     </div>
                     <div className={classes.dateWrapper}>
-                        <Typography variant={"subtitle1"} component={"div"} className={classes.subtitle}>
-                            Time
+                        <Typography variant="subtitle1" component="div" className={classes.subtitle}>
+                            {t("TIME", { defaultValue: "Time" })}
                         </Typography>
                         <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-hour">
-                                Hour
+                                {t("HOUR", { defaultValue: "Hour" })}
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
@@ -281,14 +288,14 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentT
                                 native
                                 value={hour}
                                 onChange={changeHour}
-                                label="Hour"
+                                label={t("HOUR", { defaultValue: "Hour" })}
                             >
                                 {showHour()}
                             </FilledSelect>
                         </FormControl>
                         <FormControl variant="filled" error={isValidSelectedDate}>
                             <InputLabel htmlFor="select-minute">
-                                Minute
+                                {t("MINUTE", { defaultValue: "Minute" })}
                             </InputLabel>
                             <FilledSelect
                                 variant="filled"
@@ -298,7 +305,7 @@ const ScheduleModal: FC<ScheduleModalProps> = ({ visible, onClose, onOpenUnsentT
                                 native
                                 value={minute}
                                 onChange={changeMinute}
-                                label="Minute"
+                                label={t("MINUTE", { defaultValue: "Minute" })}
                             >
                                 {showMinute()}
                             </FilledSelect>

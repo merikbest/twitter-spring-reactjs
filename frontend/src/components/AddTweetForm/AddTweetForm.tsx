@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import "emoji-mart/css/emoji-mart.css";
+import { useTranslation } from "react-i18next";
 
 import {
     addPoll,
@@ -94,6 +95,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     const images = useSelector(selectImages);
     const selectedUsers = useSelector(selectSelectedUsers);
     const { text, setText, handleChangeText, addEmoji, textConverter } = useInputText();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (unsentTweet) {
@@ -125,9 +127,15 @@ const AddTweetForm: FC<AddTweetFormProps> = (
         } else {
             dispatch(addTweet(tweet));
         }
-        tweetPostProcessing(scheduledDate
-            ? `Your Tweet will be sent on ${formatScheduleDate(scheduledDate)}`
-            : "Your Tweet was sent.");
+
+        if (scheduledDate) {
+            const date = formatScheduleDate(scheduledDate);
+            tweetPostProcessing(t("YOUR_SCHEDULED_TWEET_WAS_SENT", {
+                date, defaultValue: `Your Tweet will be sent on ${date}`
+            }));
+        } else {
+            tweetPostProcessing();
+        }
     };
 
     const handleClickQuoteTweet = async (): Promise<void> => {
@@ -170,7 +178,7 @@ const AddTweetForm: FC<AddTweetFormProps> = (
     };
 
     const tweetPostProcessing = (snackBarText?: string): void => {
-        dispatch(setOpenSnackBar(snackBarText ?? "Your tweet was sent."));
+        dispatch(setOpenSnackBar(snackBarText ?? t("YOUR_TWEET_WAS_SENT", { defaultValue: "Your tweet was sent." })));
         dispatch(resetAddTweetFormState());
         setText("");
         if (onCloseModal) onCloseModal();
@@ -185,7 +193,9 @@ const AddTweetForm: FC<AddTweetFormProps> = (
                     <TextareaAutosize
                         onChange={handleChangeText}
                         className={classes.contentTextarea}
-                        placeholder={visiblePoll ? "Ask a question..." : title}
+                        placeholder={visiblePoll
+                            ? t("ASK_A_QUESTION", { defaultValue: "Ask a question..." })
+                            : title}
                         value={text}
                         maxRows={maxRows}
                         minRows={images.length !== 0 ? 1 : minRows}

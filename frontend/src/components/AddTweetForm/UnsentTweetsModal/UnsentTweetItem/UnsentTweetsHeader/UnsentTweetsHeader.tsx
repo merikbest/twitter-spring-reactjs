@@ -1,5 +1,6 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Button, DialogTitle } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import CloseButton from "../../../../CloseButton/CloseButton";
 import { useUnsentTweetsHeaderStyles } from "./UnsentTweetsHeaderStyles";
@@ -24,11 +25,12 @@ const UnsentTweetsHeader: FC<UnsentTweetsHeaderProps> = memo((
     }
 ): ReactElement => {
     const classes = useUnsentTweetsHeaderStyles();
+    const { t } = useTranslation();
 
     return (
         <DialogTitle>
             <CloseButton onClose={!visibleEditTweetModal ? onClose : onCloseEditTweetModal} />
-            {!visibleEditTweetModal && "Unsent Tweets"}
+            {!visibleEditTweetModal && t("UNSENT_TWEETS", { defaultValue: "Unsent Tweets" })}
             {visibleEditTweetModal ? (
                 <Button
                     className={classes.outlinedButton}
@@ -37,7 +39,7 @@ const UnsentTweetsHeader: FC<UnsentTweetsHeaderProps> = memo((
                     variant="text"
                     color="primary"
                 >
-                    Unsent Tweets
+                    {t("UNSENT_TWEETS", { defaultValue: "Unsent Tweets" })}
                 </Button>
             ) : (
                 <Button
@@ -47,7 +49,9 @@ const UnsentTweetsHeader: FC<UnsentTweetsHeaderProps> = memo((
                     color="primary"
                     size="small"
                 >
-                    {visibleEditListFooter ? "Done" : "Edit"}
+                    {visibleEditListFooter
+                        ? t("DONE", { defaultValue: "Done" })
+                        : t("EDIT", { defaultValue: "Edit" })}
                 </Button>
             )}
         </DialogTitle>

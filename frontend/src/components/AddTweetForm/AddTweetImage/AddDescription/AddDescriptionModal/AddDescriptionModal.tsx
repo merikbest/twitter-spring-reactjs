@@ -2,6 +2,7 @@ import React, { FC, ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Dialog, DialogContent, FormControl, FormGroup } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useAddDescriptionModalStyles } from "./AddDescriptionModalStyles";
 import TweetInput from "../../../../TweetInput/TweetInput";
@@ -25,6 +26,7 @@ const AddDescriptionModal: FC<AddDescriptionModalProps> = ({ visible, onClose })
     const dispatch = useDispatch();
     const images = useSelector(selectImages);
     const { control, handleSubmit } = useForm<AddDescriptionFormProps>();
+    const { t } = useTranslation();
 
     const onSubmit = (data: AddDescriptionFormProps): void => {
         dispatch(setImageDescription(data.description));
@@ -38,9 +40,13 @@ const AddDescriptionModal: FC<AddDescriptionModalProps> = ({ visible, onClose })
     return (
         <Dialog open={visible} onClose={onClose}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogTitleComponent title={"Edit image description"} onClose={onClose} borderBottom>
+                <DialogTitleComponent
+                    title={t("EDIT_IMAGE_DESCRIPTION", { defaultValue: "Edit image description" })}
+                    onClose={onClose}
+                    borderBottom
+                >
                     <Button type="submit" variant="contained" color="primary" size="small">
-                        Save
+                        {t("SAVE", { defaultValue: "Save" })}
                     </Button>
                 </DialogTitleComponent>
                 <DialogContent id="scrollableDiv" className={globalClasses.dialogContent}>
@@ -56,7 +62,7 @@ const AddDescriptionModal: FC<AddDescriptionModalProps> = ({ visible, onClose })
                                 render={({ field: { onChange, value } }) => (
                                     <TweetInput
                                         name="about"
-                                        label="Description"
+                                        label={t("DESCRIPTION", { defaultValue: "Description" })}
                                         maxTextLength={1000}
                                         onChange={onChange}
                                         value={value}

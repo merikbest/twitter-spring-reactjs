@@ -1,5 +1,6 @@
 import React, { FC, memo, ReactElement } from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { usePollIconButtonStyles } from "./PollIconButtonStyles";
@@ -14,6 +15,7 @@ interface PollIconButtonProps {
 const PollIconButton: FC<PollIconButtonProps> = memo(({ buttonName, disabled }): ReactElement => {
     const classes = usePollIconButtonStyles({ disabled });
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const onClickOpenPoll = (): void => {
         dispatch(setOpenPoll());
@@ -24,11 +26,11 @@ const PollIconButton: FC<PollIconButtonProps> = memo(({ buttonName, disabled }):
             {(buttonName !== "Reply") && (
                 <div className={classes.quoteImage}>
                     <ActionIconButton
-                        actionText={"Poll"}
+                        actionText={t("POLL", { defaultValue: "Poll" })}
                         icon={PullIcon}
                         onClick={onClickOpenPoll}
                         disabled={disabled}
-                        size={"medium"}
+                        size="medium"
                     />
                 </div>
             )}

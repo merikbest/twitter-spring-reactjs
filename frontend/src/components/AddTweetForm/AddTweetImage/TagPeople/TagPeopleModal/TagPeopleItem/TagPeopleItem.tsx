@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { useDispatch } from "react-redux";
 import { Avatar, ListItem, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useTagPeopleItemStyles } from "./TagPeopleItemStyles";
 import { UserResponse } from "../../../../../../types/user";
@@ -17,6 +18,7 @@ const TagPeopleItem: FC<TagPeopleItemProps> = memo(({ user }): ReactElement => {
     const isUserCanTagged = user?.isPrivateProfile && !user.isFollower;
     const classes = useTagPeopleItemStyles({ isUserCanTagged });
     const userAvatar = user?.avatar ?? DEFAULT_PROFILE_IMG;
+    const { t } = useTranslation();
 
     const handleListItemClick = (user: UserResponse): void => {
         dispatch(setSelectedUser(user));
@@ -30,14 +32,15 @@ const TagPeopleItem: FC<TagPeopleItemProps> = memo(({ user }): ReactElement => {
                     <div className={classes.header}>
                         <div className={classes.headerInfo}>
                             <div>
-                                <Typography variant={"h6"} component={"span"}>
+                                <Typography variant="h6" component="span">
                                     {user?.fullName}
                                 </Typography>
                                 {user?.isPrivateProfile && <LockIcon />}
                             </div>
-                            <Typography variant={"subtitle1"} component={"div"}>
-                                @{user?.username}
-                                {isUserCanTagged && " can’t be tagged in photos"}
+                            <Typography variant="subtitle1" component="div">
+                                {t("USER_CANT_BE_TAGGED_IN_PHOTOS", {
+                                    defaultValue: `@${user?.username} can’t be tagged in photos`
+                                })}
                             </Typography>
                         </div>
                     </div>

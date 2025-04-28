@@ -37,9 +37,7 @@ const GifTopics: FC<GifTopicsProps> = ({ onClickGifTopic }): ReactElement => {
                         onClick={() => onClickGifTopic(gif.title)}
                     >
                         <img alt={gif.title} src={gif.src} />
-                        <ImageListItemBar title={
-                            <Typography variant={"h5"} component={"div"}>{gif.title}</Typography>
-                        } />
+                        <ImageListItemBar title={<Typography variant="h5" component="div">{gif.title}</Typography>} />
                     </ImageListItem>
                 ))
             )}

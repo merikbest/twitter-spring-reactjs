@@ -15,7 +15,7 @@ const ImageAction: FC<ImageActionProps> = ({ subtitle, icon, onClick }): ReactEl
     return (
         <div className={classes.imageAction} onClick={onClick}>
             <>{icon}</>
-            <Typography variant={"subtitle1"} component={"span"}>
+            <Typography variant="subtitle1" component="span">
                 {subtitle}
             </Typography>
         </div>

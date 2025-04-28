@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Button, DialogTitle } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import CloseButton from "../../../CloseButton/CloseButton";
 import { useScheduleModalStyles } from "../ScheduleModalStyles";
@@ -23,11 +24,12 @@ const ScheduleTitle: FC<ScheduleModalTitleProps> = memo((
 ): ReactElement => {
     const classes = useScheduleModalStyles();
     const scheduledDate = useSelector(selectScheduledDate);
+    const { t } = useTranslation();
 
     return (
         <DialogTitle>
             <CloseButton onClose={onClose} />
-            Schedule
+            {t("SCHEDULE", { defaultValue: "Schedule" })}
             <div className={classes.buttonWrapper}>
                 {scheduledDate && (
                     <Button
@@ -38,7 +40,7 @@ const ScheduleTitle: FC<ScheduleModalTitleProps> = memo((
                         size="small"
                         disabled={isValidSelectedDate}
                     >
-                        Clear
+                        {t("CLEAR", { defaultValue: "Clear" })}
                     </Button>
                 )}
                 <Button
@@ -49,7 +51,9 @@ const ScheduleTitle: FC<ScheduleModalTitleProps> = memo((
                     size="small"
                     disabled={isValidSelectedDate}
                 >
-                    {scheduledDate ? "Update" : "Confirm"}
+                    {scheduledDate
+                        ? t("UPDATE", { defaultValue: "Update" })
+                        : t("CONFIRM", { defaultValue: "Confirm" })}
                 </Button>
             </div>
         </DialogTitle>

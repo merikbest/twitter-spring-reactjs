@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { EmojiData, Picker } from "emoji-mart";
 import { Popover } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
 import { EmojiIcon } from "../../../icons";
@@ -12,15 +13,16 @@ interface EmojiIconButtonProps {
 
 const EmojiIconButton: FC<EmojiIconButtonProps> = memo(({ addEmoji }): ReactElement => {
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
+    const { t } = useTranslation();
 
     return (
         <>
             <ActionIconButton
-                id={"onClickAddEmoji"}
-                actionText={"Emoji"}
+                id="onClickAddEmoji"
+                actionText={t("EMOJI", { defaultValue: "Emoji" })}
                 icon={EmojiIcon}
                 onClick={handleOpenPopup}
-                size={"medium"}
+                size="medium"
             />
             <Popover
                 id={popoverId}

@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ImageAction from "../ImageAction/ImageAction";
 import { ListsIcon } from "../../../../icons";
@@ -10,11 +11,12 @@ import { selectImageDescription } from "../../../../store/ducks/addTweetForm/sel
 const AddDescription: FC = (): ReactElement => {
     const imageDescription = useSelector(selectImageDescription);
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
+    const { t } = useTranslation();
 
     return (
         <>
             <ImageAction
-                subtitle={(imageDescription === "") ? "Add description" : imageDescription}
+                subtitle={imageDescription || t("ADD_DESCRIPTION", { defaultValue: "Add description" })}
                 icon={ListsIcon}
                 onClick={onOpenModalWindow}
             />

@@ -1,6 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { MODAL } from "../../../constants/path-constants";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
@@ -16,6 +17,7 @@ const AddTweetImage: FC = memo((): ReactElement | null => {
     const dispatch = useDispatch();
     const location = useLocation();
     const images = useSelector(selectImages);
+    const { t } = useTranslation();
 
     const onClickRemoveImage = (): void => {
         dispatch(removeImages());
@@ -34,10 +36,10 @@ const AddTweetImage: FC = memo((): ReactElement | null => {
             </div>
             <div className={classes.imageRemove}>
                 <ActionIconButton
-                    actionText={"Remove"}
+                    actionText={t("REMOVE", { defaultValue: "Remove" })}
                     icon={CloseIcon}
                     onClick={onClickRemoveImage}
-                    size={"medium"}
+                    size="medium"
                 />
             </div>
         </div>

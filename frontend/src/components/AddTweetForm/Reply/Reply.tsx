@@ -2,6 +2,7 @@ import React, { FC, memo, ReactElement } from "react";
 import { Divider, Popover } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useReplyStyles } from "./ReplyStyles";
 import { EveryoneReplyIcon, FollowReplyIcon, MentionReplyIcon } from "../../../icons";
@@ -20,6 +21,7 @@ const Reply: FC<ReplyProps> = memo(({ isUnsentTweet }): ReactElement => {
     const dispatch = useDispatch();
     const replyType = useSelector(selectReplyType);
     const { popoverId, anchorEl, openPopover, handleOpenPopup, handleClosePopup } = usePopup();
+    const { t } = useTranslation();
 
     const handleListItemClick = (reply: ReplyType): void => {
         dispatch(setReplyType(reply));
@@ -36,9 +38,12 @@ const Reply: FC<ReplyProps> = memo(({ isUnsentTweet }): ReactElement => {
                         {replyType === ReplyType.MENTION && MentionReplyIcon}
                     </span>
                     <span>
-                        {replyType === ReplyType.EVERYONE && "Everyone can reply"}
-                        {replyType === ReplyType.FOLLOW && "People you follow"}
-                        {replyType === ReplyType.MENTION && "Only people you mention"}
+                        {replyType === ReplyType.EVERYONE &&
+                            t("EVERYONE_CAN_REPLY", { defaultValue: "Everyone can reply" })}
+                        {replyType === ReplyType.FOLLOW &&
+                            t("PEOPLE_YOU_FOLLOW", { defaultValue: "People you follow" })}
+                        {replyType === ReplyType.MENTION &&
+                            t("ONLY_PEOPLE_YOU_MENTION", { defaultValue: "Only people you mention" })}
                     </span>
                 </Button>
                 <Divider />

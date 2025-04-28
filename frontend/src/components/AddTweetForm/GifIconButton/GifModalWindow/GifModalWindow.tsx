@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent, DialogTitle, InputAdornment } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { SearchIcon } from "../../../../icons";
@@ -34,6 +35,7 @@ const GifModalWindow: FC<GifModalWindowProps> = ({ visible, onClose }): ReactEle
     const isGifsLoaded = useSelector(selectIsGifsLoaded);
     const { text, setText, handleChangeText } = useInputText();
     const textToSearch = useDebounce(text, 300);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (textToSearch) {
@@ -68,7 +70,7 @@ const GifModalWindow: FC<GifModalWindowProps> = ({ visible, onClose }): ReactEle
                 <CloseButton onClose={onCloseModalWindow} />
                 <MainSearchTextField
                     variant="outlined"
-                    placeholder="Search for GIFs"
+                    placeholder={t("SEARCH_FOR_GIFS", { defaultValue: "Search for GIFs" })}
                     onChange={handleChangeText}
                     value={text}
                     InputProps={{

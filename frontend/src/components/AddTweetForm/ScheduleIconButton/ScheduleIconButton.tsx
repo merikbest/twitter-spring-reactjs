@@ -1,4 +1,5 @@
 import React, { FC, memo, ReactElement, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ScheduleIcon } from "../../../icons";
 import ActionIconButton from "../../ActionIconButton/ActionIconButton";
@@ -10,9 +11,10 @@ interface ScheduleIconButtonProps {
     disabled: boolean;
 }
 
-const ScheduleIconButton: FC<ScheduleIconButtonProps> = memo(({ buttonName, disabled, }): ReactElement => {
+const ScheduleIconButton: FC<ScheduleIconButtonProps> = memo(({ buttonName, disabled, }): ReactElement | null => {
     const [visibleScheduleModal, setVisibleScheduleModal] = useState<boolean>(false);
     const [visibleUnsentTweetsModal, setVisibleUnsentTweetsModal] = useState<boolean>(false);
+    const { t } = useTranslation();
 
     const onOpenScheduleModal = (): void => {
         setVisibleScheduleModal(true);
@@ -32,28 +34,28 @@ const ScheduleIconButton: FC<ScheduleIconButtonProps> = memo(({ buttonName, disa
         setVisibleUnsentTweetsModal(false);
     };
 
+    if (buttonName === "Reply") {
+        return null;
+    }
+
     return (
         <>
-            {(buttonName !== "Reply") && (
-                <>
-                    <ActionIconButton
-                        actionText={"Schedule"}
-                        icon={ScheduleIcon}
-                        onClick={onOpenScheduleModal}
-                        size={"medium"}
-                        disabled={disabled}
-                    />
-                    <ScheduleModal
-                        visible={visibleScheduleModal}
-                        onClose={onCloseScheduleModal}
-                        onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
-                    />
-                    <UnsentTweetsModal
-                        visible={visibleUnsentTweetsModal}
-                        onClose={onCloseUnsentTweetsModal}
-                    />
-                </>
-            )}
+            <ActionIconButton
+                actionText={t("SCHEDULE", { defaultValue: "Schedule" })}
+                icon={ScheduleIcon}
+                onClick={onOpenScheduleModal}
+                size="medium"
+                disabled={disabled}
+            />
+            <ScheduleModal
+                visible={visibleScheduleModal}
+                onClose={onCloseScheduleModal}
+                onOpenUnsentTweetsModal={onOpenUnsentTweetsModal}
+            />
+            <UnsentTweetsModal
+                visible={visibleUnsentTweetsModal}
+                onClose={onCloseUnsentTweetsModal}
+            />
         </>
     );
 });
