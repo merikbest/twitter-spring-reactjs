@@ -23,7 +23,7 @@ const EmptyFollowersDescription: FC<EmptyFollowersDescriptionProps> = memo(({ ac
 
     return (
         <div className={classes.content}>
-            <Typography variant={"h5"} component={"div"}>
+            <Typography variant="h5" component="div">
                 {(isMyProfile) ? (
                     (activeTab === 0) ? (
                         t("EMPTY_FOLLOWING_TITLE", { defaultValue: "You aren’t following anyone yet" })
@@ -38,7 +38,7 @@ const EmptyFollowersDescription: FC<EmptyFollowersDescriptionProps> = memo(({ ac
                     )
                 )}
             </Typography>
-            <Typography variant={"subtitle1"} component={"div"}>
+            <Typography variant="subtitle1" component="div">
                 {(isMyProfile) ? (
                     (activeTab === 0) ? (
                         t("EMPTY_FOLLOWING_DESCRIPTION", { defaultValue: "When you do, they’ll be listed here and you’ll see their Tweets in your timeline." })

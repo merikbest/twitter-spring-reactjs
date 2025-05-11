@@ -66,7 +66,7 @@ describe("FollowingFollowers", () => {
         });
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: mockMyProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWERS
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
     });
 
@@ -87,7 +87,7 @@ describe("FollowingFollowers", () => {
         });
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: mockMyProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWINGS
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
     });
 
@@ -111,7 +111,7 @@ describe("FollowingFollowers", () => {
         });
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: mockMyProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWERS
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
     });
 
@@ -134,7 +134,7 @@ describe("FollowingFollowers", () => {
         });
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: mockMyProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWINGS
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
     });
 
@@ -162,14 +162,14 @@ describe("FollowingFollowers", () => {
         });
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: mockMyProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWERS
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
         expect(mockDispatchFn).nthCalledWith(4, {
             type: UsersSearchActionsType.RESET_USERS_STATE
         });
         expect(mockDispatchFn).nthCalledWith(5, {
             payload: { userId: mockMyProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWERS
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
     });
 
@@ -197,14 +197,14 @@ describe("FollowingFollowers", () => {
         });
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: mockMyProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWERS
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
         expect(mockDispatchFn).nthCalledWith(4, {
             type: UsersSearchActionsType.RESET_USERS_STATE
         });
         expect(mockDispatchFn).nthCalledWith(5, {
             payload: { userId: mockMyProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWINGS
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
     });
 
@@ -227,7 +227,7 @@ describe("FollowingFollowers", () => {
         });
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: mockUserProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWERS
+            type: UsersSearchActionsType.FETCH_FOLLOWINGS
         });
     });
 
@@ -250,7 +250,7 @@ describe("FollowingFollowers", () => {
         });
         expect(mockDispatchFn).nthCalledWith(3, {
             payload: { userId: mockUserProfileId, page: 0 },
-            type: UsersSearchActionsType.FETCH_FOLLOWINGS
+            type: UsersSearchActionsType.FETCH_FOLLOWERS
         });
     });
 
