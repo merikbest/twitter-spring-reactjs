@@ -1,45 +1,25 @@
-import React, { FC, ReactElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement } from "react";
 import { Paper, Typography } from "@material-ui/core";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { useGlobalStyles } from "../../util/globalClasses";
-import { selectIsTweetsLoading, selectPagesCount, selectTweetsItems } from "../../store/ducks/tweets/selectors";
-import { fetchQuotesByTweetId, resetTweets } from "../../store/ducks/tweets/actionCreators";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import Spinner from "../../components/Spinner/Spinner";
 import { withDocumentTitle } from "../../hoc/withDocumentTitle";
 import InfiniteScrollWrapper from "../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 import PageHeaderWrapper from "../../components/PageHeaderWrapper/PageHeaderWrapper";
+import { useQuoteTweets } from "./useQuoteTweets";
 
 const QuoteTweets: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
-    const dispatch = useDispatch();
-    const { tweetId } = useParams<{ tweetId: string }>();
-    const tweets = useSelector(selectTweetsItems);
-    const isTweetsLoading = useSelector(selectIsTweetsLoading);
-    const pagesCount = useSelector(selectPagesCount);
     const { t } = useTranslation();
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        loadTweets(0);
-
-        return () => {
-            dispatch(resetTweets());
-        };
-    }, [tweetId]);
-
-    const loadTweets = (page: number): void => {
-        dispatch(fetchQuotesByTweetId({ tweetId: parseInt(tweetId), pageNumber: page }));
-    };
+    const { tweets, isTweetsLoading, pagesCount, loadTweets } = useQuoteTweets();
 
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>
             <Paper className={globalClasses.pageContainer} variant="outlined">
                 <PageHeaderWrapper backButton>
-                    <Typography variant={"h5"} component={"div"}>
+                    <Typography variant="h5" component="div">
                         {t("QUOTES_TWEETS", { defaultValue: "Quote Tweets" })}
                     </Typography>
                 </PageHeaderWrapper>
