@@ -3,11 +3,11 @@ import { Route } from "react-router-dom";
 
 import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
 import ForgotPassword from "../ForgotPassword";
-import FindEmail from "../FindEmail/FindEmail";
-import ResetPasswordOption from "../ResetPasswordOption/ResetPasswordOption";
-import CheckEmailCode from "../CheckEmailCode/CheckEmailCode";
-import ResetPassword from "../ResetPassword/ResetPassword";
-import ResetPasswordSuccess from "../ResetPasswordSuccess/ResetPasswordSuccess";
+import FindEmail from "../FindEmail";
+import ResetPasswordOption from "../ResetPasswordOption";
+import CheckEmailCode from "../CheckEmailCode";
+import ResetPassword from "../ResetPassword";
+import ResetPasswordSuccess from "../ResetPasswordSuccess";
 import {
     ACCOUNT_FORGOT,
     ACCOUNT_FORGOT_CONFIRM_PIN_RESET,

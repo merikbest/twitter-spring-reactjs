@@ -1,48 +1,30 @@
-import React, { FC, FormEvent, ReactElement, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import React, { FC, ReactElement } from "react";
 import { Button, Link as MuiLink, Radio, Typography } from "@material-ui/core";
 
 import { useResetPasswordOptionStyles } from "./ResetPasswordOptionStyles";
-import { ACCOUNT_FORGOT_CONFIRM_PIN_RESET } from "../../../constants/path-constants";
 import { REGAIN_ACCESS } from "../../../constants/url-constants";
-import { AuthenticationApi } from "../../../services/api/user-service/authenticationApi";
+import { useResetPasswordOption } from "./useResetPasswordOption";
 
 const ResetPasswordOption: FC = (): ReactElement => {
     const classes = useResetPasswordOptionStyles();
-    const history = useHistory();
-    const location = useLocation<{ email: string }>();
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const sendResetCode = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        setIsLoading(true);
-        AuthenticationApi.sendPasswordResetCode({ email: location.state.email })
-            .then(() => {
-                history.push(ACCOUNT_FORGOT_CONFIRM_PIN_RESET);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-                setIsLoading(false);
-            });
-    };
+    const { email, isLoading, sendResetCode } = useResetPasswordOption();
 
     return (
         <>
-            <Typography variant={"h3"} component={"div"}>
+            <Typography variant="h3" component="div">
                 How do you want to reset your password?
             </Typography>
-            <Typography variant={"body1"} component={"div"} className={classes.text}>
+            <Typography variant="body1" component="div" className={classes.text}>
                 You can use the information associated with your account.
             </Typography>
             <form className={classes.formWrapper} onSubmit={sendResetCode}>
                 <div className={classes.emailWrapper}>
                     <Radio className={classes.radio} checked color="primary" />
-                    <Typography variant={"body1"} component={"span"}>
+                    <Typography variant="body1" component="span">
                         {"Send an email to "}
                     </Typography>
-                    <Typography variant={"h6"} component={"span"}>
-                        {location.state.email}
+                    <Typography variant="h6" component="span">
+                        {email}
                     </Typography>
                 </div>
                 <Button

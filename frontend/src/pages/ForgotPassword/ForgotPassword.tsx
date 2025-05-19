@@ -4,11 +4,11 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import { Typography } from "@material-ui/core";
 
 import { useForgotPasswordStyles } from "./ForgotPasswordStyles";
-import CheckEmailCode from "./CheckEmailCode/CheckEmailCode";
-import FindEmail from "./FindEmail/FindEmail";
-import ResetPasswordOption from "./ResetPasswordOption/ResetPasswordOption";
-import ResetPassword from "./ResetPassword/ResetPassword";
-import ResetPasswordSuccess from "./ResetPasswordSuccess/ResetPasswordSuccess";
+import CheckEmailCode from "./CheckEmailCode";
+import FindEmail from "./FindEmail";
+import ResetPasswordOption from "./ResetPasswordOption";
+import ResetPassword from "./ResetPassword";
+import ResetPasswordSuccess from "./ResetPasswordSuccess";
 import {
     ACCOUNT_FORGOT,
     ACCOUNT_FORGOT_CONFIRM_PIN_RESET,
@@ -27,7 +27,7 @@ const ForgotPassword: FC = (): ReactElement => {
                     <span style={{ marginTop: 10 }}>
                         <TwitterIcon />
                     </span>
-                    <Typography variant={"body1"} component={"span"}>
+                    <Typography variant="body1" component="span">
                         Password Reset
                     </Typography>
                 </div>

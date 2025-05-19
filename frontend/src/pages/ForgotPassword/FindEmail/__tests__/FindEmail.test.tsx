@@ -8,7 +8,7 @@ import { setImmediate } from "timers";
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import FindEmail from "../FindEmail";
 import { UI_V1_AUTH_FORGOT_EMAIL } from "../../../../constants/endpoint-constants";
-import { ForgotPasswordTextField } from "../../ForgotPasswordTextField/ForgotPasswordTextField";
+import { ForgotPasswordTextField } from "../../ForgotPasswordTextField";
 import { ACCOUNT_FORGOT_SEND_PASSWORD_RESET } from "../../../../constants/path-constants";
 
 describe("FindEmail", () => {

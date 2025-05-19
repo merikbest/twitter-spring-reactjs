@@ -8,7 +8,7 @@ import { setImmediate } from "timers";
 
 import ResetPassword from "../ResetPassword";
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
-import { ForgotPasswordTextField } from "../../ForgotPasswordTextField/ForgotPasswordTextField";
+import { ForgotPasswordTextField } from "../../ForgotPasswordTextField";
 import { UI_V1_AUTH_RESET } from "../../../../constants/endpoint-constants";
 import {
     ACCOUNT_FORGOT_PASSWORD_RESET_COMPLETE,

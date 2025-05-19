@@ -7,7 +7,7 @@ import { setImmediate } from "timers";
 
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import CheckEmailCode from "../CheckEmailCode";
-import { ForgotPasswordTextField } from "../../ForgotPasswordTextField/ForgotPasswordTextField";
+import { ForgotPasswordTextField } from "../../ForgotPasswordTextField";
 import { UI_V1_AUTH_RESET_CODE } from "../../../../constants/endpoint-constants";
 import { mockUser } from "../../../../util/test-utils/mock-test-data";
 import { ACCOUNT_FORGOT_RESET_PASSWORD } from "../../../../constants/path-constants";

@@ -11,14 +11,14 @@ const ResetPasswordSuccess: FC = (): ReactElement => {
 
     return (
         <>
-            <Typography variant={"h3"} component={"div"}>
+            <Typography variant="h3" component="div">
                 You’re all set. You've successfully changed your password.
             </Typography>
             <div className={classes.infoWrapper}>
                 <MuiLink href={DEVELOPER_ACCOUNT} variant="body1" target="_blank" rel="noopener">
                     Review your applications
                 </MuiLink>
-                <Typography variant={"body1"} component={"div"}>
+                <Typography variant="body1" component="div">
                     Take a moment to review the applications that have access to your account. Revoke those you don't
                     recognize or no longer use.
                 </Typography>
@@ -27,7 +27,7 @@ const ResetPasswordSuccess: FC = (): ReactElement => {
                 <MuiLink href={HOW_TO_UPDATE_YOUR_ACCOUNT_PHONE_NUMBER} variant="body1" target="_blank" rel="noopener">
                     Add a phone number to your account
                 </MuiLink>
-                <Typography variant={"body1"} component={"div"}>
+                <Typography variant="body1" component="div">
                     This makes it easy to get back into your account if you're ever locked out.
                 </Typography>
             </div>
