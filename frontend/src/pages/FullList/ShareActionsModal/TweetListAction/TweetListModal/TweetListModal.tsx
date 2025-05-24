@@ -30,7 +30,7 @@ const TweetListModal: FC<TweetListModalProps> = ({ visibleModalWindow, onCloseMo
                     tweetList={list}
                     minRows={1}
                     title={t("WHATS_HAPPENING", { defaultValue: "What's happening?" })}
-                    buttonName={"Tweet"}
+                    buttonName="Tweet"
                     onCloseModal={onCloseModalWindow}
                 />
             </DialogContent>

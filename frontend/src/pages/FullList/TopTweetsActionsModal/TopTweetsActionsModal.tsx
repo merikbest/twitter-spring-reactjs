@@ -6,7 +6,7 @@ import { useTopTweetsActionsModalStyles } from "./TopTweetsActionsModalStyles";
 import { EditIcon, NotShowIcon, SeeLatestIcon } from "../../../icons";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import { useClickAway } from "../../../hook/useClickAway";
-import TopTweetsItem from "./TopTweetsItem/TopTweetsItem";
+import TopTweetsItem from "./TopTweetsItem";
 
 const TopTweetsActionsModal = (): ReactElement => {
     const classes = useTopTweetsActionsModalStyles();

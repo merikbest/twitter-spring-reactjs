@@ -30,7 +30,7 @@ const initModalInfoState = {
     emptyPageDescription: ""
 };
 
-const membersModalInfoState = {
+export const membersModalInfoState = {
     modalType: MembersAndFollowersEnum.MEMBERS,
     modalTitleKey: "LIST_MEMBERS",
     modalTitle: "List members",
@@ -40,7 +40,7 @@ const membersModalInfoState = {
     emptyPageDescription: "When people get added, they’ll show up here."
 };
 
-const followersModalInfoState = {
+export const followersModalInfoState = {
     modalType: MembersAndFollowersEnum.FOLLOWERS,
     modalTitleKey: "LIST_FOLLOWERS",
     modalTitle: "List followers",

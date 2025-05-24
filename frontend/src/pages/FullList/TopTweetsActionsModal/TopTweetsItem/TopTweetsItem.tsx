@@ -19,10 +19,10 @@ const TopTweetsItem: FC<TopTweetsItemProps> = ({ icon, title, subtitle }): React
                     {icon}
                 </span>
                 <div>
-                    <Typography variant={"body1"} component={"div"}>
+                    <Typography variant="body1" component="div">
                         {title}
                     </Typography>
-                    <Typography variant={"subtitle2"} component={"div"}>
+                    <Typography variant="subtitle2" component="div">
                         {subtitle}
                     </Typography>
                 </div>

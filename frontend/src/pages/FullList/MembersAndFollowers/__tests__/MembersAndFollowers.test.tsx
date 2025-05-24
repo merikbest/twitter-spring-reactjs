@@ -5,7 +5,7 @@ import { createMockRootState, mountWithStore } from "../../../../util/test-utils
 import { LoadingStatus } from "../../../../types/common";
 import { mockFullList } from "../../../../util/test-utils/mock-test-data";
 import MembersAndFollowers from "../MembersAndFollowers";
-import MembersAndFollowersModal from "../../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
+import MembersAndFollowersModal from "../../FullListTweets/MembersAndFollowersModal";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 
 describe("MembersAndFollowers", () => {
@@ -25,7 +25,7 @@ describe("MembersAndFollowers", () => {
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(false);
         wrapper.find(itemId).at(0).simulate("click");
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);
-        expect(wrapper.find(MembersAndFollowersModal).prop("title")).toBe(modalTitle);
+        expect(wrapper.find(MembersAndFollowersModal).prop("modalInfo").modalTitle).toBe(modalTitle);
         wrapper.find(MembersAndFollowersModal).find(CloseButton).find(IconButton).simulate("click");
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(false);
     };

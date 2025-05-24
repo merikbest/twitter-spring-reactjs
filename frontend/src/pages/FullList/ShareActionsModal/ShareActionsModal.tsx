@@ -6,9 +6,9 @@ import { useShareActionsModalStyles } from "./ShareActionsModalStyles";
 import { MessagesIcon, ShareIcon } from "../../../icons";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import { useClickAway } from "../../../hook/useClickAway";
-import ShareActionsItem from "./ShareActionsItem/ShareActionsItem";
-import TweetListAction from "./TweetListAction/TweetListAction";
-import CopyListLinkAction from "./CopyListLinkAction/CopyListLinkAction";
+import ShareActionsItem from "./ShareActionsItem";
+import TweetListAction from "./TweetListAction";
+import CopyListLinkAction from "./CopyListLinkAction";
 
 const ShareActionsModal = (): ReactElement => {
     const classes = useShareActionsModalStyles();

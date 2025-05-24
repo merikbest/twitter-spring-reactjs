@@ -15,7 +15,7 @@ const ShareActionsItem: FC<ShareActionsItemProps> = ({ icon, title, onClick }): 
     return (
         <ListItem className={classes.listItem} onClick={onClick}>
             <>{icon}</>
-            <Typography variant={"body1"} component={"span"}>
+            <Typography variant="body1" component="span">
                 {title}
             </Typography>
         </ListItem>

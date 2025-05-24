@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { Typography } from "@material-ui/core";
 
 import { LockIcon } from "../../../icons";
-import ShareActionsModal from "../ShareActionsModal/ShareActionsModal";
-import TopTweetsActionsModal from "../TopTweetsActionsModal/TopTweetsActionsModal";
+import ShareActionsModal from "../ShareActionsModal";
+import TopTweetsActionsModal from "../TopTweetsActionsModal";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 import {
     selectIsListLoading,
@@ -26,12 +26,12 @@ const FullListHeader = memo((): ReactElement => {
             {!isListLoading && (
                 <div>
                     <div>
-                        <Typography variant={"h5"} component={"span"}>
+                        <Typography variant="h5" component="span">
                             {listName}
                         </Typography>
                         {listIsPrivate && <span className={classes.lockIcon}>{LockIcon}</span>}
                     </div>
-                    <Typography variant={"subtitle2"} component={"div"}>
+                    <Typography variant="subtitle2" component="div">
                         @{listOwnerUsername}
                     </Typography>
                 </div>

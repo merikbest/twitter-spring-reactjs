@@ -4,7 +4,7 @@ import { Button, IconButton } from "@material-ui/core";
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../types/common";
 import EditListButton from "../EditListButton";
-import EditListModal from "../EditListModal/EditListModal";
+import EditListModal from "../EditListModal";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 
 describe("EditListButton", () => {

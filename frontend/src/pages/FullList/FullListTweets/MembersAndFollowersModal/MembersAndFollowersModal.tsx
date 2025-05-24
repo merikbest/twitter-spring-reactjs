@@ -1,21 +1,14 @@
-import React, { FC, ReactElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement } from "react";
 import { Dialog, DialogContent } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 import ManageMembersItem
     from "../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
-import {
-    fetchListFollowers,
-    fetchListMembers,
-    resetListMembersState
-} from "../../../../store/ducks/listMembers/actionCreators";
-import { selectIsListMembersLoading, selectListMembersItems } from "../../../../store/ducks/listMembers/selectors";
 import Spinner from "../../../../components/Spinner/Spinner";
 import EmptyPageDescription from "../../../../components/EmptyPageDescription/EmptyPageDescription";
 import DialogTitleComponent from "../../../../components/DialogTitleComponent/DialogTitleComponent";
 import { useGlobalStyles } from "../../../../util/globalClasses";
-import { MembersAndFollowersEnum } from "../../../../hook/useListModal";
+import { useMembersAndFollowersModal } from "./useMembersAndFollowersModal";
 
 interface MembersAndFollowersModalProps {
     listId: number;
@@ -43,28 +36,12 @@ const MembersAndFollowersModal: FC<MembersAndFollowersModalProps> = (
     }
 ): ReactElement | null => {
     const globalClasses = useGlobalStyles({ dialogContentHeight: 577 });
-    const dispatch = useDispatch();
-    const users = useSelector(selectListMembersItems);
-    const isLoading = useSelector(selectIsListMembersLoading);
     const { t } = useTranslation();
-
-    useEffect(() => {
-        if (visible) {
-            if (modalInfo.modalType === MembersAndFollowersEnum.MEMBERS) {
-                dispatch(fetchListMembers({ listId, listOwnerId }));
-            }
-            if (modalInfo.modalType === MembersAndFollowersEnum.FOLLOWERS) {
-                dispatch(fetchListFollowers({ listId, listOwnerId }));
-            }
-        }
-        return () => {
-            dispatch(resetListMembersState());
-        };
-    }, [visible]);
-
-    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-        event.stopPropagation();
-    };
+    const {
+        users,
+        isLoading,
+        handleClick
+    } = useMembersAndFollowersModal(listId, listOwnerId, visible, modalInfo.modalType);
 
     if (!visible) {
         return null;

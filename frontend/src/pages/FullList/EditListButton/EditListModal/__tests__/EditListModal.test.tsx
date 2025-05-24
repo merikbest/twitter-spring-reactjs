@@ -4,9 +4,9 @@ import { setImmediate } from "timers";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import EditListModal from "../EditListModal";
-import ManageMembersModal from "../ManageMembersModal/ManageMembersModal";
+import ManageMembersModal from "../ManageMembersModal";
 import { mockFullList } from "../../../../../util/test-utils/mock-test-data";
-import DeleteListModal from "../DeleteListModal/DeleteListModal";
+import DeleteListModal from "../DeleteListModal";
 import CreateListsModalInput
     from "../../../../Lists/ListsHeader/CreateListsModal/CreateListsModalInput/CreateListsModalInput";
 import { ListActionType } from "../../../../../store/ducks/list/contracts/actionTypes";
@@ -69,13 +69,6 @@ describe("EditListModal", () => {
                     description: "Test description",
                     id: 3,
                     isPrivate: false,
-                    listOwner: {
-                        avatar: mockFullList.listOwner.avatar,
-                        id: mockFullList.listOwner.id,
-                        fullName: mockFullList.listOwner.fullName,
-                        username: mockFullList.listOwner.username,
-                        isPrivateProfile: false
-                    },
                     listName: "Test name",
                     wallpaper: undefined
                 },

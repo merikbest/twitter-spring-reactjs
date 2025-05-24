@@ -9,10 +9,12 @@ import { ListMembersActionsType } from "../../../../../store/ducks/listMembers/c
 import ManageMembersItem
     from "../../../EditListButton/EditListModal/ManageMembersModal/ManageMembersItem/ManageMembersItem";
 import { LoadingStatus } from "../../../../../types/common";
+import { followersModalInfoState, membersModalInfoState } from "../../../../../hook/useListModal";
 
 describe("MembersAndFollowersModal", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
     let mockDispatchFn: jest.Mock;
+
 
     beforeEach(() => {
         mockDispatchFn = mockDispatch();
@@ -24,7 +26,7 @@ describe("MembersAndFollowersModal", () => {
                 listId={mockFullList.id}
                 listOwnerId={mockFullList.listOwner.id}
                 visible={false}
-                title={"List members"}
+                modalInfo={membersModalInfoState}
                 onClose={jest.fn()}
             />, mockStore);
 
@@ -37,7 +39,7 @@ describe("MembersAndFollowersModal", () => {
                 listId={mockFullList.id}
                 listOwnerId={mockFullList.listOwner.id}
                 visible={true}
-                title={"List members"}
+                modalInfo={membersModalInfoState}
                 onClose={jest.fn()}
             />, createMockRootState(LoadingStatus.LOADING));
 
@@ -56,7 +58,7 @@ describe("MembersAndFollowersModal", () => {
                 listId={mockFullList.id}
                 listOwnerId={mockFullList.listOwner.id}
                 visible={true}
-                title={"List followers"}
+                modalInfo={followersModalInfoState}
                 onClose={jest.fn()}
             />, createMockRootState(LoadingStatus.LOADING));
 
@@ -75,7 +77,7 @@ describe("MembersAndFollowersModal", () => {
                 listId={mockFullList.id}
                 listOwnerId={mockFullList.listOwner.id}
                 visible={true}
-                title={"List followers"}
+                modalInfo={followersModalInfoState}
                 onClose={jest.fn()}
             />, {
                 ...mockStore,
@@ -96,7 +98,7 @@ describe("MembersAndFollowersModal", () => {
                 listId={mockFullList.id}
                 listOwnerId={mockFullList.listOwner.id}
                 visible={true}
-                title={"List members"}
+                modalInfo={membersModalInfoState}
                 onClose={jest.fn()}
             />, {
                 ...mockStore,
@@ -118,7 +120,7 @@ describe("MembersAndFollowersModal", () => {
                 listId={mockFullList.id}
                 listOwnerId={mockFullList.listOwner.id}
                 visible={true}
-                title={"List followers"}
+                modalInfo={followersModalInfoState}
                 onClose={jest.fn()}
             />, {
                 ...mockStore,
@@ -140,7 +142,7 @@ describe("MembersAndFollowersModal", () => {
                 listId={mockFullList.id}
                 listOwnerId={mockFullList.listOwner.id}
                 visible={true}
-                title={"List followers"}
+                modalInfo={followersModalInfoState}
                 onClose={jest.fn()}
             />, mockStore);
         wrapper.find(Dialog).simulate("click");
@@ -154,7 +156,7 @@ describe("MembersAndFollowersModal", () => {
                 listId={mockFullList.id}
                 listOwnerId={mockFullList.listOwner.id}
                 visible={false}
-                title={"List members"}
+                modalInfo={membersModalInfoState}
                 onClose={jest.fn()}
             />, mockStore);
         wrapper.unmount();

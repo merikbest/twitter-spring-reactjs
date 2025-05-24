@@ -3,7 +3,7 @@ import { Button } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 import { useEditListButtonStyles } from "./EditListButtonStyles";
-import EditListModal from "./EditListModal/EditListModal";
+import EditListModal from "./EditListModal";
 import { useModalWindow } from "../../../hook/useModalWindow";
 
 const EditListButton = (): ReactElement => {

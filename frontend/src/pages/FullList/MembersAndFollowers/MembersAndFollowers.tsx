@@ -1,14 +1,14 @@
 import React, { memo, ReactElement } from "react";
 import { useSelector } from "react-redux";
 
-import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
+import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal";
 import {
     selectListItemFollowersSize,
     selectListItemId,
     selectListItemMembersSize,
     selectListItemOwnerId
 } from "../../../store/ducks/list/selectors";
-import FullListUserCount from "./FullListUserCount/FullListUserCount";
+import FullListUserCount from "./FullListUserCount";
 import { MembersAndFollowersEnum, useListModal } from "../../../hook/useListModal";
 
 const MembersAndFollowers = memo((): ReactElement => {
@@ -21,17 +21,17 @@ const MembersAndFollowers = memo((): ReactElement => {
     return (
         <div>
             <FullListUserCount
-                id={"listMembers"}
+                id="listMembers"
                 userCount={membersSize}
                 titleKey={MembersAndFollowersEnum.MEMBERS}
-                titleDefaultValue={"Members"}
+                titleDefaultValue="Members"
                 onOpenModalWindow={onOpenModalWindow}
             />
             <FullListUserCount
-                id={"listFollowers"}
+                id="listFollowers"
                 userCount={followersSize}
                 titleKey={MembersAndFollowersEnum.FOLLOWERS}
-                titleDefaultValue={"Followers"}
+                titleDefaultValue="Followers"
                 onOpenModalWindow={onOpenModalWindow}
             />
             <MembersAndFollowersModal

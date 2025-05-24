@@ -5,7 +5,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { useTranslation } from "react-i18next";
 
 import { LinkIcon } from "../../../../icons";
-import ShareActionsItem from "../ShareActionsItem/ShareActionsItem";
+import ShareActionsItem from "../ShareActionsItem";
 import { setOpenSnackBar } from "../../../../store/ducks/actionSnackbar/actionCreators";
 import { CLIENT_URL } from "../../../../constants/url-constants";
 

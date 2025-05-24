@@ -7,8 +7,8 @@ import ManageMembersModal from "../ManageMembersModal";
 import { mockFullList, mockListsOwnerMember } from "../../../../../../util/test-utils/mock-test-data";
 import { ListMembersActionsType } from "../../../../../../store/ducks/listMembers/contracts/actionTypes";
 import Spinner from "../../../../../../components/Spinner/Spinner";
-import ManageMembersItem from "../ManageMembersItem/ManageMembersItem";
-import { ManageMembersInput } from "../ManageMembersInput/ManageMembersInput";
+import ManageMembersItem from "../ManageMembersItem";
+import { ManageMembersInput } from "../ManageMembersInput";
 import { LoadingStatus } from "../../../../../../types/common";
 
 describe("ManageMembersModal", () => {

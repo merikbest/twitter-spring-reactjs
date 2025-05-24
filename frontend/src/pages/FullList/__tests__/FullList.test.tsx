@@ -8,8 +8,8 @@ import FullList from "../FullList";
 import { mockFullList, mockTweets, mockUserFullList } from "../../../util/test-utils/mock-test-data";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import { ListActionType } from "../../../store/ducks/list/contracts/actionTypes";
-import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
-import EditListModal from "../EditListButton/EditListModal/EditListModal";
+import MembersAndFollowersModal from "../FullListTweets/MembersAndFollowersModal";
+import EditListModal from "../EditListButton/EditListModal";
 import { ListsActionType } from "../../../store/ducks/lists/contracts/actionTypes";
 import { LoadingStatus } from "../../../types/common";
 
@@ -75,7 +75,7 @@ describe("FullList", () => {
         wrapper.find("#listMembers").at(0).simulate("click");
 
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);
-        expect(wrapper.find(MembersAndFollowersModal).prop("title")).toBe("List members");
+        expect(wrapper.find(MembersAndFollowersModal).prop("modalInfo").modalTitle).toBe("List members");
     });
 
     it("should render Followers Modal Window", () => {
@@ -83,7 +83,7 @@ describe("FullList", () => {
         wrapper.find("#listFollowers").at(0).simulate("click");
 
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);
-        expect(wrapper.find(MembersAndFollowersModal).prop("title")).toBe("List followers");
+        expect(wrapper.find(MembersAndFollowersModal).prop("modalInfo").modalTitle).toBe("List followers");
     });
 
     it("should render Edit List Modal Window", () => {

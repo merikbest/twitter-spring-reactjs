@@ -9,9 +9,9 @@ import PopperUserWindow from "../../../../../../components/PopperUserWindow/Popp
 import { HoverItemDetail, useHoverItem } from "../../../../../../hook/useHoverItem";
 import LinkWrapper from "../../../../../../components/LinkWrapper/LinkWrapper";
 import { PROFILE } from "../../../../../../constants/path-constants";
-import ManageMemberButton from "./ManageMemberButton/ManageMemberButton";
-import MemberItemInfo from "./MemberItemInfo/MemberItemInfo";
-import MemberItemAvatar from "./MemberItemAvatar/MemberItemAvatar";
+import ManageMemberButton from "./ManageMemberButton";
+import MemberItemInfo from "./MemberItemInfo";
+import MemberItemAvatar from "./MemberItemAvatar";
 import { DEFAULT_PROFILE_IMG } from "../../../../../../constants/url-constants";
 import { fetchUserDetail } from "../../../../../../store/ducks/userDetail/actionCreators";
 
@@ -41,7 +41,7 @@ const ManageMembersItem: FC<ManageMembersItemProps> = memo((
                 <div style={{ flex: 1 }}>
                     <div className={classes.header}>
                         <div
-                            id={"fullName"}
+                            id="fullName"
                             onMouseEnter={() => handleHoverPopper({ userId: user?.id} as HoverItemDetail)}
                             onMouseLeave={handleLeavePopper}
                             className={classes.headerUserInfo}

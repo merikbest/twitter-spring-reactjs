@@ -1,41 +1,15 @@
-import React, { memo, ReactElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, { memo, ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 
 import EmptyPageDescription from "../../../components/EmptyPageDescription/EmptyPageDescription";
 import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import Spinner from "../../../components/Spinner/Spinner";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
-import { resetTweets } from "../../../store/ducks/tweets/actionCreators";
-import {
-    selectIsTweetsLoaded,
-    selectIsTweetsLoading,
-    selectListTweets,
-    selectListTweetsPagesCount
-} from "../../../store/ducks/list/selectors";
-import { fetchTweetsByListId } from "../../../store/ducks/list/actionCreators";
+import { useFullListTweets } from "./useFullListTweets";
 
 const FullListTweets = memo((): ReactElement => {
-    const dispatch = useDispatch();
-    const params = useParams<{ listId: string }>();
-    const tweets = useSelector(selectListTweets);
-    const isTweetsLoading = useSelector(selectIsTweetsLoading);
-    const isTweetsLoaded = useSelector(selectIsTweetsLoaded);
-    const pagesCount = useSelector(selectListTweetsPagesCount);
     const { t } = useTranslation();
-
-    useEffect(() => {
-        loadTweets(0);
-
-        return () => {
-            dispatch(resetTweets());
-        };
-    }, []);
-
-    const loadTweets = (page: number): void => {
-        dispatch(fetchTweetsByListId({ listId: parseInt(params.listId), pageNumber: page }));
-    };
+    const { tweets, isTweetsLoading, isTweetsLoaded, pagesCount, loadTweets } = useFullListTweets();
 
     return (
         <InfiniteScrollWrapper dataLength={tweets.length} pagesCount={pagesCount} loadItems={loadTweets}>

@@ -29,22 +29,22 @@ const FullListDescription = memo((): ReactElement => {
     return (
         <>
             <div>
-                <Typography variant={"h5"} component={"span"}>
+                <Typography variant="h5" component="span">
                     {listName}
                 </Typography>
                 {listIsPrivate && <span className={classes.lockIcon}>{LockIcon}</span>}
             </div>
-            <Typography variant={"body1"} component={"div"}>
+            <Typography variant="body1" component="div">
                 {listDescription}
             </Typography>
             <Link to={`${PROFILE}/${listOwnerId}`} className={classes.listOwnerLink}>
                 <div className={classes.listOwnerWrapper}>
                     <Avatar className={classes.listOwnerAvatar} src={listOwnerAvatar} />
                 </div>
-                <Typography variant={"h6"} component={"span"}>
+                <Typography variant="h6" component="span">
                     {listOwnerFullName}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"span"}>
+                <Typography variant="subtitle1" component="span">
                     @{listOwnerUsername}
                 </Typography>
             </Link>
