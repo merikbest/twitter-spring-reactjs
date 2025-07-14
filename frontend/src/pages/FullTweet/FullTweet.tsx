@@ -1,106 +1,38 @@
-import React, { ReactElement, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { ReactElement } from "react";
 import Paper from "@material-ui/core/Paper";
 import { Divider } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import SockJS from "sockjs-client";
-import { CompatClient, Stomp } from "@stomp/stompjs";
 
-import {
-    selectIsRepliesLoading,
-    selectIsTweetError,
-    selectIsTweetLoadedSuccess,
-    selectIsTweetLoading,
-    selectReplies,
-    selectTweetId,
-    selectTweetText,
-    selectTweetAuthorFullName
-} from "../../store/ducks/tweet/selectors";
-import {
-    fetchReplies,
-    fetchTweetData,
-    resetRepliesState,
-    resetTweetState,
-    setVoteData,
-    updateTweetData
-} from "../../store/ducks/tweet/actionCreators";
-import { TOPIC_TWEET, TOPIC_TWEET_VOTE } from "../../constants/ws-constants";
 import TweetComponent from "../../components/TweetComponent/TweetComponent";
 import { useFullTweetStyles } from "./FullTweetStyles";
-import { WS_URL } from "../../constants/endpoint-constants";
 import { textFormatter } from "../../util/text-formatter";
 import ShareTweetIconButton from "../../components/ShareTweetIconButton/ShareTweetIconButton";
 import TweetComponentActions from "../../components/TweetComponentActions/TweetComponentActions";
 import Spinner from "../../components/Spinner/Spinner";
 import { useGlobalStyles } from "../../util/globalClasses";
-import LikeIconButton from "./LikeIconButton/LikeIconButton";
-import RetweetIconButton from "./RetweetIconButton/RetweetIconButton";
-import ReplyIconButton from "./ReplyIconButton/ReplyIconButton";
-import TweetDateTime from "./TweetDateTime/TweetDateTime";
-import TweetHeader from "./TweetHeader/TweetHeader";
-import TweetMedia from "./TweetMedia/TweetMedia";
-import TweetInteractionCount from "./TweetInteractionCount/TweetInteractionCount";
-import TweetActions from "./TweetActions/TweetActions";
-import TweetReplyInfo from "./TweetReplyInfo/TweetReplyInfo";
-import AddReplyToTweet from "./AddReplyToTweet/AddReplyToTweet";
-import TweetImage from "./TweetImage/TweetImage";
-import TweetPoll from "./TweetPoll/TweetPoll";
-import TweetQuote from "./TweetQuote/TweetQuote";
-import TweetErrorPage from "./TweetErrorPage/TweetErrorPage";
+import LikeIconButton from "./LikeIconButton";
+import RetweetIconButton from "./RetweetIconButton";
+import ReplyIconButton from "./ReplyIconButton";
+import TweetDateTime from "./TweetDateTime";
+import TweetHeader from "./TweetHeader";
+import TweetMedia from "./TweetMedia";
+import TweetInteractionCount from "./TweetInteractionCount";
+import TweetActions from "./TweetActions";
+import TweetReplyInfo from "./TweetReplyInfo";
+import AddReplyToTweet from "./AddReplyToTweet";
+import TweetImage from "./TweetImage";
+import TweetPoll from "./TweetPoll";
+import TweetQuote from "./TweetQuote";
+import TweetErrorPage from "./TweetErrorPage";
 import PageWrapper from "../../components/PageWrapper/PageWrapper";
-import TweetList from "./TweetList/TweetList";
-import TweetGif from "./TweetGif/TweetGif";
-
-let stompClient: CompatClient | null = null;
+import TweetList from "./TweetList";
+import TweetGif from "./TweetGif";
+import { useFullTweet } from "./useFullTweet";
 
 const FullTweet = (): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
     const classes = useFullTweetStyles();
-    const dispatch = useDispatch();
-    const { tweetId } = useParams<{ tweetId: string }>();
-    const tweetDetailId = useSelector(selectTweetId);
-    const tweetText = useSelector(selectTweetText);
-    const isTweetLoading = useSelector(selectIsTweetLoading);
-    const isTweetLoadedSuccess = useSelector(selectIsTweetLoadedSuccess);
-    const isError = useSelector(selectIsTweetError);
-    const tweetAuthorFullName = useSelector(selectTweetAuthorFullName);
-    const replies = useSelector(selectReplies);
-    const isRepliesLoading = useSelector(selectIsRepliesLoading);
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        if (tweetId) {
-            dispatch(fetchTweetData(parseInt(tweetId)));
-            setupWebSocket(tweetId);
-        }
-        return () => {
-            stompClient?.disconnect();
-            dispatch(resetTweetState());
-        };
-    }, [tweetId]);
-
-    useEffect(() => {
-        if (isTweetLoadedSuccess) {
-            dispatch(fetchReplies(parseInt(tweetId)));
-            document.title = `${tweetAuthorFullName} on Twitter: "${tweetText}"`;
-        }
-        return () => {
-            dispatch(resetRepliesState());
-        };
-    }, [isTweetLoadedSuccess]);
-
-    const setupWebSocket = (tweetId: string): void => {
-        stompClient = Stomp.over(() => new SockJS(WS_URL));
-        stompClient.connect({}, () => {
-            stompClient?.subscribe(TOPIC_TWEET(tweetId), (response) => {
-                dispatch(updateTweetData(JSON.parse(response.body)));
-            });
-            stompClient?.subscribe(TOPIC_TWEET_VOTE(tweetId), (response) => {
-                dispatch(setVoteData(JSON.parse(response.body)));
-            });
-        });
-    };
+    const { tweetDetailId, tweetText, isTweetLoading, isError, replies, isRepliesLoading } = useFullTweet();
 
     if (isError) {
         return <TweetErrorPage />;

@@ -24,14 +24,14 @@ import YouTubeVideo from "../../../components/YouTubeVideo/YouTubeVideo";
 import TweetActionResult, { TweetActionResults } from "../../../components/TweetActionResult/TweetActionResult";
 import { MODAL, PROFILE, QUOTES } from "../../../constants/path-constants";
 import { LoadingStatus } from "../../../types/common";
-import RetweetIconButton from "../RetweetIconButton/RetweetIconButton";
-import LikeIconButton from "../LikeIconButton/LikeIconButton";
-import TweetInteractionCount from "../TweetInteractionCount/TweetInteractionCount";
-import RetweetsCount from "../TweetInteractionCount/RetweetsCount/RetweetsCount";
-import QuotesCount from "../TweetInteractionCount/QuotesCount/QuotesCount";
-import LikesCount from "../TweetInteractionCount/LikesCount/LikesCount";
-import TweetHeader from "../TweetHeader/TweetHeader";
-import ReplyIconButton from "../ReplyIconButton/ReplyIconButton";
+import RetweetIconButton from "../RetweetIconButton";
+import LikeIconButton from "../LikeIconButton";
+import TweetInteractionCount from "../TweetInteractionCount";
+import RetweetsCount from "../TweetInteractionCount/RetweetsCount";
+import QuotesCount from "../TweetInteractionCount/QuotesCount";
+import LikesCount from "../TweetInteractionCount/LikesCount";
+import TweetHeader from "../TweetHeader";
+import ReplyIconButton from "../ReplyIconButton";
 
 window.scrollTo = jest.fn();
 

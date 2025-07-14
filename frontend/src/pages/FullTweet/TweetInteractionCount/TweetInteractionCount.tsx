@@ -2,9 +2,9 @@ import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Divider } from "@material-ui/core";
 
-import RetweetsCount from "./RetweetsCount/RetweetsCount";
-import QuotesCount from "./QuotesCount/QuotesCount";
-import LikesCount from "./LikesCount/LikesCount";
+import RetweetsCount from "./RetweetsCount";
+import QuotesCount from "./QuotesCount";
+import LikesCount from "./LikesCount";
 import { useFullTweetStyles } from "../FullTweetStyles";
 import { selectLikesCount, selectQuotesCount, selectRetweetsCount } from "../../../store/ducks/tweet/selectors";
 
