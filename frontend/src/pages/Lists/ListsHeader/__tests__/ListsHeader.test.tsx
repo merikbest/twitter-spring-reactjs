@@ -1,11 +1,11 @@
 import React from "react";
+import { ClickAwayListener, IconButton } from "@material-ui/core";
 
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../types/common";
 import ListsHeader from "../ListsHeader";
 import ActionIconButton from "../../../../components/ActionIconButton/ActionIconButton";
-import { ClickAwayListener, IconButton } from "@material-ui/core";
-import CreateListsModal from "../CreateListsModal/CreateListsModal";
+import CreateListsModal from "../CreateListsModal";
 import CloseButton from "../../../../components/CloseButton/CloseButton";
 
 describe("ListsHeader", () => {

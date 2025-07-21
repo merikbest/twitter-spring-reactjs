@@ -6,7 +6,7 @@ import { usePinnedListsItemStyles } from "./PinnedListsItemStyles";
 import LockIcon from "../../../../components/LockIcon/LockIcon";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { PinnedListResponse } from "../../../../types/lists";
-import PopperListWindow from "../../PopperListWindow/PopperListWindow";
+import PopperListWindow from "../../PopperListWindow";
 import { LISTS } from "../../../../constants/path-constants";
 import { HoverItemDetail, useHoverItem } from "../../../../hook/useHoverItem";
 import { fetchListDetail } from "../../../../store/ducks/listDetail/actionCreators";

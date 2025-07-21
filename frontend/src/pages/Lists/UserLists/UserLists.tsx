@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { useUserListsStyles } from "./UserListsStyles";
 import Spinner from "../../../components/Spinner/Spinner";
-import ListsItem from "../ListsItem/ListsItem";
+import ListsItem from "../ListsItem";
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { selectIsUserListsLoading, selectUserListsItems } from "../../../store/ducks/lists/selectors";
 

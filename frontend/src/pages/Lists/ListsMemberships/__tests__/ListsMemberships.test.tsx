@@ -3,7 +3,7 @@ import ReactRouter from "react-router";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { mockUser, mockUserLists, mockUserProfile } from "../../../../util/test-utils/mock-test-data";
-import ListsItem from "../../ListsItem/ListsItem";
+import ListsItem from "../../ListsItem";
 import ListsMemberships from "../ListsMemberships";
 import Spinner from "../../../../components/Spinner/Spinner";
 import { ListsActionType } from "../../../../store/ducks/lists/contracts/actionTypes";

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
-import PinnedListsItem from "../PinnedListsItem/PinnedListsItem";
+import PinnedListsItem from "../PinnedListsItem";
 import { LoadingStatus } from "../../../../types/common";
 import { mockLists, mockPinnedLists, mockSimpleList, mockUserLists } from "../../../../util/test-utils/mock-test-data";
 import Spinner from "../../../../components/Spinner/Spinner";

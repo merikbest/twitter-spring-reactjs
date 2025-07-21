@@ -4,7 +4,7 @@ import { createMockRootState, mountWithStore } from "../../../../util/test-utils
 import { LoadingStatus } from "../../../../types/common";
 import { mockLists, mockPinnedLists, mockSimpleList, mockUserLists } from "../../../../util/test-utils/mock-test-data";
 import Spinner from "../../../../components/Spinner/Spinner";
-import ListsItem from "../../ListsItem/ListsItem";
+import ListsItem from "../../ListsItem";
 import UserLists from "../UserLists";
 
 describe("UserLists", () => {

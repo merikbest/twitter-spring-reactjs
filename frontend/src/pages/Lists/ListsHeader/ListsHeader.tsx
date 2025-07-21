@@ -11,7 +11,7 @@ import { LISTS_MEMBERSHIPS } from "../../../constants/path-constants";
 import PageHeaderWrapper from "../../../components/PageHeaderWrapper/PageHeaderWrapper";
 import { selectIsLoading } from "../../../store/ducks/lists/selectors";
 import { selectUserDataId, selectUserProfileUsername } from "../../../store/ducks/user/selectors";
-import CreateListsModal from "./CreateListsModal/CreateListsModal";
+import CreateListsModal from "./CreateListsModal";
 import { useModalWindow } from "../../../hook/useModalWindow";
 import { useClickAway } from "../../../hook/useClickAway";
 

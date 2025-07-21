@@ -4,7 +4,7 @@ import { Paper, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 import Spinner from "../../../components/Spinner/Spinner";
-import PinnedListsItem from "./PinnedListsItem/PinnedListsItem";
+import PinnedListsItem from "./PinnedListsItem";
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { usePinnedListsStyles } from "./PinnedListsStyles";
 import {

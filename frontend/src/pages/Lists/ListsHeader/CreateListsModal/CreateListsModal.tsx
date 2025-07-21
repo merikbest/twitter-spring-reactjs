@@ -1,64 +1,33 @@
-import React, { FC, ReactElement, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC, ReactElement } from "react";
 import { Button, Checkbox, Dialog, DialogContent, Typography } from "@material-ui/core";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { TFunction } from "i18next";
 
 import { useCreateListsModalStyles } from "./CreateListsModalStyles";
 import UploadProfileImage from "../../../../components/UploadProfileImage/UploadProfileImage";
-import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";
-import { uploadImage } from "../../../../util/upload-image-helper";
-import CreateListsModalInput from "./CreateListsModalInput/CreateListsModalInput";
-import { createList } from "../../../../store/ducks/lists/actionCreators";
-import { wallpapers } from "../../../../util/wallpapers";
+import CreateListsModalInput from "./CreateListsModalInput";
 import DialogTitleComponent from "../../../../components/DialogTitleComponent/DialogTitleComponent";
 import { useGlobalStyles } from "../../../../util/globalClasses";
+import { useCreateListsModal } from "./useCreateListsModal";
 
 interface CreateListsModalProps {
     visible?: boolean;
     onClose: () => void;
 }
 
-interface CreateListsModalFormProps {
-    listName: string;
-    description: string;
-    isPrivate: boolean;
-    wallpaper: string;
-}
-
-const createListsModalFormSchema = (t: TFunction<"translation", undefined>) => yup.object().shape({
-    listName: yup.string().min(1, t("LIST_NAME_ERROR", { defaultValue: "List Name can’t be blank" })).required()
-});
-
 const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles({ dialogContentHeight: 650 });
     const classes = useCreateListsModalStyles();
-    const dispatch = useDispatch();
     const { t } = useTranslation();
-    const [wallpaper, setWallpaper] = useState<ImageObj>();
-    const { control, watch, handleSubmit, formState: { errors } } = useForm<CreateListsModalFormProps>({
-        resolver: yupResolver(createListsModalFormSchema(t)),
-        mode: "onChange"
-    });
-
-    const onSubmit = async (data: CreateListsModalFormProps): Promise<void> => {
-        const altWallpaper = Math.floor(Math.random() * wallpapers.length);
-        let wallpaperResponse: string | undefined = undefined;
-
-        if (wallpaper) {
-            wallpaperResponse = await uploadImage(wallpaper.file);
-        }
-
-        dispatch(createList({
-            ...data,
-            altWallpaper: wallpapers[altWallpaper],
-            wallpaper: wallpaperResponse
-        }));
-        onClose();
-    };
+    const {
+        wallpaper,
+        setWallpaper,
+        control,
+        watch,
+        handleSubmit,
+        errors,
+        onSubmit
+    } = useCreateListsModal(onClose);
 
     if (!visible) {
         return null;
@@ -141,7 +110,8 @@ const CreateListsModal: FC<CreateListsModalProps> = ({ visible, onClose }): Reac
                             </div>
                             <Typography variant="subtitle2" component="div">
                                 {t("MAKE_PRIVATE_DESCRIPTION", {
-                                    defaultValue: "When you make a List private, only you can see it." })}
+                                    defaultValue: "When you make a List private, only you can see it."
+                                })}
                             </Typography>
                         </div>
                     </div>

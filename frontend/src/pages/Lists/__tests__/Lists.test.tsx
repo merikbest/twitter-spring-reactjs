@@ -14,9 +14,9 @@ import {
     mockUser,
     mockUserLists
 } from "../../../util/test-utils/mock-test-data";
-import PinnedListsItem from "../PinnedLists/PinnedListsItem/PinnedListsItem";
-import ListsItem from "../ListsItem/ListsItem";
-import CreateListsModal from "../ListsHeader/CreateListsModal/CreateListsModal";
+import PinnedListsItem from "../PinnedLists/PinnedListsItem";
+import ListsItem from "../ListsItem";
+import CreateListsModal from "../ListsHeader/CreateListsModal";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import HoverAction from "../../../components/HoverAction/HoverAction";
 import { LISTS, LISTS_MEMBERSHIPS } from "../../../constants/path-constants";

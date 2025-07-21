@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import { mockPinnedLists, mockUserFullList } from "../../../../../util/test-utils/mock-test-data";
 import PinnedListsItem from "../PinnedListsItem";
-import PopperListWindow from "../../../PopperListWindow/PopperListWindow";
+import PopperListWindow from "../../../PopperListWindow";
 import { LISTS } from "../../../../../constants/path-constants";
 import { LoadingStatus } from "../../../../../types/common";
 

@@ -4,7 +4,7 @@ import { setImmediate } from "timers";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
 import CreateListsModal from "../CreateListsModal";
-import CreateListsModalInput from "../CreateListsModalInput/CreateListsModalInput";
+import CreateListsModalInput from "../CreateListsModalInput";
 import { ListsActionType } from "../../../../../store/ducks/lists/contracts/actionTypes";
 import { wallpapers } from "../../../../../util/wallpapers";
 import { LoadingStatus } from "../../../../../types/common";
