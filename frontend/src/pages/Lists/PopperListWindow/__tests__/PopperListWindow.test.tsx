@@ -19,13 +19,13 @@ describe("PopperListWindow", () => {
     beforeEach(() => mockDispatchFn = mockDispatch());
 
     it("should render correctly", () => {
-        const wrapper = mountWithStore(<PopperListWindow visible={true} />, mockListDetail);
+        const wrapper = mountWithStore(<PopperListWindow visible />, mockListDetail);
         expect(wrapper.text().includes(mockUserFullList.listName)).toBe(true);
         expect(wrapper.text().includes(mockUserFullList.description)).toBe(true);
         expect(wrapper.text().includes(mockUserFullList.listOwner.fullName)).toBe(true);
         expect(wrapper.text().includes(`@${mockUserFullList.listOwner.username}`)).toBe(true);
-        expect(wrapper.text().includes(`${mockUserFullList.membersSize} Members`)).toBe(true);
-        expect(wrapper.text().includes(`${mockUserFullList.followersSize} Followers`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUserFullList.membersSize} List members`)).toBe(true);
+        expect(wrapper.text().includes(`${mockUserFullList.followersSize} List followers`)).toBe(true);
         expect(wrapper.find(Button).text().includes("Follow")).toBe(true);
     });
 
@@ -35,25 +35,26 @@ describe("PopperListWindow", () => {
     });
 
     it("should open Members Modal Window and close", () => {
-        const wrapper = mountWithStore(<PopperListWindow visible={true} />, mockListDetail);
+        const wrapper = mountWithStore(<PopperListWindow visible />, mockListDetail);
         wrapper.find("#openMembersModalWindow").at(0).simulate("click");
+        console.log(wrapper.find(MembersAndFollowersModal).prop("modalInfo").modalTitle);
         expect(wrapper.find(MembersAndFollowersModal).exists()).toBeTruthy();
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);
-        expect(wrapper.find(MembersAndFollowersModal).prop("title")).toBe("List members");
+        expect(wrapper.find(MembersAndFollowersModal).prop("modalInfo").modalTitle).toBe("List members");
         wrapper.find(MembersAndFollowersModal).find(CloseButton).find(IconButton).simulate("click");
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(false);
     });
 
     it("should open Followers Modal Window", () => {
-        const wrapper = mountWithStore(<PopperListWindow visible={true} />, mockListDetail);
+        const wrapper = mountWithStore(<PopperListWindow visible />, mockListDetail);
         wrapper.find("#openFollowersModalWindow").at(0).simulate("click");
         expect(wrapper.find(MembersAndFollowersModal).exists()).toBeTruthy();
         expect(wrapper.find(MembersAndFollowersModal).prop("visible")).toBe(true);
-        expect(wrapper.find(MembersAndFollowersModal).prop("title")).toBe("List followers");
+        expect(wrapper.find(MembersAndFollowersModal).prop("modalInfo").modalTitle).toBe("List followers");
     });
 
     it("should click follow Lists", () => {
-        const wrapper = mountWithStore(<PopperListWindow visible={true} />, mockListDetail);
+        const wrapper = mountWithStore(<PopperListWindow visible />, mockListDetail);
         wrapper.find(Button).at(0).simulate("click");
         expect(mockDispatchFn).nthCalledWith(1, { payload: 1, type: ListsActionType.FOLLOW_LIST });
     });
@@ -63,7 +64,7 @@ describe("PopperListWindow", () => {
             ...mockStore,
             listDetail: { ...mockStore.listDetail, item: { ...mockUserFullList, isFollower: true } }
         };
-        const wrapper = mountWithStore(<PopperListWindow visible={true} />, mockFollowList);
+        const wrapper = mountWithStore(<PopperListWindow visible />, mockFollowList);
         const mockButton = wrapper.find(Button).at(0);
         mockButton.simulate("mouseover");
         expect(mockButton.text().includes("Unfollow")).toBe(true);
@@ -89,7 +90,7 @@ describe("PopperListWindow", () => {
                 }
             }
         };
-        const wrapper = mountWithStore(<PopperListWindow visible={true} />, mockFollowList);
+        const wrapper = mountWithStore(<PopperListWindow visible />, mockFollowList);
         expect(wrapper.find(Avatar).at(0).prop("src")).toBe(DEFAULT_PROFILE_IMG);
         expect(wrapper.find("img").at(0).prop("src")).toBe("testwallpaper");
     });

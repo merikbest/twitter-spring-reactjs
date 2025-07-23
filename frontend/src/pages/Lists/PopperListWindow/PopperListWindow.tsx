@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import { usePopperListWindowStyles } from "./PopperListWindowStyles";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import { selectListDetailItemIsFollower, selectListDetailItemOwnerId } from "../../../store/ducks/listDetail/selectors";
-import PopperListDescription from "./PopperListDescription/PopperListDescription";
-import PopperListInteractionCount from "./PopperListInteractionCount/PopperListInteractionCount";
-import PopperListWallpaper from "./PopperListWallpaper/PopperListWallpaper";
-import FollowListButton from "./FollowListButton/FollowListButton";
-import UnfollowListButton from "./UnfollowListButton/UnfollowListButton";
+import PopperListDescription from "./PopperListDescription";
+import PopperListInteractionCount from "./PopperListInteractionCount";
+import PopperListWallpaper from "./PopperListWallpaper";
+import FollowListButton from "./FollowListButton";
+import UnfollowListButton from "./UnfollowListButton";
 
 interface PopperListWindowProps {
     visible?: boolean;

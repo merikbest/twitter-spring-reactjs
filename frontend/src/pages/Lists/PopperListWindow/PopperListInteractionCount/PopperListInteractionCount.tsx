@@ -10,7 +10,7 @@ import {
 import MembersAndFollowersModal
     from "../../../FullList/FullListTweets/MembersAndFollowersModal/MembersAndFollowersModal";
 import { MembersAndFollowersEnum, useListModal } from "../../../../hook/useListModal";
-import PopperListUserCount from "./PopperListUserCount/PopperListUserCount";
+import PopperListUserCount from "./PopperListUserCount";
 
 const PopperListInteractionCount = memo((): ReactElement => {
     const listId = useSelector(selectListDetailItemId);
