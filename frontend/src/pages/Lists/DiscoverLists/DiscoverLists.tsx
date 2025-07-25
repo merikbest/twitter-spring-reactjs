@@ -5,7 +5,7 @@ import { Paper, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 import Spinner from "../../../components/Spinner/Spinner";
-import ListsItem from "../ListsItem/ListsItem";
+import ListsItem from "../ListsItem";
 import { SUGGESTED } from "../../../constants/path-constants";
 import { useDiscoverListsStyles } from "./DiscoverListsStyles";
 import { useGlobalStyles } from "../../../util/globalClasses";

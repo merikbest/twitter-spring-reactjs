@@ -5,7 +5,7 @@ import { LoadingStatus } from "../../../../types/common";
 import { mockLists, mockPinnedLists, mockSimpleList, mockUserLists } from "../../../../util/test-utils/mock-test-data";
 import DiscoverLists from "../DiscoverLists";
 import Spinner from "../../../../components/Spinner/Spinner";
-import ListsItem from "../../ListsItem/ListsItem";
+import ListsItem from "../../ListsItem";
 
 describe("DiscoverLists", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);

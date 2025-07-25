@@ -2,7 +2,7 @@ import React, { FC, memo, ReactElement } from "react";
 import { Avatar, Typography } from "@material-ui/core";
 
 import LockIcon from "../../../../components/LockIcon/LockIcon";
-import PopperListWindow from "../../PopperListWindow/PopperListWindow";
+import PopperListWindow from "../../PopperListWindow";
 import { useListsItemStyles } from "../ListsItemStyles";
 import { HoverItemDetail, useHoverItem } from "../../../../hook/useHoverItem";
 import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";

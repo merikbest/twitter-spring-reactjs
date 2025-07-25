@@ -1,20 +1,18 @@
 import React, { FC, memo, ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { Paper } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 import { useListsItemStyles } from "./ListsItemStyles";
-import { selectUserDataId } from "../../../store/ducks/user/selectors";
 import { PinIcon, PinIconFilled } from "../../../icons";
-import { pinList, unpinList } from "../../../store/ducks/lists/actionCreators";
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { ListResponse, ListUserResponse } from "../../../types/lists";
 import { LISTS } from "../../../constants/path-constants";
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import FollowListButton from "../../../components/FollowListButton/FollowListButton";
-import ListInfoDescription from "./ListInfoDescription/ListInfoDescription";
-import ListsItemAvatar from "./ListsItemAvatar/ListsItemAvatar";
+import ListInfoDescription from "./ListInfoDescription";
+import ListsItemAvatar from "./ListsItemAvatar";
+import { useListsItem } from "./useListsItem";
 
 interface ListsItemProps {
     list?: ListResponse | ListUserResponse;
@@ -25,20 +23,8 @@ interface ListsItemProps {
 const ListsItem: FC<ListsItemProps> = memo(({ list, listIndex, isMyList }): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useListsItemStyles();
-    const dispatch = useDispatch();
-    const myProfileId = useSelector(selectUserDataId);
     const { t } = useTranslation();
-
-    const onClickPinList = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-        event.preventDefault();
-        event.stopPropagation();
-
-        if (list?.isListPinned) {
-            dispatch(unpinList(list!.id));
-        } else {
-            dispatch(pinList(list!.id));
-        }
-    };
+    const { myProfileId, onClickPinList } = useListsItem(list);
 
     return (
         <Link to={`${LISTS}/${list?.id}`} className={globalClasses.link}>

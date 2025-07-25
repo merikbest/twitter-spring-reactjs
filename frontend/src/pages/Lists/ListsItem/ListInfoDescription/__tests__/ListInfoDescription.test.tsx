@@ -5,7 +5,7 @@ import { createMockRootState, mountWithStore } from "../../../../../util/test-ut
 import ListInfoDescription from "../ListInfoDescription";
 import { mockLists } from "../../../../../util/test-utils/mock-test-data";
 import { LoadingStatus } from "../../../../../types/common";
-import PopperListWindow from "../../../PopperListWindow/PopperListWindow";
+import PopperListWindow from "../../../PopperListWindow";
 import LockIcon from "../../../../../components/LockIcon/LockIcon";
 import { DEFAULT_PROFILE_IMG } from "../../../../../constants/url-constants";
 

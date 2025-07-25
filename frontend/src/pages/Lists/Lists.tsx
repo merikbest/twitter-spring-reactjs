@@ -1,29 +1,16 @@
-import React, { ReactElement, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { ReactElement } from "react";
 import { Paper } from "@material-ui/core";
 
-import { fetchLists, fetchPinnedLists, fetchUserLists, resetListsState } from "../../store/ducks/lists/actionCreators";
 import { useGlobalStyles } from "../../util/globalClasses";
-import ListsHeader from "./ListsHeader/ListsHeader";
-import PinnedLists from "./PinnedLists/PinnedLists";
-import DiscoverLists from "./DiscoverLists/DiscoverLists";
+import ListsHeader from "./ListsHeader";
+import PinnedLists from "./PinnedLists";
+import DiscoverLists from "./DiscoverLists";
 import UserLists from "./UserLists/UserLists";
+import { useLists } from "./useLists";
 
 const Lists = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        document.title = "Lists / Twitter";
-        dispatch(fetchLists());
-        dispatch(fetchUserLists());
-        dispatch(fetchPinnedLists());
-
-        return () => {
-            dispatch(resetListsState());
-        };
-    }, []);
+    useLists();
 
     return (
         <Paper className={globalClasses.pageContainer} variant="outlined">

@@ -7,7 +7,7 @@ import { mockLists, mockUserFullList } from "../../../../util/test-utils/mock-te
 import { ListsActionType } from "../../../../store/ducks/lists/contracts/actionTypes";
 import { ListResponse } from "../../../../types/lists";
 import HoverAction from "../../../../components/HoverAction/HoverAction";
-import PopperListWindow from "../../PopperListWindow/PopperListWindow";
+import PopperListWindow from "../../PopperListWindow";
 import { LoadingStatus } from "../../../../types/common";
 
 describe("ListsItem", () => {
