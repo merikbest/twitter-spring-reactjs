@@ -1,14 +1,12 @@
 import React, { FC, ReactElement } from "react";
 import { Typography } from "@material-ui/core";
-import { useDispatch } from "react-redux";
 
 import { useTopicItemStyles } from "./TopicItemStyles";
 import { TopicIconContained } from "../../../icons";
-import { processFollowTopic } from "../../../store/ducks/topics/actionCreators";
 import { TopicResponse } from "../../../types/topic";
-import UnfollowTopicButton from "./UnfollowTopicButton/UnfollowTopicButton";
-import FollowTopicButton from "./FollowTopicButton/FollowTopicButton";
-import { capitalize } from "../../../util/text-formatter";
+import UnfollowTopicButton from "./UnfollowTopicButton";
+import FollowTopicButton from "./FollowTopicButton";
+import { useTopicItem } from "./useTopicItem";
 
 interface TopicItemProps {
     topic: TopicResponse;
@@ -16,20 +14,7 @@ interface TopicItemProps {
 
 const TopicItem: FC<TopicItemProps> = ({ topic }): ReactElement => {
     const classes = useTopicItemStyles();
-    const dispatch = useDispatch();
-
-    const onClickFollowTopic = (): void => {
-        dispatch(processFollowTopic({ topicsId: topic.id, topicCategory: topic.topicCategory }));
-    };
-
-    const converterCategory = (category: string): string | null => {
-        if (!category) {
-            return null;
-        } else {
-            const categoryString = category.replace(/_/g, " ").toLowerCase();
-            return capitalize(categoryString);
-        }
-    };
+    const { onClickFollowTopic, converterCategory } = useTopicItem(topic);
 
     return (
         <div className={classes.container}>
@@ -37,10 +22,10 @@ const TopicItem: FC<TopicItemProps> = ({ topic }): ReactElement => {
                 {TopicIconContained}
             </div>
             <div className={classes.topicInfo}>
-                <Typography variant={"h6"} component={"div"}>
+                <Typography variant="h6" component="div">
                     {topic.topicName}
                 </Typography>
-                <Typography variant={"subtitle1"} component={"div"}>
+                <Typography variant="subtitle1" component="div">
                     {converterCategory(topic.topicCategory)}
                 </Typography>
             </div>

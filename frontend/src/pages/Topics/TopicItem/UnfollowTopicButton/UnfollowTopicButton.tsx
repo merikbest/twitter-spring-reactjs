@@ -1,9 +1,9 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
 import Button from "@material-ui/core/Button/Button";
-import { useTranslation } from "react-i18next";
 
 import { useUnfollowTopicButtonStyles } from "./UnfollowTopicButtonStyles";
 import UnfollowModal from "../../../../components/UnfollowModal/UnfollowModal";
+import { useUnfollowTopicButton } from "./useUnfollowTopicButton";
 import { useModalWindow } from "../../../../hook/useModalWindow";
 
 interface UnfollowTopicButtonProps {
@@ -13,22 +13,21 @@ interface UnfollowTopicButtonProps {
 
 const UnfollowTopicButton: FC<UnfollowTopicButtonProps> = ({ topicName, onClickFollowTopic }): ReactElement => {
     const classes = useUnfollowTopicButtonStyles();
-    const { t } = useTranslation();
-    const [btnText, setBtnText] = useState<string>(t("FOLLOWING", { defaultValue: "Following" }));
     const { visibleModalWindow, onOpenModalWindow, onCloseModalWindow } = useModalWindow();
-
-    const handleClickOpenUnfollowModal = (event: React.MouseEvent<HTMLButtonElement>): void => {
-        event.preventDefault();
-        onOpenModalWindow();
-    };
+    const {
+        btnText,
+        handleMouseOver,
+        handleMouseLeave,
+        handleClickOpenUnfollowModal,
+    } = useUnfollowTopicButton(onClickFollowTopic, onOpenModalWindow);
 
     return (
         <>
             <Button
                 className={classes.containedButton}
                 onClick={handleClickOpenUnfollowModal}
-                onMouseOver={() => setBtnText(t("UNFOLLOW", { defaultValue: "Unfollow" }))}
-                onMouseLeave={() => setBtnText(t("FOLLOWING", { defaultValue: "Following" }))}
+                onMouseOver={handleMouseOver}
+                onMouseLeave={handleMouseLeave}
                 color="primary"
                 variant="contained"
                 size="small"

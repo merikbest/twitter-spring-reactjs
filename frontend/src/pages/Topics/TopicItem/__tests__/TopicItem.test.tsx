@@ -3,8 +3,8 @@ import { Button } from "@material-ui/core";
 
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
 import { mockTopics } from "../../../../util/test-utils/mock-test-data";
-import FollowTopicButton from "../FollowTopicButton/FollowTopicButton";
-import UnfollowTopicButton from "../UnfollowTopicButton/UnfollowTopicButton";
+import FollowTopicButton from "../FollowTopicButton";
+import UnfollowTopicButton from "../UnfollowTopicButton";
 import { TopicsActionsType } from "../../../../store/ducks/topics/contracts/actionTypes";
 import TopicItem from "../TopicItem";
 
