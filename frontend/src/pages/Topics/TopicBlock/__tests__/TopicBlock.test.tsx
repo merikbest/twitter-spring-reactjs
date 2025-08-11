@@ -3,8 +3,8 @@ import React from "react";
 import { createMockRootState, mountWithStore } from "../../../../util/test-utils/test-helper";
 import TopicBlock from "../TopicBlock";
 import { mockTopics } from "../../../../util/test-utils/mock-test-data";
-import FollowedTopicButton from "../FollowedTopicButton/FollowedTopicButton";
-import TopicButton from "../TopicButton/TopicButton";
+import FollowedTopicButton from "../FollowedTopicButton";
+import TopicButton from "../TopicButton";
 
 describe("TopicBlock", () => {
 

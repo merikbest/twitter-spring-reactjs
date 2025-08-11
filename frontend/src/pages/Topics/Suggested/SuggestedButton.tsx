@@ -1,5 +1,6 @@
 import React, { FC, ReactElement } from "react";
 import { Button } from "@material-ui/core";
+
 import { useSuggestedStyles } from "./SuggestedStyles";
 
 interface SuggestedButtonProps {
@@ -11,7 +12,7 @@ const SuggestedButton: FC<SuggestedButtonProps> = ({ text }): ReactElement => {
 
     return (
         <div className={classes.suggestedButton}>
-            <Button variant={"contained"} color={"primary"}>
+            <Button variant="contained" color="primary">
                 {text}
             </Button>
         </div>

@@ -34,7 +34,7 @@ const FollowedTopicButton: FC<TopicButtonProps> = ({ topic }): ReactElement => {
                     disabled={topic.isTopicNotInterested}
                     onClick={topic.isTopicFollowed ? undefined : onClickFollowTopic}
                 >
-                    <Typography variant={"h6"} component={"div"}>
+                    <Typography variant="h6" component="div">
                         {topic.topicName}
                     </Typography>
                     <>{PlusIcon}</>

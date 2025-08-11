@@ -1,9 +1,9 @@
 import React, { FC, ReactElement } from "react";
 
 import { useTopicsStyles } from "../TopicsStyles";
-import FollowedTopicButton from "./FollowedTopicButton/FollowedTopicButton";
+import FollowedTopicButton from "./FollowedTopicButton";
 import { TopicResponse } from "../../../types/topic";
-import TopicButton from "./TopicButton/TopicButton";
+import TopicButton from "./TopicButton";
 
 interface TopicBlockProps {
     topics: TopicResponse[];

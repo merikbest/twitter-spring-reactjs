@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { ReactElement } from "react";
 import { Divider, Typography } from "@material-ui/core";
 import classnames from "classnames";
 import { useTranslation } from "react-i18next";
@@ -8,78 +7,56 @@ import { useGlobalStyles } from "../../../util/globalClasses";
 import { useSuggestedStyles } from "./SuggestedStyles";
 import SuggestedButton from "./SuggestedButton";
 import { useTopicsStyles } from "../TopicsStyles";
-import TopicsCarousel from "../TopicsCarousel/TopicsCarousel";
-import {
-    fetchTopicsByCategories,
-    fetchTopicsByIds,
-    resetTopicsState
-} from "../../../store/ducks/topics/actionCreators";
-import { topicsIds } from "../Followed/Followed";
-import {
-    selectIsTopicsByCategoriesLoading,
-    selectIsTopicsLoading,
-    selectTopicsByCategories,
-    selectTopicsItems
-} from "../../../store/ducks/topics/selectors";
-import TopicBlock from "../TopicBlock/TopicBlock";
+import TopicsCarousel from "../TopicsCarousel";
+import TopicBlock from "../TopicBlock";
 import Spinner from "../../../components/Spinner/Spinner";
+import { useSuggested } from "./useSuggested";
 
 const Suggested = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useSuggestedStyles();
     const topicClasses = useTopicsStyles();
-    const dispatch = useDispatch();
-    const topics = useSelector(selectTopicsItems);
-    const topicsByCategories = useSelector(selectTopicsByCategories);
-    const isTopicsLoading = useSelector(selectIsTopicsLoading);
-    const isTopicsByCategoriesLoading = useSelector(selectIsTopicsByCategoriesLoading);
     const { t } = useTranslation();
-    const [showMoreCategories, setShowMoreCategories] = useState(false);
-
-    useEffect(() => {
-        dispatch(fetchTopicsByIds({ topicsIds }));
-        dispatch(fetchTopicsByCategories({ categories: ["GAMING", "ONLY_ON_TWITTER"] }));
-
-        return () => {
-            dispatch(resetTopicsState());
-        };
-    }, []);
-
-    const onClickShowMoreCategories = () => {
-        setShowMoreCategories(true);
-    };
+    const {
+        topics,
+        topicsByCategories,
+        isTopicsLoading,
+        isTopicsByCategoriesLoading,
+        showMoreCategories,
+        onClickShowMoreCategories,
+    } = useSuggested();
 
     return (
         <>
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
+                <Typography variant="h5" component="div">
                     {t("CATEGORIES", { defaultValue: "Categories" })}
                 </Typography>
             </div>
             <div className={globalClasses.itemInfoWrapper}>
-                <SuggestedButton text={"Fashion & beauty"} />
-                <SuggestedButton text={"Outdoors"} />
-                <SuggestedButton text={"Arts & culture"} />
-                <SuggestedButton text={"Animation & comics"} />
-                <SuggestedButton text={"Business & finance"} />
-                <SuggestedButton text={"Food"} />
+                <SuggestedButton text="Fashion & beauty" />
+                <SuggestedButton text="Outdoors" />
+                <SuggestedButton text="Arts & culture" />
+                <SuggestedButton text="Animation & comics" />
+                <SuggestedButton text="Business & finance" />
+                <SuggestedButton text="Food" />
                 {showMoreCategories && (
                     <>
-                        <SuggestedButton text={"Travel"} />
-                        <SuggestedButton text={"Entertainment"} />
-                        <SuggestedButton text={"Music"} />
-                        <SuggestedButton text={"Gaming"} />
-                        <SuggestedButton text={"Careers"} />
-                        <SuggestedButton text={"Sports"} />
+                        <SuggestedButton text="Travel" />
+                        <SuggestedButton text="Entertainment" />
+                        <SuggestedButton text="Music" />
+                        <SuggestedButton text="Gaming" />
+                        <SuggestedButton text="Careers" />
+                        <SuggestedButton text="Sports" />
                     </>
                 )}
             </div>
             {!showMoreCategories && (
                 <Typography
-                    id={"clickShowMoreCategories"}
+                    id="clickShowMoreCategories"
                     className={classes.showMoreButton}
-                    variant={"body1"}
-                    component={"div"}
+                    variant="body1"
+                    component="div"
                     onClick={onClickShowMoreCategories}
                 >
                     {t("SHOW_MORE", { defaultValue: "Show more" })}
@@ -87,7 +64,7 @@ const Suggested = (): ReactElement => {
             )}
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
+                <Typography variant="h5" component="div">
                     {t("FOR_YOU", { defaultValue: "For you" })}
                 </Typography>
             </div>
@@ -112,7 +89,7 @@ const Suggested = (): ReactElement => {
             </div>
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
+                <Typography variant="h5" component="div">
                     {t("GAMING", { defaultValue: "Gaming" })}
                 </Typography>
             </div>
@@ -153,12 +130,12 @@ const Suggested = (): ReactElement => {
                     </TopicsCarousel>
                 )}
             </div>
-            <Typography variant={"body1"} component={"div"} className={topicClasses.moreTopics}>
+            <Typography variant="body1" component="div" className={topicClasses.moreTopics}>
                 {t("VIEW_ALL", { defaultValue: "View all" })}
             </Typography>
             <Divider />
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
+                <Typography variant="h5" component="div">
                     {t("ONLY_ON_TWITTER", { defaultValue: "Only on Twitter" })}
                 </Typography>
             </div>
