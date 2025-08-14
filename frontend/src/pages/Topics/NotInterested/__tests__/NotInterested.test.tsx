@@ -6,7 +6,7 @@ import { mockTopics } from "../../../../util/test-utils/mock-test-data";
 import Spinner from "../../../../components/Spinner/Spinner";
 import { TopicsActionsType } from "../../../../store/ducks/topics/contracts/actionTypes";
 import NotInterested from "../NotInterested";
-import TopicItem from "../../TopicItem/TopicItem";
+import TopicItem from "../../TopicItem";
 
 describe("NotInterested", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

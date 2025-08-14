@@ -1,5 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { ReactElement } from "react";
 import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 import classnames from "classnames";
 import { Trans, useTranslation } from "react-i18next";
@@ -8,42 +7,23 @@ import { ACCESSING_YOUR_TWITTER_DATA } from "../../../constants/url-constants";
 import { FOLLOW_AND_UNFOLLOW_TOPICS } from "../../../constants/path-constants";
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { useTopicsStyles } from "../TopicsStyles";
-import TopicsCarousel from "../TopicsCarousel/TopicsCarousel";
-import {
-    selectFollowedTopicsItems,
-    selectIsFollowedTopicsLoading,
-    selectIsTopicsLoading,
-    selectTopicsItems
-} from "../../../store/ducks/topics/selectors";
-import { fetchFollowedTopics, fetchTopicsByIds, resetTopicsState } from "../../../store/ducks/topics/actionCreators";
-import TopicBlock from "../TopicBlock/TopicBlock";
+import TopicsCarousel from "../TopicsCarousel";
+import TopicBlock from "../TopicBlock";
 import Spinner from "../../../components/Spinner/Spinner";
-import TopicItem from "../TopicItem/TopicItem";
+import TopicItem from "../TopicItem";
+import { useFollowed } from "./useFollowed";
 
 export const topicsIds = [1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019, 1020];
 
 const Followed = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const topicClasses = useTopicsStyles();
-    const dispatch = useDispatch();
-    const topics = useSelector(selectTopicsItems);
-    const followedTopics = useSelector(selectFollowedTopicsItems);
-    const isTopicsLoading = useSelector(selectIsTopicsLoading);
-    const isFollowedTopicsLoading = useSelector(selectIsFollowedTopicsLoading);
     const { t } = useTranslation();
-
-    useEffect(() => {
-        dispatch(fetchTopicsByIds({ topicsIds }));
-        dispatch(fetchFollowedTopics());
-
-        return () => {
-            dispatch(resetTopicsState());
-        };
-    }, []);
+    const { topics, followedTopics, isTopicsLoading, isFollowedTopicsLoading } = useFollowed();
 
     return (
         <>
-            <Typography variant={"subtitle1"} component={"div"} className={globalClasses.itemInfoWrapper}>
+            <Typography variant="subtitle1" component="div" className={globalClasses.itemInfoWrapper}>
                 {t("FOLLOWED_DESCRIPTION", { defaultValue: "The Topics you follow are used to personalize the Tweets, " +
                         "events, and ads that you see, and show up publicly on your profile" })}
             </Typography>
@@ -54,10 +34,10 @@ const Followed = (): ReactElement => {
                 followedTopics.map((topic) => <TopicItem key={topic.id} topic={topic} />)
             )}
             <div className={globalClasses.itemInfoWrapper}>
-                <Typography variant={"h5"} component={"div"}>
+                <Typography variant="h5" component="div">
                     {t("SUGGESTED_TOPICS", { defaultValue: "Suggested Topics" })}
                 </Typography>
-                <Typography variant={"subtitle2"} component={"div"}>
+                <Typography variant="subtitle2" component="div">
                     {t("SUGGESTED_TOPICS_DESCRIPTION", { defaultValue: "You'll see top Tweets about these right in your Home timeline" })}
                 </Typography>
             </div>
@@ -78,18 +58,18 @@ const Followed = (): ReactElement => {
                     </TopicsCarousel>
                 )}
             </div>
-            <Typography variant={"body1"} component={"div"} className={topicClasses.moreTopics}>
+            <Typography variant="body1" component="div" className={topicClasses.moreTopics}>
                 {t("MORE_TOPICS", { defaultValue: "More Topics" })}
             </Typography>
             <Divider />
-            <Typography variant={"subtitle1"} component={"div"} className={globalClasses.itemInfoWrapper}>
+            <Typography variant="subtitle1" component="div" className={globalClasses.itemInfoWrapper}>
                 <Trans
                     i18nKey={t("MORE_TOPICS_DESCRIPTION", { defaultValue: "More Topics Description" })}
                     components={{
                         yourTwitterData: <MuiLink href={ACCESSING_YOUR_TWITTER_DATA} variant="subtitle1" target="_blank" rel="noopener" />,
                         learnMore: <MuiLink href={FOLLOW_AND_UNFOLLOW_TOPICS} variant="subtitle1" target="_blank" rel="noopener" />
                     }}
-                />
+                ></Trans>
             </Typography>
         </>
     );

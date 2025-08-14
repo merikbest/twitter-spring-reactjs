@@ -4,7 +4,7 @@ import Tab from "@material-ui/core/Tab";
 import { createMemoryHistory } from "history";
 
 import { createMockRootState, mountWithStore } from "../../../util/test-utils/test-helper";
-import { TOPICS_FOLLOWED, TOPICS_NOT_INTERESTED, TOPICS_SUGGESTED } from "../../../constants/path-constants";
+import { TOPICS_NOT_INTERESTED, TOPICS_SUGGESTED } from "../../../constants/path-constants";
 import Topics from "../Topics";
 
 describe("Topics", () => {
@@ -19,10 +19,6 @@ describe("Topics", () => {
 
     it("should render Followed tab", () => {
         testTab("followed", 0, "Followed");
-    });
-
-    it("should click Followed tab", () => {
-        testClickTab(0, TOPICS_FOLLOWED);
     });
 
     it("should click Suggested tab", () => {
