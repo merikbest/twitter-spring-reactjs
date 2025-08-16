@@ -7,16 +7,16 @@ import Spinner from "../../../../components/Spinner/Spinner";
 import { NotificationsActionsType } from "../../../../store/ducks/notifications/contracts/actionTypes";
 import { UserActionsType } from "../../../../store/ducks/user/contracts/actionTypes";
 import { mockNotifications, mockTweetAuthors } from "../../../../util/test-utils/mock-test-data";
-import NotificationAuthorItem from "../NotificationAuthorItem/NotificationAuthorItem";
-import NotificationItem from "../NotificationItem/NotificationItem";
+import NotificationAuthorItem from "../NotificationAuthorItem";
+import NotificationItem from "../NotificationItem";
 import { PROFILE } from "../../../../constants/path-constants";
-import NotificationsPage from "../NotificationsPage";
+import NotificationsTab from "../NotificationsTab";
 import { LoadingStatus } from "../../../../types/common";
 import LinkWrapper from "../../../../components/LinkWrapper/LinkWrapper";
 
 window.scrollTo = jest.fn();
 
-describe("NotificationsPage", () => {
+describe("NotificationsTab", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
     const mockNotificationsStore = {
         ...mockStore,
@@ -33,7 +33,7 @@ describe("NotificationsPage", () => {
     });
 
     it("should render loading Spinner", () => {
-        const wrapper = mountWithStore(<NotificationsPage />, createMockRootState());
+        const wrapper = mountWithStore(<NotificationsTab />, createMockRootState());
         expect(wrapper.find(Spinner).exists()).toBe(true);
         expect(mockDispatchFn).nthCalledWith(1, { payload: 0, type: NotificationsActionsType.FETCH_NOTIFICATIONS });
         expect(mockDispatchFn).nthCalledWith(2, { type: UserActionsType.RESET_NOTIFICATIONS });
@@ -41,13 +41,13 @@ describe("NotificationsPage", () => {
     });
 
     it("should render empty All Notifications", () => {
-        const wrapper = mountWithStore(<NotificationsPage />, mockStore);
+        const wrapper = mountWithStore(<NotificationsTab />, mockStore);
         expect(wrapper.text().includes("Nothing to see here — yet")).toBe(true);
         expect(wrapper.text().includes("From like to Retweets and whole lot more, this is where all the actions happens.")).toBe(true);
     });
 
     it("should render NotificationAuthorItem and NotificationItem", () => {
-        const wrapper = mountWithStore(<NotificationsPage />, mockNotificationsStore);
+        const wrapper = mountWithStore(<NotificationsTab />, mockNotificationsStore);
         expect(wrapper.find(NotificationItem).length).toEqual(3);
         expect(wrapper.find(NotificationAuthorItem).length).toEqual(2);
         expect(wrapper.text().includes(`New Tweet notifications for `)).toBe(true);
@@ -75,24 +75,25 @@ describe("NotificationsPage", () => {
                 ]
             }
         };
-        const wrapper = mountWithStore(<NotificationsPage />, mockNotificationsStore);
+        const wrapper = mountWithStore(<NotificationsTab />, mockNotificationsStore);
         expect(wrapper.find(NotificationItem).length).toEqual(3);
         expect(wrapper.find(NotificationAuthorItem).length).toEqual(3);
         expect(wrapper.text().includes(`New Tweet notifications for `)).toBe(true);
-        expect(wrapper.text().includes(`${mockTweetAuthors[0].fullName} and 2 others`)).toBe(true);
+        expect(wrapper.text().includes(mockTweetAuthors[0].username)).toBe(true);
+        expect(wrapper.text().includes("and 2 others")).toBe(true);
     });
 
     it("should click User NotificationItem", () => {
         const history = createMemoryHistory();
         const pushSpy = jest.spyOn(history, "push");
-        const wrapper = mountWithStore(<NotificationsPage />, mockNotificationsStore, history);
+        const wrapper = mountWithStore(<NotificationsTab />, mockNotificationsStore, history);
         wrapper.find(NotificationItem).at(0).find(LinkWrapper).at(1).find(Link).simulate("click", { button: 0 });
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(`${PROFILE}/${mockNotifications[0].user.id}`);
     });
 
     it("should reset Notifications State", () => {
-        const wrapper = mountWithStore(<NotificationsPage />, mockNotificationsStore);
+        const wrapper = mountWithStore(<NotificationsTab />, mockNotificationsStore);
         wrapper.unmount();
         expect(mockDispatchFn).nthCalledWith(4, { type: NotificationsActionsType.RESET_NOTIFICATION_STATE });
     });

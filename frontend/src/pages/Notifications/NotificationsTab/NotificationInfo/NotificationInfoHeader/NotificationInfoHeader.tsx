@@ -21,12 +21,12 @@ const NotificationInfoHeader = memo((): ReactElement => {
         <PageHeaderWrapper backButton>
             {!isLoading && (
                 <div>
-                    <Typography variant="h5" component={"div"}>
+                    <Typography variant="h5" component="div">
                         {notificationType === NotificationType.LIKE
                             ? t("LIKED", { defaultValue: "Liked" })
                             : t("RETWEETED", { defaultValue: "Retweeted" })}
                     </Typography>
-                    <Typography variant="caption" component={"div"}>
+                    <Typography variant="caption" component="div">
                         {t("BY_USERNAME", { userFullName, defaultValue: `by ${userFullName}` })}
                     </Typography>
                 </div>
