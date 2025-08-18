@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { useMessageSettingsStyles } from "./MessageSettingsStyles";
 import BackButton from "../../../components/BackButton/BackButton";
-import DirectMessages from "../../Settings/PrivacyAndSafety/DirectMessages/DirectMessages";
+import DirectMessages from "../../Settings/PrivacyAndSafety/DirectMessages";
 import { useGlobalStyles } from "../../../util/globalClasses";
 
 const MessageSettings = memo((): ReactElement => {

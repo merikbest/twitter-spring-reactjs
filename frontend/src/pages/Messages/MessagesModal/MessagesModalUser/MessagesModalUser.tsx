@@ -20,12 +20,12 @@ const MessagesModalUser: FC<MessagesModalUser> = memo(({ user }): ReactElement =
                 <div className={classes.header}>
                     <div className={classes.headerInfo}>
                         <div>
-                            <Typography variant={"h6"} component={"span"}>
+                            <Typography variant="h6" component="span">
                                 {user?.fullName}
                             </Typography>
                             {user?.isPrivateProfile && <LockIcon />}
                         </div>
-                        <Typography variant={"subtitle1"} component={"div"}>
+                        <Typography variant="subtitle1" component="div">
                             @{user?.username}
                         </Typography>
                     </div>

@@ -1,25 +1,16 @@
-import React, { FC, FormEvent, ReactElement, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement } from "react";
 import { Button, Dialog, Divider, List, ListItem } from "@material-ui/core";
 import DialogContent from "@material-ui/core/DialogContent";
 import classnames from "classnames";
 import { useTranslation } from "react-i18next";
 
 import { useMessagesModalStyles } from "./MessagesModalStyles";
-import {
-    fetchUsersSearchByUsername,
-    resetUsersState,
-    setUsersSearch
-} from "../../../store/ducks/usersSearch/actionCreators";
-import { selectUsersPagesCount, selectUsersSearch } from "../../../store/ducks/usersSearch/selectors";
 import MessagesModalUser from "./MessagesModalUser/MessagesModalUser";
-import { createChat } from "../../../store/ducks/chats/actionCreators";
-import { selectUserDataId } from "../../../store/ducks/user/selectors";
-import { UserResponse } from "../../../types/user";
 import InfiniteScrollWrapper from "../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
 import ModalInput from "../../../components/ModalInput/ModalInput";
 import DialogTitleComponent from "../../../components/DialogTitleComponent/DialogTitleComponent";
 import { useGlobalStyles } from "../../../util/globalClasses";
+import { useMessagesModal } from "./useMessagesModal";
 
 interface MessagesModalProps {
     visible?: boolean;
@@ -29,52 +20,20 @@ interface MessagesModalProps {
 const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactElement | null => {
     const globalClasses = useGlobalStyles({});
     const classes = useMessagesModalStyles();
-    const dispatch = useDispatch();
-    const users = useSelector(selectUsersSearch);
-    const myProfileId = useSelector(selectUserDataId);
-    const usersPagesCount = useSelector(selectUsersPagesCount);
-    const [text, setText] = useState<string>("");
-    const [selectedIndex, setSelectedIndex] = useState<number>();
-    const [selectedUser, setSelectedUser] = useState<UserResponse>();
     const { t } = useTranslation();
-
-    const handleSubmitSearch = (event: FormEvent<HTMLFormElement>): void => {
-        event.preventDefault();
-        dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: 0 })); // TODO add <InfiniteScroll/>
-    };
-
-    const onSearch = (text: string): void => {
-        if (text) {
-            setText(text);
-            dispatch(resetUsersState());
-            dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: 0 }));
-        } else {
-            setText("");
-            dispatch(setUsersSearch([]));
-        }
-    };
-
-    const loadParticipants = (page: number): void => {
-        dispatch(fetchUsersSearchByUsername({ username: encodeURIComponent(text), pageNumber: page }));
-    };
-
-    const handleClickAddUserToChat = (): void => {
-        dispatch(createChat(selectedUser?.id!));
-        dispatch(setUsersSearch([]));
-        onClose();
-    };
-
-    const handleListItemClick = (user: UserResponse): void => {
-        if (!user.isMutedDirectMessages) {
-            if (user.id !== selectedIndex) {
-                setSelectedIndex(user.id);
-                setSelectedUser(user);
-            } else {
-                setSelectedIndex(undefined);
-                setSelectedUser(undefined);
-            }
-        }
-    };
+    const {
+        text,
+        users,
+        usersPagesCount,
+        myProfileId,
+        selectedUser,
+        isNextButtonDisabled,
+        handleSubmitSearch,
+        onSearch,
+        loadParticipants,
+        handleClickAddUserToChat,
+        handleListItemClick
+    } = useMessagesModal(onClose);
 
     if (!visible) {
         return null;
@@ -93,7 +52,7 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
                     variant="contained"
                     color="primary"
                     size="small"
-                    disabled={!selectedIndex}
+                    disabled={isNextButtonDisabled}
                 >
                     {t("NEXT", { defaultValue: "Next" })}
                 </Button>
@@ -116,7 +75,7 @@ const MessagesModal: FC<MessagesModalProps> = ({ visible, onClose }): ReactEleme
                         {users.map((user) => (
                             <ListItem
                                 key={user.id}
-                                selected={selectedIndex === user.id!}
+                                selected={selectedUser?.id === user.id}
                                 disabled={user.isMutedDirectMessages || user.id === myProfileId}
                                 onClick={() => handleListItemClick(user)}
                                 button

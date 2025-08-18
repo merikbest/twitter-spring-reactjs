@@ -13,10 +13,10 @@ const StartConversation = memo((): ReactElement => {
 
     return (
         <>
-            <Typography variant={"h4"} component={"div"} className={classes.messagesTitle}>
+            <Typography variant="h4" component="div" className={classes.messagesTitle}>
                 {t("SEND_MESSAGE_TITLE", { defaultValue: "Send a message, get a message" })}
             </Typography>
-            <Typography variant={"subtitle1"} component={"div"} className={classes.messagesText}>
+            <Typography variant="subtitle1" component="div" className={classes.messagesText}>
                 {t("SEND_MESSAGE_DESCRIPTION", {
                     defaultValue: "Direct Messages are private conversations between you and other people on Twitter. Share Tweets, media, and more!" })}
             </Typography>

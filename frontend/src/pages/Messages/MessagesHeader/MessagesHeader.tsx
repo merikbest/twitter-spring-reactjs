@@ -7,7 +7,7 @@ import { MESSAGES_SETTINGS } from "../../../constants/path-constants";
 import { NewMessageIcon, SettingsIcon } from "../../../icons";
 import { useGlobalStyles } from "../../../util/globalClasses";
 import { useMessagesHeaderStyles } from "./MessagesHeaderStyles";
-import ActionIcon from "../ActionIcon/ActionIcon";
+import ActionIcon from "../ActionIcon";
 import MessagesModal from "../MessagesModal/MessagesModal";
 import { useModalWindow } from "../../../hook/useModalWindow";
 
@@ -25,16 +25,16 @@ const MessagesHeader = memo((): ReactElement => {
             <div className={classes.iconGroup}>
                 <ActionIcon
                     path={MESSAGES_SETTINGS}
-                    actionText={"Settings"}
-                    translationKey={"SETTINGS"}
-                    className={"icon"}
+                    actionText="Settings"
+                    translationKey="SETTINGS"
+                    className="icon"
                     icon={SettingsIcon}
                 />
                 <ActionIcon
                     onClick={onOpenModalWindow}
-                    actionText={"New message"}
-                    translationKey={"NEW_MESSAGE"}
-                    className={"icon"}
+                    actionText="New message"
+                    translationKey="NEW_MESSAGE"
+                    className="icon"
                     icon={NewMessageIcon}
                 />
             </div>
