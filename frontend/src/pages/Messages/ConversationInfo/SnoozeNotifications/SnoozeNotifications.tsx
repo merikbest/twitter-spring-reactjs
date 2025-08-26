@@ -16,11 +16,11 @@ const SnoozeNotifications: FC<SnoozeNotificationsProps> = memo(({ fullName }): R
 
     return (
         <div className={globalClasses.itemInfoWrapper}>
-            <Typography variant={"h5"} component={"div"}>
+            <Typography variant="h5" component="div">
                 {t("NOTIFICATIONS", { defaultValue: "Notifications" })}
             </Typography>
             <div className={classes.switchWrapper}>
-                <Typography variant={"body1"} component={"span"}>
+                <Typography variant="body1" component="span">
                     {t("SNOOZE_NOTIFICATIONS", { fullName, defaultValue: `Snooze notifications from ${fullName}` })}
                 </Typography>
                 <Switch checked={false} />

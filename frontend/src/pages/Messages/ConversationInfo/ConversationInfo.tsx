@@ -1,18 +1,13 @@
-import React, { FC, ReactElement, useCallback, useEffect, useState } from "react";
+import React, { FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { Divider, Paper } from "@material-ui/core";
 import classnames from "classnames";
 
 import { useConversationInfoStyles } from "./ConversationInfoStyles";
-import { processUserToBlocklist } from "../../../store/ducks/user/actionCreators";
 import BlockUserModal from "../../../components/BlockUserModal/BlockUserModal";
-import { fetchChatParticipant, resetUserProfileState } from "../../../store/ducks/userProfile/actionCreators";
 import { useGlobalStyles } from "../../../util/globalClasses";
-import { selectUserProfile, selectUsersIsLoading } from "../../../store/ducks/userProfile/selectors";
 import Spinner from "../../../components/Spinner/Spinner";
 import { PROFILE } from "../../../constants/path-constants";
-import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
 import ConversationHeader from "./ConversationHeader/ConversationHeader";
 import SnoozeNotifications from "./SnoozeNotifications/SnoozeNotifications";
 import BlockUserComponent from "./BlockUserComponent/BlockUserComponent";
@@ -25,6 +20,7 @@ import BlockButton from "./BlockButton/BlockButton";
 import ConversationUserAvatar from "./ConversationUserAvatar/ConversationUserAvatar";
 import ConversationUserInfo from "./ConversationUserInfo/ConversationUserInfo";
 import { DEFAULT_PROFILE_IMG } from "../../../constants/url-constants";
+import { useConversationInfo } from "./useConversationInfo";
 
 interface ConversationInfoProps {
     participantId?: number;
@@ -34,33 +30,14 @@ interface ConversationInfoProps {
 const ConversationInfo: FC<ConversationInfoProps> = ({ participantId, chatId }): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useConversationInfoStyles();
-    const dispatch = useDispatch();
-    const chatParticipant = useSelector(selectUserProfile);
-    const isChatParticipantLoading = useSelector(selectUsersIsLoading);
-    const [visibleBlockUserModal, setVisibleBlockUserModal] = useState<boolean>(false);
-
-    useEffect(() => {
-        dispatch(fetchChatParticipant({ participantId: participantId!, chatId: chatId! }));
-
-        return () => {
-            dispatch(resetUserProfileState());
-        };
-    }, []);
-
-    const onBlockUser = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
-        event.preventDefault();
-        dispatch(processUserToBlocklist({ userId: chatParticipant?.id! }));
-        setVisibleBlockUserModal(false);
-        dispatch(setOpenSnackBar(`@${chatParticipant?.username!} has been ${chatParticipant?.isUserBlocked ? "unblocked" : "blocked"}.`));
-    }, [chatParticipant?.id]);
-
-    const onOpenBlockUserModal = useCallback((): void => {
-        setVisibleBlockUserModal(true);
-    }, []);
-
-    const onCloseBlockUserModal = useCallback((): void => {
-        setVisibleBlockUserModal(false);
-    }, []);
+    const {
+        chatParticipant,
+        isChatParticipantLoading,
+        visibleBlockUserModal,
+        onBlockUser,
+        onOpenBlockUserModal,
+        onCloseBlockUserModal,
+    } = useConversationInfo(participantId, chatId);
 
     return (
         <div>

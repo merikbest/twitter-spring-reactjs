@@ -10,7 +10,7 @@ const ChatUserBlocked = (): ReactElement => {
     const { t } = useTranslation();
 
     return (
-        <Typography variant={"subtitle2"} component={"div"} className={classes.blockedInfoText}>
+        <Typography variant="subtitle2" component="div" className={classes.blockedInfoText}>
             {t("CAN_NO_LONGER_SEND_MESSAGES", { defaultValue: "You can no longer send messages to this person." })}
             {" "}
             <MuiLink href={DIRECT_MESSAGES} variant="subtitle2" target="_blank" rel="noopener">

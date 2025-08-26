@@ -8,7 +8,7 @@ import { MESSAGES } from "../../../../constants/path-constants";
 import { DetailsIcon } from "../../../../icons";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { useChatHeaderStyles } from "./ChatHeaderStyles";
-import ActionIcon from "../../ActionIcon/ActionIcon";
+import ActionIcon from "../../ActionIcon";
 import { selectUserProfile } from "../../../../store/ducks/userProfile/selectors";
 
 const ChatHeader = memo((): ReactElement => {
@@ -23,16 +23,16 @@ const ChatHeader = memo((): ReactElement => {
                 <Typography variant="h5">
                     {chatParticipant?.fullName}
                 </Typography>
-                <Typography variant="subtitle2" component={"div"}>
+                <Typography variant="subtitle2" component="div">
                     @{chatParticipant?.username}
                 </Typography>
             </div>
             <div className={classes.iconGroup}>
                 <ActionIcon
                     path={`${MESSAGES}/${chatParticipant?.id}/info`}
-                    actionText={"Details"}
-                    translationKey={"DETAILS"}
-                    className={"icon"}
+                    actionText="Details"
+                    translationKey="DETAILS"
+                    className="icon"
                     icon={DetailsIcon}
                 />
             </div>

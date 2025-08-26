@@ -23,11 +23,11 @@ const BlockUserComponent: FC<BlockUserComponentProps> = memo((
 
     return (
         <div
-            id={"onOpenBlockUserModal"}
+            id="onOpenBlockUserModal"
             className={classnames(classes.conversationInfoButton, classes.blockUser)}
             onClick={onOpenBlockUserModal}
         >
-            <Typography variant={"body1"} component={"span"}>
+            <Typography variant="body1" component="span">
                 {isUserBlocked
                     ? t("UNBLOCK", { defaultValue: "Unblock" })
                     : t("BLOCK", { defaultValue: "Block" })}

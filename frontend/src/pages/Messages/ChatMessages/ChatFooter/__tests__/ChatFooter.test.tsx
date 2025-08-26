@@ -7,7 +7,7 @@ import { mockDispatch, mountWithStore } from "../../../../../util/test-utils/tes
 import { mockChats } from "../../../../../util/test-utils/mock-test-data";
 import { MessageInput } from "../../../MessageInput/MessageInput";
 import { ChatMessagesActionsType } from "../../../../../store/ducks/chatMessages/contracts/actionTypes";
-import ActionIcon from "../../../ActionIcon/ActionIcon";
+import ActionIcon from "../../../ActionIcon";
 import ChatFooter from "../ChatFooter";
 
 describe("ChatFooter", () => {

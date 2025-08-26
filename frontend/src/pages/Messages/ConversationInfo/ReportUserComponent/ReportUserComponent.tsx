@@ -15,7 +15,7 @@ const ReportUserComponent: FC<ReportUserComponentProps> = memo(({ username }): R
 
     return (
         <div className={classnames(classes.conversationInfoButton, classes.blockUser)}>
-            <Typography variant={"body1"} component={"span"}>
+            <Typography variant="body1" component="span">
                 {t("REPORT", { defaultValue: "Report" })}
                 {` @${username}`}
             </Typography>

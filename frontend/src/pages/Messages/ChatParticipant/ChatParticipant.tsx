@@ -43,14 +43,14 @@ const ChatParticipant: FC<ChatParticipantProps> = memo((
                     )}
                 />
                 <div>
-                    <Typography variant={"h6"} component={"span"}>
+                    <Typography variant="h6" component="span">
                         {(isMyProfile) ? (
                             chat.participants[0].user.fullName
                         ) : (
                             chat.participants[1].user.fullName
                         )}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"span"} className={classes.username}>
+                    <Typography variant="subtitle1" component="span" className={classes.username}>
                         {(isMyProfile) ? (
                             `@${chat.participants[0].user.username}`
                         ) : (

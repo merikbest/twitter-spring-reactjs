@@ -36,7 +36,7 @@ const ActionIcon: FC<ActionIconProps> = (
             actionText={t(translationKey, { defaultValue: actionText })}
             disabled={disabled}
             icon={icon}
-            size={"medium"}
+            size="medium"
         />;
     };
 

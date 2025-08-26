@@ -13,10 +13,10 @@ const EmptyChatMessages = memo((): ReactElement => {
 
     return (
         <div className={classes.chatInfoWrapper}>
-            <Typography variant={"h4"} component={"div"}>
+            <Typography variant="h4" component="div">
                 {t("EMPTY_CHAT_MESSAGES_TITLE", { defaultValue: "You don’t have a message selected" })}
             </Typography>
-            <Typography variant={"subtitle1"} component={"div"}>
+            <Typography variant="subtitle1" component="div">
                 {t("EMPTY_CHAT_MESSAGES_DESCRIPTION", { defaultValue: "Choose one from your existing messages, or start a new one." })}
             </Typography>
             <Button

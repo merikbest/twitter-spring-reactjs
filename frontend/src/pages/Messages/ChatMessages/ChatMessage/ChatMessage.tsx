@@ -58,30 +58,30 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
                                                 className={classes.tweetAvatar}
                                                 src={message.tweet?.author.avatar ?? DEFAULT_PROFILE_IMG}
                                             />
-                                            <Typography variant={"h6"} component={"span"}>
+                                            <Typography variant="h6" component="span">
                                                 {message.tweet?.author.fullName}
                                             </Typography>
                                             <Typography
-                                                variant={"subtitle1"}
-                                                component={"span"}
+                                                variant="subtitle1"
+                                                component="span"
                                                 className={classes.tweetUsername}
                                             >
                                                 @{message.tweet?.author.username}
                                             </Typography>
                                             <Typography
-                                                variant={"subtitle1"}
-                                                component={"span"}
+                                                variant="subtitle1"
+                                                component="span"
                                                 className={classes.tweetUsername}
                                             >·</Typography>
                                             <Typography
-                                                variant={"subtitle1"}
-                                                component={"span"}
+                                                variant="subtitle1"
+                                                component="span"
                                                 className={classes.tweetUsername}
                                             >
                                                 {formatDate(new Date(message.tweet?.createdAt!))}
                                             </Typography>
                                         </div>
-                                        <Typography variant={"body1"} component={"span"}>
+                                        <Typography variant="body1" component="span">
                                             {textFormatter(message.tweet?.text)}
                                         </Typography>
                                     </div>
@@ -96,7 +96,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
                                 ? classes.myMessageWithTweet
                                 : classes.myMessageCommon
                         )}>
-                            <Typography component={"span"}>
+                            <Typography component="span">
                                 {textFormatter(message.text)}
                             </Typography>
                         </div>
@@ -105,7 +105,7 @@ const ChatMessage: FC<ChatMessageProps> = memo(({ message, isParticipantMessage 
             </div>
             <div className={classes.myMessageDate}>
                 {!isParticipantMessage && <span>{CheckIcon}</span>}
-                <Typography variant={"subtitle2"} component={"span"}>
+                <Typography variant="subtitle2" component="span">
                     {formatChatMessageDate(new Date(message.createdAt))}
                 </Typography>
             </div>

@@ -28,10 +28,10 @@ const LeaveFromConversationModal: FC<LeaveFromConversationModalProps> = (
         <Dialog open={visible} onClose={onClose}>
             <DialogContent style={{ padding: 0 }}>
                 <div className={classes.modalWrapper}>
-                    <Typography variant={"h5"} component={"div"}>
+                    <Typography variant="h5" component="div">
                         {t("LEAVE_CONVERSATION_QUESTION", { defaultValue: "Leave conversation?" })}
                     </Typography>
-                    <Typography variant={"subtitle1"} component={"div"}>
+                    <Typography variant="subtitle1" component="div">
                         {t("LEAVE_CONVERSATION_DESCRIPTION", { defaultValue: "This conversation will be deleted from your inbox. Other people in the conversation will still be able to see it." })}
                     </Typography>
                     <Button

@@ -37,11 +37,11 @@ const LeaveConversationComponent: FC<LeaveConversationComponentProps> = memo((
     return (
         <>
             <div
-                id={"leaveFromConversation"}
+                id="leaveFromConversation"
                 className={classnames(classes.conversationInfoButton, classes.leaveConversation)}
                 onClick={onOpenModalWindow}
             >
-                <Typography variant={"body1"} component={"span"}>
+                <Typography variant="body1" component="span">
                     {t("LEAVE_CONVERSATION", { defaultValue: "Leave conversation" })}
                 </Typography>
             </div>

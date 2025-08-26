@@ -11,7 +11,7 @@ import { ChatsActionsType } from "../../../store/ducks/chats/contracts/actionTyp
 import { mockChats } from "../../../util/test-utils/mock-test-data";
 import { ChatMessagesActionsType } from "../../../store/ducks/chatMessages/contracts/actionTypes";
 import { UserActionsType } from "../../../store/ducks/user/contracts/actionTypes";
-import ChatMessages from "../ChatMessages/ChatMessages";
+import ChatMessages from "../ChatMessages";
 import MessagesModal from "../MessagesModal/MessagesModal";
 import CloseButton from "../../../components/CloseButton/CloseButton";
 import ConversationInfo from "../ConversationInfo/ConversationInfo";
