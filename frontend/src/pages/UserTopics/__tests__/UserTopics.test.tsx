@@ -6,7 +6,7 @@ import { LoadingStatus } from "../../../types/common";
 import { TopicsActionsType } from "../../../store/ducks/topics/contracts/actionTypes";
 import Spinner from "../../../components/Spinner/Spinner";
 import { mockTopics } from "../../../util/test-utils/mock-test-data";
-import TopicItem from "../../Topics/TopicItem/TopicItem";
+import TopicItem from "../../Topics/TopicItem";
 import UserTopics from "../UserTopics";
 
 describe("UserTopics", () => {
