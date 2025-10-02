@@ -9,7 +9,7 @@ import {
     BlockedAndMutedUsersActionsType
 } from "../../../../../../store/ducks/blockedAndMutedUsers/contracts/actionTypes";
 import { mockMutedUsers } from "../../../../../../util/test-utils/mock-test-data";
-import MutedAccountItem from "../MutedAccountItem/MutedAccountItem";
+import MutedAccountItem from "../MutedAccountItem";
 import { LoadingStatus } from "../../../../../../types/common";
 
 describe("MutedAccounts", () => {

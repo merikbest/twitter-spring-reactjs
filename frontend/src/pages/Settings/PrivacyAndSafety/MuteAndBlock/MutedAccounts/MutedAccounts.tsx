@@ -1,45 +1,25 @@
-import React, { FC, ReactElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement } from "react";
 import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
-import MutedAccountItem from "./MutedAccountItem/MutedAccountItem";
+import MutedAccountItem from "./MutedAccountItem";
 import Spinner from "../../../../../components/Spinner/Spinner";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
-import {
-    selectIsBlockedAndMutedUsersLoaded,
-    selectIsBlockedAndMutedUsersLoading,
-    selectMutedUsersItems,
-    selectUsersPagesCount
-} from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
-import {
-    fetchMutedUsers,
-    resetBlockedAndMutedUsersState
-} from "../../../../../store/ducks/blockedAndMutedUsers/actionCreators";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { TWITTER_MUTE } from "../../../../../constants/url-constants";
 import InfiniteScrollWrapper from "../../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import { useMutedAccounts } from "./useMutedAccounts";
 
 const MutedAccounts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
-    const dispatch = useDispatch();
-    const mutedUsers = useSelector(selectMutedUsersItems);
-    const isMutedUsersLoading = useSelector(selectIsBlockedAndMutedUsersLoading);
-    const isMutedUsersLoaded = useSelector(selectIsBlockedAndMutedUsersLoaded);
-    const mutedUsersPagesCount = useSelector(selectUsersPagesCount);
     const { t } = useTranslation();
-
-    useEffect(() => {
-        loadMutedUsers(0);
-
-        return () => {
-            dispatch(resetBlockedAndMutedUsersState());
-        };
-    }, []);
-
-    const loadMutedUsers = (page: number): void => {
-        dispatch(fetchMutedUsers(page));
-    };
+    const {
+        mutedUsers,
+        isMutedUsersLoading,
+        isMutedUsersLoaded,
+        mutedUsersPagesCount,
+        loadMutedUsers,
+    } = useMutedAccounts();
 
     return (
         <InfiniteScrollWrapper

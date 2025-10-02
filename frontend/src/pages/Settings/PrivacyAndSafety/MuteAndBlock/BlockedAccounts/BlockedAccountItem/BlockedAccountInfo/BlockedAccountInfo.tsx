@@ -1,7 +1,7 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Typography} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { Typography } from "@material-ui/core";
 
-import {useBlockedAccountItemStyles} from "../BlockedAccountItemStyles";
+import { useBlockedAccountItemStyles } from "../BlockedAccountItemStyles";
 
 interface BlockedAccountInfoProps {
     fullName: string;

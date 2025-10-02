@@ -61,7 +61,7 @@ describe("MutedAccountItem", () => {
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {
-            payload: `@${mockMutedUser.username} has been unmuted.`,
+            payload: `@${mockMutedUser.username} has been unmuted`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
@@ -78,7 +78,7 @@ describe("MutedAccountItem", () => {
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {
-            payload: `@${mockMutedUser.username} has been muted.`,
+            payload: `@${mockMutedUser.username} has been muted`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });

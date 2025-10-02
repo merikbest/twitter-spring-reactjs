@@ -1,10 +1,7 @@
-import React, { FC, memo, ReactElement, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, memo, ReactElement } from "react";
 import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
-import { selectUserDataId, selectUserDataIsMutedDirectMessages } from "../../../../store/ducks/user/selectors";
-import { updateDirect } from "../../../../store/ducks/user/actionCreators";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import {
@@ -12,25 +9,12 @@ import {
     DIRECT_MESSAGES_RECEIPTS,
     DIRECT_MESSAGES_RECEIVE
 } from "../../../../constants/url-constants";
+import { useDirectMessages } from "./useDirectMessages";
 
 const DirectMessages: FC = memo((): ReactElement => {
     const globalClasses = useGlobalStyles({});
-    const dispatch = useDispatch();
-    const myProfileId = useSelector(selectUserDataId);
-    const isMutedDirectMessages = useSelector(selectUserDataIsMutedDirectMessages);
     const { t } = useTranslation();
-    const [checked, setChecked] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (myProfileId) {
-            setChecked(isMutedDirectMessages!);
-        }
-    }, []);
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
-        dispatch(updateDirect({ mutedDirectMessages: event.target.checked }));
-    };
+    const { checked, handleChange } = useDirectMessages();
 
     return (
         <>

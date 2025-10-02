@@ -1,5 +1,4 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { Checkbox, Link as MuiLink, Typography } from "@material-ui/core";
 import classnames from "classnames";
@@ -7,31 +6,17 @@ import { useTranslation } from "react-i18next";
 
 import { useAudienceAndTaggingStyles } from "./AudienceAndTaggingStyles";
 import { ArrowRightIcon } from "../../../../icons";
-import { selectUserDataIsPrivateProfile } from "../../../../store/ducks/user/selectors";
-import { updatePrivateProfile } from "../../../../store/ducks/user/actionCreators";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import { SETTINGS_PRIVACY_AND_SAFETY_TAGGING } from "../../../../constants/path-constants";
 import { PUBLIC_AND_PROTECTED_TWEETS } from "../../../../constants/url-constants";
+import { useAudienceAndTagging } from "./useAudienceAndTagging";
 
 const AudienceAndTagging: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useAudienceAndTaggingStyles();
-    const dispatch = useDispatch();
-    const isPrivateProfile = useSelector(selectUserDataIsPrivateProfile);
     const { t } = useTranslation();
-    const [checked, setChecked] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (isPrivateProfile) {
-            setChecked(isPrivateProfile);
-        }
-    }, []);
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
-        dispatch(updatePrivateProfile({ privateProfile: event.target.checked }));
-    };
+    const { checked, handleChange } = useAudienceAndTagging();
 
     return (
         <>

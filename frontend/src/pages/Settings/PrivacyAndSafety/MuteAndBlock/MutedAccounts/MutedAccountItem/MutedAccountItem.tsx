@@ -3,9 +3,9 @@ import { Paper } from "@material-ui/core";
 
 import { useMutedAccountItemStyles } from "./MutedAccountItemStyles";
 import { MutedUserResponse } from "../../../../../../types/user";
-import MuteAccountButton from "./MuteAccountButton/MuteAccountButton";
-import MuteAccountInfo from "./MuteAccountInfo/MuteAccountInfo";
-import MuteAccountAvatar from "./MuteAccountAvatar/MuteAccountAvatar";
+import MuteAccountButton from "./MuteAccountButton";
+import MuteAccountInfo from "./MuteAccountInfo";
+import MuteAccountAvatar from "./MuteAccountAvatar";
 
 interface MutedAccountItemProps {
     mutedUser?: MutedUserResponse;

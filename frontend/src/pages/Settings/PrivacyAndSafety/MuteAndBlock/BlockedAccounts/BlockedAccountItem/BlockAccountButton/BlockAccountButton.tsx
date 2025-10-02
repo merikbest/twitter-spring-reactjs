@@ -1,11 +1,11 @@
-import React, {FC, memo, ReactElement} from "react";
-import {useDispatch} from "react-redux";
-import {Button} from "@material-ui/core";
+import React, { FC, memo, ReactElement } from "react";
+import { useDispatch } from "react-redux";
+import { Button } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
-import {processUserToBlocklist} from "../../../../../../../store/ducks/user/actionCreators";
-import {setOpenSnackBar} from "../../../../../../../store/ducks/actionSnackbar/actionCreators";
-import {useBlockAccountButtonStyles} from "./BlockAccountButtonStyles";
+import { processUserToBlocklist } from "../../../../../../../store/ducks/user/actionCreators";
+import { setOpenSnackBar } from "../../../../../../../store/ducks/actionSnackbar/actionCreators";
+import { useBlockAccountButtonStyles } from "./BlockAccountButtonStyles";
 
 interface BlockAccountButtonProps {
     userId: number;

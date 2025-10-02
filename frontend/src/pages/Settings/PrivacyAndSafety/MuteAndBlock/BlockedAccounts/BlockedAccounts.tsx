@@ -1,55 +1,32 @@
-import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement } from "react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Divider, Link as MuiLink, Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
-import BlockedAccountItem from "./BlockedAccountItem/BlockedAccountItem";
+import BlockedAccountItem from "./BlockedAccountItem";
 import Spinner from "../../../../../components/Spinner/Spinner";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
-import {
-    fetchBlockedUsers,
-    resetBlockedAndMutedUsersState
-} from "../../../../../store/ducks/blockedAndMutedUsers/actionCreators";
-import {
-    selectBlockedUsersItems,
-    selectIsBlockedAndMutedUsersLoaded,
-    selectIsBlockedAndMutedUsersLoading,
-    selectUsersPagesCount
-} from "../../../../../store/ducks/blockedAndMutedUsers/selectors";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import {
     ADVANCED_TWITTER_BLOCK_OPTIONS,
     BLOCKING_AND_UNBLOCKING_ACCOUNTS
 } from "../../../../../constants/url-constants";
 import InfiniteScrollWrapper from "../../../../../components/InfiniteScrollWrapper/InfiniteScrollWrapper";
+import { useBlockedAccounts } from "./useBlockedAccounts";
 
 const BlockedAccounts: FC = (): ReactElement => {
     const globalClasses = useGlobalStyles({});
-    const dispatch = useDispatch();
-    const blockedUsers = useSelector(selectBlockedUsersItems);
-    const isBlockedUsersLoading = useSelector(selectIsBlockedAndMutedUsersLoading);
-    const isBlockedUsersLoaded = useSelector(selectIsBlockedAndMutedUsersLoaded);
-    const blockedUsersPagesCount = useSelector(selectUsersPagesCount);
     const { t } = useTranslation();
-    const [activeTab, setActiveTab] = useState<number>(0);
-
-    useEffect(() => {
-        loadBlockedUsers(0);
-
-        return () => {
-            dispatch(resetBlockedAndMutedUsersState());
-        };
-    }, []);
-
-    const handleChangeTab = (event: ChangeEvent<{}>, newValue: number): void => {
-        setActiveTab(newValue);
-    };
-
-    const loadBlockedUsers = (page: number): void => {
-        dispatch(fetchBlockedUsers(page));
-    };
+    const {
+        blockedUsers,
+        isBlockedUsersLoading,
+        isBlockedUsersLoaded,
+        blockedUsersPagesCount,
+        activeTab,
+        handleChangeTab,
+        loadBlockedUsers
+    } = useBlockedAccounts();
 
     return (
         <InfiniteScrollWrapper
@@ -96,7 +73,8 @@ const BlockedAccounts: FC = (): ReactElement => {
                                         message you, and you won’t see notifications from them.`
                                     })}
                                     {" "}
-                                    <MuiLink href={BLOCKING_AND_UNBLOCKING_ACCOUNTS} variant="subtitle1" target="_blank" rel="noopener">
+                                    <MuiLink href={BLOCKING_AND_UNBLOCKING_ACCOUNTS} variant="subtitle1" target="_blank"
+                                             rel="noopener">
                                         {t("LEARN_MORE", { defaultValue: "Learn more" })}
                                     </MuiLink>
                                 </>
@@ -106,7 +84,8 @@ const BlockedAccounts: FC = (): ReactElement => {
                                         defaultValue: "Find out how you can import a block list."
                                     })}
                                     {" "}
-                                    <MuiLink href={ADVANCED_TWITTER_BLOCK_OPTIONS} variant="subtitle1" target="_blank" rel="noopener">
+                                    <MuiLink href={ADVANCED_TWITTER_BLOCK_OPTIONS} variant="subtitle1" target="_blank"
+                                             rel="noopener">
                                         {t("LEARN_MORE", { defaultValue: "Learn more" })}
                                     </MuiLink>
                                 </>

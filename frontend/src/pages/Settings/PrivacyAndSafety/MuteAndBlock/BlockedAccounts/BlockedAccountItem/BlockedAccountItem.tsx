@@ -1,28 +1,28 @@
-import React, {FC, memo, ReactElement} from "react";
-import {Paper} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import React, { FC, memo, ReactElement } from "react";
+import { Paper } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-import {useBlockedAccountItemStyles} from "./BlockedAccountItemStyles";
-import {useGlobalStyles} from "../../../../../../util/globalClasses";
-import {BlockedUserResponse} from "../../../../../../types/user";
-import {PROFILE} from "../../../../../../constants/path-constants";
-import BlockAccountButton from "./BlockAccountButton/BlockAccountButton";
-import BlockedAccountInfo from "./BlockedAccountInfo/BlockedAccountInfo";
-import BlockedAccountAvatar from "./BlockedAccountAvatar/BlockedAccountAvatar";
+import { useBlockedAccountItemStyles } from "./BlockedAccountItemStyles";
+import { useGlobalStyles } from "../../../../../../util/globalClasses";
+import { BlockedUserResponse } from "../../../../../../types/user";
+import { PROFILE } from "../../../../../../constants/path-constants";
+import BlockAccountButton from "./BlockAccountButton";
+import BlockedAccountInfo from "./BlockedAccountInfo";
+import BlockedAccountAvatar from "./BlockedAccountAvatar";
 
 interface BlockedAccountItemProps {
     blockedUser: BlockedUserResponse;
 }
 
-const BlockedAccountItem: FC<BlockedAccountItemProps> = memo(({blockedUser}): ReactElement => {
+const BlockedAccountItem: FC<BlockedAccountItemProps> = memo(({ blockedUser }): ReactElement => {
     const globalClasses = useGlobalStyles({});
     const classes = useBlockedAccountItemStyles();
 
     return (
         <Link to={`${PROFILE}/${blockedUser?.id}`} className={globalClasses.link}>
             <Paper className={classes.container}>
-                <BlockedAccountAvatar avatar={blockedUser.avatar}/>
-                <div style={{flex: 1}}>
+                <BlockedAccountAvatar avatar={blockedUser.avatar} />
+                <div style={{ flex: 1 }}>
                     <div className={classes.userInfoWrapper}>
                         <BlockedAccountInfo
                             fullName={blockedUser.fullName}
