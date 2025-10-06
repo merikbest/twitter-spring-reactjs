@@ -3,7 +3,7 @@ import React from "react";
 import ChangeEmail from "../ChangeEmail";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../../util/test-utils/test-helper";
 import { ChangeInfoTextField } from "../../../../ChangeInfoTextField/ChangeInfoTextField";
-import ChangeEmailModal from "../ChangeEmailModal/ChangeEmailModal";
+import ChangeEmailModal from "../ChangeEmailModal";
 import { LoadingStatus } from "../../../../../../types/common";
 
 describe("ChangeEmail", () => {

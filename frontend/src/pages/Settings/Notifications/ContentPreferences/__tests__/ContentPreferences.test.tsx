@@ -8,8 +8,8 @@ import {
     SETTINGS_PRIVACY_AND_SAFETY_BLOCKED,
     SETTINGS_PRIVACY_AND_SAFETY_MUTED
 } from "../../../../../constants/path-constants";
-import ExploreModal from "../ExploreModal/ExploreModal";
-import RecommendationsModal from "../RecommendationsModal/RecommendationsModal";
+import ExploreModal from "../ExploreModal";
+import RecommendationsModal from "../RecommendationsModal";
 import { LoadingStatus } from "../../../../../types/common";
 
 describe("ContentPreferences", () => {

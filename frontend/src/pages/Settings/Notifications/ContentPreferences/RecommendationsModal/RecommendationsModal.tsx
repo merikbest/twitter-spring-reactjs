@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { useRecommendationsModalStyles } from "./RecommendationsModalStyles";
 import { useGlobalStyles } from "../../../../../util/globalClasses";
-import RecommendedLanguage from "./RecommendedLanguage/RecommendedLanguage";
+import RecommendedLanguage from "./RecommendedLanguage";
 import FullWidthButton from "../../../../../components/Buttons/FullWidthButton/FullWidthButton";
 
 export interface RecommendationsModalProps {

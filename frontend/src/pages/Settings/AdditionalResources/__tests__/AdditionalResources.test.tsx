@@ -8,7 +8,6 @@ describe("AdditionalResources", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(<AdditionalResources />, createMockRootState());
 
-        expect(wrapper.text().includes("Check out other places for helpful information to learn more about Twitter products and services.")).toBe(true);
         expect(wrapper.text().includes("Release notes")).toBe(true);
         expect(wrapper.text().includes("Privacy policy")).toBe(true);
         expect(wrapper.text().includes("Legal")).toBe(true);

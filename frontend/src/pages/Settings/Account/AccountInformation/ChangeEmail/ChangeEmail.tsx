@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useChangeEmailStyles } from "./ChangeEmailStyles";
 import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import { selectUserIsLoaded, selectUserProfileEmail } from "../../../../../store/ducks/user/selectors";
-import ChangeEmailModal from "./ChangeEmailModal/ChangeEmailModal";
+import ChangeEmailModal from "./ChangeEmailModal";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
 import { useModalWindow } from "../../../../../hook/useModalWindow";
 

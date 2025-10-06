@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import { useContentPreferencesStyles } from "./ContentPreferencesStyles";
 import { ArrowRightIcon } from "../../../../icons";
-import ExploreModal from "./ExploreModal/ExploreModal";
-import RecommendationsModal from "./RecommendationsModal/RecommendationsModal";
+import ExploreModal from "./ExploreModal";
+import RecommendationsModal from "./RecommendationsModal";
 import { withDocumentTitle } from "../../../../hoc/withDocumentTitle";
 import {
     SETTINGS_PERSONALIZATION,

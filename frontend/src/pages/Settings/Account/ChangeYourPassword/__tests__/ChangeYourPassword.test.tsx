@@ -39,7 +39,7 @@ describe("ChangeYourPassword", () => {
 
         mockAdapter.onPost(UI_V1_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(200, mockSuccessMessage);
 
-        setImmediate(() => {
+        setTimeout(() => {
             wrapper.update();
             done();
             expect(wrapper.find(ChangeInfoTextField).at(0).prop("value")).toBe("");
@@ -49,7 +49,7 @@ describe("ChangeYourPassword", () => {
                 payload: mockSuccessMessage,
                 type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
             });
-        });
+        }, 0);
     });
 
     it("should return current password error message", (done) => {
@@ -61,12 +61,12 @@ describe("ChangeYourPassword", () => {
 
         mockAdapter.onPost(UI_V1_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(404, { currentPassword: mockErrorMessage });
 
-        setImmediate(() => {
+        setTimeout(() => {
             wrapper.update();
             done();
             expect(wrapper.find(ChangeInfoTextField).at(0).prop("error")).toBe(true);
             expect(wrapper.find(ChangeInfoTextField).at(0).prop("helperText")).toBe(mockErrorMessage);
-        });
+        }, 0);
     });
 
     it("should return password do not match error message", (done) => {
@@ -78,12 +78,12 @@ describe("ChangeYourPassword", () => {
 
         mockAdapter.onPost(UI_V1_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(400, { password: mockErrorMessage });
 
-        setImmediate(() => {
+        setTimeout(() => {
             wrapper.update();
             done();
             expect(wrapper.find(ChangeInfoTextField).at(1).prop("error")).toBe(true);
             expect(wrapper.find(ChangeInfoTextField).at(1).prop("helperText")).toBe(mockErrorMessage);
-        });
+        }, 0);
     });
 
     it("should return password2 is empty error message", (done) => {
@@ -95,12 +95,12 @@ describe("ChangeYourPassword", () => {
 
         mockAdapter.onPost(UI_V1_AUTH_RESET_CURRENT, mockChangePasswordRequest).reply(400, { password2: mockErrorMessage });
 
-        setImmediate(() => {
+        setTimeout(() => {
             wrapper.update();
             done();
             expect(wrapper.find(ChangeInfoTextField).at(2).prop("error")).toBe(true);
             expect(wrapper.find(ChangeInfoTextField).at(2).prop("helperText")).toBe(mockErrorMessage);
-        });
+        }, 0);
     });
 
     const submitChangePasswordForm = (wrapper: ReactWrapper<any, React.Component["state"], React.Component>): void => {

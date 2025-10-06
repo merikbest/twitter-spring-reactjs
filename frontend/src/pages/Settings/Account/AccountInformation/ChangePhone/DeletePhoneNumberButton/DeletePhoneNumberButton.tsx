@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { useDeletePhoneNumberButtonStyles } from "./DeletePhoneNumberButtonStyles";
 import { useModalWindow } from "../../../../../../hook/useModalWindow";
-import DeletePhoneModal from "./DeletePhoneModal/DeletePhoneModal";
+import DeletePhoneModal from "./DeletePhoneModal";
 
 const DeletePhoneNumberButton: FC = (): ReactElement => {
     const classes = useDeletePhoneNumberButtonStyles();

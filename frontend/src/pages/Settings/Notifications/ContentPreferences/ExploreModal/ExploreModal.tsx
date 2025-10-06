@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { useGlobalStyles } from "../../../../../util/globalClasses";
 import { TWITTER_SEARCH } from "../../../../../constants/url-constants";
-import ExploreModalInfo from "./ExploreModalInfo/ExploreModalInfo";
+import ExploreModalInfo from "./ExploreModalInfo";
 import DialogTitleComponent from "../../../../../components/DialogTitleComponent/DialogTitleComponent";
 
 export interface ExploreModalProps {

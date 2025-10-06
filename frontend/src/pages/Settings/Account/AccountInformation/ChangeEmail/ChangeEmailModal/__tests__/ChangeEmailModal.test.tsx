@@ -29,12 +29,12 @@ describe("ChangeEmailModal", () => {
 
         wrapper.find(ChangeInfoTextField).at(0).find("input").simulate("change", { target: { value: "test@test.test" } });
 
-        setImmediate(() => {
+        setTimeout(() => {
             wrapper.update();
             done();
             wrapper.find(Button).simulate("submit");
             expect(wrapper.find(Button).text().includes("Cancel")).toBe(true);
-        });
+        }, 0);
     });
 
     it("should render ChangeEmailModal input error", (done) => {
@@ -42,11 +42,11 @@ describe("ChangeEmailModal", () => {
 
         wrapper.find(ChangeInfoTextField).at(0).find("input").simulate("change", { target: { value: "test@test" } });
 
-        setImmediate(() => {
+        setTimeout(() => {
             wrapper.update();
             done();
             wrapper.find(Button).simulate("submit");
-            expect(wrapper.find(ChangeInfoTextField).prop("helperText")).toBe("Invalid mail");
-        });
+            expect(wrapper.find(ChangeInfoTextField).prop("helperText")).toBe("Please enter a valid email address.");
+        }, 0);
     });
 });

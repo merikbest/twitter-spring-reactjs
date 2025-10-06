@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { useModalWindow } from "../../../../../../hook/useModalWindow";
-import ChangePhoneModal from "./ChangePhoneModal/ChangePhoneModal";
+import ChangePhoneModal from "./ChangePhoneModal";
 import { selectUserIsLoaded } from "../../../../../../store/ducks/user/selectors";
 import { useUpdatePhoneNumberButtonStyles } from "./UpdatePhoneNumberButtonStyles";
 

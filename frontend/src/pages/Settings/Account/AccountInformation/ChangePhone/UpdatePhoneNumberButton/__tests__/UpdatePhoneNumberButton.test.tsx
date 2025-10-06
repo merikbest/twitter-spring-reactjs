@@ -1,7 +1,7 @@
 import React from "react";
 
 import { createMockRootState, mountWithStore } from "../../../../../../../util/test-utils/test-helper";
-import ChangePhoneModal from "../ChangePhoneModal/ChangePhoneModal";
+import ChangePhoneModal from "../ChangePhoneModal";
 import { LoadingStatus } from "../../../../../../../types/common";
 import UpdatePhoneNumberButton from "../UpdatePhoneNumberButton";
 

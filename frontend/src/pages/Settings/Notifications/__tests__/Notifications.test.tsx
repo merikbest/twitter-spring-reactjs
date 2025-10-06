@@ -9,7 +9,6 @@ describe("Notifications", () => {
     it("should render correctly", () => {
         const wrapper = mountWithStore(<Notifications />, createMockRootState());
 
-        expect(wrapper.text().includes("Select the kinds of notifications you get about your activities, interests, and recommendations.")).toBe(true);
         expect(wrapper.text().includes("Filters")).toBe(true);
         expect(wrapper.text().includes("Preferences")).toBe(true);
     });

@@ -7,8 +7,8 @@ import { useChangePhoneStyles } from "./ChangePhoneStyles";
 import { ChangeInfoTextField } from "../../../ChangeInfoTextField/ChangeInfoTextField";
 import { selectUserProfilePhoneCode, selectUserProfilePhoneNumber } from "../../../../../store/ducks/user/selectors";
 import { withDocumentTitle } from "../../../../../hoc/withDocumentTitle";
-import DeletePhoneNumberButton from "./DeletePhoneNumberButton/DeletePhoneNumberButton";
-import UpdatePhoneNumberButton from "./UpdatePhoneNumberButton/UpdatePhoneNumberButton";
+import DeletePhoneNumberButton from "./DeletePhoneNumberButton";
+import UpdatePhoneNumberButton from "./UpdatePhoneNumberButton";
 
 const ChangePhone: FC = (): ReactElement => {
     const classes = useChangePhoneStyles();

@@ -3,7 +3,7 @@ import React from "react";
 import { createMockRootState, mountWithStore } from "../../../../../../../util/test-utils/test-helper";
 import { LoadingStatus } from "../../../../../../../types/common";
 import DeletePhoneNumberButton from "../DeletePhoneNumberButton";
-import DeletePhoneModal from "../DeletePhoneModal/DeletePhoneModal";
+import DeletePhoneModal from "../DeletePhoneModal";
 
 describe("DeletePhoneNumberButton", () => {
     const mockStore = createMockRootState(LoadingStatus.LOADED);
