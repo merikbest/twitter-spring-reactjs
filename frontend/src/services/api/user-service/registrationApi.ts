@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { AuthenticationResponse, RegistrationRequest } from "../../../types/auth";
+import { AuthenticationResponse, EndRegistrationRequest, RegistrationRequest } from "../../../types/auth";
 import { axios } from "../../../core/axios";
 import {
     UI_V1_AUTH_REGISTRATION_ACTIVATE_CODE,
@@ -8,7 +8,6 @@ import {
     UI_V1_AUTH_REGISTRATION_CODE,
     UI_V1_AUTH_REGISTRATION_CONFIRM
 } from "../../../constants/endpoint-constants";
-import { EndRegistrationRequest } from "../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 
 export const RegistrationApi = {
     async registration(postData: RegistrationRequest): Promise<AxiosResponse<string>> {

@@ -1,11 +1,9 @@
 import React, { FC, ReactElement, ReactNode } from "react";
 import { Button, Dialog, DialogContent } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
-import { useDispatch, useSelector } from "react-redux";
 
 import { useDialogWrapperStyles } from "./DialogWrapperStyles";
-import { selectIsLoading } from "../../../store/ducks/authentication/selector";
-import { setCloseModal } from "../../../store/ducks/authentication/actionCreators";
+import { useDialogWrapper } from "./useDialogWrapper";
 
 interface DialogWrapperProps {
     isOpen: boolean;
@@ -26,12 +24,7 @@ const DialogWrapper: FC<DialogWrapperProps> = (
     }
 ): ReactElement => {
     const classes = useDialogWrapperStyles();
-    const dispatch = useDispatch();
-    const isLoading = useSelector(selectIsLoading);
-
-    const onClose = (): void => {
-        dispatch(setCloseModal());
-    };
+    const { isLoading, onClose } = useDialogWrapper();
 
     return (
         <Dialog transitionDuration={0} open={isOpen} onClose={onClose}>

@@ -50,10 +50,9 @@ import {
 import { UserActionsType } from "../contracts/actionTypes";
 import { SettingsRequest, UserRequest } from "../contracts/state";
 import { AuthUserResponse, UserPintTweetResponse } from "../../../../types/user";
-import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
-import { LoginRequest } from "../../../../types/auth";
+import { EndRegistrationRequest, LoginRequest } from "../../../../types/auth";
 
 describe("user actions", () => {
     testAction(updatedUserData, updatedUserData({ fullName: "text" } as UserRequest), {

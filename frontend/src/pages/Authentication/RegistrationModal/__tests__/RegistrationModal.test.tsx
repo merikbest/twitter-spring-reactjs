@@ -4,7 +4,7 @@ import { setImmediate } from "timers";
 
 import RegistrationModal from "../RegistrationModal";
 import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
-import RegistrationInput from "../../RegistrationInput/RegistrationInput";
+import RegistrationInput from "../../RegistrationInput";
 import { FilledSelect } from "../../../../components/FilledSelect/FilledSelect";
 import { LoadingStatus } from "../../../../types/common";
 import { RegistrationStep } from "../../../../types/auth";

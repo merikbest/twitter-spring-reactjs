@@ -1,31 +1,19 @@
 import React, { FC, ReactElement } from "react";
-import { useHistory } from "react-router-dom";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import { Button, List, ListItem, Typography } from "@material-ui/core";
-import { useDispatch } from "react-redux";
 
 import { useAuthenticationStyles } from "./AuthenticationStyles";
 import { CommunityIcon, ReplyIcon, SearchIcon } from "../../icons";
-import RegistrationModal from "./RegistrationModal/RegistrationModal";
-import CustomizeModal from "./CustomizeModal/CustomizeModal";
-import CreateAccountModal from "./CreateAccountModal/CreateAccountModal";
-import EmailVerificationModal from "./EmailVerificationModal/EmailVerificationModal";
-import SetPasswordModal from "./SetPasswordModal/SetPasswordModal";
-import { ACCOUNT_LOGIN } from "../../constants/path-constants";
-import { setOpenModal } from "../../store/ducks/authentication/actionCreators";
+import RegistrationModal from "./RegistrationModal";
+import CustomizeModal from "./CustomizeModal";
+import CreateAccountModal from "./CreateAccountModal";
+import EmailVerificationModal from "./EmailVerificationModal";
+import SetPasswordModal from "./SetPasswordModal";
+import { useAuthentication } from "./useAuthentication";
 
 const Authentication: FC = (): ReactElement => {
     const classes = useAuthenticationStyles();
-    const dispatch = useDispatch();
-    const history = useHistory();
-
-    const handleClickOpenSignIn = (): void => {
-        history.push(ACCOUNT_LOGIN);
-    };
-
-    const handleClickOpenSignUp = (): void => {
-        dispatch(setOpenModal());
-    };
+    const { handleClickOpenSignIn, handleClickOpenSignUp } = useAuthentication();
 
     return (
         <div className={classes.wrapper}>

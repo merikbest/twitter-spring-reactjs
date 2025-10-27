@@ -1,10 +1,9 @@
 import { Action } from "redux";
 
 import { UserPhoneResponse, SettingsRequest, UserActionRequest, UserRequest, UserState } from "./state";
-import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
 import { ChatMessageResponse } from "../../../../types/chat";
 import { LoadingStatus } from "../../../../types/common";
-import { LoginRequest } from "../../../../types/auth";
+import { EndRegistrationRequest, LoginRequest } from "../../../../types/auth";
 import { UserPintTweetResponse } from "../../../../types/user";
 
 export enum UserActionsType {

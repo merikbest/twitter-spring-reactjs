@@ -68,8 +68,7 @@ import { testCall, testLoadingStatus, testSetResponse, testWatchSaga } from "../
 import { UserApi } from "../../../../services/api/user-service/userApi";
 import { AuthUserResponse, UserPintTweetResponse, UserProfileResponse } from "../../../../types/user";
 import { SettingsRequest, UserRequest } from "../contracts/state";
-import { AuthenticationResponse, LoginRequest } from "../../../../types/auth";
-import { EndRegistrationRequest } from "../../../../pages/Authentication/SetPasswordModal/SetPasswordModal";
+import { AuthenticationResponse, EndRegistrationRequest, LoginRequest } from "../../../../types/auth";
 import { NotificationUserResponse } from "../../../../types/notification";
 import { setBlockedToTweetsState, setFollowToTweetsState, setMutedToTweetsState } from "../../tweets/actionCreators";
 import {

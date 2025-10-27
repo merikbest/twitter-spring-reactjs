@@ -1118,7 +1118,7 @@ export const mockNotificationInfo = {
     "tweet": {
         "id": 6,
         "text": "#myCat  :smile_cat:",
-        "dateTime": "2021-10-15T21:20:26",
+        "createdAt": "2021-10-15T21:20:26",
         "scheduledDate": null,
         "addressedUsername": null,
         "addressedId": null,
@@ -1129,7 +1129,7 @@ export const mockNotificationInfo = {
         "linkDescription": null,
         "linkCover": null,
         "linkCoverSize": null,
-        "user": {
+        "author": {
             "id": 2,
             "email": "user2016@gmail.com",
             "fullName": "MrCat",

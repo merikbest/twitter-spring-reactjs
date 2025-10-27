@@ -18,6 +18,12 @@ export interface LoginRequest {
     history: History<LocationState>;
 }
 
+export interface EndRegistrationRequest {
+    email: string;
+    password: string;
+    history: History<LocationState>;
+}
+
 export enum RegistrationStep {
     STEP_1 = "STEP_1",
     STEP_2 = "STEP_2",
