@@ -9,7 +9,7 @@ import TweetComponent from "../../../components/TweetComponent/TweetComponent";
 import { UserActionsType } from "../../../store/ducks/user/contracts/actionTypes";
 import { TweetsActionType } from "../../../store/ducks/tweets/contracts/actionTypes";
 import AddTweetForm from "../../../components/AddTweetForm/AddTweetForm";
-import TopTweetActions from "../TopTweetActions/TopTweetActions";
+import TopTweetActions from "../TopTweetActions";
 import { mockUser } from "../../../util/test-utils/mock-test-data";
 import Welcome from "../../../components/Welcome/Welcome";
 import { HOME } from "../../../constants/path-constants";

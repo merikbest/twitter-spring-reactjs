@@ -6,7 +6,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { useDisplayModalStyles } from "./DisplayModalStyles";
 import { CheckIcon, TweetIcon, VerifiedIcon } from "../../../../icons";
-import { DisplayProps } from "../../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import { DisplayProps } from "../../../../pages/Settings/AccessibilityDisplayLanguages/Display";
 import { updateBackgroundColor, updateColorScheme } from "../../../../store/ducks/user/actionCreators";
 import { BackgroundTheme, ColorScheme } from "../../../../types/common";
 import { BACKGROUND, COLOR } from "../../../../constants/common-constants";

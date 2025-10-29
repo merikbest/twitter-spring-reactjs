@@ -26,7 +26,7 @@ import {
     selectUserDataFollowerRequestsCount,
     selectUserDataIsPrivateProfile
 } from "../../../store/ducks/user/selectors";
-import { DisplayProps } from "../../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import { DisplayProps } from "../../../pages/Settings/AccessibilityDisplayLanguages/Display";
 import FollowerRequestsModal from "./FollowerRequestsModal/FollowerRequestsModal";
 import DisplayModal from "./DisplayModal/DisplayModal";
 import { resetFollowerRequestsState } from "../../../store/ducks/followerRequests/actionCreators";

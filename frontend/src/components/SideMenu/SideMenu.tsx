@@ -24,7 +24,7 @@ import {
 import UserSideProfile from "../UserSideProfile/UserSideProfile";
 import { selectUserDataId } from "../../store/ducks/user/selectors";
 import { useSideMenuStyles } from "./SideMenuStyles";
-import { DisplayProps } from "../../pages/Settings/AccessibilityDisplayLanguages/Display/Display";
+import { DisplayProps } from "../../pages/Settings/AccessibilityDisplayLanguages/Display";
 import { BOOKMARKS, HOME, LISTS, MESSAGES, NOTIFICATIONS, PROFILE, SEARCH } from "../../constants/path-constants";
 import AddTweetButton from "./AddTweetButton/AddTweetButton";
 import SideMenuItem from "./SideMenuItem/SideMenuItem";

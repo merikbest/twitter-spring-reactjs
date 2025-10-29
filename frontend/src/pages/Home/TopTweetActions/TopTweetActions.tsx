@@ -44,7 +44,7 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
                             <div className={classes.dropdownHeaderImage}>
                                 {switchTweets ? ShowLatestTweets : ShowTopTweets}
                             </div>
-                            <Typography variant={"h5"} component={"div"}>
+                            <Typography variant="h5" component="div">
                                 {switchTweets
                                     ? t("LATEST_TWEETS", { defaultValue: "Latest Tweets show up as they happen" })
                                     : t("TOP_TWEETS_FIRST", { defaultValue: "Home shows you top Tweets first" })
@@ -53,19 +53,19 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
                         </div>
                         <Divider />
                         <List>
-                            <ListItem id={"switchTweets"} onClick={switchTweets ? handleTopTweets : handleLatestTweets}>
+                            <ListItem id="switchTweets" onClick={switchTweets ? handleTopTweets : handleLatestTweets}>
                                 <div className={classes.listItemWrapper}>
                                     <span className={classes.textIcon}>
                                         {SeeLatestIcon}
                                     </span>
                                     <div>
-                                        <Typography variant={"body1"} component={"div"}>
+                                        <Typography variant="body1" component="div">
                                             {switchTweets
                                                 ? t("GO_BACK_HOME", { defaultValue: "Go back Home" })
                                                 : t("SEE_LATEST_TWEETS", { defaultValue: "See latest Tweets instead" })
                                             }
                                         </Typography>
-                                        <Typography variant={"subtitle2"} component={"div"}>
+                                        <Typography variant="subtitle2" component="div">
                                             {switchTweets
                                                 ? t("SEE_TOP_TWEETS_FIRST_DESCRIPTION", { defaultValue: "You’ll see top Tweets first." })
                                                 : t("LATEST_TWEETS_DESCRIPTION", { defaultValue: "You’ll see Tweets show up as they happen." })
@@ -81,7 +81,7 @@ const TopTweetActions: FC<TopTweetActionsProps> = (
                                         {SettingsIcon}
                                     </span>
                                         <div>
-                                            <Typography variant={"body1"} component={"div"}>
+                                            <Typography variant="body1" component="div">
                                                 {t("VIEW_CONTENT_PREFERENCES", { defaultValue: "View content preferences" })}
                                             </Typography>
                                         </div>
