@@ -12,8 +12,8 @@ import {
 } from "../../../store/ducks/userProfile/selectors";
 import { USER } from "../../../constants/path-constants";
 import { selectUserDataId } from "../../../store/ducks/user/selectors";
-import UserFollowersCount from "./UserFollowersCount/UserFollowersCount";
-import UserFollowingCount from "./UserFollowingCount/UserFollowingCount";
+import UserFollowersCount from "./UserFollowersCount";
+import UserFollowingCount from "./UserFollowingCount";
 import { useUserPageStyles } from "../UserPageStyles";
 
 interface LinkToFollowersProps {

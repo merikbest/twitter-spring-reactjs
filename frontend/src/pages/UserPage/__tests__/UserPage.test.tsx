@@ -104,7 +104,7 @@ describe("UserPage", () => {
     it("should User Profile Success Loaded", () => {
         const wrapper = mountWithStore(<UserPage />, mockRootState);
 
-        expect(mockDispatchFn).nthCalledWith(3, {
+        expect(mockDispatchFn).nthCalledWith(4, {
             payload: { userId: "2", page: 0 },
             type: UserTweetsActionType.FETCH_TWEETS
         });
@@ -119,7 +119,15 @@ describe("UserPage", () => {
     });
 
     it("should click tweet Tab and fetch user tweets", () => {
-        testClickTab(0, `${mockUser.tweetCount} Tweets`, "Tweets", UserTweetsActionType.FETCH_TWEETS);
+        const wrapper = mountWithStore(<UserPage />, mockRootState);
+        expect(wrapper.find(Tab).at(0).prop("selected")).toBe(true);
+        wrapper.find(Tab).at(0).simulate("click");
+        expect(wrapper.text().includes(`${mockUser.tweetCount} Tweets`)).toBe(true);
+        expect(wrapper.find(Tab).at(0).prop("selected")).toBe(true);
+        expect(wrapper.find(Tab).at(0).text().includes("Tweets")).toBe(true);
+        expect(mockDispatchFn).nthCalledWith(5, { type: UserTweetsActionType.RESET_TWEETS });
+        expect(mockDispatchFn).nthCalledWith(6, { payload: { userId: "2" }, type: UserTweetsActionType.FETCH_PINNED_TWEET });
+        expect(mockDispatchFn).nthCalledWith(7, { payload: { userId: "2", page: 0 }, type: UserTweetsActionType.FETCH_TWEETS });
     });
 
     it("should click Tweets & replies Tab and fetch user tweets", () => {
@@ -156,10 +164,10 @@ describe("UserPage", () => {
 
         wrapper.unmount();
 
-        expect(mockDispatchFn).nthCalledWith(4, { type: UserProfileActionsType.RESET_USER_PROFILE_STATE });
-        expect(mockDispatchFn).nthCalledWith(5, { type: UserTweetsActionType.RESET_TWEETS });
-        expect(mockDispatchFn).nthCalledWith(6, { type: UserProfileActionsType.RESET_IMAGES_STATE });
-        expect(mockDispatchFn).nthCalledWith(7, { type: UserTweetsActionType.RESET_TWEETS });
+        expect(mockDispatchFn).nthCalledWith(5, { type: UserProfileActionsType.RESET_USER_PROFILE_STATE });
+        expect(mockDispatchFn).nthCalledWith(6, { type: UserTweetsActionType.RESET_TWEETS });
+        expect(mockDispatchFn).nthCalledWith(7, { type: UserProfileActionsType.RESET_IMAGES_STATE });
+        expect(mockDispatchFn).nthCalledWith(8, { type: UserTweetsActionType.RESET_TWEETS });
     });
 
     it("should click on Setup profile button and close", () => {
@@ -211,7 +219,7 @@ describe("UserPage", () => {
 
         wrapper.find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, { payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST });
+        expect(mockDispatchFn).nthCalledWith(5, { payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST });
     });
 
     it("should click follow to user profile", () => {
@@ -227,7 +235,7 @@ describe("UserPage", () => {
 
         wrapper.find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, { payload: { userId: 1 }, type: UserActionsType.FOLLOW_USER });
+        expect(mockDispatchFn).nthCalledWith(5, { payload: { userId: 1 }, type: UserActionsType.FOLLOW_USER });
     });
 
     it("should click unfollow to user profile", () => {
@@ -243,7 +251,7 @@ describe("UserPage", () => {
 
         wrapper.find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, { payload: { userId: 1 }, type: UserActionsType.UNFOLLOW_USER });
+        expect(mockDispatchFn).nthCalledWith(5, { payload: { userId: 1 }, type: UserActionsType.UNFOLLOW_USER });
     });
 
     it("should click user waiting for approve", () => {
@@ -265,7 +273,7 @@ describe("UserPage", () => {
 
         wrapper.find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, { payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST });
+        expect(mockDispatchFn).nthCalledWith(5, { payload: 1, type: UserActionsType.PROCESS_FOLLOW_REQUEST });
     });
 
     it("should click Add User To Chat", () => {
@@ -277,7 +285,7 @@ describe("UserPage", () => {
 
         expect(pushSpy).toHaveBeenCalled();
         expect(pushSpy).toHaveBeenCalledWith(MESSAGES);
-        expect(mockDispatchFn).nthCalledWith(4, { payload: 1, type: ChatsActionsType.CREATE_CHAT });
+        expect(mockDispatchFn).nthCalledWith(5, { payload: 1, type: ChatsActionsType.CREATE_CHAT });
     });
 
     it("should hover Message icon and render Hover Action", () => {
@@ -289,12 +297,12 @@ describe("UserPage", () => {
         wrapper.find(IconButton).at(1).simulate("click");
         wrapper.find("#handleMuteUser").at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, {
+        expect(mockDispatchFn).nthCalledWith(5, {
             payload: { userId: 1 },
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
-        expect(mockDispatchFn).nthCalledWith(5, {
-            payload: `@${mockUserProfile.username} has been muted.`,
+        expect(mockDispatchFn).nthCalledWith(6, {
+            payload: `@${mockUserProfile.username} has been muted`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
@@ -312,12 +320,12 @@ describe("UserPage", () => {
 
         wrapper.find("#unmuteUser").at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, {
+        expect(mockDispatchFn).nthCalledWith(5, {
             payload: { userId: 1 },
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
-        expect(mockDispatchFn).nthCalledWith(5, {
-            payload: `@${mockUserProfile.username} has been unmuted.`,
+        expect(mockDispatchFn).nthCalledWith(6, {
+            payload: `@${mockUserProfile.username} has been unmuted`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
@@ -332,12 +340,12 @@ describe("UserPage", () => {
 
         wrapper.find(BlockUserModal).find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, {
+        expect(mockDispatchFn).nthCalledWith(5, {
             payload: { userId: 1 },
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
-        expect(mockDispatchFn).nthCalledWith(5, {
-            payload: `@${mockUserProfile.username} has been blocked.`,
+        expect(mockDispatchFn).nthCalledWith(6, {
+            payload: `@${mockUserProfile.username} has been blocked`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
@@ -365,12 +373,12 @@ describe("UserPage", () => {
 
         wrapper.find(BlockUserModal).find(Button).at(0).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, {
+        expect(mockDispatchFn).nthCalledWith(5, {
             payload: { userId: 1 },
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
-        expect(mockDispatchFn).nthCalledWith(5, {
-            payload: `@${mockUserProfile.username} has been unblocked.`,
+        expect(mockDispatchFn).nthCalledWith(6, {
+            payload: `@${mockUserProfile.username} has been unblocked`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
@@ -396,7 +404,7 @@ describe("UserPage", () => {
 
         wrapper.find(IconButton).at(3).simulate("click");
 
-        expect(mockDispatchFn).nthCalledWith(4, { payload: 1, type: UserProfileActionsType.PROCESS_SUBSCRIBE });
+        expect(mockDispatchFn).nthCalledWith(5, { payload: 1, type: UserProfileActionsType.PROCESS_SUBSCRIBE });
     });
 
     it("should hover Subscribe icon and render Hover Action", () => {
@@ -430,7 +438,13 @@ describe("UserPage", () => {
     });
 
     it("should scroll and fetch User Tweets", () => {
-        testLoadUserTweets(0, UserTweetsActionType.FETCH_TWEETS);
+        const wrapper = mountWithStore(<UserPage />, mockWithTweets);
+        wrapper.find(Tab).at(0).simulate("click");
+        wrapper.find(InfiniteScroll).prop("next")();
+        expect(mockDispatchFn).nthCalledWith(7, {
+            payload: { userId: "2", page: 0 },
+            type: UserTweetsActionType.FETCH_TWEETS
+        });
     });
 
     it("should scroll and fetch User Retweets And Replies", () => {
@@ -451,12 +465,13 @@ describe("UserPage", () => {
         expect(wrapper.find(Tab).at(tabIndex).prop("selected")).toBe(tabIndex === 0);
 
         wrapper.find(Tab).at(tabIndex).simulate("click");
+        console.log(wrapper.debug());
 
         expect(wrapper.text().includes(tweetCount)).toBe(true);
         expect(wrapper.find(Tab).at(tabIndex).prop("selected")).toBe(true);
         expect(wrapper.find(Tab).at(tabIndex).text().includes(tabText)).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(4, { type: UserTweetsActionType.RESET_TWEETS });
-        expect(mockDispatchFn).nthCalledWith(5, { payload: { userId: "2", page: 0 }, type: typeAction });
+        expect(mockDispatchFn).nthCalledWith(5, { type: UserTweetsActionType.RESET_TWEETS });
+        expect(mockDispatchFn).nthCalledWith(6, { payload: { userId: "2", page: 0 }, type: typeAction });
     };
 
     const testShowSingleTweetCount = (tabIndex: number, tweetCountText: string): void => {
@@ -509,6 +524,6 @@ describe("UserPage", () => {
         const wrapper = mountWithStore(<UserPage />, mockWithTweets);
         wrapper.find(Tab).at(tabIndex).simulate("click");
         wrapper.find(InfiniteScroll).prop("next")();
-        expect(mockDispatchFn).nthCalledWith(5, { payload: { userId: "2", page: 0 }, type: actionType });
+        expect(mockDispatchFn).nthCalledWith(6, { payload: { userId: "2", page: 0 }, type: actionType });
     };
 });

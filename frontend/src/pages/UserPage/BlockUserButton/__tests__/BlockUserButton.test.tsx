@@ -35,7 +35,7 @@ describe("BlockUserButton", () => {
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {
-            payload: `@${mockMyProfile.username} has been blocked.`,
+            payload: `@${mockMyProfile.username} has been blocked`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
@@ -55,7 +55,7 @@ describe("BlockUserButton", () => {
             type: UserActionsType.PROCESS_USER_TO_BLOCKLIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {
-            payload: `@${mockUserProfile.username} has been unblocked.`,
+            payload: `@${mockUserProfile.username} has been unblocked`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });

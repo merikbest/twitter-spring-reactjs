@@ -1,26 +1,15 @@
 import React, { memo, ReactElement } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import ActionIconButton from "../../../components/ActionIconButton/ActionIconButton";
 import { MessagesIcon } from "../../../icons";
-import { createChat } from "../../../store/ducks/chats/actionCreators";
-import { MESSAGES } from "../../../constants/path-constants";
 import { useGlobalStyles } from "../../../util/globalClasses";
-import { selectUserProfileId } from "../../../store/ducks/userProfile/selectors";
+import { useAddUserToChatButton } from "./useAddUserToChatButton";
 
 const AddUserToChatButton = memo((): ReactElement => {
     const globalClasses = useGlobalStyles({});
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const userProfileId = useSelector(selectUserProfileId);
     const { t } = useTranslation();
-
-    const handleClickAddUserToChat = (): void => {
-        dispatch(createChat(userProfileId!));
-        history.push(MESSAGES);
-    };
+    const { handleClickAddUserToChat } = useAddUserToChatButton();
 
     return (
         <span className={globalClasses.userPageIconButton}>
