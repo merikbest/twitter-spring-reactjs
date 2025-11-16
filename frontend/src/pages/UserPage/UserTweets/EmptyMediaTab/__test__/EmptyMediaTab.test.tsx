@@ -1,12 +1,12 @@
 import React from "react";
 import { Button, IconButton, Typography } from "@material-ui/core";
 
-import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
-import { LoadingStatus } from "../../../../types/common";
-import { mockMyProfile, mockUserProfile } from "../../../../util/test-utils/mock-test-data";
-import AddTweetModal from "../../../../components/AddTweetModal/AddTweetModal";
-import CloseButton from "../../../../components/CloseButton/CloseButton";
-import EmptyMediaTab from "./EmptyMediaTab";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../types/common";
+import { mockMyProfile, mockUserProfile } from "../../../../../util/test-utils/mock-test-data";
+import AddTweetModal from "../../../../../components/AddTweetModal/AddTweetModal";
+import CloseButton from "../../../../../components/CloseButton/CloseButton";
+import EmptyMediaTab from "../EmptyMediaTab";
 
 describe("EmptyMediaTab", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);

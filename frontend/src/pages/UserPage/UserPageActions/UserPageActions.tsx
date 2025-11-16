@@ -13,13 +13,13 @@ import {
     selectUserProfileIsUserBlocked,
     selectUserProfileUsername
 } from "../../../store/ducks/userProfile/selectors";
-import AddUserToListsButton from "./AddUserToListsButton/AddUserToListsButton";
-import CopyProfileLinkButton from "./CopyProfileLinkButton/CopyProfileLinkButton";
-import MuteUserButton from "./MuteUserButton/MuteUserButton";
-import BlockUserButton from "./BlockUserButton/BlockUserButton";
-import UserItemAction from "./UserItemAction/UserItemAction";
-import ViewUserListsButton from "./ViewUserListsButton/ViewUserListsButton";
-import ViewUserTopicsButton from "./ViewUserTopicsButton/ViewUserTopicsButton";
+import AddUserToListsButton from "./AddUserToListsButton";
+import CopyProfileLinkButton from "./CopyProfileLinkButton";
+import MuteUserButton from "./MuteUserButton";
+import BlockUserButton from "./BlockUserButton";
+import UserItemAction from "./UserItemAction";
+import ViewUserListsButton from "./ViewUserListsButton";
+import ViewUserTopicsButton from "./ViewUserTopicsButton";
 import { useClickAway } from "../../../hook/useClickAway";
 
 const UserPageActions = memo((): ReactElement => {

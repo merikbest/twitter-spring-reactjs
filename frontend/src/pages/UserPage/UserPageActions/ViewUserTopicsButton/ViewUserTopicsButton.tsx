@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { selectUserProfileId } from "../../../../store/ducks/userProfile/selectors";
 import { resetUserProfileState } from "../../../../store/ducks/userProfile/actionCreators";
 import { PROFILE, TOPICS } from "../../../../constants/path-constants";
-import UserItemAction from "../UserItemAction/UserItemAction";
+import UserItemAction from "../UserItemAction";
 import { TopicIcon } from "../../../../icons";
 
 const ViewUserTopicsButton: FC = memo((): ReactElement => {

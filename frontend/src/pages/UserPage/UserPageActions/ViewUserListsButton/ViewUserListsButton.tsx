@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
-import UserItemAction from "../UserItemAction/UserItemAction";
+import UserItemAction from "../UserItemAction";
 import { resetUserProfileState } from "../../../../store/ducks/userProfile/actionCreators";
 import { LISTS_MEMBERSHIPS } from "../../../../constants/path-constants";
 import { selectUserProfileId } from "../../../../store/ducks/userProfile/selectors";

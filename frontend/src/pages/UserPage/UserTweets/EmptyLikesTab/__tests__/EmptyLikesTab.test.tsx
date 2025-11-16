@@ -1,12 +1,12 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 
-import { createMockRootState, mockDispatch, mountWithStore } from "../../../../util/test-utils/test-helper";
-import { LoadingStatus } from "../../../../types/common";
-import { mockMyProfile, mockUserProfile } from "../../../../util/test-utils/mock-test-data";
-import EmptyRepliesTab from "./EmptyRepliesTab";
+import { createMockRootState, mockDispatch, mountWithStore } from "../../../../../util/test-utils/test-helper";
+import { LoadingStatus } from "../../../../../types/common";
+import { mockMyProfile, mockUserProfile } from "../../../../../util/test-utils/mock-test-data";
+import EmptyLikesTab from "../EmptyLikesTab";
 
-describe("EmptyRepliesTab", () => {
+describe("EmptyLikesTab", () => {
     const mockRootState = createMockRootState(LoadingStatus.LOADED);
     let mockDispatchFn: jest.Mock;
 
@@ -14,25 +14,24 @@ describe("EmptyRepliesTab", () => {
         mockDispatchFn = mockDispatch();
     });
 
-    it("should render empty replies", () => {
+    it("should render empty likes", () => {
         testTitleWithEmptyTweet(
             true,
-            "You haven’t any replies yet",
-            "When you reply Tweets, they will show up here."
+            "You don’t have any likes yet",
+            "Tap the heart on any Tweet to show it some love. When you do, it’ll show up here."
         );
-
     });
 
-    it("should render user empty replies", () => {
+    it("should render user empty likes", () => {
         testTitleWithEmptyTweet(
             false,
-            `@${mockUserProfile.username} hasn’t any replies`,
-            "When they do, their replies show up here."
+            `@${mockUserProfile.username} hasn’t liked any Tweets`,
+            "When they do, those Tweets will show up here."
         );
     });
 
     const testTitleWithEmptyTweet = (isUserProfile: boolean, title: string, text: string): void => {
-        const wrapper = mountWithStore(<EmptyRepliesTab />,
+        const wrapper = mountWithStore(<EmptyLikesTab />,
             {
                 ...mockRootState,
                 userProfile: {

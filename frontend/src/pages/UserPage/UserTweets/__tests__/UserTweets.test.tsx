@@ -43,7 +43,13 @@ describe("UserTweets", () => {
     });
 
     it("should scroll and fetch User Tweets", () => {
-        testLoadUserTweets(0, UserTweetsActionType.FETCH_TWEETS);
+        const wrapper = mountWithStore(<UserTweets userTweetsActiveTab={0} handleChangeUserTweetsTab={jest.fn()} />, mockRootState);
+        wrapper.find(Tab).at(0).simulate("click");
+        expect(wrapper.find(Tab).at(0).prop("selected")).toBe(true);
+        expect(mockDispatchFn).nthCalledWith(3, {
+            payload: { userId: "2", page: 0 },
+            type: UserTweetsActionType.FETCH_TWEETS
+        });
     });
 
     it("should scroll and fetch User Retweets And Replies", () => {
@@ -77,7 +83,7 @@ describe("UserTweets", () => {
         wrapper.find(Tab).at(tabIndex).simulate("click");
         expect(wrapper.find(Tab).at(tabIndex).prop("selected")).toBe(true);
         expect(wrapper.find(Tab).at(tabIndex).text().includes(tabText)).toBe(true);
-        expect(mockDispatchFn).nthCalledWith(2, { payload: { userId: "2", page: 0 }, type: typeAction });
+        expect(mockDispatchFn).nthCalledWith(3, { payload: { userId: "2", page: 0 }, type: typeAction });
     };
 
     const testLoadUserTweets = (tabIndex: number, actionType: UserTweetsActionType): void => {

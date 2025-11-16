@@ -36,14 +36,14 @@ const UserPageHeader: FC<UserPageHeaderProps> = memo(({ userTweetsActiveTab }): 
                 {isPrivateProfile && <span className={classes.lockIcon}>{LockIcon}</span>}
                 <Typography variant="subtitle2" component="div">
                     {(userTweetsActiveTab === 0 || userTweetsActiveTab === 1) && ((tweetCount === 1)
-                        ? t("TWEET_COUNT", { tweetCount, defaultValue: "Tweet" })
-                        : t("TWEETS_COUNT", { tweetCount, defaultValue: "Tweets" }))}
+                        ? t("TWEET_COUNT", { tweetCount, defaultValue: `${tweetCount} Tweet` })
+                        : t("TWEETS_COUNT", { tweetCount, defaultValue: `${tweetCount} Tweets` }))}
                     {userTweetsActiveTab === 2 && ((mediaTweetCount === 1)
-                        ? t("PHOTO_AND_VIDEO_COUNT", { mediaTweetCount, defaultValue: "Photo & video" })
-                        : t("PHOTOS_AND_VIDEOS_COUNT", { mediaTweetCount, defaultValue: "Photos & videos" }))}
+                        ? t("PHOTO_AND_VIDEO_COUNT", { mediaTweetCount, defaultValue: `${mediaTweetCount} Photo & video` })
+                        : t("PHOTOS_AND_VIDEOS_COUNT", { mediaTweetCount, defaultValue: `${mediaTweetCount} Photos & videos` }))}
                     {userTweetsActiveTab === 3 && ((likeCount === 1)
-                        ? t("LIKE_COUNT", { likeCount, defaultValue: "Like" })
-                        : t("LIKES_COUNT", { likeCount, defaultValue: "Likes" }))}
+                        ? t("LIKE_COUNT", { likeCount, defaultValue: `${likeCount} Like` })
+                        : t("LIKES_COUNT", { likeCount, defaultValue: `${likeCount} Likes` }))}
                 </Typography>
             </div>
         </PageHeaderWrapper>

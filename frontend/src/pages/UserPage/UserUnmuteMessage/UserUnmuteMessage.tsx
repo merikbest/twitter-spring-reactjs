@@ -1,32 +1,14 @@
 import React, { memo, ReactElement } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
-import { processUserToMuteList } from "../../../store/ducks/user/actionCreators";
-import { setOpenSnackBar } from "../../../store/ducks/actionSnackbar/actionCreators";
-import {
-    selectUserProfileId,
-    selectUserProfileIsUserMuted,
-    selectUserProfileUsername
-} from "../../../store/ducks/userProfile/selectors";
 import { useUserPageStyles } from "../UserPageStyles";
+import { useUserUnmuteMessage } from "./useUserUnmuteMessage";
 
 const UserUnmuteMessage = memo((): ReactElement => {
     const classes = useUserPageStyles();
-    const dispatch = useDispatch();
-    const userProfileId = useSelector(selectUserProfileId);
-    const username = useSelector(selectUserProfileUsername);
-    const isUserMuted = useSelector(selectUserProfileIsUserMuted);
     const { t } = useTranslation();
-
-    const onMuteUser = (): void => {
-        dispatch(processUserToMuteList({ userId: userProfileId! }));
-        dispatch(setOpenSnackBar(isUserMuted
-            ? t("UNMUTE_USER_POPUP_MESSAGE", { username, defaultValue: `@${username} has been unmuted` })
-            : t("MUTE_USER_POPUP_MESSAGE", { username, defaultValue: `@${username} has been muted` })
-        ));
-    };
+    const { userProfileId, isUserMuted, onMuteUser } = useUserUnmuteMessage();
 
     return (
         <>

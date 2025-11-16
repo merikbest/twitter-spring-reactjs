@@ -30,7 +30,7 @@ describe("UserUnmuteMessage", () => {
             type: UserActionsType.PROCESS_USER_TO_MUTELIST
         });
         expect(mockDispatchFn).nthCalledWith(2, {
-            payload: `@${mockMyProfile.username} has been unmuted.`,
+            payload: `@${mockMyProfile.username} has been unmuted`,
             type: ActionSnackbarTypes.SET_OPEN_SNACKBAR
         });
     });
