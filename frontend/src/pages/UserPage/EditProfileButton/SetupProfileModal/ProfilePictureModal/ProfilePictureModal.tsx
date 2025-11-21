@@ -6,7 +6,7 @@ import { useProfilePictureModalStyles } from "./ProfilePictureModalStyles";
 import { DEFAULT_PROFILE_IMG } from "../../../../../constants/url-constants";
 import UploadProfileImage from "../../../../../components/UploadProfileImage/UploadProfileImage";
 import { ImageObj } from "../../../../../components/AddTweetForm/AddTweetForm";
-import ProfileModal from "../ProfileModal/ProfileModal";
+import ProfileModal from "../ProfileModal";
 
 interface ProfilePictureModalProps {
     isOpen: boolean;

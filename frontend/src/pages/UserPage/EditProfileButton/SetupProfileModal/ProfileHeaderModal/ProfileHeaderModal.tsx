@@ -8,7 +8,7 @@ import UploadProfileImage from "../../../../../components/UploadProfileImage/Upl
 import { DEFAULT_PROFILE_IMG } from "../../../../../constants/url-constants";
 import { selectUserProfileFullName, selectUserProfileUsername } from "../../../../../store/ducks/user/selectors";
 import { ImageObj } from "../../../../../components/AddTweetForm/AddTweetForm";
-import ProfileModal from "../ProfileModal/ProfileModal";
+import ProfileModal from "../ProfileModal";
 
 interface ProfileHeaderModalProps {
     isOpen: boolean;

@@ -3,7 +3,7 @@ import { Button } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 
 import { useProfileUpdatedModalStyles } from "./ProfileUpdatedModalStyles";
-import ProfileModal from "../ProfileModal/ProfileModal";
+import ProfileModal from "../ProfileModal";
 
 interface ProfileUpdatedModalProps {
     isOpen: boolean;

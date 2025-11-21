@@ -1,8 +1,8 @@
 import React, { FC, ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 
-import ProfileDescriptionInput from "./ProfileDescriptionInput/ProfileDescriptionInput";
-import ProfileModal from "../ProfileModal/ProfileModal";
+import ProfileDescriptionInput from "./ProfileDescriptionInput";
+import ProfileModal from "../ProfileModal";
 
 interface ProfileDescriptionModalProps {
     isOpen: boolean;
