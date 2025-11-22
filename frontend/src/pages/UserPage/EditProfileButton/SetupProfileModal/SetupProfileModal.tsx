@@ -15,14 +15,14 @@ interface SetupProfileModalProps {
 const SetupProfileModal: FC<SetupProfileModalProps> = ({ visible, onClose }): ReactElement => {
     const classes = useSetupProfileModalStyles();
     const {
-        avatar,
-        wallpaper,
+        avatarImage,
+        wallpaperImage,
         bio,
         visibleProfileHeaderModal,
         visibleProfileDescriptionModal,
         visibleProfileUpdatedModal,
-        setAvatar,
-        setWallpaper,
+        setAvatarImage,
+        setWallpaperImage,
         setBio,
         onOpenProfileHeaderModal,
         onOpenProfileDescriptionModal,
@@ -36,15 +36,15 @@ const SetupProfileModal: FC<SetupProfileModalProps> = ({ visible, onClose }): Re
             <ProfilePictureModal
                 isOpen={visible}
                 onClose={handleCloseModal}
-                avatar={avatar}
-                onChangeAvatar={setAvatar}
+                avatar={avatarImage}
+                onChangeAvatar={setAvatarImage}
                 onOpenProfileHeaderModal={onOpenProfileHeaderModal}
             />
             <ProfileHeaderModal
                 isOpen={visibleProfileHeaderModal}
-                avatar={avatar}
-                wallpaper={wallpaper}
-                onChangeWallpaper={setWallpaper}
+                avatar={avatarImage}
+                wallpaper={wallpaperImage}
+                onChangeWallpaper={setWallpaperImage}
                 onClose={handleCloseModal}
                 onOpenProfileDescriptionModal={onOpenProfileDescriptionModal}
             />

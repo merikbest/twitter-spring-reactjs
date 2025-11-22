@@ -12,6 +12,7 @@ import usLang from "date-fns/locale/en-US/index";
 import differenceInDays from "date-fns/differenceInDays";
 import differenceInHours from "date-fns/differenceInHours";
 import differenceInMinutes from "date-fns/differenceInMinutes";
+
 import { PollResponse } from "../types/tweet";
 import { HOUR_MINUTE_AMPM } from "../constants/common-constants";
 
@@ -63,4 +64,12 @@ export const voteFormatDate = (poll: PollResponse): string => {
     } else {
         return diffInMinutes + " minutes";
     }
+};
+
+export const formatBirthdate = (year: number, month: number, day: number): string => {
+    if (year === 0 || month === 0 || day === 0) {
+        return "";
+    }
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return new Intl.DateTimeFormat("en-CA", { timeZone: "UTC" }).format(date);
 };

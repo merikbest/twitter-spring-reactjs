@@ -1,24 +1,20 @@
 import React, { FC, ReactElement } from "react";
 import { Controller } from "react-hook-form";
 import { FormControl, InputLabel, Link as MuiLink, Typography } from "@material-ui/core";
+import { useTranslation } from "react-i18next";
 
 import { useRegistrationModalStyles } from "./RegistrationModalStyles";
 import RegistrationInput from "../RegistrationInput";
 import { FilledSelect } from "../../../components/FilledSelect/FilledSelect";
 import DialogWrapper from "../DialogWrapper";
 import { useRegistrationModal } from "./useRegistrationModal";
+import { useDateSelector } from "../../../hook/useDateSelector";
 
 const RegistrationModal: FC = (): ReactElement => {
     const classes = useRegistrationModalStyles();
-    const {
-        registrationStep1,
-        control,
-        handleSubmit,
-        errors,
-        onSubmit,
-        showDays,
-        showYears
-    } = useRegistrationModal();
+    const { t } = useTranslation();
+    const { showYears, showDays } = useDateSelector();
+    const { registrationStep1, control, watch, handleSubmit, errors, onSubmit } = useRegistrationModal();
 
     return (
         <DialogWrapper isOpen={registrationStep1} onClick={handleSubmit(onSubmit)}>
@@ -75,16 +71,17 @@ const RegistrationModal: FC = (): ReactElement => {
                         <Controller
                             name="month"
                             control={control}
-                            defaultValue=""
+                            defaultValue={0}
                             render={({ field: { onChange, value } }) => (
                                 <>
-                                    <InputLabel htmlFor="select-month">
+                                    <InputLabel error={!!errors.month && !!errors.birthdate} htmlFor="select-month">
                                         Month
                                     </InputLabel>
                                     <FilledSelect
                                         name="month"
                                         variant="filled"
                                         style={{ width: 240, marginRight: 12 }}
+                                        error={!!errors.month && !!errors.birthdate}
                                         labelId="select-month"
                                         id="select-month"
                                         native
@@ -92,19 +89,19 @@ const RegistrationModal: FC = (): ReactElement => {
                                         onChange={onChange}
                                         label="Month"
                                     >
-                                        <option aria-label="None" />
-                                        <option value="Jan">January</option>
-                                        <option value="Feb">February</option>
-                                        <option value="Mar">March</option>
-                                        <option value="Apr">April</option>
-                                        <option value="May">May</option>
-                                        <option value="Jun">June</option>
-                                        <option value="Jul">July</option>
-                                        <option value="Aug">August</option>
-                                        <option value="Sep">September</option>
-                                        <option value="Oct">October</option>
-                                        <option value="Nov">November</option>
-                                        <option value="Dec">December</option>
+                                        <option value={0} aria-label="None" />
+                                        <option value={1}>{t("JANUARY", { defaultValue: "January" })}</option>
+                                        <option value={2}>{t("FEBRUARY", { defaultValue: "February" })}</option>
+                                        <option value={3}>{t("MARCH", { defaultValue: "March" })}</option>
+                                        <option value={4}>{t("APRIL", { defaultValue: "April" })}</option>
+                                        <option value={5}>{t("MAY", { defaultValue: "May" })}</option>
+                                        <option value={6}>{t("JUNE", { defaultValue: "June" })}</option>
+                                        <option value={7}>{t("JULY", { defaultValue: "July" })}</option>
+                                        <option value={8}>{t("AUGUST", { defaultValue: "August" })}</option>
+                                        <option value={9}>{t("SEPTEMBER", { defaultValue: "September" })}</option>
+                                        <option value={10}>{t("OCTOBER", { defaultValue: "October" })}</option>
+                                        <option value={11}>{t("NOVEMBER", { defaultValue: "November" })}</option>
+                                        <option value={12}>{t("DECEMBER", { defaultValue: "December" })}</option>
                                     </FilledSelect>
                                 </>
                             )}
@@ -117,13 +114,14 @@ const RegistrationModal: FC = (): ReactElement => {
                             defaultValue={0}
                             render={({ field: { onChange, value } }) => (
                                 <>
-                                    <InputLabel htmlFor="select-day">
+                                    <InputLabel error={!!errors.day && !!errors.birthdate} htmlFor="select-day">
                                         Day
                                     </InputLabel>
                                     <FilledSelect
                                         name="day"
                                         variant="filled"
                                         style={{ width: 100, marginRight: 12 }}
+                                        error={!!errors.day && !!errors.birthdate}
                                         labelId="select-day"
                                         id="select-day"
                                         native
@@ -131,8 +129,8 @@ const RegistrationModal: FC = (): ReactElement => {
                                         onChange={onChange}
                                         label="Day"
                                     >
-                                        <option aria-label="None" />
-                                        {showDays()}
+                                        <option value={0} aria-label="None" />
+                                        {showDays(watch("month"), watch("year"))}
                                     </FilledSelect>
                                 </>
                             )}
@@ -145,13 +143,14 @@ const RegistrationModal: FC = (): ReactElement => {
                             defaultValue={0}
                             render={({ field: { onChange, value } }) => (
                                 <>
-                                    <InputLabel htmlFor="select-year">
+                                    <InputLabel error={!!errors.year && !!errors.birthdate} htmlFor="select-year">
                                         Year
                                     </InputLabel>
                                     <FilledSelect
                                         name="year"
                                         variant="filled"
                                         style={{ width: 125 }}
+                                        error={!!errors.year && !!errors.birthdate}
                                         labelId="select-year"
                                         id="select-year"
                                         native
@@ -159,7 +158,7 @@ const RegistrationModal: FC = (): ReactElement => {
                                         onChange={onChange}
                                         label="Year"
                                     >
-                                        <option aria-label="None" />
+                                        <option value={0} aria-label="None" />
                                         {showYears()}
                                     </FilledSelect>
                                 </>

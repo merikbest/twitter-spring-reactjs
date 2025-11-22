@@ -10,14 +10,8 @@ import { selectUserData } from "../../../../store/ducks/user/selectors";
 import { uploadImage } from "../../../../util/upload-image-helper";
 import { ImageObj } from "../../../../components/AddTweetForm/AddTweetForm";
 import { updatedUserData } from "../../../../store/ducks/user/actionCreators";
-
-export enum BirthDateVisibility {
-    PUBLIC = "PUBLIC",
-    YOUR_FOLLOWERS = "YOUR_FOLLOWERS",
-    PEOPLE_YOU_FOLLOW = "PEOPLE_YOU_FOLLOW",
-    YOU_FOLLOW_EACH_OTHER = "YOU_FOLLOW_EACH_OTHER",
-    ONLY_YOU = "ONLY_YOU"
-}
+import { BirthDateVisibility } from "../../../../store/ducks/user/contracts/state";
+import { formatBirthdate } from "../../../../util/format-date-helper";
 
 export interface EditProfileFormProps {
     fullName: string;
@@ -27,8 +21,8 @@ export interface EditProfileFormProps {
     year: number;
     month: number;
     day: number;
-    showMonthAndDay: BirthDateVisibility;
-    showYear: BirthDateVisibility;
+    monthAndDayVisibility: BirthDateVisibility;
+    yearVisibility: BirthDateVisibility;
     birthdate?: string;
 }
 
@@ -64,8 +58,8 @@ const editProfileModalFormSchema = (t: TFunction<"translation", undefined>) =>
 const useEditProfileModal = (onClose: () => void) => {
     const dispatch = useDispatch();
     const userData = useSelector(selectUserData);
-    const [avatar, setAvatar] = useState<ImageObj>();
-    const [wallpaper, setWallpaper] = useState<ImageObj>();
+    const [avatarImage, setAvatarImage] = useState<ImageObj>();
+    const [wallpaperImage, setWallpaperImage] = useState<ImageObj>();
     const { t } = useTranslation();
 
     const { control, watch, handleSubmit, formState: { errors } } = useForm<EditProfileFormProps>({
@@ -79,29 +73,25 @@ const useEditProfileModal = (onClose: () => void) => {
     });
 
     const onSubmit = async (data: EditProfileFormProps): Promise<void> => {
-        let avatarResponse: string | undefined = undefined;
-        let wallpaperResponse: string | undefined = undefined;
-
-        if (avatar) {
-            avatarResponse = await uploadImage(avatar.file);
-        }
-        if (wallpaper) {
-            wallpaperResponse = await uploadImage(wallpaper.file);
-        }
-
-        dispatch(updatedUserData({ ...data, avatar: avatarResponse!, wallpaper: wallpaperResponse! }));
+        const upload = (img) => img ? uploadImage(img.file) : Promise.resolve(undefined);
+        const [avatar, wallpaper] = await Promise.all([
+            upload(avatarImage),
+            upload(wallpaperImage),
+        ]);
+        const birthdate = formatBirthdate(data.year, data.month, data.day);
+        dispatch(updatedUserData({ ...data, birthdate, avatar: avatar!, wallpaper: wallpaper! }));
         onClose();
     };
 
     return {
         userData,
-        avatar,
-        wallpaper,
+        avatarImage,
+        wallpaperImage,
         control,
         watch,
         errors,
-        setAvatar,
-        setWallpaper,
+        setAvatarImage,
+        setWallpaperImage,
         handleSubmit,
         onSubmit
     };

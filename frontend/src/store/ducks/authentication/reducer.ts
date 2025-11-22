@@ -8,7 +8,7 @@ import { RegistrationRequest, RegistrationStep } from "../../../types/auth";
 export const initialRegistrationInfo: RegistrationRequest = {
     username: "",
     email: "",
-    birthday: ""
+    birthdate: ""
 };
 
 export const initialAuthenticationState: AuthenticationState = {

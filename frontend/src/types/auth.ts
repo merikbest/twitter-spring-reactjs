@@ -9,7 +9,7 @@ export interface AuthenticationResponse {
 export interface RegistrationRequest {
     username: string;
     email: string;
-    birthday: string;
+    birthdate: string;
 }
 
 export interface LoginRequest {

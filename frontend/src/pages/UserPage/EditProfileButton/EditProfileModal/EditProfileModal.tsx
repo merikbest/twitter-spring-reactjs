@@ -14,6 +14,7 @@ import { DEFAULT_PROFILE_IMG } from "../../../../constants/url-constants";
 import { useGlobalStyles } from "../../../../util/globalClasses";
 import DialogTitleComponent from "../../../../components/DialogTitleComponent/DialogTitleComponent";
 import useEditProfileModal from "./useEditProfileModal";
+import EditBirthDate from "./EditBirthDate";
 
 interface EditProfileModalProps {
     visible?: boolean;
@@ -26,13 +27,13 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
     const { t } = useTranslation();
     const {
         userData,
-        avatar,
-        wallpaper,
+        avatarImage,
+        wallpaperImage,
         control,
         watch,
         errors,
-        setAvatar,
-        setWallpaper,
+        setAvatarImage,
+        setWallpaperImage,
         handleSubmit,
         onSubmit
     } = useEditProfileModal(onClose);
@@ -57,19 +58,19 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                         <div className={classes.wallpaperWrapper}>
                             <img
                                 className={classes.wallpaperImg}
-                                key={wallpaper?.src}
+                                key={wallpaperImage?.src}
                                 alt="wallpaper"
-                                src={(userData?.wallpaper && !wallpaper?.src) ? userData?.wallpaper : wallpaper?.src}
+                                src={(userData?.wallpaper && !wallpaperImage?.src) ? userData?.wallpaper : wallpaperImage?.src}
                             />
                             <div className={classes.wallpaperEditImg}>
-                                <UploadProfileImage name="wallpaper" image={wallpaper} onChangeImage={setWallpaper} />
+                                <UploadProfileImage name="wallpaper" image={wallpaperImage} onChangeImage={setWallpaperImage} />
                             </div>
                         </div>
                         <div className={classes.avatarWrapper}>
-                            <UploadProfileImage name="avatar" image={avatar} onChangeImage={setAvatar} />
+                            <UploadProfileImage name="avatar" image={avatarImage} onChangeImage={setAvatarImage} />
                             <Avatar
-                                key={avatar?.src}
-                                src={(userData?.avatar && !avatar?.src) ? userData?.avatar : avatar?.src}
+                                key={avatarImage?.src}
+                                src={(userData?.avatar && !avatarImage?.src) ? userData?.avatar : avatarImage?.src}
                             >
                                 <img alt="default-img" src={DEFAULT_PROFILE_IMG} />
                             </Avatar>
@@ -136,6 +137,7 @@ const EditProfileModal: FC<EditProfileModalProps> = ({ visible, onClose }): Reac
                                         />
                                     )}
                                 />
+                                <EditBirthDate control={control} watch={watch} errors={errors} />
                             </FormGroup>
                         </FormControl>
                     </div>

@@ -28,6 +28,17 @@ export interface UserRequest {
     avatar: string;
     wallpaper: string;
     about: string;
+    birthdate?: string;
+    monthAndDayVisibility?: BirthDateVisibility;
+    yearVisibility?: BirthDateVisibility;
+}
+
+export enum BirthDateVisibility {
+    PUBLIC = "PUBLIC",
+    YOUR_FOLLOWERS = "YOUR_FOLLOWERS",
+    PEOPLE_YOU_FOLLOW = "PEOPLE_YOU_FOLLOW",
+    YOU_FOLLOW_EACH_OTHER = "YOU_FOLLOW_EACH_OTHER",
+    ONLY_YOU = "ONLY_YOU"
 }
 
 export interface UserActionRequest {

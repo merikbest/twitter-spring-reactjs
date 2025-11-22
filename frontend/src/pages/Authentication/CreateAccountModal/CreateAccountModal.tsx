@@ -11,6 +11,14 @@ import { useCreateAccountModal } from "./useCreateAccountModal";
 const CreateAccountModal: FC = (): ReactElement => {
     const classes = useCreateAccountModalStyles();
     const { registrationInfo, registrationStep3, isLoading, onSubmit } = useCreateAccountModal();
+    const { username, email, birthdate } = registrationInfo;
+    const formatBirthdate = () => {
+        return new Date(birthdate).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        });
+    }
 
     return (
         <DialogWrapper isOpen={registrationStep3} logo={false}>
@@ -28,21 +36,21 @@ const CreateAccountModal: FC = (): ReactElement => {
                         <RegistrationInputField
                             label="Name"
                             variant="filled"
-                            value={registrationInfo.username}
+                            value={username}
                             fullWidth
                             disabled
                         />
                         <RegistrationInputField
                             label="Email"
                             variant="filled"
-                            value={registrationInfo.email}
+                            value={email}
                             fullWidth
                             disabled
                         />
                         <RegistrationInputField
                             label="Birth date"
                             variant="filled"
-                            value={registrationInfo.birthday}
+                            value={formatBirthdate()}
                             fullWidth
                             disabled
                         />

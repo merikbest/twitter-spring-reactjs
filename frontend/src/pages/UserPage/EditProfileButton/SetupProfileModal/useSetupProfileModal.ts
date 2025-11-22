@@ -18,8 +18,8 @@ export const useSetupProfileModal = (onClose: () => void) => {
     const [visibleProfileHeaderModal, setVisibleProfileHeaderModal] = useState<boolean>(false);
     const [visibleProfileDescriptionModal, setVisibleProfileDescriptionModal] = useState<boolean>(false);
     const [visibleProfileUpdatedModal, setVisibleProfileUpdatedModal] = useState<boolean>(false);
-    const [avatar, setAvatar] = useState<ImageObj>();
-    const [wallpaper, setWallpaper] = useState<ImageObj>();
+    const [avatarImage, setAvatarImage] = useState<ImageObj>();
+    const [wallpaperImage, setWallpaperImage] = useState<ImageObj>();
     const [bio, setBio] = useState<string>("");
 
     const handleCloseModal = (): void => {
@@ -42,36 +42,31 @@ export const useSetupProfileModal = (onClose: () => void) => {
     };
 
     const onSubmit = async (): Promise<void> => {
-        let avatarResponse: string | undefined = undefined;
-        let wallpaperResponse: string | undefined = undefined;
-
-        if (avatar) {
-            avatarResponse = await uploadImage(avatar.file);
-        }
-        if (wallpaper) {
-            wallpaperResponse = await uploadImage(wallpaper.file);
-        }
-
+        const upload = (img) => img ? uploadImage(img.file) : Promise.resolve(undefined);
+        const [avatar, wallpaper] = await Promise.all([
+            upload(avatarImage),
+            upload(wallpaperImage),
+        ]);
         dispatch(updatedUserData({
             fullName: fullName!,
             location: location!,
             website: website!,
-            avatar: avatarResponse!,
-            wallpaper: wallpaperResponse!,
+            avatar: avatar!,
+            wallpaper: wallpaper!,
             about: bio
         }));
         handleCloseModal();
     };
 
     return {
-        avatar,
-        wallpaper,
+        avatarImage,
+        wallpaperImage,
         bio,
         visibleProfileHeaderModal,
         visibleProfileDescriptionModal,
         visibleProfileUpdatedModal,
-        setAvatar,
-        setWallpaper,
+        setAvatarImage,
+        setWallpaperImage,
         setBio,
         onOpenProfileHeaderModal,
         onOpenProfileDescriptionModal,
